@@ -117,7 +117,7 @@ def build_excel(rows, path):
             "URUNADEDIVARSAYILANDEGER": 1,
             "URUNADEDIARTISKADEMESI": 1,
             "GTIPKODU": gtip(name, cat),
-            "OZELALAN1": r["url"], "OZELALAN2": r["image"],
+            "OZELALAN1": "", "OZELALAN2": "",
             "OZELALAN3": "", "OZELALAN4": "", "OZELALAN5": "",
             "VERGIISTISNAKODU": 0,
             "YEMEKKARTIODEMEYASAKLILISTESI": "",

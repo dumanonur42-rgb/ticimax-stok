@@ -207,7 +207,6 @@ def build_xml(rows):
         lines.append(f"    <Marka>{e(r['brand'])}</Marka>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
         lines.append(f"    <Kategori>{e(r['category_path'].split('>')[-1])}</Kategori>")
-        lines.append(f"    <UrunUrl>{e(r['url'])}</UrunUrl>")
         lines.append("    <UrunSecenek>")
         lines.append("      <Secenek>")
         lines.append(f"        <VaryasyonID>{e(r['id'])}</VaryasyonID>")
