@@ -66,19 +66,29 @@ def safe_name(sku: str) -> str:
     return re.sub(r"[^A-Za-z0-9_-]+", "_", sku).strip("_") or "urun"
 
 
+def image_filename(name: str, sku: str) -> str:
+    """Gorsel dosya adi: 'Urun Adi - StokKodu.jpg'"""
+    clean = re.sub(r'[\\/:*?"<>|]+', "", (name or "").strip())
+    clean = re.sub(r"\s+", " ", clean)
+    if not clean:
+        return safe_name(sku) + ".jpg"
+    return f"{clean} - {sku}.jpg"
+
+
 def main():
     OUT_DIR.mkdir(exist_ok=True)
     template = load_template()
     rows = list(csv.reader(open(CSV_FILE, encoding="utf-8-sig"), delimiter=";"))
     header = rows[0]
     i_sku, i_img = header.index("Stok Kodu"), header.index("Gorsel")
+    i_name = header.index("Urun Adi")
     s = requests.Session()
     s.headers["User-Agent"] = "Mozilla/5.0"
     done = fail = skip = 0
     failures = []
     for r in rows[1:]:
         sku, url = r[i_sku], r[i_img]
-        target = OUT_DIR / (safe_name(sku) + ".jpg")
+        target = OUT_DIR / image_filename(r[i_name], sku)
         if target.exists():
             skip += 1
             continue

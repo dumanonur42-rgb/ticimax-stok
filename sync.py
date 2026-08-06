@@ -26,6 +26,7 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 from xml.sax.saxutils import escape
 
 import requests
@@ -34,9 +35,9 @@ from icerik import build_description, build_onyazi, build_seo, desi_agirlik, gti
 from ticimax_excel import build_excel, pretty_name
 
 try:
-    from make_images import safe_name
+    from make_images import image_filename
 except ImportError:
-    safe_name = None
+    image_filename = None
 
 BASE = "https://talhateknik.diaeticaret.com"
 HERE = Path(__file__).resolve().parent
@@ -264,10 +265,10 @@ def main():
             except (TypeError, ValueError):
                 p["price_try"] = ""
             p["category_path"] = cat_path
-            if safe_name and IMAGE_BASE_URL:
-                img_file = safe_name(p["sku"] or "") + ".jpg"
+            if image_filename and IMAGE_BASE_URL:
+                img_file = image_filename(pretty_name(p["name"] or ""), p["sku"] or "")
                 if (IMAGE_DIR / img_file).exists():
-                    p["image"] = IMAGE_BASE_URL + img_file
+                    p["image"] = IMAGE_BASE_URL + quote(img_file)
             rows.append(p)
             new += 1
         print(f"Kategori {cat_id}: {len(prods)} urun ({new} yeni) -> {cat_path}")
