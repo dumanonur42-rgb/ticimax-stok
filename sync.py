@@ -214,7 +214,6 @@ def build_xml(rows):
         lines.append(f"        <StokKodu>{e(r['sku'])}</StokKodu>")
         lines.append(f"        <Barkod>{e(r['sku'])}</Barkod>")
         lines.append(f"        <StokAdedi>{int(r['stock'])}</StokAdedi>")
-        lines.append(f"        <AlisFiyati>{e(r['price'])}</AlisFiyati>")
         lines.append(f"        <SatisFiyati>{e(r['price'])}</SatisFiyati>")
         lines.append(f"        <IndirimliFiyat>{e(r['price'])}</IndirimliFiyat>")
         lines.append("        <KDVDahil>false</KDVDahil>")

@@ -98,7 +98,7 @@ def build_excel(rows, path):
             "SEO_SAYFAACIKLAMA": seo_desc,
             "UCRETSIZKARGO": 0,
             "STOKADEDI": stock,
-            "ALISFIYATI": price_try,
+            "ALISFIYATI": 0,
             "SATISFIYATI": price_try,
             "INDIRIMLIFIYAT": 0,
             "UYETIPIFIYAT1": 0, "UYETIPIFIYAT2": 0, "UYETIPIFIYAT3": 0,
