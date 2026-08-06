@@ -205,6 +205,7 @@ def build_xml(rows):
         lines.append(f"    <KargoAgirligi>{desi}</KargoAgirligi>")
         lines.append(f"    <UrunAgirligi>{agirlik}</UrunAgirligi>")
         lines.append(f"    <Marka>{e(r['brand'])}</Marka>")
+        lines.append("    <Tedarikci>Talha</Tedarikci>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
         lines.append(f"    <Kategori>{e(r['category_path'].split('>')[-1])}</Kategori>")
         lines.append("    <UrunSecenek>")

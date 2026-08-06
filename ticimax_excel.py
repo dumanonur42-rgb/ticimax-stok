@@ -84,7 +84,7 @@ def build_excel(rows, path):
             "PUANDEGER": 0,
             "PUANYUZDE": 0,
             "MARKA": r["brand"],
-            "TEDARIKCI": "",
+            "TEDARIKCI": "Talha",
             "MAKSTAKSITSAYISI": 9,
             "BREADCRUMBKAT": cat,
             "KATEGORILER": cat,
