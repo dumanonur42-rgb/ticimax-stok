@@ -70,7 +70,7 @@ def parse_specs(name: str, category_path: str):
         s["din"] = "DIN " + m.group(1) + (("-" + m.group(2)) if m.lastindex and m.lastindex > 1 else "")
     if "KARBÜR" in up or "CARBIDE" in up:
         s["malzeme"] = "karbür"
-    elif "HSS-E" in up or "HSSE" in up or "CO5" in up or "COBALT" in up or "ALTIN SERİ" in up:
+    elif "HSS-E" in up or "HSSE" in up or "CO5" in up or "COBALT" in up or "ALTIN SERİ" in up or "ALTIN SERI" in up:
         s["malzeme"] = "HSS-E kobalt alaşımlı"
     elif "HSS" in up:
         s["malzeme"] = "HSS (yüksek hız çeliği)"
@@ -152,6 +152,43 @@ def _tip_adi(s):
     }[s["tip"]]
 
 
+_ALANLAR = {
+    "kademeli": ["Elektrik pano ve tesisat işleri", "Havalandırma kanalı ve sac montajı",
+                 "Otomotiv karoseri tamiri", "Reklam tabelası ve profil işleri",
+                 "İnce sac ve alüminyum levha delme"],
+    "punta": ["Torna tezgahlarında merkezleme deliği açma", "CNC işleme merkezlerinde delik öncesi puntalama",
+              "Hassas ölçüm ve markalama işleri", "Mil ve şaft uçlarına punta yuvası açma"],
+    "konik": ["Sütunlu matkap tezgahlarında büyük çaplı delik delme", "Torna gövdesinde Mors konik kovanla kullanım",
+              "Çelik konstrüksiyon ve makine imalatı", "Kalıp ve aparat üretimi"],
+    "uzun": ["Derin delik delme uygulamaları", "Kalıp ve enjeksiyon soğutma kanalları",
+             "Ulaşılması zor bölgelerde delme", "Ahşap ve metal karkas montaj işleri"],
+    "matkap": ["Metal atölyesi ve tornacılıkta genel delme", "Makine imalatı ve bakım-onarım",
+               "Çelik konstrüksiyon montajı", "Hobi ve profesyonel atölye kullanımı"],
+}
+
+_MALZEME_UYUM = {
+    "karbür": "Sertleştirilmiş çelik (HRC 45-55), paslanmaz çelik, dökme demir, titanyum alaşımları ve aşındırıcı malzemelerde üstün performans gösterir.",
+    "hsse": "Paslanmaz çelik, asitli çelikler, ısıya dayanıklı alaşımlar ve zorlu malzemelerde standart HSS'e göre belirgin biçimde daha uzun ömür sunar.",
+    "hss": "Yapı çeliği, alaşımsız ve düşük alaşımlı çelikler, dökme demir, pirinç, bakır, alüminyum ve sert plastiklerde güvenle kullanılır.",
+}
+
+_NEDEN = [
+    "{marka} ürünleri, sanayi standartlarına uygun üretim ve sıkı kalite kontrol süreçlerinden geçer. {sku} stok kodlu bu ürün, orijinal ve faturalı olarak YAMANSA güvencesiyle gönderilir.",
+    "Doğru {tip_adi} seçimi; delik kalitesini, takım ömrünü ve işçilik süresini doğrudan etkiler. {marka} kalitesindeki bu ürün, hem hobi kullanıcısının hem profesyonel atölyelerin beklentisini karşılar.",
+    "{sku} stok kodlu {marka} {tip_adi}, yüksek talaş tahliye kapasitesi ve ölçü hassasiyeti ile uzun vadede takım maliyetinizi düşürür. YAMANSA stoklarından hızlı ve güvenli teslimat.",
+    "Endüstriyel kesici takımlarda marka ve malzeme kalitesi belirleyicidir. {marka} imzalı bu {tip_adi}, ölçü kararlılığı ve dayanımı ile tekrarlı işlerde güvenilir sonuç verir.",
+]
+
+_SSS_KULLANIM = [
+    ("Hangi devirde kullanılmalı?",
+     "Delinecek malzemeye ve çapa göre devir seçilmelidir: çap büyüdükçe devir düşürülür, sert malzemelerde düşük devir ve bol soğutma sıvısı önerilir."),
+    ("Soğutma sıvısı gerekli mi?",
+     "Metal delme işlemlerinde bor yağı veya kesme sıvısı kullanmak takım ömrünü belirgin şekilde uzatır ve delik yüzey kalitesini artırır."),
+    ("Nasıl daha uzun ömürlü kullanılır?",
+     "Sabit ilerleme, doğru devir ve titreşimsiz bağlama takım ömrünü uzatır; körelme başladığında ucu bilemek kesme performansını geri kazandırır."),
+]
+
+
 def build_description(name, sku, brand, category_path):
     s = parse_specs(name, category_path)
     marka = brand or "YAMANSA"
@@ -178,9 +215,37 @@ def build_description(name, sku, brand, category_path):
     ozellikler.append(f"Stok kodu: {sku}")
     kapanis = _pick(_KAPANIS, sku, "k")
     li = "".join(f"<li>{o}</li>" for o in ozellikler)
+
+    cap_txt = ""
+    if s.get("cap"):
+        cap_txt = (f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm")
+    baslik_alan = f"{cap_txt} {tip_adi}".strip().capitalize()
+
+    # Kullanim alanlari: urune gore deterministik siralanmis liste
+    alanlar = list(_ALANLAR[s["tip"]])
+    rot = int(hashlib.md5((sku + "a").encode()).hexdigest(), 16) % len(alanlar)
+    alanlar = alanlar[rot:] + alanlar[:rot]
+    alan_li = "".join(f"<li>{a}</li>" for a in alanlar)
+
+    # Malzeme uyumu
+    malz = s.get("malzeme", "")
+    if "karbür" in malz:
+        uyum = _MALZEME_UYUM["karbür"]
+    elif "HSS-E" in malz:
+        uyum = _MALZEME_UYUM["hsse"]
+    else:
+        uyum = _MALZEME_UYUM["hss"]
+    din_txt = f" {s['din']} normuna uygun üretilmiştir." if s.get("din") else ""
+
+    neden = _pick(_NEDEN, sku, "n").format(marka=marka, sku=sku, tip_adi=tip_adi)
+    soru, cevap = _pick(_SSS_KULLANIM, sku, "q")
+
     return (f"<h2>{name}</h2><p>{giris}</p>"
             f"<h3>Teknik Özellikler</h3><ul>{li}</ul>"
-            f"<p>{kapanis}</p>")
+            f"<h3>Kullanım Alanları</h3><ul>{alan_li}</ul>"
+            f"<h3>Hangi Malzemelerde Kullanılır?</h3><p>{uyum}{din_txt}</p>"
+            f"<h3>Neden {marka} {baslik_alan}?</h3><p>{neden} {kapanis}</p>"
+            f"<h3>Sık Sorulan Soru</h3><p><strong>{soru}</strong> {cevap}</p>")
 
 
 def build_onyazi(name, sku, brand, category_path):
