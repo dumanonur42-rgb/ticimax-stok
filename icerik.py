@@ -248,6 +248,26 @@ def build_description(name, sku, brand, category_path):
             f"<h3>Sık Sorulan Soru</h3><p><strong>{soru}</strong> {cevap}</p>")
 
 
+def teknik_detaylar(name, sku, brand, category_path):
+    """Ticimax teknik detay/filtre alanlari icin (ozellik, deger) listesi."""
+    s = parse_specs(name, category_path)
+    out = []
+    if s.get("cap"):
+        out.append(("Çap", f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
+    if s.get("malzeme"):
+        malz = ("Karbür" if s["malzeme"] == "karbür"
+                else ("HSS-E Kobalt" if "HSS-E" in s["malzeme"] else "HSS"))
+        out.append(("Malzeme", malz))
+    out.append(("Kaplama", "TiN Kaplı" if s.get("kaplama") else "Kaplamasız"))
+    if s.get("din"):
+        out.append(("Standart", s["din"]))
+    if s.get("islem"):
+        out.append(("İşlem", "Fully Ground (Taşlanmış)"))
+    for etiket, deger in olcu_ozellikleri(sku):
+        out.append((etiket, deger))
+    return out
+
+
 def build_onyazi(name, sku, brand, category_path):
     """Urun karti ustunde gorunen tablo bicimli on yazi."""
     s = parse_specs(name, category_path)

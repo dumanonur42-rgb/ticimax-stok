@@ -31,7 +31,8 @@ from xml.sax.saxutils import escape
 
 import requests
 
-from icerik import build_description, build_onyazi, build_seo, desi_agirlik, gtip
+from icerik import (build_description, build_onyazi, build_seo, desi_agirlik,
+                    gtip, teknik_detaylar)
 from ticimax_excel import build_excel, pretty_name
 
 try:
@@ -205,6 +206,13 @@ def build_xml(rows):
         lines.append(f"    <Desi>{desi}</Desi>")
         lines.append(f"    <KargoAgirligi>{desi}</KargoAgirligi>")
         lines.append(f"    <UrunAgirligi>{agirlik}</UrunAgirligi>")
+        lines.append("    <TeknikDetaylar>")
+        for ozellik, deger in teknik_detaylar(name, r["sku"], r["brand"], r["category_path"]):
+            lines.append("      <TeknikDetay>")
+            lines.append(f"        <Ozellik>{e(ozellik)}</Ozellik>")
+            lines.append(f"        <Deger>{e(deger)}</Deger>")
+            lines.append("      </TeknikDetay>")
+        lines.append("    </TeknikDetaylar>")
         lines.append(f"    <Marka>{e(r['brand'])}</Marka>")
         lines.append("    <Tedarikci>Talha</Tedarikci>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
