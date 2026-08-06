@@ -6,6 +6,8 @@ import re
 
 from openpyxl import Workbook
 
+from icerik import build_description, build_seo, desi_agirlik, gtip
+
 COLUMNS = [
     "URUNKARTIID", "URUNID", "STOKKODU", "VARYASYONKODU", "BARKOD", "URUNADI",
     "ONYAZI", "ACIKLAMA", "PUANDEGER", "PUANYUZDE", "MARKA", "TEDARIKCI",
@@ -68,6 +70,8 @@ def build_excel(rows, path):
         name = pretty_name(r["name"] or "")
         cat = r["category_path"]
         price_try = r["price_try"] if r["price_try"] != "" else 0
+        seo_title, seo_kw, seo_desc = build_seo(name, r["sku"], r["brand"], cat)
+        desi, agirlik = desi_agirlik(name, cat)
         row = {
             "URUNKARTIID": 0,
             "URUNID": 0,
@@ -76,7 +80,7 @@ def build_excel(rows, path):
             "BARKOD": r["sku"],
             "URUNADI": name,
             "ONYAZI": "",
-            "ACIKLAMA": f'<p>{name}</p><p><img src="{r["image"]}" alt="{name}"/></p>' if r["image"] else f"<p>{name}</p>",
+            "ACIKLAMA": build_description(name, r["sku"], r["brand"], cat, r["image"]),
             "PUANDEGER": 0,
             "PUANYUZDE": 0,
             "MARKA": r["brand"],
@@ -89,10 +93,9 @@ def build_excel(rows, path):
             "YENIURUN": 1,
             "FIRSATURUNU": 0,
             "FBSTOREGOSTER": 0,
-            "SEO_SAYFABASLIK": name,
-            "SEO_ANAHTARKELIME": ", ".join(dict.fromkeys(
-                w for w in re.split(r"[ /]", name.lower()) if len(w) > 2)),
-            "SEO_SAYFAACIKLAMA": f"{name} uygun fiyat ve stoktan hızlı kargo ile.",
+            "SEO_SAYFABASLIK": seo_title,
+            "SEO_ANAHTARKELIME": seo_kw,
+            "SEO_SAYFAACIKLAMA": seo_desc,
             "UCRETSIZKARGO": 0,
             "STOKADEDI": stock,
             "ALISFIYATI": price_try,
@@ -104,16 +107,16 @@ def build_excel(rows, path):
             "KDVDAHIL": 0,
             "PARABIRIMI": "TL",
             "KUR": 1,
-            "KARGOAGIRLIGI": 0, "KARGOAGIRLIGIYURTDISI": 0,
+            "KARGOAGIRLIGI": desi, "KARGOAGIRLIGIYURTDISI": desi,
             "URUNGENISLIK": 0, "URUNDERINLIK": 0, "URUNYUKSEKLIK": 0,
-            "URUNAGIRLIGI": 0, "KARGOUCRETI": 0,
+            "URUNAGIRLIGI": agirlik, "KARGOUCRETI": 0,
             "URUNAKTIF": 1,
             "VARYASYON": "",
             "TAHMINITESLIMSURESIGOSTER": 0,
             "URUNADEDIMINIMUMDEGER": 1,
             "URUNADEDIVARSAYILANDEGER": 1,
             "URUNADEDIARTISKADEMESI": 1,
-            "GTIPKODU": "",
+            "GTIPKODU": gtip(name, cat),
             "OZELALAN1": r["url"], "OZELALAN2": r["image"],
             "OZELALAN3": "", "OZELALAN4": "", "OZELALAN5": "",
             "VERGIISTISNAKODU": 0,

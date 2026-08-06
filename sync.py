@@ -30,6 +30,7 @@ from xml.sax.saxutils import escape
 
 import requests
 
+from icerik import build_description, build_seo, desi_agirlik, gtip
 from ticimax_excel import build_excel, pretty_name
 
 try:
@@ -190,7 +191,18 @@ def build_xml(rows):
         e = lambda s: escape(str(s if s is not None else ""))
         lines.append("  <Urun>")
         lines.append(f"    <UrunKartiID>{e(r['id'])}</UrunKartiID>")
-        lines.append(f"    <UrunAdi>{e(r['name'])}</UrunAdi>")
+        name = pretty_name(r["name"] or "")
+        seo_title, seo_kw, seo_desc = build_seo(name, r["sku"], r["brand"], r["category_path"])
+        desi, agirlik = desi_agirlik(name, r["category_path"])
+        lines.append(f"    <UrunAdi>{e(name)}</UrunAdi>")
+        lines.append(f"    <Aciklama>{e(build_description(name, r['sku'], r['brand'], r['category_path'], r['image']))}</Aciklama>")
+        lines.append(f"    <SeoSayfaBaslik>{e(seo_title)}</SeoSayfaBaslik>")
+        lines.append(f"    <SeoAnahtarKelime>{e(seo_kw)}</SeoAnahtarKelime>")
+        lines.append(f"    <SeoSayfaAciklama>{e(seo_desc)}</SeoSayfaAciklama>")
+        lines.append(f"    <GtipKodu>{e(gtip(name, r['category_path']))}</GtipKodu>")
+        lines.append(f"    <Desi>{desi}</Desi>")
+        lines.append(f"    <KargoAgirligi>{desi}</KargoAgirligi>")
+        lines.append(f"    <UrunAgirligi>{agirlik}</UrunAgirligi>")
         lines.append(f"    <Marka>{e(r['brand'])}</Marka>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
         lines.append(f"    <Kategori>{e(r['category_path'].split('>')[-1])}</Kategori>")
