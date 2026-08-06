@@ -6,7 +6,7 @@ import re
 
 from openpyxl import Workbook
 
-from icerik import build_description, build_seo, desi_agirlik, gtip
+from icerik import build_description, build_onyazi, build_seo, desi_agirlik, gtip
 
 COLUMNS = [
     "URUNKARTIID", "URUNID", "STOKKODU", "VARYASYONKODU", "BARKOD", "URUNADI",
@@ -79,7 +79,7 @@ def build_excel(rows, path):
             "VARYASYONKODU": r["sku"],
             "BARKOD": r["sku"],
             "URUNADI": name,
-            "ONYAZI": "",
+            "ONYAZI": build_onyazi(name, r["sku"], r["brand"], cat),
             "ACIKLAMA": build_description(name, r["sku"], r["brand"], cat, r["image"]),
             "PUANDEGER": 0,
             "PUANYUZDE": 0,

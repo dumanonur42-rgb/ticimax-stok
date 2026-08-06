@@ -148,6 +148,35 @@ def build_description(name, sku, brand, category_path, image_url=""):
             f"<p>{kapanis}</p>{img}")
 
 
+def build_onyazi(name, sku, brand, category_path):
+    """Urun karti ustunde gorunen tablo bicimli on yazi."""
+    s = parse_specs(name, category_path)
+    tip = _tip_adi(s).title()
+    cols = [("Ürün Kodu", sku), ("Ürün Tipi", tip)]
+    if s.get("cap"):
+        cols.append(("Çap", f"{s['cap']} - {s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
+    if s.get("din"):
+        cols.append(("Standart", s["din"]))
+    malzeme = ""
+    if s.get("malzeme"):
+        malzeme = "Karbür" if s["malzeme"] == "karbür" else s["malzeme"].split(" ")[0].upper()
+    if s.get("kaplama"):
+        malzeme = (malzeme + " / TiN Kaplı") if malzeme else "TiN Kaplı"
+    if malzeme:
+        cols.append(("Malzeme", malzeme))
+    cols.append(("Marka", brand or "YAMANSA"))
+    th = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
+          'font-weight:bold;background:#fff;"')
+    td = 'style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;"'
+    heads = "".join(f"<th {th}>{k}</th>" for k, _ in cols)
+    vals = "".join(f"<td {td}>{v}</td>" for _, v in cols)
+    return (
+        '<table style="width:100%;border-collapse:collapse;font-family:inherit;'
+        'font-size:14px;margin-bottom:10px;">'
+        f"<tr>{heads}</tr><tr>{vals}</tr></table>"
+    )
+
+
 _SEO_DESC = [
     "{name} en uygun fiyatla YAMANSA'da. {ek} Stoktan aynı gün kargo.",
     "{name} stokta! {ek} Hızlı kargo ve orijinal ürün garantisiyle sipariş verin.",

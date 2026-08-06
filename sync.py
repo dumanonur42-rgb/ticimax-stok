@@ -30,7 +30,7 @@ from xml.sax.saxutils import escape
 
 import requests
 
-from icerik import build_description, build_seo, desi_agirlik, gtip
+from icerik import build_description, build_onyazi, build_seo, desi_agirlik, gtip
 from ticimax_excel import build_excel, pretty_name
 
 try:
@@ -195,6 +195,7 @@ def build_xml(rows):
         seo_title, seo_kw, seo_desc = build_seo(name, r["sku"], r["brand"], r["category_path"])
         desi, agirlik = desi_agirlik(name, r["category_path"])
         lines.append(f"    <UrunAdi>{e(name)}</UrunAdi>")
+        lines.append(f"    <OnYazi>{e(build_onyazi(name, r['sku'], r['brand'], r['category_path']))}</OnYazi>")
         lines.append(f"    <Aciklama>{e(build_description(name, r['sku'], r['brand'], r['category_path'], r['image']))}</Aciklama>")
         lines.append(f"    <SeoSayfaBaslik>{e(seo_title)}</SeoSayfaBaslik>")
         lines.append(f"    <SeoAnahtarKelime>{e(seo_kw)}</SeoAnahtarKelime>")
