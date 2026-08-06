@@ -196,7 +196,7 @@ def build_xml(rows):
         desi, agirlik = desi_agirlik(name, r["category_path"])
         lines.append(f"    <UrunAdi>{e(name)}</UrunAdi>")
         lines.append(f"    <OnYazi>{e(build_onyazi(name, r['sku'], r['brand'], r['category_path']))}</OnYazi>")
-        lines.append(f"    <Aciklama>{e(build_description(name, r['sku'], r['brand'], r['category_path'], r['image']))}</Aciklama>")
+        lines.append(f"    <Aciklama>{e(build_description(name, r['sku'], r['brand'], r['category_path']))}</Aciklama>")
         lines.append(f"    <SeoSayfaBaslik>{e(seo_title)}</SeoSayfaBaslik>")
         lines.append(f"    <SeoAnahtarKelime>{e(seo_kw)}</SeoAnahtarKelime>")
         lines.append(f"    <SeoSayfaAciklama>{e(seo_desc)}</SeoSayfaAciklama>")

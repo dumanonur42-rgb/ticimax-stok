@@ -80,7 +80,7 @@ def build_excel(rows, path):
             "BARKOD": r["sku"],
             "URUNADI": name,
             "ONYAZI": build_onyazi(name, r["sku"], r["brand"], cat),
-            "ACIKLAMA": build_description(name, r["sku"], r["brand"], cat, r["image"]),
+            "ACIKLAMA": build_description(name, r["sku"], r["brand"], cat),
             "PUANDEGER": 0,
             "PUANYUZDE": 0,
             "MARKA": r["brand"],

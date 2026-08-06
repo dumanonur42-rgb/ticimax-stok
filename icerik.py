@@ -118,7 +118,7 @@ def _tip_adi(s):
     }[s["tip"]]
 
 
-def build_description(name, sku, brand, category_path, image_url=""):
+def build_description(name, sku, brand, category_path):
     s = parse_specs(name, category_path)
     marka = brand or "YAMANSA"
     tip_adi = _tip_adi(s)
@@ -142,10 +142,9 @@ def build_description(name, sku, brand, category_path, image_url=""):
     ozellikler.append(f"Stok kodu: {sku}")
     kapanis = _pick(_KAPANIS, sku, "k")
     li = "".join(f"<li>{o}</li>" for o in ozellikler)
-    img = f'<p><img src="{image_url}" alt="{name}"/></p>' if image_url else ""
     return (f"<h2>{name}</h2><p>{giris}</p>"
             f"<h3>Teknik Özellikler</h3><ul>{li}</ul>"
-            f"<p>{kapanis}</p>{img}")
+            f"<p>{kapanis}</p>")
 
 
 def build_onyazi(name, sku, brand, category_path):
