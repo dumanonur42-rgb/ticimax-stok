@@ -8,7 +8,41 @@ standardi, kaplama, malzeme) urun adindan ayiklanir.
 """
 
 import hashlib
+import json
 import re
+from pathlib import Path
+
+try:
+    OLCULER = json.load(open(Path(__file__).resolve().parent / "olculer.json"))
+except OSError:
+    OLCULER = {}
+
+
+def _fmt(v):
+    return ("%g" % v).replace(".", ",") if isinstance(v, float) else str(v)
+
+
+def olcu_ozellikleri(sku):
+    """Katalogdan alinan olculeri (etiket, deger) listesi olarak dondurur."""
+    o = OLCULER.get(sku or "")
+    if not o:
+        return []
+    out = []
+    if o.get("boy"):
+        out.append(("Toplam Boy", f"{_fmt(o['boy'])} mm"))
+    if o.get("helis"):
+        out.append(("Helis (Kesme) Boyu", f"{_fmt(o['helis'])} mm"))
+    if o.get("sap"):
+        out.append(("Şaft Çapı", f"{_fmt(o['sap'])} mm"))
+    if o.get("govde"):
+        out.append(("Gövde Çapı", f"{_fmt(o['govde'])} mm"))
+    if o.get("mk"):
+        out.append(("Mors Konik", f"MK{o['mk']}"))
+    if o.get("derece"):
+        out.append(("Uç Açısı", f"{o['derece']}°"))
+    if o.get("kademeler"):
+        out.append(("Kademeler", f"{o['kademeler']} mm"))
+    return out
 
 # GTIP: 8207.50 delmeye mahsus aletler (metal isleme)
 GTIP_HSS = "8207.50.60.00.00"      # is goren kismi yuksek hiz celigi (HSS)
@@ -138,6 +172,8 @@ def build_description(name, sku, brand, category_path):
         ozellikler.append(f"Kaplama: {s['kaplama']}")
     if s.get("islem"):
         ozellikler.append(f"İşlem: {s['islem']}")
+    for etiket, deger in olcu_ozellikleri(sku):
+        ozellikler.append(f"{etiket}: {deger}")
     ozellikler.append(f"Marka: {marka}")
     ozellikler.append(f"Stok kodu: {sku}")
     kapanis = _pick(_KAPANIS, sku, "k")
@@ -163,6 +199,10 @@ def build_onyazi(name, sku, brand, category_path):
         malzeme = (malzeme + " / TiN Kaplı") if malzeme else "TiN Kaplı"
     if malzeme:
         cols.append(("Malzeme", malzeme))
+    for etiket, deger in olcu_ozellikleri(sku):
+        if etiket in ("Toplam Boy", "Helis (Kesme) Boyu", "Mors Konik"):
+            cols.append(("Boy" if etiket == "Toplam Boy" else
+                         ("Helis Boyu" if etiket.startswith("Helis") else etiket), deger))
     cols.append(("Marka", brand or "YAMANSA"))
     th = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
           'font-weight:bold;background:#fff;"')
