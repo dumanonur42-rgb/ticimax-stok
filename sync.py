@@ -67,8 +67,8 @@ CATEGORIES = [
     (167, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
     (266, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
     # Bohrcraft punta matkaplari (265'ten once gelmeli ki dogru kategoriye dussun)
-    (267, ROOT_CATEGORY + ">Punta Matkapları"),
-    (269, ROOT_CATEGORY + ">Punta Matkapları"),
+    (267, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (269, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
     (265, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
     # Uzun seriler
     (166, ROOT_CATEGORY + ">MATKAP UÇLARI>Uzun Matkap Uçları"),
@@ -82,14 +82,14 @@ CATEGORIES = [
     (293, ROOT_CATEGORY + ">MATKAP UÇLARI>Karbür Matkap Uçları"),
     (292, ROOT_CATEGORY + ">MATKAP UÇLARI>Karbür Matkap Uçları"),
     # Punta matkaplari
-    (190, ROOT_CATEGORY + ">Punta Matkapları"),
-    (191, ROOT_CATEGORY + ">Punta Matkapları"),
-    (192, ROOT_CATEGORY + ">Punta Matkapları"),
-    (287, ROOT_CATEGORY + ">Punta Matkapları"),
-    (288, ROOT_CATEGORY + ">Punta Matkapları"),
-    (291, ROOT_CATEGORY + ">Punta Matkapları"),
+    (190, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (191, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (192, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (287, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (288, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
+    (291, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
     # Kademeli sac matkaplari
-    (193, ROOT_CATEGORY + ">Kademeli Sac Matkapları"),
+    (193, ROOT_CATEGORY + ">MATKAP UÇLARI>Kademeli Sac Matkapları"),
 ]
 
 
