@@ -100,7 +100,8 @@ def build_excel(rows, path):
             "STOKADEDI": stock,
             "ALISFIYATI": 0,
             "SATISFIYATI": price_try,
-            "INDIRIMLIFIYAT": round(price_try * 0.80, 2) if isinstance(price_try, (int, float)) else 0,
+            "INDIRIMLIFIYAT": round(price_try * 0.80, 2)
+            if isinstance(price_try, (int, float)) and price_try >= 100 else 0,
             "UYETIPIFIYAT1": 0, "UYETIPIFIYAT2": 0, "UYETIPIFIYAT3": 0,
             "UYETIPIFIYAT4": 0, "UYETIPIFIYAT5": 0,
             "KDVORANI": r["vat_rate"] if r["vat_rate"] is not None else 20,

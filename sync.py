@@ -234,8 +234,12 @@ def build_xml(rows):
         lines.append(f"        <Barkod>{e(r['sku'])}</Barkod>")
         lines.append(f"        <StokAdedi>{int(r['stock'])}</StokAdedi>")
         try:
-            indirimli = round(float(r["price"]) * 0.80, 2)
-            indirimli_try = round(float(r["price_try"]) * 0.80, 2)
+            if float(r["price_try"]) >= 100:
+                indirimli = round(float(r["price"]) * 0.80, 2)
+                indirimli_try = round(float(r["price_try"]) * 0.80, 2)
+            else:
+                indirimli = r["price"]
+                indirimli_try = r["price_try"]
         except (TypeError, ValueError):
             indirimli = r["price"]
             indirimli_try = r["price_try"]

@@ -55,8 +55,8 @@
         <Barkod>T3380005CO</Barkod>
         <StokAdedi>3630</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -123,8 +123,8 @@
         <Barkod>T3380006CO</Barkod>
         <StokAdedi>2900</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -191,8 +191,8 @@
         <Barkod>T3380007CO</Barkod>
         <StokAdedi>1750</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -259,8 +259,8 @@
         <Barkod>T3380008CO</Barkod>
         <StokAdedi>1760</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -327,8 +327,8 @@
         <Barkod>T3380009CO</Barkod>
         <StokAdedi>1900</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -395,8 +395,8 @@
         <Barkod>T3380011CO</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -467,8 +467,8 @@
         <Barkod>T3380011F</Barkod>
         <StokAdedi>950</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -535,8 +535,8 @@
         <Barkod>T3380012CO</Barkod>
         <StokAdedi>1130</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -607,8 +607,8 @@
         <Barkod>T3380012F</Barkod>
         <StokAdedi>1320</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -675,8 +675,8 @@
         <Barkod>T3380013CO</Barkod>
         <StokAdedi>850</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -747,8 +747,8 @@
         <Barkod>T3380013F</Barkod>
         <StokAdedi>900</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -815,8 +815,8 @@
         <Barkod>T3380014CO</Barkod>
         <StokAdedi>850</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -887,8 +887,8 @@
         <Barkod>T3380014F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -955,8 +955,8 @@
         <Barkod>T3380015CO</Barkod>
         <StokAdedi>3120</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1027,8 +1027,8 @@
         <Barkod>T3380015F</Barkod>
         <StokAdedi>0</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1095,8 +1095,8 @@
         <Barkod>TGT340015</Barkod>
         <StokAdedi>4400</StokAdedi>
         <SatisFiyati>0.49</SatisFiyati>
-        <IndirimliFiyat>0.39</IndirimliFiyat>
-        <IndirimliFiyatTL>18.63</IndirimliFiyatTL>
+        <IndirimliFiyat>0.49</IndirimliFiyat>
+        <IndirimliFiyatTL>23.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1163,8 +1163,8 @@
         <Barkod>T3380016CO</Barkod>
         <StokAdedi>1230</StokAdedi>
         <SatisFiyati>0.41</SatisFiyati>
-        <IndirimliFiyat>0.33</IndirimliFiyat>
-        <IndirimliFiyatTL>15.58</IndirimliFiyatTL>
+        <IndirimliFiyat>0.41</IndirimliFiyat>
+        <IndirimliFiyatTL>19.48</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1235,8 +1235,8 @@
         <Barkod>T3380016F</Barkod>
         <StokAdedi>1320</StokAdedi>
         <SatisFiyati>0.29</SatisFiyati>
-        <IndirimliFiyat>0.23</IndirimliFiyat>
-        <IndirimliFiyatTL>11.02</IndirimliFiyatTL>
+        <IndirimliFiyat>0.29</IndirimliFiyat>
+        <IndirimliFiyatTL>13.78</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1303,8 +1303,8 @@
         <Barkod>T3380017CO</Barkod>
         <StokAdedi>2510</StokAdedi>
         <SatisFiyati>0.41</SatisFiyati>
-        <IndirimliFiyat>0.33</IndirimliFiyat>
-        <IndirimliFiyatTL>15.58</IndirimliFiyatTL>
+        <IndirimliFiyat>0.41</IndirimliFiyat>
+        <IndirimliFiyatTL>19.48</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1375,8 +1375,8 @@
         <Barkod>T3380017F</Barkod>
         <StokAdedi>2990</StokAdedi>
         <SatisFiyati>0.29</SatisFiyati>
-        <IndirimliFiyat>0.23</IndirimliFiyat>
-        <IndirimliFiyatTL>11.02</IndirimliFiyatTL>
+        <IndirimliFiyat>0.29</IndirimliFiyat>
+        <IndirimliFiyatTL>13.78</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1443,8 +1443,8 @@
         <Barkod>T3380018CO</Barkod>
         <StokAdedi>690</StokAdedi>
         <SatisFiyati>0.41</SatisFiyati>
-        <IndirimliFiyat>0.33</IndirimliFiyat>
-        <IndirimliFiyatTL>15.58</IndirimliFiyatTL>
+        <IndirimliFiyat>0.41</IndirimliFiyat>
+        <IndirimliFiyatTL>19.48</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1515,8 +1515,8 @@
         <Barkod>T3380018F</Barkod>
         <StokAdedi>770</StokAdedi>
         <SatisFiyati>0.29</SatisFiyati>
-        <IndirimliFiyat>0.23</IndirimliFiyat>
-        <IndirimliFiyatTL>11.02</IndirimliFiyatTL>
+        <IndirimliFiyat>0.29</IndirimliFiyat>
+        <IndirimliFiyatTL>13.78</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1583,8 +1583,8 @@
         <Barkod>T3380019CO</Barkod>
         <StokAdedi>800</StokAdedi>
         <SatisFiyati>0.41</SatisFiyati>
-        <IndirimliFiyat>0.33</IndirimliFiyat>
-        <IndirimliFiyatTL>15.58</IndirimliFiyatTL>
+        <IndirimliFiyat>0.41</IndirimliFiyat>
+        <IndirimliFiyatTL>19.48</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -1655,8 +1655,8 @@
         <Barkod>T3380019F</Barkod>
         <StokAdedi>870</StokAdedi>
         <SatisFiyati>0.29</SatisFiyati>
-        <IndirimliFiyat>0.23</IndirimliFiyat>
-        <IndirimliFiyatTL>11.02</IndirimliFiyatTL>
+        <IndirimliFiyat>0.29</IndirimliFiyat>
+        <IndirimliFiyatTL>13.78</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12603,8 +12603,8 @@
         <Barkod>T3380010CO</Barkod>
         <StokAdedi>6420</StokAdedi>
         <SatisFiyati>0.3</SatisFiyati>
-        <IndirimliFiyat>0.24</IndirimliFiyat>
-        <IndirimliFiyatTL>11.41</IndirimliFiyatTL>
+        <IndirimliFiyat>0.3</IndirimliFiyat>
+        <IndirimliFiyatTL>14.26</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12675,8 +12675,8 @@
         <Barkod>T3380010F</Barkod>
         <StokAdedi>680</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
-        <IndirimliFiyat>0.2</IndirimliFiyat>
-        <IndirimliFiyatTL>9.5</IndirimliFiyatTL>
+        <IndirimliFiyat>0.25</IndirimliFiyat>
+        <IndirimliFiyatTL>11.88</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12743,8 +12743,8 @@
         <Barkod>TGT340010</Barkod>
         <StokAdedi>2970</StokAdedi>
         <SatisFiyati>0.42</SatisFiyati>
-        <IndirimliFiyat>0.34</IndirimliFiyat>
-        <IndirimliFiyatTL>15.97</IndirimliFiyatTL>
+        <IndirimliFiyat>0.42</IndirimliFiyat>
+        <IndirimliFiyatTL>19.96</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12811,8 +12811,8 @@
         <Barkod>T3380021CO</Barkod>
         <StokAdedi>1290</StokAdedi>
         <SatisFiyati>0.5</SatisFiyati>
-        <IndirimliFiyat>0.4</IndirimliFiyat>
-        <IndirimliFiyatTL>19.01</IndirimliFiyatTL>
+        <IndirimliFiyat>0.5</IndirimliFiyat>
+        <IndirimliFiyatTL>23.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12883,8 +12883,8 @@
         <Barkod>T3380021F</Barkod>
         <StokAdedi>1320</StokAdedi>
         <SatisFiyati>0.35</SatisFiyati>
-        <IndirimliFiyat>0.28</IndirimliFiyat>
-        <IndirimliFiyatTL>13.3</IndirimliFiyatTL>
+        <IndirimliFiyat>0.35</IndirimliFiyat>
+        <IndirimliFiyatTL>16.63</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -12951,8 +12951,8 @@
         <Barkod>T3380022CO</Barkod>
         <StokAdedi>1110</StokAdedi>
         <SatisFiyati>0.5</SatisFiyati>
-        <IndirimliFiyat>0.4</IndirimliFiyat>
-        <IndirimliFiyatTL>19.01</IndirimliFiyatTL>
+        <IndirimliFiyat>0.5</IndirimliFiyat>
+        <IndirimliFiyatTL>23.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13023,8 +13023,8 @@
         <Barkod>T3380022F</Barkod>
         <StokAdedi>1250</StokAdedi>
         <SatisFiyati>0.35</SatisFiyati>
-        <IndirimliFiyat>0.28</IndirimliFiyat>
-        <IndirimliFiyatTL>13.3</IndirimliFiyatTL>
+        <IndirimliFiyat>0.35</IndirimliFiyat>
+        <IndirimliFiyatTL>16.63</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13091,8 +13091,8 @@
         <Barkod>T3380023CO</Barkod>
         <StokAdedi>760</StokAdedi>
         <SatisFiyati>0.5</SatisFiyati>
-        <IndirimliFiyat>0.4</IndirimliFiyat>
-        <IndirimliFiyatTL>19.01</IndirimliFiyatTL>
+        <IndirimliFiyat>0.5</IndirimliFiyat>
+        <IndirimliFiyatTL>23.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13163,8 +13163,8 @@
         <Barkod>T3380023F</Barkod>
         <StokAdedi>610</StokAdedi>
         <SatisFiyati>0.35</SatisFiyati>
-        <IndirimliFiyat>0.28</IndirimliFiyat>
-        <IndirimliFiyatTL>13.3</IndirimliFiyatTL>
+        <IndirimliFiyat>0.35</IndirimliFiyat>
+        <IndirimliFiyatTL>16.63</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13231,8 +13231,8 @@
         <Barkod>T3380024CO</Barkod>
         <StokAdedi>730</StokAdedi>
         <SatisFiyati>0.5</SatisFiyati>
-        <IndirimliFiyat>0.4</IndirimliFiyat>
-        <IndirimliFiyatTL>19.01</IndirimliFiyatTL>
+        <IndirimliFiyat>0.5</IndirimliFiyat>
+        <IndirimliFiyatTL>23.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13303,8 +13303,8 @@
         <Barkod>T3380024F</Barkod>
         <StokAdedi>870</StokAdedi>
         <SatisFiyati>0.35</SatisFiyati>
-        <IndirimliFiyat>0.28</IndirimliFiyat>
-        <IndirimliFiyatTL>13.3</IndirimliFiyatTL>
+        <IndirimliFiyat>0.35</IndirimliFiyat>
+        <IndirimliFiyatTL>16.63</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13371,8 +13371,8 @@
         <Barkod>T3380025CO</Barkod>
         <StokAdedi>3830</StokAdedi>
         <SatisFiyati>0.5</SatisFiyati>
-        <IndirimliFiyat>0.4</IndirimliFiyat>
-        <IndirimliFiyatTL>19.01</IndirimliFiyatTL>
+        <IndirimliFiyat>0.5</IndirimliFiyat>
+        <IndirimliFiyatTL>23.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13443,8 +13443,8 @@
         <Barkod>T3380025F</Barkod>
         <StokAdedi>5840</StokAdedi>
         <SatisFiyati>0.35</SatisFiyati>
-        <IndirimliFiyat>0.28</IndirimliFiyat>
-        <IndirimliFiyatTL>13.3</IndirimliFiyatTL>
+        <IndirimliFiyat>0.35</IndirimliFiyat>
+        <IndirimliFiyatTL>16.63</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13511,8 +13511,8 @@
         <Barkod>TGT340025</Barkod>
         <StokAdedi>2860</StokAdedi>
         <SatisFiyati>0.77</SatisFiyati>
-        <IndirimliFiyat>0.62</IndirimliFiyat>
-        <IndirimliFiyatTL>29.27</IndirimliFiyatTL>
+        <IndirimliFiyat>0.77</IndirimliFiyat>
+        <IndirimliFiyatTL>36.59</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13579,8 +13579,8 @@
         <Barkod>T3380026CO</Barkod>
         <StokAdedi>600</StokAdedi>
         <SatisFiyati>0.68</SatisFiyati>
-        <IndirimliFiyat>0.54</IndirimliFiyat>
-        <IndirimliFiyatTL>25.86</IndirimliFiyatTL>
+        <IndirimliFiyat>0.68</IndirimliFiyat>
+        <IndirimliFiyatTL>32.32</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13651,8 +13651,8 @@
         <Barkod>T3380026F</Barkod>
         <StokAdedi>690</StokAdedi>
         <SatisFiyati>0.58</SatisFiyati>
-        <IndirimliFiyat>0.46</IndirimliFiyat>
-        <IndirimliFiyatTL>22.05</IndirimliFiyatTL>
+        <IndirimliFiyat>0.58</IndirimliFiyat>
+        <IndirimliFiyatTL>27.56</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13719,8 +13719,8 @@
         <Barkod>T3380027CO</Barkod>
         <StokAdedi>630</StokAdedi>
         <SatisFiyati>0.68</SatisFiyati>
-        <IndirimliFiyat>0.54</IndirimliFiyat>
-        <IndirimliFiyatTL>25.86</IndirimliFiyatTL>
+        <IndirimliFiyat>0.68</IndirimliFiyat>
+        <IndirimliFiyatTL>32.32</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13791,8 +13791,8 @@
         <Barkod>T3380027F</Barkod>
         <StokAdedi>810</StokAdedi>
         <SatisFiyati>0.58</SatisFiyati>
-        <IndirimliFiyat>0.46</IndirimliFiyat>
-        <IndirimliFiyatTL>22.05</IndirimliFiyatTL>
+        <IndirimliFiyat>0.58</IndirimliFiyat>
+        <IndirimliFiyatTL>27.56</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13859,8 +13859,8 @@
         <Barkod>T3380028CO</Barkod>
         <StokAdedi>1350</StokAdedi>
         <SatisFiyati>0.68</SatisFiyati>
-        <IndirimliFiyat>0.54</IndirimliFiyat>
-        <IndirimliFiyatTL>25.86</IndirimliFiyatTL>
+        <IndirimliFiyat>0.68</IndirimliFiyat>
+        <IndirimliFiyatTL>32.32</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13931,8 +13931,8 @@
         <Barkod>T3380028F</Barkod>
         <StokAdedi>1400</StokAdedi>
         <SatisFiyati>0.58</SatisFiyati>
-        <IndirimliFiyat>0.46</IndirimliFiyat>
-        <IndirimliFiyatTL>22.05</IndirimliFiyatTL>
+        <IndirimliFiyat>0.58</IndirimliFiyat>
+        <IndirimliFiyatTL>27.56</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -13999,8 +13999,8 @@
         <Barkod>T3380029CO</Barkod>
         <StokAdedi>950</StokAdedi>
         <SatisFiyati>0.68</SatisFiyati>
-        <IndirimliFiyat>0.54</IndirimliFiyat>
-        <IndirimliFiyatTL>25.86</IndirimliFiyatTL>
+        <IndirimliFiyat>0.68</IndirimliFiyat>
+        <IndirimliFiyatTL>32.32</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -14071,8 +14071,8 @@
         <Barkod>T3380029F</Barkod>
         <StokAdedi>950</StokAdedi>
         <SatisFiyati>0.58</SatisFiyati>
-        <IndirimliFiyat>0.46</IndirimliFiyat>
-        <IndirimliFiyatTL>22.05</IndirimliFiyatTL>
+        <IndirimliFiyat>0.58</IndirimliFiyat>
+        <IndirimliFiyatTL>27.56</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15067,8 +15067,8 @@
         <Barkod>T3380020CO</Barkod>
         <StokAdedi>3140</StokAdedi>
         <SatisFiyati>0.41</SatisFiyati>
-        <IndirimliFiyat>0.33</IndirimliFiyat>
-        <IndirimliFiyatTL>15.58</IndirimliFiyatTL>
+        <IndirimliFiyat>0.41</IndirimliFiyat>
+        <IndirimliFiyatTL>19.48</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15139,8 +15139,8 @@
         <Barkod>T3380020F</Barkod>
         <StokAdedi>2800</StokAdedi>
         <SatisFiyati>0.29</SatisFiyati>
-        <IndirimliFiyat>0.23</IndirimliFiyat>
-        <IndirimliFiyatTL>11.02</IndirimliFiyatTL>
+        <IndirimliFiyat>0.29</IndirimliFiyat>
+        <IndirimliFiyatTL>13.78</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15207,8 +15207,8 @@
         <Barkod>TGT340020</Barkod>
         <StokAdedi>2780</StokAdedi>
         <SatisFiyati>0.63</SatisFiyati>
-        <IndirimliFiyat>0.5</IndirimliFiyat>
-        <IndirimliFiyatTL>23.95</IndirimliFiyatTL>
+        <IndirimliFiyat>0.63</IndirimliFiyat>
+        <IndirimliFiyatTL>29.94</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15275,8 +15275,8 @@
         <Barkod>T3380031CO</Barkod>
         <StokAdedi>800</StokAdedi>
         <SatisFiyati>0.77</SatisFiyati>
-        <IndirimliFiyat>0.62</IndirimliFiyat>
-        <IndirimliFiyatTL>29.27</IndirimliFiyatTL>
+        <IndirimliFiyat>0.77</IndirimliFiyat>
+        <IndirimliFiyatTL>36.59</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15347,8 +15347,8 @@
         <Barkod>T3380031F</Barkod>
         <StokAdedi>820</StokAdedi>
         <SatisFiyati>0.69</SatisFiyati>
-        <IndirimliFiyat>0.55</IndirimliFiyat>
-        <IndirimliFiyatTL>26.23</IndirimliFiyatTL>
+        <IndirimliFiyat>0.69</IndirimliFiyat>
+        <IndirimliFiyatTL>32.79</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15415,8 +15415,8 @@
         <Barkod>T3380032CO</Barkod>
         <StokAdedi>3080</StokAdedi>
         <SatisFiyati>0.77</SatisFiyati>
-        <IndirimliFiyat>0.62</IndirimliFiyat>
-        <IndirimliFiyatTL>29.27</IndirimliFiyatTL>
+        <IndirimliFiyat>0.77</IndirimliFiyat>
+        <IndirimliFiyatTL>36.59</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15487,8 +15487,8 @@
         <Barkod>T3380032F</Barkod>
         <StokAdedi>4440</StokAdedi>
         <SatisFiyati>0.69</SatisFiyati>
-        <IndirimliFiyat>0.55</IndirimliFiyat>
-        <IndirimliFiyatTL>26.23</IndirimliFiyatTL>
+        <IndirimliFiyat>0.69</IndirimliFiyat>
+        <IndirimliFiyatTL>32.79</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15555,8 +15555,8 @@
         <Barkod>TGT340032</Barkod>
         <StokAdedi>1900</StokAdedi>
         <SatisFiyati>1.15</SatisFiyati>
-        <IndirimliFiyat>0.92</IndirimliFiyat>
-        <IndirimliFiyatTL>43.72</IndirimliFiyatTL>
+        <IndirimliFiyat>1.15</IndirimliFiyat>
+        <IndirimliFiyatTL>54.65</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15623,8 +15623,8 @@
         <Barkod>T3380033CO</Barkod>
         <StokAdedi>1690</StokAdedi>
         <SatisFiyati>0.9</SatisFiyati>
-        <IndirimliFiyat>0.72</IndirimliFiyat>
-        <IndirimliFiyatTL>34.22</IndirimliFiyatTL>
+        <IndirimliFiyat>0.9</IndirimliFiyat>
+        <IndirimliFiyatTL>42.77</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15695,8 +15695,8 @@
         <Barkod>T3380033F</Barkod>
         <StokAdedi>510</StokAdedi>
         <SatisFiyati>0.69</SatisFiyati>
-        <IndirimliFiyat>0.55</IndirimliFiyat>
-        <IndirimliFiyatTL>26.23</IndirimliFiyatTL>
+        <IndirimliFiyat>0.69</IndirimliFiyat>
+        <IndirimliFiyatTL>32.79</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15763,8 +15763,8 @@
         <Barkod>TGT340033</Barkod>
         <StokAdedi>1460</StokAdedi>
         <SatisFiyati>1.27</SatisFiyati>
-        <IndirimliFiyat>1.02</IndirimliFiyat>
-        <IndirimliFiyatTL>48.28</IndirimliFiyatTL>
+        <IndirimliFiyat>1.27</IndirimliFiyat>
+        <IndirimliFiyatTL>60.35</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15831,8 +15831,8 @@
         <Barkod>T3380034CO</Barkod>
         <StokAdedi>1930</StokAdedi>
         <SatisFiyati>0.9</SatisFiyati>
-        <IndirimliFiyat>0.72</IndirimliFiyat>
-        <IndirimliFiyatTL>34.22</IndirimliFiyatTL>
+        <IndirimliFiyat>0.9</IndirimliFiyat>
+        <IndirimliFiyatTL>42.77</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15903,8 +15903,8 @@
         <Barkod>T3380034F</Barkod>
         <StokAdedi>1420</StokAdedi>
         <SatisFiyati>0.69</SatisFiyati>
-        <IndirimliFiyat>0.55</IndirimliFiyat>
-        <IndirimliFiyatTL>26.23</IndirimliFiyatTL>
+        <IndirimliFiyat>0.69</IndirimliFiyat>
+        <IndirimliFiyatTL>32.79</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -15971,8 +15971,8 @@
         <Barkod>T3380035CO</Barkod>
         <StokAdedi>3630</StokAdedi>
         <SatisFiyati>0.9</SatisFiyati>
-        <IndirimliFiyat>0.72</IndirimliFiyat>
-        <IndirimliFiyatTL>34.22</IndirimliFiyatTL>
+        <IndirimliFiyat>0.9</IndirimliFiyat>
+        <IndirimliFiyatTL>42.77</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16043,8 +16043,8 @@
         <Barkod>T3380035F</Barkod>
         <StokAdedi>4680</StokAdedi>
         <SatisFiyati>0.69</SatisFiyati>
-        <IndirimliFiyat>0.55</IndirimliFiyat>
-        <IndirimliFiyatTL>26.23</IndirimliFiyatTL>
+        <IndirimliFiyat>0.69</IndirimliFiyat>
+        <IndirimliFiyatTL>32.79</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16111,8 +16111,8 @@
         <Barkod>TGT340035</Barkod>
         <StokAdedi>1880</StokAdedi>
         <SatisFiyati>1.27</SatisFiyati>
-        <IndirimliFiyat>1.02</IndirimliFiyat>
-        <IndirimliFiyatTL>48.28</IndirimliFiyatTL>
+        <IndirimliFiyat>1.27</IndirimliFiyat>
+        <IndirimliFiyatTL>60.35</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16179,8 +16179,8 @@
         <Barkod>T3380036CO</Barkod>
         <StokAdedi>1410</StokAdedi>
         <SatisFiyati>1.11</SatisFiyati>
-        <IndirimliFiyat>0.89</IndirimliFiyat>
-        <IndirimliFiyatTL>42.2</IndirimliFiyatTL>
+        <IndirimliFiyat>1.11</IndirimliFiyat>
+        <IndirimliFiyatTL>52.75</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16251,8 +16251,8 @@
         <Barkod>T3380036F</Barkod>
         <StokAdedi>900</StokAdedi>
         <SatisFiyati>0.76</SatisFiyati>
-        <IndirimliFiyat>0.61</IndirimliFiyat>
-        <IndirimliFiyatTL>28.9</IndirimliFiyatTL>
+        <IndirimliFiyat>0.76</IndirimliFiyat>
+        <IndirimliFiyatTL>36.12</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16319,8 +16319,8 @@
         <Barkod>T3380037CO</Barkod>
         <StokAdedi>880</StokAdedi>
         <SatisFiyati>1.11</SatisFiyati>
-        <IndirimliFiyat>0.89</IndirimliFiyat>
-        <IndirimliFiyatTL>42.2</IndirimliFiyatTL>
+        <IndirimliFiyat>1.11</IndirimliFiyat>
+        <IndirimliFiyatTL>52.75</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16391,8 +16391,8 @@
         <Barkod>T3380037F</Barkod>
         <StokAdedi>950</StokAdedi>
         <SatisFiyati>0.76</SatisFiyati>
-        <IndirimliFiyat>0.61</IndirimliFiyat>
-        <IndirimliFiyatTL>28.9</IndirimliFiyatTL>
+        <IndirimliFiyat>0.76</IndirimliFiyat>
+        <IndirimliFiyatTL>36.12</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16459,8 +16459,8 @@
         <Barkod>T3380038CO</Barkod>
         <StokAdedi>1220</StokAdedi>
         <SatisFiyati>1.11</SatisFiyati>
-        <IndirimliFiyat>0.89</IndirimliFiyat>
-        <IndirimliFiyatTL>42.2</IndirimliFiyatTL>
+        <IndirimliFiyat>1.11</IndirimliFiyat>
+        <IndirimliFiyatTL>52.75</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16531,8 +16531,8 @@
         <Barkod>T3380038F</Barkod>
         <StokAdedi>1090</StokAdedi>
         <SatisFiyati>0.76</SatisFiyati>
-        <IndirimliFiyat>0.61</IndirimliFiyat>
-        <IndirimliFiyatTL>28.9</IndirimliFiyatTL>
+        <IndirimliFiyat>0.76</IndirimliFiyat>
+        <IndirimliFiyatTL>36.12</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16599,8 +16599,8 @@
         <Barkod>T3380039CO</Barkod>
         <StokAdedi>940</StokAdedi>
         <SatisFiyati>1.11</SatisFiyati>
-        <IndirimliFiyat>0.89</IndirimliFiyat>
-        <IndirimliFiyatTL>42.2</IndirimliFiyatTL>
+        <IndirimliFiyat>1.11</IndirimliFiyat>
+        <IndirimliFiyatTL>52.75</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16671,8 +16671,8 @@
         <Barkod>T3380039F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>0.76</SatisFiyati>
-        <IndirimliFiyat>0.61</IndirimliFiyat>
-        <IndirimliFiyatTL>28.9</IndirimliFiyatTL>
+        <IndirimliFiyat>0.76</IndirimliFiyat>
+        <IndirimliFiyatTL>36.12</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16739,8 +16739,8 @@
         <Barkod>T3380030CO</Barkod>
         <StokAdedi>7970</StokAdedi>
         <SatisFiyati>0.68</SatisFiyati>
-        <IndirimliFiyat>0.54</IndirimliFiyat>
-        <IndirimliFiyatTL>25.86</IndirimliFiyatTL>
+        <IndirimliFiyat>0.68</IndirimliFiyat>
+        <IndirimliFiyatTL>32.32</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16811,8 +16811,8 @@
         <Barkod>T3380030F</Barkod>
         <StokAdedi>4460</StokAdedi>
         <SatisFiyati>0.58</SatisFiyati>
-        <IndirimliFiyat>0.46</IndirimliFiyat>
-        <IndirimliFiyatTL>22.05</IndirimliFiyatTL>
+        <IndirimliFiyat>0.58</IndirimliFiyat>
+        <IndirimliFiyatTL>27.56</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16879,8 +16879,8 @@
         <Barkod>TGT340030</Barkod>
         <StokAdedi>2600</StokAdedi>
         <SatisFiyati>0.99</SatisFiyati>
-        <IndirimliFiyat>0.79</IndirimliFiyat>
-        <IndirimliFiyatTL>37.64</IndirimliFiyatTL>
+        <IndirimliFiyat>0.99</IndirimliFiyat>
+        <IndirimliFiyatTL>47.05</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -16947,8 +16947,8 @@
         <Barkod>T3380041CO</Barkod>
         <StokAdedi>780</StokAdedi>
         <SatisFiyati>1.17</SatisFiyati>
-        <IndirimliFiyat>0.94</IndirimliFiyat>
-        <IndirimliFiyatTL>44.48</IndirimliFiyatTL>
+        <IndirimliFiyat>1.17</IndirimliFiyat>
+        <IndirimliFiyatTL>55.6</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17019,8 +17019,8 @@
         <Barkod>T3380041F</Barkod>
         <StokAdedi>1400</StokAdedi>
         <SatisFiyati>0.83</SatisFiyati>
-        <IndirimliFiyat>0.66</IndirimliFiyat>
-        <IndirimliFiyatTL>31.55</IndirimliFiyatTL>
+        <IndirimliFiyat>0.83</IndirimliFiyat>
+        <IndirimliFiyatTL>39.44</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17087,8 +17087,8 @@
         <Barkod>T3380042CO</Barkod>
         <StokAdedi>5780</StokAdedi>
         <SatisFiyati>1.17</SatisFiyati>
-        <IndirimliFiyat>0.94</IndirimliFiyat>
-        <IndirimliFiyatTL>44.48</IndirimliFiyatTL>
+        <IndirimliFiyat>1.17</IndirimliFiyat>
+        <IndirimliFiyatTL>55.6</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17159,8 +17159,8 @@
         <Barkod>T3380042F</Barkod>
         <StokAdedi>3820</StokAdedi>
         <SatisFiyati>0.83</SatisFiyati>
-        <IndirimliFiyat>0.66</IndirimliFiyat>
-        <IndirimliFiyatTL>31.55</IndirimliFiyatTL>
+        <IndirimliFiyat>0.83</IndirimliFiyat>
+        <IndirimliFiyatTL>39.44</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17227,8 +17227,8 @@
         <Barkod>TGT340042</Barkod>
         <StokAdedi>1860</StokAdedi>
         <SatisFiyati>1.62</SatisFiyati>
-        <IndirimliFiyat>1.3</IndirimliFiyat>
-        <IndirimliFiyatTL>61.59</IndirimliFiyatTL>
+        <IndirimliFiyat>1.62</IndirimliFiyat>
+        <IndirimliFiyatTL>76.99</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17295,8 +17295,8 @@
         <Barkod>T3380043CO</Barkod>
         <StokAdedi>970</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17367,8 +17367,8 @@
         <Barkod>T3380043F</Barkod>
         <StokAdedi>1520</StokAdedi>
         <SatisFiyati>0.83</SatisFiyati>
-        <IndirimliFiyat>0.66</IndirimliFiyat>
-        <IndirimliFiyatTL>31.55</IndirimliFiyatTL>
+        <IndirimliFiyat>0.83</IndirimliFiyat>
+        <IndirimliFiyatTL>39.44</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17435,8 +17435,8 @@
         <Barkod>T3380044CO</Barkod>
         <StokAdedi>910</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17507,8 +17507,8 @@
         <Barkod>T3380044F</Barkod>
         <StokAdedi>970</StokAdedi>
         <SatisFiyati>0.83</SatisFiyati>
-        <IndirimliFiyat>0.66</IndirimliFiyat>
-        <IndirimliFiyatTL>31.55</IndirimliFiyatTL>
+        <IndirimliFiyat>0.83</IndirimliFiyat>
+        <IndirimliFiyatTL>39.44</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17575,8 +17575,8 @@
         <Barkod>T3380045CO</Barkod>
         <StokAdedi>3240</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17647,8 +17647,8 @@
         <Barkod>T3380045F</Barkod>
         <StokAdedi>1920</StokAdedi>
         <SatisFiyati>0.9</SatisFiyati>
-        <IndirimliFiyat>0.72</IndirimliFiyat>
-        <IndirimliFiyatTL>34.22</IndirimliFiyatTL>
+        <IndirimliFiyat>0.9</IndirimliFiyat>
+        <IndirimliFiyatTL>42.77</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17715,8 +17715,8 @@
         <Barkod>TGT340045</Barkod>
         <StokAdedi>890</StokAdedi>
         <SatisFiyati>1.85</SatisFiyati>
-        <IndirimliFiyat>1.48</IndirimliFiyat>
-        <IndirimliFiyatTL>70.34</IndirimliFiyatTL>
+        <IndirimliFiyat>1.85</IndirimliFiyat>
+        <IndirimliFiyatTL>87.92</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17783,8 +17783,8 @@
         <Barkod>T3380046CO</Barkod>
         <StokAdedi>900</StokAdedi>
         <SatisFiyati>1.75</SatisFiyati>
-        <IndirimliFiyat>1.4</IndirimliFiyat>
-        <IndirimliFiyatTL>66.54</IndirimliFiyatTL>
+        <IndirimliFiyat>1.75</IndirimliFiyat>
+        <IndirimliFiyatTL>83.17</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17855,8 +17855,8 @@
         <Barkod>T3380046F</Barkod>
         <StokAdedi>960</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17923,8 +17923,8 @@
         <Barkod>T3380047CO</Barkod>
         <StokAdedi>840</StokAdedi>
         <SatisFiyati>1.75</SatisFiyati>
-        <IndirimliFiyat>1.4</IndirimliFiyat>
-        <IndirimliFiyatTL>66.54</IndirimliFiyatTL>
+        <IndirimliFiyat>1.75</IndirimliFiyat>
+        <IndirimliFiyatTL>83.17</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -17995,8 +17995,8 @@
         <Barkod>T3380047F</Barkod>
         <StokAdedi>920</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18063,8 +18063,8 @@
         <Barkod>T3380048CO</Barkod>
         <StokAdedi>790</StokAdedi>
         <SatisFiyati>1.75</SatisFiyati>
-        <IndirimliFiyat>1.4</IndirimliFiyat>
-        <IndirimliFiyatTL>66.54</IndirimliFiyatTL>
+        <IndirimliFiyat>1.75</IndirimliFiyat>
+        <IndirimliFiyatTL>83.17</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18135,8 +18135,8 @@
         <Barkod>T3380048F</Barkod>
         <StokAdedi>1120</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18203,8 +18203,8 @@
         <Barkod>T3380049CO</Barkod>
         <StokAdedi>810</StokAdedi>
         <SatisFiyati>1.75</SatisFiyati>
-        <IndirimliFiyat>1.4</IndirimliFiyat>
-        <IndirimliFiyatTL>66.54</IndirimliFiyatTL>
+        <IndirimliFiyat>1.75</IndirimliFiyat>
+        <IndirimliFiyatTL>83.17</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18275,8 +18275,8 @@
         <Barkod>T3380049F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18343,8 +18343,8 @@
         <Barkod>T3380040CO</Barkod>
         <StokAdedi>7340</StokAdedi>
         <SatisFiyati>1.11</SatisFiyati>
-        <IndirimliFiyat>0.89</IndirimliFiyat>
-        <IndirimliFiyatTL>42.2</IndirimliFiyatTL>
+        <IndirimliFiyat>1.11</IndirimliFiyat>
+        <IndirimliFiyatTL>52.75</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18415,8 +18415,8 @@
         <Barkod>T3380040F</Barkod>
         <StokAdedi>7160</StokAdedi>
         <SatisFiyati>0.76</SatisFiyati>
-        <IndirimliFiyat>0.61</IndirimliFiyat>
-        <IndirimliFiyatTL>28.9</IndirimliFiyatTL>
+        <IndirimliFiyat>0.76</IndirimliFiyat>
+        <IndirimliFiyatTL>36.12</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18483,8 +18483,8 @@
         <Barkod>TGT340040</Barkod>
         <StokAdedi>2610</StokAdedi>
         <SatisFiyati>1.51</SatisFiyati>
-        <IndirimliFiyat>1.21</IndirimliFiyat>
-        <IndirimliFiyatTL>57.41</IndirimliFiyatTL>
+        <IndirimliFiyat>1.51</IndirimliFiyat>
+        <IndirimliFiyatTL>71.76</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18623,8 +18623,8 @@
         <Barkod>T3380051F</Barkod>
         <StokAdedi>760</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18763,8 +18763,8 @@
         <Barkod>T3380052F</Barkod>
         <StokAdedi>680</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -18971,8 +18971,8 @@
         <Barkod>T3380053F</Barkod>
         <StokAdedi>790</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19111,8 +19111,8 @@
         <Barkod>T3380054F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19251,8 +19251,8 @@
         <Barkod>T3380055F</Barkod>
         <StokAdedi>740</StokAdedi>
         <SatisFiyati>1.4</SatisFiyati>
-        <IndirimliFiyat>1.12</IndirimliFiyat>
-        <IndirimliFiyatTL>53.22</IndirimliFiyatTL>
+        <IndirimliFiyat>1.4</IndirimliFiyat>
+        <IndirimliFiyatTL>66.53</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19459,8 +19459,8 @@
         <Barkod>T3380056F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>1.6</SatisFiyati>
-        <IndirimliFiyat>1.28</IndirimliFiyat>
-        <IndirimliFiyatTL>60.83</IndirimliFiyatTL>
+        <IndirimliFiyat>1.6</IndirimliFiyat>
+        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19599,8 +19599,8 @@
         <Barkod>T3380057F</Barkod>
         <StokAdedi>900</StokAdedi>
         <SatisFiyati>1.6</SatisFiyati>
-        <IndirimliFiyat>1.28</IndirimliFiyat>
-        <IndirimliFiyatTL>60.83</IndirimliFiyatTL>
+        <IndirimliFiyat>1.6</IndirimliFiyat>
+        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19739,8 +19739,8 @@
         <Barkod>T3380058F</Barkod>
         <StokAdedi>1370</StokAdedi>
         <SatisFiyati>1.6</SatisFiyati>
-        <IndirimliFiyat>1.28</IndirimliFiyat>
-        <IndirimliFiyatTL>60.83</IndirimliFiyatTL>
+        <IndirimliFiyat>1.6</IndirimliFiyat>
+        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19879,8 +19879,8 @@
         <Barkod>T3380059F</Barkod>
         <StokAdedi>900</StokAdedi>
         <SatisFiyati>1.6</SatisFiyati>
-        <IndirimliFiyat>1.28</IndirimliFiyat>
-        <IndirimliFiyatTL>60.83</IndirimliFiyatTL>
+        <IndirimliFiyat>1.6</IndirimliFiyat>
+        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -19947,8 +19947,8 @@
         <Barkod>T3380050CO</Barkod>
         <StokAdedi>6510</StokAdedi>
         <SatisFiyati>1.75</SatisFiyati>
-        <IndirimliFiyat>1.4</IndirimliFiyat>
-        <IndirimliFiyatTL>66.54</IndirimliFiyatTL>
+        <IndirimliFiyat>1.75</IndirimliFiyat>
+        <IndirimliFiyatTL>83.17</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20019,8 +20019,8 @@
         <Barkod>T3380050F</Barkod>
         <StokAdedi>5400</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20227,8 +20227,8 @@
         <Barkod>T3380061F</Barkod>
         <StokAdedi>1360</StokAdedi>
         <SatisFiyati>1.9</SatisFiyati>
-        <IndirimliFiyat>1.52</IndirimliFiyat>
-        <IndirimliFiyatTL>72.23</IndirimliFiyatTL>
+        <IndirimliFiyat>1.9</IndirimliFiyat>
+        <IndirimliFiyatTL>90.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20367,8 +20367,8 @@
         <Barkod>T3380062F</Barkod>
         <StokAdedi>930</StokAdedi>
         <SatisFiyati>1.9</SatisFiyati>
-        <IndirimliFiyat>1.52</IndirimliFiyat>
-        <IndirimliFiyatTL>72.23</IndirimliFiyatTL>
+        <IndirimliFiyat>1.9</IndirimliFiyat>
+        <IndirimliFiyatTL>90.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20507,8 +20507,8 @@
         <Barkod>T3380063F</Barkod>
         <StokAdedi>850</StokAdedi>
         <SatisFiyati>1.9</SatisFiyati>
-        <IndirimliFiyat>1.52</IndirimliFiyat>
-        <IndirimliFiyatTL>72.23</IndirimliFiyatTL>
+        <IndirimliFiyat>1.9</IndirimliFiyat>
+        <IndirimliFiyatTL>90.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20647,8 +20647,8 @@
         <Barkod>T3380064F</Barkod>
         <StokAdedi>970</StokAdedi>
         <SatisFiyati>1.9</SatisFiyati>
-        <IndirimliFiyat>1.52</IndirimliFiyat>
-        <IndirimliFiyatTL>72.23</IndirimliFiyatTL>
+        <IndirimliFiyat>1.9</IndirimliFiyat>
+        <IndirimliFiyatTL>90.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -20787,8 +20787,8 @@
         <Barkod>T3380065F</Barkod>
         <StokAdedi>3170</StokAdedi>
         <SatisFiyati>1.9</SatisFiyati>
-        <IndirimliFiyat>1.52</IndirimliFiyat>
-        <IndirimliFiyatTL>72.23</IndirimliFiyatTL>
+        <IndirimliFiyat>1.9</IndirimliFiyat>
+        <IndirimliFiyatTL>90.29</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -21555,8 +21555,8 @@
         <Barkod>T3380060F</Barkod>
         <StokAdedi>4470</StokAdedi>
         <SatisFiyati>1.6</SatisFiyati>
-        <IndirimliFiyat>1.28</IndirimliFiyat>
-        <IndirimliFiyatTL>60.83</IndirimliFiyatTL>
+        <IndirimliFiyat>1.6</IndirimliFiyat>
+        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -37095,8 +37095,8 @@
         <Barkod>T333A160</Barkod>
         <StokAdedi>1818</StokAdedi>
         <SatisFiyati>2.0</SatisFiyati>
-        <IndirimliFiyat>1.6</IndirimliFiyat>
-        <IndirimliFiyatTL>76.04</IndirimliFiyatTL>
+        <IndirimliFiyat>2.0</IndirimliFiyat>
+        <IndirimliFiyatTL>95.05</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -38331,8 +38331,8 @@
         <Barkod>T333A200</Barkod>
         <StokAdedi>1942</StokAdedi>
         <SatisFiyati>2.1</SatisFiyati>
-        <IndirimliFiyat>1.68</IndirimliFiyat>
-        <IndirimliFiyatTL>79.84</IndirimliFiyatTL>
+        <IndirimliFiyat>2.1</IndirimliFiyat>
+        <IndirimliFiyatTL>99.8</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -40799,8 +40799,8 @@
         <Barkod>1T1869015</Barkod>
         <StokAdedi>0</StokAdedi>
         <SatisFiyati>1.76</SatisFiyati>
-        <IndirimliFiyat>1.41</IndirimliFiyat>
-        <IndirimliFiyatTL>66.91</IndirimliFiyatTL>
+        <IndirimliFiyat>1.76</IndirimliFiyat>
+        <IndirimliFiyatTL>83.64</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -40939,8 +40939,8 @@
         <Barkod>T340015</Barkod>
         <StokAdedi>2970</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
-        <IndirimliFiyat>0.26</IndirimliFiyat>
-        <IndirimliFiyatTL>12.17</IndirimliFiyatTL>
+        <IndirimliFiyat>0.32</IndirimliFiyat>
+        <IndirimliFiyatTL>15.21</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -43875,8 +43875,8 @@
         <Barkod>1T1869010</Barkod>
         <StokAdedi>0</StokAdedi>
         <SatisFiyati>1.76</SatisFiyati>
-        <IndirimliFiyat>1.41</IndirimliFiyat>
-        <IndirimliFiyatTL>66.91</IndirimliFiyatTL>
+        <IndirimliFiyat>1.76</IndirimliFiyat>
+        <IndirimliFiyatTL>83.64</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -44015,8 +44015,8 @@
         <Barkod>T340010</Barkod>
         <StokAdedi>4970</StokAdedi>
         <SatisFiyati>0.27</SatisFiyati>
-        <IndirimliFiyat>0.22</IndirimliFiyat>
-        <IndirimliFiyatTL>10.26</IndirimliFiyatTL>
+        <IndirimliFiyat>0.27</IndirimliFiyat>
+        <IndirimliFiyatTL>12.83</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -44291,8 +44291,8 @@
         <Barkod>T340025</Barkod>
         <StokAdedi>2820</StokAdedi>
         <SatisFiyati>0.59</SatisFiyati>
-        <IndirimliFiyat>0.47</IndirimliFiyat>
-        <IndirimliFiyatTL>22.43</IndirimliFiyatTL>
+        <IndirimliFiyat>0.59</IndirimliFiyat>
+        <IndirimliFiyatTL>28.04</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -44431,8 +44431,8 @@
         <Barkod>1T1869020</Barkod>
         <StokAdedi>170</StokAdedi>
         <SatisFiyati>1.76</SatisFiyati>
-        <IndirimliFiyat>1.41</IndirimliFiyat>
-        <IndirimliFiyatTL>66.91</IndirimliFiyatTL>
+        <IndirimliFiyat>1.76</IndirimliFiyat>
+        <IndirimliFiyatTL>83.64</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -44639,8 +44639,8 @@
         <Barkod>T340020</Barkod>
         <StokAdedi>3840</StokAdedi>
         <SatisFiyati>0.47</SatisFiyati>
-        <IndirimliFiyat>0.38</IndirimliFiyat>
-        <IndirimliFiyatTL>17.87</IndirimliFiyatTL>
+        <IndirimliFiyat>0.47</IndirimliFiyat>
+        <IndirimliFiyatTL>22.34</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -44915,8 +44915,8 @@
         <Barkod>T340032</Barkod>
         <StokAdedi>1920</StokAdedi>
         <SatisFiyati>1.0</SatisFiyati>
-        <IndirimliFiyat>0.8</IndirimliFiyat>
-        <IndirimliFiyatTL>38.02</IndirimliFiyatTL>
+        <IndirimliFiyat>1.0</IndirimliFiyat>
+        <IndirimliFiyatTL>47.52</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -45055,8 +45055,8 @@
         <Barkod>T340033</Barkod>
         <StokAdedi>1480</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -45331,8 +45331,8 @@
         <Barkod>T340035</Barkod>
         <StokAdedi>1940</StokAdedi>
         <SatisFiyati>1.1</SatisFiyati>
-        <IndirimliFiyat>0.88</IndirimliFiyat>
-        <IndirimliFiyatTL>41.82</IndirimliFiyatTL>
+        <IndirimliFiyat>1.1</IndirimliFiyat>
+        <IndirimliFiyatTL>52.28</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -45607,8 +45607,8 @@
         <Barkod>T340030</Barkod>
         <StokAdedi>2820</StokAdedi>
         <SatisFiyati>0.91</SatisFiyati>
-        <IndirimliFiyat>0.73</IndirimliFiyat>
-        <IndirimliFiyatTL>34.6</IndirimliFiyatTL>
+        <IndirimliFiyat>0.91</IndirimliFiyat>
+        <IndirimliFiyatTL>43.25</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -45883,8 +45883,8 @@
         <Barkod>T340042</Barkod>
         <StokAdedi>1990</StokAdedi>
         <SatisFiyati>1.45</SatisFiyati>
-        <IndirimliFiyat>1.16</IndirimliFiyat>
-        <IndirimliFiyatTL>55.13</IndirimliFiyatTL>
+        <IndirimliFiyat>1.45</IndirimliFiyat>
+        <IndirimliFiyatTL>68.91</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -46159,8 +46159,8 @@
         <Barkod>T340045</Barkod>
         <StokAdedi>970</StokAdedi>
         <SatisFiyati>1.65</SatisFiyati>
-        <IndirimliFiyat>1.32</IndirimliFiyat>
-        <IndirimliFiyatTL>62.73</IndirimliFiyatTL>
+        <IndirimliFiyat>1.65</IndirimliFiyat>
+        <IndirimliFiyatTL>78.41</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -46435,8 +46435,8 @@
         <Barkod>T340040</Barkod>
         <StokAdedi>2730</StokAdedi>
         <SatisFiyati>1.35</SatisFiyati>
-        <IndirimliFiyat>1.08</IndirimliFiyat>
-        <IndirimliFiyatTL>51.33</IndirimliFiyatTL>
+        <IndirimliFiyat>1.35</IndirimliFiyat>
+        <IndirimliFiyatTL>64.16</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
@@ -47263,8 +47263,8 @@
         <Barkod>T340050</Barkod>
         <StokAdedi>1770</StokAdedi>
         <SatisFiyati>1.95</SatisFiyati>
-        <IndirimliFiyat>1.56</IndirimliFiyat>
-        <IndirimliFiyatTL>74.14</IndirimliFiyatTL>
+        <IndirimliFiyat>1.95</IndirimliFiyat>
+        <IndirimliFiyatTL>92.67</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>USD</ParaBirimi>
