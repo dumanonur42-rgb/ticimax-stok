@@ -289,18 +289,18 @@ def build_onyazi(name, sku, brand, category_path):
             cols.append(("Boy" if etiket == "Toplam Boy" else
                          ("Helis Boyu" if etiket.startswith("Helis") else etiket), deger))
     cols.append(("Marka", brand or "YAMANSA"))
-    th = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
-          'font-weight:bold;background:#fff;white-space:nowrap;"')
-    td = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
-          'white-space:nowrap;"')
-    heads = "".join(f"<th {th}>{k}</th>" for k, _ in cols)
-    vals = "".join(f"<td {td}>{v}</td>" for _, v in cols)
+    hucre = ('style="flex:1 1 110px;min-width:100px;border:1px solid #e0e0e0;'
+             'padding:6px 8px;text-align:center;"')
+    etiket = 'style="font-weight:bold;font-size:13px;margin-bottom:4px;"'
+    deger_s = 'style="font-size:14px;"'
+    kutular = "".join(
+        f'<div {hucre}><div {etiket}>{k}</div><div {deger_s}>{v}</div></div>'
+        for k, v in cols)
     return (
-        '<div style="width:100%;max-width:100%;overflow-x:auto;'
-        '-webkit-overflow-scrolling:touch;margin-bottom:10px;">'
-        '<table style="width:100%;border-collapse:collapse;font-family:inherit;'
-        'font-size:14px;">'
-        f"<tr>{heads}</tr><tr>{vals}</tr></table></div>"
+        '<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;'
+        'max-width:100%;font-family:inherit;margin-bottom:10px;'
+        'box-sizing:border-box;">'
+        f"{kutular}</div>"
     )
 
 
