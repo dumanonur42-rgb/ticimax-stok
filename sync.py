@@ -214,6 +214,8 @@ def build_xml(rows):
         lines.append(f"    <UrunAdediMinimumDeger>{moq}</UrunAdediMinimumDeger>")
         lines.append(f"    <UrunAdediVarsayilanDeger>{moq}</UrunAdediVarsayilanDeger>")
         lines.append(f"    <UrunAdediArtisKademesi>{moq}</UrunAdediArtisKademesi>")
+        lines.append(f"    <UyeAlisMin>{moq}</UyeAlisMin>")
+        lines.append(f"    <BayiAlisMin>{moq}</BayiAlisMin>")
         lines.append("    <TeknikDetaylar>")
         for ozellik, deger in teknik_detaylar(name, r["sku"], r["brand"], r["category_path"]):
             lines.append("      <TeknikDetay>")
