@@ -229,8 +229,15 @@ def build_xml(rows):
         lines.append(f"        <StokKodu>{e(r['sku'])}</StokKodu>")
         lines.append(f"        <Barkod>{e(r['sku'])}</Barkod>")
         lines.append(f"        <StokAdedi>{int(r['stock'])}</StokAdedi>")
+        try:
+            indirimli = round(float(r["price"]) * 0.80, 2)
+            indirimli_try = round(float(r["price_try"]) * 0.80, 2)
+        except (TypeError, ValueError):
+            indirimli = r["price"]
+            indirimli_try = r["price_try"]
         lines.append(f"        <SatisFiyati>{e(r['price'])}</SatisFiyati>")
-        lines.append(f"        <IndirimliFiyat>{e(r['price'])}</IndirimliFiyat>")
+        lines.append(f"        <IndirimliFiyat>{e(indirimli)}</IndirimliFiyat>")
+        lines.append(f"        <IndirimliFiyatTL>{e(indirimli_try)}</IndirimliFiyatTL>")
         lines.append("        <KDVDahil>false</KDVDahil>")
         lines.append(f"        <KdvOrani>{e(r['vat_rate'])}</KdvOrani>")
         lines.append(f"        <ParaBirimi>{e(r['currency'])}</ParaBirimi>")
