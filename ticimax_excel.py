@@ -87,7 +87,10 @@ def build_excel(rows, path):
             "TEDARIKCI": "Talha",
             "MAKSTAKSITSAYISI": 9,
             "BREADCRUMBKAT": cat,
-            "KATEGORILER": cat,
+            "KATEGORILER": ";".join(
+                ">".join(cat.split(">")[: i + 1])
+                for i in reversed(range(len(cat.split(">"))))
+            ),
             "SATISBIRIMI": "ADET",
             "VITRIN": 0,
             "YENIURUN": 1,

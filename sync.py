@@ -198,14 +198,14 @@ CATEGORIES = [
     (391, OLCU_ROOT + ">SENTİLLER>Şerit Sentiller"),
     (393, OLCU_ROOT + ">SENTİLLER>Sentil Filler Çakıları"),
     (394, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Paralel Setler"),
-    (395, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Johnson Mastar Setleri"),
-    (400, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Radius Mastarları"),
+    (395, OLCU_ROOT + ">MASTARLAR>Johnson Mastar Setleri"),
+    (400, OLCU_ROOT + ">MASTARLAR>Radius Mastarları"),
     (396, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Açı Ölçerler"),
     (402, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Açı Ölçerler"),
     (405, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Hassas Su Terazileri"),
     (406, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Hassas Su Terazileri"),
     (501, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Çelik Cetveller"),
-    (392, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Diş Tarakları"),
+    (392, OLCU_ROOT + ">MASTARLAR>Diş Tarakları"),
 ]
 
 
@@ -342,7 +342,10 @@ def build_xml(rows):
         lines.append(f"    <Etiketler>{e(build_etiketler(name, r['sku'], r['brand'], r['category_path']))}</Etiketler>")
         lines.append("    <Tedarikci>Talha</Tedarikci>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
-        lines.append(f"    <Kategori>{e(r['category_path'])}</Kategori>")
+        # Urunu tum ust kategorilere de ata ki ust kategori sayfalarinda da listelensin
+        parcalar = r["category_path"].split(">")
+        yollar = [">".join(parcalar[: i + 1]) for i in range(len(parcalar))]
+        lines.append(f"    <Kategori>{e(';'.join(reversed(yollar)))}</Kategori>")
         lines.append("    <UrunSecenek>")
         lines.append("      <Secenek>")
         lines.append(f"        <VaryasyonID>{e(r['id'])}</VaryasyonID>")
