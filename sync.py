@@ -177,6 +177,7 @@ def fetch_category(session: requests.Session, cat_id: int):
                 "brand": brands.get(str(a.get("brand_id") or ""), "") or _brand_from_name(a.get("name") or ""),
                 "url": BASE + (a.get("path") or ""),
                 "image": images.get(p["id"], ""),
+                "moq": int(u.get("moq") or 1),
             })
         pagination = d.get("pagination") or {}
         pages = pagination.get("pages") or 1
@@ -206,6 +207,11 @@ def build_xml(rows):
         lines.append(f"    <Desi>{desi}</Desi>")
         lines.append(f"    <KargoAgirligi>{desi}</KargoAgirligi>")
         lines.append(f"    <UrunAgirligi>{agirlik}</UrunAgirligi>")
+        moq = r.get("moq") or 1
+        lines.append(f"    <MinSiparisAdedi>{moq}</MinSiparisAdedi>")
+        lines.append(f"    <UrunAdediMinimumDeger>{moq}</UrunAdediMinimumDeger>")
+        lines.append(f"    <UrunAdediVarsayilanDeger>{moq}</UrunAdediVarsayilanDeger>")
+        lines.append(f"    <UrunAdediArtisKademesi>{moq}</UrunAdediArtisKademesi>")
         lines.append("    <TeknikDetaylar>")
         for ozellik, deger in teknik_detaylar(name, r["sku"], r["brand"], r["category_path"]):
             lines.append("      <TeknikDetay>")
