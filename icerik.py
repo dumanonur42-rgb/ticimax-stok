@@ -901,8 +901,17 @@ def build_etiketler(name, sku, brand, category_path):
     kat = (category_path or "").split(">")[-1]
     if kat:
         tags += [kat.lower(), _tr_lower_ascii(kat)]
-    uniq = list(dict.fromkeys(t.strip() for t in tags if t and t.strip()))
-    return ",".join(uniq[:40])
+    mevcut = _tr_lower_ascii(f"{name or ''} {kat}")
+    mevcut_kelimeler = set(re.split(r"[^a-z0-9.]+", mevcut))
+    uniq = []
+    for t in dict.fromkeys(x.strip() for x in tags if x and x.strip()):
+        kelimeler = [k for k in re.split(r"[^a-z0-9.]+", _tr_lower_ascii(t)) if k]
+        # Urun adinda/kategorisinde zaten gecen tek kelimelik genel
+        # etiketler aramada gurultu yaratiyor, atla
+        if kelimeler and all(k in mevcut_kelimeler for k in kelimeler) and t != sku:
+            continue
+        uniq.append(t)
+    return ",".join(uniq[:30])
 
 
 _SEO_DESC = [

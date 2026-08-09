@@ -342,7 +342,7 @@ def build_xml(rows):
         lines.append(f"    <Etiketler>{e(build_etiketler(name, r['sku'], r['brand'], r['category_path']))}</Etiketler>")
         lines.append("    <Tedarikci>Talha</Tedarikci>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
-        lines.append(f"    <Kategori>{e(r['category_path'].split('>')[-1])}</Kategori>")
+        lines.append(f"    <Kategori>{e(r['category_path'])}</Kategori>")
         lines.append("    <UrunSecenek>")
         lines.append("      <Secenek>")
         lines.append(f"        <VaryasyonID>{e(r['id'])}</VaryasyonID>")
