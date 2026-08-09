@@ -54,7 +54,7 @@ IMAGE_BASE_URL = os.environ.get(
 IMAGE_DIR = HERE / "gorseller"
 
 # Ticimax tarafinda olusturulacak ana kategori
-ROOT_CATEGORY = "Matkap ve Freze"
+ROOT_CATEGORY = "MATKAP VE FREZE"
 
 # Cekilecek kaynak kategoriler: (kaynak kategori id, Ticimax kategori yolu)
 # Sadelestirilmis, son kullanici odakli kategori yapisi.
@@ -62,25 +62,25 @@ ROOT_CATEGORY = "Matkap ve Freze"
 # otomatik olusturulur.
 CATEGORIES = [
     # HSS matkap uclari (normal boy)
-    (164, ROOT_CATEGORY + ">Matkap Uçları>HSS Matkap Uçları"),
-    (165, ROOT_CATEGORY + ">Matkap Uçları>HSS Matkap Uçları"),
-    (167, ROOT_CATEGORY + ">Matkap Uçları>HSS Matkap Uçları"),
-    (266, ROOT_CATEGORY + ">Matkap Uçları>HSS Matkap Uçları"),
+    (164, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
+    (165, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
+    (167, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
+    (266, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
     # Bohrcraft punta matkaplari (265'ten once gelmeli ki dogru kategoriye dussun)
     (267, ROOT_CATEGORY + ">Punta Matkapları"),
     (269, ROOT_CATEGORY + ">Punta Matkapları"),
-    (265, ROOT_CATEGORY + ">Matkap Uçları>HSS Matkap Uçları"),
+    (265, ROOT_CATEGORY + ">MATKAP UÇLARI>HSS Matkap Uçları"),
     # Uzun seriler
-    (166, ROOT_CATEGORY + ">Matkap Uçları>Uzun Matkap Uçları"),
-    (168, ROOT_CATEGORY + ">Matkap Uçları>Uzun Matkap Uçları"),
-    (169, ROOT_CATEGORY + ">Matkap Uçları>Uzun Matkap Uçları"),
-    (170, ROOT_CATEGORY + ">Matkap Uçları>Uzun Matkap Uçları"),
+    (166, ROOT_CATEGORY + ">MATKAP UÇLARI>Uzun Matkap Uçları"),
+    (168, ROOT_CATEGORY + ">MATKAP UÇLARI>Uzun Matkap Uçları"),
+    (169, ROOT_CATEGORY + ">MATKAP UÇLARI>Uzun Matkap Uçları"),
+    (170, ROOT_CATEGORY + ">MATKAP UÇLARI>Uzun Matkap Uçları"),
     # Konik sapli
-    (171, ROOT_CATEGORY + ">Matkap Uçları>Konik Saplı Matkap Uçları"),
+    (171, ROOT_CATEGORY + ">MATKAP UÇLARI>Konik Saplı Matkap Uçları"),
     # Karbur
-    (289, ROOT_CATEGORY + ">Matkap Uçları>Karbür Matkap Uçları"),
-    (293, ROOT_CATEGORY + ">Matkap Uçları>Karbür Matkap Uçları"),
-    (292, ROOT_CATEGORY + ">Matkap Uçları>Karbür Matkap Uçları"),
+    (289, ROOT_CATEGORY + ">MATKAP UÇLARI>Karbür Matkap Uçları"),
+    (293, ROOT_CATEGORY + ">MATKAP UÇLARI>Karbür Matkap Uçları"),
+    (292, ROOT_CATEGORY + ">MATKAP UÇLARI>Karbür Matkap Uçları"),
     # Punta matkaplari
     (190, ROOT_CATEGORY + ">Punta Matkapları"),
     (191, ROOT_CATEGORY + ">Punta Matkapları"),
