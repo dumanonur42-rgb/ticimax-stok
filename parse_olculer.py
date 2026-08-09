@@ -108,8 +108,115 @@ def main(pdf_path):
             data[sku] = {"boy": int(boy), "helis": int(kesme),
                          "sap": float(sap.replace(",", "."))}
 
+    data.update(parse_freze(pdf))
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1))
     print(f"{len(data)} urun olcusu yazildi -> {OUT}")
+
+
+def _f(x):
+    return float(str(x).replace(",", "."))
+
+
+def parse_freze(pdf):
+    """Freze sayfalarindaki olcu tablolarini okur (fiyatlar alinmaz)."""
+    pg = {}
+    for i in list(range(93, 103)) + list(range(138, 173)):
+        pg[i] = pdf.pages[i - 1].extract_text() or ""
+    data = {}
+
+    # HSS parmak frezeler (93-96): KOD D L1 L SAFT
+    pat = re.compile(r"(T[PK]U?844\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)")
+    for i in (93, 94, 95, 96):
+        for m in pat.finditer(pg[i]):
+            sku, d, l1, L, saft = m.groups()
+            data[sku] = {"boy": int(L), "helis": int(l1), "sap": int(saft)}
+
+    # HSS T frezeler (99): KOD D H L d DIS
+    for m in re.finditer(r"(TRF\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)", pg[99]):
+        sku, D, H, L, dd, dis = m.groups()
+        data[sku] = {"boy": int(L), "kanal": _f(H), "sap": int(dd), "dis": int(dis)}
+
+    # Kose yuvarlama (100): KOD R D L d DIS
+    for m in re.finditer(r"(TKV\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)", pg[100]):
+        sku, R, D, L, dd, dis = m.groups()
+        data[sku] = {"boy": int(L), "govde": int(D), "sap": int(dd), "dis": int(dis)}
+
+    # Kirlangic (101): KOD DER° D I L d DIS
+    for m in re.finditer(r"(TK(?:450|600)\d+)\s+(\d+)°\s+(\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)", pg[101]):
+        sku, der, D, I, L, dd, dis = m.groups()
+        data[sku] = {"boy": int(L), "helis": _f(I), "sap": int(dd), "dis": int(dis), "derece": int(der)}
+
+    # Sabit pilotlu havsa (101): KOD Mx D d1 d2 i
+    for m in re.finditer(r"(T373\d+)\s+M\d+\s+(\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)", pg[101]):
+        sku, D, d1, d2, i_ = m.groups()
+        data[sku] = {"govde": int(D)}
+
+    # HSS havsa frezeler (102): T335 D L d / T334 D d L
+    for m in re.finditer(r"(T335\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)", pg[102]):
+        sku, D, L, dd = m.groups()
+        data[sku] = {"boy": int(L), "sap": int(dd)}
+    for m in re.finditer(r"(T334\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)", pg[102]):
+        sku, D, dd, L = m.groups()
+        data[sku] = {"boy": int(L), "sap": int(dd)}
+
+    # Karbur dis frezeleri (138): KOD Mx hatve d D L1 L
+    for m in re.finditer(r"(T41[12]\d+)\s+M[\d,.\-]+\s+" + NUM + r"\s+" + NUM + r"\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)", pg[138]):
+        sku, hatve, dd, D, l1, L = m.groups()
+        data[sku] = {"boy": int(L), "helis": _f(l1)}
+
+    # Pah kirma (139): KOD D L2 L1 d2 DER° DIS
+    for m in re.finditer(r"(TKP\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)°\s+(\d+)", pg[139]):
+        sku, D, l2, l1, d2, der, dis = m.groups()
+        data[sku] = {"boy": int(l1), "helis": int(l2), "sap": int(d2), "derece": int(der), "dis": int(dis)}
+
+    # Karbur havsa freze (140): KOD D d L
+    for m in re.finditer(r"(TK335\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)", pg[140]):
+        sku, D, dd, L = m.groups()
+        data[sku] = {"boy": int(L), "sap": int(dd)}
+
+    # Karbur T-yarik (144): KOD D1 L2 L3 D3 L1 D2 DIS
+    for m in re.finditer(r"(TKTF\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)", pg[144]):
+        sku, D1, l2, l3, D3, l1, D2, dis = m.groups()
+        data[sku] = {"boy": int(l1), "kanal": _f(l2), "sap": int(D2), "dis": int(dis)}
+
+    # Karbur parmak frezeler 45/55HRC + radusler (145-156):
+    # KOD "X mm"/"XRY mm" TAMBOY KESME SAFT
+    patF = re.compile(r"([24]F[A-Z0-9]*\d)\s+[\d,.]+\s*(?:R[\d,.]+\s*)?mm\s+(\d+)\s+(\d+)\s+(\d+)")
+    for i in range(145, 157):
+        for m in patF.finditer(pg[i]):
+            sku, L, l1, saft = m.groups()
+            data[sku] = {"boy": int(L), "helis": int(l1), "sap": int(saft)}
+
+    # Mikro frezeler (157-159): KOD D L2 L3 L1 d [R] DIS
+    for i in (157, 158):
+        for m in re.finditer(r"(M[İI]R?\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)", pg[i]):
+            sku, D, l2, l3, l1, dd, dis = m.groups()
+            data[sku] = {"boy": int(l1), "helis": _f(l2), "dalma": int(l3), "sap": int(dd), "dis": int(dis)}
+    for m in re.finditer(r"(M[İI]R\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)\s+(\d+)\s+(\d+)\s+" + NUM + r"\s+(\d+)", pg[159]):
+        sku, D, l2, l3, l1, dd, R, dis = m.groups()
+        data[sku] = {"boy": int(l1), "helis": _f(l2), "dalma": int(l3), "sap": int(dd), "radus": _f(R), "dis": int(dis)}
+
+    # Aluminyum frezeler (160-162): KOD D d L(1) L2
+    for i in (160, 161, 162):
+        for m in re.finditer(r"((?:T3?U?AL|TUAL|TA1K)\d+)\s+" + NUM + r"\s+" + NUM + r"\s+(\d+)\s+(\d+)", pg[i]):
+            sku, D, dd, L, l2 = m.groups()
+            data[sku] = {"boy": int(L), "helis": int(l2), "sap": _f(dd)}
+
+    # BOHRCRAFT DIN335 havsa frezeler: ayni DIN normundaki T335 olculeri
+    for cap, t335 in (("08390", "T335083"), ("10490", "T335104"),
+                      ("12490", "T335124"), ("16590", "T335165"),
+                      ("20590", "T335205"), ("25090", "T335250")):
+        if t335 in data:
+            data[f"1700 03{cap}"] = dict(data[t335])
+            data[f"1702 03{cap}"] = dict(data[t335])
+
+    # Kalipci frezeler (171-172): KOD d1 d2 L2 L1
+    for i in (171, 172):
+        for m in re.finditer(r"(T[A-HLM]\d{6})\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)", pg[i]):
+            sku, d1, d2, l2, l1 = m.groups()
+            data[sku] = {"boy": int(l1), "helis": int(l2), "sap": int(d2)}
+
+    return data
 
 
 if __name__ == "__main__":

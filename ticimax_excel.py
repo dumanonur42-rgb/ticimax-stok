@@ -31,7 +31,7 @@ COLUMNS = [
 KEEP_UPPER = {
     "HSS", "HSSE", "HSS-E", "HSS-G", "DIN", "NC", "CNC", "GT-100", "GT100",
     "CO5", "TIN", "MM", "XD", "4XD", "8XD", "Z20", "H7", "ERİC", "ERIC",
-    "BOHRCRAFT", "HÜGEL", "HUGEL",
+    "BOHRCRAFT", "HÜGEL", "HUGEL", "HRC", "TIALN", "TISIN", "HSS-G",
 }
 
 _TR_LOWER = str.maketrans("ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZXQW", "abcçdefgğhıijklmnoöprsştuüvyzxqw")
@@ -101,7 +101,8 @@ def build_excel(rows, path):
             "ALISFIYATI": 0,
             "SATISFIYATI": price_try,
             "INDIRIMLIFIYAT": round(price_try * 0.80, 2)
-            if isinstance(price_try, (int, float)) and price_try >= 100 else 0,
+            if isinstance(price_try, (int, float)) and price_try >= 100
+            else price_try,
             "UYETIPIFIYAT1": 0, "UYETIPIFIYAT2": 0, "UYETIPIFIYAT3": 0,
             "UYETIPIFIYAT4": 0, "UYETIPIFIYAT5": 0,
             "KDVORANI": r["vat_rate"] if r["vat_rate"] is not None else 20,

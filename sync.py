@@ -92,6 +92,59 @@ CATEGORIES = [
     (291, ROOT_CATEGORY + ">MATKAP UÇLARI>Punta Matkapları"),
     # Kademeli sac matkaplari
     (193, ROOT_CATEGORY + ">MATKAP UÇLARI>Kademeli Sac Matkapları"),
+    # --- FREZELER ---
+    # HSS parmak frezeler (normal, uzun, kabatalas)
+    (172, ROOT_CATEGORY + ">FREZELER>HSS Parmak Frezeler"),
+    (173, ROOT_CATEGORY + ">FREZELER>HSS Parmak Frezeler"),
+    (174, ROOT_CATEGORY + ">FREZELER>HSS Parmak Frezeler"),
+    (175, ROOT_CATEGORY + ">FREZELER>HSS Parmak Frezeler"),
+    (177, ROOT_CATEGORY + ">FREZELER>HSS Parmak Frezeler"),
+    # Karbur parmak frezeler (45/55HRC duz-kure-radus, high feed)
+    (300, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (301, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (302, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (303, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (304, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (305, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (307, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (308, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (309, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (310, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (311, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (312, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    (317, ROOT_CATEGORY + ">FREZELER>Karbür Parmak Frezeler"),
+    # Dalma boylu mikro karbur frezeler
+    (314, ROOT_CATEGORY + ">FREZELER>Mikro Karbür Frezeler"),
+    (315, ROOT_CATEGORY + ">FREZELER>Mikro Karbür Frezeler"),
+    (316, ROOT_CATEGORY + ">FREZELER>Mikro Karbür Frezeler"),
+    # Aluminyum karbur frezeler (1-2-3 agiz)
+    (319, ROOT_CATEGORY + ">FREZELER>Alüminyum Frezeler"),
+    (320, ROOT_CATEGORY + ">FREZELER>Alüminyum Frezeler"),
+    (321, ROOT_CATEGORY + ">FREZELER>Alüminyum Frezeler"),
+    (322, ROOT_CATEGORY + ">FREZELER>Alüminyum Frezeler"),
+    (323, ROOT_CATEGORY + ">FREZELER>Alüminyum Frezeler"),
+    # Karbur kalipci frezeler
+    (343, ROOT_CATEGORY + ">FREZELER>Kalıpçı Frezeler"),
+    # Havsa frezeleri (HSS, karbur, Bohrcraft)
+    (185, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    (187, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    (188, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    (263, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    (268, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    (290, ROOT_CATEGORY + ">FREZELER>Havşa Frezeleri"),
+    # T kanal frezeleri (HSS ve karbur)
+    (181, ROOT_CATEGORY + ">FREZELER>T Kanal Frezeleri"),
+    (297, ROOT_CATEGORY + ">FREZELER>T Kanal Frezeleri"),
+    # Kose yuvarlama frezeleri
+    (182, ROOT_CATEGORY + ">FREZELER>Köşe Yuvarlama Frezeleri"),
+    # Kirlangic frezeler
+    (184, ROOT_CATEGORY + ">FREZELER>Kırlangıç Frezeler"),
+    # Karbur dis frezeleri
+    (272, ROOT_CATEGORY + ">FREZELER>Diş Frezeleri"),
+    (279, ROOT_CATEGORY + ">FREZELER>Diş Frezeleri"),
+    # Pah kirma frezeleri
+    (284, ROOT_CATEGORY + ">FREZELER>Pah Kırma Frezeleri"),
+    (285, ROOT_CATEGORY + ">FREZELER>Pah Kırma Frezeleri"),
 ]
 
 

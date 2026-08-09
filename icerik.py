@@ -42,11 +42,36 @@ def olcu_ozellikleri(sku):
         out.append(("Uç Açısı", f"{o['derece']}°"))
     if o.get("kademeler"):
         out.append(("Kademeler", f"{o['kademeler']} mm"))
+    if o.get("dalma"):
+        out.append(("Dalma Boyu", f"{_fmt(o['dalma'])} mm"))
+    if o.get("kanal"):
+        out.append(("Kanal Genişliği", f"{_fmt(o['kanal'])} mm"))
+    if o.get("radus"):
+        out.append(("Köşe Radüsü", f"{_fmt(o['radus'])} mm"))
+    if o.get("dis"):
+        out.append(("Ağız (Diş) Sayısı", str(o["dis"])))
     return out
 
 # GTIP: 8207.50 delmeye mahsus aletler (metal isleme)
 GTIP_HSS = "8207.50.60.00.00"      # is goren kismi yuksek hiz celigi (HSS)
 GTIP_KARBUR = "8207.50.50.00.00"   # is goren kismi sermet/karbur
+# GTIP: 8207.70 frezelemeye mahsus aletler
+GTIP_FREZE_HSS = "8207.70.35.00.00"     # sapli frezeler (HSS)
+GTIP_FREZE_KARBUR = "8207.70.10.00.00"  # is goren kismi sermet/karbur
+
+_FREZE_TIPLER = {
+    "HSS Parmak Frezeler": "parmak",
+    "Karbür Parmak Frezeler": "karbur_parmak",
+    "Mikro Karbür Frezeler": "mikro",
+    "Alüminyum Frezeler": "alu",
+    "Kalıpçı Frezeler": "kalipci",
+    "Havşa Frezeleri": "havsa",
+    "T Kanal Frezeleri": "tkanal",
+    "Köşe Yuvarlama Frezeleri": "kose",
+    "Kırlangıç Frezeler": "kirlangic",
+    "Diş Frezeleri": "dis_freze",
+    "Pah Kırma Frezeleri": "pah",
+}
 
 
 def _pick(variants, key, salt=""):
@@ -57,7 +82,7 @@ def _pick(variants, key, salt=""):
 def parse_specs(name: str, category_path: str):
     up = (name or "").upper()
     s = {}
-    m = re.search(r"(\d+(?:[.,]\d+)?)\s*[Xx\-]\s*(\d+(?:[.,]\d+)?)\s*MM", up)
+    m = re.search(r"(\d+(?:[.,]\d+)?)\s*[Xx\-*]\s*(\d+(?:[.,]\d+)?)\s*MM", up)
     if m:
         s["cap"] = m.group(1).replace(".", ",")
         s["cap2"] = m.group(2).replace(".", ",")
@@ -76,9 +101,30 @@ def parse_specs(name: str, category_path: str):
         s["malzeme"] = "HSS (yüksek hız çeliği)"
     if "TİN" in up.split() or "TIN KAPLI" in up or " TIN " in f" {up} " or "ALTIN" in up:
         s["kaplama"] = "TiN (titanyum nitrür) kaplama"
-    if "FULLY GROUND" in up or "TAŞLANMIŞ" in up:
-        s["islem"] = "komple taşlanmış (fully ground)"
+    if "TIALN" in up or "TİALN" in up:
+        s["kaplama"] = "TiAlN (titanyum alüminyum nitrür) kaplama"
+    m = re.search(r"(\d{2})\s*HRC", up)
+    if m:
+        s["hrc"] = m.group(1)
+    m = re.search(r"\bM(\d+)\b", up)
+    if m:
+        s["m_olcu"] = "M" + m.group(1)
+    m = re.search(r"R(\d+(?:[.,]\d+)?)\b", up)
+    if m and "HRC" not in up[max(0, m.start()-3):m.start()]:
+        s["radus_ad"] = m.group(1).replace(".", ",")
+    m = re.search(r"BOY[: ]\s*(\d+)", up)
+    if m:
+        s["boy_ad"] = m.group(1)
     cat = category_path or ""
+    for ad, tip in _FREZE_TIPLER.items():
+        if ad in cat:
+            s["tip"] = tip
+            if not s.get("malzeme") and tip in ("karbur_parmak", "mikro", "kalipci", "dis_freze", "pah"):
+                s["malzeme"] = "karbür"
+            if tip == "tkanal":
+                # T frezelerde "45,5*10MM" cap x kanal genisligidir, aralik degil
+                s.pop("cap2", None)
+            return s
     if "Kademeli" in cat:
         s["tip"] = "kademeli"
     elif "Punta" in cat:
@@ -94,7 +140,10 @@ def parse_specs(name: str, category_path: str):
 
 def gtip(name: str, category_path: str) -> str:
     up = (name or "").upper() + " " + (category_path or "").upper()
-    return GTIP_KARBUR if "KARBÜR" in up or "CARBIDE" in up else GTIP_HSS
+    karbur = "KARBÜR" in up or "CARBIDE" in up
+    if ">FREZELER>" in (category_path or ""):
+        return GTIP_FREZE_KARBUR if karbur else GTIP_FREZE_HSS
+    return GTIP_KARBUR if karbur else GTIP_HSS
 
 
 def desi_agirlik(name: str, category_path: str):
@@ -110,6 +159,10 @@ def desi_agirlik(name: str, category_path: str):
         return 3 if cap >= 20 else 2, round(0.15 + cap * 0.035, 2)
     if s["tip"] == "uzun":
         return 2 if cap >= 10 else 1, round(0.03 + cap * 0.02, 2)
+    if s["tip"] in _FREZE_TIP_ADLARI:
+        if cap >= 20:
+            return 2, round(0.1 + cap * 0.03, 2)
+        return 1, round(0.02 + cap * 0.02, 2)
     if s["tip"] == "punta":
         return 1, round(0.02 + cap * 0.01, 2)
     # standart matkap ucu
@@ -124,6 +177,17 @@ _KULLANIM = {
     "konik": "sütunlu matkap ve torna tezgahlarında Mors konik kovana doğrudan takılır, büyük çaplı deliklerde yüksek tork aktarımı sağlar",
     "uzun": "standart uçların yetişmediği derin deliklerde ve ulaşılması zor noktalarda güvenle çalışır",
     "matkap": "çelik, alaşımlı çelik, döküm, alüminyum ve sert plastiklerde hassas ve temiz delikler açar",
+    "parmak": "freze ve CNC tezgahlarında kanal açma, yüzey frezeleme ve cep boşaltma işlemlerinde kullanılır",
+    "karbur_parmak": "CNC işleme merkezlerinde sertleştirilmiş çelik dahil zorlu malzemelerde yüksek hızda kanal, cep ve profil frezeler",
+    "mikro": "hassas kalıp, elektrot ve ince detay işlemede mikro ölçekli kanal ve cep frezeleme yapar",
+    "alu": "alüminyum ve demir dışı metallerde yüksek talaş tahliyesiyle yapışma yapmadan hızlı frezeleme sağlar",
+    "kalipci": "kalıp boşluklarında form verme, radüs ve detay işlemede el breyzi ve tezgahlarda kullanılır",
+    "havsa": "delik ağızlarında havşa açarak vida başlarının yüzeyle aynı hizada oturmasını sağlar ve çapak alır",
+    "tkanal": "tezgah tablalarında ve bağlantı elemanı yuvalarında T biçimli kanallar açar",
+    "kose": "iş parçası kenarlarına belirli yarıçapta yuvarlatma (radüs) formu verir",
+    "kirlangic": "kızak ve bağlantı yüzeylerinde açılı kırlangıç kuyruğu kanalları açar",
+    "dis_freze": "CNC tezgahlarda frezeleme yöntemiyle iç diş açar; kılavuz kırılma riskini ortadan kaldırır",
+    "pah": "kenar kırma, pah açma ve çapak alma işlemlerini tek operasyonda hassas biçimde yapar",
 }
 
 _GIRIS = [
@@ -136,10 +200,25 @@ _GIRIS = [
 _KAPANIS = [
     "Uzun ömürlü kesici kenarları sayesinde bileme ihtiyacını azaltır, işçilik maliyetlerinizi düşürür.",
     "Isıl işlem görmüş gövdesi yüksek devirlerde dahi form bozulmasına karşı direnç gösterir.",
-    "Hassas helis geometrisi talaş tahliyesini hızlandırır, delme süresini kısaltır.",
+    "Hassas helis geometrisi talaş tahliyesini hızlandırır, işleme süresini kısaltır.",
     "Dengeli sertlik ve tokluk oranı ile kırılmaya karşı yüksek dayanım sunar.",
     "Seri üretim koşullarında dahi ölçü tutarlılığından ödün vermez.",
 ]
+
+
+_FREZE_TIP_ADLARI = {
+    "parmak": "HSS parmak freze",
+    "karbur_parmak": "karbür parmak freze",
+    "mikro": "mikro karbür freze",
+    "alu": "alüminyum frezesi",
+    "kalipci": "karbür kalıpçı freze",
+    "havsa": "havşa freze",
+    "tkanal": "T kanal frezesi",
+    "kose": "köşe yuvarlama frezesi",
+    "kirlangic": "kırlangıç freze",
+    "dis_freze": "karbür diş frezesi",
+    "pah": "pah kırma frezesi",
+}
 
 
 def _tip_adi(s):
@@ -149,6 +228,7 @@ def _tip_adi(s):
         "konik": "konik saplı matkap ucu",
         "uzun": "uzun seri matkap ucu",
         "matkap": "matkap ucu",
+        **_FREZE_TIP_ADLARI,
     }[s["tip"]]
 
 
@@ -164,6 +244,28 @@ _ALANLAR = {
              "Ulaşılması zor bölgelerde delme", "Ahşap ve metal karkas montaj işleri"],
     "matkap": ["Metal atölyesi ve tornacılıkta genel delme", "Makine imalatı ve bakım-onarım",
                "Çelik konstrüksiyon montajı", "Hobi ve profesyonel atölye kullanımı"],
+    "parmak": ["Üniversal freze tezgahında kanal açma", "Yüzey ve kenar frezeleme",
+               "Kalıp ve aparat imalatı", "Genel talaşlı imalat işleri"],
+    "karbur_parmak": ["CNC işleme merkezlerinde kanal ve cep frezeleme", "Sertleştirilmiş çelik işleme",
+                      "Kalıp imalatı ve finiş operasyonları", "Yüksek hızlı seri üretim"],
+    "mikro": ["Hassas kalıp ve elektrot işleme", "Medikal ve elektronik parça üretimi",
+              "İnce detay ve gravür frezeleme", "Mikro kanal ve cep açma"],
+    "alu": ["Alüminyum profil ve plaka işleme", "Havacılık ve otomotiv parçaları",
+            "Demir dışı metallerin frezelenmesi", "Reklam ve CNC router uygulamaları"],
+    "kalipci": ["Kalıp boşluğu form işleme", "El breyzi ile taşlama-frezeleme",
+                "Radüs ve kavis verme", "Çelik yüzeylerde detay düzeltme"],
+    "havsa": ["Vida başı havşası açma", "Delik ağzı çapak alma",
+              "Makine montaj delikleri hazırlama", "Sac ve profil işlerinde havşalama"],
+    "tkanal": ["Tezgah tablası T kanalı açma", "Bağlantı ve sabitleme kanalları",
+               "Kızak yuvası işleme", "Aparat ve fikstür imalatı"],
+    "kose": ["Kenar yuvarlatma (radüs) işleme", "Kalıp kenarı form verme",
+             "Görsel ve fonksiyonel kenar bitirme", "Makine parçası kenar yumuşatma"],
+    "kirlangic": ["Kırlangıç kuyruğu kızak açma", "Torna ve tezgah kızak yüzeyleri",
+                  "Açılı bağlantı kanalları", "Hassas kayıt yüzeyleri işleme"],
+    "dis_freze": ["CNC tezgahta iç diş frezeleme", "Sert malzemelerde diş açma",
+                  "Kör deliklerde emniyetli diş işleme", "Büyük çaplı dişlerin frezelenmesi"],
+    "pah": ["Kenar pah kırma", "Delik ağzı çapak alma",
+            "Kaynak ağzı hazırlama", "Görsel kenar bitirme işlemleri"],
 }
 
 _MALZEME_UYUM = {
@@ -209,6 +311,10 @@ def build_description(name, sku, brand, category_path):
         ozellikler.append(f"Kaplama: {s['kaplama']}")
     if s.get("islem"):
         ozellikler.append(f"İşlem: {s['islem']}")
+    if s.get("hrc"):
+        ozellikler.append(f"İşlenebilir Sertlik: {s['hrc']} HRC'ye kadar")
+    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa"):
+        ozellikler.append(f"Diş/Cıvata Ölçüsü: {s['m_olcu']}")
     for etiket, deger in olcu_ozellikleri(sku):
         ozellikler.append(f"{etiket}: {deger}")
     ozellikler.append(f"Marka: {marka}")
@@ -263,8 +369,18 @@ def teknik_detaylar(name, sku, brand, category_path):
         out.append(("Standart", s["din"]))
     if s.get("islem"):
         out.append(("İşlem", "Fully Ground (Taşlanmış)"))
-    for etiket, deger in olcu_ozellikleri(sku):
+    if s.get("hrc"):
+        out.append(("Sertlik Sınıfı", f"{s['hrc']} HRC"))
+    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa"):
+        out.append(("Diş/Cıvata Ölçüsü", s["m_olcu"]))
+    olculer = olcu_ozellikleri(sku)
+    for etiket, deger in olculer:
         out.append((etiket, deger))
+    etiketler = {e for e, _ in olculer}
+    if s.get("boy_ad") and "Toplam Boy" not in etiketler:
+        out.append(("Toplam Boy", f"{s['boy_ad']} mm"))
+    if s.get("radus_ad") and "Köşe Radüsü" not in etiketler and s["tip"] in ("karbur_parmak", "mikro", "kose"):
+        out.append(("Köşe Radüsü", f"{s['radus_ad']} mm"))
     return out
 
 

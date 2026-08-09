@@ -5,6 +5,7 @@
 import csv
 import io
 import re
+import sys
 import time
 from pathlib import Path
 
@@ -101,9 +102,13 @@ def main():
     s.headers["User-Agent"] = "Mozilla/5.0"
     done = fail = 0
     failures = []
+    force = "--force" in sys.argv
     for r in rows[1:]:
         sku, url = r[i_sku], r[i_src]
         target = OUT_DIR / image_filename(r[i_name], sku)
+        if target.exists() and not force:
+            done += 1
+            continue
         if not url:
             url = series_fallback.get(_series_key(r[i_name]), "")
         if not url:
