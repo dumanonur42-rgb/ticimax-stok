@@ -109,6 +109,7 @@ def main(pdf_path):
                          "sap": float(sap.replace(",", "."))}
 
     data.update(parse_freze(pdf))
+    data.update(parse_olcu_aletleri(pdf))
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1))
     print(f"{len(data)} urun olcusu yazildi -> {OUT}")
 
@@ -215,6 +216,128 @@ def parse_freze(pdf):
         for m in re.finditer(r"(T[A-HLM]\d{6})\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)", pg[i]):
             sku, d1, d2, l2, l1 = m.groups()
             data[sku] = {"boy": int(l1), "helis": int(l2), "sap": int(d2)}
+
+    return data
+
+
+def parse_olcu_aletleri(pdf):
+    """Olcu aletleri sayfalarindaki tablolari okur (fiyatlar alinmaz)."""
+    pg = {}
+    for i in range(177, 198):
+        pg[i] = pdf.pages[i - 1].extract_text() or ""
+    data = {}
+    KOD = r"(T[SB]?[A-Z0-9İ]+)"
+
+    # Olcum araligi * hassasiyet tablolari (kumpas, mikrometre, komparator,
+    # mihengir, Z sifirlama, su terazisi, aci olcer)
+    pat = re.compile(
+        KOD + r"\s+(\d+(?:[.,]\d+)?(?:\s*[-–]\s*\d+(?:[.,]\d+)?)?)"
+        r"\s*\*\s*(\d+[.,]\d+)(?:\s*(?:mm|MM))?(?:\s*\*\s*\d+)?"
+        r"(?:\s*\(?[^)\d]{0,20}\)?)?\s+(?:(\d+)\s*mm\s+)?[\d.]*\d+[.,]\d+")
+    for i in (177, 178, 179, 180, 181, 182, 183, 184, 187, 188, 193, 195):
+        for m in pat.finditer(pg[i]):
+            sku, aralik, hass, cene = m.groups()
+            d = {"olcum": aralik.replace(" ", ""), "hassasiyet": hass}
+            if cene:
+                d["cene"] = int(cene)
+            data[sku] = d
+
+    # Gonyeler (194) ve mercekli gonye (193): KOD A * B mm
+    for m in re.finditer(r"(T2[5678]\d+)\s+(\d+)\s*\*\s*(\d+)\s*mm\s+[\d.,]+", pg[193] + "\n" + pg[194]):
+        sku, a, b = m.groups()
+        data[sku] = {"en": int(a), "boy": int(b)}
+
+    # Granit / gonye pleyti (190): KOD En Boy Yukseklik Agirlik
+    for m in re.finditer(r"(T4\d{5,6})\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+[\d.,]+", pg[190]):
+        sku, en, boy, yuk, kg = m.groups()
+        data[sku] = {"en": int(en), "boy": int(boy), "yukseklik": int(yuk),
+                     "agirlik": int(kg)}
+
+    # Serit sentiller (191): KOD OLCU EN BOY
+    for m in re.finditer(r"(TS100\d+)\s+(\d+[.,]\d+)\s+(\d+)\s+(\d+)\s+[\d.,]+", pg[191]):
+        sku, olc, en, boy = m.groups()
+        data[sku] = {"kalinlik": _f(olc), "en": int(en), "boy": int(boy)}
+    # Celik cetveller (191): KOD BOY GENISLIK KALINLIK
+    for m in re.finditer(r"(TS11\d+)\s+(\d+)\s+(\d+)\s+(\d+[.,]\d+)\s+[\d.,]+", pg[191]):
+        sku, boy, en, kal = m.groups()
+        data[sku] = {"boy": int(boy), "en": int(en), "kalinlik": _f(kal)}
+
+    # Z sifirlamalar (187-188): KOD OLCU [mm] HASSASIYET
+    for i in (187, 188):
+        for m in re.finditer(r"(T22[A-ZİI0-9]+)\s+(\d+)\s*(?:mm)?\s+(\d+[.,]\d+)\s+[\d.,]+", pg[i]):
+            sku, olc, hass = m.groups()
+            data[sku] = {"olcum": olc, "hassasiyet": hass}
+
+    # Paralel / ayarlanabilir V-yatak (185): KOD L H KAPASITE
+    for m in re.finditer(r"(T21PAR\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+[\d.,]+", pg[185]):
+        sku, L, H, kap = m.groups()
+        data[sku] = {"boy": int(L), "yukseklik": int(H), "kapasite": int(kap)}
+    for m in re.finditer(r"(T21CİF\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+", pg[185]):
+        sku, L, W, H, L1 = m.groups()
+        data[sku] = {"boy": int(L), "en": int(W), "yukseklik": int(H)}
+    for m in re.finditer(r"(T21AYA\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+", pg[185]):
+        sku, H, W, L, h = m.groups()
+        data[sku] = {"boy": int(L), "en": int(W), "yukseklik": int(H)}
+
+    # Manyetik V yatagi + proplar (186)
+    for m in re.finditer(r"(T21MANV\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+[\d.,]+", pg[186]):
+        sku, L, W, H, kg = m.groups()
+        data[sku] = {"boy": int(L), "en": int(W), "yukseklik": int(H), "agirlik": int(kg)}
+    for m in re.finditer(r"(T22ISP)\s+(\d+)\s*\*\s*(\d+)\s*mm", pg[186]):
+        sku, d, L = m.groups()
+        data[sku] = {"cap": int(d), "boy": int(L)}
+    for m in re.finditer(r"(T22TPRA)\s+T PROP\s+(\d+)\s+", pg[186]):
+        data[m.group(1)] = {"cap": int(m.group(2))}
+    for sku, tasima in (("T21MAN60", 60), ("T21MANU60", 60)):
+        if re.search(sku, pg[186]):
+            data[sku] = {"tasima": tasima}
+
+    # 3D tester (189): KOD HASSASIYET ACIKLAMA
+    for m in re.finditer(r"(TTES\d+)\s+(\d+[.,]\d+)\s*mm\s+(\d+)\s*mm", pg[189]):
+        sku, hass, boy = m.groups()
+        data[sku] = {"hassasiyet": hass, "boy": int(boy)}
+
+    # Radius mastari (192): KOD A * B * KALINLIK mm
+    for m in re.finditer(r"(T23\d+)\s+(\d+(?:[.,]\d+)?)\s*\*\s*(\d+(?:[.,]\d+)?)\s*\*\s*"
+                         r"(\d+[.,]\d+)\s*mm", pg[192]):
+        sku, a, b, kal = m.groups()
+        data[sku] = {"olcum": f"{a}-{b}", "kalinlik": _f(kal)}
+    # Sentil filler cakisi (192) ve dis taragi
+    for m in re.finditer(r"(T231100)\s+([\d,]+)\s*-\s*([\d,]+)\*(\d+)\s*mm", pg[192]):
+        sku, a, b, boy = m.groups()
+        data[sku] = {"olcum": f"{a}-{b}", "boy": int(boy)}
+    for m in re.finditer(r"(T230052)\s+(\d+)\s*PARÇALI", pg[192]):
+        data[m.group(1)] = {"parca": int(m.group(2))}
+    # Paralel setler (192): KOD ... N CIFT
+    for m in re.finditer(r"(T24\d+)\s+([\d*,]+)\s*MM\s+(\d+)\s*ÇİFT", pg[192]):
+        sku, olc, cift = m.groups()
+        data[sku] = {"olcum": olc, "parca": int(cift) * 2}
+    # Johnson mastar / mikrometre setleri: KOD ... N PARCALI SET
+    flat = re.sub(r"\s+", " ", pg[193] + " " + pg[180])
+    for m in re.finditer(r"T240(\d{3})", flat):
+        data["T240" + m.group(1)] = {"parca": int(m.group(1))}
+    # 3D tester yedek uclari (189): KOD 0,01 mm - OcapUC
+    for m in re.finditer(r"(TTES\d+)\s+[\d,]+\s*mm\s+-\s*Ø(\d+)", pg[189]):
+        data[m.group(1)] = {"cap": int(m.group(2))}
+    for m in re.finditer(r"(T160\d+SET) ([\d,]+)-([\d,]+)mm", flat):
+        data[m.group(1)] = {"olcum": f"{m.group(2)}-{m.group(3)}"}
+    # Aci olcer (193): KOD 0 - 10 * 0,01 mm 0 - 360 DERECE
+    for m in re.finditer(r"(T25\d+)\s+([\d,]+ ?- ?[\d,]+)\s*\*\s*([\d,]+)\s*mm\s+"
+                         r"([\d,]+ ?- ?[\d,]+)\s*DERECE", pg[193]):
+        sku, olc, hass, der = m.groups()
+        data[sku] = {"olcum": olc.replace(" ", ""), "hassasiyet": hass,
+                     "aci": der.replace(" ", "")}
+
+    # Mastarlar (196-197): OLCU HATVE ERKEK_KOD FIYAT DISI_KOD FIYAT
+    patM = re.compile(
+        r"(M[\d,]+|UNF ?[\d/ ]+|UNC ?[\d/ ]+|G ?[\d/ ]+)\s+(\d+(?:[.,]\d+)?)\s+"
+        r"(T31[A-Z0-9]+)\s+[\d.,]+\s+(T33[A-Z0-9]+)\s+[\d.,]+")
+    for i in (196, 197):
+        for m in patM.finditer(pg[i]):
+            olcu, hatve, erkek, disi = m.groups()
+            d = {"dis_olcu": olcu.strip(), "hatve": hatve}
+            data[erkek] = dict(d)
+            data[disi] = dict(d)
 
     return data
 

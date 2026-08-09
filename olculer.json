@@ -6437,5 +6437,1542 @@
   "boy": 65,
   "helis": 25,
   "sap": 6
+ },
+ "T10150DM": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T10200DM": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T10300DM": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T10150IP54": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T10200IP54": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T10300IP54": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T10150IP67": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T10200IP67": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T10300IP67": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T110500Dİ": {
+  "olcum": "500",
+  "hassasiyet": "0,01"
+ },
+ "T110600Dİ": {
+  "olcum": "600",
+  "hassasiyet": "0,01"
+ },
+ "T111000Dİ": {
+  "olcum": "1000",
+  "hassasiyet": "0,01"
+ },
+ "T111002": {
+  "olcum": "100",
+  "hassasiyet": "0,02"
+ },
+ "T111005": {
+  "olcum": "100",
+  "hassasiyet": "0,05"
+ },
+ "T111502": {
+  "olcum": "150",
+  "hassasiyet": "0,02"
+ },
+ "T121505": {
+  "olcum": "150",
+  "hassasiyet": "0,05"
+ },
+ "T111505": {
+  "olcum": "150",
+  "hassasiyet": "0,05"
+ },
+ "T122005": {
+  "olcum": "200",
+  "hassasiyet": "0,05"
+ },
+ "T112002": {
+  "olcum": "200",
+  "hassasiyet": "0,02"
+ },
+ "T123005": {
+  "olcum": "300",
+  "hassasiyet": "0,05"
+ },
+ "T112005": {
+  "olcum": "200",
+  "hassasiyet": "0,05"
+ },
+ "T113005": {
+  "olcum": "300",
+  "hassasiyet": "0,05"
+ },
+ "T135005": {
+  "olcum": "500",
+  "hassasiyet": "0,05",
+  "cene": 100
+ },
+ "T136005": {
+  "olcum": "600",
+  "hassasiyet": "0,05",
+  "cene": 100
+ },
+ "T1310005": {
+  "olcum": "1000",
+  "hassasiyet": "0,05",
+  "cene": 125
+ },
+ "T1315005": {
+  "olcum": "1500",
+  "hassasiyet": "0,05",
+  "cene": 125
+ },
+ "T1320005": {
+  "olcum": "2000",
+  "hassasiyet": "0,05",
+  "cene": 150
+ },
+ "T143005": {
+  "olcum": "300",
+  "hassasiyet": "0,05",
+  "cene": 90
+ },
+ "T145005": {
+  "olcum": "500",
+  "hassasiyet": "0,05",
+  "cene": 150
+ },
+ "T145105": {
+  "olcum": "500",
+  "hassasiyet": "0,05",
+  "cene": 200
+ },
+ "T146005": {
+  "olcum": "600",
+  "hassasiyet": "0,05",
+  "cene": 150
+ },
+ "T146105": {
+  "olcum": "600",
+  "hassasiyet": "0,05",
+  "cene": 200
+ },
+ "T1410005": {
+  "olcum": "1000",
+  "hassasiyet": "0,05",
+  "cene": 150
+ },
+ "T1411055": {
+  "olcum": "1000",
+  "hassasiyet": "0,05",
+  "cene": 200
+ },
+ "T151502": {
+  "olcum": "150",
+  "hassasiyet": "0,02"
+ },
+ "T152002": {
+  "olcum": "200",
+  "hassasiyet": "0,02"
+ },
+ "T153002": {
+  "olcum": "300",
+  "hassasiyet": "0,02"
+ },
+ "T11100DU": {
+  "olcum": "100",
+  "hassasiyet": "0,01"
+ },
+ "T11150DM": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T11150DU": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T11200DM": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T11200DU": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T11300DM": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T11300DU": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T11150MİT": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T11200MİT": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T11300MİT": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T15150D": {
+  "olcum": "150",
+  "hassasiyet": "0,01"
+ },
+ "T15200D": {
+  "olcum": "200",
+  "hassasiyet": "0,01"
+ },
+ "T15300D": {
+  "olcum": "300",
+  "hassasiyet": "0,01"
+ },
+ "T11150SA": {
+  "olcum": "150",
+  "hassasiyet": "0,02"
+ },
+ "T11200SA": {
+  "olcum": "200",
+  "hassasiyet": "0,02"
+ },
+ "T11300SA": {
+  "olcum": "300",
+  "hassasiyet": "0,02"
+ },
+ "T160025": {
+  "olcum": "0-25",
+  "hassasiyet": "0,01"
+ },
+ "T160050": {
+  "olcum": "25-50",
+  "hassasiyet": "0,01"
+ },
+ "T160075": {
+  "olcum": "50-75",
+  "hassasiyet": "0,01"
+ },
+ "T160100": {
+  "olcum": "75-100",
+  "hassasiyet": "0,01"
+ },
+ "T160125": {
+  "olcum": "100-125",
+  "hassasiyet": "0,01"
+ },
+ "T160150": {
+  "olcum": "125-150",
+  "hassasiyet": "0,01"
+ },
+ "T160175": {
+  "olcum": "150-175",
+  "hassasiyet": "0,01"
+ },
+ "T160200": {
+  "olcum": "175-200",
+  "hassasiyet": "0,01"
+ },
+ "T160225": {
+  "olcum": "200-225",
+  "hassasiyet": "0,01"
+ },
+ "T160250": {
+  "olcum": "225-250",
+  "hassasiyet": "0,01"
+ },
+ "T160275": {
+  "olcum": "250-275",
+  "hassasiyet": "0,01"
+ },
+ "T160300": {
+  "olcum": "275-300",
+  "hassasiyet": "0,01"
+ },
+ "T160400": {
+  "olcum": "300-400",
+  "hassasiyet": "0,01"
+ },
+ "T160500": {
+  "olcum": "400-500",
+  "hassasiyet": "0,01"
+ },
+ "T160600": {
+  "olcum": "500-600",
+  "hassasiyet": "0,01"
+ },
+ "T160025SPK": {
+  "olcum": "0-25",
+  "hassasiyet": "0,01"
+ },
+ "T160025NUM": {
+  "olcum": "0-25",
+  "hassasiyet": "0,01"
+ },
+ "T160050NUM": {
+  "olcum": "25-50",
+  "hassasiyet": "0,01"
+ },
+ "T160025DJT": {
+  "olcum": "0-25",
+  "hassasiyet": "0,001"
+ },
+ "T160030IC": {
+  "olcum": "5-30",
+  "hassasiyet": "0,01"
+ },
+ "T160050DJT": {
+  "olcum": "25-50",
+  "hassasiyet": "0,001"
+ },
+ "T160050IC": {
+  "olcum": "25-50",
+  "hassasiyet": "0,01"
+ },
+ "T160075DJT": {
+  "olcum": "50-75",
+  "hassasiyet": "0,001"
+ },
+ "T160075IC": {
+  "olcum": "50-75",
+  "hassasiyet": "0,01"
+ },
+ "T160100DJT": {
+  "olcum": "75-100",
+  "hassasiyet": "0,001"
+ },
+ "T160100IC": {
+  "olcum": "75-100",
+  "hassasiyet": "0,01"
+ },
+ "T160100DRN": {
+  "olcum": "0-100",
+  "hassasiyet": "0,01"
+ },
+ "T160150DU": {
+  "olcum": "50-150",
+  "hassasiyet": "0,01"
+ },
+ "T160150DRN": {
+  "olcum": "0-150",
+  "hassasiyet": "0,01"
+ },
+ "T160250DU": {
+  "olcum": "50-250",
+  "hassasiyet": "0,01"
+ },
+ "T160600DU": {
+  "olcum": "50-600",
+  "hassasiyet": "0,01"
+ },
+ "T170010K": {
+  "olcum": "0,10",
+  "hassasiyet": "0,01"
+ },
+ "T170020": {
+  "olcum": "0-20",
+  "hassasiyet": "0,01"
+ },
+ "T170010": {
+  "olcum": "0,10",
+  "hassasiyet": "0,01"
+ },
+ "T170030": {
+  "olcum": "0-30",
+  "hassasiyet": "0,01"
+ },
+ "T170050": {
+  "olcum": "0-50",
+  "hassasiyet": "0,01"
+ },
+ "T170008SLG": {
+  "olcum": "0,08",
+  "hassasiyet": "0,01"
+ },
+ "T1700127DJT": {
+  "olcum": "0-12,7",
+  "hassasiyet": "0,01"
+ },
+ "T1700127DJTM": {
+  "olcum": "0-12,7",
+  "hassasiyet": "0,001"
+ },
+ "T180010CEP": {
+  "olcum": "0-10",
+  "hassasiyet": "0,1"
+ },
+ "T180010BR": {
+  "olcum": "0-10",
+  "hassasiyet": "0,01"
+ },
+ "T180020CEP": {
+  "olcum": "0-20",
+  "hassasiyet": "0,1"
+ },
+ "T180010RUL": {
+  "olcum": "0-10",
+  "hassasiyet": "0,01"
+ },
+ "T181535": {
+  "olcum": "15-35",
+  "hassasiyet": "0,01"
+ },
+ "T180020": {
+  "olcum": "0-20",
+  "hassasiyet": "0,01"
+ },
+ "T183555": {
+  "olcum": "35-55",
+  "hassasiyet": "0,01"
+ },
+ "T182040": {
+  "olcum": "20-40",
+  "hassasiyet": "0,01"
+ },
+ "T185575": {
+  "olcum": "55-75",
+  "hassasiyet": "0,01"
+ },
+ "T184060": {
+  "olcum": "40-60",
+  "hassasiyet": "0,01"
+ },
+ "T191018": {
+  "olcum": "10-18",
+  "hassasiyet": "0,01"
+ },
+ "T191835": {
+  "olcum": "18-35",
+  "hassasiyet": "0,01"
+ },
+ "T193550": {
+  "olcum": "35-50",
+  "hassasiyet": "0,01"
+ },
+ "T1950160": {
+  "olcum": "50-160",
+  "hassasiyet": "0,01"
+ },
+ "T19160250": {
+  "olcum": "160-250",
+  "hassasiyet": "0,01"
+ },
+ "T19250450": {
+  "olcum": "250-450",
+  "hassasiyet": "0,01"
+ },
+ "T191018U": {
+  "olcum": "10-18",
+  "hassasiyet": "0,01"
+ },
+ "T191835U": {
+  "olcum": "18-35",
+  "hassasiyet": "0,01"
+ },
+ "T193550U": {
+  "olcum": "35-50",
+  "hassasiyet": "0,01"
+ },
+ "T1950160U": {
+  "olcum": "50-160",
+  "hassasiyet": "0,01"
+ },
+ "T19160250U": {
+  "olcum": "160-250",
+  "hassasiyet": "0,01"
+ },
+ "T19250450U": {
+  "olcum": "250-450",
+  "hassasiyet": "0,01"
+ },
+ "T200300": {
+  "olcum": "0-300",
+  "hassasiyet": "0,02"
+ },
+ "T200500": {
+  "olcum": "0-500",
+  "hassasiyet": "0,02"
+ },
+ "T200600": {
+  "olcum": "0-600",
+  "hassasiyet": "0,02"
+ },
+ "T200300SA": {
+  "olcum": "0-300",
+  "hassasiyet": "0,02"
+ },
+ "T200500SA": {
+  "olcum": "0-500",
+  "hassasiyet": "0,02"
+ },
+ "T200600SA": {
+  "olcum": "0-600",
+  "hassasiyet": "0,02"
+ },
+ "T200300DJT": {
+  "olcum": "0-300",
+  "hassasiyet": "0,01"
+ },
+ "T200500DJT": {
+  "olcum": "0-500",
+  "hassasiyet": "0,01"
+ },
+ "T200600DJT": {
+  "olcum": "0-600",
+  "hassasiyet": "0,01"
+ },
+ "T290100": {
+  "olcum": "100",
+  "hassasiyet": "0,02"
+ },
+ "T290150": {
+  "olcum": "150",
+  "hassasiyet": "0,02"
+ },
+ "T290200": {
+  "olcum": "200",
+  "hassasiyet": "0,02"
+ },
+ "T290250": {
+  "olcum": "250",
+  "hassasiyet": "0,02"
+ },
+ "T290100K": {
+  "olcum": "100",
+  "hassasiyet": "0,02"
+ },
+ "T290150K": {
+  "olcum": "150",
+  "hassasiyet": "0,02"
+ },
+ "T290200K": {
+  "olcum": "200",
+  "hassasiyet": "0,02"
+ },
+ "T290250K": {
+  "olcum": "250",
+  "hassasiyet": "0,02"
+ },
+ "T2580120": {
+  "en": 80,
+  "boy": 120
+ },
+ "T25120150": {
+  "en": 120,
+  "boy": 150
+ },
+ "T25150200": {
+  "en": 150,
+  "boy": 200
+ },
+ "T26040050": {
+  "en": 40,
+  "boy": 50
+ },
+ "T26050075": {
+  "en": 50,
+  "boy": 75
+ },
+ "T26070100": {
+  "en": 70,
+  "boy": 100
+ },
+ "T26100150": {
+  "en": 100,
+  "boy": 150
+ },
+ "T26130200": {
+  "en": 130,
+  "boy": 200
+ },
+ "T26165250": {
+  "en": 165,
+  "boy": 250
+ },
+ "T26200300": {
+  "en": 200,
+  "boy": 300
+ },
+ "T27040050": {
+  "en": 40,
+  "boy": 50
+ },
+ "T27050075": {
+  "en": 50,
+  "boy": 75
+ },
+ "T27070100": {
+  "en": 70,
+  "boy": 100
+ },
+ "T27100150": {
+  "en": 100,
+  "boy": 150
+ },
+ "T27130200": {
+  "en": 130,
+  "boy": 200
+ },
+ "T27165250": {
+  "en": 165,
+  "boy": 250
+ },
+ "T28040050": {
+  "en": 40,
+  "boy": 50
+ },
+ "T28050075": {
+  "en": 50,
+  "boy": 75
+ },
+ "T28070100": {
+  "en": 70,
+  "boy": 100
+ },
+ "T28100150": {
+  "en": 100,
+  "boy": 150
+ },
+ "T28130200": {
+  "en": 130,
+  "boy": 200
+ },
+ "T28160250": {
+  "en": 160,
+  "boy": 250
+ },
+ "T28200300": {
+  "en": 200,
+  "boy": 300
+ },
+ "T28250400": {
+  "en": 250,
+  "boy": 400
+ },
+ "T28330500": {
+  "en": 330,
+  "boy": 500
+ },
+ "T4020200": {
+  "en": 200,
+  "boy": 300,
+  "yukseklik": 70,
+  "agirlik": 20
+ },
+ "T4020250": {
+  "en": 250,
+  "boy": 400,
+  "yukseklik": 80,
+  "agirlik": 30
+ },
+ "T4020400": {
+  "en": 400,
+  "boy": 630,
+  "yukseklik": 100,
+  "agirlik": 80
+ },
+ "T4020500": {
+  "en": 500,
+  "boy": 800,
+  "yukseklik": 130,
+  "agirlik": 150
+ },
+ "T4020630": {
+  "en": 630,
+  "boy": 1000,
+  "yukseklik": 150,
+  "agirlik": 280
+ },
+ "T4020800": {
+  "en": 800,
+  "boy": 1200,
+  "yukseklik": 160,
+  "agirlik": 360
+ },
+ "T4021000": {
+  "en": 1000,
+  "boy": 1600,
+  "yukseklik": 200,
+  "agirlik": 1080
+ },
+ "T4022000": {
+  "en": 1000,
+  "boy": 2000,
+  "yukseklik": 200,
+  "agirlik": 1360
+ },
+ "T450250": {
+  "en": 250,
+  "boy": 200,
+  "yukseklik": 150,
+  "agirlik": 10
+ },
+ "T450300": {
+  "en": 300,
+  "boy": 230,
+  "yukseklik": 200,
+  "agirlik": 13
+ },
+ "TS100001": {
+  "kalinlik": 0.01,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100002": {
+  "kalinlik": 0.02,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100003": {
+  "kalinlik": 0.03,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100004": {
+  "kalinlik": 0.04,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100005": {
+  "kalinlik": 0.05,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100006": {
+  "kalinlik": 0.06,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100007": {
+  "kalinlik": 0.07,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100008": {
+  "kalinlik": 0.08,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100009": {
+  "kalinlik": 0.09,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100010": {
+  "kalinlik": 0.1,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100015": {
+  "kalinlik": 0.15,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100020": {
+  "kalinlik": 0.2,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100025": {
+  "kalinlik": 0.25,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100030": {
+  "kalinlik": 0.3,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100035": {
+  "kalinlik": 0.35,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100040": {
+  "kalinlik": 0.4,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100045": {
+  "kalinlik": 0.45,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100050": {
+  "kalinlik": 0.5,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100060": {
+  "kalinlik": 0.6,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100070": {
+  "kalinlik": 0.7,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100080": {
+  "kalinlik": 0.8,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100090": {
+  "kalinlik": 0.9,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS100100": {
+  "kalinlik": 1.0,
+  "en": 13,
+  "boy": 5000
+ },
+ "TS11015150": {
+  "boy": 150,
+  "en": 19,
+  "kalinlik": 0.5
+ },
+ "TS11020200": {
+  "boy": 200,
+  "en": 26,
+  "kalinlik": 0.75
+ },
+ "TS11025300": {
+  "boy": 300,
+  "en": 26,
+  "kalinlik": 0.7
+ },
+ "TS11030500": {
+  "boy": 500,
+  "en": 26,
+  "kalinlik": 0.85
+ },
+ "TS11030100": {
+  "boy": 1000,
+  "en": 28,
+  "kalinlik": 0.95
+ },
+ "TS11038150": {
+  "boy": 1500,
+  "en": 38,
+  "kalinlik": 1.4
+ },
+ "TS11038200": {
+  "boy": 2000,
+  "en": 38,
+  "kalinlik": 1.7
+ },
+ "T22ZSFR050": {
+  "olcum": "50",
+  "hassasiyet": "0,01"
+ },
+ "T22ZSFR100": {
+  "olcum": "100",
+  "hassasiyet": "0,01"
+ },
+ "T22KARE050": {
+  "olcum": "50",
+  "hassasiyet": "0,01"
+ },
+ "T22ZDİJ050": {
+  "olcum": "50",
+  "hassasiyet": "0,01"
+ },
+ "T22Z151050": {
+  "olcum": "50",
+  "hassasiyet": "0,01"
+ },
+ "T21PAR44": {
+  "boy": 44,
+  "yukseklik": 41,
+  "kapasite": 35
+ },
+ "T21PAR70": {
+  "boy": 70,
+  "yukseklik": 44,
+  "kapasite": 41
+ },
+ "T21CİF70": {
+  "boy": 70,
+  "en": 40,
+  "yukseklik": 50
+ },
+ "T21CİF100": {
+  "boy": 100,
+  "en": 50,
+  "yukseklik": 80
+ },
+ "T21AYA48": {
+  "boy": 102,
+  "en": 30,
+  "yukseklik": 48
+ },
+ "T21MANV70": {
+  "boy": 70,
+  "en": 60,
+  "yukseklik": 75,
+  "agirlik": 2
+ },
+ "T21MANV100": {
+  "boy": 100,
+  "en": 70,
+  "yukseklik": 96,
+  "agirlik": 3
+ },
+ "T22ISP": {
+  "cap": 20,
+  "boy": 160
+ },
+ "T22TPRA": {
+  "cap": 28
+ },
+ "T21MAN60": {
+  "tasima": 60
+ },
+ "T21MANU60": {
+  "tasima": 60
+ },
+ "TTES0010": {
+  "hassasiyet": "0,01",
+  "boy": 178
+ },
+ "T230107": {
+  "olcum": "1-7",
+  "kalinlik": 0.5
+ },
+ "T230715": {
+  "olcum": "7,5-15",
+  "kalinlik": 0.5
+ },
+ "T231525": {
+  "olcum": "15,5-25",
+  "kalinlik": 0.5
+ },
+ "T231100": {
+  "olcum": "0,05-1",
+  "boy": 100
+ },
+ "T230052": {
+  "parca": 52
+ },
+ "T2415007": {
+  "olcum": "150",
+  "parca": 14
+ },
+ "T2415005": {
+  "olcum": "150*5",
+  "parca": 28
+ },
+ "T2415010": {
+  "olcum": "150*10",
+  "parca": 28
+ },
+ "T240047": {
+  "parca": 47
+ },
+ "T240087": {
+  "parca": 87
+ },
+ "T240112": {
+  "parca": 112
+ },
+ "TTES0020": {
+  "cap": 4
+ },
+ "TTES0021": {
+  "cap": 8
+ },
+ "T160100SET": {
+  "olcum": "0-100"
+ },
+ "T160150SET": {
+  "olcum": "0-150"
+ },
+ "T250010": {
+  "olcum": "0-10",
+  "hassasiyet": "0,01",
+  "aci": "0-360"
+ },
+ "T31020": {
+  "dis_olcu": "M2",
+  "hatve": "0,40"
+ },
+ "T33020": {
+  "dis_olcu": "M2",
+  "hatve": "0,40"
+ },
+ "T31025": {
+  "dis_olcu": "M2,5",
+  "hatve": "0,45"
+ },
+ "T33025": {
+  "dis_olcu": "M2,5",
+  "hatve": "0,45"
+ },
+ "T31030": {
+  "dis_olcu": "M3",
+  "hatve": "0,50"
+ },
+ "T33030": {
+  "dis_olcu": "M3",
+  "hatve": "0,50"
+ },
+ "T31035": {
+  "dis_olcu": "M3,5",
+  "hatve": "0,60"
+ },
+ "T33035": {
+  "dis_olcu": "M3,5",
+  "hatve": "0,60"
+ },
+ "T31040": {
+  "dis_olcu": "M4",
+  "hatve": "0,70"
+ },
+ "T33040": {
+  "dis_olcu": "M4",
+  "hatve": "0,70"
+ },
+ "T31050": {
+  "dis_olcu": "M5",
+  "hatve": "0,80"
+ },
+ "T33050": {
+  "dis_olcu": "M5",
+  "hatve": "0,80"
+ },
+ "T31060": {
+  "dis_olcu": "M6",
+  "hatve": "1,00"
+ },
+ "T33060": {
+  "dis_olcu": "M6",
+  "hatve": "1,00"
+ },
+ "T31070": {
+  "dis_olcu": "M7",
+  "hatve": "1,00"
+ },
+ "T33070": {
+  "dis_olcu": "M7",
+  "hatve": "1,00"
+ },
+ "T31080": {
+  "dis_olcu": "M8",
+  "hatve": "1,25"
+ },
+ "T33080": {
+  "dis_olcu": "M8",
+  "hatve": "1,25"
+ },
+ "T31090": {
+  "dis_olcu": "M9",
+  "hatve": "1,25"
+ },
+ "T33090": {
+  "dis_olcu": "M9",
+  "hatve": "1,25"
+ },
+ "T31100": {
+  "dis_olcu": "M10",
+  "hatve": "1,50"
+ },
+ "T33100": {
+  "dis_olcu": "M10",
+  "hatve": "1,50"
+ },
+ "T31120": {
+  "dis_olcu": "M12",
+  "hatve": "1,75"
+ },
+ "T33120": {
+  "dis_olcu": "M12",
+  "hatve": "1,75"
+ },
+ "T31140": {
+  "dis_olcu": "M14",
+  "hatve": "2,00"
+ },
+ "T33140": {
+  "dis_olcu": "M14",
+  "hatve": "2,00"
+ },
+ "T31160": {
+  "dis_olcu": "M16",
+  "hatve": "2,00"
+ },
+ "T33160": {
+  "dis_olcu": "M16",
+  "hatve": "2,00"
+ },
+ "T31180": {
+  "dis_olcu": "M18",
+  "hatve": "2,50"
+ },
+ "T33180": {
+  "dis_olcu": "M18",
+  "hatve": "2,50"
+ },
+ "T31200": {
+  "dis_olcu": "M20",
+  "hatve": "2,50"
+ },
+ "T33200": {
+  "dis_olcu": "M20",
+  "hatve": "2,50"
+ },
+ "T310405": {
+  "dis_olcu": "M4",
+  "hatve": "0,50"
+ },
+ "T330450": {
+  "dis_olcu": "M4",
+  "hatve": "0,50"
+ },
+ "T310505": {
+  "dis_olcu": "M5",
+  "hatve": "0,50"
+ },
+ "T330550": {
+  "dis_olcu": "M5",
+  "hatve": "0,50"
+ },
+ "T310675": {
+  "dis_olcu": "M6",
+  "hatve": "0,75"
+ },
+ "T330675": {
+  "dis_olcu": "M6",
+  "hatve": "0,75"
+ },
+ "T310875": {
+  "dis_olcu": "M8",
+  "hatve": "0,75"
+ },
+ "T330875": {
+  "dis_olcu": "M8",
+  "hatve": "0,75"
+ },
+ "T310810": {
+  "dis_olcu": "M8",
+  "hatve": "1,00"
+ },
+ "T330810": {
+  "dis_olcu": "M8",
+  "hatve": "1,00"
+ },
+ "T311075": {
+  "dis_olcu": "M10",
+  "hatve": "0,75"
+ },
+ "T331075": {
+  "dis_olcu": "M10",
+  "hatve": "0,75"
+ },
+ "T311001": {
+  "dis_olcu": "M10",
+  "hatve": "1,00"
+ },
+ "T331001": {
+  "dis_olcu": "M10",
+  "hatve": "1,00"
+ },
+ "T311025": {
+  "dis_olcu": "M10",
+  "hatve": "1,25"
+ },
+ "T331025": {
+  "dis_olcu": "M10",
+  "hatve": "1,25"
+ },
+ "T311210": {
+  "dis_olcu": "M12",
+  "hatve": "1,00"
+ },
+ "T331210": {
+  "dis_olcu": "M12",
+  "hatve": "1,00"
+ },
+ "T311225": {
+  "dis_olcu": "M12",
+  "hatve": "1,25"
+ },
+ "T331225": {
+  "dis_olcu": "M12",
+  "hatve": "1,25"
+ },
+ "T311215": {
+  "dis_olcu": "M12",
+  "hatve": "1,50"
+ },
+ "T331215": {
+  "dis_olcu": "M12",
+  "hatve": "1,50"
+ },
+ "T311410": {
+  "dis_olcu": "M14",
+  "hatve": "1,00"
+ },
+ "T331410": {
+  "dis_olcu": "M14",
+  "hatve": "1,00"
+ },
+ "T311425": {
+  "dis_olcu": "M14",
+  "hatve": "1,25"
+ },
+ "T331425": {
+  "dis_olcu": "M14",
+  "hatve": "1,25"
+ },
+ "T311415": {
+  "dis_olcu": "M14",
+  "hatve": "1,50"
+ },
+ "T331415": {
+  "dis_olcu": "M14",
+  "hatve": "1,50"
+ },
+ "T311610": {
+  "dis_olcu": "M16",
+  "hatve": "1,00"
+ },
+ "T331610": {
+  "dis_olcu": "M16",
+  "hatve": "1,00"
+ },
+ "T311615": {
+  "dis_olcu": "M16",
+  "hatve": "1,50"
+ },
+ "T331615": {
+  "dis_olcu": "M16",
+  "hatve": "1,50"
+ },
+ "T311810": {
+  "dis_olcu": "M18",
+  "hatve": "1,00"
+ },
+ "T331810": {
+  "dis_olcu": "M18",
+  "hatve": "1,00"
+ },
+ "T311815": {
+  "dis_olcu": "M18",
+  "hatve": "1,50"
+ },
+ "T331815": {
+  "dis_olcu": "M18",
+  "hatve": "1,50"
+ },
+ "T312010": {
+  "dis_olcu": "M20",
+  "hatve": "1,00"
+ },
+ "T332010": {
+  "dis_olcu": "M20",
+  "hatve": "1,00"
+ },
+ "T312015": {
+  "dis_olcu": "M20",
+  "hatve": "1,50"
+ },
+ "T332015": {
+  "dis_olcu": "M20",
+  "hatve": "1,50"
+ },
+ "T31NF0014": {
+  "dis_olcu": "UNF1/4",
+  "hatve": "28"
+ },
+ "T33NF0014": {
+  "dis_olcu": "UNF1/4",
+  "hatve": "28"
+ },
+ "T31NF0516": {
+  "dis_olcu": "UNF5/16",
+  "hatve": "24"
+ },
+ "T33NF0516": {
+  "dis_olcu": "UNF5/16",
+  "hatve": "24"
+ },
+ "T31NF0038": {
+  "dis_olcu": "UNF3/8",
+  "hatve": "24"
+ },
+ "T33NF0038": {
+  "dis_olcu": "UNF3/8",
+  "hatve": "24"
+ },
+ "T31NF0716": {
+  "dis_olcu": "UNF7/16",
+  "hatve": "20"
+ },
+ "T33NF0716": {
+  "dis_olcu": "UNF7/16",
+  "hatve": "20"
+ },
+ "T31NF0012": {
+  "dis_olcu": "UNF1/2",
+  "hatve": "20"
+ },
+ "T33NF0012": {
+  "dis_olcu": "UNF1/2",
+  "hatve": "20"
+ },
+ "T31NF0916": {
+  "dis_olcu": "UNF9/16",
+  "hatve": "18"
+ },
+ "T33NF0916": {
+  "dis_olcu": "UNF9/16",
+  "hatve": "18"
+ },
+ "T31NF0058": {
+  "dis_olcu": "UNF5/8",
+  "hatve": "18"
+ },
+ "T33NF0058": {
+  "dis_olcu": "UNF5/8",
+  "hatve": "18"
+ },
+ "T31NF0034": {
+  "dis_olcu": "UNF3/4",
+  "hatve": "16"
+ },
+ "T33NF0034": {
+  "dis_olcu": "UNF3/4",
+  "hatve": "16"
+ },
+ "T31NF0078": {
+  "dis_olcu": "UNF7/8",
+  "hatve": "14"
+ },
+ "T33NF0078": {
+  "dis_olcu": "UNF7/8",
+  "hatve": "14"
+ },
+ "T31NF1012": {
+  "dis_olcu": "UNF1",
+  "hatve": "12"
+ },
+ "T33NF1012": {
+  "dis_olcu": "UNF1",
+  "hatve": "12"
+ },
+ "T31NF1014": {
+  "dis_olcu": "UNF1",
+  "hatve": "14"
+ },
+ "T33NF1014": {
+  "dis_olcu": "UNF1",
+  "hatve": "14"
+ },
+ "T31NC0014": {
+  "dis_olcu": "UNC1/4",
+  "hatve": "20"
+ },
+ "T33NC0014": {
+  "dis_olcu": "UNC1/4",
+  "hatve": "20"
+ },
+ "T31NC0516": {
+  "dis_olcu": "UNC5/16",
+  "hatve": "18"
+ },
+ "T33NC0516": {
+  "dis_olcu": "UNC5/16",
+  "hatve": "18"
+ },
+ "T31NC0038": {
+  "dis_olcu": "UNC3/8",
+  "hatve": "16"
+ },
+ "T33NC0038": {
+  "dis_olcu": "UNC3/8",
+  "hatve": "16"
+ },
+ "T31NC0716": {
+  "dis_olcu": "UNC7/16",
+  "hatve": "14"
+ },
+ "T33NC0716": {
+  "dis_olcu": "UNC7/16",
+  "hatve": "14"
+ },
+ "T31NC0012": {
+  "dis_olcu": "UNC1/2",
+  "hatve": "13"
+ },
+ "T33NC0012": {
+  "dis_olcu": "UNC1/2",
+  "hatve": "13"
+ },
+ "T31NC0916": {
+  "dis_olcu": "UNC9/16",
+  "hatve": "12"
+ },
+ "T33NC0916": {
+  "dis_olcu": "UNC9/16",
+  "hatve": "12"
+ },
+ "T31NC0058": {
+  "dis_olcu": "UNC5/8",
+  "hatve": "11"
+ },
+ "T33NC0058": {
+  "dis_olcu": "UNC5/8",
+  "hatve": "11"
+ },
+ "T31NC0034": {
+  "dis_olcu": "UNC3/4",
+  "hatve": "10"
+ },
+ "T33NC0034": {
+  "dis_olcu": "UNC3/4",
+  "hatve": "10"
+ },
+ "T31NC0078": {
+  "dis_olcu": "UNC7/8",
+  "hatve": "9"
+ },
+ "T33NC0078": {
+  "dis_olcu": "UNC7/8",
+  "hatve": "9"
+ },
+ "T31NC1008": {
+  "dis_olcu": "UNC1",
+  "hatve": "8"
+ },
+ "T33NC1008": {
+  "dis_olcu": "UNC1",
+  "hatve": "8"
+ },
+ "T31G0018": {
+  "dis_olcu": "G1/8",
+  "hatve": "28"
+ },
+ "T33G0018": {
+  "dis_olcu": "G1/8",
+  "hatve": "28"
+ },
+ "T31G0014": {
+  "dis_olcu": "G1/4",
+  "hatve": "19"
+ },
+ "T33G0014": {
+  "dis_olcu": "G1/4",
+  "hatve": "19"
+ },
+ "T31G0038": {
+  "dis_olcu": "G3/8",
+  "hatve": "19"
+ },
+ "T33G0038": {
+  "dis_olcu": "G3/8",
+  "hatve": "19"
+ },
+ "T31G0012": {
+  "dis_olcu": "G1/2",
+  "hatve": "14"
+ },
+ "T33G0012": {
+  "dis_olcu": "G1/2",
+  "hatve": "14"
+ },
+ "T31G0058": {
+  "dis_olcu": "G5/8",
+  "hatve": "14"
+ },
+ "T33G0058": {
+  "dis_olcu": "G5/8",
+  "hatve": "14"
+ },
+ "T31G0034": {
+  "dis_olcu": "G3/4",
+  "hatve": "14"
+ },
+ "T33G0034": {
+  "dis_olcu": "G3/4",
+  "hatve": "14"
+ },
+ "T31G0078": {
+  "dis_olcu": "G7/8",
+  "hatve": "14"
+ },
+ "T33G0078": {
+  "dis_olcu": "G7/8",
+  "hatve": "14"
+ },
+ "T31G1000": {
+  "dis_olcu": "G1",
+  "hatve": "11"
+ },
+ "T33G1000": {
+  "dis_olcu": "G1",
+  "hatve": "11"
+ },
+ "T31G0114": {
+  "dis_olcu": "G1 1/4",
+  "hatve": "11"
+ },
+ "T33G0114": {
+  "dis_olcu": "G1 1/4",
+  "hatve": "11"
+ },
+ "T31G0112": {
+  "dis_olcu": "G1 1/2",
+  "hatve": "11"
+ },
+ "T33G0112": {
+  "dis_olcu": "G1 1/2",
+  "hatve": "11"
+ },
+ "T31G2000": {
+  "dis_olcu": "G2",
+  "hatve": "11"
+ },
+ "T33G2000": {
+  "dis_olcu": "G2",
+  "hatve": "11"
+ },
+ "T31G0212": {
+  "dis_olcu": "G2 1/2",
+  "hatve": "11"
+ },
+ "T33G0212": {
+  "dis_olcu": "G2 1/2",
+  "hatve": "11"
+ },
+ "T31G3000": {
+  "dis_olcu": "G3",
+  "hatve": "11"
+ },
+ "T33G3000": {
+  "dis_olcu": "G3",
+  "hatve": "11"
  }
 }

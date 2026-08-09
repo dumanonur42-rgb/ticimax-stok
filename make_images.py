@@ -16,6 +16,7 @@ HERE = Path(__file__).resolve().parent
 TEMPLATES = {
     "BOHRCRAFT": HERE / "sablon_bohrcraft.png",
     "ERİC": HERE / "sablon_eric.png",
+    "VERTEX": HERE / "sablon_vertex.png",
 }
 DEFAULT_TEMPLATE = HERE / "sablon_eric.png"
 OUT_DIR = HERE / "gorseller"

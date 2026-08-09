@@ -22,12 +22,44 @@ def _fmt(v):
     return ("%g" % v).replace(".", ",") if isinstance(v, float) else str(v)
 
 
-def olcu_ozellikleri(sku):
+def olcu_ozellikleri(sku, olcu_aleti=False):
     """Katalogdan alinan olculeri (etiket, deger) listesi olarak dondurur."""
-    o = OLCULER.get(sku or "")
+    o = OLCULER.get((sku or "").strip())
     if not o:
         return []
     out = []
+    if olcu_aleti:
+        if o.get("olcum"):
+            out.append(("Ölçüm Aralığı", f"{o['olcum']} mm"))
+        if o.get("hassasiyet"):
+            out.append(("Hassasiyet", f"{o['hassasiyet']} mm"))
+        if o.get("dis_olcu"):
+            out.append(("Diş Ölçüsü", str(o["dis_olcu"])))
+        if o.get("hatve"):
+            out.append(("Hatve (Adım)", f"{_fmt(o['hatve'])}"))
+        if o.get("cene"):
+            out.append(("Çene Boyu", f"{_fmt(o['cene'])} mm"))
+        if o.get("cap"):
+            out.append(("Uç Çapı", f"Ø{_fmt(o['cap'])} mm"))
+        if o.get("boy"):
+            out.append(("Boy", f"{_fmt(o['boy'])} mm"))
+        if o.get("en"):
+            out.append(("En", f"{_fmt(o['en'])} mm"))
+        if o.get("yukseklik"):
+            out.append(("Yükseklik", f"{_fmt(o['yukseklik'])} mm"))
+        if o.get("kalinlik"):
+            out.append(("Kalınlık", f"{_fmt(o['kalinlik'])} mm"))
+        if o.get("aci"):
+            out.append(("Açı Aralığı", f"{o['aci']}°"))
+        if o.get("parca"):
+            out.append(("Parça Sayısı", str(o["parca"])))
+        if o.get("tasima"):
+            out.append(("Taşıma Kapasitesi", f"{_fmt(o['tasima'])} kg"))
+        if o.get("kapasite"):
+            out.append(("Kapasite", f"{_fmt(o['kapasite'])} kg"))
+        if o.get("agirlik"):
+            out.append(("Ağırlık", f"{_fmt(o['agirlik'])} kg"))
+        return out
     if o.get("boy"):
         out.append(("Toplam Boy", f"{_fmt(o['boy'])} mm"))
     if o.get("helis"):
@@ -58,6 +90,72 @@ GTIP_KARBUR = "8207.50.50.00.00"   # is goren kismi sermet/karbur
 # GTIP: 8207.70 frezelemeye mahsus aletler
 GTIP_FREZE_HSS = "8207.70.35.00.00"     # sapli frezeler (HSS)
 GTIP_FREZE_KARBUR = "8207.70.10.00.00"  # is goren kismi sermet/karbur
+# GTIP: olcu aletleri
+GTIP_OLCU_KUMPAS = "9017.30.10.00.00"   # mikrometreler ve kumpaslar
+GTIP_OLCU_MASTAR = "9017.30.90.00.00"   # mastarlar (vida, sentil, johnson)
+GTIP_OLCU_CIZIM = "9017.20.90.00.00"    # gonye, cetvel, aci olcer, pleyt
+GTIP_OLCU_DIGER = "9031.80.80.00.00"    # komparator, mihengir, prop, tester
+
+_OLCU_GTIP = {
+    GTIP_OLCU_KUMPAS: {
+        "kumpas_mekanik", "kumpas_dijital", "kumpas_saatli", "kumpas_derinlik",
+        "mikrometre", "mikrometre_dijital", "mikrometre_ic",
+        "mikrometre_derinlik", "mikrometre_uzatma", "mikrometre_set",
+    },
+    GTIP_OLCU_MASTAR: {
+        "mastar_erkek", "mastar_disi", "sentil", "sentil_caki", "johnson_set",
+        "radius_mastar", "paralel_set", "dis_taragi",
+    },
+    GTIP_OLCU_CIZIM: {
+        "gonye_kil", "gonye_duz", "gonye_sapkali", "cetvel", "aci_olcer",
+        "pleyt_granit", "pleyt_gonye",
+    },
+}
+
+# Olcu aletleri: kategori yaprak adi -> tip kodu
+_OLCU_TIPLER = {
+    "Mekanik Kumpaslar": "kumpas_mekanik",
+    "Dijital Kumpaslar": "kumpas_dijital",
+    "Saatli Kumpaslar": "kumpas_saatli",
+    "Derinlik Kumpasları": "kumpas_derinlik",
+    "Dış Çap Mikrometreleri": "mikrometre",
+    "Dijital Dış Çap Mikrometreleri": "mikrometre_dijital",
+    "İç Çap Mikrometreleri": "mikrometre_ic",
+    "Derinlik Mikrometreleri": "mikrometre_derinlik",
+    "Delik İçi Uzatma Mikrometreleri": "mikrometre_uzatma",
+    "Mikrometre Setleri": "mikrometre_set",
+    "Komparatör Saatleri": "komparator",
+    "Dijital Komparatör Saatleri": "komparator_dijital",
+    "Salgı Komparatör Saatleri": "komparator_salgi",
+    "Kalınlık Komparatörleri": "komparator_kalinlik",
+    "İç Çap Komparatörleri": "komparator_ic",
+    "Dış Çap Komparatörleri": "komparator_dis",
+    "Silindir Komparatör Takımları": "silindir_komparator",
+    "Mercekli Yükseklik Mihengirleri": "mihengir",
+    "Saatli Yükseklik Mihengirleri": "mihengir_saatli",
+    "Dijital Yükseklik Mihengirleri": "mihengir_dijital",
+    "Manyetik Ayaklar": "manyetik_ayak",
+    "Manyetik V Yatakları": "manyetik_v",
+    "Proplar": "prop",
+    "Z Sıfırlama Aparatları": "z_sifirlama",
+    "3D Testerler": "tester3d",
+    "Erkek Vida Mastarları": "mastar_erkek",
+    "Dişi Vida Mastarları": "mastar_disi",
+    "Granit Pleytler": "pleyt_granit",
+    "Gönye Pleytleri": "pleyt_gonye",
+    "Kıl Gönyeler": "gonye_kil",
+    "Şapkasız Gönyeler": "gonye_duz",
+    "Şapkalı Gönyeler": "gonye_sapkali",
+    "Şerit Sentiller": "sentil",
+    "Sentil Filler Çakıları": "sentil_caki",
+    "Paralel Setler": "paralel_set",
+    "Johnson Mastar Setleri": "johnson_set",
+    "Radius Mastarları": "radius_mastar",
+    "Açı Ölçerler": "aci_olcer",
+    "Hassas Su Terazileri": "su_terazisi",
+    "Çelik Cetveller": "cetvel",
+    "Diş Tarakları": "dis_taragi",
+}
 
 _FREZE_TIPLER = {
     "HSS Parmak Frezeler": "parmak",
@@ -79,9 +177,59 @@ def _pick(variants, key, salt=""):
     return variants[h % len(variants)]
 
 
+def _parse_olcu_specs(up: str, cat: str):
+    """Olcu aletlerinde urun adindan olcum araligi, hassasiyet vb. cikarir."""
+    s = {"olcu_aleti": True, "tip": "olcu"}
+    for ad, tip in _OLCU_TIPLER.items():
+        if cat.endswith(ad):
+            s["tip"] = tip
+            break
+    m = re.search(r"(\d+(?:[.,]\d+)?)\s*-\s*(\d+(?:[.,]\d+)?)\s*MM", up)
+    if m:
+        s["olcum_ad"] = f"{m.group(1)}-{m.group(2)} mm"
+    else:
+        m = re.search(r"(\d+(?:[.,]\d+)?)\s*MM", up)
+        if m:
+            s["olcum_ad"] = f"{m.group(1)} mm"
+    m = re.search(r"\b0[.,](\d{1,3})\b", up)
+    if m:
+        s["hassasiyet_ad"] = "0," + m.group(1)
+    m = re.search(r"\b(M\d+(?:[.,]\d+)?|UNF ?\d+/\d+|UNC ?\d+/\d+|G ?\d+/\d+)\b", up)
+    if m:
+        s["dis_ad"] = m.group(1).replace(" ", "")
+    if "DİJİTAL" in up:
+        s["gosterge"] = "Dijital"
+    elif "SAATLİ" in up or "MERCEKLİ" in up:
+        s["gosterge"] = "Saatli/Mekanik"
+    elif "MEKANİK" in up or "MONOBLOK" in up:
+        s["gosterge"] = "Mekanik (verniyeli)"
+    if "IP67" in up:
+        s["koruma"] = "IP67"
+    elif "IP54" in up:
+        s["koruma"] = "IP54"
+    if "PASLANMAZ" in up:
+        s["gövde"] = "Paslanmaz çelik"
+    elif "GRANİT" in up:
+        s["gövde"] = "Granit"
+    elif "METAL KASA" in up:
+        s["gövde"] = "Metal kasa"
+    if "DIN" in up:
+        m = re.search(r"D[İI]N\s*-?\s*(\d+(?:/\d+)?)", up)
+        if m:
+            s["din"] = "DIN " + m.group(1)
+    if s["tip"] in ("gonye_kil", "gonye_duz", "gonye_sapkali"):
+        s["din"] = s.get("din") or "DIN 875/1"
+    if s["tip"] == "pleyt_granit":
+        s["din"] = s.get("din") or "DIN 876/1"
+    return s
+
+
 def parse_specs(name: str, category_path: str):
     up = (name or "").upper()
     s = {}
+    cat0 = category_path or ""
+    if cat0.startswith("ÖLÇÜ ALETLERİ"):
+        return _parse_olcu_specs(up, cat0)
     m = re.search(r"(\d+(?:[.,]\d+)?)\s*[Xx\-*]\s*(\d+(?:[.,]\d+)?)\s*MM", up)
     if m:
         s["cap"] = m.group(1).replace(".", ",")
@@ -139,9 +287,16 @@ def parse_specs(name: str, category_path: str):
 
 
 def gtip(name: str, category_path: str) -> str:
-    up = (name or "").upper() + " " + (category_path or "").upper()
+    cat = category_path or ""
+    if cat.startswith("ÖLÇÜ ALETLERİ"):
+        tip = _parse_olcu_specs((name or "").upper(), cat)["tip"]
+        for kod, tipler in _OLCU_GTIP.items():
+            if tip in tipler:
+                return kod
+        return GTIP_OLCU_DIGER
+    up = (name or "").upper() + " " + cat.upper()
     karbur = "KARBÜR" in up or "CARBIDE" in up
-    if ">FREZELER>" in (category_path or ""):
+    if ">FREZELER>" in cat:
         return GTIP_FREZE_KARBUR if karbur else GTIP_FREZE_HSS
     return GTIP_KARBUR if karbur else GTIP_HSS
 
@@ -153,6 +308,21 @@ def desi_agirlik(name: str, category_path: str):
         cap = float((s.get("cap") or "5").replace(",", "."))
     except ValueError:
         cap = 5.0
+    if s.get("olcu_aleti"):
+        if s["tip"] in ("pleyt_granit", "pleyt_gonye"):
+            return 12, 15.0
+        if s["tip"] in ("mihengir", "mihengir_saatli", "mihengir_dijital",
+                        "manyetik_v", "silindir_komparator", "johnson_set",
+                        "mikrometre_set"):
+            return 3, 2.0
+        if s["tip"] in ("kumpas_mekanik", "kumpas_dijital", "kumpas_saatli",
+                        "kumpas_derinlik", "mikrometre", "mikrometre_dijital",
+                        "mikrometre_ic", "mikrometre_derinlik",
+                        "mikrometre_uzatma", "aci_olcer", "cetvel",
+                        "gonye_sapkali", "gonye_duz", "gonye_kil",
+                        "su_terazisi", "manyetik_ayak", "paralel_set"):
+            return 2, 0.6
+        return 1, 0.3
     if s["tip"] == "kademeli":
         return 2, 0.45
     if s["tip"] == "konik":
@@ -221,7 +391,123 @@ _FREZE_TIP_ADLARI = {
 }
 
 
+_OLCU_TIP_ADLARI = {
+    "olcu": "ölçü aleti",
+    "kumpas_mekanik": "mekanik kumpas",
+    "kumpas_dijital": "dijital kumpas",
+    "kumpas_saatli": "saatli kumpas",
+    "kumpas_derinlik": "derinlik kumpası",
+    "mikrometre": "dış çap mikrometresi",
+    "mikrometre_dijital": "dijital dış çap mikrometresi",
+    "mikrometre_ic": "iç çap mikrometresi",
+    "mikrometre_derinlik": "derinlik mikrometresi",
+    "mikrometre_uzatma": "delik içi uzatma mikrometresi",
+    "mikrometre_set": "mikrometre seti",
+    "komparator": "komparatör saati",
+    "komparator_dijital": "dijital komparatör saati",
+    "komparator_salgi": "salgı komparatör saati",
+    "komparator_kalinlik": "kalınlık komparatörü",
+    "komparator_ic": "iç çap komparatörü",
+    "komparator_dis": "dış çap komparatörü",
+    "silindir_komparator": "silindir komparatör takımı",
+    "mihengir": "mercekli yükseklik mihengiri",
+    "mihengir_saatli": "saatli yükseklik mihengiri",
+    "mihengir_dijital": "dijital yükseklik mihengiri",
+    "manyetik_ayak": "manyetik komparatör ayağı",
+    "manyetik_v": "manyetik V yatağı",
+    "prop": "prop (kenar bulucu)",
+    "z_sifirlama": "Z sıfırlama aparatı",
+    "tester3d": "3D tester",
+    "mastar_erkek": "erkek vida mastarı",
+    "mastar_disi": "dişi vida mastarı",
+    "pleyt_granit": "granit pleyt",
+    "pleyt_gonye": "gönye pleyti",
+    "gonye_kil": "kıl gönye",
+    "gonye_duz": "şapkasız gönye",
+    "gonye_sapkali": "şapkalı gönye",
+    "sentil": "şerit sentil",
+    "sentil_caki": "sentil filler çakısı",
+    "paralel_set": "paralel set",
+    "johnson_set": "Johnson mastar seti",
+    "radius_mastar": "radius mastarı",
+    "aci_olcer": "açı ölçer",
+    "su_terazisi": "hassas su terazisi",
+    "cetvel": "paslanmaz çelik cetvel",
+    "dis_taragi": "diş tarağı",
+}
+
+_OLCU_KULLANIM = {
+    "olcu": "atölye ve kalite kontrol ortamlarında hassas ölçüm yapmanızı sağlar",
+    "kumpas_mekanik": "iç çap, dış çap, derinlik ve kademe ölçümlerini verniyer skalasıyla pilsiz olarak yapar",
+    "kumpas_dijital": "iç çap, dış çap, derinlik ve kademe ölçümlerini dijital ekranda anında ve okuma hatasız gösterir",
+    "kumpas_saatli": "kadranlı göstergesiyle titreşimli atölye ortamında hızlı ve kolay okunabilir ölçüm sağlar",
+    "kumpas_derinlik": "delik, kanal ve kademe derinliklerini hassas biçimde ölçer",
+    "mikrometre": "mil, levha ve parça dış ölçülerini 0,01 mm hassasiyetle ölçer",
+    "mikrometre_dijital": "dış ölçüleri dijital ekranda mikron mertebesinde okur, mm/inç dönüşümü yapar",
+    "mikrometre_ic": "delik ve yatak iç çaplarını hassas biçimde ölçer",
+    "mikrometre_derinlik": "delik, kanal ve kademe derinliklerini mikrometre hassasiyetinde ölçer",
+    "mikrometre_uzatma": "uzatma çubukları sayesinde derin deliklerin iç çapını ölçer",
+    "mikrometre_set": "farklı ölçüm aralıklarındaki mikrometreleri tek kutuda sunar",
+    "komparator": "iş parçasındaki sapma, düzlemsellik ve paralellik farklarını 0,01 mm hassasiyetle gösterir",
+    "komparator_dijital": "sapma ölçümlerini dijital ekranda okuma hatası olmadan gösterir",
+    "komparator_salgi": "mil ve tezgah tablalarında salgı (eksenden kaçıklık) ölçümü yapar",
+    "komparator_kalinlik": "sac, levha, boru ve conta kalınlıklarını hızlıca ölçer",
+    "komparator_ic": "silindir ve delik iç çaplarında ovallik ve konikliği tespit eder",
+    "komparator_dis": "mil ve parça dış çaplarında seri ölçüm ve karşılaştırma yapar",
+    "silindir_komparator": "silindir deliklerinde iç çap, ovallik ve konikliği uzatma parçalarıyla ölçer",
+    "mihengir": "yükseklik ölçümü ve pleyt üzerinde hassas markalama yapar",
+    "mihengir_saatli": "kadranlı göstergesiyle yükseklik ölçümü ve markalamayı kolaylaştırır",
+    "mihengir_dijital": "yükseklik ölçümlerini dijital ekranda hızlı ve hatasız okur",
+    "manyetik_ayak": "komparatör saatini tezgaha manyetik olarak sabitler, açılı kollarla her konuma ayarlanır",
+    "manyetik_v": "silindirik parçaları manyetik olarak sabitleyerek ölçüm ve markalama sırasında kaymayı önler",
+    "prop": "freze tezgahında iş parçası kenarını hassas biçimde bulur ve sıfır noktası belirler",
+    "z_sifirlama": "CNC ve freze tezgahlarında takım boyu Z eksen sıfırlamasını hızlı ve tekrarlanabilir şekilde yapar",
+    "tester3d": "X, Y ve Z eksenlerinde kenar, delik merkezi ve sıfır noktası tespitini tek aparatla yapar",
+    "mastar_erkek": "dişi vida deliklerinin diş ölçüsünü ve toleransını hızlıca kontrol eder",
+    "mastar_disi": "erkek vidaların diş ölçüsünü ve toleransını hızlıca kontrol eder",
+    "pleyt_granit": "ölçüm ve markalama işlerinde ısıl genleşmesi düşük, aşınmaya dayanıklı referans yüzey sunar",
+    "pleyt_gonye": "dik konumdaki ölçüm ve markalama işlerinde 90° referans yüzey sağlar",
+    "gonye_kil": "dikliği ince kıl kenarıyla ışık sızdırma yöntemiyle en hassas şekilde kontrol eder",
+    "gonye_duz": "montaj ve markalama işlerinde 90° kontrolü yapar",
+    "gonye_sapkali": "şapkalı tabanı sayesinde iş parçasına dayanarak güvenli 90° kontrolü sağlar",
+    "sentil": "boşluk, aralık ve tolerans ölçümlerinde şerit biçiminde istenen kalınlığı verir",
+    "sentil_caki": "farklı kalınlıktaki yaprakları tek gövdede toplayarak boşluk ölçümünü pratikleştirir",
+    "paralel_set": "mengenede iş parçasını tabandan yükselterek düzgün ve paralel bağlanmasını sağlar",
+    "johnson_set": "hassas ölçüm cihazlarının kalibrasyonu ve referans ölçü oluşturmada kullanılır",
+    "radius_mastar": "iç ve dış radüsleri şablon yaprakları ile hızlıca kontrol eder",
+    "aci_olcer": "açı ölçümü ve açılı markalama işlerinde 0-360° aralığında çalışır",
+    "su_terazisi": "tezgah tablası ve makine montajında hassas terazileme yapar",
+    "cetvel": "paslanmaz çelik gövdesiyle atölyede uzun ömürlü ölçüm ve markalama sağlar",
+    "dis_taragi": "metrik ve inç vida dişlerinin hatvesini şablonlarla hızlıca belirler",
+}
+
+_OLCU_ALANLAR = {
+    "kalite": ["Kalite kontrol ve ölçüm laboratuvarı", "CNC ve talaşlı imalat atölyeleri",
+               "Makine bakım-onarım işleri", "Kalıp ve aparat imalatı"],
+    "tezgah": ["CNC işleme merkezleri", "Freze ve torna tezgahları",
+               "Kalıp ve aparat imalatı", "Seri üretimde takım ayarı"],
+    "markalama": ["Pleyt üzerinde markalama", "Kalite kontrol ölçümleri",
+                  "Makine montajı ve ayarı", "Model ve prototip üretimi"],
+    "vida": ["Vida ve cıvata diş kontrolü", "Kalite kontrol girdi muayenesi",
+             "Diş açma sonrası tolerans kontrolü", "Makine imalatı ve montaj"],
+}
+
+_OLCU_ALAN_TIP = {
+    "prop": "tezgah", "z_sifirlama": "tezgah", "tester3d": "tezgah",
+    "manyetik_ayak": "tezgah", "manyetik_v": "markalama",
+    "paralel_set": "tezgah", "su_terazisi": "tezgah",
+    "mihengir": "markalama", "mihengir_saatli": "markalama",
+    "mihengir_dijital": "markalama", "pleyt_granit": "markalama",
+    "pleyt_gonye": "markalama", "cetvel": "markalama",
+    "gonye_kil": "markalama", "gonye_duz": "markalama",
+    "gonye_sapkali": "markalama", "aci_olcer": "markalama",
+    "mastar_erkek": "vida", "mastar_disi": "vida", "dis_taragi": "vida",
+}
+
+
 def _tip_adi(s):
+    if s.get("olcu_aleti"):
+        return _OLCU_TIP_ADLARI.get(s["tip"], "ölçü aleti")
     return {
         "kademeli": "kademeli sac matkabı",
         "punta": "punta matkabı",
@@ -291,8 +577,81 @@ _SSS_KULLANIM = [
 ]
 
 
+def _olcu_teknik_listesi(s, sku):
+    """Olcu aletleri icin (etiket, deger) listesi: katalog + urun adi."""
+    out = list(olcu_ozellikleri(sku, olcu_aleti=True))
+    etiketler = {e for e, _ in out}
+    if s.get("olcum_ad") and "Ölçüm Aralığı" not in etiketler:
+        out.insert(0, ("Ölçüm Aralığı", s["olcum_ad"]))
+    if s.get("hassasiyet_ad") and "Hassasiyet" not in etiketler:
+        out.append(("Hassasiyet", f"{s['hassasiyet_ad']} mm"))
+    if s.get("dis_ad") and "Diş Ölçüsü" not in etiketler:
+        out.append(("Diş Ölçüsü", s["dis_ad"]))
+    if s.get("gosterge"):
+        out.append(("Gösterge Tipi", s["gosterge"]))
+    if s.get("koruma"):
+        out.append(("Koruma Sınıfı", s["koruma"]))
+    if s.get("gövde"):
+        out.append(("Gövde Malzemesi", s["gövde"]))
+    if s.get("din"):
+        out.append(("Standart", s["din"]))
+    return out
+
+
+_OLCU_KAPANIS = [
+    "Hassas işleme ve sıkı kalite kontrol süreçleriyle üretilir, ölçüm tekrarlanabilirliği yüksektir.",
+    "Düzgün taşlanmış ölçüm yüzeyleri uzun ömür ve kararlı hassasiyet sunar.",
+    "Atölye koşullarına dayanıklı yapısıyla yıllarca güvenle kullanılır.",
+    "Kutusunda korumalı olarak gönderilir, kullanıma hazırdır.",
+]
+
+_OLCU_NEDEN = [
+    "{marka} ölçü aletleri, sanayi standartlarına uygun üretim ve sıkı kalite kontrol süreçlerinden geçer. {sku} stok kodlu bu ürün, orijinal ve faturalı olarak YAMANSA güvencesiyle gönderilir.",
+    "Doğru {tip_adi} seçimi; ölçüm güvenilirliğini, ürün kalitesini ve fire oranını doğrudan etkiler. {marka} kalitesindeki bu ürün, hem hobi kullanıcısının hem profesyonel atölyelerin beklentisini karşılar.",
+    "{sku} stok kodlu {marka} {tip_adi}, ölçüm kararlılığı ve dayanıklı yapısıyla uzun vadede güvenilir sonuç verir. YAMANSA stoklarından hızlı ve güvenli teslimat.",
+    "Hassas ölçüm aletlerinde marka ve işçilik kalitesi belirleyicidir. {marka} imzalı bu {tip_adi}, tekrarlanabilir ölçüm ve uzun ömür sunar.",
+]
+
+_OLCU_SSS = [
+    ("Nasıl korunmalı?",
+     "Kullanım sonrası temiz ve kuru bir bezle silinmeli, ince yağ ile korunmalı ve kutusunda saklanmalıdır; düşme ve darbeden kaçınılmalıdır.",),
+    ("Kalibrasyon gerekir mi?",
+     "Hassas ölçüm aletlerinin belirli aralıklarla mastar veya referans bloklarla doğrulanması ölçüm güvenilirliğini artırır.",),
+    ("Hangi ortamda kullanılmalı?",
+     "Aşırı tozlu, nemli ve manyetik alanlı ortamlardan kaçınılmalı; ölçüm öncesi alet ve iş parçası aynı ortam sıcaklığında olmalıdır.",),
+]
+
+
+def _build_olcu_description(name, sku, brand, s):
+    marka = brand or "YAMANSA"
+    tip_adi = _tip_adi(s)
+    kullanim = _OLCU_KULLANIM.get(s["tip"], _OLCU_KULLANIM["olcu"])
+    giris = _pick(_GIRIS, sku, "g").format(marka=marka, tip_adi=tip_adi,
+                                           kullanim=kullanim)
+    ozellikler = [f"{e}: {d}" for e, d in _olcu_teknik_listesi(s, sku)]
+    ozellikler.append(f"Marka: {marka}")
+    ozellikler.append(f"Stok kodu: {sku}")
+    li = "".join(f"<li>{o}</li>" for o in ozellikler)
+    alan_key = _OLCU_ALAN_TIP.get(s["tip"], "kalite")
+    alanlar = list(_OLCU_ALANLAR[alan_key])
+    rot = int(hashlib.md5((sku + "a").encode()).hexdigest(), 16) % len(alanlar)
+    alanlar = alanlar[rot:] + alanlar[:rot]
+    alan_li = "".join(f"<li>{a}</li>" for a in alanlar)
+    kapanis = _pick(_OLCU_KAPANIS, sku, "k")
+    neden = _pick(_OLCU_NEDEN, sku, "n").format(marka=marka, sku=sku,
+                                                tip_adi=tip_adi)
+    soru, cevap = _pick(_OLCU_SSS, sku, "q")
+    return (f"<h2>{name}</h2><p>{giris}</p>"
+            f"<h3>Teknik Özellikler</h3><ul>{li}</ul>"
+            f"<h3>Kullanım Alanları</h3><ul>{alan_li}</ul>"
+            f"<h3>Neden {marka} {tip_adi.capitalize()}?</h3><p>{neden} {kapanis}</p>"
+            f"<h3>Sık Sorulan Soru</h3><p><strong>{soru}</strong> {cevap}</p>")
+
+
 def build_description(name, sku, brand, category_path):
     s = parse_specs(name, category_path)
+    if s.get("olcu_aleti"):
+        return _build_olcu_description(name, sku, brand, s)
     marka = brand or "YAMANSA"
     tip_adi = _tip_adi(s)
     giris = _pick(_GIRIS, sku, "g").format(
@@ -357,6 +716,8 @@ def build_description(name, sku, brand, category_path):
 def teknik_detaylar(name, sku, brand, category_path):
     """Ticimax teknik detay/filtre alanlari icin (ozellik, deger) listesi."""
     s = parse_specs(name, category_path)
+    if s.get("olcu_aleti"):
+        return _olcu_teknik_listesi(s, sku)
     out = []
     if s.get("cap"):
         out.append(("Çap", f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
@@ -388,6 +749,15 @@ def build_onyazi(name, sku, brand, category_path):
     """Urun karti ustunde gorunen tablo bicimli on yazi."""
     s = parse_specs(name, category_path)
     cols = []
+    if s.get("olcu_aleti"):
+        for etiket, deger in _olcu_teknik_listesi(s, sku):
+            if etiket in ("Ölçüm Aralığı", "Hassasiyet", "Diş Ölçüsü",
+                          "Hatve (Adım)", "Boy") and len(cols) < 3:
+                cols.append(("Ölçüm" if etiket == "Ölçüm Aralığı" else
+                             ("Hatve" if etiket.startswith("Hatve") else etiket),
+                             deger))
+        cols.append(("Marka", brand or "YAMANSA"))
+        return _onyazi_html(cols)
     if s.get("cap"):
         cols.append(("Çap", f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
     malzeme = ""
@@ -402,6 +772,10 @@ def build_onyazi(name, sku, brand, category_path):
             cols.append(("Boy" if etiket == "Toplam Boy" else
                          ("Helis Boyu" if etiket.startswith("Helis") else etiket), deger))
     cols.append(("Marka", brand or "YAMANSA"))
+    return _onyazi_html(cols)
+
+
+def _onyazi_html(cols):
     hucre = ('style="flex:1 1 0;min-width:0;border:1px solid #e0e0e0;'
              'padding:5px 3px;text-align:center;overflow:hidden;"')
     etiket = ('style="font-weight:bold;font-size:11px;margin-bottom:3px;'

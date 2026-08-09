@@ -57,6 +57,7 @@ IMAGE_VERSION = "?v=2"
 
 # Ticimax tarafinda olusturulacak ana kategori
 ROOT_CATEGORY = "MATKAP VE FREZE"
+OLCU_ROOT = "ÖLÇÜ ALETLERİ"
 
 # Cekilecek kaynak kategoriler: (kaynak kategori id, Ticimax kategori yolu)
 # Sadelestirilmis, son kullanici odakli kategori yapisi.
@@ -145,6 +146,66 @@ CATEGORIES = [
     # Pah kirma frezeleri
     (284, ROOT_CATEGORY + ">FREZELER>Pah Kırma Frezeleri"),
     (285, ROOT_CATEGORY + ">FREZELER>Pah Kırma Frezeleri"),
+    # --- OLCU ALETLERI ---
+    (348, OLCU_ROOT + ">KUMPASLAR>Mekanik Kumpaslar"),
+    (349, OLCU_ROOT + ">KUMPASLAR>Dijital Kumpaslar"),
+    (500, OLCU_ROOT + ">KUMPASLAR>Saatli Kumpaslar"),
+    (350, OLCU_ROOT + ">KUMPASLAR>Derinlik Kumpasları"),
+    (352, OLCU_ROOT + ">MİKROMETRELER>Dış Çap Mikrometreleri"),
+    (354, OLCU_ROOT + ">MİKROMETRELER>Dijital Dış Çap Mikrometreleri"),
+    (355, OLCU_ROOT + ">MİKROMETRELER>İç Çap Mikrometreleri"),
+    (356, OLCU_ROOT + ">MİKROMETRELER>Derinlik Mikrometreleri"),
+    (357, OLCU_ROOT + ">MİKROMETRELER>Delik İçi Uzatma Mikrometreleri"),
+    (353, OLCU_ROOT + ">MİKROMETRELER>Mikrometre Setleri"),
+    (360, OLCU_ROOT + ">KOMPARATÖRLER>Komparatör Saatleri"),
+    (361, OLCU_ROOT + ">KOMPARATÖRLER>Dijital Komparatör Saatleri"),
+    (362, OLCU_ROOT + ">KOMPARATÖRLER>Salgı Komparatör Saatleri"),
+    (363, OLCU_ROOT + ">KOMPARATÖRLER>Kalınlık Komparatörleri"),
+    (364, OLCU_ROOT + ">KOMPARATÖRLER>İç Çap Komparatörleri"),
+    (365, OLCU_ROOT + ">KOMPARATÖRLER>Dış Çap Komparatörleri"),
+    (367, OLCU_ROOT + ">KOMPARATÖRLER>Silindir Komparatör Takımları"),
+    (368, OLCU_ROOT + ">KOMPARATÖRLER>Silindir Komparatör Takımları"),
+    (370, OLCU_ROOT + ">MİHENGİRLER>Mercekli Yükseklik Mihengirleri"),
+    (371, OLCU_ROOT + ">MİHENGİRLER>Saatli Yükseklik Mihengirleri"),
+    (372, OLCU_ROOT + ">MİHENGİRLER>Dijital Yükseklik Mihengirleri"),
+    (374, OLCU_ROOT + ">MANYETİK ÜRÜNLER>Manyetik Ayaklar"),
+    (375, OLCU_ROOT + ">MANYETİK ÜRÜNLER>Manyetik Ayaklar"),
+    (376, OLCU_ROOT + ">MANYETİK ÜRÜNLER>Manyetik V Yatakları"),
+    (378, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Proplar"),
+    (379, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Proplar"),
+    (380, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Proplar"),
+    (381, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Proplar"),
+    (383, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Z Sıfırlama Aparatları"),
+    (384, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Z Sıfırlama Aparatları"),
+    (519, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Z Sıfırlama Aparatları"),
+    (520, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>Z Sıfırlama Aparatları"),
+    (385, OLCU_ROOT + ">PROPLAR VE Z SIFIRLAMA>3D Testerler"),
+    (409, OLCU_ROOT + ">MASTARLAR>Erkek Vida Mastarları"),
+    (410, OLCU_ROOT + ">MASTARLAR>Erkek Vida Mastarları"),
+    (411, OLCU_ROOT + ">MASTARLAR>Erkek Vida Mastarları"),
+    (412, OLCU_ROOT + ">MASTARLAR>Erkek Vida Mastarları"),
+    (413, OLCU_ROOT + ">MASTARLAR>Erkek Vida Mastarları"),
+    (415, OLCU_ROOT + ">MASTARLAR>Dişi Vida Mastarları"),
+    (416, OLCU_ROOT + ">MASTARLAR>Dişi Vida Mastarları"),
+    (417, OLCU_ROOT + ">MASTARLAR>Dişi Vida Mastarları"),
+    (418, OLCU_ROOT + ">MASTARLAR>Dişi Vida Mastarları"),
+    (419, OLCU_ROOT + ">MASTARLAR>Dişi Vida Mastarları"),
+    (387, OLCU_ROOT + ">PLEYTLER>Granit Pleytler"),
+    (389, OLCU_ROOT + ">PLEYTLER>Gönye Pleytleri"),
+    (398, OLCU_ROOT + ">GÖNYELER>Kıl Gönyeler"),
+    (399, OLCU_ROOT + ">GÖNYELER>Şapkasız Gönyeler"),
+    (403, OLCU_ROOT + ">GÖNYELER>Şapkalı Gönyeler"),
+    (391, OLCU_ROOT + ">SENTİLLER>Şerit Sentiller"),
+    (393, OLCU_ROOT + ">SENTİLLER>Sentil Filler Çakıları"),
+    (394, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Paralel Setler"),
+    (395, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Johnson Mastar Setleri"),
+    (400, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Radius Mastarları"),
+    (396, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Açı Ölçerler"),
+    (402, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Açı Ölçerler"),
+    (405, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Hassas Su Terazileri"),
+    (406, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Hassas Su Terazileri"),
+    (501, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Çelik Cetveller"),
+    (392, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Diş Tarakları"),
 ]
 
 
@@ -178,13 +239,13 @@ def get_currencies(session: requests.Session):
     return id_code, rates
 
 
-KNOWN_BRANDS = ["BOHRCRAFT", "ERİC", "ERIC", "HÜGEL", "HUGEL"]
+KNOWN_BRANDS = ["BOHRCRAFT", "ERİC", "ERIC", "HÜGEL", "HUGEL", "VERTEX"]
 
 
 def _brand_from_name(name: str) -> str:
     upper = name.upper()
     for b in KNOWN_BRANDS:
-        if upper.endswith(b) or f" {b} " in upper:
+        if upper.endswith(b) or f" {b} " in upper or upper.startswith(b + " "):
             return "ERİC" if b == "ERIC" else ("HÜGEL" if b == "HUGEL" else b)
     return ""
 
@@ -229,7 +290,8 @@ def fetch_category(session: requests.Session, cat_id: int):
                 "price": u.get("b2b_price"),
                 "currency_id": str(u.get("b2b_currency_id") or ""),
                 "brand_id": str(a.get("brand_id") or ""),
-                "brand": brands.get(str(a.get("brand_id") or ""), "") or _brand_from_name(a.get("name") or ""),
+                "brand": (brands.get(str(a.get("brand_id") or ""), "")
+                          or _brand_from_name(a.get("name") or "") or "ERİC"),
                 "url": BASE + (a.get("path") or ""),
                 "image": images.get(p["id"], ""),
                 "moq": int(u.get("moq") or 1),
