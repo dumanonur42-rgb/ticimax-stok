@@ -792,6 +792,119 @@ def _onyazi_html(cols):
     )
 
 
+# Elastic arama icin tip bazli es anlamli / yaygin yazim etiketleri
+_ETIKET_ES = {
+    "matkap": ["matkap ucu", "hss matkap ucu", "metal matkap ucu", "matkap"],
+    "uzun": ["uzun matkap ucu", "derin delik matkabi", "uzun seri matkap"],
+    "konik": ["konik sapli matkap", "mors konik matkap", "mk matkap ucu"],
+    "punta": ["punta matkabi", "merkezleme matkabi", "center drill", "punta ucu"],
+    "kademeli": ["kademeli matkap", "adim matkap", "step drill", "sac matkabi"],
+    "parmak": ["parmak freze", "end mill", "endmill", "hss freze", "freze ucu"],
+    "karbur_parmak": ["karbur parmak freze", "carbide freze", "end mill", "sert metal freze", "freze ucu"],
+    "mikro": ["mikro freze", "mikro karbur freze", "hassas freze"],
+    "alu": ["aluminyum frezesi", "alu freze", "aluminyum end mill"],
+    "kalipci": ["kalipci frezesi", "kalip frezesi", "rotary freze"],
+    "havsa": ["havsa frezesi", "havsa ucu", "countersink", "havsa matkabi"],
+    "tkanal": ["t kanal frezesi", "t freze", "kanal frezesi"],
+    "kose": ["kose yuvarlama frezesi", "radus frezesi", "corner radius"],
+    "kirlangic": ["kirlangic freze", "kirlangic kuyrugu frezesi", "dovetail"],
+    "dis_freze": ["dis frezesi", "dis acma frezesi", "thread mill"],
+    "pah": ["pah frezesi", "pah kirma ucu", "chamfer freze"],
+    "kumpas_mekanik": ["kumpas", "mekanik kumpas", "surmeli kumpas", "caliper", "verniyeli kumpas"],
+    "kumpas_dijital": ["kumpas", "dijital kumpas", "digital kumpas", "elektronik kumpas", "caliper"],
+    "kumpas_saatli": ["kumpas", "saatli kumpas", "ibreli kumpas", "dial caliper"],
+    "kumpas_derinlik": ["derinlik kumpasi", "derinlik olcer", "depth gauge"],
+    "mikrometre": ["mikrometre", "mikro metre", "dis cap mikrometresi", "micrometer"],
+    "mikrometre_dijital": ["mikrometre", "dijital mikrometre", "digital mikrometre"],
+    "mikrometre_ic": ["ic cap mikrometresi", "mikrometre", "delik mikrometresi"],
+    "mikrometre_derinlik": ["derinlik mikrometresi", "mikrometre", "derinlik olcer"],
+    "mikrometre_uzatma": ["uzatma mikrometresi", "delik ici mikrometre", "mikrometre"],
+    "mikrometre_set": ["mikrometre seti", "mikrometre takimi", "mikrometre"],
+    "komparator": ["komparator", "komparator saati", "olcu saati", "dial indicator", "salgi saati"],
+    "komparator_dijital": ["komparator", "dijital komparator", "digital komparator saati"],
+    "komparator_salgi": ["salgi komparatoru", "salgi saati", "komparator"],
+    "komparator_kalinlik": ["kalinlik komparatoru", "kalinlik olcer", "komparator"],
+    "komparator_ic": ["ic cap komparatoru", "komparator", "delik komparatoru"],
+    "komparator_dis": ["dis cap komparatoru", "komparator"],
+    "silindir_komparator": ["silindir komparatoru", "silindir takimi", "bore gauge", "komparator"],
+    "mihengir": ["mihengir", "yukseklik olcer", "height gauge", "mercekli mihengir"],
+    "mihengir_saatli": ["mihengir", "saatli mihengir", "yukseklik olcer"],
+    "mihengir_dijital": ["mihengir", "dijital mihengir", "digital mihengir", "yukseklik olcer"],
+    "manyetik_ayak": ["manyetik ayak", "komparator ayagi", "magnet ayak", "manyetik stand"],
+    "manyetik_v": ["manyetik v yatagi", "v blok", "v yatak", "v-block"],
+    "prop": ["prop", "kenar bulucu", "edge finder", "sifirlama probu"],
+    "z_sifirlama": ["z sifirlama", "takim boyu olcer", "tool setter", "z ekseni sifirlayici"],
+    "tester3d": ["3d tester", "3 boyutlu tester", "universal tester"],
+    "mastar_erkek": ["erkek mastar", "vida mastari", "tampon mastar", "dis mastari", "go nogo"],
+    "mastar_disi": ["disi mastar", "vida mastari", "halka mastar", "dis mastari", "go nogo"],
+    "pleyt_granit": ["granit pleyt", "pleyt", "olcum pleyti", "kontrol pleyti"],
+    "pleyt_gonye": ["gonye pleyti", "pleyt", "dik pleyt"],
+    "gonye_kil": ["kil gonye", "gonye", "hassas gonye"],
+    "gonye_duz": ["gonye", "duz gonye", "sapkasiz gonye"],
+    "gonye_sapkali": ["gonye", "sapkali gonye", "tesviyeci gonyesi"],
+    "sentil": ["sentil", "sentil seridi", "filler", "feeler gauge"],
+    "sentil_caki": ["sentil cakisi", "sentil", "filler caki"],
+    "paralel_set": ["paralel set", "paralel takim", "paralel altlik"],
+    "johnson_set": ["johnson mastari", "blok mastar", "gauge block", "mastar seti"],
+    "radius_mastar": ["radius mastari", "radus mastari", "radius gauge"],
+    "aci_olcer": ["aci olcer", "aci gonyesi", "iletki", "universal aci olcer"],
+    "su_terazisi": ["su terazisi", "hassas su terazisi", "makinist terazisi", "level"],
+    "cetvel": ["celik cetvel", "cetvel", "paslanmaz cetvel", "metal cetvel"],
+    "dis_taragi": ["dis taragi", "hatve taragi", "vida taragi", "pitch gauge"],
+    "olcu": ["olcu aleti", "olcum aleti"],
+}
+
+_ASCII_TR = str.maketrans("çğıöşüÇĞİÖŞÜ", "cgiosuCGIOSU")
+
+
+def _tr_lower_ascii(t: str) -> str:
+    return t.translate(_ASCII_TR).lower()
+
+
+def _olcu_varyantlari(name: str):
+    """Urun adindaki mm olculerinden bitisik/ayri, virgul/nokta varyantlari."""
+    out = []
+    for m in re.finditer(r"(\d+(?:[.,]\d+)?)\s*(?:\*\s*(\d+(?:[.,]\d+)?)\s*)?MM",
+                         name.upper()):
+        n = m.group(1).replace(",", ".")
+        out += [f"{n}mm", f"{n} mm"]
+    return out
+
+
+def build_etiketler(name, sku, brand, category_path):
+    """Elastic arama icin etiket listesi (virgulle ayrilmis)."""
+    s = parse_specs(name, category_path)
+    tip_adi = _tip_adi(s)
+    tags = []
+    tags += _ETIKET_ES.get(s["tip"], [])
+    tags.append(tip_adi)
+    tags.append(_tr_lower_ascii(tip_adi))
+    olculer = _olcu_varyantlari(name or "")
+    tags += olculer
+    ana = _ETIKET_ES.get(s["tip"], [tip_adi])[0]
+    for o in olculer[:4]:
+        tags.append(f"{o} {ana}")
+    if s.get("din"):
+        d = s["din"]
+        tags += [d.lower(), d.replace(" ", "").lower()]
+    if s.get("malzeme"):
+        mal = s["malzeme"].split(" ")[0]
+        tags += [mal.lower(), _tr_lower_ascii(mal)]
+    if s.get("dis_ad"):
+        tags += [s["dis_ad"].lower(), s["dis_ad"].upper()]
+    if s.get("m_olcu"):
+        tags.append(s["m_olcu"].lower())
+    if brand:
+        tags.append(_tr_lower_ascii(brand))
+    if sku:
+        tags += [sku, sku.replace(" ", "")]
+    kat = (category_path or "").split(">")[-1]
+    if kat:
+        tags += [kat.lower(), _tr_lower_ascii(kat)]
+    uniq = list(dict.fromkeys(t.strip() for t in tags if t and t.strip()))
+    return ",".join(uniq[:40])
+
+
 _SEO_DESC = [
     "{name} en uygun fiyatla YAMANSA'da. {ek} Stoktan aynı gün kargo.",
     "{name} stokta! {ek} Hızlı kargo ve orijinal ürün garantisiyle sipariş verin.",
