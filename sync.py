@@ -342,10 +342,7 @@ def build_xml(rows):
         lines.append(f"    <Etiketler>{e(build_etiketler(name, r['sku'], r['brand'], r['category_path']))}</Etiketler>")
         lines.append("    <Tedarikci>Talha</Tedarikci>")
         lines.append(f"    <KategoriYolu>{e(r['category_path'])}</KategoriYolu>")
-        # Urunu tum ust kategorilere de ata ki ust kategori sayfalarinda da listelensin
-        parcalar = r["category_path"].split(">")
-        yollar = [">".join(parcalar[: i + 1]) for i in range(len(parcalar))]
-        lines.append(f"    <Kategori>{e(';'.join(reversed(yollar)))}</Kategori>")
+        lines.append(f"    <Kategori>{e(r['category_path'].split('>')[-1])}</Kategori>")
         lines.append("    <UrunSecenek>")
         lines.append("      <Secenek>")
         lines.append(f"        <VaryasyonID>{e(r['id'])}</VaryasyonID>")
