@@ -290,14 +290,17 @@ def build_onyazi(name, sku, brand, category_path):
                          ("Helis Boyu" if etiket.startswith("Helis") else etiket), deger))
     cols.append(("Marka", brand or "YAMANSA"))
     th = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
-          'font-weight:bold;background:#fff;"')
-    td = 'style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;"'
+          'font-weight:bold;background:#fff;white-space:nowrap;"')
+    td = ('style="border:1px solid #e0e0e0;padding:8px 12px;text-align:center;'
+          'white-space:nowrap;"')
     heads = "".join(f"<th {th}>{k}</th>" for k, _ in cols)
     vals = "".join(f"<td {td}>{v}</td>" for _, v in cols)
     return (
+        '<div style="width:100%;max-width:100%;overflow-x:auto;'
+        '-webkit-overflow-scrolling:touch;margin-bottom:10px;">'
         '<table style="width:100%;border-collapse:collapse;font-family:inherit;'
-        'font-size:14px;margin-bottom:10px;">'
-        f"<tr>{heads}</tr><tr>{vals}</tr></table>"
+        'font-size:14px;">'
+        f"<tr>{heads}</tr><tr>{vals}</tr></table></div>"
     )
 
 
