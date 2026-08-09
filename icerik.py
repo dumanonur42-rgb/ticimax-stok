@@ -271,12 +271,9 @@ def teknik_detaylar(name, sku, brand, category_path):
 def build_onyazi(name, sku, brand, category_path):
     """Urun karti ustunde gorunen tablo bicimli on yazi."""
     s = parse_specs(name, category_path)
-    tip = _tip_adi(s).title()
-    cols = [("Ürün Kodu", sku), ("Ürün Tipi", tip)]
+    cols = []
     if s.get("cap"):
-        cols.append(("Çap", f"{s['cap']} - {s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
-    if s.get("din"):
-        cols.append(("Standart", s["din"]))
+        cols.append(("Çap", f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
     malzeme = ""
     if s.get("malzeme"):
         malzeme = "Karbür" if s["malzeme"] == "karbür" else s["malzeme"].split(" ")[0].upper()
@@ -289,15 +286,16 @@ def build_onyazi(name, sku, brand, category_path):
             cols.append(("Boy" if etiket == "Toplam Boy" else
                          ("Helis Boyu" if etiket.startswith("Helis") else etiket), deger))
     cols.append(("Marka", brand or "YAMANSA"))
-    hucre = ('style="flex:1 1 110px;min-width:100px;border:1px solid #e0e0e0;'
-             'padding:6px 8px;text-align:center;"')
-    etiket = 'style="font-weight:bold;font-size:13px;margin-bottom:4px;"'
-    deger_s = 'style="font-size:14px;"'
+    hucre = ('style="flex:1 1 0;min-width:0;border:1px solid #e0e0e0;'
+             'padding:5px 3px;text-align:center;overflow:hidden;"')
+    etiket = ('style="font-weight:bold;font-size:11px;margin-bottom:3px;'
+              'white-space:nowrap;"')
+    deger_s = 'style="font-size:12px;"'
     kutular = "".join(
         f'<div {hucre}><div {etiket}>{k}</div><div {deger_s}>{v}</div></div>'
         for k, v in cols)
     return (
-        '<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;'
+        '<div style="display:flex;flex-wrap:nowrap;gap:4px;width:100%;'
         'max-width:100%;font-family:inherit;margin-bottom:10px;'
         'box-sizing:border-box;">'
         f"{kutular}</div>"
