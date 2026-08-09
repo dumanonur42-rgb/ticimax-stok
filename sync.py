@@ -52,6 +52,8 @@ IMAGE_BASE_URL = os.environ.get(
     "https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/main/gorseller/",
 )
 IMAGE_DIR = HERE / "gorseller"
+# Gorsel adresi surum eki: degistirilirse Ticimax gorselleri yeniden indirir
+IMAGE_VERSION = "?v=2"
 
 # Ticimax tarafinda olusturulacak ana kategori
 ROOT_CATEGORY = "MATKAP VE FREZE"
@@ -290,7 +292,7 @@ def main():
             if image_filename and IMAGE_BASE_URL:
                 img_file = image_filename(pretty_name(p["name"] or ""), p["sku"] or "")
                 if (IMAGE_DIR / img_file).exists():
-                    p["image"] = IMAGE_BASE_URL + quote(img_file)
+                    p["image"] = IMAGE_BASE_URL + quote(img_file) + IMAGE_VERSION
             rows.append(p)
             new += 1
         print(f"Kategori {cat_id}: {len(prods)} urun ({new} yeni) -> {cat_path}")
