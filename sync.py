@@ -273,6 +273,7 @@ def main():
             except (TypeError, ValueError):
                 p["price_try"] = ""
             p["category_path"] = cat_path
+            p["source_image"] = p["image"]
             if image_filename and IMAGE_BASE_URL:
                 img_file = image_filename(pretty_name(p["name"] or ""), p["sku"] or "")
                 if (IMAGE_DIR / img_file).exists():
@@ -294,10 +295,11 @@ def main():
     with open(OUT / "urunler.csv", "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f, delimiter=";")
         w.writerow(["Stok Kodu", "Urun Adi", "Marka", "Kategori Yolu", "Stok Adedi",
-                    "Fiyat", "Para Birimi", "Fiyat (TL)", "KDV %", "Gorsel", "Urun Linki"])
+                    "Fiyat", "Para Birimi", "Fiyat (TL)", "KDV %", "Gorsel", "Kaynak Gorsel", "Urun Linki"])
         for r in rows:
             w.writerow([r["sku"], pretty_name(r["name"] or ""), r["brand"], r["category_path"], int(r["stock"]),
-                        r["price"], r["currency"], r["price_try"], r["vat_rate"], r["image"], r["url"]])
+                        r["price"], r["currency"], r["price_try"], r["vat_rate"], r["image"],
+                        r.get("source_image", ""), r["url"]])
 
     # Stok degisim raporu
     old = {}
