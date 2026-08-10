@@ -6,14 +6,11 @@ MIN_INDIRIM_FIYAT_TRY = 200.0
 
 _ORANLAR = {
     # Piyasaya gore pahali kaldigimiz gruplar -> %25
-    "Mekanik Kumpaslar": 0.25,
-    "Dijital Kumpaslar": 0.25,
-    "Punta Matkapları": 0.25,
-    "Konik Saplı Matkap Uçları": 0.25,
-    "Alüminyum Frezeler": 0.25,
     "Dijital Yükseklik Mihengirleri": 0.25,
-    "Saatli Yükseklik Mihengirleri": 0.25,
     # Piyasaya gore zaten uygun fiyatli gruplar -> dusuk oran
+    "Mekanik Kumpaslar": 0.15,
+    "Punta Matkapları": 0.15,
+    "Konik Saplı Matkap Uçları": 0.15,
     "Erkek Vida Mastarları": 0.15,
     "Dişi Vida Mastarları": 0.15,
     "Radius Mastarları": 0.15,
