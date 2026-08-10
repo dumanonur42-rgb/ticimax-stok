@@ -7,6 +7,7 @@ import re
 from openpyxl import Workbook
 
 from icerik import build_description, build_onyazi, build_seo, desi_agirlik, gtip
+from indirim import indirim_orani
 
 COLUMNS = [
     "URUNKARTIID", "URUNID", "STOKKODU", "VARYASYONKODU", "BARKOD", "URUNADI",
@@ -100,9 +101,12 @@ def build_excel(rows, path):
             "STOKADEDI": stock,
             "ALISFIYATI": 0,
             "SATISFIYATI": price_try,
-            "INDIRIMLIFIYAT": round(price_try * 0.80, 2)
-            if isinstance(price_try, (int, float)) and price_try >= 100
-            else price_try,
+            "INDIRIMLIFIYAT": (
+                round(price_try * (1 - indirim_orani(cat, price_try)), 2)
+                if isinstance(price_try, (int, float))
+                and indirim_orani(cat, price_try) > 0
+                else price_try
+            ),
             "UYETIPIFIYAT1": 0, "UYETIPIFIYAT2": 0, "UYETIPIFIYAT3": 0,
             "UYETIPIFIYAT4": 0, "UYETIPIFIYAT5": 0,
             "KDVORANI": r["vat_rate"] if r["vat_rate"] is not None else 20,

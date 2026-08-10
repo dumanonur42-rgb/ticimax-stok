@@ -31,6 +31,7 @@ from xml.sax.saxutils import escape
 
 import requests
 
+from indirim import indirim_orani
 from icerik import (build_description, build_etiketler, build_onyazi,
                     build_seo, desi_agirlik, gtip, teknik_detaylar)
 from ticimax_excel import build_excel, pretty_name
@@ -349,10 +350,11 @@ def build_xml(rows):
         lines.append(f"        <StokKodu>{e(r['sku'])}</StokKodu>")
         lines.append(f"        <Barkod>{e(r['sku'])}</Barkod>")
         lines.append(f"        <StokAdedi>{int(r['stock'])}</StokAdedi>")
+        oran = indirim_orani(r["category_path"], r["price_try"])
         try:
-            if float(r["price_try"]) >= 100:
-                indirimli = round(float(r["price"]) * 0.80, 2)
-                indirimli_try = round(float(r["price_try"]) * 0.80, 2)
+            if oran > 0:
+                indirimli = round(float(r["price"]) * (1 - oran), 2)
+                indirimli_try = round(float(r["price_try"]) * (1 - oran), 2)
             else:
                 indirimli = r["price"]
                 indirimli_try = r["price_try"]
