@@ -882,7 +882,7 @@ def build_etiketler(name, sku, brand, category_path):
     olculer = _olcu_varyantlari(name or "")
     tags += olculer
     ana = _ETIKET_ES.get(s["tip"], [tip_adi])[0]
-    for o in olculer[:4]:
+    for o in olculer[:2]:
         tags.append(f"{o} {ana}")
     if s.get("din"):
         d = s["din"]
@@ -900,7 +900,7 @@ def build_etiketler(name, sku, brand, category_path):
         tags += [sku, sku.replace(" ", "")]
     kat = (category_path or "").split(">")[-1]
     if kat:
-        tags += [kat.lower(), _tr_lower_ascii(kat)]
+        tags += [kat.replace("İ", "i").replace("I", "ı").lower(), _tr_lower_ascii(kat)]
     mevcut = _tr_lower_ascii(f"{name or ''} {kat}")
     mevcut_kelimeler = set(re.split(r"[^a-z0-9.]+", mevcut))
     uniq = []
