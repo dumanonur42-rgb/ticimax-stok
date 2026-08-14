@@ -863,12 +863,12 @@ def _tr_lower_ascii(t: str) -> str:
 
 def _olcu_varyantlari(name: str):
     """Urun adindaki mm olculerinden bitisik/ayri, virgul/nokta varyantlari."""
-    out = []
-    for m in re.finditer(r"(\d+(?:[.,]\d+)?)\s*(?:\*\s*(\d+(?:[.,]\d+)?)\s*)?MM",
-                         name.upper()):
-        n = m.group(1).replace(",", ".")
-        out += [f"{n}mm", f"{n} mm"]
-    return out
+    m = re.search(r"(\d+(?:[.,]\d+)?)\s*(?:\*\s*(\d+(?:[.,]\d+)?)\s*)?MM",
+                  name.upper())
+    if not m:
+        return []
+    n = m.group(1).replace(",", ".")
+    return [f"{n}mm", f"{n} mm"]
 
 
 def build_etiketler(name, sku, brand, category_path):
