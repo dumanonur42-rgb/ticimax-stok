@@ -891,9 +891,23 @@ def build_etiketler(name, sku, brand, category_path):
         mal = s["malzeme"].split(" ")[0]
         tags += [mal.lower(), _tr_lower_ascii(mal)]
     if s.get("dis_ad"):
-        tags += [s["dis_ad"].lower(), s["dis_ad"].upper()]
+        tags += [s["dis_ad"].lower(), s["dis_ad"].upper(),
+                 f"{s['dis_ad'].lower()} {ana}"]
     if s.get("m_olcu"):
-        tags.append(s["m_olcu"].lower())
+        m = s["m_olcu"].lower()
+        tags += [m, f"m {m[1:]}", f"{m} {ana}"]
+    olcu_aleti = "ÖLÇÜ ALETLERİ" in (category_path or "")
+    if olcu_aleti:
+        rng = re.search(
+            r"(\d+(?:[.,]\d+)?)\s*[*\-]\s*(\d+(?:[.,]\d+)?)", name or "")
+        if rng:
+            a = rng.group(1).replace(",", ".")
+            b = rng.group(2).replace(",", ".")
+            tags += [f"{a}-{b}", f"{a}-{b} mm", f"{b}mm", f"{b} mm",
+                     f"{a}-{b} {ana}", f"{b}mm {ana}"]
+        elif olculer and s["tip"].split("_")[0] in ("kumpas", "mihengir"):
+            n = olculer[0][:-2]
+            tags += [f"0-{n}", f"0-{n} mm", f"0-{n} {ana}"]
     if brand:
         tags.append(_tr_lower_ascii(brand))
     if sku:
