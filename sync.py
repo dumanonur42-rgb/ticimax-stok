@@ -345,7 +345,15 @@ def build_xml(rows):
         desi, agirlik = desi_agirlik(name, r["category_path"])
         lines.append(f"    <UrunAdi>{e(name)}</UrunAdi>")
         lines.append(f"    <OnYazi>{e(build_onyazi(name, r['sku'], r['brand'], r['category_path']))}</OnYazi>")
-        lines.append(f"    <Aciklama>{e(build_description(name, r['sku'], r['brand'], r['category_path']))}</Aciklama>")
+        aciklama = build_description(name, r["sku"], r["brand"], r["category_path"])
+        if r["category_path"].startswith(ELMAS_ROOT):
+            adet = int(r.get("moq") or 1)
+            not_ = "<p><strong>Belirtilen fiyat 1 adet elmas uç fiyatıdır.</strong>"
+            if adet > 1:
+                not_ += f" Minimum sipariş adedi {adet} adettir; sipariş {adet} ve katları şeklinde verilir."
+            not_ += "</p>"
+            aciklama = not_ + aciklama
+        lines.append(f"    <Aciklama>{e(aciklama)}</Aciklama>")
         lines.append(f"    <SeoSayfaBaslik>{e(seo_title)}</SeoSayfaBaslik>")
         lines.append(f"    <SeoAnahtarKelime>{e(seo_kw)}</SeoAnahtarKelime>")
         lines.append(f"    <SeoSayfaAciklama>{e(seo_desc)}</SeoSayfaAciklama>")
