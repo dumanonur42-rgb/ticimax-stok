@@ -42,6 +42,17 @@ except ImportError:
     image_filename = None
 
 BASE = "https://talhateknik.diaeticaret.com"
+
+# Tedarikcide gorseli olmayan urunler icin ayni seriden esdeger urun gorseli
+_R = "https://s3-eu-west-1.amazonaws.com/dia-fs/talhateknik/Resimler/"
+GORSEL_YEDEK = {
+    "KU70100": _R + "967141.png",    # Apmt 1135 -> Apkt 1035
+    "KU70102-1": _R + "967144.png",  # Apmt 1604 -> Apkt 1604
+    "KU85013": _R + "965408.png",    # Mgmn 200 Pcd -> Mgmn 200 Cbn
+    "KU85014": _R + "965411.png",    # Mgmn 300 Pcd -> Mgmn 300 Cbn
+    "KU85015": _R + "965414.png",    # Mgmn 400 Pcd -> Mgmn 400 Cbn
+    "KU82004": _R + "965012.png",    # Dnmg 150608 TAL7010 -> Dnmg 150604 TAL7010
+}
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "output"
 STATE_FILE = HERE / "state.json"
@@ -429,6 +440,8 @@ def main():
             except (TypeError, ValueError):
                 p["price_try"] = ""
             p["category_path"] = cat_path
+            if not p["image"]:
+                p["image"] = GORSEL_YEDEK.get(p["sku"], "")
             p["source_image"] = p["image"]
             if image_filename and IMAGE_BASE_URL:
                 img_file = image_filename(pretty_name(p["name"] or ""), p["sku"] or "")
