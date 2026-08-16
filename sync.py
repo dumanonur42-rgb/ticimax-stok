@@ -59,6 +59,7 @@ IMAGE_VERSION = "?v=2"
 # Ticimax tarafinda olusturulacak ana kategori
 ROOT_CATEGORY = "MATKAP VE FREZE"
 OLCU_ROOT = "ÖLÇÜ ALETLERİ"
+ELMAS_ROOT = "ELMAS UÇLAR"
 
 # Cekilecek kaynak kategoriler: (kaynak kategori id, Ticimax kategori yolu)
 # Sadelestirilmis, son kullanici odakli kategori yapisi.
@@ -207,6 +208,22 @@ CATEGORIES = [
     (406, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Hassas Su Terazileri"),
     (501, OLCU_ROOT + ">DİĞER ÖLÇÜ ALETLERİ>Çelik Cetveller"),
     (392, OLCU_ROOT + ">MASTARLAR>Diş Tarakları"),
+    # --- ELMAS (INSERT) UCLAR ---
+    (330, ELMAS_ROOT + ">TORNALAMA UÇLARI>Genel Kalite Tornalama Uçları"),
+    (334, ELMAS_ROOT + ">TORNALAMA UÇLARI>Çelik Serisi Tornalama Uçları"),
+    (331, ELMAS_ROOT + ">TORNALAMA UÇLARI>Döküm Serisi Tornalama Uçları"),
+    (326, ELMAS_ROOT + ">Frezeleme Uçları"),
+    (327, ELMAS_ROOT + ">U-Drill Uçları"),
+    (329, ELMAS_ROOT + ">Alüminyum Uçları"),
+    (333, ELMAS_ROOT + ">DİŞ AÇMA UÇLARI>İso Diş Açma Uçları"),
+    (338, ELMAS_ROOT + ">DİŞ AÇMA UÇLARI>Whitworth Diş Açma Uçları"),
+    (339, ELMAS_ROOT + ">DİŞ AÇMA UÇLARI>Trapez Diş Açma Uçları"),
+    (328, ELMAS_ROOT + ">KESME VE KANAL UÇLARI>Kesme Uçları"),
+    (340, ELMAS_ROOT + ">KESME VE KANAL UÇLARI>Sekman Kanal Açma Uçları"),
+    (335, ELMAS_ROOT + ">CBN Uçlar"),
+    (336, ELMAS_ROOT + ">PCD Uçlar"),
+    (341, ELMAS_ROOT + ">ALTLIK VE VİDALAR>İnsert Altlık Uçları"),
+    (342, ELMAS_ROOT + ">ALTLIK VE VİDALAR>Altlık Vidaları"),
 ]
 
 

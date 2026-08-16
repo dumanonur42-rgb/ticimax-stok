@@ -96,6 +96,9 @@ GTIP_OLCU_MASTAR = "9017.30.90.00.00"   # mastarlar (vida, sentil, johnson)
 GTIP_OLCU_CIZIM = "9017.20.90.00.00"    # gonye, cetvel, aci olcer, pleyt
 GTIP_OLCU_DIGER = "9031.80.80.00.00"    # komparator, mihengir, prop, tester
 
+GTIP_INSERT = "8209.00.80.00.00"        # sermet/karbur degistirilebilir kesici uclar
+GTIP_INSERT_PARCA = "8466.10.38.00.00"  # kater altlik ve vidalari (takim tutucu aksami)
+
 _OLCU_GTIP = {
     GTIP_OLCU_KUMPAS: {
         "kumpas_mekanik", "kumpas_dijital", "kumpas_saatli", "kumpas_derinlik",
@@ -230,6 +233,8 @@ def parse_specs(name: str, category_path: str):
     cat0 = category_path or ""
     if cat0.startswith("ÖLÇÜ ALETLERİ"):
         return _parse_olcu_specs(up, cat0)
+    if cat0.startswith("ELMAS UÇLAR"):
+        return _parse_insert_specs(up, cat0)
     m = re.search(r"(\d+(?:[.,]\d+)?)\s*[Xx\-*]\s*(\d+(?:[.,]\d+)?)\s*MM", up)
     if m:
         s["cap"] = m.group(1).replace(".", ",")
@@ -294,6 +299,11 @@ def gtip(name: str, category_path: str) -> str:
             if tip in tipler:
                 return kod
         return GTIP_OLCU_DIGER
+    if cat.startswith("ELMAS UÇLAR"):
+        tip = _parse_insert_specs((name or "").upper(), cat)["tip"]
+        if tip in ("ins_altlik", "ins_vida"):
+            return GTIP_INSERT_PARCA
+        return GTIP_INSERT
     up = (name or "").upper() + " " + cat.upper()
     karbur = "KARBÜR" in up or "CARBIDE" in up
     if ">FREZELER>" in cat:
@@ -341,6 +351,62 @@ def desi_agirlik(name: str, category_path: str):
     return 1, round(0.01 + cap * 0.012, 2)
 
 
+_INSERT_TIPLER = {
+    "Tornalama": "ins_torna",
+    "Frezeleme": "ins_freze",
+    "U-Drill": "ins_udrill",
+    "Alüminyum": "ins_alu",
+    "Diş Açma": "ins_dis",
+    "Kesme": "ins_kesme",
+    "Sekman": "ins_sekman",
+    "CBN": "ins_cbn",
+    "PCD": "ins_pcd",
+    "Altlık Uçları": "ins_altlik",
+    "Altlık Vidaları": "ins_vida",
+}
+
+_INSERT_TIP_ADLARI = {
+    "ins_torna": "tornalama ucu",
+    "ins_freze": "frezeleme ucu",
+    "ins_udrill": "u-drill ucu",
+    "ins_alu": "alüminyum tornalama ucu",
+    "ins_dis": "diş açma ucu",
+    "ins_kesme": "kesme ucu",
+    "ins_sekman": "sekman kanal açma ucu",
+    "ins_cbn": "CBN uç",
+    "ins_pcd": "PCD uç",
+    "ins_altlik": "insert altlığı",
+    "ins_vida": "altlık vidası",
+}
+
+
+def _parse_insert_specs(up: str, cat: str):
+    """ELMAS UCLAR (insert) urunleri icin ozellik cikarimi."""
+    s = {"insert": True, "tip": "ins_torna"}
+    for ad, tip in _INSERT_TIPLER.items():
+        if ad.upper() in cat.upper():
+            s["tip"] = tip
+            break
+    if s["tip"] == "ins_cbn":
+        s["malzeme"] = "CBN (kübik bor nitrür)"
+    elif s["tip"] == "ins_pcd":
+        s["malzeme"] = "PCD (polikristal elmas)"
+    elif s["tip"] != "ins_vida":
+        s["malzeme"] = "karbür"
+    # ISO form kodu: CNMG 120408, APMT 1135, MGMN 300, 16ER AG60 vb.
+    m = re.search(r"\b([A-Z]{3,6})\s?(\d{3,6})\b", up)
+    if m:
+        s["form"] = f"{m.group(1)} {m.group(2)}"
+    else:
+        m = re.search(r"\b(\d{2}(?:ER|IR|EL|IL))\b", up)
+        if m:
+            s["form"] = m.group(1)
+    m = re.search(r"\bM(\d+(?:[.,]\d+)?)\b", up)
+    if m:
+        s["m_olcu"] = "M" + m.group(1)
+    return s
+
+
 _KULLANIM = {
     "kademeli": "sac, panel, profil ve ince metal levhalarda tek uçla farklı çaplarda temiz delikler açar; elektrik, havalandırma ve karoseri işlerinde vazgeçilmezdir",
     "punta": "torna ve CNC tezgahlarında delik öncesi hassas merkezleme yapar, matkap ucunun kaymasını önleyerek delik hassasiyetini artırır",
@@ -358,6 +424,17 @@ _KULLANIM = {
     "kirlangic": "kızak ve bağlantı yüzeylerinde açılı kırlangıç kuyruğu kanalları açar",
     "dis_freze": "CNC tezgahlarda frezeleme yöntemiyle iç diş açar; kılavuz kırılma riskini ortadan kaldırır",
     "pah": "kenar kırma, pah açma ve çapak alma işlemlerini tek operasyonda hassas biçimde yapar",
+    "ins_torna": "torna tezgahlarında dış ve iç çap tornalama operasyonlarında değiştirilebilir kesici uç olarak kullanılır",
+    "ins_freze": "insert frezeleme kafalarında yüzey ve kenar frezeleme operasyonlarında kullanılır",
+    "ins_udrill": "u-drill (insert matkap) gövdelerinde delik delme operasyonlarında kullanılır",
+    "ins_alu": "alüminyum ve demir dışı metallerin tornalanmasında parlak yüzey kalitesi sağlar",
+    "ins_dis": "torna tezgahlarında iç ve dış diş açma operasyonlarında kullanılır",
+    "ins_kesme": "torna tezgahlarında kesme (parça ayırma) operasyonlarında kullanılır",
+    "ins_sekman": "torna tezgahlarında sekman ve kanal açma operasyonlarında kullanılır",
+    "ins_cbn": "sertleştirilmiş çeliklerin (HRC 45-65) tornalanmasında taşlama kalitesinde yüzey elde eder",
+    "ins_pcd": "alüminyum ve demir dışı metallerde parlatma kalitesinde finiş tornalama yapar",
+    "ins_altlik": "insert katerlerinde kesici ucun altına yerleştirilerek ucu darbelere karşı korur",
+    "ins_vida": "insert uç ve altlıkların katere sabitlenmesinde kullanılır",
 }
 
 _GIRIS = [
@@ -515,6 +592,7 @@ def _tip_adi(s):
         "uzun": "uzun seri matkap ucu",
         "matkap": "matkap ucu",
         **_FREZE_TIP_ADLARI,
+        **_INSERT_TIP_ADLARI,
     }[s["tip"]]
 
 
@@ -552,6 +630,28 @@ _ALANLAR = {
                   "Kör deliklerde emniyetli diş işleme", "Büyük çaplı dişlerin frezelenmesi"],
     "pah": ["Kenar pah kırma", "Delik ağzı çapak alma",
             "Kaynak ağzı hazırlama", "Görsel kenar bitirme işlemleri"],
+    "ins_torna": ["CNC ve üniversal torna tezgahlarında dış çap tornalama", "İç çap (delik içi) tornalama",
+                  "Seri üretimde kaba ve finiş talaş kaldırma", "Makine imalatı ve talaşlı imalat atölyeleri"],
+    "ins_freze": ["İnsert freze kafalarıyla yüzey frezeleme", "CNC işleme merkezlerinde kaba talaş boşaltma",
+                  "Kalıp ve makine parçası imalatı", "Seri üretim frezeleme operasyonları"],
+    "ins_udrill": ["U-drill gövdeleriyle hızlı delik delme", "CNC torna ve işleme merkezlerinde delik operasyonları",
+                   "Büyük çaplı deliklerin ön delme işlemi", "Seri üretim delme uygulamaları"],
+    "ins_alu": ["Alüminyum parçaların tornalanması", "Demir dışı metallerde finiş yüzey işleme",
+                "Otomotiv ve havacılık parça üretimi", "Parlak yüzey gerektiren operasyonlar"],
+    "ins_dis": ["CNC tornada dış diş açma", "İç diş (delik içi) açma operasyonları",
+                "Metrik, whitworth ve trapez diş profilleri", "Boru ve bağlantı elemanı imalatı"],
+    "ins_kesme": ["Torna tezgahında parça kesme (ayırma)", "Kanal açma operasyonları",
+                  "Çubuk malzemeden seri parça kesimi", "CNC otomat tezgahları"],
+    "ins_sekman": ["Sekman (segman) kanalı açma", "Mil ve delik içi kanal operasyonları",
+                   "O-ring ve emniyet segmanı yuvaları", "Hassas kanal genişliği gerektiren işler"],
+    "ins_cbn": ["Sertleştirilmiş çelik tornalama (HRC 45-65)", "Taşlama yerine sert tornalama",
+                "Rulman ve dişli imalatı", "Kalıp parçalarının finiş işlemesi"],
+    "ins_pcd": ["Alüminyum jant ve piston imalatı", "Demir dışı metallerde ayna parlaklığında finiş",
+                "Kompozit ve grafit işleme", "Yüksek hızlı finiş tornalama"],
+    "ins_altlik": ["Kater üzerinde insert ucun desteklenmesi", "Darbeli işlemede uç koruması",
+                   "Kater yuvasının deformasyondan korunması", "Uzun takım ömrü için altlık yenileme"],
+    "ins_vida": ["İnsert uçların katere sabitlenmesi", "Altlık ve mekanizma vidalarının yenilenmesi",
+                 "Kater bakım ve yedek parça ihtiyacı", "Torx başlı sıkma vidası uygulamaları"],
 }
 
 _MALZEME_UYUM = {
@@ -674,6 +774,8 @@ def build_description(name, sku, brand, category_path):
         ozellikler.append(f"İşlenebilir Sertlik: {s['hrc']} HRC'ye kadar")
     if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa"):
         ozellikler.append(f"Diş/Cıvata Ölçüsü: {s['m_olcu']}")
+    if s.get("form"):
+        ozellikler.append(f"Uç Formu (ISO): {s['form']}")
     for etiket, deger in olcu_ozellikleri(sku):
         ozellikler.append(f"{etiket}: {deger}")
     ozellikler.append(f"Marka: {marka}")
@@ -694,7 +796,11 @@ def build_description(name, sku, brand, category_path):
 
     # Malzeme uyumu
     malz = s.get("malzeme", "")
-    if "karbür" in malz:
+    if "CBN" in malz:
+        uyum = "Sertleştirilmiş çelikler (HRC 45-65), sert döküm ve aşındırıcı malzemelerde taşlama kalitesinde yüzey elde eder."
+    elif "PCD" in malz:
+        uyum = "Alüminyum, bakır, pirinç gibi demir dışı metaller ile kompozit ve grafit malzemelerde üstün finiş performansı gösterir."
+    elif "karbür" in malz:
         uyum = _MALZEME_UYUM["karbür"]
     elif "HSS-E" in malz:
         uyum = _MALZEME_UYUM["hsse"]
@@ -722,10 +828,16 @@ def teknik_detaylar(name, sku, brand, category_path):
     if s.get("cap"):
         out.append(("Çap", f"{s['cap']}-{s['cap2']} mm" if s.get("cap2") else f"{s['cap']} mm"))
     if s.get("malzeme"):
-        malz = ("Karbür" if s["malzeme"] == "karbür"
-                else ("HSS-E Kobalt" if "HSS-E" in s["malzeme"] else "HSS"))
+        if s.get("insert"):
+            malz = s["malzeme"].split(" ")[0].capitalize() if s["malzeme"] == "karbür" else s["malzeme"].split(" ")[0]
+        else:
+            malz = ("Karbür" if s["malzeme"] == "karbür"
+                    else ("HSS-E Kobalt" if "HSS-E" in s["malzeme"] else "HSS"))
         out.append(("Malzeme", malz))
-    out.append(("Kaplama", "TiN Kaplı" if s.get("kaplama") else "Kaplamasız"))
+    if s.get("form"):
+        out.append(("Uç Formu (ISO)", s["form"]))
+    if not s.get("insert"):
+        out.append(("Kaplama", "TiN Kaplı" if s.get("kaplama") else "Kaplamasız"))
     if s.get("din"):
         out.append(("Standart", s["din"]))
     if s.get("islem"):
@@ -810,6 +922,17 @@ _ETIKET_ES = {
     "kirlangic": ["kirlangic freze", "kirlangic kuyrugu frezesi", "dovetail"],
     "dis_freze": ["dis frezesi", "dis acma frezesi", "thread mill"],
     "pah": ["pah frezesi", "pah kirma ucu", "chamfer freze"],
+    "ins_torna": ["elmas uc", "insert uc", "torna elmasi", "tornalama elmasi", "kesici uc", "torna ucu"],
+    "ins_freze": ["elmas uc", "insert uc", "freze elmasi", "frezeleme elmasi", "kesici uc"],
+    "ins_udrill": ["elmas uc", "insert uc", "u drill ucu", "udrill elmasi", "matkap elmasi"],
+    "ins_alu": ["elmas uc", "insert uc", "aluminyum elmasi", "aluminyum torna ucu"],
+    "ins_dis": ["elmas uc", "insert uc", "dis elmasi", "dis acma elmasi", "dis ucu"],
+    "ins_kesme": ["elmas uc", "insert uc", "kesme elmasi", "keski ucu", "parca kesme ucu"],
+    "ins_sekman": ["elmas uc", "insert uc", "kanal elmasi", "sekman ucu", "kanal ucu"],
+    "ins_cbn": ["cbn uc", "cbn elmas", "sert torna ucu", "elmas uc", "insert uc"],
+    "ins_pcd": ["pcd uc", "pcd elmas", "elmas uc", "insert uc", "parlatma ucu"],
+    "ins_altlik": ["insert altligi", "altlik uc", "elmas altligi", "kater altligi"],
+    "ins_vida": ["altlik vidasi", "insert vidasi", "kater vidasi", "torx vida"],
     "kumpas_mekanik": ["kumpas", "mekanik kumpas", "surmeli kumpas", "caliper", "verniyeli kumpas"],
     "kumpas_dijital": ["kumpas", "dijital kumpas", "digital kumpas", "elektronik kumpas", "caliper"],
     "kumpas_saatli": ["kumpas", "saatli kumpas", "ibreli kumpas", "dial caliper"],
@@ -896,6 +1019,9 @@ def build_etiketler(name, sku, brand, category_path):
     if s.get("m_olcu"):
         m = s["m_olcu"].lower()
         tags += [m, f"m {m[1:]}", f"{m} {ana}"]
+    if s.get("form"):
+        f_ = s["form"].lower()
+        tags += [f_.replace(" ", ""), f_, f"{f_.split(' ')[0]} {ana}"]
     olcu_aleti = "ÖLÇÜ ALETLERİ" in (category_path or "")
     if olcu_aleti:
         rng = re.search(
