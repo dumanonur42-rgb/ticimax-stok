@@ -98,6 +98,9 @@ GTIP_OLCU_DIGER = "9031.80.80.00.00"    # komparator, mihengir, prop, tester
 
 GTIP_INSERT = "8209.00.80.00.00"        # sermet/karbur degistirilebilir kesici uclar
 GTIP_INSERT_PARCA = "8466.10.38.00.00"  # kater altlik ve vidalari (takim tutucu aksami)
+GTIP_KILAVUZ = "8207.40.10.00.00"       # metal dis acmaya mahsus aletler (kilavuz)
+GTIP_HELIKOIL = "7318.19.00.00.19"      # disli baglanti elemanlari (helikoil yay)
+GTIP_MENGENE = "8466.20.98.00.00"       # takim tezgahlari icin is tutucular (mengene)
 
 _OLCU_GTIP = {
     GTIP_OLCU_KUMPAS: {
@@ -269,6 +272,46 @@ def parse_specs(name: str, category_path: str):
     if m:
         s["boy_ad"] = m.group(1)
     cat = category_path or ""
+    if cat0.startswith("KILAVUZLAR"):
+        s["tip"] = "kilavuz_ters" if "Ters" in cat0 else "kilavuz"
+        if "Karbür" in cat0:
+            s["malzeme"] = "karbür"
+        elif not s.get("malzeme"):
+            s["malzeme"] = "HSS (yüksek hız çeliği)"
+        m = re.search(r"\bM(\d+(?:[.,]\d+)?)(?:\s?[*Xx]\s?(\d+(?:[.,]\d+)?))?\b", up)
+        if m:
+            s["m_olcu"] = "M" + m.group(1) + (("x" + m.group(2)) if m.group(2) else "")
+        else:
+            m = re.search(r"\b(UNF|UNC|NPT|G|W)\s?(\d+(?:/\d+)?(?:\"|″)?)", up)
+            if m:
+                s["dis_ad"] = f"{m.group(1)} {m.group(2)}"
+        s.pop("cap", None)
+        s.pop("cap2", None)
+        return s
+    if cat0.startswith("HELİKOİL"):
+        s["tip"] = "helikoil_yay"
+        s["malzeme"] = "paslanmaz çelik"
+        s.pop("kaplama", None)
+        m = re.search(r"\bM(\d+(?:[.,]\d+)?)(?:\s?\*\s?(\d+(?:[.,]\d+)?))?\b", up)
+        if m:
+            s["m_olcu"] = "M" + m.group(1) + (("x" + m.group(2)) if m.group(2) else "")
+        m = re.search(r"\b([12](?:[.,]5)?)\s?D\b", up)
+        if m:
+            s["yay_boy"] = m.group(1).replace(".", ",") + "D"
+        s.pop("cap", None)
+        s.pop("cap2", None)
+        return s
+    if cat0.startswith("MENGENELER"):
+        s["tip"] = ("mengene_aparat" if ("Yedek" in cat0 or "Point" in cat0)
+                    else "mengene")
+        s.pop("malzeme", None)
+        s.pop("kaplama", None)
+        s.pop("cap2", None)
+        if s.pop("cap", None) and s["tip"] == "mengene":
+            m = re.search(r"(\d+)\s*MM", up)
+            if m:
+                s["cene_ad"] = m.group(1)
+        return s
     for ad, tip in _FREZE_TIPLER.items():
         if ad in cat:
             s["tip"] = tip
@@ -304,6 +347,12 @@ def gtip(name: str, category_path: str) -> str:
         if tip in ("ins_altlik", "ins_vida"):
             return GTIP_INSERT_PARCA
         return GTIP_INSERT
+    if cat.startswith("KILAVUZLAR"):
+        return GTIP_KILAVUZ
+    if cat.startswith("HELİKOİL"):
+        return GTIP_HELIKOIL
+    if cat.startswith("MENGENELER"):
+        return GTIP_MENGENE
     up = (name or "").upper() + " " + cat.upper()
     karbur = "KARBÜR" in up or "CARBIDE" in up
     if ">FREZELER>" in cat:
@@ -333,6 +382,14 @@ def desi_agirlik(name: str, category_path: str):
                         "su_terazisi", "manyetik_ayak", "paralel_set"):
             return 2, 0.6
         return 1, 0.3
+    if s["tip"] == "mengene":
+        return 15, 12.0
+    if s["tip"] == "mengene_aparat":
+        return 3, 1.5
+    if s["tip"] in ("kilavuz", "kilavuz_ters"):
+        return 1, 0.08
+    if s["tip"] == "helikoil_yay":
+        return 1, 0.03
     if s["tip"] == "kademeli":
         return 2, 0.45
     if s["tip"] == "konik":
@@ -377,6 +434,11 @@ _INSERT_TIP_ADLARI = {
     "ins_pcd": "PCD uç",
     "ins_altlik": "insert altlığı",
     "ins_vida": "altlık vidası",
+    "kilavuz": "kılavuz",
+    "kilavuz_ters": "ters kılavuz seti",
+    "helikoil_yay": "helikoil yay",
+    "mengene": "mengene",
+    "mengene_aparat": "mengene aksesuarı",
 }
 
 
@@ -435,6 +497,11 @@ _KULLANIM = {
     "ins_pcd": "alüminyum ve demir dışı metallerde parlatma kalitesinde finiş tornalama yapar",
     "ins_altlik": "insert katerlerinde kesici ucun altına yerleştirilerek ucu darbelere karşı korur",
     "ins_vida": "insert uç ve altlıkların katere sabitlenmesinde kullanılır",
+    "kilavuz": "delik içine hassas ve temiz iç diş açar; el ve makine ile diş açma operasyonlarında kullanılır",
+    "kilavuz_ters": "kırılan cıvata, saplama ve kılavuzları delik içinden güvenle söker",
+    "helikoil_yay": "aşınmış veya sıyrılmış dişleri onararak orijinalinden daha dayanıklı yeni bir diş yuvası oluşturur",
+    "mengene": "freze, CNC ve tezgah üzerinde iş parçasını hassas ve güvenli biçimde bağlar",
+    "mengene_aparat": "mengene sisteminin bakımında ve bağlama kapasitesinin genişletilmesinde kullanılır",
 }
 
 _GIRIS = [
@@ -652,6 +719,16 @@ _ALANLAR = {
                    "Kater yuvasının deformasyondan korunması", "Uzun takım ömrü için altlık yenileme"],
     "ins_vida": ["İnsert uçların katere sabitlenmesi", "Altlık ve mekanizma vidalarının yenilenmesi",
                  "Kater bakım ve yedek parça ihtiyacı", "Torx başlı sıkma vidası uygulamaları"],
+    "kilavuz": ["El ile diş açma (kılavuz kolu ile)", "Matkap ve CNC tezgahında makine ile diş açma",
+                "Kör ve boş deliklerde iç diş açma", "Bakım-onarım ve seri imalat işleri"],
+    "kilavuz_ters": ["Kırılan cıvata ve saplama sökme", "Kırık kılavuz çıkarma",
+                     "Bakım-onarım atölyeleri", "Oto tamir ve makine bakım işleri"],
+    "helikoil_yay": ["Sıyrılmış diş onarımı", "Alüminyum ve yumuşak metallerde diş güçlendirme",
+                     "Motor bloğu ve şanzıman tamiri", "Seri üretimde dayanıklı diş yuvası oluşturma"],
+    "mengene": ["Freze ve CNC tezgahında iş bağlama", "Hassas kalıp ve aparat imalatı",
+                "Seri üretimde tekrarlanabilir bağlama", "Tel erozyon ve taslama operasyonları"],
+    "mengene_aparat": ["Mengene bakım ve yedek parça yenileme", "5 eksen bağlama sistemleri",
+                       "Bağlama kapasitesini artırma", "CNC fikstür kurulumları"],
 }
 
 _MALZEME_UYUM = {
@@ -772,8 +849,14 @@ def build_description(name, sku, brand, category_path):
         ozellikler.append(f"İşlem: {s['islem']}")
     if s.get("hrc"):
         ozellikler.append(f"İşlenebilir Sertlik: {s['hrc']} HRC'ye kadar")
-    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa"):
-        ozellikler.append(f"Diş/Cıvata Ölçüsü: {s['m_olcu']}")
+    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa", "kilavuz", "helikoil_yay"):
+        ozellikler.append(f"Diş Ölçüsü: {s['m_olcu']}")
+    if s.get("dis_ad") and s["tip"] == "kilavuz":
+        ozellikler.append(f"Diş Ölçüsü: {s['dis_ad']}")
+    if s.get("yay_boy"):
+        ozellikler.append(f"Yay Boyu: {s['yay_boy']} (diş çapının katı)")
+    if s.get("cene_ad"):
+        ozellikler.append(f"Çene Genişliği: {s['cene_ad']} mm")
     if s.get("form"):
         ozellikler.append(f"Uç Formu (ISO): {s['form']}")
     for etiket, deger in olcu_ozellikleri(sku):
@@ -800,6 +883,10 @@ def build_description(name, sku, brand, category_path):
         uyum = "Sertleştirilmiş çelikler (HRC 45-65), sert döküm ve aşındırıcı malzemelerde taşlama kalitesinde yüzey elde eder."
     elif "PCD" in malz:
         uyum = "Alüminyum, bakır, pirinç gibi demir dışı metaller ile kompozit ve grafit malzemelerde üstün finiş performansı gösterir."
+    elif s["tip"] in ("mengene", "mengene_aparat"):
+        uyum = "Sfero döküm ve sertleştirilmiş çelik gövdesiyle her tür metal ve plastik iş parçasının bağlanmasında güvenle kullanılır."
+    elif s["tip"] == "helikoil_yay":
+        uyum = "Alüminyum, magnezyum, döküm ve çelik gövdelerdeki sıyrılmış dişlerin onarımında kullanılır; paslanmaz yapısı korozyona dayanıklıdır."
     elif "karbür" in malz:
         uyum = _MALZEME_UYUM["karbür"]
     elif "HSS-E" in malz:
@@ -830,13 +917,15 @@ def teknik_detaylar(name, sku, brand, category_path):
     if s.get("malzeme"):
         if s.get("insert"):
             malz = s["malzeme"].split(" ")[0].capitalize() if s["malzeme"] == "karbür" else s["malzeme"].split(" ")[0]
+        elif "paslanmaz" in s["malzeme"]:
+            malz = "Paslanmaz Çelik"
         else:
             malz = ("Karbür" if s["malzeme"] == "karbür"
                     else ("HSS-E Kobalt" if "HSS-E" in s["malzeme"] else "HSS"))
         out.append(("Malzeme", malz))
     if s.get("form"):
         out.append(("Uç Formu (ISO)", s["form"]))
-    if not s.get("insert"):
+    if not s.get("insert") and s["tip"] not in ("mengene", "mengene_aparat", "helikoil_yay", "kilavuz_ters"):
         out.append(("Kaplama", "TiN Kaplı" if s.get("kaplama") else "Kaplamasız"))
     if s.get("din"):
         out.append(("Standart", s["din"]))
@@ -844,8 +933,14 @@ def teknik_detaylar(name, sku, brand, category_path):
         out.append(("İşlem", "Fully Ground (Taşlanmış)"))
     if s.get("hrc"):
         out.append(("Sertlik Sınıfı", f"{s['hrc']} HRC"))
-    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa"):
-        out.append(("Diş/Cıvata Ölçüsü", s["m_olcu"]))
+    if s.get("m_olcu") and s["tip"] in ("dis_freze", "havsa", "kilavuz", "helikoil_yay"):
+        out.append(("Diş Ölçüsü", s["m_olcu"]))
+    if s.get("dis_ad") and s["tip"] == "kilavuz":
+        out.append(("Diş Ölçüsü", s["dis_ad"]))
+    if s.get("yay_boy"):
+        out.append(("Yay Boyu", s["yay_boy"]))
+    if s.get("cene_ad"):
+        out.append(("Çene Genişliği", f"{s['cene_ad']} mm"))
     olculer = olcu_ozellikleri(sku)
     for etiket, deger in olculer:
         out.append((etiket, deger))
@@ -933,6 +1028,11 @@ _ETIKET_ES = {
     "ins_pcd": ["pcd uc", "pcd elmas", "elmas uc", "insert uc", "parlatma ucu"],
     "ins_altlik": ["insert altligi", "altlik uc", "elmas altligi", "kater altligi"],
     "ins_vida": ["altlik vidasi", "insert vidasi", "kater vidasi", "torx vida"],
+    "kilavuz": ["kilavuz", "dis kilavuzu", "makine kilavuzu", "pafta kilavuz", "tap", "klavuz"],
+    "kilavuz_ters": ["ters kilavuz", "civata sokucu", "saplama sokme", "screw extractor"],
+    "helikoil_yay": ["helikoil", "helicoil", "helikoil yay", "dis telleri", "yay insert", "thread insert"],
+    "mengene": ["mengene", "makine mengenesi", "tezgah mengenesi", "freze mengenesi", "vise"],
+    "mengene_aparat": ["mengene yedek parca", "mengene aksesuari", "mengene cenesi"],
     "kumpas_mekanik": ["kumpas", "mekanik kumpas", "surmeli kumpas", "caliper", "verniyeli kumpas"],
     "kumpas_dijital": ["kumpas", "dijital kumpas", "digital kumpas", "elektronik kumpas", "caliper"],
     "kumpas_saatli": ["kumpas", "saatli kumpas", "ibreli kumpas", "dial caliper"],
@@ -1017,7 +1117,7 @@ def build_etiketler(name, sku, brand, category_path):
         tags += [s["dis_ad"].lower(), s["dis_ad"].upper(),
                  f"{s['dis_ad'].lower()} {ana}"]
     if s.get("m_olcu"):
-        m = s["m_olcu"].lower()
+        m = s["m_olcu"].lower().replace(",", ".")
         tags += [m, f"m {m[1:]}", f"{m} {ana}"]
     if s.get("form"):
         f_ = s["form"].lower()

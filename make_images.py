@@ -17,6 +17,7 @@ TEMPLATES = {
     "BOHRCRAFT": HERE / "sablon_bohrcraft.png",
     "ERİC": HERE / "sablon_eric.png",
     "VERTEX": HERE / "sablon_vertex.png",
+    "HÜGEL": HERE / "sablon_hugel.png",
 }
 DEFAULT_TEMPLATE = HERE / "sablon_eric.png"
 OUT_DIR = HERE / "gorseller"
@@ -114,6 +115,10 @@ def main():
             url = series_fallback.get(_series_key(r[i_name]), "")
         if not url:
             failures.append((sku, "kaynak gorsel yok"))
+            fail += 1
+            continue
+        if r[i_brand] and r[i_brand] not in templates:
+            failures.append((sku, f"sablon yok: {r[i_brand]}"))
             fail += 1
             continue
         try:

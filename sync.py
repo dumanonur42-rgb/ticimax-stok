@@ -71,6 +71,9 @@ IMAGE_VERSION = "?v=2"
 ROOT_CATEGORY = "MATKAP VE FREZE"
 OLCU_ROOT = "ÖLÇÜ ALETLERİ"
 ELMAS_ROOT = "ELMAS UÇLAR"
+MENGENE_ROOT = "MENGENELER"
+HELIKOIL_ROOT = "HELİKOİL YAYLAR"
+KILAVUZ_ROOT = "KILAVUZLAR"
 
 # Cekilecek kaynak kategoriler: (kaynak kategori id, Ticimax kategori yolu)
 # Sadelestirilmis, son kullanici odakli kategori yapisi.
@@ -235,6 +238,43 @@ CATEGORIES = [
     (336, ELMAS_ROOT + ">PCD Uçlar"),
     (341, ELMAS_ROOT + ">ALTLIK VE VİDALAR>İnsert Altlık Uçları"),
     (342, ELMAS_ROOT + ">ALTLIK VE VİDALAR>Altlık Vidaları"),
+    # --- KILAVUZLAR ---
+    (203, KILAVUZ_ROOT + ">Metrik Makina Kılavuzları"),
+    (245, KILAVUZ_ROOT + ">Metrik Makina Kılavuzları"),
+    (249, KILAVUZ_ROOT + ">Metrik Makina Kılavuzları"),
+    (201, KILAVUZ_ROOT + ">İnce Diş Kılavuzlar"),
+    (200, KILAVUZ_ROOT + ">El Takım Kılavuzları"),
+    (257, KILAVUZ_ROOT + ">El Takım Kılavuzları"),
+    (209, KILAVUZ_ROOT + ">Sol Kılavuzlar"),
+    (212, KILAVUZ_ROOT + ">Atlamalı Kılavuzlar"),
+    (213, KILAVUZ_ROOT + ">NPT Konik Kılavuzlar"),
+    (214, KILAVUZ_ROOT + ">Gaz Diş Kılavuzları"),
+    (256, KILAVUZ_ROOT + ">Gaz Diş Kılavuzları"),
+    (217, KILAVUZ_ROOT + ">UNF Kılavuzlar"),
+    (220, KILAVUZ_ROOT + ">UNC Kılavuzlar"),
+    (255, KILAVUZ_ROOT + ">Ovalama Kılavuzlar"),
+    (280, KILAVUZ_ROOT + ">Karbür Kılavuzlar"),
+    (240, KILAVUZ_ROOT + ">Ters Kılavuz Setleri"),
+    # --- HELIKOIL YAYLAR ---
+    (234, HELIKOIL_ROOT + ">Metrik Helikoil Yaylar"),
+    (235, HELIKOIL_ROOT + ">İnce Diş Helikoil Yaylar"),
+    # --- MENGENELER ---
+    (425, MENGENE_ROOT + ">Freze Mengeneleri"),
+    (477, MENGENE_ROOT + ">CNC Freze Mengeneleri"),
+    (443, MENGENE_ROOT + ">Hassas Üniversal Açılı Mengeneler"),
+    (445, MENGENE_ROOT + ">2 Açılı Makina Mengeneleri"),
+    (446, MENGENE_ROOT + ">3 Açılı Makina Mengeneleri"),
+    (447, MENGENE_ROOT + ">Hidrolik Mengeneler"),
+    (448, MENGENE_ROOT + ">Tel Erozyon Mengeneleri"),
+    (449, MENGENE_ROOT + ">Pimli Hassas Tezgah Mengeneleri"),
+    (450, MENGENE_ROOT + ">Vidalı Hassas Tezgah Mengeneleri"),
+    (470, MENGENE_ROOT + ">Süper Hassas Tezgah Mengeneleri"),
+    (476, MENGENE_ROOT + ">Çift Çeneli Mengeneler"),
+    (471, MENGENE_ROOT + ">5 Eksen Mengeneler"),
+    (472, MENGENE_ROOT + ">5 Eksen Mengene Point Plakaları"),
+    (478, MENGENE_ROOT + ">Matkap Mengeneleri"),
+    (479, MENGENE_ROOT + ">Sabit Tezgah Mengeneleri"),
+    (474, MENGENE_ROOT + ">Mengene Yedek Parçaları"),
 ]
 
 
