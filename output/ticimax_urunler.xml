@@ -390,7 +390,7 @@
         <VaryasyonID>6504</VaryasyonID>
         <StokKodu>KU91008</StokKodu>
         <Barkod>KU91008</Barkod>
-        <StokAdedi>1450</StokAdedi>
+        <StokAdedi>1400</StokAdedi>
         <SatisFiyati>0.23</SatisFiyati>
         <IndirimliFiyat>0.23</IndirimliFiyat>
         <IndirimliFiyatTL>11.09</IndirimliFiyatTL>
@@ -8306,7 +8306,7 @@
         <VaryasyonID>3645</VaryasyonID>
         <StokKodu>KU78101-1</StokKodu>
         <Barkod>KU78101-1</Barkod>
-        <StokAdedi>390</StokAdedi>
+        <StokAdedi>370</StokAdedi>
         <SatisFiyati>5.8</SatisFiyati>
         <IndirimliFiyat>4.64</IndirimliFiyat>
         <IndirimliFiyatTL>223.8</IndirimliFiyatTL>
@@ -8624,7 +8624,7 @@
         <VaryasyonID>1588</VaryasyonID>
         <StokKodu>KU77112</StokKodu>
         <Barkod>KU77112</Barkod>
-        <StokAdedi>620</StokAdedi>
+        <StokAdedi>610</StokAdedi>
         <SatisFiyati>5.8</SatisFiyati>
         <IndirimliFiyat>4.64</IndirimliFiyat>
         <IndirimliFiyatTL>223.8</IndirimliFiyatTL>
@@ -21576,7 +21576,7 @@
         <VaryasyonID>5488</VaryasyonID>
         <StokKodu>2DHLM12175</StokKodu>
         <Barkod>2DHLM12175</Barkod>
-        <StokAdedi>1140</StokAdedi>
+        <StokAdedi>5140</StokAdedi>
         <SatisFiyati>0.25</SatisFiyati>
         <IndirimliFiyat>0.25</IndirimliFiyat>
         <IndirimliFiyatTL>12.06</IndirimliFiyatTL>
@@ -21747,7 +21747,7 @@
         <VaryasyonID>5489</VaryasyonID>
         <StokKodu>2DHLM14200</StokKodu>
         <Barkod>2DHLM14200</Barkod>
-        <StokAdedi>480</StokAdedi>
+        <StokAdedi>4480</StokAdedi>
         <SatisFiyati>0.32</SatisFiyati>
         <IndirimliFiyat>0.32</IndirimliFiyat>
         <IndirimliFiyatTL>15.43</IndirimliFiyatTL>
@@ -22146,7 +22146,7 @@
         <VaryasyonID>5461</VaryasyonID>
         <StokKodu>15DHLM02040</StokKodu>
         <Barkod>15DHLM02040</Barkod>
-        <StokAdedi>600</StokAdedi>
+        <StokAdedi>5600</StokAdedi>
         <SatisFiyati>0.15</SatisFiyati>
         <IndirimliFiyat>0.15</IndirimliFiyat>
         <IndirimliFiyatTL>7.23</IndirimliFiyatTL>
@@ -22203,7 +22203,7 @@
         <VaryasyonID>5445</VaryasyonID>
         <StokKodu>1DHLM02040</StokKodu>
         <Barkod>1DHLM02040</Barkod>
-        <StokAdedi>1800</StokAdedi>
+        <StokAdedi>11800</StokAdedi>
         <SatisFiyati>0.12</SatisFiyati>
         <IndirimliFiyat>0.12</IndirimliFiyat>
         <IndirimliFiyatTL>5.79</IndirimliFiyatTL>
@@ -22260,7 +22260,7 @@
         <VaryasyonID>5477</VaryasyonID>
         <StokKodu>2DHLM02040</StokKodu>
         <Barkod>2DHLM02040</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>15000</StokAdedi>
         <SatisFiyati>0.17</SatisFiyati>
         <IndirimliFiyat>0.17</IndirimliFiyat>
         <IndirimliFiyatTL>8.2</IndirimliFiyatTL>
@@ -22317,7 +22317,7 @@
         <VaryasyonID>5462</VaryasyonID>
         <StokKodu>15DHLM02545</StokKodu>
         <Barkod>15DHLM02545</Barkod>
-        <StokAdedi>5100</StokAdedi>
+        <StokAdedi>4700</StokAdedi>
         <SatisFiyati>0.15</SatisFiyati>
         <IndirimliFiyat>0.15</IndirimliFiyat>
         <IndirimliFiyatTL>7.23</IndirimliFiyatTL>
@@ -22374,7 +22374,7 @@
         <VaryasyonID>5446</VaryasyonID>
         <StokKodu>1DHLM02545</StokKodu>
         <Barkod>1DHLM02545</Barkod>
-        <StokAdedi>2100</StokAdedi>
+        <StokAdedi>12100</StokAdedi>
         <SatisFiyati>0.12</SatisFiyati>
         <IndirimliFiyat>0.12</IndirimliFiyat>
         <IndirimliFiyatTL>5.79</IndirimliFiyatTL>
@@ -22716,7 +22716,7 @@
         <VaryasyonID>5447</VaryasyonID>
         <StokKodu>1DHLM03050</StokKodu>
         <Barkod>1DHLM03050</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>9900</StokAdedi>
         <SatisFiyati>0.09</SatisFiyati>
         <IndirimliFiyat>0.09</IndirimliFiyat>
         <IndirimliFiyatTL>4.34</IndirimliFiyatTL>
@@ -22887,7 +22887,7 @@
         <VaryasyonID>5448</VaryasyonID>
         <StokKodu>1DHLM04070</StokKodu>
         <Barkod>1DHLM04070</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>24200</StokAdedi>
         <SatisFiyati>0.09</SatisFiyati>
         <IndirimliFiyat>0.09</IndirimliFiyat>
         <IndirimliFiyatTL>4.34</IndirimliFiyatTL>
@@ -23229,7 +23229,7 @@
         <VaryasyonID>5450</VaryasyonID>
         <StokKodu>1DHLM06100</StokKodu>
         <Barkod>1DHLM06100</Barkod>
-        <StokAdedi>-100</StokAdedi>
+        <StokAdedi>14900</StokAdedi>
         <SatisFiyati>0.09</SatisFiyati>
         <IndirimliFiyat>0.09</IndirimliFiyat>
         <IndirimliFiyatTL>4.34</IndirimliFiyatTL>
@@ -23286,7 +23286,7 @@
         <VaryasyonID>5482</VaryasyonID>
         <StokKodu>2DHLM06100</StokKodu>
         <Barkod>2DHLM06100</Barkod>
-        <StokAdedi>16300</StokAdedi>
+        <StokAdedi>28300</StokAdedi>
         <SatisFiyati>0.12</SatisFiyati>
         <IndirimliFiyat>0.12</IndirimliFiyat>
         <IndirimliFiyatTL>5.79</IndirimliFiyatTL>
@@ -23571,7 +23571,7 @@
         <VaryasyonID>5452</VaryasyonID>
         <StokKodu>1DHLM08125</StokKodu>
         <Barkod>1DHLM08125</Barkod>
-        <StokAdedi>1975</StokAdedi>
+        <StokAdedi>16975</StokAdedi>
         <SatisFiyati>0.11</SatisFiyati>
         <IndirimliFiyat>0.11</IndirimliFiyat>
         <IndirimliFiyatTL>5.31</IndirimliFiyatTL>
@@ -24882,7 +24882,7 @@
         <VaryasyonID>5516</VaryasyonID>
         <StokKodu>15DHLM14125</StokKodu>
         <Barkod>15DHLM14125</Barkod>
-        <StokAdedi>1440</StokAdedi>
+        <StokAdedi>6440</StokAdedi>
         <SatisFiyati>0.27</SatisFiyati>
         <IndirimliFiyat>0.27</IndirimliFiyat>
         <IndirimliFiyatTL>13.02</IndirimliFiyatTL>
@@ -43493,7 +43493,7 @@
         <VaryasyonID>6369</VaryasyonID>
         <StokKodu>TNPT416014</StokKodu>
         <Barkod>TNPT416014</Barkod>
-        <StokAdedi>135</StokAdedi>
+        <StokAdedi>129</StokAdedi>
         <SatisFiyati>15.13</SatisFiyati>
         <IndirimliFiyat>12.1</IndirimliFiyat>
         <IndirimliFiyatTL>583.81</IndirimliFiyatTL>
@@ -47581,7 +47581,7 @@
         <VaryasyonID>6399</VaryasyonID>
         <StokKodu>T414516</StokKodu>
         <Barkod>T414516</Barkod>
-        <StokAdedi>197</StokAdedi>
+        <StokAdedi>191</StokAdedi>
         <SatisFiyati>7.0</SatisFiyati>
         <IndirimliFiyat>5.6</IndirimliFiyat>
         <IndirimliFiyatTL>270.1</IndirimliFiyatTL>
@@ -85323,7 +85323,7 @@
         <VaryasyonID>6126</VaryasyonID>
         <StokKodu>TK45016</StokKodu>
         <Barkod>TK45016</Barkod>
-        <StokAdedi>76</StokAdedi>
+        <StokAdedi>75</StokAdedi>
         <SatisFiyati>25.1</SatisFiyati>
         <IndirimliFiyat>20.08</IndirimliFiyat>
         <IndirimliFiyatTL>968.51</IndirimliFiyatTL>
@@ -93576,7 +93576,7 @@
         <VaryasyonID>4459</VaryasyonID>
         <StokKodu>TKTF10525</StokKodu>
         <Barkod>TKTF10525</Barkod>
-        <StokAdedi>29</StokAdedi>
+        <StokAdedi>27</StokAdedi>
         <SatisFiyati>160.7</SatisFiyati>
         <IndirimliFiyat>128.56</IndirimliFiyat>
         <IndirimliFiyatTL>6200.78</IndirimliFiyatTL>
@@ -147783,7 +147783,7 @@
         <VaryasyonID>4281</VaryasyonID>
         <StokKodu>T30300170</StokKodu>
         <Barkod>T30300170</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>2</StokAdedi>
         <SatisFiyati>154.0</SatisFiyati>
         <IndirimliFiyat>123.2</IndirimliFiyat>
         <IndirimliFiyatTL>5942.26</IndirimliFiyatTL>
@@ -147873,7 +147873,7 @@
         <VaryasyonID>4284</VaryasyonID>
         <StokKodu>T30305296</StokKodu>
         <Barkod>T30305296</Barkod>
-        <StokAdedi>2</StokAdedi>
+        <StokAdedi>5</StokAdedi>
         <SatisFiyati>995.0</SatisFiyati>
         <IndirimliFiyat>796.0</IndirimliFiyat>
         <IndirimliFiyatTL>38393.15</IndirimliFiyatTL>
@@ -147918,7 +147918,7 @@
         <VaryasyonID>4283</VaryasyonID>
         <StokKodu>T30305260</StokKodu>
         <Barkod>T30305260</Barkod>
-        <StokAdedi>2</StokAdedi>
+        <StokAdedi>5</StokAdedi>
         <SatisFiyati>920.0</SatisFiyati>
         <IndirimliFiyat>736.0</IndirimliFiyat>
         <IndirimliFiyatTL>35499.19</IndirimliFiyatTL>
@@ -148102,7 +148102,7 @@
         <VaryasyonID>4088</VaryasyonID>
         <StokKodu>T301130220</StokKodu>
         <Barkod>T301130220</Barkod>
-        <StokAdedi>1</StokAdedi>
+        <StokAdedi>19</StokAdedi>
         <SatisFiyati>1310.0</SatisFiyati>
         <IndirimliFiyat>1048.0</IndirimliFiyat>
         <IndirimliFiyatTL>50547.77</IndirimliFiyatTL>
@@ -148196,7 +148196,7 @@
         <VaryasyonID>3945</VaryasyonID>
         <StokKodu>T301060080</StokKodu>
         <Barkod>T301060080</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>14</StokAdedi>
         <SatisFiyati>230.0</SatisFiyati>
         <IndirimliFiyat>184.0</IndirimliFiyat>
         <IndirimliFiyatTL>8874.8</IndirimliFiyatTL>
@@ -148290,7 +148290,7 @@
         <VaryasyonID>3946</VaryasyonID>
         <StokKodu>T301070100</StokKodu>
         <Barkod>T301070100</Barkod>
-        <StokAdedi>1</StokAdedi>
+        <StokAdedi>26</StokAdedi>
         <SatisFiyati>420.0</SatisFiyati>
         <IndirimliFiyat>336.0</IndirimliFiyat>
         <IndirimliFiyatTL>16206.15</IndirimliFiyatTL>
@@ -148335,7 +148335,7 @@
         <VaryasyonID>3947</VaryasyonID>
         <StokKodu>T301090150</StokKodu>
         <Barkod>T301090150</Barkod>
-        <StokAdedi>11</StokAdedi>
+        <StokAdedi>46</StokAdedi>
         <SatisFiyati>610.0</SatisFiyati>
         <IndirimliFiyat>488.0</IndirimliFiyat>
         <IndirimliFiyatTL>23537.51</IndirimliFiyatTL>
@@ -148433,7 +148433,7 @@
         <VaryasyonID>1865</VaryasyonID>
         <StokKodu>T390150</StokKodu>
         <Barkod>T390150</Barkod>
-        <StokAdedi>4</StokAdedi>
+        <StokAdedi>9</StokAdedi>
         <SatisFiyati>376.0</SatisFiyati>
         <IndirimliFiyat>300.8</IndirimliFiyat>
         <IndirimliFiyatTL>14508.37</IndirimliFiyatTL>
@@ -149413,7 +149413,7 @@
         <VaryasyonID>1852</VaryasyonID>
         <StokKodu>T330200</StokKodu>
         <Barkod>T330200</Barkod>
-        <StokAdedi>1</StokAdedi>
+        <StokAdedi>4</StokAdedi>
         <SatisFiyati>398.0</SatisFiyati>
         <IndirimliFiyat>318.4</IndirimliFiyat>
         <IndirimliFiyatTL>15357.26</IndirimliFiyatTL>
@@ -153473,7 +153473,7 @@
         <VaryasyonID>2258</VaryasyonID>
         <StokKodu>T395QKG100</StokKodu>
         <Barkod>T395QKG100</Barkod>
-        <StokAdedi>2</StokAdedi>
+        <StokAdedi>12</StokAdedi>
         <SatisFiyati>200.0</SatisFiyati>
         <IndirimliFiyat>160.0</IndirimliFiyat>
         <IndirimliFiyatTL>7717.22</IndirimliFiyatTL>
@@ -153522,7 +153522,7 @@
         <VaryasyonID>2259</VaryasyonID>
         <StokKodu>T395QKG125</StokKodu>
         <Barkod>T395QKG125</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>5</StokAdedi>
         <SatisFiyati>290.0</SatisFiyati>
         <IndirimliFiyat>232.0</IndirimliFiyat>
         <IndirimliFiyatTL>11189.96</IndirimliFiyatTL>
@@ -153620,7 +153620,7 @@
         <VaryasyonID>2256</VaryasyonID>
         <StokKodu>T395QKG050</StokKodu>
         <Barkod>T395QKG050</Barkod>
-        <StokAdedi>1</StokAdedi>
+        <StokAdedi>51</StokAdedi>
         <SatisFiyati>68.0</SatisFiyati>
         <IndirimliFiyat>54.4</IndirimliFiyat>
         <IndirimliFiyatTL>2623.86</IndirimliFiyatTL>
@@ -154176,7 +154176,7 @@
         <VaryasyonID>3304</VaryasyonID>
         <StokKodu>T315150</StokKodu>
         <Barkod>T315150</Barkod>
-        <StokAdedi>58</StokAdedi>
+        <StokAdedi>88</StokAdedi>
         <SatisFiyati>100.0</SatisFiyati>
         <IndirimliFiyat>80.0</IndirimliFiyat>
         <IndirimliFiyatTL>3858.61</IndirimliFiyatTL>
@@ -154225,7 +154225,7 @@
         <VaryasyonID>3305</VaryasyonID>
         <StokKodu>T315200</StokKodu>
         <Barkod>T315200</Barkod>
-        <StokAdedi>28</StokAdedi>
+        <StokAdedi>53</StokAdedi>
         <SatisFiyati>148.0</SatisFiyati>
         <IndirimliFiyat>118.4</IndirimliFiyat>
         <IndirimliFiyatTL>5710.74</IndirimliFiyatTL>
@@ -154953,7 +154953,7 @@
         <VaryasyonID>2249</VaryasyonID>
         <StokKodu>T395QGG100</StokKodu>
         <Barkod>T395QGG100</Barkod>
-        <StokAdedi>21</StokAdedi>
+        <StokAdedi>36</StokAdedi>
         <SatisFiyati>240.0</SatisFiyati>
         <IndirimliFiyat>192.0</IndirimliFiyat>
         <IndirimliFiyatTL>9260.66</IndirimliFiyatTL>
@@ -156316,7 +156316,7 @@
         <VaryasyonID>1355</VaryasyonID>
         <StokKodu>T2415005</StokKodu>
         <Barkod>T2415005</Barkod>
-        <StokAdedi>131</StokAdedi>
+        <StokAdedi>231</StokAdedi>
         <SatisFiyati>122.0</SatisFiyati>
         <IndirimliFiyat>97.6</IndirimliFiyat>
         <IndirimliFiyatTL>4707.5</IndirimliFiyatTL>
@@ -156369,7 +156369,7 @@
         <VaryasyonID>1354</VaryasyonID>
         <StokKodu>T2415007</StokKodu>
         <Barkod>T2415007</Barkod>
-        <StokAdedi>27</StokAdedi>
+        <StokAdedi>37</StokAdedi>
         <SatisFiyati>86.0</SatisFiyati>
         <IndirimliFiyat>68.8</IndirimliFiyat>
         <IndirimliFiyatTL>3318.4</IndirimliFiyatTL>
@@ -157268,7 +157268,7 @@
         <VaryasyonID>1364</VaryasyonID>
         <StokKodu>T26070100</StokKodu>
         <Barkod>T26070100</Barkod>
-        <StokAdedi>341</StokAdedi>
+        <StokAdedi>841</StokAdedi>
         <SatisFiyati>12.0</SatisFiyati>
         <IndirimliFiyat>10.2</IndirimliFiyat>
         <IndirimliFiyatTL>491.97</IndirimliFiyatTL>
@@ -158967,7 +158967,7 @@
         <VaryasyonID>1305</VaryasyonID>
         <StokKodu>T170008SLG</StokKodu>
         <Barkod>T170008SLG</Barkod>
-        <StokAdedi>130</StokAdedi>
+        <StokAdedi>125</StokAdedi>
         <SatisFiyati>29.5</SatisFiyati>
         <IndirimliFiyat>25.07</IndirimliFiyat>
         <IndirimliFiyatTL>1209.43</IndirimliFiyatTL>
@@ -159016,7 +159016,7 @@
         <VaryasyonID>1306</VaryasyonID>
         <StokKodu>T170008SLGU</StokKodu>
         <Barkod>T170008SLGU</Barkod>
-        <StokAdedi>51</StokAdedi>
+        <StokAdedi>46</StokAdedi>
         <SatisFiyati>36.0</SatisFiyati>
         <IndirimliFiyat>30.6</IndirimliFiyat>
         <IndirimliFiyatTL>1475.91</IndirimliFiyatTL>
@@ -162765,7 +162765,7 @@
         <VaryasyonID>1340</VaryasyonID>
         <StokKodu>T21MAN60</StokKodu>
         <Barkod>T21MAN60</Barkod>
-        <StokAdedi>68</StokAdedi>
+        <StokAdedi>63</StokAdedi>
         <SatisFiyati>13.65</SatisFiyati>
         <IndirimliFiyat>10.92</IndirimliFiyat>
         <IndirimliFiyatTL>526.7</IndirimliFiyatTL>
@@ -162814,7 +162814,7 @@
         <VaryasyonID>1341</VaryasyonID>
         <StokKodu>T21MANU60</StokKodu>
         <Barkod>T21MANU60</Barkod>
-        <StokAdedi>298</StokAdedi>
+        <StokAdedi>293</StokAdedi>
         <SatisFiyati>27.5</SatisFiyati>
         <IndirimliFiyat>22.0</IndirimliFiyat>
         <IndirimliFiyatTL>1061.12</IndirimliFiyatTL>
@@ -169780,7 +169780,7 @@
         <VaryasyonID>6548</VaryasyonID>
         <StokKodu>T31NC0014</StokKodu>
         <Barkod>T31NC0014</Barkod>
-        <StokAdedi>9</StokAdedi>
+        <StokAdedi>8</StokAdedi>
         <SatisFiyati>40.25</SatisFiyati>
         <IndirimliFiyat>34.21</IndirimliFiyat>
         <IndirimliFiyatTL>1650.16</IndirimliFiyatTL>
@@ -173940,7 +173940,7 @@
         <VaryasyonID>6534</VaryasyonID>
         <StokKodu>T450300</StokKodu>
         <Barkod>T450300</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>10</StokAdedi>
         <SatisFiyati>204.0</SatisFiyati>
         <IndirimliFiyat>163.2</IndirimliFiyat>
         <IndirimliFiyatTL>7871.56</IndirimliFiyatTL>
@@ -174173,7 +174173,7 @@
         <VaryasyonID>4293</VaryasyonID>
         <StokKodu>TTES0010</StokKodu>
         <Barkod>TTES0010</Barkod>
-        <StokAdedi>4</StokAdedi>
+        <StokAdedi>38</StokAdedi>
         <SatisFiyati>516.0</SatisFiyati>
         <IndirimliFiyat>412.8</IndirimliFiyat>
         <IndirimliFiyatTL>19910.42</IndirimliFiyatTL>
@@ -174226,7 +174226,7 @@
         <VaryasyonID>5563</VaryasyonID>
         <StokKodu>TTES0020</StokKodu>
         <Barkod>TTES0020</Barkod>
-        <StokAdedi>15</StokAdedi>
+        <StokAdedi>118</StokAdedi>
         <SatisFiyati>46.1</SatisFiyati>
         <IndirimliFiyat>36.88</IndirimliFiyat>
         <IndirimliFiyatTL>1778.82</IndirimliFiyatTL>
@@ -174520,7 +174520,7 @@
         <VaryasyonID>1346</VaryasyonID>
         <StokKodu>T22MPRA</StokKodu>
         <Barkod>T22MPRA</Barkod>
-        <StokAdedi>2352</StokAdedi>
+        <StokAdedi>3352</StokAdedi>
         <SatisFiyati>7.5</SatisFiyati>
         <IndirimliFiyat>6.0</IndirimliFiyat>
         <IndirimliFiyatTL>289.39</IndirimliFiyatTL>
@@ -174573,7 +174573,7 @@
         <VaryasyonID>1344</VaryasyonID>
         <StokKodu>T22ISP</StokKodu>
         <Barkod>T22ISP</Barkod>
-        <StokAdedi>209</StokAdedi>
+        <StokAdedi>304</StokAdedi>
         <SatisFiyati>30.0</SatisFiyati>
         <IndirimliFiyat>24.0</IndirimliFiyat>
         <IndirimliFiyatTL>1157.58</IndirimliFiyatTL>
@@ -174810,7 +174810,7 @@
         <VaryasyonID>3401</VaryasyonID>
         <StokKodu>T22TPRA</StokKodu>
         <Barkod>T22TPRA</Barkod>
-        <StokAdedi>532</StokAdedi>
+        <StokAdedi>1032</StokAdedi>
         <SatisFiyati>18.0</SatisFiyati>
         <IndirimliFiyat>14.4</IndirimliFiyat>
         <IndirimliFiyatTL>694.55</IndirimliFiyatTL>
@@ -175263,7 +175263,7 @@
         <VaryasyonID>2239</VaryasyonID>
         <StokKodu>T22ZSFR050</StokKodu>
         <Barkod>T22ZSFR050</Barkod>
-        <StokAdedi>154</StokAdedi>
+        <StokAdedi>254</StokAdedi>
         <SatisFiyati>100.0</SatisFiyati>
         <IndirimliFiyat>80.0</IndirimliFiyat>
         <IndirimliFiyatTL>3858.61</IndirimliFiyatTL>
