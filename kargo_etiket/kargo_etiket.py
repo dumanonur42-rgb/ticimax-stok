@@ -421,7 +421,7 @@ def print_pdf(pdf: Path, printer: str | None = None):
     if printer and printers and printer not in printers:
         raise RuntimeError(
             f"'{printer}' adlı yazıcı sistemde bulunamadı.\n"
-            "Yazıcının açık ve bağlı olduğundan emin olup listeyi yenileyin (↻).")
+            "Yazıcının açık ve bağlı olduğundan emin olup \"Yenile\" ile listeyi güncelleyin.")
     if not printer and not printers:
         raise RuntimeError(
             "Sistemde tanımlı yazıcı bulunamadı.\n"
@@ -656,6 +656,18 @@ class Preview(tk.Frame if tk else object):
         self.next_btn.config(state="normal" if self.idx < n - 1 else "disabled")
 
 
+def pill(master, text, cmd, primary: bool = False, size: int = 9):
+    """Düz/çerçeveli küçük düğme (Label tabanlı, tema bağımsız)."""
+    fg, bg = ("white", UI_DARK) if primary else (UI_DARK, UI_CARD)
+    hover = UI_DARK_HOVER if primary else UI_DARK
+    b = tk.Label(master, text=text, font=_f(size, True), fg=fg, bg=bg, cursor="hand2",
+                 padx=12, pady=4, highlightbackground=UI_DARK, highlightthickness=1)
+    b.bind("<Button-1>", lambda _e: cmd())
+    b.bind("<Enter>", lambda _e: b.config(bg=hover, fg="white"))
+    b.bind("<Leave>", lambda _e: b.config(bg=bg, fg=fg))
+    return b
+
+
 class StatusBar(tk.Frame if tk else object):
     """Alt durum çubuğu: renkli durum rozeti, iki satır metin, sağda eylem düğmeleri."""
 
@@ -677,19 +689,8 @@ class StatusBar(tk.Frame if tk else object):
         self.detail.grid(row=1, column=1, sticky="w")
         self.buttons = tk.Frame(self, bg=UI_CARD)
         for i, (text, cmd, primary) in enumerate(actions):
-            self._pill(self.buttons, text, cmd, primary).grid(row=0, column=i, padx=(8, 0))
+            pill(self.buttons, text, cmd, primary).grid(row=0, column=i, padx=(8, 0))
         self.set("idle", "Hazır", "Bir Ticimax PDF'i ekleyin; etiket burada raporlanır.")
-
-    @staticmethod
-    def _pill(master, text, cmd, primary: bool = False):
-        fg, bg = ("white", UI_DARK) if primary else (UI_DARK, UI_CARD)
-        hover = "#333333" if primary else UI_DARK
-        b = tk.Label(master, text=text, font=_f(9, True), fg=fg, bg=bg, cursor="hand2",
-                     padx=12, pady=4, highlightbackground=UI_DARK, highlightthickness=1)
-        b.bind("<Button-1>", lambda _e: cmd())
-        b.bind("<Enter>", lambda _e: b.config(bg=hover, fg="white"))
-        b.bind("<Leave>", lambda _e: b.config(bg=bg, fg=fg))
-        return b
 
     def set(self, state: str, title: str, detail: str = "", show_actions: bool = False):
         c = self.badge
@@ -800,10 +801,8 @@ class App(_TkBase):
         self.printer_box = ttk.Combobox(card, textvariable=self.printer_var, width=30,
                                         font=_f(10))
         self.printer_box.grid(row=3, column=1, sticky="w", padx=(14, 0), pady=4)
-        tk.Button(card, text="↻", command=self.refresh_printers, font=_f(11), bd=0,
-                  relief="flat", highlightthickness=0, bg=UI_CARD, activebackground=UI_BG,
-                  fg=UI_MUTED, cursor="hand2", width=2).grid(row=3, column=2, sticky="w",
-                                                            padx=(4, 0))
+        pill(card, "Yenile", self.refresh_printers, size=8).grid(row=3, column=2, sticky="w",
+                                                                 padx=(10, 0))
 
         self.print_var = tk.BooleanVar(value=False)
         self.open_var = tk.BooleanVar(value=False)
