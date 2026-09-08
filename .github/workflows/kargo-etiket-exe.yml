@@ -25,11 +25,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r kargo_etiket/requirements.txt pyinstaller
 
+      - name: SumatraPDF indir (gomulu PDF goruntuleyici/yazdirici)
+        working-directory: kargo_etiket
+        run: |
+          $v = "3.5.2"
+          Invoke-WebRequest -Uri "https://www.sumatrapdfreader.org/dl/rel/$v/SumatraPDF-$v-64.zip" -OutFile sumatra.zip
+          Expand-Archive sumatra.zip -DestinationPath sumatra -Force
+          Copy-Item (Get-ChildItem sumatra -Recurse -Filter "SumatraPDF*.exe" | Select-Object -First 1).FullName SumatraPDF.exe
+          if (-not (Test-Path SumatraPDF.exe)) { Write-Error "SumatraPDF bulunamadi"; exit 1 }
+
       - name: Derle
         working-directory: kargo_etiket
         run: |
           pyinstaller --noconfirm --onefile --windowed --name KargoEtiket_QL550 `
             --add-data "fonts;fonts" `
+            --add-binary "SumatraPDF.exe;." `
             --collect-all pymupdf --collect-all barcode `
             kargo_etiket.py
 
@@ -40,6 +50,8 @@ jobs:
           $p = Start-Process -FilePath .\dist\KargoEtiket_QL550.exe -ArgumentList "test\ornek.pdf","--acma" -Wait -PassThru -NoNewWindow
           if ($p.ExitCode -ne 0) { Write-Error "exe cikis kodu $($p.ExitCode)"; exit 1 }
           if (-not (Test-Path test\ornek_QL550.pdf)) { Write-Error "cikti olusmadi"; exit 1 }
+          $k = Start-Process -FilePath .\dist\KargoEtiket_QL550.exe -ArgumentList "--kontrol" -Wait -PassThru -NoNewWindow
+          if ($k.ExitCode -ne 0) { Write-Error "gomulu SumatraPDF exe icinde bulunamadi"; exit 1 }
 
       - uses: actions/upload-artifact@v4
         with:

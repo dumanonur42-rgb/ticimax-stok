@@ -375,12 +375,13 @@ def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) ->
 # ---------------------------------------------------------------- Yazdırma
 
 def _sumatra() -> str | None:
+    """Exe içine gömülü SumatraPDF (öncelikli) ya da sistemde kurulu olan."""
     for c in (
+        str(resource_path("SumatraPDF.exe")),
         shutil.which("SumatraPDF"),
         os.path.expandvars(r"%LOCALAPPDATA%\SumatraPDF\SumatraPDF.exe"),
         os.path.expandvars(r"%ProgramFiles%\SumatraPDF\SumatraPDF.exe"),
         os.path.expandvars(r"%ProgramFiles(x86)%\SumatraPDF\SumatraPDF.exe"),
-        str(resource_path("SumatraPDF.exe")),
     ):
         if c and os.path.isfile(c):
             return c
@@ -413,13 +414,44 @@ def print_pdf(pdf: Path, printer: str | None = None):
         cmd += ["-print-to", printer] if printer else ["-print-to-default"]
         cmd += ["-print-settings", "noscale", "-silent", "-exit-when-done", str(pdf)]
         subprocess.run(cmd, check=False, timeout=120)
-    else:
+        return
+    try:
         os.startfile(str(pdf), "print")  # type: ignore[attr-defined]
+    except OSError as ex:
+        raise RuntimeError(
+            "Windows'ta PDF yazdıracak bir uygulama bulunamadı. Etiket oluşturuldu:\n"
+            f"{pdf}\nBu dosyayı Edge/Acrobat ile açıp Brother QL-550'ye 62x100 mm, "
+            "%100 ölçek ile yazdırın.") from ex
+
+
+def _edge() -> str | None:
+    for c in (
+        os.path.expandvars(r"%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"),
+        os.path.expandvars(r"%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"),
+    ):
+        if os.path.isfile(c):
+            return c
+    return None
 
 
 def open_file(path: Path):
+    """Çıktıyı gösterir. Windows'ta gömülü SumatraPDF ile açar; yoksa .pdf ile
+    ilişkili uygulama, Edge, en son dosyanın klasörü denenir."""
     if sys.platform == "win32":
-        os.startfile(str(path))  # type: ignore[attr-defined]
+        sumatra = _sumatra()
+        if sumatra:
+            subprocess.Popen([sumatra, str(path)])
+            return
+        try:
+            os.startfile(str(path))  # type: ignore[attr-defined]
+            return
+        except OSError:
+            pass
+        edge = _edge()
+        if edge:
+            subprocess.Popen([edge, path.resolve().as_uri()])
+            return
+        subprocess.Popen(["explorer.exe", "/select,", str(path.resolve())])
     elif sys.platform == "darwin":
         subprocess.Popen(["open", str(path)])
     else:
@@ -455,7 +487,7 @@ class App(tk.Tk if tk else object):
         ttk.Combobox(frm, textvariable=self.printer_var, width=28,
                      values=printers).grid(column=1, row=2, sticky="w", **pad)
 
-        self.print_var = tk.BooleanVar(value=False)
+        self.print_var = tk.BooleanVar(value=bool(brother))
         ttk.Checkbutton(frm, text="Dönüştürdükten sonra otomatik yazdır",
                         variable=self.print_var).grid(column=0, row=3, columnspan=2,
                                                        sticky="w", **pad)
@@ -478,13 +510,31 @@ class App(tk.Tk if tk else object):
     def process(self, src: Path):
         try:
             dst = convert(src, size_key=self.size_var.get())
-            self.status.config(text=f"Oluşturuldu: {dst.name}")
-            if self.print_var.get():
-                print_pdf(dst, self.printer_var.get() or None)
-            if self.open_var.get():
-                open_file(dst)
         except Exception as ex:  # noqa: BLE001
             messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
+            return
+        self.status.config(text=f"Oluşturuldu: {dst.name}")
+        warn = _after_convert(dst, self.print_var.get(), self.printer_var.get() or None,
+                              self.open_var.get())
+        if warn:
+            messagebox.showwarning("Etiket oluşturuldu", warn)
+
+
+def _after_convert(dst: Path, do_print: bool, printer: str | None, do_open: bool) -> str:
+    """Yazdırma/açma adımları; dönüştürme başarılı olduğu için hata yerine uyarı
+    metni döndürür (boş = sorun yok)."""
+    msgs = []
+    if do_print:
+        try:
+            print_pdf(dst, printer)
+        except (OSError, RuntimeError, subprocess.SubprocessError) as ex:
+            msgs.append(f"Yazdırılamadı: {ex}")
+    if do_open:
+        try:
+            open_file(dst)
+        except OSError as ex:
+            msgs.append(f"Açılamadı: {ex}\nDosya burada: {dst}")
+    return "\n\n".join(msgs)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -495,7 +545,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--yazdir", action="store_true", help="varsayılan yazıcıya gönder")
     ap.add_argument("--yazici", help="yazıcı adı (örn. \"Brother QL-550\")")
     ap.add_argument("--acma", action="store_true", help="çıktıyı açma")
+    ap.add_argument("--kontrol", action="store_true",
+                    help="gömülü PDF yazdırıcının bulunduğunu doğrula ve çık")
     args = ap.parse_args(argv)
+
+    if args.kontrol:
+        s = _sumatra()
+        print(f"SumatraPDF: {s or 'YOK'}")
+        return 0 if s else 2
 
     if not args.pdf:
         if tk is None:
@@ -508,18 +565,28 @@ def main(argv: list[str] | None = None) -> int:
         src = Path(p)
         try:
             dst = convert(src, size_key=args.boyut)
-            print(f"OK  {src} -> {dst}")
-            if args.yazdir or args.yazici:
-                print_pdf(dst, args.yazici)
-            elif not args.acma:
-                open_file(dst)
         except Exception as ex:  # noqa: BLE001
             rc = 1
             print(f"HATA {src}: {ex}", file=sys.stderr)
-            if tk and sys.platform == "win32" and not sys.stdout.isatty():
-                root = tk.Tk(); root.withdraw()
-                messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
+            _popup("error", "Hata", f"{src.name}\n\n{ex}")
+            continue
+        print(f"OK  {src} -> {dst}")
+        do_print = bool(args.yazdir or args.yazici)
+        warn = _after_convert(dst, do_print, args.yazici, not do_print and not args.acma)
+        if warn:
+            print(warn, file=sys.stderr)
+            _popup("warning", "Etiket oluşturuldu", warn)
     return rc
+
+
+def _popup(kind: str, title: str, text: str):
+    """Sürükle-bırak ile (konsolsuz) çalıştırıldığında mesaj kutusu gösterir."""
+    if tk and sys.platform == "win32" and not sys.stdout.isatty():
+        root = tk.Tk()
+        root.withdraw()
+        fn = messagebox.showerror if kind == "error" else messagebox.showwarning
+        fn(title, text)
+        root.destroy()
 
 
 if __name__ == "__main__":

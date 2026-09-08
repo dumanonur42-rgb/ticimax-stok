@@ -29,10 +29,12 @@ Her sayfa/sipariş ayrı bir etiket sayfası olur.
 
 Çıktı PDF'inin sayfa boyutu **tam 62 × 100 mm**'dir; bu yüzden ek ölçekleme gerekmez.
 
-**Yol 1 – Otomatik (önerilen):** [SumatraPDF](https://www.sumatrapdfreader.org/) kurulu ise
-uygulama etiketi doğrudan seçilen yazıcıya **ölçeklemeden** gönderir (`--yazici` veya
-penceredeki "otomatik yazdır"). SumatraPDF yoksa Windows'un varsayılan PDF
-uygulamasının yazdırma penceresi açılır.
+**Yol 1 – Otomatik (önerilen):** Exe'nin içinde gömülü bir PDF görüntüleyici/yazdırıcı
+([SumatraPDF](https://www.sumatrapdfreader.org/), GPLv3) bulunur; dışarıdan hiçbir program
+gerekmez. Uygulama etiketi doğrudan seçilen yazıcıya **ölçeklemeden** gönderir (`--yazici`
+veya penceredeki "otomatik yazdır"; Brother/QL yazıcı algılanırsa varsayılan işaretlidir).
+"Çıktı PDF'ini aç" da aynı gömülü görüntüleyiciyi kullanır (Windows'ta .pdf ile ilişkili
+uygulama olmasa bile çalışır).
 
 **Yol 2 – Elle:** PDF'i açın → Yazdır → Yazıcı: *Brother QL-550* → Yazıcı özelliklerinde
 kağıt boyutu **62mm x 100mm** → ölçek **Gerçek boyut / %100** (Sayfaya sığdır **kapalı**).
