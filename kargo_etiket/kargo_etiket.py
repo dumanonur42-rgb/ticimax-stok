@@ -152,153 +152,211 @@ def _wrap(text: str, size: float, font: str, max_w: float, max_lines: int) -> li
     return lines
 
 
-LEADING = 1.22  # satır yüksekliği / punto
+LEADING = 1.2  # satır yüksekliği / punto
+BLACK = (0, 0, 0)
+WHITE = (1, 1, 1)
+
+
+class Canvas:
+    """Sayfaya siyah-beyaz metin/şekil çizen yardımcı. Tüm ölçüler pt."""
+
+    def __init__(self, page: pymupdf.Page):
+        self.page = page
+        self.w = page.rect.width
+        self.tw_black = pymupdf.TextWriter(page.rect)
+        self.tw_white = pymupdf.TextWriter(page.rect)
+
+    def text(self, x: float, y: float, s: str, size: float, font: str = "r",
+             align: str = "left", white: bool = False, box_w: float | None = None) -> None:
+        """y: satır taban çizgisi. align: left|center|right (box_w ile birlikte)."""
+        f = _font(font)
+        tl = f.text_length(s, fontsize=size)
+        if align == "center":
+            x = x + ((box_w if box_w is not None else self.w - 2 * x) - tl) / 2
+        elif align == "right":
+            x = x + (box_w if box_w is not None else self.w - 2 * x) - tl
+        (self.tw_white if white else self.tw_black).append((x, y), s, font=f, fontsize=size)
+
+    def lines(self, x: float, y: float, lines: list[str], size: float, font: str = "r",
+              align: str = "left", box_w: float | None = None) -> float:
+        for ln in lines:
+            y += size
+            self.text(x, y, ln, size, font, align, box_w=box_w)
+            y += size * (LEADING - 1)
+        return y
+
+    def band(self, rect: pymupdf.Rect, radius: float = 0) -> None:
+        sh = self.page.new_shape()
+        if radius:
+            sh.draw_rect(rect, radius=radius / min(rect.width, rect.height))
+        else:
+            sh.draw_rect(rect)
+        sh.finish(color=None, fill=BLACK)
+        sh.commit()
+
+    def frame(self, rect: pymupdf.Rect, width: float = 0.8, radius: float = 0) -> None:
+        sh = self.page.new_shape()
+        if radius:
+            sh.draw_rect(rect, radius=radius / min(rect.width, rect.height))
+        else:
+            sh.draw_rect(rect)
+        sh.finish(color=BLACK, width=width, fill=None)
+        sh.commit()
+
+    def vline(self, x: float, y0: float, y1: float, width: float = 0.8) -> None:
+        self.page.draw_line((x, y0), (x, y1), color=BLACK, width=width)
+
+    def barcode(self, value: str, x: float, y: float, w: float, h: float) -> None:
+        modules = _barcode_modules(value)
+        mod_w = w / (len(modules) + 20)  # her yanda 10 modül sessiz bölge
+        x0 = x + 10 * mod_w
+        sh = self.page.new_shape()
+        i = 0
+        while i < len(modules):
+            if modules[i] == "1":
+                j = i
+                while j < len(modules) and modules[j] == "1":
+                    j += 1
+                sh.draw_rect(pymupdf.Rect(x0 + i * mod_w, y, x0 + j * mod_w, y + h))
+                i = j
+            else:
+                i += 1
+        sh.finish(color=None, fill=BLACK)
+        sh.commit()
+
+    def finish(self) -> None:
+        self.tw_black.write_text(self.page, color=BLACK)
+        self.tw_white.write_text(self.page, color=WHITE)
 
 
 @dataclass
-class Line:
-    text: str
-    size: float
-    font: str = "r"
-    center: bool = False
-    gray: bool = False
-    space_after: float = 0.0
+class Layout:
+    """Bir etiketin ölçekli metrikleri. `s` yazı ölçeği."""
+    s: float
+    name: list[str]
+    addr: list[str]
+    firma: list[str]
+    g_addr: list[str]
 
-    @property
-    def height(self) -> float:
-        return self.size * LEADING + self.space_after
+    header_h: float = 0
+    alici_h: float = 0
+    kargo_h: float = 0
+    gond_h: float = 0
+    barkod_text: float = 0
 
+    def __post_init__(self):
+        s = self.s
+        self.header_h = 7 * MM
+        pad = 2 * MM
+        self.alici_h = (pad + len(self.name) * 14 * s * LEADING + 11 * s * LEADING + 1.2 * MM
+                        + len(self.addr) * 8.5 * s * LEADING + pad)
+        self.kargo_h = 8.5 * MM
+        self.gond_h = (1.5 * MM + len(self.firma) * 7 * s * LEADING
+                       + len(self.g_addr) * 6.5 * s * LEADING + 0.5 * MM)
+        self.barkod_text = 11 * s * LEADING
 
-@dataclass
-class Barcode:
-    value: str
-    height: float
-
-    @property
-    def total(self) -> float:
-        return self.height + 1 * MM + 11 * LEADING
-
-
-Item = Line | Barcode
-
-
-def _block_height(items: list[Item]) -> float:
-    return sum(i.height if isinstance(i, Line) else i.total for i in items)
-
-
-def _draw_items(page: pymupdf.Page, items: list[Item], y: float) -> float:
-    w = page.rect.width
-    tw_black = pymupdf.TextWriter(page.rect)
-    tw_gray = pymupdf.TextWriter(page.rect)
-    for it in items:
-        if isinstance(it, Barcode):
-            modules = _barcode_modules(it.value)
-            avail = w - 2 * MARGIN_X
-            mod_w = avail / (len(modules) + 20)  # 10 modül sessiz bölge
-            x = MARGIN_X + 10 * mod_w
-            shape = page.new_shape()
-            i = 0
-            while i < len(modules):
-                if modules[i] == "1":
-                    j = i
-                    while j < len(modules) and modules[j] == "1":
-                        j += 1
-                    shape.draw_rect(pymupdf.Rect(x + i * mod_w, y, x + j * mod_w, y + it.height))
-                    i = j
-                else:
-                    i += 1
-            shape.finish(color=None, fill=(0, 0, 0))
-            shape.commit()
-            y += it.height + 1 * MM
-            f = _font("b")
-            y += 11
-            tw_black.append(((w - f.text_length(it.value, fontsize=11)) / 2, y), it.value,
-                            font=f, fontsize=11)
-            y += 11 * (LEADING - 1)
-            continue
-        f = _font(it.font)
-        y += it.size
-        px = MARGIN_X
-        if it.center:
-            px = (w - f.text_length(it.text, fontsize=it.size)) / 2
-        (tw_gray if it.gray else tw_black).append((px, y), it.text, font=f, fontsize=it.size)
-        y += it.size * (LEADING - 1) + it.space_after
-    tw_black.write_text(page)
-    tw_gray.write_text(page, color=(0.35, 0.35, 0.35))
-    return y
+    def fixed_total(self, gap: float) -> float:
+        return (self.header_h + self.alici_h + self.kargo_h + self.gond_h
+                + self.barkod_text + 5 * gap)
 
 
-def _rule(page: pymupdf.Page, y: float):
-    page.draw_line((MARGIN_X, y), (page.rect.width - MARGIN_X, y), width=0.4,
-                   color=(0.6, 0.6, 0.6))
-
-
-def _kargo_satirlari(k: dict[str, str]) -> list[str]:
-    ust = " · ".join(p for p in (k.get("Kargo Firması", ""), k.get("Ödeme Türü", "")) if p)
-    alt = []
-    if k.get("Paket Sayısı"):
-        alt.append(f"Paket {k['Paket Sayısı']}")
-    if k.get("Desi"):
-        alt.append(f"{k['Desi']} Desi")
-    return [ln for ln in (ust, " · ".join(alt)) if ln]
-
-
-def _blocks(e: Etiket, max_w: float, scale: float) -> list[list[Item]]:
-    """Etiket içeriğini bölümlere ayırır. `scale` yazı boyutlarını büyütür/küçültür."""
-    s = scale
+def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
+    pad = 2 * MM
     a, g = e.alici, e.gonderici
-
-    alici: list[Item] = [Line("ALICI", 6.5 * s, gray=True, space_after=1 * MM)]
-    alici += [Line(t, 14 * s, "b") for t in _wrap(a.get("İsim", ""), 14 * s, "b", max_w, 2)]
-    alici.append(Line(_telefon(a.get("Telefon", "")), 11 * s, space_after=1.5 * MM))
-    alici += [Line(t, 9 * s) for t in _wrap(a.get("Adres", ""), 9 * s, "r", max_w, 5)]
-
-    barkod: list[Item] = [Barcode(e.barkod, 22 * MM)]
-
-    kargo: list[Item] = []
-    for i, ln in enumerate(_kargo_satirlari(e.kargo)):
-        for t in _wrap(ln, (8.5 if i == 0 else 8) * s, "b" if i == 0 else "r", max_w, 2):
-            kargo.append(Line(t, (8.5 if i == 0 else 8) * s, "b" if i == 0 else "r", center=True))
-
-    gond: list[Item] = [Line("GÖNDERİCİ", 6 * s, gray=True, space_after=0.6 * MM)]
-    gond += [Line(t, 7.5 * s, "b") for t in _wrap(g.get("Firma", ""), 7.5 * s, "b", max_w, 2)]
-    gond.append(Line(_telefon(g.get("Telefon", "")), 7 * s))
-    gond += [Line(t, 6.5 * s, gray=True)
-             for t in _wrap(g.get("Adres", ""), 6.5 * s, "r", max_w, 3)]
-    return [alici, barkod, kargo, gond]
+    return Layout(
+        s=s,
+        name=_wrap(a.get("İsim", ""), 14 * s, "b", inner_w - 2 * pad, 2),
+        addr=_wrap(a.get("Adres", ""), 8.5 * s, "r", inner_w - 2 * pad, 5),
+        firma=_wrap(g.get("Firma", ""), 7 * s, "b", inner_w, 2),
+        g_addr=_wrap(" · ".join(filter(None, [_telefon(g.get("Telefon", "")),
+                                                g.get("Adres", "")])),
+                     6.5 * s, "r", inner_w, 3),
+    )
 
 
 def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     w, h = LABEL_SIZES[size_key]
-    max_w = w - 2 * MARGIN_X
-    min_gap = 2.5 * MM
+    inner_w = w - 2 * MARGIN_X
+    gap = 2.2 * MM
+    min_bar, max_bar = 14 * MM, 26 * MM
 
     if h is None:  # sürekli rulo: içerik kadar uzunluk
-        blocks = _blocks(e, max_w, 1.0)
-        total = sum(_block_height(b) for b in blocks) + min_gap * (len(blocks) - 1)
-        page = doc.new_page(width=w, height=total + 2 * MARGIN_Y)
-        gap = min_gap
+        lay = _layout(e, inner_w, 1.0)
+        bar_h = 20 * MM
+        h_page = lay.fixed_total(gap) + bar_h + 2 * MARGIN_Y
     else:
-        page = doc.new_page(width=w, height=h)
-        avail = h - 2 * MARGIN_Y
-        # Yazıyı, etiket yüksekliğine sığan en büyük ölçekte bas.
-        scale = 1.15
+        s = 1.1
         while True:
-            blocks = _blocks(e, max_w, scale)
-            total = sum(_block_height(b) for b in blocks)
-            if total + min_gap * (len(blocks) - 1) <= avail or scale <= 0.7:
+            lay = _layout(e, inner_w, s)
+            bar_h = h - 2 * MARGIN_Y - lay.fixed_total(gap)
+            if bar_h >= min_bar or s <= 0.7:
                 break
-            scale -= 0.05
-        gap = max(min_gap, (avail - total) / (len(blocks) - 1))
-
+            s -= 0.05
+        bar_h = max(min_bar, min(max_bar, bar_h))
+        h_page = h
+    page = doc.new_page(width=w, height=h_page)
+    c = Canvas(page)
+    s = lay.s
+    x = MARGIN_X
     y = MARGIN_Y
-    for i, b in enumerate(blocks):
-        y = _draw_items(page, b, y)
-        if i < len(blocks) - 1:
-            y += gap / 2
-            if i != 0:  # barkodun üstüne çizgi koyma
-                _rule(page, y)
-            y += gap / 2
+
+    # 1) Üst şerit: siyah zemin, beyaz yazı — ALICI | Kargo Firması
+    band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
+    c.band(band, radius=1.2 * MM)
+    base = y + lay.header_h / 2 + 9 * s * 0.36
+    c.text(x + 2 * MM, base, "ALICI", 9 * s, "b", white=True)
+    c.text(x, base, e.kargo.get("Kargo Firması", ""), 9 * s, "b",
+           align="right", white=True, box_w=inner_w - 2 * MM)
+    y = band.y1 + gap
+
+    # 2) Alıcı kutusu
+    box = pymupdf.Rect(x, y, x + inner_w, y + lay.alici_h)
+    c.frame(box, width=0.9, radius=1.2 * MM)
+    pad = 2 * MM
+    yy = y + pad
+    yy = c.lines(x + pad, yy, lay.name, 14 * s, "b")
+    yy = c.lines(x + pad, yy, [_telefon(e.alici.get("Telefon", ""))], 11 * s, "r")
+    yy += 1.2 * MM
+    c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
+    y = box.y1 + gap
+
+    # 3) Barkod (kalan alanı doldurur) + değeri
+    c.barcode(e.barkod, x, y, inner_w, bar_h)
+    y += bar_h
+    y = c.lines(x, y, [e.barkod], 11 * s, "b", align="center", box_w=inner_w)
+    y += gap
+
+    # 4) Kargo bilgisi: 3 hücreli çerçeve — ÖDEME | PAKET | DESİ
+    k = e.kargo
+    cells = [("ÖDEME", k.get("Ödeme Türü", "-")), ("PAKET", k.get("Paket Sayısı", "-")),
+             ("DESİ", k.get("Desi", "-"))]
+    widths = [inner_w * 0.56, inner_w * 0.22, inner_w * 0.22]
+    tbl = pymupdf.Rect(x, y, x + inner_w, y + lay.kargo_h)
+    c.frame(tbl, width=0.9)
+    cx = x
+    for i, ((lab, val), cw) in enumerate(zip(cells, widths)):
+        if i:
+            c.vline(cx, tbl.y0, tbl.y1, 0.9)
+        c.text(cx, tbl.y0 + 1 * MM + 5.5 * s, lab, 5.5 * s, "r", align="center", box_w=cw)
+        vs = 8 * s
+        while vs > 5 and _font("b").text_length(val, fontsize=vs) > cw - 2 * MM:
+            vs -= 0.25  # hücreye sığacak en büyük punto
+        c.text(cx, tbl.y1 - 1.3 * MM, val, vs, "b", align="center", box_w=cw)
+        cx += cw
+    y = tbl.y1 + gap
+
+    # 5) Gönderici: üstte ince çizgi + küçük siyah etiket
+    c.page.draw_line((x, y), (x + inner_w, y), color=BLACK, width=0.6)
+    tag_w = _font("b").text_length("GÖNDERİCİ", fontsize=5.5 * s) + 3 * MM
+    tag = pymupdf.Rect(x, y, x + tag_w, y + 3.2 * MM)
+    c.band(tag)
+    c.text(x, y + 3.2 * MM - 0.9 * MM, "GÖNDERİCİ", 5.5 * s, "b", align="center",
+           white=True, box_w=tag_w)
+    yy = y + 3.2 * MM + 0.8 * MM
+    yy = c.lines(x, yy, lay.firma, 7 * s, "b")
+    c.lines(x, yy, lay.g_addr, 6.5 * s, "r")
+
+    c.finish()
 
 
 def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) -> Path:
