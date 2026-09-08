@@ -668,6 +668,71 @@ def pill(master, text, cmd, primary: bool = False, size: int = 9):
     return b
 
 
+class Segmented(tk.Frame if tk else object):
+    """Tek seçimli bölmeli düğme grubu (segmented control)."""
+
+    def __init__(self, master, variable, options: list[tuple[str, str, str]]):
+        super().__init__(master, bg=UI_DARK, padx=1, pady=1)
+        self.var = variable
+        self.items: dict[str, tk.Frame] = {}
+        for i, (key, title, sub) in enumerate(options):
+            cell = tk.Frame(self, bg=UI_CARD, cursor="hand2", padx=12, pady=6)
+            cell.grid(row=0, column=i, sticky="nsew", padx=(0 if i == 0 else 1, 0))
+            self.columnconfigure(i, weight=1, uniform="seg")
+            t = tk.Label(cell, text=title, font=_f(10, True), bg=UI_CARD)
+            t.pack(anchor="w")
+            d = tk.Label(cell, text=sub, font=_f(8), bg=UI_CARD)
+            d.pack(anchor="w")
+            for w in (cell, t, d):
+                w.bind("<Button-1>", lambda _e, k=key: self.var.set(k))
+            self.items[key] = cell
+        self.var.trace_add("write", lambda *_: self._paint())
+        self._paint()
+
+    def _paint(self):
+        cur = self.var.get()
+        for key, cell in self.items.items():
+            on = key == cur
+            bg = UI_DARK if on else UI_CARD
+            cell.config(bg=bg)
+            t, d = cell.winfo_children()
+            t.config(bg=bg, fg="white" if on else UI_TEXT)
+            d.config(bg=bg, fg="#C9CDD3" if on else UI_MUTED)
+
+
+class Toggle(tk.Frame if tk else object):
+    """Açma/kapama anahtarı + açıklama."""
+
+    W, H = 40, 22
+
+    def __init__(self, master, variable, text: str, sub: str = ""):
+        super().__init__(master, bg=UI_CARD, cursor="hand2")
+        self.var = variable
+        self.sw = tk.Canvas(self, width=self.W, height=self.H, bg=UI_CARD,
+                            highlightthickness=0)
+        self.sw.grid(row=0, column=0, rowspan=2, padx=(0, 12), sticky="n")
+        tk.Label(self, text=text, font=_f(10), fg=UI_TEXT, bg=UI_CARD,
+                 anchor="w").grid(row=0, column=1, sticky="w")
+        if sub:
+            tk.Label(self, text=sub, font=_f(8), fg=UI_MUTED, bg=UI_CARD,
+                     anchor="w").grid(row=1, column=1, sticky="w")
+        for w in (self, self.sw, *self.winfo_children()):
+            w.bind("<Button-1>", lambda _e: self.var.set(not self.var.get()))
+        self.var.trace_add("write", lambda *_: self._paint())
+        self._paint()
+
+    def _paint(self):
+        on = self.var.get()
+        c, w, h = self.sw, self.W, self.H
+        c.delete("all")
+        fill = UI_DARK if on else "#CBD0D6"
+        c.create_oval(0, 0, h, h, fill=fill, outline="")
+        c.create_oval(w - h, 0, w, h, fill=fill, outline="")
+        c.create_rectangle(h / 2, 0, w - h / 2, h, fill=fill, outline="")
+        x = w - h + 3 if on else 3
+        c.create_oval(x, 3, x + h - 6, h - 3, fill="white", outline="")
+
+
 class StatusBar(tk.Frame if tk else object):
     """Alt durum çubuğu: renkli durum rozeti, iki satır metin, sağda eylem düğmeleri."""
 
@@ -779,39 +844,38 @@ class App(_TkBase):
 
         # Ayarlar kartı
         card = tk.Frame(body, bg=UI_CARD, highlightbackground=UI_BORDER,
-                        highlightthickness=1, padx=16, pady=12)
+                        highlightthickness=1, padx=18, pady=14)
         card.grid(row=1, column=0, sticky="ew")
-        card.columnconfigure(2, weight=1)
+        card.columnconfigure(0, weight=1)
         tk.Label(card, text="AYARLAR", font=_f(8, True), fg=UI_MUTED,
-                 bg=UI_CARD).grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 6))
+                 bg=UI_CARD).grid(row=0, column=0, columnspan=2, sticky="w")
 
-        tk.Label(card, text="Etiket boyutu", font=_f(10), bg=UI_CARD,
-                 fg=UI_TEXT).grid(row=1, column=0, sticky="w", pady=4)
+        tk.Label(card, text="Etiket boyutu", font=_f(9), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=1, column=0, columnspan=2, sticky="w", pady=(10, 4))
         self.size_var = tk.StringVar(value=DEFAULT_SIZE)
-        ttk.Combobox(card, textvariable=self.size_var, state="readonly", width=30,
-                     values=list(LABEL_SIZES), font=_f(10)).grid(
-            row=1, column=1, sticky="w", padx=(14, 0), pady=4)
-        tk.Label(card, text="62x100 = DK-11202 kesik etiket · 62surekli = DK-22205 rulo",
-                 font=_f(8), fg=UI_MUTED, bg=UI_CARD).grid(
-            row=2, column=1, sticky="w", padx=(14, 0))
+        Segmented(card, self.size_var, [
+            ("62x100", "62 × 100 mm", "DK-11202 kesik etiket"),
+            ("62surekli", "62 mm sürekli", "DK-22205 rulo, uzunluk otomatik"),
+        ]).grid(row=2, column=0, columnspan=2, sticky="ew")
 
-        tk.Label(card, text="Yazıcı", font=_f(10), bg=UI_CARD,
-                 fg=UI_TEXT).grid(row=3, column=0, sticky="w", pady=4)
+        tk.Label(card, text="Yazıcı", font=_f(9), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=3, column=0, columnspan=2, sticky="w", pady=(12, 4))
         self.printer_var = tk.StringVar()
-        self.printer_box = ttk.Combobox(card, textvariable=self.printer_var, width=30,
-                                        font=_f(10))
-        self.printer_box.grid(row=3, column=1, sticky="w", padx=(14, 0), pady=4)
-        pill(card, "Yenile", self.refresh_printers, size=8).grid(row=3, column=2, sticky="w",
-                                                                 padx=(10, 0))
+        self.printer_box = ttk.Combobox(card, textvariable=self.printer_var, font=_f(10))
+        self.printer_box.grid(row=4, column=0, sticky="ew")
+        pill(card, "Yenile", self.refresh_printers, size=8).grid(row=4, column=1, sticky="ns",
+                                                                 padx=(8, 0))
 
+        tk.Frame(card, bg=UI_BORDER, height=1).grid(row=5, column=0, columnspan=2,
+                                                    sticky="ew", pady=14)
         self.print_var = tk.BooleanVar(value=False)
         self.open_var = tk.BooleanVar(value=False)
-        ttk.Checkbutton(card, text="Dönüştürdükten sonra yazıcıya gönder (62×100 mm, ölçeksiz)",
-                        variable=self.print_var, style="Card.TCheckbutton").grid(
-            row=4, column=0, columnspan=3, sticky="w", pady=(10, 2))
-        ttk.Checkbutton(card, text="Ayrıca PDF görüntüleyicide aç",
-                        variable=self.open_var, style="Card.TCheckbutton").grid(
-            row=5, column=0, columnspan=3, sticky="w", pady=2)
+        Toggle(card, self.print_var, "Dönüştürünce yazıcıya gönder",
+               "62×100 mm, ölçeklemesiz · seçili yazıcıya").grid(
+            row=6, column=0, columnspan=2, sticky="w")
+        Toggle(card, self.open_var, "Ayrıca PDF görüntüleyicide aç",
+               "Gömülü görüntüleyici ayrı pencerede açılır").grid(
+            row=7, column=0, columnspan=2, sticky="w", pady=(10, 0))
         self.refresh_printers()
 
         # Ana buton
