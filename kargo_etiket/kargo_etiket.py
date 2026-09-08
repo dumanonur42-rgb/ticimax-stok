@@ -540,6 +540,100 @@ class DropZone(tk.Canvas if tk else object):
                          font=_f(9), fill=UI_MUTED)
 
 
+class Preview(tk.Frame if tk else object):
+    """Üretilen etiket PDF'inin sayfa sayfa küçük önizlemesi."""
+
+    W, H = 250, 400  # görüntü alanı (62x100 mm oranı)
+
+    def __init__(self, master, on_print):
+        super().__init__(master, bg=UI_CARD, highlightbackground=UI_BORDER,
+                         highlightthickness=1, padx=14, pady=12)
+        self.on_print = on_print
+        self.pages: list[bytes] = []
+        self.idx = 0
+        self._img = None
+
+        top = tk.Frame(self, bg=UI_CARD)
+        top.grid(row=0, column=0, sticky="ew")
+        top.columnconfigure(0, weight=1)
+        tk.Label(top, text="ÖNİZLEME", font=_f(8, True), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=0, column=0, sticky="w")
+        self.counter = tk.Label(top, text="", font=_f(8), fg=UI_MUTED, bg=UI_CARD)
+        self.counter.grid(row=0, column=1, sticky="e")
+
+        self.canvas = tk.Canvas(self, width=self.W, height=self.H, bg=UI_BG,
+                                highlightthickness=0)
+        self.canvas.grid(row=1, column=0, pady=(8, 8))
+
+        nav = tk.Frame(self, bg=UI_CARD)
+        nav.grid(row=2, column=0, sticky="ew")
+        nav.columnconfigure(1, weight=1)
+        self.prev_btn = self._nav(nav, "‹", lambda: self.show(self.idx - 1), 0)
+        self.print_btn = tk.Button(nav, text="Yazdır", command=lambda: self.on_print(),
+                                   font=_f(10, True), bg=UI_DARK, fg="white", bd=0,
+                                   activebackground=UI_DARK_HOVER, activeforeground="white",
+                                   cursor="hand2", padx=18, pady=5)
+        self.print_btn.grid(row=0, column=1)
+        self.next_btn = self._nav(nav, "›", lambda: self.show(self.idx + 1), 2)
+        self.clear()
+
+    def _nav(self, master, text, cmd, col):
+        b = tk.Button(master, text=text, command=cmd, font=_f(14), bd=0, relief="flat",
+                      highlightthickness=0, bg=UI_CARD, activebackground=UI_BG,
+                      fg=UI_DARK, disabledforeground=UI_BORDER, cursor="hand2", width=2)
+        b.grid(row=0, column=col)
+        return b
+
+    def clear(self):
+        self.pages, self.idx, self._img = [], 0, None
+        c = self.canvas
+        c.delete("all")
+        cx, cy = self.W / 2, self.H / 2
+        c.create_rectangle(cx - 78, cy - 126, cx + 78, cy + 126, outline="#C4C8CF",
+                           dash=(5, 4), width=1.5)
+        c.create_text(cx, cy - 6, text="Etiket önizlemesi", font=_f(10, True),
+                      fill="#9CA3AF")
+        c.create_text(cx, cy + 16, text="PDF eklendiğinde\nburada görünür", font=_f(8),
+                      fill="#B0B5BD", justify="center")
+        self.counter.config(text="")
+        for b in (self.prev_btn, self.next_btn, self.print_btn):
+            b.config(state="disabled")
+        self.print_btn.config(bg=UI_BORDER)
+
+    def load(self, pdf: Path):
+        """PDF sayfalarını PNG olarak belleğe alır ve ilkini gösterir."""
+        doc = pymupdf.open(pdf)
+        pages = []
+        for page in doc:
+            zoom = min((self.W - 24) / page.rect.width, (self.H - 24) / page.rect.height)
+            pages.append(page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom)).tobytes("png"))
+        doc.close()
+        self.pages = pages
+        self.print_btn.config(state="normal", bg=UI_DARK)
+        self.show(0)
+
+    def show(self, i: int):
+        if not self.pages:
+            return
+        self.idx = max(0, min(i, len(self.pages) - 1))
+        self._img = tk.PhotoImage(data=self.pages[self.idx])
+        c = self.canvas
+        c.delete("all")
+        cx, cy = self.W / 2, self.H / 2
+        w, h = self._img.width(), self._img.height()
+        # yumuşak gölge + beyaz etiket
+        for k, a in ((6, "#E3E5E9"), (3, "#D4D7DC")):
+            c.create_rectangle(cx - w / 2 + k, cy - h / 2 + k, cx + w / 2 + k,
+                               cy + h / 2 + k, fill=a, outline="")
+        c.create_rectangle(cx - w / 2 - 1, cy - h / 2 - 1, cx + w / 2 + 1, cy + h / 2 + 1,
+                           fill="white", outline=UI_BORDER)
+        c.create_image(cx, cy, image=self._img)
+        n = len(self.pages)
+        self.counter.config(text=f"{self.idx + 1} / {n}  etiket" if n > 1 else "1 etiket")
+        self.prev_btn.config(state="normal" if self.idx > 0 else "disabled")
+        self.next_btn.config(state="normal" if self.idx < n - 1 else "disabled")
+
+
 class App(_TkBase):
     def __init__(self):
         super().__init__()
@@ -562,8 +656,13 @@ class App(_TkBase):
                  font=_f(10), fg="#C9CDD3", bg=UI_DARK).grid(row=1, column=1, sticky="w")
         tk.Frame(self, bg=UI_ACCENT, height=3).grid(row=1, column=0, sticky="ew")
 
-        body = tk.Frame(self, bg=UI_BG, padx=22, pady=18)
-        body.grid(row=2, column=0)
+        outer = tk.Frame(self, bg=UI_BG, padx=22, pady=18)
+        outer.grid(row=2, column=0)
+        body = tk.Frame(outer, bg=UI_BG)
+        body.grid(row=0, column=0, sticky="ns")
+        body.rowconfigure(2, weight=1)
+        self.preview = Preview(outer, self.print_current)
+        self.preview.grid(row=0, column=1, sticky="ns", padx=(18, 0))
 
         self.drop = DropZone(body, self.on_files)
         self.drop.grid(row=0, column=0, pady=(0, 16))
@@ -598,11 +697,11 @@ class App(_TkBase):
                                                             padx=(4, 0))
 
         self.print_var = tk.BooleanVar(value=False)
-        self.open_var = tk.BooleanVar(value=True)
+        self.open_var = tk.BooleanVar(value=False)
         ttk.Checkbutton(card, text="Dönüştürdükten sonra yazıcıya gönder (62×100 mm, ölçeksiz)",
                         variable=self.print_var, style="Card.TCheckbutton").grid(
             row=4, column=0, columnspan=3, sticky="w", pady=(10, 2))
-        ttk.Checkbutton(card, text="Etiketi ekranda göster",
+        ttk.Checkbutton(card, text="Ayrıca PDF görüntüleyicide aç",
                         variable=self.open_var, style="Card.TCheckbutton").grid(
             row=5, column=0, columnspan=3, sticky="w", pady=2)
         self.refresh_printers()
@@ -612,7 +711,7 @@ class App(_TkBase):
                              font=_f(11, True), bg=UI_DARK, fg="white", bd=0,
                              activebackground=UI_DARK_HOVER, activeforeground="white",
                              cursor="hand2", pady=11)
-        self.btn.grid(row=2, column=0, sticky="ew", pady=(16, 0))
+        self.btn.grid(row=2, column=0, sticky="sew", pady=(16, 0))
         self.btn.bind("<Enter>", lambda _e: self.btn.config(bg=UI_DARK_HOVER))
         self.btn.bind("<Leave>", lambda _e: self.btn.config(bg=UI_DARK))
 
@@ -682,6 +781,15 @@ class App(_TkBase):
         else:
             open_file(self.last_dst.parent)
 
+    def print_current(self):
+        if not self.last_dst:
+            return
+        try:
+            print_pdf(self.last_dst, self.printer_var.get() or None)
+            self.set_status(f"Yazıcıya gönderildi: {self.last_dst.name}", ok=True)
+        except (OSError, RuntimeError, subprocess.SubprocessError) as ex:
+            messagebox.showwarning("Yazdırılamadı", str(ex))
+
     # -- akış
     def on_files(self, paths: list[Path] | None = None):
         if paths is None:
@@ -700,6 +808,7 @@ class App(_TkBase):
             messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
             return
         self.last_dst = dst
+        self.preview.load(dst)
         self.set_status(f"Oluşturuldu: {dst.name}", ok=True)
         warn = _after_convert(dst, self.print_var.get(), self.printer_var.get() or None,
                               self.open_var.get())
