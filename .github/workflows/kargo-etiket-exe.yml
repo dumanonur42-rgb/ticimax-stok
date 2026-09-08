@@ -1,0 +1,55 @@
+name: Kargo Etiket Windows EXE
+
+on:
+  push:
+    paths:
+      - "kargo_etiket/**"
+      - ".github/workflows/kargo-etiket-exe.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bagimliliklar
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r kargo_etiket/requirements.txt pyinstaller
+
+      - name: Derle
+        working-directory: kargo_etiket
+        run: |
+          pyinstaller --noconfirm --onefile --windowed --name KargoEtiket_QL550 `
+            --add-data "fonts;fonts" `
+            --collect-all pymupdf --collect-all barcode `
+            kargo_etiket.py
+
+      - name: Test (ornek PDF)
+        working-directory: kargo_etiket
+        run: |
+          .\dist\KargoEtiket_QL550.exe test\ornek.pdf --acma
+          if (-not (Test-Path test\ornek_QL550.pdf)) { exit 1 }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KargoEtiket_QL550
+          path: kargo_etiket/dist/KargoEtiket_QL550.exe
+
+      - name: Release (main)
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: kargo-etiket-latest
+          name: Kargo Etiket QL-550 (son surum)
+          body: "Ticimax kargo barkod PDF -> Brother QL-550 etiket donusturucu. KargoEtiket_QL550.exe dosyasini indirip PDF'i uzerine surukleyin."
+          prerelease: false
+          files: kargo_etiket/dist/KargoEtiket_QL550.exe
