@@ -19,6 +19,7 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import ClassVar
 
 import pymupdf
 from barcode import Code128
@@ -634,6 +635,54 @@ class Preview(tk.Frame if tk else object):
         self.next_btn.config(state="normal" if self.idx < n - 1 else "disabled")
 
 
+class StatusBar(tk.Frame if tk else object):
+    """Alt durum çubuğu: renkli durum rozeti, iki satır metin, sağda eylem düğmeleri."""
+
+    COLORS: ClassVar[dict[str, str]] = {"idle": "#9CA3AF", "busy": UI_DARK, "ok": UI_OK,
+                                        "error": UI_ACCENT}
+    MARKS: ClassVar[dict[str, str]] = {"idle": "", "busy": "…", "ok": "✓", "error": "!"}
+
+    def __init__(self, master, actions: list[tuple[str, object]]):
+        super().__init__(master, bg=UI_CARD, highlightbackground=UI_BORDER,
+                         highlightthickness=1, padx=22, pady=10)
+        self.columnconfigure(1, weight=1)
+        self.badge = tk.Canvas(self, width=26, height=26, bg=UI_CARD, highlightthickness=0)
+        self.badge.grid(row=0, column=0, rowspan=2, padx=(0, 12))
+        self.title = tk.Label(self, text="", font=_f(10, True), fg=UI_TEXT, bg=UI_CARD,
+                              anchor="w")
+        self.title.grid(row=0, column=1, sticky="w")
+        self.detail = tk.Label(self, text="", font=_f(8), fg=UI_MUTED, bg=UI_CARD,
+                               anchor="w")
+        self.detail.grid(row=1, column=1, sticky="w")
+        self.buttons = tk.Frame(self, bg=UI_CARD)
+        for i, (text, cmd) in enumerate(actions):
+            self._pill(self.buttons, text, cmd).grid(row=0, column=i, padx=(8, 0))
+        self.set("idle", "Hazır", "Bir Ticimax PDF'i ekleyin; etiket burada raporlanır.")
+
+    @staticmethod
+    def _pill(master, text, cmd):
+        b = tk.Label(master, text=text, font=_f(9, True), fg=UI_DARK, bg=UI_CARD,
+                     cursor="hand2", padx=12, pady=4, highlightbackground=UI_DARK,
+                     highlightthickness=1)
+        b.bind("<Button-1>", lambda _e: cmd())
+        b.bind("<Enter>", lambda _e: b.config(bg=UI_DARK, fg="white"))
+        b.bind("<Leave>", lambda _e: b.config(bg=UI_CARD, fg=UI_DARK))
+        return b
+
+    def set(self, state: str, title: str, detail: str = "", show_actions: bool = False):
+        c = self.badge
+        c.delete("all")
+        color = self.COLORS[state]
+        c.create_oval(2, 2, 24, 24, fill=color, outline="")
+        c.create_text(13, 13, text=self.MARKS[state], font=_f(11, True), fill="white")
+        self.title.config(text=title, fg=UI_TEXT if state != "idle" else UI_MUTED)
+        self.detail.config(text=detail)
+        if show_actions:
+            self.buttons.grid(row=0, column=2, rowspan=2, sticky="e")
+        else:
+            self.buttons.grid_forget()
+
+
 class App(_TkBase):
     def __init__(self):
         super().__init__()
@@ -716,16 +765,9 @@ class App(_TkBase):
         self.btn.bind("<Leave>", lambda _e: self.btn.config(bg=UI_DARK))
 
         # Durum çubuğu
-        foot = tk.Frame(self, bg=UI_CARD, highlightbackground=UI_BORDER,
-                        highlightthickness=1, padx=22, pady=8)
-        foot.grid(row=3, column=0, sticky="ew")
-        foot.columnconfigure(0, weight=1)
-        self.status = tk.Label(foot, text="Hazır", font=_f(9), fg=UI_MUTED, bg=UI_CARD,
-                               anchor="w")
-        self.status.grid(row=0, column=0, sticky="w")
-        self.folder_btn = tk.Label(foot, text="Klasörü aç", font=(UI_FONT, 9, "underline"),
-                                   fg=UI_DARK, bg=UI_CARD, cursor="hand2")
-        self.folder_btn.bind("<Button-1>", lambda _e: self.open_folder())
+        self.bar = StatusBar(self, [("Klasörü aç", self.open_folder),
+                                    ("PDF'i aç", self.open_pdf)])
+        self.bar.grid(row=3, column=0, sticky="ew")
 
         self.update_idletasks()
         self._center()
@@ -768,10 +810,15 @@ class App(_TkBase):
         self.printer_var.set(brother or (printers[0] if printers else ""))
         self.print_var.set(bool(brother))
 
-    def set_status(self, text: str, ok: bool = False):
-        self.status.config(text=text, fg=UI_OK if ok else UI_MUTED)
+    def _report(self, state: str, title: str):
+        d = self.last_dst
+        n = len(self.preview.pages)
+        detail = f"{d.name}  ·  {n} etiket  ·  {d.resolve().parent}" if d else ""
+        self.bar.set(state, title, detail, show_actions=bool(d))
+
+    def open_pdf(self):
         if self.last_dst:
-            self.folder_btn.grid(row=0, column=1, sticky="e")
+            open_file(self.last_dst)
 
     def open_folder(self):
         if not self.last_dst:
@@ -786,7 +833,7 @@ class App(_TkBase):
             return
         try:
             print_pdf(self.last_dst, self.printer_var.get() or None)
-            self.set_status(f"Yazıcıya gönderildi: {self.last_dst.name}", ok=True)
+            self._report("ok", f"Yazıcıya gönderildi: {self.printer_var.get() or 'varsayılan'}")
         except (OSError, RuntimeError, subprocess.SubprocessError) as ex:
             messagebox.showwarning("Yazdırılamadı", str(ex))
 
@@ -799,17 +846,17 @@ class App(_TkBase):
             self.process(p)
 
     def process(self, src: Path):
-        self.set_status(f"Dönüştürülüyor: {src.name} …")
+        self.bar.set("busy", "Dönüştürülüyor…", src.name)
         self.update_idletasks()
         try:
             dst = convert(src, size_key=self.size_var.get())
         except Exception as ex:  # noqa: BLE001
-            self.set_status(f"Hata: {src.name}")
+            self.bar.set("error", "Dönüştürülemedi", f"{src.name}  ·  {ex}")
             messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
             return
         self.last_dst = dst
         self.preview.load(dst)
-        self.set_status(f"Oluşturuldu: {dst.name}", ok=True)
+        self._report("ok", "Etiket oluşturuldu")
         warn = _after_convert(dst, self.print_var.get(), self.printer_var.get() or None,
                               self.open_var.get())
         if warn:
