@@ -854,8 +854,8 @@ class App(_TkBase):
                  bg=UI_CARD).grid(row=1, column=0, columnspan=2, sticky="w", pady=(10, 4))
         self.size_var = tk.StringVar(value=DEFAULT_SIZE)
         Segmented(card, self.size_var, [
-            ("62x100", "62 × 100 mm", "DK-11202 kesik etiket"),
-            ("62surekli", "62 mm sürekli", "DK-22205 rulo, uzunluk otomatik"),
+            ("62x100", "62 × 100 mm", "Sabit uzunluk · her etiket 100 mm"),
+            ("62surekli", "62 mm sürekli", "İçeriğe göre uzunluk · daha az kâğıt"),
         ]).grid(row=2, column=0, columnspan=2, sticky="ew")
 
         tk.Label(card, text="Yazıcı", font=_f(9), fg=UI_MUTED,
