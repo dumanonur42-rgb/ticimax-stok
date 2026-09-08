@@ -871,7 +871,7 @@ class App(_TkBase):
         self.print_var = tk.BooleanVar(value=False)
         self.open_var = tk.BooleanVar(value=False)
         Toggle(card, self.print_var, "Dönüştürünce yazıcıya gönder",
-               "62×100 mm, ölçeklemesiz · seçili yazıcıya").grid(
+               "Seçili yazıcıya, gerçek boyutta (ölçeklemesiz)").grid(
             row=6, column=0, columnspan=2, sticky="w")
         Toggle(card, self.open_var, "Ayrıca PDF görüntüleyicide aç",
                "Gömülü görüntüleyici ayrı pencerede açılır").grid(
