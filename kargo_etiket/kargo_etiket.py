@@ -413,22 +413,43 @@ def list_printers() -> list[str]:
 
 def print_pdf(pdf: Path, printer: str | None = None):
     """SumatraPDF varsa sessiz yazdırır (sayfa boyutu etikete birebir uyar);
-    yoksa Windows'un varsayılan PDF uygulamasıyla yazdırır."""
+    yoksa Windows'un varsayılan PDF uygulamasıyla yazdırır. Sorunlarda Türkçe
+    açıklamalı RuntimeError fırlatır."""
     if sys.platform != "win32":
         raise RuntimeError("Yazdırma yalnızca Windows'ta desteklenir.")
+    printers = list_printers()
+    if printer and printers and printer not in printers:
+        raise RuntimeError(
+            f"'{printer}' adlı yazıcı sistemde bulunamadı.\n"
+            "Yazıcının açık ve bağlı olduğundan emin olup listeyi yenileyin (↻).")
+    if not printer and not printers:
+        raise RuntimeError(
+            "Sistemde tanımlı yazıcı bulunamadı.\n"
+            "Brother QL-550 sürücüsünün kurulu ve yazıcının bağlı olduğundan emin olun.")
     sumatra = _sumatra()
     if sumatra:
         cmd = [sumatra]
         cmd += ["-print-to", printer] if printer else ["-print-to-default"]
         cmd += ["-print-settings", "noscale", "-silent", "-exit-when-done", str(pdf)]
-        subprocess.run(cmd, check=False, timeout=120)
+        try:
+            rc = subprocess.run(cmd, check=False, timeout=120, capture_output=True,
+                                creationflags=0x08000000).returncode
+        except subprocess.TimeoutExpired as ex:
+            raise RuntimeError(
+                "Yazıcı zaman aşımına uğradı; yazıcı yanıt vermiyor.\n"
+                "Yazıcının açık, bağlı ve kâğıt takılı olduğunu kontrol edin.") from ex
+        if rc != 0:
+            raise RuntimeError(
+                f"Yazıcı gönderiyi kabul etmedi (hata kodu {rc}).\n"
+                "Yazıcının açık ve bağlı olduğunu, Windows'ta duraklatılmadığını "
+                "kontrol edin.")
         return
     try:
         os.startfile(str(pdf), "print")  # type: ignore[attr-defined]
     except OSError as ex:
         raise RuntimeError(
-            "Windows'ta PDF yazdıracak bir uygulama bulunamadı. Etiket oluşturuldu:\n"
-            f"{pdf}\nBu dosyayı Edge/Acrobat ile açıp Brother QL-550'ye 62x100 mm, "
+            "PDF yazdıracak bir uygulama bulunamadı. Etiket oluşturuldu:\n"
+            f"{pdf}\nBu dosyayı açıp Brother QL-550'ye 62x100 mm, "
             "%100 ölçek ile yazdırın.") from ex
 
 
@@ -684,6 +705,44 @@ class StatusBar(tk.Frame if tk else object):
             self.buttons.grid_forget()
 
 
+class Dialog(tk.Toplevel if tk else object):
+    """Uygulama tasarımına uygun Türkçe hata/uyarı penceresi."""
+
+    def __init__(self, master, title: str, text: str, kind: str = "error"):
+        super().__init__(master, bg=UI_CARD)
+        self.title(title)
+        self.resizable(False, False)
+        self.transient(master)
+        self.configure(highlightbackground=UI_BORDER, highlightthickness=1)
+        color = UI_ACCENT if kind == "error" else "#B45309"
+        tk.Frame(self, bg=color, height=4).pack(fill="x")
+        body = tk.Frame(self, bg=UI_CARD, padx=22, pady=18)
+        body.pack(fill="both", expand=True)
+        badge = tk.Canvas(body, width=36, height=36, bg=UI_CARD, highlightthickness=0)
+        badge.create_oval(2, 2, 34, 34, fill=color, outline="")
+        badge.create_text(18, 18, text="!", font=_f(16, True), fill="white")
+        badge.grid(row=0, column=0, rowspan=2, padx=(0, 16), sticky="n")
+        tk.Label(body, text=title, font=_f(12, True), fg=UI_TEXT, bg=UI_CARD,
+                 anchor="w").grid(row=0, column=1, sticky="w")
+        tk.Label(body, text=text, font=_f(10), fg=UI_MUTED, bg=UI_CARD, justify="left",
+                 anchor="w", wraplength=380).grid(row=1, column=1, sticky="w", pady=(4, 0))
+        btn = tk.Label(body, text="Tamam", font=_f(10, True), fg="white", bg=UI_DARK,
+                       cursor="hand2", padx=22, pady=6)
+        btn.grid(row=2, column=1, sticky="e", pady=(16, 0))
+        btn.bind("<Button-1>", lambda _e: self.destroy())
+        btn.bind("<Enter>", lambda _e: btn.config(bg=UI_DARK_HOVER))
+        btn.bind("<Leave>", lambda _e: btn.config(bg=UI_DARK))
+        self.bind("<Return>", lambda _e: self.destroy())
+        self.bind("<Escape>", lambda _e: self.destroy())
+        self.update_idletasks()
+        mx, my = master.winfo_rootx(), master.winfo_rooty()
+        mw, mh = master.winfo_width(), master.winfo_height()
+        w, h = self.winfo_reqwidth(), self.winfo_reqheight()
+        self.geometry(f"+{mx + (mw - w) // 2}+{my + (mh - h) // 2}")
+        self.grab_set()
+        self.focus_set()
+
+
 class App(_TkBase):
     def __init__(self):
         super().__init__()
@@ -833,11 +892,19 @@ class App(_TkBase):
     def print_current(self):
         if not self.last_dst:
             return
+        self._print(self.last_dst, "Yazıcıya gönderildi")
+
+    def _print(self, dst: Path, ok_title: str):
+        printer = self.printer_var.get() or None
+        self.bar.set("busy", "Yazıcıya gönderiliyor…", printer or "varsayılan yazıcı")
+        self.update_idletasks()
         try:
-            print_pdf(self.last_dst, self.printer_var.get() or None)
-            self._report("ok", f"Yazıcıya gönderildi: {self.printer_var.get() or 'varsayılan'}")
+            print_pdf(dst, printer)
         except (OSError, RuntimeError, subprocess.SubprocessError) as ex:
-            messagebox.showwarning("Yazdırılamadı", str(ex))
+            self._report("error", "Yazıcıya gönderilemedi")
+            Dialog(self, "Yazıcıya gönderilemedi", str(ex))
+            return
+        self._report("ok", f"{ok_title}  ·  {printer or 'varsayılan yazıcı'}")
 
     # -- akış
     def on_files(self, paths: list[Path] | None = None):
@@ -854,15 +921,18 @@ class App(_TkBase):
             dst = convert(src, size_key=self.size_var.get())
         except Exception as ex:  # noqa: BLE001
             self.bar.set("error", "Dönüştürülemedi", f"{src.name}  ·  {ex}")
-            messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
+            Dialog(self, "Etiket oluşturulamadı", f"{src.name}\n\n{ex}")
             return
         self.last_dst = dst
         self.preview.load(dst)
         self._report("ok", "Etiket oluşturuldu")
-        warn = _after_convert(dst, self.print_var.get(), self.printer_var.get() or None,
-                              self.open_var.get())
-        if warn:
-            messagebox.showwarning("Etiket oluşturuldu", warn)
+        if self.print_var.get():
+            self._print(dst, "Etiket oluşturuldu ve yazıcıya gönderildi")
+        if self.open_var.get():
+            try:
+                open_file(dst)
+            except OSError as ex:
+                Dialog(self, "PDF açılamadı", f"{ex}\n\nDosya burada: {dst}", kind="warning")
 
 
 def _after_convert(dst: Path, do_print: bool, printer: str | None, do_open: bool) -> str:
