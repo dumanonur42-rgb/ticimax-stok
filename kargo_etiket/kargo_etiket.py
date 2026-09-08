@@ -642,7 +642,7 @@ class StatusBar(tk.Frame if tk else object):
                                         "error": UI_ACCENT}
     MARKS: ClassVar[dict[str, str]] = {"idle": "", "busy": "…", "ok": "✓", "error": "!"}
 
-    def __init__(self, master, actions: list[tuple[str, object]]):
+    def __init__(self, master, actions: list[tuple[str, object, bool]]):
         super().__init__(master, bg=UI_CARD, highlightbackground=UI_BORDER,
                          highlightthickness=1, padx=22, pady=10)
         self.columnconfigure(1, weight=1)
@@ -655,18 +655,19 @@ class StatusBar(tk.Frame if tk else object):
                                anchor="w")
         self.detail.grid(row=1, column=1, sticky="w")
         self.buttons = tk.Frame(self, bg=UI_CARD)
-        for i, (text, cmd) in enumerate(actions):
-            self._pill(self.buttons, text, cmd).grid(row=0, column=i, padx=(8, 0))
+        for i, (text, cmd, primary) in enumerate(actions):
+            self._pill(self.buttons, text, cmd, primary).grid(row=0, column=i, padx=(8, 0))
         self.set("idle", "Hazır", "Bir Ticimax PDF'i ekleyin; etiket burada raporlanır.")
 
     @staticmethod
-    def _pill(master, text, cmd):
-        b = tk.Label(master, text=text, font=_f(9, True), fg=UI_DARK, bg=UI_CARD,
-                     cursor="hand2", padx=12, pady=4, highlightbackground=UI_DARK,
-                     highlightthickness=1)
+    def _pill(master, text, cmd, primary: bool = False):
+        fg, bg = ("white", UI_DARK) if primary else (UI_DARK, UI_CARD)
+        hover = "#333333" if primary else UI_DARK
+        b = tk.Label(master, text=text, font=_f(9, True), fg=fg, bg=bg, cursor="hand2",
+                     padx=12, pady=4, highlightbackground=UI_DARK, highlightthickness=1)
         b.bind("<Button-1>", lambda _e: cmd())
-        b.bind("<Enter>", lambda _e: b.config(bg=UI_DARK, fg="white"))
-        b.bind("<Leave>", lambda _e: b.config(bg=UI_CARD, fg=UI_DARK))
+        b.bind("<Enter>", lambda _e: b.config(bg=hover, fg="white"))
+        b.bind("<Leave>", lambda _e: b.config(bg=bg, fg=fg))
         return b
 
     def set(self, state: str, title: str, detail: str = "", show_actions: bool = False):
@@ -765,8 +766,9 @@ class App(_TkBase):
         self.btn.bind("<Leave>", lambda _e: self.btn.config(bg=UI_DARK))
 
         # Durum çubuğu
-        self.bar = StatusBar(self, [("Klasörü aç", self.open_folder),
-                                    ("PDF'i aç", self.open_pdf)])
+        self.bar = StatusBar(self, [("Klasörü aç", self.open_folder, False),
+                                    ("PDF'i aç", self.open_pdf, False),
+                                    ("Tekrar yazdır", self.print_current, True)])
         self.bar.grid(row=3, column=0, sticky="ew")
 
         self.update_idletasks()
