@@ -36,8 +36,10 @@ jobs:
       - name: Test (ornek PDF)
         working-directory: kargo_etiket
         run: |
-          .\dist\KargoEtiket_QL550.exe test\ornek.pdf --acma
-          if (-not (Test-Path test\ornek_QL550.pdf)) { exit 1 }
+          # Pencereli (GUI) exe olduğu için PowerShell beklemez; -Wait şart.
+          $p = Start-Process -FilePath .\dist\KargoEtiket_QL550.exe -ArgumentList "test\ornek.pdf","--acma" -Wait -PassThru -NoNewWindow
+          if ($p.ExitCode -ne 0) { Write-Error "exe cikis kodu $($p.ExitCode)"; exit 1 }
+          if (-not (Test-Path test\ornek_QL550.pdf)) { Write-Error "cikti olusmadi"; exit 1 }
 
       - uses: actions/upload-artifact@v4
         with:
