@@ -7,20 +7,20 @@ bu yüzden küçük boyutta da net okunur.
 
 ## Kurulum (Windows)
 
-1. GitHub → **Releases** → `KargoEtiket_QL550.exe` dosyasını indirin
-   (veya Actions sekmesindeki son derlemenin *KargoEtiket_QL550* artifact'ını).
+1. GitHub → **Releases** → `Kargo Etiket.exe` dosyasını indirin
+   (veya Actions sekmesindeki son derlemenin *Kargo Etiket* artifact'ını).
 2. Masaüstüne koyun. Kurulum gerekmez.
 
 ## Kullanım
 
-- **Sürükle-bırak:** Ticimax'tan indirdiğiniz PDF'i `KargoEtiket_QL550.exe` simgesinin
+- **Sürükle-bırak:** Ticimax'tan indirdiğiniz PDF'i `Kargo Etiket.exe` simgesinin
   üzerine bırakın. Aynı klasörde `<dosya>_QL550.pdf` oluşur ve otomatik açılır.
 - **Pencere:** exe'ye çift tıklayın → *PDF Seç ve Dönüştür*. Buradan yazıcı seçip
   "otomatik yazdır" işaretleyebilirsiniz.
 - **Komut satırı:**
   ```
-  KargoEtiket_QL550.exe KargoGonderimTopluBarkod.pdf --yazici "Brother QL-550"
-  KargoEtiket_QL550.exe dosya.pdf --boyut 62surekli     (DK-22205 sürekli rulo)
+  "Kargo Etiket.exe" KargoGonderimTopluBarkod.pdf --yazici "Brother QL-550"
+  "Kargo Etiket.exe" dosya.pdf --boyut 62surekli     (DK-22205 sürekli rulo)
   ```
 
 Her sayfa/sipariş ayrı bir etiket sayfası olur.

@@ -37,7 +37,7 @@ jobs:
       - name: Derle
         working-directory: kargo_etiket
         run: |
-          pyinstaller --noconfirm --onefile --windowed --name KargoEtiket_QL550 `
+          pyinstaller --noconfirm --onefile --windowed --name "Kargo Etiket" `
             --icon assets\icon.ico `
             --add-data "fonts;fonts" `
             --add-data "assets\icon.ico;assets" `
@@ -51,16 +51,16 @@ jobs:
         working-directory: kargo_etiket
         run: |
           # Pencereli (GUI) exe olduğu için PowerShell beklemez; -Wait şart.
-          $p = Start-Process -FilePath .\dist\KargoEtiket_QL550.exe -ArgumentList "test\ornek.pdf","--acma" -Wait -PassThru -NoNewWindow
+          $p = Start-Process -FilePath ".\dist\Kargo Etiket.exe" -ArgumentList "test\ornek.pdf","--acma" -Wait -PassThru -NoNewWindow
           if ($p.ExitCode -ne 0) { Write-Error "exe cikis kodu $($p.ExitCode)"; exit 1 }
           if (-not (Test-Path test\ornek_QL550.pdf)) { Write-Error "cikti olusmadi"; exit 1 }
-          $k = Start-Process -FilePath .\dist\KargoEtiket_QL550.exe -ArgumentList "--kontrol" -Wait -PassThru -NoNewWindow
+          $k = Start-Process -FilePath ".\dist\Kargo Etiket.exe" -ArgumentList "--kontrol" -Wait -PassThru -NoNewWindow
           if ($k.ExitCode -ne 0) { Write-Error "gomulu SumatraPDF exe icinde bulunamadi"; exit 1 }
 
       - uses: actions/upload-artifact@v4
         with:
-          name: KargoEtiket_QL550
-          path: kargo_etiket/dist/KargoEtiket_QL550.exe
+          name: Kargo Etiket
+          path: "kargo_etiket/dist/Kargo Etiket.exe"
 
       - name: Release (main)
         if: github.ref == 'refs/heads/main'
@@ -68,6 +68,6 @@ jobs:
         with:
           tag_name: kargo-etiket-latest
           name: Kargo Etiket QL-550 (son surum)
-          body: "Ticimax kargo barkod PDF -> Brother QL-550 etiket donusturucu. KargoEtiket_QL550.exe dosyasini indirip PDF'i uzerine surukleyin."
+          body: "Ticimax kargo barkod PDF -> Brother QL-550 etiket donusturucu. Kargo Etiket.exe dosyasini indirip PDF'i uzerine surukleyin."
           prerelease: false
-          files: kargo_etiket/dist/KargoEtiket_QL550.exe
+          files: "kargo_etiket/dist/Kargo Etiket.exe"
