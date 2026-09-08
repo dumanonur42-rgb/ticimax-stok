@@ -38,9 +38,13 @@ jobs:
         working-directory: kargo_etiket
         run: |
           pyinstaller --noconfirm --onefile --windowed --name KargoEtiket_QL550 `
+            --icon assets\icon.ico `
             --add-data "fonts;fonts" `
+            --add-data "assets\icon.ico;assets" `
+            --add-data "assets\icon_48.png;assets" `
+            --add-data "assets\icon_256.png;assets" `
             --add-binary "SumatraPDF.exe;." `
-            --collect-all pymupdf --collect-all barcode `
+            --collect-all pymupdf --collect-all barcode --collect-all tkinterdnd2 `
             kargo_etiket.py
 
       - name: Test (ornek PDF)

@@ -29,6 +29,13 @@ try:
 except ImportError:  # tkinter olmayan sunucu kurulumları (yalnızca komut satırı)
     tk = None
 
+try:  # pencereye sürükle-bırak (opsiyonel)
+    from tkinterdnd2 import DND_FILES, TkinterDnD
+    _TkBase = TkinterDnD.Tk
+except ImportError:
+    DND_FILES = None
+    _TkBase = tk.Tk if tk else object
+
 MM = 72 / 25.4
 
 # Brother QL-550: rulo genişliği 62 mm. Yazdırılabilir alan ~58 mm.
@@ -460,60 +467,240 @@ def open_file(path: Path):
 
 # ---------------------------------------------------------------- Arayüz
 
-class App(tk.Tk if tk else object):
+UI_BG = "#F3F4F6"
+UI_CARD = "#FFFFFF"
+UI_DARK = "#15171C"
+UI_DARK_HOVER = "#2A2D35"
+UI_TEXT = "#1F2328"
+UI_MUTED = "#6B7280"
+UI_BORDER = "#D9DCE1"
+UI_ACCENT = "#E63946"
+UI_OK = "#15803D"
+UI_FONT = "Segoe UI" if sys.platform == "win32" else "DejaVu Sans"
+
+
+def _f(size: int, bold: bool = False) -> tuple:
+    return (UI_FONT, size, "bold") if bold else (UI_FONT, size)
+
+
+class DropZone(tk.Canvas if tk else object):
+    """Kesikli çerçeveli, tıklanabilir ve (tkinterdnd2 varsa) dosya bırakılabilir alan."""
+
+    W, H = 500, 150
+
+    def __init__(self, master, on_files):
+        super().__init__(master, width=self.W, height=self.H, bg=UI_BG,
+                         highlightthickness=0, cursor="hand2")
+        self.on_files = on_files
+        self.active = False
+        self._draw()
+        self.bind("<Button-1>", lambda _e: self.on_files(None))
+        self.bind("<Enter>", lambda _e: self._set_active(True))
+        self.bind("<Leave>", lambda _e: self._set_active(False))
+        if DND_FILES:
+            self.drop_target_register(DND_FILES)
+            self.dnd_bind("<<DropEnter>>", lambda _e: self._set_active(True))
+            self.dnd_bind("<<DropLeave>>", lambda _e: self._set_active(False))
+            self.dnd_bind("<<Drop>>", self._drop)
+
+    def _set_active(self, on: bool):
+        self.active = on
+        self._draw()
+
+    def _drop(self, event):
+        self._set_active(False)
+        paths = [Path(p) for p in self.tk.splitlist(event.data)]
+        self.on_files([p for p in paths if p.suffix.lower() == ".pdf"])
+
+    def _draw(self):
+        self.delete("all")
+        color = UI_DARK if self.active else "#B5BAC3"
+        fill = "#FAFAFB" if self.active else UI_CARD
+        r, x0, y0, x1, y1 = 14, 2, 2, self.W - 2, self.H - 2
+        # yuvarlatılmış dikdörtgen (kesikli)
+        pts = [x0 + r, y0, x1 - r, y0, x1, y0, x1, y0 + r, x1, y1 - r, x1, y1, x1 - r, y1,
+               x0 + r, y1, x0, y1, x0, y1 - r, x0, y0 + r, x0, y0]
+        self.create_polygon(pts, smooth=True, fill=fill, outline=color, width=2,
+                            dash=(6, 4))
+        # belge simgesi
+        cx, top = self.W / 2, 26
+        self.create_rectangle(cx - 16, top, cx + 16, top + 40, outline=UI_DARK, width=2,
+                              fill=UI_CARD)
+        self.create_polygon(cx + 6, top, cx + 16, top + 10, cx + 6, top + 10,
+                            fill=UI_DARK, outline=UI_DARK)
+        for i, w in enumerate((18, 14, 10)):
+            y = top + 18 + i * 7
+            self.create_line(cx - 10, y, cx - 10 + w, y, fill=UI_DARK, width=2)
+        self.create_text(cx, top + 62, text="Ticimax PDF'ini buraya sürükleyip bırakın",
+                         font=_f(12, True), fill=UI_TEXT)
+        tip = "veya seçmek için tıklayın" if DND_FILES else "Seçmek için tıklayın"
+        self.create_text(cx, top + 84, text=tip, font=_f(10), fill=UI_MUTED)
+        self.create_text(cx, top + 106,
+                         text="Çıktı aynı klasöre  <ad>_QL550.pdf  olarak kaydedilir",
+                         font=_f(9), fill=UI_MUTED)
+
+
+class App(_TkBase):
     def __init__(self):
         super().__init__()
-        self.title("Ticimax → Brother QL-550 Kargo Etiketi")
+        self.title("Kargo Etiket · Brother QL-550")
+        self.configure(bg=UI_BG)
         self.resizable(False, False)
-        pad = {"padx": 10, "pady": 5}
+        self.last_dst: Path | None = None
+        self._icons()
+        self._styles()
 
-        frm = ttk.Frame(self, padding=12)
-        frm.grid()
+        # Başlık şeridi
+        head = tk.Frame(self, bg=UI_DARK, padx=22, pady=16)
+        head.grid(row=0, column=0, sticky="ew")
+        if self.logo:
+            tk.Label(head, image=self.logo, bg=UI_DARK).grid(row=0, column=0, rowspan=2,
+                                                            padx=(0, 14))
+        tk.Label(head, text="Kargo Etiket", font=_f(18, True), fg="white",
+                 bg=UI_DARK).grid(row=0, column=1, sticky="w")
+        tk.Label(head, text="Ticimax barkod PDF  →  Brother QL-550 etiketi",
+                 font=_f(10), fg="#C9CDD3", bg=UI_DARK).grid(row=1, column=1, sticky="w")
+        tk.Frame(self, bg=UI_ACCENT, height=3).grid(row=1, column=0, sticky="ew")
 
-        ttk.Label(frm, text="Ticimax 'Kargo Gönderim Toplu Barkod' PDF'ini seçin.\n"
-                            "Çıktı aynı klasöre  <ad>_QL550.pdf  olarak kaydedilir.",
-                  justify="left").grid(column=0, row=0, columnspan=2, sticky="w", **pad)
+        body = tk.Frame(self, bg=UI_BG, padx=22, pady=18)
+        body.grid(row=2, column=0)
 
-        ttk.Label(frm, text="Etiket boyutu:").grid(column=0, row=1, sticky="w", **pad)
+        self.drop = DropZone(body, self.on_files)
+        self.drop.grid(row=0, column=0, pady=(0, 16))
+
+        # Ayarlar kartı
+        card = tk.Frame(body, bg=UI_CARD, highlightbackground=UI_BORDER,
+                        highlightthickness=1, padx=16, pady=12)
+        card.grid(row=1, column=0, sticky="ew")
+        card.columnconfigure(2, weight=1)
+        tk.Label(card, text="AYARLAR", font=_f(8, True), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 6))
+
+        tk.Label(card, text="Etiket boyutu", font=_f(10), bg=UI_CARD,
+                 fg=UI_TEXT).grid(row=1, column=0, sticky="w", pady=4)
         self.size_var = tk.StringVar(value=DEFAULT_SIZE)
-        ttk.Combobox(frm, textvariable=self.size_var, state="readonly", width=28,
-                     values=list(LABEL_SIZES)).grid(column=1, row=1, sticky="w", **pad)
+        ttk.Combobox(card, textvariable=self.size_var, state="readonly", width=30,
+                     values=list(LABEL_SIZES), font=_f(10)).grid(
+            row=1, column=1, sticky="w", padx=(14, 0), pady=4)
+        tk.Label(card, text="62x100 = DK-11202 kesik etiket · 62surekli = DK-22205 rulo",
+                 font=_f(8), fg=UI_MUTED, bg=UI_CARD).grid(
+            row=2, column=1, sticky="w", padx=(14, 0))
 
-        ttk.Label(frm, text="Yazıcı:").grid(column=0, row=2, sticky="w", **pad)
+        tk.Label(card, text="Yazıcı", font=_f(10), bg=UI_CARD,
+                 fg=UI_TEXT).grid(row=3, column=0, sticky="w", pady=4)
         self.printer_var = tk.StringVar()
+        self.printer_box = ttk.Combobox(card, textvariable=self.printer_var, width=30,
+                                        font=_f(10))
+        self.printer_box.grid(row=3, column=1, sticky="w", padx=(14, 0), pady=4)
+        tk.Button(card, text="↻", command=self.refresh_printers, font=_f(11), bd=0,
+                  relief="flat", highlightthickness=0, bg=UI_CARD, activebackground=UI_BG,
+                  fg=UI_MUTED, cursor="hand2", width=2).grid(row=3, column=2, sticky="w",
+                                                            padx=(4, 0))
+
+        self.print_var = tk.BooleanVar(value=False)
+        self.open_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(card, text="Dönüştürdükten sonra yazıcıya gönder (62×100 mm, ölçeksiz)",
+                        variable=self.print_var, style="Card.TCheckbutton").grid(
+            row=4, column=0, columnspan=3, sticky="w", pady=(10, 2))
+        ttk.Checkbutton(card, text="Etiketi ekranda göster",
+                        variable=self.open_var, style="Card.TCheckbutton").grid(
+            row=5, column=0, columnspan=3, sticky="w", pady=2)
+        self.refresh_printers()
+
+        # Ana buton
+        self.btn = tk.Button(body, text="PDF Seç ve Dönüştür", command=self.on_files,
+                             font=_f(11, True), bg=UI_DARK, fg="white", bd=0,
+                             activebackground=UI_DARK_HOVER, activeforeground="white",
+                             cursor="hand2", pady=11)
+        self.btn.grid(row=2, column=0, sticky="ew", pady=(16, 0))
+        self.btn.bind("<Enter>", lambda _e: self.btn.config(bg=UI_DARK_HOVER))
+        self.btn.bind("<Leave>", lambda _e: self.btn.config(bg=UI_DARK))
+
+        # Durum çubuğu
+        foot = tk.Frame(self, bg=UI_CARD, highlightbackground=UI_BORDER,
+                        highlightthickness=1, padx=22, pady=8)
+        foot.grid(row=3, column=0, sticky="ew")
+        foot.columnconfigure(0, weight=1)
+        self.status = tk.Label(foot, text="Hazır", font=_f(9), fg=UI_MUTED, bg=UI_CARD,
+                               anchor="w")
+        self.status.grid(row=0, column=0, sticky="w")
+        self.folder_btn = tk.Label(foot, text="Klasörü aç", font=(UI_FONT, 9, "underline"),
+                                   fg=UI_DARK, bg=UI_CARD, cursor="hand2")
+        self.folder_btn.bind("<Button-1>", lambda _e: self.open_folder())
+
+        self.update_idletasks()
+        self._center()
+
+    # -- yardımcılar
+    def _icons(self):
+        self.logo = None
+        try:
+            self.logo = tk.PhotoImage(file=str(resource_path("assets/icon_48.png")))
+            self.iconphoto(True, tk.PhotoImage(file=str(resource_path("assets/icon_256.png"))))
+            if sys.platform == "win32":
+                self.iconbitmap(str(resource_path("assets/icon.ico")))
+        except tk.TclError:
+            pass
+
+    def _styles(self):
+        st = ttk.Style(self)
+        if "clam" in st.theme_names():
+            st.theme_use("clam")
+        st.configure("Card.TCheckbutton", background=UI_CARD, foreground=UI_TEXT,
+                     font=_f(10))
+        st.map("Card.TCheckbutton", background=[("active", UI_CARD)])
+        st.configure("TCombobox", fieldbackground=UI_CARD, background=UI_CARD,
+                     bordercolor=UI_BORDER, arrowcolor=UI_DARK, padding=4)
+        st.map("TCombobox", fieldbackground=[("readonly", UI_CARD)],
+               selectbackground=[("readonly", UI_CARD)],
+               selectforeground=[("readonly", UI_TEXT)])
+        self.option_add("*TCombobox*Listbox.font", _f(10))
+
+    def _center(self):
+        w, h = self.winfo_width(), self.winfo_height()
+        x = (self.winfo_screenwidth() - w) // 2
+        y = (self.winfo_screenheight() - h) // 3
+        self.geometry(f"+{x}+{y}")
+
+    def refresh_printers(self):
         printers = list_printers()
         brother = next((p for p in printers if "QL" in p.upper() or "BROTHER" in p.upper()), "")
+        self.printer_box["values"] = printers
         self.printer_var.set(brother or (printers[0] if printers else ""))
-        ttk.Combobox(frm, textvariable=self.printer_var, width=28,
-                     values=printers).grid(column=1, row=2, sticky="w", **pad)
+        self.print_var.set(bool(brother))
 
-        self.print_var = tk.BooleanVar(value=bool(brother))
-        ttk.Checkbutton(frm, text="Dönüştürdükten sonra otomatik yazdır",
-                        variable=self.print_var).grid(column=0, row=3, columnspan=2,
-                                                       sticky="w", **pad)
-        self.open_var = tk.BooleanVar(value=True)
-        ttk.Checkbutton(frm, text="Çıktı PDF'ini aç",
-                        variable=self.open_var).grid(column=0, row=4, columnspan=2,
-                                                      sticky="w", **pad)
+    def set_status(self, text: str, ok: bool = False):
+        self.status.config(text=text, fg=UI_OK if ok else UI_MUTED)
+        if self.last_dst:
+            self.folder_btn.grid(row=0, column=1, sticky="e")
 
-        ttk.Button(frm, text="PDF Seç ve Dönüştür", command=self.pick).grid(
-            column=0, row=5, columnspan=2, sticky="ew", **pad)
-        self.status = ttk.Label(frm, text="", foreground="#555")
-        self.status.grid(column=0, row=6, columnspan=2, sticky="w", **pad)
+    def open_folder(self):
+        if not self.last_dst:
+            return
+        if sys.platform == "win32":
+            subprocess.Popen(["explorer.exe", "/select,", str(self.last_dst.resolve())])
+        else:
+            open_file(self.last_dst.parent)
 
-    def pick(self):
-        paths = filedialog.askopenfilenames(
-            title="Ticimax kargo barkod PDF", filetypes=[("PDF", "*.pdf")])
+    # -- akış
+    def on_files(self, paths: list[Path] | None = None):
+        if paths is None:
+            paths = [Path(p) for p in filedialog.askopenfilenames(
+                title="Ticimax kargo barkod PDF", filetypes=[("PDF", "*.pdf")])]
         for p in paths:
-            self.process(Path(p))
+            self.process(p)
 
     def process(self, src: Path):
+        self.set_status(f"Dönüştürülüyor: {src.name} …")
+        self.update_idletasks()
         try:
             dst = convert(src, size_key=self.size_var.get())
         except Exception as ex:  # noqa: BLE001
+            self.set_status(f"Hata: {src.name}")
             messagebox.showerror("Hata", f"{src.name}\n\n{ex}")
             return
-        self.status.config(text=f"Oluşturuldu: {dst.name}")
+        self.last_dst = dst
+        self.set_status(f"Oluşturuldu: {dst.name}", ok=True)
         warn = _after_convert(dst, self.print_var.get(), self.printer_var.get() or None,
                               self.open_var.get())
         if warn:

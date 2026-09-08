@@ -48,7 +48,11 @@ yazdırmalarda tekrar ayar gerekmez.
 pip install -r requirements.txt
 python kargo_etiket.py ornek.pdf --acma
 python test/make_ornek.py        # uydurma verili test PDF'i üretir
+python assets/make_icon.py       # uygulama simgesini (icon.ico/png) yeniden üretir
 ```
+
+Pencereye sürükle-bırak `tkinterdnd2` ile sağlanır; paket yoksa uygulama yine çalışır,
+yalnızca "tıklayıp seç" kalır.
 
 EXE, `.github/workflows/kargo-etiket-exe.yml` ile Windows'ta PyInstaller kullanılarak
 otomatik derlenir.
