@@ -13,6 +13,7 @@ Akış:
 Kullanım:  python3 video_uret.py            -> video/yamansa_tanitim_9x16.mp4
 """
 import asyncio
+import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -32,33 +33,36 @@ W, H = 1080, 1920
 FPS = 30
 SR = 48000
 VOICE = "tr-TR-AhmetNeural"
+RATE = "+0%"
 VO_START = 0.45     # seslendirme sahne başından kaç sn sonra başlar
 PAD = 0.8           # seslendirme bitince sahne kaç sn daha kalır
 XF = 0.55           # wipe geçiş süresi
 URL = SITE.replace("https://www.", "")
 
+# vo: seslendirmeye giden metin (marka adları Türkçe okunuşuyla yazılır: "Es Ka Ef", "Şaomi")
+# cap: ekranda görünen alt yazı; `Görünen|okunuş` ile ilgili vo kelimesine bağlanır, yoksa aynı kelime aranır
 SCENES = [
-    dict(id="hook", foto="34240236.jpg", kb="in",
-         vo="Motorun mu titriyor? Tekerlek mi ses yapıyor? Sorun, büyük ihtimalle rulman.", min=4.0),
+    dict(id="hook", foto="34240236.jpg", kb="in", min=4.0,
+         vo="Motorun mu titriyor? Tekerleğin mi ses yapıyor? Sorun, büyük ihtimalle rulmanda."),
     dict(id="logo", foto="19911427.jpg", kb="out",
-         vo="Yamansa Rulman. 1986'dan beri rulmanda doğru adres."),
+         vo="Yamansa Rulman. 1986'dan beri rulmanda güvenilir adres."),
     dict(id="moto", foto="18171624.jpg", kb="in",
-         vo="Honda'dan KTM'ye, tüm motosikletler için tekerlek rulmanı setleri stokta."),
+         vo="Honda'dan Yamaha'ya, Ka Te Em'den Bajaj'a; tüm motosikletler için tekerlek rulmanı setleri stokta.",
+         cap="Honda'dan Yamaha'ya, KTM'den|ka Bajaj'a; tüm motosikletler için tekerlek rulmanı setleri stokta."),
     dict(id="scooter", foto="26860251.jpg", kb="out",
-         vo="Xiaomi, Ninebot, Dualtron. Elektrikli scooter rulmanları ölçüsüyle hazır."),
+         vo="Şaomi, Naynbot, Dualtron. Elektrikli skuter rulmanları, ölçüsüyle hazır.",
+         cap="Xiaomi,|şaomi Ninebot,|naynbot Dualtron. Elektrikli scooter|skuter rulmanları, ölçüsüyle hazır."),
     dict(id="zz", foto="35568191.jpg", kb="in",
-         vo="Zet zet mi, iki R S mi? Tekerlekse iki R S, motorsa zet zet. Emin değilsen ölçünü yaz.",
-         cap=[("ZZ", "zet", 0), ("mi,", "mi", 0), ("2RS", "iki", 0), ("mi?", "mi", 1), ("Tekerlekse", "tekerlekse", 0),
-              ("2RS,", "iki", 1), ("motorsa", "motorsa", 0), ("ZZ.", "zet", 2), ("Emin", "emin", 0),
-              ("değilsen", "değilsen", 0), ("ölçünü", "ölçünü", 0), ("yaz.", "yaz", 0)]),
+         vo="Zet zet mi, iki er es mi? Tekerlek için iki er es, motor içi için zet zet. Emin değilseniz ölçünüzü yazın, biz bulalım.",
+         cap="ZZ|zet mi, 2RS|iki mi? Tekerlek için 2RS,|iki motor içi için ZZ.|zet Emin değilseniz ölçünüzü yazın, biz bulalım."),
     dict(id="sanayi", foto="7568421.jpg", kb="out",
-         vo="Konik, silindirik, oynak. SKF, FAG, ORS. Orijinal ve faturalı."),
+         vo="Konik, silindirik, oynak makaralı. Es Ka Ef, Fag, Ors. Hepsi orijinal ve faturalı.",
+         cap="Konik, silindirik, oynak makaralı. SKF,|es FAG,|fag ORS.|ors Hepsi orijinal ve faturalı."),
     dict(id="kargo", foto="4483608.jpg", kb="in",
-         vo="Saat üçe kadar verilen sipariş, aynı gün kargoda."),
-    dict(id="outro", foto="19911421.jpg", kb="out",
-         vo="yamansa nokta com nokta te re. Ölçünü yaz, doğru rulmanı bulalım.", min=5.0,
-         cap=[(URL, "yamansa", 0), ("·", "Ölçünü", 0), ("Ölçünü", "Ölçünü", 0), ("yaz,", "yaz", 0), ("doğru", "doğru", 0),
-              ("rulmanı", "rulmanı", 0), ("bulalım.", "bulalım", 0)]),
+         vo="Saat üçe kadar verdiğiniz sipariş, aynı gün kargoda."),
+    dict(id="outro", foto="19911421.jpg", kb="out", min=5.0,
+         vo="yamansarulman nokta kom. Ölçünüzü yazın, doğru rulmanı birlikte bulalım.",
+         cap=f"{URL}&nbsp;·|yamansarulman Ölçünüzü yazın, doğru rulmanı birlikte bulalım."),
 ]
 
 VIDEO_CSS = CSS + """
@@ -123,7 +127,7 @@ def tr_upper(s):
 
 # ---------------------------------------------------------------- seslendirme
 async def _tts(scene, path):
-    com = edge_tts.Communicate(scene["vo"], VOICE, rate="+8%", boundary="WordBoundary")
+    com = edge_tts.Communicate(scene["vo"], VOICE, rate=RATE, boundary="WordBoundary")
     words = []
     with open(path, "wb") as f:
         async for ch in com.stream():
@@ -134,7 +138,7 @@ async def _tts(scene, path):
     return words
 
 
-def tighten(data, words, gap=0.28, thr=0.012, min_sil=0.4):
+def tighten(data, words, gap=0.38, thr=0.012, min_sil=0.55):
     """TTS'in cümle aralarındaki uzun sessizlikleri `gap` sn'ye kısaltır, kelime zamanlarını kaydırır."""
     win = int(0.02 * SR)
     env = np.convolve(np.abs(data), np.ones(win) / win, mode="same")
@@ -165,10 +169,11 @@ def make_voice():
     TMP.mkdir(parents=True, exist_ok=True)
     t0 = 0.0
     for i, s in enumerate(SCENES):
-        mp3 = TMP / f"vo{i}.mp3"
-        wav = TMP / f"vo{i}.wav"
-        meta = TMP / f"vo{i}.json"
-        if not meta.exists():
+        key = hashlib.md5(f"{VOICE}|{RATE}|{s['vo']}".encode()).hexdigest()[:8]
+        mp3 = TMP / f"vo{i}_{key}.mp3"
+        wav = TMP / f"vo{i}_{key}.wav"
+        meta = TMP / f"vo{i}_{key}.json"
+        if not (meta.exists() and json.loads(meta.read_text())):
             words = asyncio.run(_tts(s, mp3))
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(wav)], check=True)
             _, data = wavfile.read(wav)
@@ -194,13 +199,18 @@ def wt(s, prefix, nth=0):
 
 # ---------------------------------------------------------------- HTML
 def cap_tokens(s):
-    """Alt yazı kelimeleri: (görünen metin, sahne içi zaman)."""
-    if "cap" in s:
-        return [(txt, wt(s, pre, nth) + 0.08) for txt, pre, nth in s["cap"]]
-    toks = s["vo"].split()
-    if len(toks) != len(s["words"]):
-        toks = [w["text"] for w in s["words"]]
-    return [(txt, VO_START + w["t"]) for txt, w in zip(toks, s["words"])]
+    """Alt yazı kelimeleri: (görünen metin, sahne içi zaman). Her token sırayla bir sonraki uygun vo kelimesine bağlanır."""
+    out, j = [], 0
+    for tok in s.get("cap", s["vo"]).split():
+        txt, _, pre = tok.partition("|")
+        pre = (pre or txt.strip(".,;:?!")).lower()
+        while j < len(s["words"]) and not s["words"][j]["text"].lower().startswith(pre):
+            j += 1
+        if j >= len(s["words"]):
+            raise ValueError(f"{s['id']}: alt yazı kelimesi seslendirmede bulunamadı: {tok!r}")
+        out.append((txt, VO_START + s["words"][j]["t"]))
+        j += 1
+    return out
 
 
 def cap_html(s):
@@ -289,7 +299,7 @@ def scene_scooter(s):
       <div style="position:absolute;left:72px;right:72px;bottom:440px;text-align:right">
         <div class="pop" style="--t:.25s"><span class="vtag">E-Scooter</span></div>
         <div style="margin-top:36px">{h1_lines(["SCOOTER", "RULMANI", "STOKTA."], "slideR", 0.4)}</div>
-        <div style="display:flex;justify-content:flex-end">{chips(["Xiaomi", "Segway Ninebot", "Dualtron", "Navee", "Citymate"], wt(s, "Xiaomi"), orange=(0, 1, 2))}</div>
+        <div style="display:flex;justify-content:flex-end">{chips(["Xiaomi", "Segway Ninebot", "Dualtron", "Navee", "Citymate"], wt(s, "Şaomi"), orange=(0, 1, 2))}</div>
       </div>{cap_html(s)}"""
 
 
@@ -305,7 +315,7 @@ def scene_zz(s):
         <div class="card slideR" style="--t:{wt(s, 'iki'):.2f}s;background:var(--orange)">
           <b>2RS</b><small>Kauçuk keçe</small><span>Su & çamur koruması</span><span>Gres içinde kalır</span><span>Tekerlek · dış ortam</span></div>
       </div>
-      <div class="stamp" style="--t:{wt(s, 'Tekerlekse'):.2f}s;position:absolute;left:50%;top:800px;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:var(--navy);border:6px solid #fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:900;font-size:56px;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)">VS</div>
+      <div class="stamp" style="--t:{wt(s, 'Tekerlek'):.2f}s;position:absolute;left:50%;top:800px;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:var(--navy);border:6px solid #fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:900;font-size:56px;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)">VS</div>
       {cap_html(s)}"""
 
 
@@ -317,8 +327,8 @@ def scene_sanayi(s):
       <div style="position:absolute;left:72px;right:72px;bottom:440px">
         <div class="pop" style="--t:.2s"><span class="vtag">Sanayi</span></div>
         <div style="margin-top:36px">{h1}</div>
-        {chips(["SKF", "FAG", "ORS", "NMB", "TPI"], wt(s, "SKF"), step=0.14)}
-        <div class="up" style="--t:{wt(s, 'Orijinal'):.2f}s" ><p class="vsub" style="font-weight:600">Orijinal ürün · faturalı · stoktan</p></div>
+        {chips(["SKF", "FAG", "ORS", "NMB", "TPI"], wt(s, "Es"), step=0.14)}
+        <div class="up" style="--t:{wt(s, 'Hepsi'):.2f}s" ><p class="vsub" style="font-weight:600">Orijinal ürün · faturalı · stoktan</p></div>
       </div>{cap_html(s)}"""
 
 
@@ -340,7 +350,7 @@ def scene_outro(s):
           <div style="position:absolute;inset:0;opacity:.85">{bearing_svg(420, 'spin')}</div>
           <img src="{LOGO_ICON}" style="position:absolute;left:50%;top:50%;width:200px;transform:translate(-50%,-50%);filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))">
         </div>
-        <div class="up" style="--t:{wt(s, 'yamansa'):.2f}s;font-family:Montserrat;font-weight:900;font-size:104px;color:#fff;letter-spacing:-.03em;margin-top:60px">{URL}</div>
+        <div class="up" style="--t:{wt(s, 'yamansa'):.2f}s;font-family:Montserrat;font-weight:900;font-size:88px;color:#fff;letter-spacing:-.03em;margin-top:60px">{URL}</div>
         <div class="up" style="--t:{wt(s, 'yamansa') + 0.3:.2f}s;font-size:44px;color:var(--steel);font-weight:600;margin-top:10px">{TEL}</div>
         <div class="pop" style="--t:{wt(s, 'Ölçünü'):.2f}s;margin-top:70px">
           <span class="pulse" style="--t:{wt(s, 'Ölçünü') + 0.5:.2f}s;display:inline-block;background:var(--orange);color:#fff;font-family:Montserrat;font-weight:900;font-size:46px;letter-spacing:.04em;padding:30px 60px;border-radius:999px">ÖLÇÜNÜ YAZ, DM AT</span></div>

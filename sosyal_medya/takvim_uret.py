@@ -37,7 +37,7 @@ def write_md():
     out.append("## Paylaşım kuralları\n")
     out.append("- IG/FB: 12:30 (öğle arası), LinkedIn: 09:00 (iş günü başlangıcı). Hafta sonu sadece IG/FB.\n"
                "- Her gönderi `gonderiler/gunXX_kare.png` (IG/FB) ve varsa `gonderiler/gunXX_linkedin.png` (LI) görselini kullanır.\n"
-               "- Instagram'da link biyografide (yamansa.com.tr); metindeki UTM linki Facebook ve LinkedIn'de doğrudan paylaşılır.\n"
+               "- Instagram'da link biyografide (yamansarulman.com); metindeki UTM linki Facebook ve LinkedIn'de doğrudan paylaşılır.\n"
                "- Alt metin (erişilebilirlik) alanı her platformda doldurulur; SEO için görsel açıklaması olarak da işe yarar.\n"
                "- Her gönderiye eşlik eden **blog / site sayfası** önerisi, gönderi tarihinden önce siteye eklenirse link otoritesi için en iyi sonucu verir.\n")
     out.append("## Haftalık içerik dağılımı\n")

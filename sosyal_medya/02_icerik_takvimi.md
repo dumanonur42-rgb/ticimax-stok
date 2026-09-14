@@ -2,13 +2,13 @@
 
 **Dönem:** 21 Eylül – 20 Ekim 2026  
 **Kanallar:** Instagram (IG), Facebook (FB), LinkedIn (LI)  
-**Site:** https://www.yamansa.com.tr · **Tel:** 0212 670 02 05 · **Adres:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
+**Site:** https://www.yamansarulman.com · **Tel:** 0212 670 02 05 · **Adres:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
 
 ## Paylaşım kuralları
 
 - IG/FB: 12:30 (öğle arası), LinkedIn: 09:00 (iş günü başlangıcı). Hafta sonu sadece IG/FB.
 - Her gönderi `gonderiler/gunXX_kare.png` (IG/FB) ve varsa `gonderiler/gunXX_linkedin.png` (LI) görselini kullanır.
-- Instagram'da link biyografide (yamansa.com.tr); metindeki UTM linki Facebook ve LinkedIn'de doğrudan paylaşılır.
+- Instagram'da link biyografide (yamansarulman.com); metindeki UTM linki Facebook ve LinkedIn'de doğrudan paylaşılır.
 - Alt metin (erişilebilirlik) alanı her platformda doldurulur; SEO için görsel açıklaması olarak da işe yarar.
 - Her gönderiye eşlik eden **blog / site sayfası** önerisi, gönderi tarihinden önce siteye eklenirse link otoritesi için en iyi sonucu verir.
 
@@ -63,7 +63,7 @@
 **Görsel:** `gonderiler/gun01_kare.png` · `gonderiler/gun01_linkedin.png`  
 **Başlık:** RULMANDA DOĞRU ADRES.  
 **SEO anahtar kelimeler:** rulman, rulman tedarikçisi İstanbul, rulman satış  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=lansman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=lansman  
 **Alt metin:** Yamansa Rulman açılış gönderisi: çelik bilyalı rulman fotoğrafı üzerinde 'Rulmanda doğru adres' başlığı  
 **Eşlik eden blog/site sayfası:** Yamansa Rulman hakkında: 1986'dan bugüne (Hakkımızda sayfası SEO metni)
 
@@ -76,7 +76,7 @@ Yamansa Rulman artık sosyal medyada! 1986'dan beri İkitelli OSB'den tüm Türk
 • Motosiklet, scooter, bisiklet ve sanayi rulmanları
 • Stoktan aynı gün kargo, faturalı ve orijinal ürün
 
-Ölçünüzü yazın, doğru rulmanı bulalım. Katalog: yamansa.com.tr
+Ölçünüzü yazın, doğru rulmanı bulalım. Katalog: yamansarulman.com
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
@@ -88,9 +88,9 @@ Yamansa Rulman olarak 1986'dan bu yana rulman ithalatı ve distribütörlüğü 
 
 Odak alanlarımız: sabit bilyalı rulmanlar (ZZ/2RS), motosiklet ve e-scooter tekerlek rulmanları, sanayi tipi konik ve silindirik makaralı rulmanlar. Distribütörlüğünü yürüttüğümüz markalar: SKF, FAG, ORS, NMB, TPI.
 
-Bayi ve toplu alım talepleri için: yamansa.com.tr
+Bayi ve toplu alım talepleri için: yamansarulman.com
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=lansman
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=lansman
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
@@ -100,7 +100,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun02_kare.png`  
 **Başlık:** 6200 SERİSİ SABİT BİLYALI  
 **SEO anahtar kelimeler:** 6204 rulman, 6203 rulman, 6200 serisi rulman ölçüleri  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=seri6200  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=seri6200  
 **Alt metin:** 6200 serisi rulman ölçü tablosu: 6200'den 6205'e iç çap, dış çap ve kalınlık  
 **Eşlik eden blog/site sayfası:** 6200 serisi rulman ölçüleri ve kullanım alanları (ölçü tablosu sayfası)
 
@@ -116,7 +116,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 6204 → 20×47×14
 6205 → 25×52×15
 
-ZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansa.com.tr
+ZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansarulman.com
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
@@ -126,7 +126,7 @@ ZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansa.com.tr
 **Görsel:** `gonderiler/gun03_kare.png` · `gonderiler/gun03_linkedin.png`  
 **Başlık:** ZZ Mİ, 2RS Mİ?  
 **SEO anahtar kelimeler:** zz rulman 2rs rulman farkı, kapaklı rulman keçeli rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=zz-2rs  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=zz-2rs  
 **Alt metin:** ZZ metal kapaklı ve 2RS kauçuk keçeli rulman karşılaştırma grafiği  
 **Eşlik eden blog/site sayfası:** ZZ ve 2RS rulman farkı nedir? Hangi uygulamada hangisi kullanılır?
 
@@ -155,7 +155,7 @@ ZZ (metal kapak): düşük sürtünme ve yüksek devir; toz koruması sağlar, s
 
 Doğru seçim, doğru ömür. Teknik danışmanlık için ekibimizle iletişime geçebilirsiniz.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=zz-2rs
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=zz-2rs
 
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
@@ -165,7 +165,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun04_kare.png` · `gonderiler/gun04_linkedin.png`  
 **Başlık:** TEKERLEK RULMANI SETLERİ  
 **SEO anahtar kelimeler:** motosiklet tekerlek rulmanı, honda tekerlek rulmanı, bajaj rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=moto-tekerlek  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=moto-tekerlek  
 **Alt metin:** Motosiklet ön tekerlek ve fren diski fotoğrafı; Yamansa motosiklet tekerlek rulmanı setleri  
 **Eşlik eden blog/site sayfası:** Motosiklet tekerlek rulmanı nasıl anlaşılır, nasıl değişir? Marka-model ölçü rehberi
 
@@ -188,7 +188,7 @@ Motosiklet servisleri için en sık değişen parçalardan biri tekerlek rulman�
 
 Yamansa olarak 26 motosiklet markası için model bazlı ön/arka tekerlek rulman setleri hazırladık; SKF, FAG, ORS veya Yamansa markalı alternatiflerle. Servisler ve yedek parça bayileri için toplu fiyatlandırma mevcuttur.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=moto-tekerlek
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=moto-tekerlek
 
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı
 ```
@@ -198,7 +198,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun05_kare.png`  
 **Başlık:** ORİJİNAL. FATURALI. STOKTAN.  
 **SEO anahtar kelimeler:** skf rulman, fag rulman, ors rulman, orijinal rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=markalar  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=markalar  
 **Alt metin:** SKF, FAG, ORS, NMB, TPI ve Yamansa marka logotipleri; orijinal faturalı rulman  
 **Eşlik eden blog/site sayfası:** Sahte rulman nasıl anlaşılır? Orijinal SKF/FAG rulman kontrol rehberi
 
@@ -221,7 +221,7 @@ Marka tercihini yaz, fiyatı gönderelim.
 **Görsel:** `gonderiler/gun06_kare.png`  
 **Başlık:** RULMAN KODU NASIL OKUNUR?  
 **SEO anahtar kelimeler:** rulman kodu okuma, rulman numarası ne anlama gelir, 6204 2rs c3  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=rulman-kodu  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=rulman-kodu  
 **Alt metin:** 6204-2RS C3 rulman kodunun parçalara ayrılmış açıklaması  
 **Eşlik eden blog/site sayfası:** Rulman kodları nasıl okunur? Tam rehber (ek harfler, boşluk sınıfları)
 
@@ -247,7 +247,7 @@ Kaydet, lazım olur. Sorularınızı yoruma yazın.
 **Görsel:** `gonderiler/gun07_kare.png`  
 **Başlık:** “Bir makinenin sesi, rulmanının sağlığıdır.”  
 **SEO anahtar kelimeler:** rulman bakımı, rulman sesi  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=pazar  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=pazar  
 **Alt metin:** Makro çekim bilyalı rulman fotoğrafı üzerine alıntı: Bir makinenin sesi, rulmanının sağlığıdır  
 **Eşlik eden blog/site sayfası:** 
 
@@ -266,7 +266,7 @@ Bir makinenin sesi, rulmanının sağlığıdır.
 **Görsel:** `gonderiler/gun08_kare.png` · `gonderiler/gun08_linkedin.png`  
 **Başlık:** SCOOTER RULMANLARI STOKTA  
 **SEO anahtar kelimeler:** scooter rulmanı, xiaomi scooter rulman, ninebot rulman, dualtron rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=scooter  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=scooter  
 **Alt metin:** Sıra sıra elektrikli scooterlar; Yamansa e-scooter rulmanları  
 **Eşlik eden blog/site sayfası:** Elektrikli scooter rulmanı değişimi: Xiaomi M365 / Pro / Ninebot ölçüleri
 
@@ -289,7 +289,7 @@ Mikro mobilite pazarı büyüdükçe e-scooter servis ağı da genişliyor. Bu a
 
 Yamansa olarak Xiaomi, Segway Ninebot, Dualtron, Navee gibi markaların yaygın modelleri için rulman setlerini NMB, TPI ve Yamansa markalı seçeneklerle stoklu tutuyoruz. Servis ve filo işletmecileri için toplu tedarik mümkündür.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=scooter
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=scooter
 
 #elektrikliscooter #scooter #xiaomi #segway
 ```
@@ -299,7 +299,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun09_kare.png`  
 **Başlık:** 6300 SERİSİ AĞIR HİZMET  
 **SEO anahtar kelimeler:** 6304 rulman, 6303 rulman, 6300 serisi rulman ölçüleri  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=seri6300  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=seri6300  
 **Alt metin:** 6300 serisi rulman ölçü tablosu: 6300'den 6305'e ölçüler  
 **Eşlik eden blog/site sayfası:** 6300 serisi rulman ölçüleri – 6200 ile farkı
 
@@ -325,7 +325,7 @@ Motosiklet arka tekerlek, tarım makinesi, redüktör. Stok için DM.
 **Görsel:** `gonderiler/gun10_kare.png` · `gonderiler/gun10_linkedin.png`  
 **Başlık:** C3 BOŞLUK NE DEMEK?  
 **SEO anahtar kelimeler:** c3 rulman ne demek, rulman boşluk sınıfı, c3 rulman farkı  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=c3  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=c3  
 **Alt metin:** Rulman iç boşluk sınıfları C2, CN, C3, C4 açıklama listesi  
 **Eşlik eden blog/site sayfası:** C3 rulman nedir? Boşluk sınıfları ve seçim rehberi
 
@@ -353,7 +353,7 @@ Isınan millerde iç bilezik genleşir ve normal boşluklu (CN) bir rulman sık�
 
 Doğru boşluk sınıfı seçimi, planlı bakım maliyetlerini doğrudan etkiler.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=c3
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=c3
 
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
@@ -363,7 +363,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun11_kare.png`  
 **Başlık:** RULMAN BİTTİ Mİ? 5 İŞARET  
 **SEO anahtar kelimeler:** rulman arızası belirtileri, tekerlek rulmanı sesi, rulman bozulduğu nasıl anlaşılır  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=ariza  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=ariza  
 **Alt metin:** Motosiklet arka tekerlek fotoğrafı; rulman arızasının 5 belirtisi listesi  
 **Eşlik eden blog/site sayfası:** Rulman arızası belirtileri: sesten titreşime 5 kontrol noktası
 
@@ -388,7 +388,7 @@ Birini bile fark ettiyseniz bekletmeyin; bitmiş rulman göbeği ve mili de boza
 **Görsel:** `gonderiler/gun12_kare.png` · `gonderiler/gun12_linkedin.png`  
 **Başlık:** STOKTAN, AYNI GÜN KARGO.  
 **SEO anahtar kelimeler:** rulman kargo, hızlı rulman tedariki, rulmancı istanbul ikitelli  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=kargo  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=kargo  
 **Alt metin:** Depo rafları ve forklift; Yamansa stoktan aynı gün kargo  
 **Eşlik eden blog/site sayfası:** 
 
@@ -399,7 +399,7 @@ Makine durmuş, servis bekliyor. Rulman 'gelecek' değil, 'gitti' olmalı.
 
 İkitelli OSB'deki depomuzdan saat 15:00'e kadar verilen siparişler aynı gün kargoda. Binlerce kalem stok, günlük güncellenen stok bilgisi.
 
-yamansa.com.tr üzerinden stok durumunu anlık görebilirsiniz.
+yamansarulman.com üzerinden stok durumunu anlık görebilirsiniz.
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
@@ -411,7 +411,7 @@ Bakım duruşlarında en pahalı şey beklemektir. Bu nedenle stok politikamız 
 
 İkitelli OSB'deki depomuz Türkiye'nin her noktasına ertesi gün teslimat için konumlanmıştır. Bakım ekipleri ve satın alma birimleri için çerçeve anlaşma seçeneklerimiz vardır.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=kargo
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=kargo
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
@@ -421,7 +421,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun13_kare.png`  
 **Başlık:** İÇ ÇAP × DIŞ ÇAP × KALINLIK  
 **SEO anahtar kelimeler:** ölçüye göre rulman bulma, rulman ölçü tablosu, rulman ölçüsü nasıl bulunur  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=olcu  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=olcu  
 **Alt metin:** Rulman ölçüleri iç çap, dış çap ve kalınlık gösterimi  
 **Eşlik eden blog/site sayfası:** Ölçüye göre rulman bulma: iç çap / dış çap / kalınlık tablosu
 
@@ -435,7 +435,7 @@ Kumpasla üç ölçü al:
 • Dış çap (D)
 • Kalınlık (B)
 
-Örn. 20 × 47 × 14 → 6204. DM'den yaz, kodunu ve fiyatını dakikalar içinde gönderelim. Sitemizdeki ölçü filtresiyle de kendin bulabilirsin: yamansa.com.tr
+Örn. 20 × 47 × 14 → 6204. DM'den yaz, kodunu ve fiyatını dakikalar içinde gönderelim. Sitemizdeki ölçü filtresiyle de kendin bulabilirsin: yamansarulman.com
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
@@ -445,7 +445,7 @@ Kumpasla üç ölçü al:
 **Görsel:** `gonderiler/gun14_kare.png`  
 **Başlık:** 2RS'İN İÇİNDE NE VAR?  
 **SEO anahtar kelimeler:** rulman gresi, keçeli rulman yağlama, 2rs rulman gres  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=gres  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=gres  
 **Alt metin:** Bilyalı rulman makro fotoğrafı; 2RS rulmanın içindeki gres hakkında bilgi listesi  
 **Eşlik eden blog/site sayfası:** Rulman yağlama rehberi: açık, ZZ ve 2RS rulmanlarda gres
 
@@ -466,7 +466,7 @@ Keçeli rulmanlar fabrikada lityum bazlı gresle dolu gelir; keçe gresi içerid
 **Görsel:** `gonderiler/gun15_kare.png`  
 **Başlık:** GÖBEK RULMANLARI  
 **SEO anahtar kelimeler:** bisiklet göbek rulmanı, salcano rulman, bisiklet rulmanı ölçüleri  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=bisiklet  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=bisiklet  
 **Alt metin:** Bisiklet ön tekerlek göbeği ve jant telleri; Yamansa bisiklet göbek rulmanları  
 **Eşlik eden blog/site sayfası:** Bisiklet göbek rulmanı ölçüleri ve değişim rehberi
 
@@ -485,7 +485,7 @@ Salcano ve yaygın markalar için ön/arka göbek, orta göbek (BB) ve pedal rul
 **Görsel:** `gonderiler/gun16_kare.png`  
 **Başlık:** 6000 SERİSİ HAFİF KESİT  
 **SEO anahtar kelimeler:** 6004 rulman, 6002 rulman, 6000 serisi rulman ölçüleri  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=seri6000  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=seri6000  
 **Alt metin:** 6000 serisi rulman ölçü tablosu: 6000'den 6005'e ölçüler  
 **Eşlik eden blog/site sayfası:** 6000 serisi rulman ölçüleri ve muadilleri
 
@@ -511,7 +511,7 @@ Bisiklet göbeği, küçük elektrik motorları, ev aletleri. Stokta.
 **Görsel:** `gonderiler/gun17_kare.png` · `gonderiler/gun17_linkedin.png`  
 **Başlık:** TEK KAYNAK, BÜTÜN MARKALAR.  
 **SEO anahtar kelimeler:** rulman toptan, rulman bayilik, rulman b2b tedarik  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=b2b  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=b2b  
 **Alt metin:** Depoda görüşen ekip; Yamansa B2B bayi ve toptan rulman tedariki  
 **Eşlik eden blog/site sayfası:** Rulman bayiliği ve toptan tedarik: Yamansa B2B programı
 
@@ -534,7 +534,7 @@ Bayi başvurusu için DM veya 0212 670 02 05.
 
 Yamansa, 1986'dan beri distribütörlüğünü yürüttüğü SKF, FAG, ORS, NMB ve TPI markalarını tek noktadan, tek faturayla ve günlük güncellenen stokla sunuyor. Rulmancılar, yetkili servisler ve OEM imalatçılar için bayi programımız hakkında bilgi almak isteyenler mesaj gönderebilir.
 
-https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=b2b
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=b2b
 
 #endüstri #makineimalat #fabrika #bakım
 ```
@@ -544,7 +544,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=b
 **Görsel:** `gonderiler/gun18_kare.png`  
 **Başlık:** MONTAJDA 5 ÖLÜMCÜL HATA  
 **SEO anahtar kelimeler:** rulman montajı nasıl yapılır, rulman takma hataları, rulman çakma  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=montaj  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=montaj  
 **Alt metin:** Teknisyen elleri ve dişli parça; rulman montajında yapılan 5 hata listesi  
 **Eşlik eden blog/site sayfası:** Rulman montajı: doğru yöntem, kovan ve pres kullanımı
 
@@ -569,7 +569,7 @@ Montaj kovanı veya pres kullanın. Kaydet, ustana gönder.
 **Görsel:** `gonderiler/gun19_kare.png`  
 **Başlık:** BÜTÇE DOSTU, TEST EDİLMİŞ.  
 **SEO anahtar kelimeler:** uygun fiyatlı rulman, yamansa rulman seti, ekonomik rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=yamansa-set  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=yamansa-set  
 **Alt metin:** Çelik bilyalı rulman ve bilyeler; Yamansa markalı ekonomik rulman setleri  
 **Eşlik eden blog/site sayfası:** 
 
@@ -590,7 +590,7 @@ Aynı ölçüde SKF/FAG ile yan yana fiyat isteyin, karar sizin.
 **Görsel:** `gonderiler/gun20_kare.png` · `gonderiler/gun20_linkedin.png`  
 **Başlık:** HANGİ MOTOR, HANGİ RULMAN?  
 **SEO anahtar kelimeler:** yamaha rulman, ktm tekerlek rulmanı, mondial rulman, rks rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=moto-markalar  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=moto-markalar  
 **Alt metin:** Motosiklet ön tekerlek ve krom fren diski; 12 motosiklet markası logotip listesi  
 **Eşlik eden blog/site sayfası:** Motosiklet marka-model tekerlek rulmanı ölçü tablosu (26 marka)
 
@@ -613,7 +613,7 @@ Motosiklet sektöründe yerli montaj markaların (Mondial, RKS, Kuba, Yuki, Aror
 
 Yamansa olarak 26 marka için model bazlı tekerlek rulman seti veri tabanı oluşturduk. Servis zincirleri ve yedek parça toptancıları için set bazında fiyatlandırma ve düzenli tedarik programı sunuyoruz.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=moto-markalar
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=moto-markalar
 
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı
 ```
@@ -623,7 +623,7 @@ https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=
 **Görsel:** `gonderiler/gun21_kare.png`  
 **Başlık:** “Kalite, duyulmayan sestir.”  
 **SEO anahtar kelimeler:** kaliteli rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=pazar2  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=pazar2  
 **Alt metin:** Karanlık zeminde kam mili fotoğrafı; alıntı: Kalite, duyulmayan sestir  
 **Eşlik eden blog/site sayfası:** 
 
@@ -642,7 +642,7 @@ Kalite, duyulmayan sestir.
 **Görsel:** `gonderiler/gun22_kare.png` · `gonderiler/gun22_linkedin.png`  
 **Başlık:** KONİK. SİLİNDİRİK. OYNAK.  
 **SEO anahtar kelimeler:** konik makaralı rulman, silindirik makaralı rulman, oynak bilyalı rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=sanayi  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=sanayi  
 **Alt metin:** Fabrikada büyük vidalı mil önünde mühendis; sanayi tipi konik, silindirik ve oynak rulmanlar  
 **Eşlik eden blog/site sayfası:** Konik, silindirik ve oynak rulman: hangi yükte hangisi?
 
@@ -668,7 +668,7 @@ Sanayi uygulamalarında rulman seçimi yük tipiyle başlar: radyal yük için s
 
 Yamansa, bu ailelerin tümünü SKF, FAG ve ORS markalarıyla stoklamaktadır. Bakım planlaması yapan ekipler için kritik yedek listesi oluşturma desteği veriyoruz.
 
-https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=sanayi
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=sanayi
 
 #endüstri #makineimalat #fabrika #bakım
 ```
@@ -678,7 +678,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=s
 **Görsel:** `gonderiler/gun23_kare.png`  
 **Başlık:** 6800 / 6900 İNCE KESİT  
 **SEO anahtar kelimeler:** 6900 rulman, 6800 rulman, ince kesit rulman, 61900 rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=ince-kesit  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=ince-kesit  
 **Alt metin:** 6800 ve 6900 serisi ince kesit rulman ölçü tablosu  
 **Eşlik eden blog/site sayfası:** İnce kesit rulmanlar: 6700/6800/6900 serileri ölçü tablosu
 
@@ -704,7 +704,7 @@ E-scooter tekerlekleri, drone motorları, bisiklet göbekleri. NMB ve TPI seçen
 **Görsel:** `gonderiler/gun24_kare.png` · `gonderiler/gun24_linkedin.png`  
 **Başlık:** STOK, HER GÜN GÜNCELLENİR.  
 **SEO anahtar kelimeler:** rulman stok sorgulama, online rulman satış, rulman fiyat listesi  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=stok  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=stok  
 **Alt metin:** Depo rafları koridoru; Yamansa rakamlarla: 1986, 6 marka, 26 marka, 15:00 kargo  
 **Eşlik eden blog/site sayfası:** 
 
@@ -713,7 +713,7 @@ E-scooter tekerlekleri, drone motorları, bisiklet göbekleri. NMB ve TPI seçen
 ```
 "Var mı?" diye aramanıza gerek yok.
 
-yamansa.com.tr'de gördüğünüz stok, o günün gerçek stoğu. Her sabah güncellenir. Ölçü filtresiyle iç çap / dış çap / kalınlık girin, stoktaki tüm markaları yan yana görün.
+yamansarulman.com'da gördüğünüz stok, o günün gerçek stoğu. Her sabah güncellenir. Ölçü filtresiyle iç çap / dış çap / kalınlık girin, stoktaki tüm markaları yan yana görün.
 
 1986'dan beri • 6 distribütör marka • 26 araç markası • 15:00'e kadar aynı gün kargo
 
@@ -727,7 +727,7 @@ B2B e-ticarette en büyük güven sorunu stok bilgisinin gerçek olmamasıdır. 
 
 Ölçü tabanlı filtreleme (iç çap / dış çap / kalınlık) ile kod bilmeden doğru rulmana ulaşılır. Kurumsal müşteriler için fiyat listesi ve cari hesap seçenekleri mevcuttur.
 
-https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=stok
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=stok
 
 #endüstri #makineimalat #fabrika #bakım
 ```
@@ -737,7 +737,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=s
 **Görsel:** `gonderiler/gun25_kare.png`  
 **Başlık:** KUMPASLA RULMAN ÖLÇÜMÜ  
 **SEO anahtar kelimeler:** rulman ölçüsü nasıl alınır, kumpasla rulman ölçme, rulman iç çap dış çap  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=kumpas  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=kumpas  
 **Alt metin:** Metal makine parçası; kumpasla rulman ölçümü 3 adım listesi  
 **Eşlik eden blog/site sayfası:** Kumpasla rulman ölçümü ve ölçüden kod bulma tablosu
 
@@ -761,7 +761,7 @@ Kod silindi, rulman elimde: ne yapayım?
 **Görsel:** `gonderiler/gun26_kare.png`  
 **Başlık:** 6204 MÜ, 6304 MÜ?  
 **SEO anahtar kelimeler:** 6204 6304 farkı, 6204 rulman ölçüsü, 6304 rulman ölçüsü  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=6204-6304  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=6204-6304  
 **Alt metin:** 6204 ve 6304 rulman karşılaştırma tablosu  
 **Eşlik eden blog/site sayfası:** 6204 ve 6304 farkı: ölçü, yük ve kullanım alanı
 
@@ -783,7 +783,7 @@ Kural: Yuva ölçüsü neyse o. 47 mm yuvaya 6304 girmez; 52 mm yuvada 6204 dön
 **Görsel:** `gonderiler/gun27_kare.png` · `gonderiler/gun27_linkedin.png`  
 **Başlık:** ÖLÇÜ. MUADİL. MARKA ÖNERİSİ.  
 **SEO anahtar kelimeler:** rulman muadil bulma, rulman teknik destek, rulman danışmanlık  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=teknik-destek  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=teknik-destek  
 **Alt metin:** CNC tezgâh başında mavi iş kıyafetli mühendis; Yamansa teknik destek  
 **Eşlik eden blog/site sayfası:** Rulman muadil tablosu: eski kodlardan yeni standarda geçiş
 
@@ -806,7 +806,7 @@ Bakım ekiplerinin sık karşılaştığı sorun: eski makinelerde üretimi durm
 
 Yamansa teknik ekibi; ölçü doğrulama, muadil kod tespiti, marka ve boşluk sınıfı önerisini ücretsiz sunar. 1986'dan beri biriken saha tecrübesi, hızlı ve doğru karar için en güçlü aracımız.
 
-https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=teknik-destek
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=teknik-destek
 
 #endüstri #makineimalat #fabrika #bakım
 ```
@@ -816,7 +816,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=t
 **Görsel:** `gonderiler/gun28_kare.png`  
 **Başlık:** ÖN + ARKA SET, KARGO BİZDEN.  
 **SEO anahtar kelimeler:** motosiklet rulman seti, ücretsiz kargo rulman  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=set-kampanya  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=set-kampanya  
 **Alt metin:** Turuncu motosiklet jantı ve jant telleri; ön ve arka tekerlek rulman seti kampanyası  
 **Eşlik eden blog/site sayfası:** 
 
@@ -837,7 +837,7 @@ Kampanya 25 Ekim'e kadar geçerlidir.
 **Görsel:** `gonderiler/gun29_kare.png` · `gonderiler/gun29_linkedin.png`  
 **Başlık:** 40 YILA YAKIN TECRÜBE.  
 **SEO anahtar kelimeler:** rulman firması istanbul, köklü rulman tedarikçisi, yamansa rulman hakkında  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=40yil  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=40yil  
 **Alt metin:** Fabrika üretim hattında çalışanlar; Yamansa 1986'dan 2026'ya rakamlar  
 **Eşlik eden blog/site sayfası:** Yamansa Rulman hikâyesi: 1986'dan bugüne
 
@@ -860,7 +860,7 @@ Yamansa Rulman 1986'da İkitelli'de kuruldu. 40 yıla yaklaşan sürede rulman i
 
 Bugün SKF, FAG, ORS, NMB, TPI ve Yamansa markalı ürünlerle sanayi, motosiklet ve mikro mobilite sektörlerine hizmet veriyoruz. Yeni dönemde dijital stok görünürlüğü ve B2B çevrimiçi sipariş ile büyümeye devam ediyoruz.
 
-https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=40yil
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=40yil
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
@@ -870,7 +870,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=4
 **Görsel:** `gonderiler/gun30_kare.png` · `gonderiler/gun30_linkedin.png`  
 **Başlık:** ÖLÇÜNÜ GİR, RULMANINI BUL.  
 **SEO anahtar kelimeler:** online rulman katalog, rulman ölçü filtresi, rulman satın al  
-**Link (UTM):** https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=katalog  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=katalog  
 **Alt metin:** Çelik rulman bilezikleri ve bilyeler; Yamansa online katalog çağrısı  
 **Eşlik eden blog/site sayfası:** Site içi arama ve ölçü filtresi kullanım rehberi
 
@@ -879,7 +879,7 @@ https://www.yamansa.com.tr/?utm_source=linkedin&utm_medium=social&utm_campaign=4
 ```
 Bir aydır anlattık: kod okuma, ZZ/2RS, C3, ölçü alma, montaj…
 
-Şimdi sıra sizde: yamansa.com.tr'ye gir, ölçünü yaz, stoktaki tüm markaları fiyatıyla gör. Saat 15:00'e kadar sipariş, aynı gün kargo.
+Şimdi sıra sizde: yamansarulman.com'a gir, ölçünü yaz, stoktaki tüm markaları fiyatıyla gör. Saat 15:00'e kadar sipariş, aynı gün kargo.
 
 Kaçırdığınız gönderiler için profilimize göz atın. Sorularınız için DM her zaman açık.
 
@@ -891,9 +891,9 @@ Kaçırdığınız gönderiler için profilimize göz atın. Sorularınız için
 ```
 Bir aylık içerik serimizde rulman kodlarını, kapak ve boşluk sınıflarını, ölçü almayı ve montaj hatalarını ele aldık. Tüm içeriklere sayfamızdan ulaşabilirsiniz.
 
-Ölçü tabanlı çevrimiçi kataloğumuz yamansa.com.tr adresinde: iç çap / dış çap / kalınlık girin, stoktaki markaları karşılaştırın. Kurumsal tedarik için ekibimizle iletişime geçin.
+Ölçü tabanlı çevrimiçi kataloğumuz yamansarulman.com adresinde: iç çap / dış çap / kalınlık girin, stoktaki markaları karşılaştırın. Kurumsal tedarik için ekibimizle iletişime geçin.
 
-https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=social&utm_campaign=katalog
+https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=katalog
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```

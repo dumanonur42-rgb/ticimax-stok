@@ -4,7 +4,7 @@
 Hem takvim dosyaları (MD/CSV) hem de görseller bu listeden üretilir.
 """
 
-SITE = "https://www.yamansa.com.tr"
+SITE = "https://www.yamansarulman.com"
 TEL = "0212 670 02 05"
 ADRES = "İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul"
 
@@ -28,8 +28,8 @@ POSTS = [
         kw="rulman, rulman tedarikçisi İstanbul, rulman satış",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=lansman",
         alt_text="Yamansa Rulman açılış gönderisi: çelik bilyalı rulman fotoğrafı üzerinde 'Rulmanda doğru adres' başlığı",
-        ig="Yamansa Rulman artık sosyal medyada! 1986'dan beri İkitelli OSB'den tüm Türkiye'ye rulman tedarik ediyoruz.\n\n• SKF, FAG, ORS, NMB, TPI ve Yamansa markalı setler\n• Motosiklet, scooter, bisiklet ve sanayi rulmanları\n• Stoktan aynı gün kargo, faturalı ve orijinal ürün\n\nÖlçünüzü yazın, doğru rulmanı bulalım. Katalog: yamansa.com.tr",
-        li="Yamansa Rulman olarak 1986'dan bu yana rulman ithalatı ve distribütörlüğü yapıyoruz. Bu sayfada sektör bilgisi, ürün serileri ve tedarik süreçlerimizi paylaşacağız.\n\nOdak alanlarımız: sabit bilyalı rulmanlar (ZZ/2RS), motosiklet ve e-scooter tekerlek rulmanları, sanayi tipi konik ve silindirik makaralı rulmanlar. Distribütörlüğünü yürüttüğümüz markalar: SKF, FAG, ORS, NMB, TPI.\n\nBayi ve toplu alım talepleri için: yamansa.com.tr",
+        ig="Yamansa Rulman artık sosyal medyada! 1986'dan beri İkitelli OSB'den tüm Türkiye'ye rulman tedarik ediyoruz.\n\n• SKF, FAG, ORS, NMB, TPI ve Yamansa markalı setler\n• Motosiklet, scooter, bisiklet ve sanayi rulmanları\n• Stoktan aynı gün kargo, faturalı ve orijinal ürün\n\nÖlçünüzü yazın, doğru rulmanı bulalım. Katalog: yamansarulman.com",
+        li="Yamansa Rulman olarak 1986'dan bu yana rulman ithalatı ve distribütörlüğü yapıyoruz. Bu sayfada sektör bilgisi, ürün serileri ve tedarik süreçlerimizi paylaşacağız.\n\nOdak alanlarımız: sabit bilyalı rulmanlar (ZZ/2RS), motosiklet ve e-scooter tekerlek rulmanları, sanayi tipi konik ve silindirik makaralı rulmanlar. Distribütörlüğünü yürüttüğümüz markalar: SKF, FAG, ORS, NMB, TPI.\n\nBayi ve toplu alım talepleri için: yamansarulman.com",
         hashtags="genel", blog="Yamansa Rulman hakkında: 1986'dan bugüne (Hakkımızda sayfası SEO metni)",
     ),
     dict(
@@ -42,7 +42,7 @@ POSTS = [
         kw="6204 rulman, 6203 rulman, 6200 serisi rulman ölçüleri",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=seri6200",
         alt_text="6200 serisi rulman ölçü tablosu: 6200'den 6205'e iç çap, dış çap ve kalınlık",
-        ig="6200 serisi, sanayide ve motosiklette en çok kullanılan sabit bilyalı rulman ailesi.\n\n6200 → 10×30×9\n6201 → 12×32×10\n6202 → 15×35×11\n6203 → 17×40×12\n6204 → 20×47×14\n6205 → 25×52×15\n\nZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansa.com.tr",
+        ig="6200 serisi, sanayide ve motosiklette en çok kullanılan sabit bilyalı rulman ailesi.\n\n6200 → 10×30×9\n6201 → 12×32×10\n6202 → 15×35×11\n6203 → 17×40×12\n6204 → 20×47×14\n6205 → 25×52×15\n\nZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansarulman.com",
         hashtags="genel", blog="6200 serisi rulman ölçüleri ve kullanım alanları (ölçü tablosu sayfası)",
     ),
     dict(
@@ -167,7 +167,7 @@ POSTS = [
         kw="rulman kargo, hızlı rulman tedariki, rulmancı istanbul ikitelli",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=kargo",
         alt_text="Depo rafları ve forklift; Yamansa stoktan aynı gün kargo",
-        ig="Makine durmuş, servis bekliyor. Rulman 'gelecek' değil, 'gitti' olmalı.\n\nİkitelli OSB'deki depomuzdan saat 15:00'e kadar verilen siparişler aynı gün kargoda. Binlerce kalem stok, günlük güncellenen stok bilgisi.\n\nyamansa.com.tr üzerinden stok durumunu anlık görebilirsiniz.",
+        ig="Makine durmuş, servis bekliyor. Rulman 'gelecek' değil, 'gitti' olmalı.\n\nİkitelli OSB'deki depomuzdan saat 15:00'e kadar verilen siparişler aynı gün kargoda. Binlerce kalem stok, günlük güncellenen stok bilgisi.\n\nyamansarulman.com üzerinden stok durumunu anlık görebilirsiniz.",
         li="Bakım duruşlarında en pahalı şey beklemektir. Bu nedenle stok politikamız net: en çok dönen serilerde derin stok, günlük güncellenen stok görünürlüğü ve saat 15:00'e kadar aynı gün sevkiyat.\n\nİkitelli OSB'deki depomuz Türkiye'nin her noktasına ertesi gün teslimat için konumlanmıştır. Bakım ekipleri ve satın alma birimleri için çerçeve anlaşma seçeneklerimiz vardır.",
         hashtags="genel", blog="",
     ),
@@ -179,7 +179,7 @@ POSTS = [
         kw="ölçüye göre rulman bulma, rulman ölçü tablosu, rulman ölçüsü nasıl bulunur",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=olcu",
         alt_text="Rulman ölçüleri iç çap, dış çap ve kalınlık gösterimi",
-        ig="Rulmanın üzerindeki kod silinmiş mi? Sorun değil.\n\nKumpasla üç ölçü al:\n• İç çap (d)\n• Dış çap (D)\n• Kalınlık (B)\n\nÖrn. 20 × 47 × 14 → 6204. DM'den yaz, kodunu ve fiyatını dakikalar içinde gönderelim. Sitemizdeki ölçü filtresiyle de kendin bulabilirsin: yamansa.com.tr",
+        ig="Rulmanın üzerindeki kod silinmiş mi? Sorun değil.\n\nKumpasla üç ölçü al:\n• İç çap (d)\n• Dış çap (D)\n• Kalınlık (B)\n\nÖrn. 20 × 47 × 14 → 6204. DM'den yaz, kodunu ve fiyatını dakikalar içinde gönderelim. Sitemizdeki ölçü filtresiyle de kendin bulabilirsin: yamansarulman.com",
         hashtags="genel", blog="Ölçüye göre rulman bulma: iç çap / dış çap / kalınlık tablosu",
     ),
     dict(
@@ -313,7 +313,7 @@ POSTS = [
         kw="rulman stok sorgulama, online rulman satış, rulman fiyat listesi",
         link=f"{SITE}/?utm_source=linkedin&utm_medium=social&utm_campaign=stok",
         alt_text="Depo rafları koridoru; Yamansa rakamlarla: 1986, 6 marka, 26 marka, 15:00 kargo",
-        ig="\"Var mı?\" diye aramanıza gerek yok.\n\nyamansa.com.tr'de gördüğünüz stok, o günün gerçek stoğu. Her sabah güncellenir. Ölçü filtresiyle iç çap / dış çap / kalınlık girin, stoktaki tüm markaları yan yana görün.\n\n1986'dan beri • 6 distribütör marka • 26 araç markası • 15:00'e kadar aynı gün kargo",
+        ig="\"Var mı?\" diye aramanıza gerek yok.\n\nyamansarulman.com'da gördüğünüz stok, o günün gerçek stoğu. Her sabah güncellenir. Ölçü filtresiyle iç çap / dış çap / kalınlık girin, stoktaki tüm markaları yan yana görün.\n\n1986'dan beri • 6 distribütör marka • 26 araç markası • 15:00'e kadar aynı gün kargo",
         li="B2B e-ticarette en büyük güven sorunu stok bilgisinin gerçek olmamasıdır. Yamansa'da ürün sayfalarındaki stok her gün otomatik olarak güncellenir; satın alma ekipleri telefonla doğrulama yapmak zorunda kalmaz.\n\nÖlçü tabanlı filtreleme (iç çap / dış çap / kalınlık) ile kod bilmeden doğru rulmana ulaşılır. Kurumsal müşteriler için fiyat listesi ve cari hesap seçenekleri mevcuttur.",
         hashtags="sanayi", blog="",
     ),
@@ -383,12 +383,12 @@ POSTS = [
         gun=30, tarih="20 Eki 2026 Sal", platform="IG, FB, LI", pillar="CTA",
         sablon="hero", foto="19911421.jpg", etiket="KATALOG",
         baslik="ÖLÇÜNÜ GİR,<br>RULMANINI BUL.",
-        alt="İç çap / dış çap / kalınlık filtresiyle tüm markaları yan yana karşılaştır. yamansa.com.tr",
+        alt="İç çap / dış çap / kalınlık filtresiyle tüm markaları yan yana karşılaştır. yamansarulman.com",
         kw="online rulman katalog, rulman ölçü filtresi, rulman satın al",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=katalog",
         alt_text="Çelik rulman bilezikleri ve bilyeler; Yamansa online katalog çağrısı",
-        ig="Bir aydır anlattık: kod okuma, ZZ/2RS, C3, ölçü alma, montaj…\n\nŞimdi sıra sizde: yamansa.com.tr'ye gir, ölçünü yaz, stoktaki tüm markaları fiyatıyla gör. Saat 15:00'e kadar sipariş, aynı gün kargo.\n\nKaçırdığınız gönderiler için profilimize göz atın. Sorularınız için DM her zaman açık.",
-        li="Bir aylık içerik serimizde rulman kodlarını, kapak ve boşluk sınıflarını, ölçü almayı ve montaj hatalarını ele aldık. Tüm içeriklere sayfamızdan ulaşabilirsiniz.\n\nÖlçü tabanlı çevrimiçi kataloğumuz yamansa.com.tr adresinde: iç çap / dış çap / kalınlık girin, stoktaki markaları karşılaştırın. Kurumsal tedarik için ekibimizle iletişime geçin.",
+        ig="Bir aydır anlattık: kod okuma, ZZ/2RS, C3, ölçü alma, montaj…\n\nŞimdi sıra sizde: yamansarulman.com'a gir, ölçünü yaz, stoktaki tüm markaları fiyatıyla gör. Saat 15:00'e kadar sipariş, aynı gün kargo.\n\nKaçırdığınız gönderiler için profilimize göz atın. Sorularınız için DM her zaman açık.",
+        li="Bir aylık içerik serimizde rulman kodlarını, kapak ve boşluk sınıflarını, ölçü almayı ve montaj hatalarını ele aldık. Tüm içeriklere sayfamızdan ulaşabilirsiniz.\n\nÖlçü tabanlı çevrimiçi kataloğumuz yamansarulman.com adresinde: iç çap / dış çap / kalınlık girin, stoktaki markaları karşılaştırın. Kurumsal tedarik için ekibimizle iletişime geçin.",
         hashtags="genel", blog="Site içi arama ve ölçü filtresi kullanım rehberi",
     ),
 ]

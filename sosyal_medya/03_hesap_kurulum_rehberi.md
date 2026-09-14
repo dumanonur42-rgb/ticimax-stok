@@ -1,7 +1,7 @@
 # Yamansa Rulman – Hesap Kurulum & SEO Rehberi
 
 Tüm hesaplarda **aynı isim, aynı logo, aynı adres/telefon (NAP)** kullanılır; bu tutarlılık Google'ın
-işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linklerinin otorite katkısı için önemlidir.
+işletmeyi tek varlık olarak eşlemesi ve yamansarulman.com'a giden profil linklerinin otorite katkısı için önemlidir.
 
 ## Ortak bilgiler
 
@@ -9,7 +9,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linkle
 |---|---|
 | Görünen ad | Yamansa Rulman |
 | Kullanıcı adı (öncelik sırasıyla) | `yamansarulman` → `yamansa.rulman` → `yamansarulmantr` |
-| Web sitesi | https://www.yamansa.com.tr |
+| Web sitesi | https://www.yamansarulman.com |
 | Telefon | 0212 670 02 05 |
 | Adres | İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul |
 | Kategori | Endüstriyel Ürün Tedarikçisi / Otomotiv Yedek Parça |
@@ -26,7 +26,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linkle
   Motosiklet · Scooter · Sanayi rulmanları
   Stoktan aynı gün kargo ↓
   ```
-- **Link:** `https://www.yamansa.com.tr/?utm_source=instagram&utm_medium=bio`
+- **Link:** `https://www.yamansarulman.com/?utm_source=instagram&utm_medium=bio`
 - **Öne çıkanlar (highlight) kapakları:** `gonderiler/marka/hl_*_1080.png` → Ürünler, Teknik, Motosiklet, Scooter, Sanayi
 - Facebook sayfası ile bağla (Meta Business Suite) → tek panelden IG+FB planlama.
 - İletişim butonları: Ara (0212 670 02 05), E-posta, Adres.
@@ -44,13 +44,13 @@ işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linkle
   (6000/6200/6300 serisi, ZZ ve 2RS), konik makaralı, silindirik makaralı ve oynak rulmanları stoktan tedarik ederiz.
   Motosiklet tekerlek rulmanı setleri (Honda, Yamaha, Bajaj, KTM, CFMOTO, Mondial, RKS, Kuba…), elektrikli scooter
   rulmanları (Xiaomi, Segway Ninebot, Dualtron…) ve bisiklet göbek rulmanları için hazır setlerimiz mevcuttur.
-  Ölçünüzü yazın, doğru rulmanı birlikte bulalım. Online katalog: www.yamansa.com.tr
+  Ölçünüzü yazın, doğru rulmanı birlikte bulalım. Online katalog: www.yamansarulman.com
   ```
 - Buton: **Web Sitesini Ziyaret Et** → UTM'li link. Konum ve çalışma saatleri eklenir (Google eşleşmesi için).
 
 ## LinkedIn (Şirket Sayfası)
 
-> LinkedIn şirket sayfası, **kişisel bir LinkedIn hesabı** üzerinden açılır; hesabın şirket e-posta alanı (@yamansa.com.tr) doğrulanmış olmalıdır.
+> LinkedIn şirket sayfası, **kişisel bir LinkedIn hesabı** üzerinden açılır; hesabın şirket e-posta alanı (@yamansarulman.com) doğrulanmış olmalıdır.
 
 - **Sayfa adı:** Yamansa Rulman
 - **URL:** linkedin.com/company/yamansa-rulman
@@ -67,7 +67,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linkle
 2. Sitede **footer'a sosyal ikonlar** ve `sameAs` içeren `Organization` schema ekle:
    ```json
    {"@context":"https://schema.org","@type":"Organization","name":"Yamansa Rulman",
-    "url":"https://www.yamansa.com.tr","telephone":"+90-212-670-02-05",
+    "url":"https://www.yamansarulman.com","telephone":"+90-212-670-02-05",
     "sameAs":["https://www.instagram.com/yamansarulman","https://www.facebook.com/yamansarulman","https://www.linkedin.com/company/yamansa-rulman"]}
    ```
 3. Takvimdeki **blog önerilerini** (`02_icerik_takvimi.md` → "Eşlik eden blog/site sayfası") sitede yayınla; gönderiler bu sayfalara UTM ile link verir.
@@ -78,7 +78,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansa.com.tr'ye giden profil linkle
 
 | Gerekli | Not |
 |---|---|
-| E-posta adresi + şifre | Tercihen `sosyalmedya@yamansa.com.tr` gibi kurumsal bir adres; üç platformda da aynı |
+| E-posta adresi + şifre | Tercihen `sosyalmedya@yamansarulman.com` gibi kurumsal bir adres; üç platformda da aynı |
 | Telefon numarası | SMS doğrulaması için (kurumsal cep numarası) |
 | Kişisel LinkedIn hesabı | Şirket sayfasını açacak yönetici; e-posta doğrulaması yapılmış olmalı |
 | Kullanıcı adı onayı | `yamansarulman` alınmışsa yedek tercih |

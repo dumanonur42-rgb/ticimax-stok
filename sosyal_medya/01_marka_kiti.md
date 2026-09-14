@@ -5,7 +5,7 @@
 - **Kuruluş:** 1986 – 40 yıla yakın rulman ithalat ve distribütörlük tecrübesi
 - **Konum:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
 - **Telefon:** 0212 670 02 05
-- **Web:** https://www.yamansa.com.tr
+- **Web:** https://www.yamansarulman.com
 - **Konumlandırma:** "Rulmanda doğru ölçü, doğru marka, doğru fiyat – stoktan aynı gün kargo."
 - **Ürün odağı:** Sabit bilyalı rulmanlar (ZZ / 2RS), motosiklet & scooter rulmanları, SKF – FAG – ORS – NMB – TPI ve Yamansa markalı setler, sanayi tipi rulmanlar (silindirik/konik makaralı, oynak bilyalı, geniş kesitli).
 
@@ -35,7 +35,7 @@
 - Gerçek ürün ve sanayi fotoğrafları (Pexels lisanslı, ticari kullanım serbest) + tipografik düzen.
 - Sert grid, büyük başlık, ince çizgi ayraçlar, köşe etiketleri ("SERİ 6200", "ZZ / 2RS").
 - Fotoğrafın üzerine lacivert → şeffaf gradyan; metin her zaman okunur.
-- Her görselde sol üstte logo, sağ altta `yamansa.com.tr`.
+- Her görselde sol üstte logo, sağ altta `yamansarulman.com`.
 - Sabit şablonlar: **Hero**, **Split (yarı foto / yarı metin)**, **Ürün Kartı**, **İstatistik / Bilgi**, **Alıntı**, **Karşılaştırma (ZZ vs 2RS)**, **Marka Vitrini**.
 
 ## Formatlar
@@ -50,7 +50,7 @@
 | YouTube Shorts / TikTok / Reels video | Dikey | 1080×1920, 30 fps, H.264 |
 
 ## Logo Dosyaları
-- `logo_yamansa.png` – küre + YAMANSA yazısı, 1482×433 şeffaf (kaynak: yamansa.com.tr resmi logo)
+- `logo_yamansa.png` – küre + YAMANSA yazısı, 1482×433 şeffaf (kaynak: yamansarulman.com resmi logo)
 - `logo_icon.png` – yalnız küre, 488×421 şeffaf
 
 ## Dosya Yapısı

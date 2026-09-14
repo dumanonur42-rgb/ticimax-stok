@@ -391,7 +391,7 @@ def brand_assets():
         <div class="bar"></div>
         <p class="sub" style="font-size:22px;max-width:620px">1986'dan beri • SKF · FAG · ORS · NMB · TPI • Motosiklet, scooter ve sanayi rulmanları • Stoktan aynı gün kargo</p>
       </div>
-      <div style="position:absolute;right:56px;bottom:40px;font-weight:600;font-size:22px;letter-spacing:.04em">yamansa.com.tr</div>
+      <div style="position:absolute;right:56px;bottom:40px;font-weight:600;font-size:22px;letter-spacing:.04em">yamansarulman.com</div>
     </div>"""))
     # LinkedIn kapak 2256x382 (1128x191 @2x)
     items.append(("linkedin_kapak_2256x382.png", 2256, 382, f"""
@@ -402,7 +402,7 @@ def brand_assets():
         <h1 style="font-size:60px">RULMAN İTHALAT & DİSTRİBÜTÖRLÜK</h1>
         <p class="sub" style="font-size:24px;margin-top:16px;max-width:1000px;white-space:nowrap">1986 • İkitelli OSB, İstanbul • SKF · FAG · ORS · NMB · TPI • Stoktan aynı gün sevkiyat</p>
       </div>
-      <div style="position:absolute;right:56px;bottom:28px;font-weight:600;font-size:22px;letter-spacing:.04em">yamansa.com.tr</div>
+      <div style="position:absolute;right:56px;bottom:28px;font-weight:600;font-size:22px;letter-spacing:.04em">yamansarulman.com</div>
     </div>"""))
     # Instagram highlight kapakları
     for name, label in [("hl_urunler", "ÜRÜNLER"), ("hl_teknik", "TEKNİK"), ("hl_motosiklet", "MOTOSİKLET"), ("hl_scooter", "SCOOTER"), ("hl_sanayi", "SANAYİ")]:
