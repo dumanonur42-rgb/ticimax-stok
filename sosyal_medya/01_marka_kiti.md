@@ -69,13 +69,14 @@ sosyal_medya/
 ├── gonderiler/                 gunXX_kare.png (IG/FB), gunXX_linkedin.png (LI)
 │   └── marka/                  profil, kapak ve highlight görselleri
 └── video/                      yamansa_tanitim_9x16.mp4
+    └── ses/                    sahne seslendirmeleri (ElevenLabs, Fatih Yıldırım sesi): hook.mp3 … outro.mp3
 ```
 
 ## Yeniden üretme
 ```bash
-pip install playwright pillow && sudo apt install ffmpeg
+pip install playwright pillow edge-tts faster-whisper scipy && sudo apt install ffmpeg
 cd sosyal_medya
 python3 gorsel_uret.py --marka   # tüm görseller
 python3 takvim_uret.py           # takvim MD + CSV
-python3 video_uret.py            # örnek video
+python3 video_uret.py            # örnek video (video/ses/*.mp3 varsa o kayıtlar kullanılır)
 ```

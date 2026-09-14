@@ -3,23 +3,34 @@
 """YouTube Shorts / TikTok / Reels için 9:16 seslendirmeli tanıtım videosu.
 
 Akış:
-  1. edge-tts ile her sahnenin Türkçe seslendirmesi üretilir; kelime zamanları alınır.
+  1. Her sahnenin Türkçe seslendirmesi alınır; kelime zamanları çıkarılır.
+     - video/ses/<sahne>.mp3 varsa hazır kayıt kullanılır (ElevenLabs web arayüzünden indirilen
+       insan kalitesinde ses); kelime zamanları faster-whisper ile metne hizalanır.
+     - yoksa ELEVENLABS_API_KEY tanımlıysa ElevenLabs API (karakter zamanlamalı),
+     - o da yoksa edge-tts.
   2. Tüm video tek bir HTML sayfasıdır: CSS keyframe animasyonları sahne başlangıç
      zamanlarına göre gecikmelidir. Playwright ile animasyon saati kare kare ileri
      alınıp (Web Animations API currentTime) her kare ekran görüntüsü alınır.
   3. numpy ile ritim + whoosh üretilir, seslendirme altında müzik kısılır (ducking).
   4. ffmpeg kareleri ve sesi H.264/AAC MP4 olarak birleştirir.
 
-Kullanım:  python3 video_uret.py            -> video/yamansa_tanitim_9x16.mp4
+Kullanım:  python3 video_uret.py   -> video/yamansa_tanitim_9x16.mp4
 """
 import asyncio
+import base64
+import difflib
 import hashlib
 import json
+import os
+import re
 import subprocess
+import unicodedata
 from pathlib import Path
 
 import edge_tts
 import numpy as np
+import requests
+from faster_whisper import WhisperModel
 from playwright.sync_api import sync_playwright
 from scipy.io import wavfile
 
@@ -29,10 +40,16 @@ from icerik_verisi import SITE, TEL
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "video"
 TMP = OUT / "_katman"
+SES = OUT / "ses"      # hazır seslendirme kayıtları: <sahne id>.mp3
+WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "medium")
 W, H = 1080, 1920
 FPS = 30
 SR = 48000
-VOICE = "tr-TR-AhmetNeural"
+ELEVEN_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
+ELEVEN_VOICE = os.environ.get("ELEVEN_VOICE", "7VqWGAWwo2HMrylfKrcm")  # Fatih Yıldırım – derin, net, doğal (Voice Library)
+ELEVEN_MODEL = "eleven_multilingual_v2"
+ELEVEN_SETTINGS = dict(stability=0.42, similarity_boost=0.8, style=0.25, use_speaker_boost=True, speed=1.0)
+VOICE = f"eleven:{ELEVEN_VOICE}" if ELEVEN_KEY else "tr-TR-AhmetNeural"
 RATE = "+0%"
 VO_START = 0.45     # seslendirme sahne başından kaç sn sonra başlar
 PAD = 0.8           # seslendirme bitince sahne kaç sn daha kalır
@@ -56,8 +73,8 @@ SCENES = [
          vo="Zet zet mi, iki er es mi? Tekerlek için iki er es, motor içi için zet zet. Emin değilseniz ölçünüzü yazın, biz bulalım.",
          cap="ZZ|zet mi, 2RS|iki mi? Tekerlek için 2RS,|iki motor içi için ZZ.|zet Emin değilseniz ölçünüzü yazın, biz bulalım."),
     dict(id="sanayi", foto="7568421.jpg", kb="out",
-         vo="Konik, silindirik, oynak makaralı. Es Ka Ef, Fag, Ors. Hepsi orijinal ve faturalı.",
-         cap="Konik, silindirik, oynak makaralı. SKF,|es FAG,|fag ORS.|ors Hepsi orijinal ve faturalı."),
+         vo="Konik, silindirik, oynak makaralı. Es Ka Ef, Fag, O Re Se. Hepsi orijinal ve faturalı.",
+         cap="Konik, silindirik, oynak makaralı. SKF,|es FAG,|fag ORS.|o Hepsi orijinal ve faturalı."),
     dict(id="kargo", foto="4483608.jpg", kb="in",
          vo="Saat üçe kadar verdiğiniz sipariş, aynı gün kargoda."),
     dict(id="outro", foto="19911421.jpg", kb="out", min=5.0,
@@ -126,7 +143,96 @@ def tr_upper(s):
 
 
 # ---------------------------------------------------------------- seslendirme
-async def _tts(scene, path):
+def _tts_eleven(scene, path):
+    """ElevenLabs TTS; karakter hizalamasından kelime zamanları türetilir."""
+    r = requests.post(
+        f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVEN_VOICE}/with-timestamps",
+        params=dict(output_format="mp3_44100_128"),
+        headers={"xi-api-key": ELEVEN_KEY},
+        json=dict(text=scene["vo"], model_id=ELEVEN_MODEL, language_code="tr", voice_settings=ELEVEN_SETTINGS),
+        timeout=120)
+    r.raise_for_status()
+    j = r.json()
+    Path(path).write_bytes(base64.b64decode(j["audio_base64"]))
+    al = j["alignment"]
+    words, cur = [], None
+    for ch, t0, t1 in zip(al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]):
+        if ch.isspace():
+            if cur:
+                words.append(cur)
+            cur = None
+        elif cur is None:
+            cur = dict(t=t0, d=t1 - t0, text=ch)
+        else:
+            cur["text"] += ch
+            cur["d"] = t1 - cur["t"]
+    if cur:
+        words.append(cur)
+    return words
+
+
+def _norm(s):
+    """Hizalama için: küçük harf, aksan/noktalama/boşluk yok (ş->s, ı->i ...)."""
+    s = s.replace("ı", "i").replace("İ", "i").lower()
+    s = unicodedata.normalize("NFKD", s)
+    return re.sub(r"[^a-z0-9]", "", s)
+
+
+def _align_words(vo, heard):
+    """vo kelimelerini whisper'ın duyduğu kelimelere ([(metin, t0, t1)]) karakter düzeyinde eşler.
+    Whisper 'Ka Te Em' -> 'KTM' gibi birleştirse de karakter eşleşmesi çoğunlukla tutar;
+    eşleşmeyen karakterler komşu eşleşmeler arasında doğrusal dağıtılır."""
+    vo_words = vo.split()
+    a, spans = "", []          # a: normalize vo metni; spans: her vo kelimesinin a içindeki aralığı
+    for w in vo_words:
+        n = _norm(w)
+        spans.append((len(a), len(a) + len(n)))
+        a += n
+    b, tmap = "", []           # b: normalize duyulan metin; tmap[i]: b[i] karakterinin zamanı
+    for txt, t0, t1 in heard:
+        n = _norm(txt)
+        if not n:
+            continue
+        for k in range(len(n)):
+            tmap.append(t0 + (t1 - t0) * k / len(n))
+        b += n
+    tmap.append(heard[-1][2])
+    anchors = [(0, 0)]
+    for m in difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks():
+        if m.size:
+            anchors += [(m.a, m.b), (m.a + m.size, m.b + m.size)]
+    anchors.append((len(a), len(b)))
+    ax = np.array([p[0] for p in anchors], float)
+    bx = np.array([p[1] for p in anchors], float)
+
+    def t_of(i):
+        j = float(np.interp(i, ax, bx))
+        return float(np.interp(j, np.arange(len(tmap)), tmap))
+
+    words = []
+    for w, (i0, i1) in zip(vo_words, spans):
+        t0, t1 = t_of(i0), t_of(max(i1, i0 + 1))
+        words.append(dict(t=t0, d=max(t1 - t0, 0.05), text=w))
+    return words
+
+
+_whisper = None
+
+
+def _words_from_audio(scene, path):
+    """Hazır kayıt: faster-whisper kelime zamanları + metne hizalama."""
+    global _whisper
+    if _whisper is None:
+        _whisper = WhisperModel(WHISPER_MODEL, device="cpu", compute_type="int8")
+    segs, _ = _whisper.transcribe(str(path), language="tr", word_timestamps=True, beam_size=5,
+                               initial_prompt=scene["vo"])
+    heard = [(w.word, w.start, w.end) for s in segs for w in s.words]
+    if not heard:
+        raise ValueError(f"{scene['id']}: kayıtta konuşma bulunamadı: {path}")
+    return _align_words(scene["vo"], heard)
+
+
+async def _tts_edge(scene, path):
     com = edge_tts.Communicate(scene["vo"], VOICE, rate=RATE, boundary="WordBoundary")
     words = []
     with open(path, "wb") as f:
@@ -138,7 +244,7 @@ async def _tts(scene, path):
     return words
 
 
-def tighten(data, words, gap=0.38, thr=0.012, min_sil=0.55):
+def tighten(data, words, gap=0.5, thr=0.012, min_sil=0.8):
     """TTS'in cümle aralarındaki uzun sessizlikleri `gap` sn'ye kısaltır, kelime zamanlarını kaydırır."""
     win = int(0.02 * SR)
     env = np.convolve(np.abs(data), np.ones(win) / win, mode="same")
@@ -169,12 +275,22 @@ def make_voice():
     TMP.mkdir(parents=True, exist_ok=True)
     t0 = 0.0
     for i, s in enumerate(SCENES):
-        key = hashlib.md5(f"{VOICE}|{RATE}|{s['vo']}".encode()).hexdigest()[:8]
+        ready = SES / f"{s['id']}.mp3"
+        if ready.exists():
+            key = hashlib.md5(ready.read_bytes() + f"|{WHISPER_MODEL}|{s['vo']}".encode()).hexdigest()[:8]
+        else:
+            key = hashlib.md5(f"{VOICE}|{RATE}|{ELEVEN_MODEL}|{sorted(ELEVEN_SETTINGS.items())}|{s['vo']}".encode()).hexdigest()[:8]
         mp3 = TMP / f"vo{i}_{key}.mp3"
         wav = TMP / f"vo{i}_{key}.wav"
         meta = TMP / f"vo{i}_{key}.json"
         if not (meta.exists() and json.loads(meta.read_text())):
-            words = asyncio.run(_tts(s, mp3))
+            if ready.exists():
+                mp3 = ready
+                words = _words_from_audio(s, mp3)
+            elif ELEVEN_KEY:
+                words = _tts_eleven(s, mp3)
+            else:
+                words = asyncio.run(_tts_edge(s, mp3))
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(wav)], check=True)
             _, data = wavfile.read(wav)
             data, words = tighten(data.astype(np.float64) / 32768.0, words)
