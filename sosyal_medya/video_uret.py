@@ -1,17 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""YouTube Shorts / TikTok / Reels için 9:16 örnek tanıtım videosu.
+"""YouTube Shorts / TikTok / Reels için 9:16 seslendirmeli tanıtım videosu.
 
-Her sahne iki katmandan oluşur: arka plan (fotoğraf + gradyan, yavaş zoom) ve
-ön plan (şeffaf PNG: logo/metin, aşağıdan kayarak belirir). Katmanlar Playwright ile
-HTML/CSS'ten render edilir, ffmpeg ile hareketlendirilip xfade ile birleştirilir.
+Akış:
+  1. edge-tts ile her sahnenin Türkçe seslendirmesi üretilir; kelime zamanları alınır.
+  2. Tüm video tek bir HTML sayfasıdır: CSS keyframe animasyonları sahne başlangıç
+     zamanlarına göre gecikmelidir. Playwright ile animasyon saati kare kare ileri
+     alınıp (Web Animations API currentTime) her kare ekran görüntüsü alınır.
+  3. numpy ile ritim + whoosh üretilir, seslendirme altında müzik kısılır (ducking).
+  4. ffmpeg kareleri ve sesi H.264/AAC MP4 olarak birleştirir.
 
 Kullanım:  python3 video_uret.py            -> video/yamansa_tanitim_9x16.mp4
 """
+import asyncio
+import json
 import subprocess
 from pathlib import Path
 
+import edge_tts
+import numpy as np
 from playwright.sync_api import sync_playwright
+from scipy.io import wavfile
 
 from gorsel_uret import CHROME, CSS, FOTO, LOGO_ICON, b64
 from icerik_verisi import SITE, TEL
@@ -21,147 +30,463 @@ OUT = HERE / "video"
 TMP = OUT / "_katman"
 W, H = 1080, 1920
 FPS = 30
-SCENE = 3.4        # sahne süresi (sn)
-XF = 0.6           # geçiş süresi (sn)
+SR = 48000
+VOICE = "tr-TR-AhmetNeural"
+VO_START = 0.45     # seslendirme sahne başından kaç sn sonra başlar
+PAD = 0.8           # seslendirme bitince sahne kaç sn daha kalır
+XF = 0.55           # wipe geçiş süresi
+URL = SITE.replace("https://www.", "")
 
 SCENES = [
-    dict(foto="19911427.jpg", tag="1986'DAN BERİ", h1="RULMANDA<br>DOĞRU<br>ADRES.",
-         sub="Rulman ithalat & distribütörlük • İkitelli OSB, İstanbul", intro=True),
-    dict(foto="18171624.jpg", tag="MOTOSİKLET", h1="TEKERLEK<br>RULMANI<br>SETLERİ",
-         sub="Honda · Yamaha · Bajaj · KTM · CFMOTO · Mondial · RKS · Kuba"),
-    dict(foto="38292508.jpg", tag="E-SCOOTER", h1="SCOOTER<br>RULMANLARI<br>STOKTA",
-         sub="Xiaomi · Segway Ninebot · Dualtron · Navee · Citymate"),
-    dict(foto="35568191.jpg", tag="TEKNİK BİLGİ", h1="ZZ Mİ,<br>2RS Mİ?",
-         sub="Tekerlekse 2RS, motorsa ZZ. Emin değilsen ölçünü yaz.", cards=True),
-    dict(foto="2760241.jpg", tag="SANAYİ", h1="KONİK.<br>SİLİNDİRİK.<br>OYNAK.",
-         sub="SKF · FAG · ORS · NMB · TPI – orijinal, faturalı"),
-    dict(foto="36398150.jpg", tag="LOJİSTİK", h1="STOKTAN,<br>AYNI GÜN<br>KARGO.",
-         sub="15:00'e kadar verilen siparişler aynı gün yolda."),
-    dict(foto="19911421.jpg", tag="KATALOG", h1="ÖLÇÜNÜ YAZ,<br>DOĞRU RULMANI<br>BULALIM.",
-         sub=f"{SITE.replace('https://www.', '')}  •  {TEL}", outro=True),
+    dict(id="hook", foto="34240236.jpg", kb="in",
+         vo="Motorun mu titriyor? Tekerlek mi ses yapıyor? Sorun, büyük ihtimalle rulman.", min=4.0),
+    dict(id="logo", foto="19911427.jpg", kb="out",
+         vo="Yamansa Rulman. 1986'dan beri rulmanda doğru adres."),
+    dict(id="moto", foto="18171624.jpg", kb="in",
+         vo="Honda'dan KTM'ye, tüm motosikletler için tekerlek rulmanı setleri stokta."),
+    dict(id="scooter", foto="26860251.jpg", kb="out",
+         vo="Xiaomi, Ninebot, Dualtron. Elektrikli scooter rulmanları ölçüsüyle hazır."),
+    dict(id="zz", foto="35568191.jpg", kb="in",
+         vo="Zet zet mi, iki R S mi? Tekerlekse iki R S, motorsa zet zet. Emin değilsen ölçünü yaz.",
+         cap=[("ZZ", "zet", 0), ("mi,", "mi", 0), ("2RS", "iki", 0), ("mi?", "mi", 1), ("Tekerlekse", "tekerlekse", 0),
+              ("2RS,", "iki", 1), ("motorsa", "motorsa", 0), ("ZZ.", "zet", 2), ("Emin", "emin", 0),
+              ("değilsen", "değilsen", 0), ("ölçünü", "ölçünü", 0), ("yaz.", "yaz", 0)]),
+    dict(id="sanayi", foto="7568421.jpg", kb="out",
+         vo="Konik, silindirik, oynak. SKF, FAG, ORS. Orijinal ve faturalı."),
+    dict(id="kargo", foto="4483608.jpg", kb="in",
+         vo="Saat üçe kadar verilen sipariş, aynı gün kargoda."),
+    dict(id="outro", foto="19911421.jpg", kb="out",
+         vo="yamansa nokta com nokta te re. Ölçünü yaz, doğru rulmanı bulalım.", min=5.0,
+         cap=[(URL, "yamansa", 0), ("·", "Ölçünü", 0), ("Ölçünü", "Ölçünü", 0), ("yaz,", "yaz", 0), ("doğru", "doğru", 0),
+              ("rulmanı", "rulmanı", 0), ("bulalım.", "bulalım", 0)]),
 ]
 
 VIDEO_CSS = CSS + """
-:root{--pad:72px}
-html,body{background:transparent}
-.canvas{width:1080px;height:1920px}
+html,body{width:1080px;height:1920px;margin:0;overflow:hidden;background:var(--mid);--s:0s}
+*{animation-fill-mode:both!important}
+.stage{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:0;visibility:hidden;animation:hold var(--d) linear var(--s) 1;animation-fill-mode:none!important}
+@keyframes hold{from,to{visibility:visible}}
+.ph{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.6) contrast(1.05)}
+.ph.in{animation:kbin var(--d) linear var(--s) 1}
+.ph.out{animation:kbout var(--d) linear var(--s) 1}
+@keyframes kbin{from{transform:scale(1) translate(0,0)}to{transform:scale(1.16) translate(-2%,1%)}}
+@keyframes kbout{from{transform:scale(1.16) translate(2%,-1%)}to{transform:scale(1) translate(0,0)}}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,27,84,.45) 0%,rgba(1,27,84,.25) 35%,rgba(7,15,43,.9) 68%,rgba(7,15,43,1) 100%)}
+.shade.deep{background:linear-gradient(180deg,rgba(1,27,84,.7),rgba(7,15,43,.92))}
+.grid{background-size:135px 135px}
+
+.up{opacity:0;transform:translateY(90px);animation:up .65s cubic-bezier(.2,.8,.2,1) calc(var(--s) + var(--t)) 1}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+.stamp{opacity:0;transform:scale(1.7);animation:stamp .38s cubic-bezier(.2,1.2,.3,1) calc(var(--s) + var(--t)) 1}
+@keyframes stamp{60%{opacity:1}to{opacity:1;transform:scale(1)}}
+.slideL{opacity:0;transform:translateX(-140%);animation:slide .6s cubic-bezier(.2,.9,.2,1) calc(var(--s) + var(--t)) 1}
+.slideR{opacity:0;transform:translateX(140%);animation:slide .6s cubic-bezier(.2,.9,.2,1) calc(var(--s) + var(--t)) 1}
+@keyframes slide{to{opacity:1;transform:translateX(0)}}
+.pop{opacity:0;transform:scale(.5);animation:pop .45s cubic-bezier(.2,1.6,.4,1) calc(var(--s) + var(--t)) 1}
+@keyframes pop{to{opacity:1;transform:scale(1)}}
+.grow{transform:scaleX(0);transform-origin:left;animation:grow .7s cubic-bezier(.2,.8,.2,1) calc(var(--s) + var(--t)) 1}
+@keyframes grow{to{transform:scaleX(1)}}
+.pulse{animation:pulse 1.1s ease-in-out calc(var(--s) + var(--t)) infinite}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,106,0,.55)}50%{transform:scale(1.04);box-shadow:0 0 0 26px rgba(255,106,0,0)}}
+.spin{animation:spin 9s linear 0s infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.wipe{position:absolute;top:-10%;bottom:-10%;left:-40%;width:180%;transform:translateX(-100%) skewX(-14deg);animation:wipe .62s cubic-bezier(.7,0,.3,1) calc(var(--s) + var(--t)) 1}
+@keyframes wipe{to{transform:translateX(100%) skewX(-14deg)}}
+
 .vtag{font-family:'Montserrat';font-weight:700;font-size:26px;letter-spacing:.22em;text-transform:uppercase;color:#fff;background:var(--orange);padding:14px 22px;display:inline-block;border-radius:4px}
-.vh1{font-family:'Montserrat';font-weight:900;font-size:136px;line-height:.96;letter-spacing:-.03em;color:#fff;margin-top:36px}
-.vsub{font-size:34px;line-height:1.35;color:#fff;opacity:.92;margin-top:34px;max-width:900px}
-.vbar{width:120px;height:10px;background:var(--orange);margin-top:40px}
-.vcard{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-top:8px solid var(--steel);border-radius:8px;padding:34px 30px;backdrop-filter:blur(6px)}
-.vcard.o{border-top-color:var(--orange)}
-.vcard b{font-family:'Montserrat';font-weight:900;font-size:64px;color:#fff;display:block}
-.vcard small{display:block;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin:6px 0 18px}
-.vcard span{display:block;font-size:26px;color:#fff;padding:9px 0;border-top:1px solid rgba(255,255,255,.14)}
+.vh1{font-family:'Montserrat';font-weight:900;font-size:138px;line-height:.94;letter-spacing:-.03em;color:#fff;margin:0}
+.vh1 .l{display:block}
+.vsub{font-size:34px;line-height:1.35;color:#fff;opacity:.92;margin-top:28px;max-width:920px}
+.chips{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+.chip{font-family:'Montserrat';font-weight:800;font-size:28px;letter-spacing:.04em;color:#fff;border:2px solid rgba(255,255,255,.55);padding:14px 24px;border-radius:999px;background:rgba(7,15,43,.35)}
+.chip.o{background:var(--orange);border-color:var(--orange)}
+.head{position:absolute;top:72px;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+.foot{position:absolute;left:72px;right:72px;bottom:72px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-weight:600;font-size:26px;letter-spacing:.04em}
+.foot .ln{flex:1;height:1px;background:#fff;opacity:.35;margin:0 28px}
+.cap{position:absolute;left:72px;right:72px;bottom:190px;display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px;font-family:'Inter';font-weight:700;font-size:40px;line-height:1.35;text-align:center}
+.cap .w{color:rgba(255,255,255,.42);animation:word .45s ease-out calc(var(--s) + var(--t)) 1;display:inline-block}
+@keyframes word{25%{color:var(--orange);transform:scale(1.14)}to{color:#fff;transform:scale(1)}}
+.big{font-family:'Montserrat';font-weight:900;color:#fff;letter-spacing:-.03em;line-height:.95}
+.hookw{display:inline-block;margin:0 .14em}
+.card{flex:1;border-radius:14px;padding:38px 32px;color:#fff}
+.card b{font-family:'Montserrat';font-weight:900;font-size:96px;display:block;line-height:1}
+.card small{display:block;font-size:22px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin:8px 0 22px}
+.card span{display:block;font-size:28px;font-weight:600;padding:12px 0;border-top:1px solid rgba(255,255,255,.25)}
 """
 
 
-def doc(body, css=VIDEO_CSS):
-    return f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{css}
-    html,body{{width:{W}px;height:{H}px;margin:0}}</style></head><body>{body}</body></html>"""
+def tr_upper(s):
+    return s.replace("i", "İ").replace("ı", "I").upper()
 
 
-def bg_html(s):
-    return doc(f"""
-    <div class="canvas" style="position:relative;overflow:hidden;background:var(--mid)">
-      <div class="photo" style="background-image:url('{b64(FOTO / s['foto'])}');filter:saturate(.55)"></div>
-      <div style="position:absolute;inset:0;background:linear-gradient(180deg,{'rgba(1,27,84,.62) 0%,rgba(1,27,84,.66) 40%,rgba(7,15,43,.9) 75%' if s.get('intro') else 'rgba(1,27,84,.35) 0%,rgba(1,27,84,.25) 35%,rgba(7,15,43,.92) 70%'},rgba(7,15,43,1) 100%)"></div>
-      <div class="grid"></div>
-    </div>""")
+# ---------------------------------------------------------------- seslendirme
+async def _tts(scene, path):
+    com = edge_tts.Communicate(scene["vo"], VOICE, rate="+8%", boundary="WordBoundary")
+    words = []
+    with open(path, "wb") as f:
+        async for ch in com.stream():
+            if ch["type"] == "audio":
+                f.write(ch["data"])
+            elif ch["type"] == "WordBoundary":
+                words.append(dict(t=ch["offset"] / 1e7, d=ch["duration"] / 1e7, text=ch["text"]))
+    return words
 
 
-def fg_html(s):
-    if s.get("intro"):
-        main = f"""
-        <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-58%);text-align:center">
-          <img src="{LOGO_ICON}" style="width:340px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45))">
-          <div style="font-family:Montserrat;font-weight:900;font-size:120px;letter-spacing:.02em;color:#fff;margin-top:10px">YAMANSA</div>
-          <div style="font-family:Montserrat;font-weight:700;font-size:34px;letter-spacing:.42em;color:var(--steel);margin-top:4px">RULMAN</div>
-          <div class="vbar" style="margin:44px auto 0"></div>
-          <div class="vsub" style="margin:36px auto 0;font-size:30px">{s['sub']}</div>
-        </div>"""
-    else:
-        cards = ""
-        if s.get("cards"):
-            cards = """
-            <div style="display:flex;gap:22px;margin-top:44px">
-              <div class="vcard"><b>ZZ</b><small>Metal kapak</small><span>Yüksek devir</span><span>Düşük sürtünme</span><span>Kuru ortam</span></div>
-              <div class="vcard o"><b>2RS</b><small>Kauçuk keçe</small><span>Su & çamur koruması</span><span>Gres içinde kalır</span><span>Tekerlek / dış ortam</span></div>
-            </div>"""
-        h1_size = 136 if not s.get("outro") else 108
-        main = f"""
-        <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:280px">
-          <span class="vtag">{s['tag']}</span>
-          <h1 class="vh1" style="font-size:{h1_size}px">{s['h1']}</h1>
-          {cards}
-          <div class="vbar"></div>
-          <p class="vsub">{s['sub']}</p>
-        </div>"""
-    head = "" if s.get("intro") else f"""
-        <div style="position:absolute;top:var(--pad);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;align-items:center;color:#fff">
-          <div class="brand"><img src="{LOGO_ICON}" style="height:64px"><div class="sep"></div><span style="font-size:36px">YAMANSA</span></div>
-          <div style="font-weight:600;font-size:24px;letter-spacing:.06em;opacity:.85">yamansa.com.tr</div>
-        </div>"""
-    return doc(f"""<div class="canvas" style="position:relative">{head}{main}
-      <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:var(--pad);display:flex;justify-content:space-between;align-items:center;color:#fff;font-weight:600;font-size:26px;letter-spacing:.04em">
-        <span>{SITE.replace('https://www.', '')}</span><div class="line" style="flex:1;height:1px;background:#fff;opacity:.35;margin:0 28px"></div><span>{TEL}</span>
-      </div></div>""")
+def tighten(data, words, gap=0.28, thr=0.012, min_sil=0.4):
+    """TTS'in cümle aralarındaki uzun sessizlikleri `gap` sn'ye kısaltır, kelime zamanlarını kaydırır."""
+    win = int(0.02 * SR)
+    env = np.convolve(np.abs(data), np.ones(win) / win, mode="same")
+    silent = env < thr
+    edges = np.flatnonzero(np.diff(np.concatenate(([0], silent.astype(np.int8), [0]))))
+    cuts = []  # (kes_başlangıç, kes_bitiş) örnek indeksleri
+    for a, b in zip(edges[::2], edges[1::2]):
+        if a == 0:
+            cuts.append((0, max(0, b - int(0.06 * SR))))
+        elif b >= len(data) - win:
+            cuts.append((min(len(data), a + int(0.12 * SR)), len(data)))
+        elif b - a >= min_sil * SR:
+            half = int(gap / 2 * SR)
+            cuts.append((a + half, b - half))
+    keep = np.ones(len(data), bool)
+    for a, b in cuts:
+        keep[a:b] = False
+    removed_before = np.cumsum(~keep)
+
+    def remap(t):
+        i = min(int(t * SR), len(data) - 1)
+        return (i - removed_before[i]) / SR
+
+    return data[keep], [dict(w, t=remap(w["t"])) for w in words]
 
 
-def render_layers():
+def make_voice():
     TMP.mkdir(parents=True, exist_ok=True)
+    t0 = 0.0
+    for i, s in enumerate(SCENES):
+        mp3 = TMP / f"vo{i}.mp3"
+        wav = TMP / f"vo{i}.wav"
+        meta = TMP / f"vo{i}.json"
+        if not meta.exists():
+            words = asyncio.run(_tts(s, mp3))
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(wav)], check=True)
+            _, data = wavfile.read(wav)
+            data, words = tighten(data.astype(np.float64) / 32768.0, words)
+            wavfile.write(wav, SR, (data * 32767).astype(np.int16))
+            meta.write_text(json.dumps(words, ensure_ascii=False))
+        s["words"] = json.loads(meta.read_text())
+        s["wav"] = wav
+        s["vo_dur"] = float(subprocess.check_output(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(wav)]))
+        vo_dur = s["vo_dur"]
+        s["d"] = max(s.get("min", 0), VO_START + vo_dur + PAD)
+        s["s"] = t0
+        t0 += s["d"]
+    return t0
+
+
+def wt(s, prefix, nth=0):
+    """Sahne içi zaman: seslendirmede `prefix` ile başlayan n. kelimenin başlangıcı."""
+    hits = [w for w in s["words"] if w["text"].lower().startswith(prefix.lower())]
+    return VO_START + hits[nth]["t"] - 0.08
+
+
+# ---------------------------------------------------------------- HTML
+def cap_tokens(s):
+    """Alt yazı kelimeleri: (görünen metin, sahne içi zaman)."""
+    if "cap" in s:
+        return [(txt, wt(s, pre, nth) + 0.08) for txt, pre, nth in s["cap"]]
+    toks = s["vo"].split()
+    if len(toks) != len(s["words"]):
+        toks = [w["text"] for w in s["words"]]
+    return [(txt, VO_START + w["t"]) for txt, w in zip(toks, s["words"])]
+
+
+def cap_html(s):
+    spans = "".join(f'<span class="w" style="--t:{t:.3f}s">{txt}</span>' for txt, t in cap_tokens(s))
+    return f'<div class="cap">{spans}</div>'
+
+
+def head_html():
+    return f"""<div class="head">
+      <div class="brand"><img src="{LOGO_ICON}" style="height:64px"><div class="sep"></div><span style="font-size:36px">YAMANSA</span></div>
+      <div style="font-weight:600;font-size:24px;letter-spacing:.06em;opacity:.85">{URL}</div></div>"""
+
+
+def foot_html():
+    return f'<div class="foot"><span>{URL}</span><div class="ln"></div><span>{TEL}</span></div>'
+
+
+def bearing_svg(size, cls=""):
+    balls = "".join(
+        f'<circle cx="{50 + 38 * np.cos(a):.2f}" cy="{50 + 38 * np.sin(a):.2f}" r="5.2" fill="#fff"/>'
+        for a in np.linspace(0, 2 * np.pi, 12, endpoint=False))
+    return f"""<svg class="{cls}" viewBox="0 0 100 100" width="{size}" height="{size}" style="display:block">
+      <circle cx="50" cy="50" r="47" fill="none" stroke="#fff" stroke-width="5"/>
+      <circle cx="50" cy="50" r="29" fill="none" stroke="#fff" stroke-width="5"/>
+      <circle cx="50" cy="50" r="38" fill="none" stroke="#fff" stroke-width="1.2" opacity=".5"/>{balls}</svg>"""
+
+
+def h1_lines(lines, cls, t0, step=0.12, size=138):
+    return f'<h1 class="vh1" style="font-size:{size}px">' + "".join(
+        f'<span class="l {cls}" style="--t:{t0 + i * step:.2f}s">{l}</span>' for i, l in enumerate(lines)) + "</h1>"
+
+
+def chips(items, t0, step=0.09, orange=()):
+    return '<div class="chips">' + "".join(
+        f'<span class="chip pop {"o" if i in orange else ""}" style="--t:{t0 + i * step:.2f}s">{c}</span>'
+        for i, c in enumerate(items)) + "</div>"
+
+
+def scene_hook(s):
+    # cümleler: kelimeler konuşulduğu anda sahneye "damgalanır"
+    groups, cur = [], []
+    for (txt, t), w in zip(cap_tokens(s), s["words"]):
+        cur.append(dict(w, text=txt))
+        if txt.endswith(("?", ".")):
+            groups.append(cur)
+            cur = []
+    if cur:
+        groups.append(cur)
+    html = ""
+    for gi, g in enumerate(groups):
+        start = VO_START + g[0]["t"] - 0.1
+        end = VO_START + groups[gi + 1][0]["t"] - 0.1 if gi + 1 < len(groups) else s["d"] + 1
+        last = gi == len(groups) - 1
+        words = "".join(
+            f'<span class="hookw stamp" style="--t:{VO_START + w["t"] - 0.05 - start:.3f}s;{"color:var(--orange)" if last and w["text"].lower().startswith("rulman") else ""}">{tr_upper(w["text"])}</span>'
+            for w in g)
+        html += f"""<div class="scene" style="--s:{start:.3f}s;--d:{end - start:.3f}s;display:flex;align-items:center;justify-content:center;padding:0 60px">
+          <div class="big" style="font-size:{124 if not last else 150}px;text-align:center">{words}</div></div>"""
+    return html
+
+
+def scene_logo(s):
+    letters = "".join(
+        f'<span class="up" style="--t:{0.55 + i * 0.06:.2f}s;display:inline-block">{c}</span>' for i, c in enumerate("YAMANSA"))
+    return f"""
+      <div style="position:absolute;left:0;right:0;top:50%;transform:translateY(-60%);text-align:center">
+        <div class="stamp" style="--t:.3s"><img src="{LOGO_ICON}" style="width:360px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45))"></div>
+        <div style="font-family:Montserrat;font-weight:900;font-size:124px;letter-spacing:.02em;color:#fff;margin-top:6px">{letters}</div>
+        <div class="up" style="--t:1.0s;font-family:Montserrat;font-weight:700;font-size:36px;letter-spacing:.42em;color:var(--steel)">RULMAN</div>
+        <div class="grow" style="--t:1.15s;width:140px;height:10px;background:var(--orange);margin:40px auto 0"></div>
+        <div class="pop" style="--t:{wt(s, '1986'):.2f}s;margin-top:40px"><span class="vtag" style="font-size:30px">1986'dan beri</span></div>
+      </div>{cap_html(s)}"""
+
+
+def scene_moto(s):
+    return f"""
+      <div style="position:absolute;left:72px;right:72px;bottom:440px">
+        <div class="pop" style="--t:.25s"><span class="vtag">Motosiklet</span></div>
+        <div style="margin-top:36px">{h1_lines(["TEKERLEK", "RULMANI", "SETLERİ"], "slideL", 0.4)}</div>
+        {chips(["Honda", "Yamaha", "Bajaj", "KTM", "CFMOTO", "Mondial", "RKS", "Kuba"], wt(s, "Honda"), orange=(0, 3))}
+      </div>{cap_html(s)}"""
+
+
+def scene_scooter(s):
+    return f"""
+      <div style="position:absolute;left:72px;right:72px;bottom:440px;text-align:right">
+        <div class="pop" style="--t:.25s"><span class="vtag">E-Scooter</span></div>
+        <div style="margin-top:36px">{h1_lines(["SCOOTER", "RULMANI", "STOKTA."], "slideR", 0.4)}</div>
+        <div style="display:flex;justify-content:flex-end">{chips(["Xiaomi", "Segway Ninebot", "Dualtron", "Navee", "Citymate"], wt(s, "Xiaomi"), orange=(0, 1, 2))}</div>
+      </div>{cap_html(s)}"""
+
+
+def scene_zz(s):
+    return f"""
+      <div style="position:absolute;left:72px;right:72px;top:290px">
+        <div class="pop" style="--t:.2s"><span class="vtag">Teknik bilgi</span></div>
+        <div style="margin-top:30px">{h1_lines(["ZZ Mİ,", "2RS Mİ?"], "up", 0.35, size=150)}</div>
+      </div>
+      <div style="position:absolute;left:72px;right:72px;top:800px;display:flex;gap:24px">
+        <div class="card slideL" style="--t:{wt(s, 'Zet'):.2f}s;background:rgba(184,192,204,.18);border:2px solid rgba(255,255,255,.35);backdrop-filter:blur(8px)">
+          <b>ZZ</b><small>Metal kapak</small><span>Yüksek devir</span><span>Düşük sürtünme</span><span>Motor içi · kuru ortam</span></div>
+        <div class="card slideR" style="--t:{wt(s, 'iki'):.2f}s;background:var(--orange)">
+          <b>2RS</b><small>Kauçuk keçe</small><span>Su & çamur koruması</span><span>Gres içinde kalır</span><span>Tekerlek · dış ortam</span></div>
+      </div>
+      <div class="stamp" style="--t:{wt(s, 'Tekerlekse'):.2f}s;position:absolute;left:50%;top:800px;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:var(--navy);border:6px solid #fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:900;font-size:56px;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)">VS</div>
+      {cap_html(s)}"""
+
+
+def scene_sanayi(s):
+    words = [("KONİK.", "Konik"), ("SİLİNDİRİK.", "silindirik"), ("OYNAK.", "oynak")]
+    h1 = '<h1 class="vh1" style="font-size:128px">' + "".join(
+        f'<span class="l stamp" style="--t:{wt(s, k):.2f}s;{"color:var(--orange)" if i == 2 else ""}">{w}</span>' for i, (w, k) in enumerate(words)) + "</h1>"
+    return f"""
+      <div style="position:absolute;left:72px;right:72px;bottom:440px">
+        <div class="pop" style="--t:.2s"><span class="vtag">Sanayi</span></div>
+        <div style="margin-top:36px">{h1}</div>
+        {chips(["SKF", "FAG", "ORS", "NMB", "TPI"], wt(s, "SKF"), step=0.14)}
+        <div class="up" style="--t:{wt(s, 'Orijinal'):.2f}s" ><p class="vsub" style="font-weight:600">Orijinal ürün · faturalı · stoktan</p></div>
+      </div>{cap_html(s)}"""
+
+
+def scene_kargo(s):
+    return f"""
+      <div style="position:absolute;left:72px;right:72px;top:300px">
+        <div class="pop" style="--t:.2s"><span class="vtag">Lojistik</span></div>
+        <div class="stamp" style="--t:{wt(s, 'üçe'):.2f}s;font-family:Montserrat;font-weight:900;font-size:260px;line-height:1;color:#fff;letter-spacing:-.04em;margin-top:24px">15<span style="color:var(--orange)">:</span>00</div>
+        <div class="up" style="--t:{wt(s, 'kadar'):.2f}s;font-size:34px;color:var(--steel);font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-top:6px">'e kadar verilen siparişler</div>
+        <div style="margin-top:56px">{h1_lines(["AYNI GÜN", "KARGODA."], "stamp", wt(s, "aynı"), step=wt(s, "kargoda") - wt(s, "aynı"), size=150)}</div>
+        <div class="grow" style="--t:{wt(s, 'aynı'):.2f}s;height:12px;background:var(--orange);margin-top:40px;width:100%"></div>
+      </div>{cap_html(s)}"""
+
+
+def scene_outro(s):
+    return f"""
+      <div style="position:absolute;left:0;right:0;top:250px;text-align:center">
+        <div class="stamp" style="--t:.2s;position:relative;width:420px;height:420px;margin:0 auto">
+          <div style="position:absolute;inset:0;opacity:.85">{bearing_svg(420, 'spin')}</div>
+          <img src="{LOGO_ICON}" style="position:absolute;left:50%;top:50%;width:200px;transform:translate(-50%,-50%);filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))">
+        </div>
+        <div class="up" style="--t:{wt(s, 'yamansa'):.2f}s;font-family:Montserrat;font-weight:900;font-size:104px;color:#fff;letter-spacing:-.03em;margin-top:60px">{URL}</div>
+        <div class="up" style="--t:{wt(s, 'yamansa') + 0.3:.2f}s;font-size:44px;color:var(--steel);font-weight:600;margin-top:10px">{TEL}</div>
+        <div class="pop" style="--t:{wt(s, 'Ölçünü'):.2f}s;margin-top:70px">
+          <span class="pulse" style="--t:{wt(s, 'Ölçünü') + 0.5:.2f}s;display:inline-block;background:var(--orange);color:#fff;font-family:Montserrat;font-weight:900;font-size:46px;letter-spacing:.04em;padding:30px 60px;border-radius:999px">ÖLÇÜNÜ YAZ, DM AT</span></div>
+        <div class="up" style="--t:{wt(s, 'doğru'):.2f}s;font-size:34px;color:#fff;opacity:.9;margin-top:50px">Doğru rulmanı birlikte bulalım.</div>
+      </div>{cap_html(s)}"""
+
+
+BUILDERS = dict(hook=scene_hook, logo=scene_logo, moto=scene_moto, scooter=scene_scooter, zz=scene_zz,
+                sanayi=scene_sanayi, kargo=scene_kargo, outro=scene_outro)
+
+
+def page_html(total):
+    parts = []
+    for s in SCENES:
+        deep = s["id"] in ("hook", "logo", "zz", "kargo")
+        chrome = "" if s["id"] in ("hook", "logo") else head_html()
+        parts.append(f"""
+        <div class="scene" style="--s:{s['s']:.3f}s;--d:{s['d'] + XF:.3f}s">
+          <div class="ph {s['kb']}" style="--s:{s['s']:.3f}s;--d:{s['d'] + XF:.3f}s;background-image:url('{b64(FOTO / s['foto'])}')"></div>
+          <div class="shade {'deep' if deep else ''}"></div><div class="grid"></div>
+          {'' if s['id'] == 'hook' else f'<div style="position:absolute;right:-120px;bottom:520px;opacity:.16">{bearing_svg(420, "spin")}</div>'}
+          <div class="stage" style="--s:{s['s']:.3f}s">{BUILDERS[s['id']](s)}</div>
+          {chrome}{foot_html() if s['id'] != 'hook' else ''}
+        </div>""")
+    # sahne geçişleri: çift panel çapraz wipe
+    for s in SCENES[1:]:
+        t = s["s"] - XF / 2
+        parts.append(f'<div class="wipe" style="--t:{t:.3f}s;background:var(--orange);z-index:50"></div>'
+                     f'<div class="wipe" style="--t:{t + 0.09:.3f}s;background:var(--navy);z-index:49"></div>')
+    return f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{VIDEO_CSS}</style></head>
+    <body><div class="stage">{''.join(parts)}</div></body></html>"""
+
+
+# ---------------------------------------------------------------- ses
+def _env(n, a, d):
+    t = np.arange(n) / SR
+    return np.exp(-t / d) * np.minimum(1, t / max(a, 1e-4))
+
+
+def make_music(total, boundaries):
+    rng = np.random.default_rng(7)
+    n = int(total * SR)
+    t = np.arange(n) / SR
+    bpm = 124
+    beat = 60 / bpm
+    out = np.zeros(n)
+    # kick + hat
+    for b in np.arange(0, total, beat):
+        i = int(b * SR)
+        k = int(0.35 * SR)
+        tt = np.arange(k) / SR
+        kick = np.sin(2 * np.pi * (48 * tt + 80 * np.exp(-tt * 18))) * _env(k, 0.001, 0.09) * 0.9
+        out[i:i + k] += kick[: n - i]
+        for off, g in ((beat / 2, 0.22), (beat / 4, 0.09), (3 * beat / 4, 0.09)):
+            j = int((b + off) * SR)
+            h = int(0.06 * SR)
+            if j + h < n:
+                out[j:j + h] += rng.normal(0, 1, h) * _env(h, 0.001, 0.012) * g
+    # bas: 2 barlık kalıp
+    notes = [55, 55, 65.4, 49]   # A1 A1 C2 G1
+    for bar_i, b in enumerate(np.arange(0, total, beat * 4)):
+        f = notes[bar_i % 4]
+        for step in range(8):
+            j = int((b + step * beat / 2) * SR)
+            k = int(beat / 2 * SR)
+            if j + k > n:
+                break
+            tt = np.arange(k) / SR
+            saw = 2 * ((tt * f) % 1) - 1
+            sq = np.sign(np.sin(2 * np.pi * f * 2 * tt)) * 0.3
+            out[j:j + k] += (saw + sq) * _env(k, 0.004, 0.16) * (0.34 if step % 2 == 0 else 0.22)
+    # pad
+    for f in (220, 261.6, 329.6):
+        out += 0.035 * np.sin(2 * np.pi * f * t + np.sin(2 * np.pi * 0.3 * t)) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.11 * t))
+    # whoosh (geçişlerde)
+    for bt in boundaries:
+        i = int((bt - 0.35) * SR)
+        k = int(0.7 * SR)
+        if 0 <= i and i + k < n:
+            tt = np.arange(k) / SR
+            noise = rng.normal(0, 1, k)
+            sweep = np.sin(2 * np.pi * (300 + 2500 * tt / 0.7) * tt)
+            env = np.sin(np.pi * tt / 0.7) ** 2
+            out[i:i + k] += (noise * 0.35 + sweep * 0.25) * env * 0.9
+    out /= np.max(np.abs(out)) + 1e-9
+    fade = int(1.2 * SR)
+    out[:fade] *= np.linspace(0, 1, fade)
+    out[-fade * 2:] *= np.linspace(1, 0, fade * 2)
+    return out
+
+
+def make_audio(total, path):
+    n = int(total * SR)
+    voice = np.zeros(n)
+    for s in SCENES:
+        sr, data = wavfile.read(s["wav"])
+        data = data.astype(np.float64) / 32768.0
+        i = int((s["s"] + VO_START) * SR)
+        voice[i:i + len(data)] += data[: n - i]
+    voice *= 0.95 / (np.max(np.abs(voice)) + 1e-9)
+    music = make_music(total, [s["s"] for s in SCENES[1:]])
+    # ducking: seslendirme varken müzik kısılır
+    env = np.convolve(np.abs(voice), np.ones(int(0.08 * SR)) / int(0.08 * SR), mode="same")
+    active = (env > 0.02).astype(np.float64)
+    active = np.convolve(active, np.ones(int(0.25 * SR)) / int(0.25 * SR), mode="same")
+    gain = 0.42 - 0.27 * np.clip(active * 1.3, 0, 1)
+    mix = voice + music * gain
+    mix = np.tanh(mix * 1.1) * 0.95
+    wavfile.write(path, SR, (mix * 32767).astype(np.int16))
+
+
+# ---------------------------------------------------------------- kare render + encode
+def render(total, out):
+    html = page_html(total)
+    (TMP / "video.html").write_text(html, encoding="utf-8")
+    frames = int(round(total * FPS))
+    cmd = ["ffmpeg", "-v", "error", "-y",
+           "-f", "image2pipe", "-framerate", str(FPS), "-c:v", "mjpeg", "-i", "-",
+           "-i", str(TMP / "mix.wav"),
+           "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-r", str(FPS),
+           "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", "-shortest", str(out)]
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=CHROME, headless=True)
         page = browser.new_context(device_scale_factor=1, viewport={"width": W, "height": H}).new_page()
-
-        def shot(html, path, transparent):
-            page.set_content(html, wait_until="load")
-            page.wait_for_function("document.fonts.ready.then(()=>document.fonts.status==='loaded')")
-            page.wait_for_timeout(120)
-            page.screenshot(path=str(path), omit_background=transparent, clip={"x": 0, "y": 0, "width": W, "height": H})
-
-        for i, s in enumerate(SCENES):
-            shot(bg_html(s), TMP / f"bg{i}.png", False)
-            shot(fg_html(s), TMP / f"fg{i}.png", True)
-            print("ok sahne", i + 1)
+        page.set_content(html, wait_until="load")
+        page.wait_for_function("document.fonts.ready.then(()=>document.fonts.status==='loaded')")
+        page.wait_for_timeout(200)
+        page.evaluate("()=>{window.A=document.getAnimations();A.forEach(a=>a.pause())}")
+        enc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+        for f in range(frames):
+            page.evaluate("t=>A.forEach(a=>{a.currentTime=t})", f * 1000 / FPS)
+            enc.stdin.write(page.screenshot(type="jpeg", quality=94))
+            if f % 60 == 0:
+                print(f"kare {f}/{frames}", flush=True)
+        enc.stdin.close()
+        enc.wait()
         browser.close()
-
-
-def build_video(out=OUT / "yamansa_tanitim_9x16.mp4"):
-    n = len(SCENES)
-    frames = int(SCENE * FPS)
-    inputs, fc = [], []
-    for i in range(n):
-        inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{SCENE}", "-i", str(TMP / f"bg{i}.png")]
-        inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{SCENE}", "-i", str(TMP / f"fg{i}.png")]
-        zoom_dir = "1.10-0.10*on/%d" % frames if i % 2 else "1+0.10*on/%d" % frames
-        fc.append(
-            f"[{2*i}:v]scale={W*1.25:.0f}:{H*1.25:.0f},zoompan=z='{zoom_dir}':d={frames}:"
-            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps={FPS},setsar=1[b{i}];"
-            f"[{2*i+1}:v]format=rgba,fade=t=in:st=0.15:d=0.7:alpha=1,setpts=PTS-STARTPTS[f{i}];"
-            f"[b{i}][f{i}]overlay=x=0:y='70*pow(max(0,1-(t-0.15)/0.9),2)':shortest=1,format=yuv420p[s{i}]"
-        )
-    # xfade zinciri
-    prev = "s0"
-    for i in range(1, n):
-        offset = i * (SCENE - XF)
-        label = f"x{i}" if i < n - 1 else "vout"
-        fc.append(f"[{prev}][s{i}]xfade=transition={'fade' if i % 2 else 'smoothup'}:duration={XF}:offset={offset:.3f}[{label}]")
-        prev = label
-    total = n * SCENE - (n - 1) * XF
-    # ambient ses (tek başına yayınlanmaz; TikTok/Reels'te üstüne trend müzik eklenir)
-    audio = (f"aevalsrc='0.10*sin(2*PI*110*t)+0.06*sin(2*PI*164.8*t)+0.05*sin(2*PI*220*t)*(0.5+0.5*sin(2*PI*0.2*t))"
-             f"+0.02*sin(2*PI*330*t)*(0.5+0.5*sin(2*PI*0.13*t+1))':s=48000:d={total:.2f},"
-             f"lowpass=f=900,afade=t=in:d=1.2,afade=t=out:st={total-1.5:.2f}:d=1.5,volume=0.7[aout]")
-    fc.append(audio)
-    cmd = ["ffmpeg", "-y", *inputs, "-filter_complex", ";".join(fc), "-map", "[vout]", "-map", "[aout]",
-           "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-r", str(FPS), "-pix_fmt", "yuv420p",
-           "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", "-t", f"{total:.2f}", str(out)]
-    subprocess.run(cmd, check=True)
-    print("ok", out, f"{total:.1f}s")
+    if enc.returncode:
+        raise SystemExit("ffmpeg hata")
 
 
 if __name__ == "__main__":
-    render_layers()
-    build_video()
+    total = make_voice()
+    for s in SCENES:
+        print(f"{s['id']:8s} {s['s']:6.2f}s +{s['d']:.2f}s  vo={s['vo_dur']:.2f}s")
+    make_audio(total, TMP / "mix.wav")
+    out = OUT / "yamansa_tanitim_9x16.mp4"
+    render(total, out)
+    print("ok", out, f"{total:.1f}s")
