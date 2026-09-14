@@ -58,6 +58,7 @@ URL = SITE.replace("https://www.", "")
 
 # vo: seslendirmeye giden metin (marka adları Türkçe okunuşuyla yazılır: "Es Ka Ef", "Şaomi")
 # cap: ekranda görünen alt yazı; `Görünen|okunuş` ile ilgili vo kelimesine bağlanır, yoksa aynı kelime aranır
+# kes: bu kelimelerden sonraki duraksama (sessizlik) kurguda kesilir
 SCENES = [
     dict(id="hook", foto="34240236.jpg", kb="in", min=4.0,
          vo="Motorun mu titriyor? Tekerleğin mi ses yapıyor? Sorun, büyük ihtimalle rulmanda."),
@@ -65,7 +66,8 @@ SCENES = [
          vo="Yamansa Rulman. 1986'dan beri rulmanda güvenilir adres."),
     dict(id="moto", foto="18171624.jpg", kb="in",
          vo="Honda'dan Yamaha'ya, Ka Te Em'den Bajaj'a; tüm motosikletler için tekerlek rulmanı setleri stokta.",
-         cap="Honda'dan Yamaha'ya, KTM'den|ka Bajaj'a; tüm motosikletler için tekerlek rulmanı setleri stokta."),
+         cap="Honda'dan Yamaha'ya, KTM'den|ka Bajaj'a; tüm motosikletler için tekerlek rulmanı setleri stokta.",
+         kes=["tekerlek"]),
     dict(id="scooter", foto="26860251.jpg", kb="out",
          vo="Şaomi, Naynbot, Dualtron. Elektrikli skuter rulmanları, ölçüsüyle hazır.",
          cap="Xiaomi,|şaomi Ninebot,|naynbot Dualtron. Elektrikli scooter|skuter rulmanları, ölçüsüyle hazır."),
@@ -244,12 +246,19 @@ async def _tts_edge(scene, path):
     return words
 
 
-def tighten(data, words, gap=0.5, thr=0.012, min_sil=0.8):
-    """TTS'in cümle aralarındaki uzun sessizlikleri `gap` sn'ye kısaltır, kelime zamanlarını kaydırır."""
+def tighten(data, words, kes=(), gap=0.5, thr=0.012, min_sil=0.8, hes=0.15, hes_gap=0.08):
+    """Cümle aralarındaki uzun sessizlikleri `gap` sn'ye, `kes` kelimelerinden sonraki duraksamaları
+    `hes_gap` sn'ye kısaltır; kelime zamanlarını kaydırır."""
     win = int(0.02 * SR)
     env = np.convolve(np.abs(data), np.ones(win) / win, mode="same")
     silent = env < thr
     edges = np.flatnonzero(np.diff(np.concatenate(([0], silent.astype(np.int8), [0]))))
+    kes = {_norm(k) for k in kes}
+
+    def word_before(t):
+        prev = [w for w in words if w["t"] <= t + 0.05]
+        return _norm(prev[-1]["text"]) if prev else ""
+
     cuts = []  # (kes_başlangıç, kes_bitiş) örnek indeksleri
     for a, b in zip(edges[::2], edges[1::2]):
         if a == 0:
@@ -258,6 +267,9 @@ def tighten(data, words, gap=0.5, thr=0.012, min_sil=0.8):
             cuts.append((min(len(data), a + int(0.12 * SR)), len(data)))
         elif b - a >= min_sil * SR:
             half = int(gap / 2 * SR)
+            cuts.append((a + half, b - half))
+        elif b - a >= hes * SR and word_before(a / SR) in kes:
+            half = int(hes_gap / 2 * SR)
             cuts.append((a + half, b - half))
     keep = np.ones(len(data), bool)
     for a, b in cuts:
@@ -277,7 +289,7 @@ def make_voice():
     for i, s in enumerate(SCENES):
         ready = SES / f"{s['id']}.mp3"
         if ready.exists():
-            key = hashlib.md5(ready.read_bytes() + f"|{WHISPER_MODEL}|{s['vo']}".encode()).hexdigest()[:8]
+            key = hashlib.md5(ready.read_bytes() + f"|{WHISPER_MODEL}|{s['vo']}|{s.get('kes', ())}".encode()).hexdigest()[:8]
         else:
             key = hashlib.md5(f"{VOICE}|{RATE}|{ELEVEN_MODEL}|{sorted(ELEVEN_SETTINGS.items())}|{s['vo']}".encode()).hexdigest()[:8]
         mp3 = TMP / f"vo{i}_{key}.mp3"
@@ -293,7 +305,7 @@ def make_voice():
                 words = asyncio.run(_tts_edge(s, mp3))
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(wav)], check=True)
             _, data = wavfile.read(wav)
-            data, words = tighten(data.astype(np.float64) / 32768.0, words)
+            data, words = tighten(data.astype(np.float64) / 32768.0, words, s.get("kes", ()))
             wavfile.write(wav, SR, (data * 32767).astype(np.int16))
             meta.write_text(json.dumps(words, ensure_ascii=False))
         s["words"] = json.loads(meta.read_text())
@@ -425,13 +437,13 @@ def scene_zz(s):
         <div class="pop" style="--t:.2s"><span class="vtag">Teknik bilgi</span></div>
         <div style="margin-top:30px">{h1_lines(["ZZ Mİ,", "2RS Mİ?"], "up", 0.35, size=150)}</div>
       </div>
-      <div style="position:absolute;left:72px;right:72px;top:800px;display:flex;gap:24px">
+      <div style="position:absolute;left:72px;right:72px;top:800px;display:flex;gap:120px">
         <div class="card slideL" style="--t:{wt(s, 'Zet'):.2f}s;background:rgba(184,192,204,.18);border:2px solid rgba(255,255,255,.35);backdrop-filter:blur(8px)">
           <b>ZZ</b><small>Metal kapak</small><span>Yüksek devir</span><span>Düşük sürtünme</span><span>Motor içi · kuru ortam</span></div>
         <div class="card slideR" style="--t:{wt(s, 'iki'):.2f}s;background:var(--orange)">
           <b>2RS</b><small>Kauçuk keçe</small><span>Su & çamur koruması</span><span>Gres içinde kalır</span><span>Tekerlek · dış ortam</span></div>
+        <div class="stamp" style="--t:{wt(s, 'Tekerlek'):.2f}s;position:absolute;left:50%;top:50%;margin:-58px 0 0 -58px;width:116px;height:116px;border-radius:50%;background:var(--navy);border:6px solid #fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:900;font-size:44px;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)">VS</div>
       </div>
-      <div class="stamp" style="--t:{wt(s, 'Tekerlek'):.2f}s;position:absolute;left:50%;top:800px;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:var(--navy);border:6px solid #fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat;font-weight:900;font-size:56px;color:#fff;box-shadow:0 20px 50px rgba(0,0,0,.45)">VS</div>
       {cap_html(s)}"""
 
 
