@@ -5,7 +5,7 @@ Hem takvim dosyaları (MD/CSV) hem de görseller bu listeden üretilir.
 """
 
 SITE = "https://www.yamansarulman.com"
-TEL = "0212 670 02 05"
+TEL = "0552 610 93 63"
 ADRES = "İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul"
 
 # Ortak hashtag setleri (Instagram/Facebook için). LinkedIn'de en fazla 3-5 tanesi kullanılır.
@@ -231,7 +231,7 @@ POSTS = [
         kw="rulman toptan, rulman bayilik, rulman b2b tedarik",
         link=f"{SITE}/?utm_source=linkedin&utm_medium=social&utm_campaign=b2b",
         alt_text="Depoda görüşen ekip; Yamansa B2B bayi ve toptan rulman tedariki",
-        ig="Rulmancı, servis ya da makine imalatçısı mısınız?\n\nSKF, FAG, ORS, NMB, TPI ve Yamansa markalarını tek kaynaktan, bayi fiyatıyla ve düzenli tedarikle alın. Sipariş geçmişiniz ve sık aldığınız ölçüler için özel liste.\n\nBayi başvurusu için DM veya 0212 670 02 05.",
+        ig="Rulmancı, servis ya da makine imalatçısı mısınız?\n\nSKF, FAG, ORS, NMB, TPI ve Yamansa markalarını tek kaynaktan, bayi fiyatıyla ve düzenli tedarikle alın. Sipariş geçmişiniz ve sık aldığınız ölçüler için özel liste.\n\nBayi başvurusu için DM veya 0552 610 93 63.",
         li="Çok markalı rulman tedarikinde en büyük maliyet, dağınık tedarik zinciridir: farklı tedarikçiler, farklı teslim süreleri, farklı fatura ve kalite standartları.\n\nYamansa, 1986'dan beri distribütörlüğünü yürüttüğü SKF, FAG, ORS, NMB ve TPI markalarını tek noktadan, tek faturayla ve günlük güncellenen stokla sunuyor. Rulmancılar, yetkili servisler ve OEM imalatçılar için bayi programımız hakkında bilgi almak isteyenler mesaj gönderebilir.",
         hashtags="sanayi", blog="Rulman bayiliği ve toptan tedarik: Yamansa B2B programı",
     ),
@@ -355,7 +355,7 @@ POSTS = [
         kw="rulman muadil bulma, rulman teknik destek, rulman danışmanlık",
         link=f"{SITE}/?utm_source=linkedin&utm_medium=social&utm_campaign=teknik-destek",
         alt_text="CNC tezgâh başında mavi iş kıyafetli mühendis; Yamansa teknik destek",
-        ig="Elinizdeki kod eski bir katalogdan mı? Üretimden kalkmış bir marka mı?\n\nEkibimiz muadil kodu, uygun markayı ve doğru kapak/boşluk tipini birlikte belirler. 40 yıla yakın tecrübe, ücretsiz.\n\nDM, WhatsApp veya 0212 670 02 05.",
+        ig="Elinizdeki kod eski bir katalogdan mı? Üretimden kalkmış bir marka mı?\n\nEkibimiz muadil kodu, uygun markayı ve doğru kapak/boşluk tipini birlikte belirler. 40 yıla yakın tecrübe, ücretsiz.\n\nDM, WhatsApp veya 0552 610 93 63.",
         li="Bakım ekiplerinin sık karşılaştığı sorun: eski makinelerde üretimi durmuş ya da farklı standartta kodlanmış rulmanlar. Bu durumda doğru muadili bulmak, makinenin ömrünü belirler.\n\nYamansa teknik ekibi; ölçü doğrulama, muadil kod tespiti, marka ve boşluk sınıfı önerisini ücretsiz sunar. 1986'dan beri biriken saha tecrübesi, hızlı ve doğru karar için en güçlü aracımız.",
         hashtags="sanayi", blog="Rulman muadil tablosu: eski kodlardan yeni standarda geçiş",
     ),
@@ -580,7 +580,7 @@ POSTS = [
         kw="kurumsal rulman tedariki, rulman fiyat listesi, rulman cari hesap, rulman çerçeve anlaşma",
         link=f"{SITE}/?utm_source=linkedin&utm_medium=social&utm_campaign=kurumsal",
         alt_text="Depoda görüşen üç kişi; kurumsal rulman tedariki: cari hesap, tek fatura, düzenli sevkiyat",
-        ig="Her rulman için ayrı sipariş, ayrı fatura, ayrı takip… Yormuyor mu?\n\nKurumsal müşterilerimize:\n• Cari hesap ve vade\n• Aylık tek fatura\n• Sık kullanılan kodlar için sabit fiyat listesi\n• Haftalık / aylık düzenli sevkiyat\n\nSatın alma ekibinizle 15 dakikalık görüşme için DM veya 0212 670 02 05.",
+        ig="Her rulman için ayrı sipariş, ayrı fatura, ayrı takip… Yormuyor mu?\n\nKurumsal müşterilerimize:\n• Cari hesap ve vade\n• Aylık tek fatura\n• Sık kullanılan kodlar için sabit fiyat listesi\n• Haftalık / aylık düzenli sevkiyat\n\nSatın alma ekibinizle 15 dakikalık görüşme için DM veya 0552 610 93 63.",
         li="Satın alma birimleri için rulman tedarikinde asıl maliyet, işlem sayısıdır. Yamansa kurumsal programı bu yükü azaltmak için tasarlandı: cari hesap ve vade, aylık tek fatura, sık kullanılan kodlar için 6 ay sabit fiyat listesi ve planlı sevkiyat.\n\n1986'dan beri sanayi ve servis sektörüne tedarik yapıyoruz. Çerçeve anlaşma görüşmesi için mesaj gönderebilirsiniz.",
         hashtags="sanayi", blog="Kurumsal rulman tedariki: çerçeve anlaşma ve sabit fiyat listesi nasıl işler?",
     ),
@@ -730,7 +730,7 @@ POSTS = [
         kw="yıllık bakım duruşu, bakım duruşu yedek parça, yıl sonu bakım planı rulman",
         link=f"{SITE}/?utm_source=linkedin&utm_medium=social&utm_campaign=yil-sonu-durus",
         alt_text="Yüksek raflı depo koridoru; yıl sonu bakım duruşu için rulman planlama çağrısı",
-        ig="Aralık bakım duruşu için rulman listeniz hazır mı?\n\nDuruş haftasında herkes aynı kodları arar; ithal kalemlerde bekleme 3–6 haftayı bulur. Listenizi Kasım'da gönderin:\n• Stoktakileri adınıza ayıralım\n• Eksikleri zamanında getirelim\n• Muadilleri önceden onaylayalım\n\nDM veya 0212 670 02 05.",
+        ig="Aralık bakım duruşu için rulman listeniz hazır mı?\n\nDuruş haftasında herkes aynı kodları arar; ithal kalemlerde bekleme 3–6 haftayı bulur. Listenizi Kasım'da gönderin:\n• Stoktakileri adınıza ayıralım\n• Eksikleri zamanında getirelim\n• Muadilleri önceden onaylayalım\n\nDM veya 0552 610 93 63.",
         li="Yıl sonu bakım duruşlarında en sık yaşanan sorun, aynı haftada tüm sektörün aynı rulman kodlarına yönelmesidir. İthal ve özel kalemlerde tedarik süresi bu dönemde belirgin şekilde uzar.\n\nÖnerimiz: duruş listesini Kasım ortasına kadar kapatmak, stoktaki kalemleri rezerve ettirmek ve tedarik süresi uzun kodlar için muadil onayını önceden almak. Yamansa olarak bu süreci bakım ekipleriyle birlikte yürütüyoruz.",
         hashtags="sanayi", blog="Yıl sonu bakım duruşu planlaması: rulman listesi ve tedarik takvimi",
     ),
@@ -767,7 +767,7 @@ POSTS = [
         kw="rulman danışmanlık, rulman fiyat sor, rulman teknik destek, rulman whatsapp",
         link=f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=soru-cevap",
         alt_text="CNC tezgâh başında mavi iş kıyafetli mühendis; Yamansa soru-cevap çağrısı",
-        ig="2 ay, 60 gönderi: kod okuma, kapak ve boşluk sınıfları, konik ve silindirik rulmanlar, çamaşır makinesinden scooter filosuna…\n\nEn çok sorulan soruları önümüzdeki hafta yanıtlıyoruz. Sorunuzu yoruma ya da DM'e yazın: kod, ölçü, muadil, marka, montaj – ne olursa.\n\nStok ve fiyat: yamansarulman.com · 0212 670 02 05",
+        ig="2 ay, 60 gönderi: kod okuma, kapak ve boşluk sınıfları, konik ve silindirik rulmanlar, çamaşır makinesinden scooter filosuna…\n\nEn çok sorulan soruları önümüzdeki hafta yanıtlıyoruz. Sorunuzu yoruma ya da DM'e yazın: kod, ölçü, muadil, marka, montaj – ne olursa.\n\nStok ve fiyat: yamansarulman.com · 0552 610 93 63",
         li="İki aylık içerik serimizde rulman seçimi, kodlama, montaj–söküm ve planlı bakım konularını ele aldık. Teşekkürler.\n\nBir sonraki seride sektörden gelen soruları yanıtlayacağız. Bakım, satın alma ve servis ekiplerinden gelen teknik soruları bu gönderinin altında toplayabiliriz.\n\nÖlçü tabanlı katalog ve güncel stok: yamansarulman.com",
         hashtags="genel", blog="Rulman hakkında sık sorulan sorular (SSS) sayfası",
     ),

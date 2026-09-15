@@ -10,7 +10,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansarulman.com'a giden profil link
 | Görünen ad | Yamansa Rulman |
 | Kullanıcı adı (öncelik sırasıyla) | `yamansarulman` → `yamansa.rulman` → `yamansarulmantr` |
 | Web sitesi | https://www.yamansarulman.com |
-| Telefon | 0212 670 02 05 |
+| Telefon | 0552 610 93 63 |
 | Adres | İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul |
 | Kategori | Endüstriyel Ürün Tedarikçisi / Otomotiv Yedek Parça |
 | Kuruluş | 1986 |
@@ -29,7 +29,7 @@ işletmeyi tek varlık olarak eşlemesi ve yamansarulman.com'a giden profil link
 - **Link:** `https://www.yamansarulman.com/?utm_source=instagram&utm_medium=bio`
 - **Öne çıkanlar (highlight) kapakları:** `gonderiler/marka/hl_*_1080.png` → Ürünler, Teknik, Motosiklet, Scooter, Sanayi
 - Facebook sayfası ile bağla (Meta Business Suite) → tek panelden IG+FB planlama.
-- İletişim butonları: Ara (0212 670 02 05), E-posta, Adres.
+- İletişim butonları: Ara (0552 610 93 63), E-posta, Adres.
 
 ## Facebook (Sayfa)
 

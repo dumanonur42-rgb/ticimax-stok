@@ -2,7 +2,7 @@
 
 **Dönem:** 1. ay 21 Eylül – 20 Ekim 2026 (Gün 1–30) · 2. ay 21 Ekim – 19 Kasım 2026 (Gün 31–60)  
 **Kanallar:** Instagram (IG), Facebook (FB), LinkedIn (LI)  
-**Site:** https://www.yamansarulman.com · **Tel:** 0212 670 02 05 · **Adres:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
+**Site:** https://www.yamansarulman.com · **Tel:** 0552 610 93 63 · **Adres:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
 
 ## Günlük 3 paylaşım düzeni
 
@@ -1001,7 +1001,7 @@ Rulmancı, servis ya da makine imalatçısı mısınız?
 
 SKF, FAG, ORS, NMB, TPI ve Yamansa markalarını tek kaynaktan, bayi fiyatıyla ve düzenli tedarikle alın. Sipariş geçmişiniz ve sık aldığınız ölçüler için özel liste.
 
-Bayi başvurusu için DM veya 0212 670 02 05.
+Bayi başvurusu için DM veya 0552 610 93 63.
 
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
@@ -1533,7 +1533,7 @@ Elinizdeki kod eski bir katalogdan mı? Üretimden kalkmış bir marka mı?
 
 Ekibimiz muadil kodu, uygun markayı ve doğru kapak/boşluk tipini birlikte belirler. 40 yıla yakın tecrübe, ücretsiz.
 
-DM, WhatsApp veya 0212 670 02 05.
+DM, WhatsApp veya 0552 610 93 63.
 
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
@@ -2523,7 +2523,7 @@ Kurumsal müşterilerimize:
 • Sık kullanılan kodlar için sabit fiyat listesi
 • Haftalık / aylık düzenli sevkiyat
 
-Satın alma ekibinizle 15 dakikalık görüşme için DM veya 0212 670 02 05.
+Satın alma ekibinizle 15 dakikalık görüşme için DM veya 0552 610 93 63.
 
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
@@ -3169,7 +3169,7 @@ Duruş haftasında herkes aynı kodları arar; ithal kalemlerde bekleme 3–6 ha
 • Eksikleri zamanında getirelim
 • Muadilleri önceden onaylayalım
 
-DM veya 0212 670 02 05.
+DM veya 0552 610 93 63.
 
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
@@ -3339,7 +3339,7 @@ Kaydet; bakım günü lazım olur.
 
 En çok sorulan soruları önümüzdeki hafta yanıtlıyoruz. Sorunuzu yoruma ya da DM'e yazın: kod, ölçü, muadil, marka, montaj – ne olursa.
 
-Stok ve fiyat: yamansarulman.com · 0212 670 02 05
+Stok ve fiyat: yamansarulman.com · 0552 610 93 63
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```

@@ -4,7 +4,7 @@
 - **Marka:** Yamansa Rulman (YAMANSA RULMAN İTHALAT SAN. VE DIŞ TİC. LTD. ŞTİ.)
 - **Kuruluş:** 1986 – 40 yıla yakın rulman ithalat ve distribütörlük tecrübesi
 - **Konum:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
-- **Telefon:** 0212 670 02 05
+- **Telefon:** 0552 610 93 63
 - **Web:** https://www.yamansarulman.com
 - **Konumlandırma:** "Rulmanda doğru ölçü, doğru marka, doğru fiyat – stoktan aynı gün kargo."
 - **Ürün odağı:** Sabit bilyalı rulmanlar (ZZ / 2RS), motosiklet & scooter rulmanları, SKF – FAG – ORS – NMB – TPI ve Yamansa markalı setler, sanayi tipi rulmanlar (silindirik/konik makaralı, oynak bilyalı, geniş kesitli).
