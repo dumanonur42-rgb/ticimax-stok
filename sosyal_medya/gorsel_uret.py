@@ -86,7 +86,8 @@ def foot(color_class=""):
 
 def t_hero(p, W, H):
     wide = W > H
-    h1 = 118 if not wide else 86
+    n = p["baslik"].count("<br>") + 1
+    h1 = (118 if n <= 3 else 100) if not wide else (86 if n <= 2 else 68 if n == 3 else 56)
     sub = 27 if not wide else 22
     return f"""
     <div class="canvas">
@@ -94,7 +95,7 @@ def t_hero(p, W, H):
       <div class="grid"></div>
       {head('', p['etiket'])}
       <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:{150 if not wide else 120}px;z-index:4">
-        <h1 style="font-size:{h1}px;max-width:{'100%' if not wide else '760px'}">{p['baslik']}</h1>
+        <h1 style="font-size:{h1}px;max-width:{'100%' if not wide else '900px'}">{p['baslik']}</h1>
         <div class="bar"></div>
         <p class="sub" style="font-size:{sub}px;max-width:{'820px' if not wide else '680px'}">{p['alt']}</p>
       </div>
@@ -112,7 +113,7 @@ def t_split(p, W, H):
           <div style="position:absolute;left:0;top:0;bottom:0;width:56%">
           {head('', p['etiket'])}
           <div style="position:absolute;left:var(--pad);top:50%;transform:translateY(-46%);right:40px;z-index:4">
-            <h1 style="font-size:74px">{p['baslik']}</h1>
+            <h1 style="font-size:{74 if p['baslik'].count('<br>') < 2 else 62}px">{p['baslik']}</h1>
             <div class="bar"></div>
             <p class="sub" style="font-size:21px;max-width:560px">{p['alt']}</p>
           </div>
@@ -135,10 +136,14 @@ def t_split(p, W, H):
 
 def t_urun(p, W, H):
     wide = W > H
+    long = max(len(k) + len(v) for k, v in p["tablo"]) > 18
+    fk, fv = (44, 34) if not wide else (30, 24)
+    if long:
+        fk, fv = (int(fk * .8), int(fv * .8))
     rows = "".join(
-        f"""<div style="display:flex;justify-content:space-between;align-items:baseline;padding:{'18px 0' if not wide else '11px 0'};border-bottom:2px solid rgba(1,27,84,.12)">
-              <span class="num" style="font-size:{44 if not wide else 30}px;color:var(--navy)">{k}</span>
-              <span class="num" style="font-size:{34 if not wide else 24}px;color:var(--ink);font-weight:600">{v}<span style="font-size:{18 if not wide else 14}px;opacity:.55;margin-left:8px">mm</span></span>
+        f"""<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;white-space:nowrap;padding:{'18px 0' if not wide else '11px 0'};border-bottom:2px solid rgba(1,27,84,.12)">
+              <span class="num" style="font-size:{fk}px;color:var(--navy)">{k}</span>
+              <span class="num" style="font-size:{fv}px;color:var(--ink);font-weight:600">{v}<span style="font-size:{18 if not wide else 14}px;opacity:.55;margin-left:8px">mm</span></span>
             </div>"""
         for k, v in p["tablo"])
     photo = f"""<div style="position:absolute;{'right:var(--pad);top:220px;width:400px;height:400px' if not wide else 'right:var(--pad);top:150px;width:330px;height:330px'};border-radius:50%;overflow:hidden;box-shadow:0 30px 60px rgba(1,27,84,.25)">
@@ -250,10 +255,14 @@ def t_alinti(p, W, H):
 
 def t_bilgi(p, W, H):
     wide = W > H
+    dense = len(p["liste"]) >= 5
+    pad_y, fnum, ftxt = ("16px 0", 40, 27) if not wide else ("9px 0", 28, 19)
+    if dense and not wide:
+        pad_y, fnum, ftxt = "12px 0", 34, 25
     items = "".join(
-        f"""<li style="display:flex;gap:{24 if not wide else 16}px;align-items:flex-start;padding:{'16px 0' if not wide else '9px 0'};border-top:1px solid rgba(255,255,255,.18)">
-              <span class="num" style="font-size:{40 if not wide else 28}px;color:var(--orange);min-width:{56 if not wide else 40}px;line-height:1.1">{i+1:02d}</span>
-              <span style="font-size:{27 if not wide else 19}px;line-height:1.3;padding-top:6px">{t}</span></li>"""
+        f"""<li style="display:flex;gap:{24 if not wide else 16}px;align-items:flex-start;padding:{pad_y};border-top:1px solid rgba(255,255,255,.18)">
+              <span class="num" style="font-size:{fnum}px;color:var(--orange);min-width:{56 if not wide else 40}px;line-height:1.1">{i+1:02d}</span>
+              <span style="font-size:{ftxt}px;line-height:1.3;padding-top:6px">{t}</span></li>"""
         for i, t in enumerate(p["liste"]))
     if wide:
         return f"""
@@ -274,9 +283,9 @@ def t_bilgi(p, W, H):
       <div class="photo" style="top:0;height:42%;background-image:url('{b64(FOTO / p['foto'])}')"></div>
       <div style="position:absolute;top:30%;height:12%;left:0;right:0;background:linear-gradient(180deg,transparent,var(--navy))"></div>
       {head('', p['etiket'], fill=True)}
-      <div style="position:absolute;left:var(--pad);right:var(--pad);top:36%;z-index:4">
-        <h1 style="font-size:82px">{p['baslik']}</h1>
-        <p class="sub" style="font-size:22px;margin:14px 0 10px;opacity:.75">{p['alt']}</p>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:{'34%' if dense else '36%'};z-index:4">
+        <h1 style="font-size:{76 if dense else 82}px">{p['baslik']}</h1>
+        <p class="sub" style="font-size:22px;margin:{'10px 0 6px' if dense else '14px 0 10px'};opacity:.75">{p['alt']}</p>
         <ul style="list-style:none">{items}</ul>
       </div>
       {foot()}

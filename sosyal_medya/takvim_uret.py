@@ -30,8 +30,8 @@ def li_hashtags(p):
 
 def write_md():
     out = []
-    out.append("# Yamansa Rulman – 30 Günlük Sosyal Medya İçerik Takvimi\n")
-    out.append("**Dönem:** 21 Eylül – 20 Ekim 2026  \n"
+    out.append("# Yamansa Rulman – 60 Günlük (2 Ay) Sosyal Medya İçerik Takvimi\n")
+    out.append("**Dönem:** 1. ay 21 Eylül – 20 Ekim 2026 (Gün 1–30) · 2. ay 21 Ekim – 19 Kasım 2026 (Gün 31–60)  \n"
                "**Kanallar:** Instagram (IG), Facebook (FB), LinkedIn (LI)  \n"
                f"**Site:** {SITE} · **Tel:** {TEL} · **Adres:** {ADRES}\n")
     out.append("## Paylaşım kuralları\n")
@@ -45,7 +45,11 @@ def write_md():
                "| 1 | 1–7 | Lansman, 6200 serisi, ZZ/2RS, motosiklet setleri, markalar, kod okuma |\n"
                "| 2 | 8–14 | Scooter, 6300 serisi, C3 boşluk, arıza teşhisi, lojistik, ölçü rehberi, gres |\n"
                "| 3 | 15–21 | Bisiklet, 6000 serisi, B2B/bayi, montaj hataları, Yamansa marka, motor modelleri |\n"
-               "| 4 | 22–30 | Sanayi rulmanları, ince kesit, stok görünürlüğü, kumpas, 6204/6304, teknik destek, katalog CTA |\n")
+               "| 4 | 22–30 | Sanayi rulmanları, ince kesit, stok görünürlüğü, kumpas, 6204/6304, teknik destek, katalog CTA |\n"
+               "| 5 | 31–37 | Kapak kodları (Z/ZZ/RS/2RZ), 6206–6211, çamaşır makinesi rulmanı, 608, arıza analizi, konik 30200 |\n"
+               "| 6 | 38–44 | Kritik yedek listesi, 29 Ekim, bilyalı/makaralı, direksiyon & salıncak, NU/NJ/NUP, ek harfler |\n"
+               "| 7 | 45–51 | Kurumsal tedarik, sökme, scooter filoları, rulman tarihi, oynak bilyalı 1200, 10 Kasım |\n"
+               "| 8 | 52–60 | Açık/kapaklı, sahte rulman, 6306–6311, elektrik motoru, yıl sonu duruşu, gres seçimi, yastıklı rulman, SSS CTA |\n")
 
     out.append("## Özet tablo\n")
     out.append("| Gün | Tarih | Platform | Tema | Başlık | SEO anahtar kelimeler | Görsel |\n|---|---|---|---|---|---|---|")

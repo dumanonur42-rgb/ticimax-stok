@@ -57,7 +57,7 @@
 ```
 sosyal_medya/
 ├── 01_marka_kiti.md            bu dosya
-├── 02_icerik_takvimi.md        30 günlük plan – metinler, hashtag, link, alt metin
+├── 02_icerik_takvimi.md        60 günlük (2 ay) plan – metinler, hashtag, link, alt metin
 ├── 03_hesap_kurulum_rehberi.md bio/hakkında metinleri, kullanıcı adları, SEO adımları
 ├── icerik_takvimi.csv          aynı plan, planlama araçlarına (Meta Business Suite, Buffer…) import için
 ├── icerik_verisi.py            planın tek kaynağı (görsel + takvim buradan üretilir)
