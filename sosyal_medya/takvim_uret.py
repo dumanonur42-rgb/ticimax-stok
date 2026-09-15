@@ -49,7 +49,7 @@ def write_md():
                "| 5 | 31–37 | Kapak kodları (Z/ZZ/RS/2RZ), 6206–6211, çamaşır makinesi rulmanı, 608, arıza analizi, konik 30200 |\n"
                "| 6 | 38–44 | Kritik yedek listesi, 29 Ekim, bilyalı/makaralı, direksiyon & salıncak, NU/NJ/NUP, ek harfler |\n"
                "| 7 | 45–51 | Kurumsal tedarik, sökme, scooter filoları, rulman tarihi, oynak bilyalı 1200, 10 Kasım |\n"
-               "| 8 | 52–60 | Açık/kapaklı, sahte rulman, 6306–6311, elektrik motoru, yıl sonu duruşu, gres seçimi, yastıklı rulman, SSS CTA |\n")
+               "| 8 | 52–60 | Açık/kapaklı, sahte rulman, 6306–6311, elektrik motoru, yıl sonu duruşu, gres seçimi, yataklı rulman, SSS CTA |\n")
 
     out.append("## Özet tablo\n")
     out.append("| Gün | Tarih | Platform | Tema | Başlık | SEO anahtar kelimeler | Görsel |\n|---|---|---|---|---|---|---|")

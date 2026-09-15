@@ -23,7 +23,7 @@
 | 5 | 31–37 | Kapak kodları (Z/ZZ/RS/2RZ), 6206–6211, çamaşır makinesi rulmanı, 608, arıza analizi, konik 30200 |
 | 6 | 38–44 | Kritik yedek listesi, 29 Ekim, bilyalı/makaralı, direksiyon & salıncak, NU/NJ/NUP, ek harfler |
 | 7 | 45–51 | Kurumsal tedarik, sökme, scooter filoları, rulman tarihi, oynak bilyalı 1200, 10 Kasım |
-| 8 | 52–60 | Açık/kapaklı, sahte rulman, 6306–6311, elektrik motoru, yıl sonu duruşu, gres seçimi, yastıklı rulman, SSS CTA |
+| 8 | 52–60 | Açık/kapaklı, sahte rulman, 6306–6311, elektrik motoru, yıl sonu duruşu, gres seçimi, yataklı rulman, SSS CTA |
 
 ## Özet tablo
 
@@ -87,7 +87,7 @@
 | 56 | 15 Kas 2026 Paz | IG, FB | Marka | “Bakım masraf değil, sigortadır.” | planlı bakım | gun56_kare.png |
 | 57 | 16 Kas 2026 Pzt | IG, FB, LI | Kurumsal | ARALIK DURUŞU İÇİN LİSTEYİ KASIM'DA KAPATIN. | yıllık bakım duruşu, bakım duruşu yedek parça, yıl sonu bakım planı rulman | gun57_kare.png, gun57_linkedin.png |
 | 58 | 17 Kas 2026 Sal | IG, FB | Teknik | GRES SEÇİMİ: 4 KURAL | rulman gresi seçimi, rulman gres miktarı, lityum gres rulman, rulman yağlama | gun58_kare.png |
-| 59 | 18 Kas 2026 Çar | IG, FB, LI | Ürün | UCP · UCF · UCFL YASTIKLI RULMANLAR | ucp 205 rulman, yastıklı rulman, ucf 204, uc 206, yataklı rulman fiyat | gun59_kare.png, gun59_linkedin.png |
+| 59 | 18 Kas 2026 Çar | IG, FB, LI | Ürün | UCP · UCF · UCFL YATAKLI RULMANLAR | ucp 205 rulman, yataklı rulman, ucf 204, uc 206, ucp yatak fiyat | gun59_kare.png, gun59_linkedin.png |
 | 60 | 19 Kas 2026 Per | IG, FB, LI | CTA | SORUNUZ VARSA, CEVABI BİZDE. | rulman danışmanlık, rulman fiyat sor, rulman teknik destek, rulman whatsapp | gun60_kare.png, gun60_linkedin.png |
 
 ## Gönderi detayları
@@ -688,7 +688,7 @@ Sadece motosiklet değil. Sanayi tarafında da 1986'dan beri buradayız.
 • Konik makaralı (30200/30300/32000 serileri)
 • Silindirik makaralı (NU/NJ/N serileri)
 • Oynak bilyalı (1200/2200 serileri)
-• Geniş kesitli ve yastıklı (UCP/UCF) rulmanlar
+• Geniş kesitli ve yataklı (UCP/UCF) rulmanlar
 
 Redüktör, konveyör, pompa, tezgâh. Ölçü ve kodunuzu yazın.
 
@@ -1732,16 +1732,16 @@ Uygulama sıcaklığı ve devrini yazın, gres tipini birlikte seçelim.
 ### Gün 59 · 18 Kas 2026 Çar · IG, FB, LI · Ürün
 
 **Görsel:** `gonderiler/gun59_kare.png` · `gonderiler/gun59_linkedin.png`  
-**Başlık:** UCP · UCF · UCFL YASTIKLI RULMANLAR  
-**SEO anahtar kelimeler:** ucp 205 rulman, yastıklı rulman, ucf 204, uc 206, yataklı rulman fiyat  
-**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=yastikli  
-**Alt metin:** Zincir ve dişli parçaları; UCP, UCF, UCFL yastıklı rulman üniteleri tanıtımı  
-**Eşlik eden blog/site sayfası:** UCP, UCF, UCFL yastıklı rulman tipleri ve UC 204–212 ölçü tablosu
+**Başlık:** UCP · UCF · UCFL YATAKLI RULMANLAR  
+**SEO anahtar kelimeler:** ucp 205 rulman, yataklı rulman, ucf 204, uc 206, ucp yatak fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=yatakli  
+**Alt metin:** Zincir ve dişli parçaları; UCP, UCF, UCFL yataklı rulman üniteleri tanıtımı  
+**Eşlik eden blog/site sayfası:** UCP, UCF, UCFL yataklı rulman tipleri ve UC 204–212 ölçü tablosu
 
 **Instagram / Facebook metni:**
 
 ```
-Mil var, yuva yok mu? Yastıklı rulman.
+Mil var, yuva yok mu? Yataklı rulman.
 
 UCP → ayaklı yuva (zemine / şaseye)
 UCF → kare flanşlı (duvara / plakaya)
@@ -1756,11 +1756,11 @@ Konveyör, tarım makinesi, tekstil, gıda hattı. Kod veya mil çapını yaz, g
 **LinkedIn metni:**
 
 ```
-Yastıklı rulman üniteleri (UCP, UCF, UCFL, UCT) konveyör, tarım ve tesis makinelerinde en pratik yataklama çözümüdür: yuva ve rulman tek parça gelir, setuskurla mile bağlanır, açısal kaçıklığı tolere eder.
+Yataklı rulman üniteleri (UCP, UCF, UCFL, UCT) konveyör, tarım ve tesis makinelerinde en pratik yataklama çözümüdür: yuva ve rulman tek parça gelir, setuskurla mile bağlanır, açısal kaçıklığı tolere eder.
 
 Yamansa olarak UCP/UCF/UCFL ünitelerini ve UC 204–212 iç rulmanlarını stoklu tutuyoruz; paslanmaz ve termoplastik yuva seçenekleri için temin süresi veriyoruz.
 
-https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=yastikli
+https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=yatakli
 
 #endüstri #makineimalat #fabrika #bakım
 ```
