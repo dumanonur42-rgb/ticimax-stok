@@ -775,3 +775,246 @@ POSTS = [
 
 # LinkedIn günlerinde kullanılacak kısa hashtag seti
 LI_HASHTAGS = "#rulman #bearings #endüstri #tedarikzinciri #bakım"
+
+
+# ============================================================================
+# GÜNLÜK 3 PAYLAŞIM DÜZENİ
+#   09:00  SABAH  – kısa kart (IG + FB kare): günün kodu / terimi / bakım ipucu / doğru-yanlış
+#   12:30  ANA    – POSTS (IG + FB kare, seçili günlerde LinkedIn 09:00)
+#   18:30  STORY  – dikey 1080×1920 (IG + FB story): günün konusuna bağlı anket + link
+# ============================================================================
+
+SABAH_LINK = f"{SITE}/?utm_source=instagram&utm_medium=social&utm_campaign=sabah"
+STORY_LINK = f"{SITE}/?utm_source=instagram&utm_medium=story&utm_campaign=story"
+
+
+def _kod(gun, kod, olcu, kullanim, not_, kw, hashtags="genel"):
+    return dict(gun=gun, tip="kod", baslik=kod, olcu=olcu, kullanim=kullanim, metin=not_, kw=kw, hashtags=hashtags)
+
+
+def _terim(gun, terim, metin, kw, hashtags="teknik"):
+    return dict(gun=gun, tip="terim", baslik=terim, metin=metin, kw=kw, hashtags=hashtags)
+
+
+def _ipucu(gun, baslik, metin, kw, hashtags="teknik"):
+    return dict(gun=gun, tip="ipucu", baslik=baslik, metin=metin, kw=kw, hashtags=hashtags)
+
+
+def _soru(gun, soru, cevap, kw, hashtags="teknik"):
+    return dict(gun=gun, tip="soru", baslik=soru, metin=cevap, kw=kw, hashtags=hashtags)
+
+
+SABAH = [
+    _kod(1, "6204 ZZ", "20 × 47 × 14", ["Motosiklet tekerlek", "Elektrik motoru", "Redüktör"],
+         "En çok sorulan rulman kodu. ZZ: iki tarafı metal kapaklı, ömür boyu yağlı.", "6204 zz rulman, 6204 ölçüleri, 6204 rulman fiyat"),
+    _terim(2, "d × D × B", "İç çap × dış çap × kalınlık. Rulmanı tanımlayan üç ölçü. Üzerindeki kod silinmiş olsa bile bu üçünü verirseniz doğru rulmanı buluruz.",
+           "rulman ölçüleri, iç çap dış çap kalınlık, rulman ölçüsü nasıl bulunur"),
+    _ipucu(3, "KUTUYU KONTROL ET", "Orijinal üründe kutu üzerindeki kod, lot numarası ve rulmanın üstündeki lazer markalama birbirini tutar. Uyuşmuyorsa takma, sor.",
+           "orijinal rulman nasıl anlaşılır, sahte rulman, rulman kutusu"),
+    _kod(4, "6301 2RS", "12 × 37 × 12", ["Motosiklet ön tekerlek", "Jeneratör", "Küçük redüktör"],
+         "6201 ile aynı iç çap, daha kalın bilezik ve büyük bilya: daha fazla yük.", "6301 rulman, 6301 2rs ölçüleri, motosiklet ön tekerlek rulmanı", "moto"),
+    _soru(5, "ZZ rulman yeniden greslenebilir.", "YANLIŞ. Metal kapaklar sökülmek için tasarlanmamıştır; rulman fabrikada ömür boyu yetecek gresle gelir. Bittiğinde komple değişir.",
+          "zz rulman gresleme, kapaklı rulman yağlama"),
+    _kod(6, "608 ZZ", "8 × 22 × 7", ["Kaykay & paten", "3D yazıcı", "Fan & hobi"],
+         "Dünyanın en çok üretilen rulmanı. ABEC sınıfı yükseldikçe tolerans daralır.", "608 rulman, 608zz, kaykay rulmanı 608", "kaykay"),
+    _terim(7, "ABEC", "Kaykay ve paten dünyasının hassasiyet sınıfı: ABEC 1, 3, 5, 7, 9. Sanayideki karşılığı ISO P0–P2. Yüksek ABEC \"daha hızlı\" değil, \"daha dar toleranslı\" demektir.",
+           "abec ne demek, abec 7 rulman, abec 9 rulman", "kaykay"),
+    _ipucu(8, "ÇEKİÇLE VURMA", "Rulmanı mile takarken kuvveti yalnızca iç bileziğe, yuvaya takarken yalnızca dış bileziğe uygula. Bilyalar üzerinden geçen darbe yolları çentikler.",
+           "rulman montajı nasıl yapılır, rulman takma, rulman montaj hataları"),
+    _kod(9, "6304 2RS", "20 × 52 × 15", ["Motosiklet arka tekerlek", "Tarım makinesi", "Kompresör"],
+         "6204 ile aynı 20 mm iç çap; dış çap ve kalınlık daha büyük, yük kapasitesi daha yüksek.", "6304 rulman, 6304 2rs, motosiklet arka tekerlek rulmanı", "moto"),
+    _soru(10, "6204 ile 6004 aynı mile takılır.", "DOĞRU. İkisinin de iç çapı 20 mm. Fark dış çapta: 6204 → 47 mm, 6004 → 42 mm. Hangisinin gireceğini yuva belirler.",
+          "6204 6004 farkı, 6004 rulman ölçüleri"),
+    _kod(11, "6001 2RS", "12 × 28 × 8", ["E-scooter tekerlek", "Elektrikli el aleti", "Küçük motor"],
+         "Scooter tekerleklerinde en sık değişen kodlardan biri. 2RS: kauçuk keçeli, suya ve toza kapalı.", "6001 rulman, 6001 2rs, scooter tekerlek rulmanı", "scooter"),
+    _terim(12, "RADYAL / EKSENEL YÜK", "Radyal yük mile dik, eksenel yük mil boyunca gelir. Sabit bilyalı rulman ikisini de taşır ama eksenelde sınırlıdır; konik makaralı eksenel yükte güçlüdür.",
+           "radyal yük eksenel yük, rulman yük tipleri"),
+    _ipucu(13, "SICAKLIĞI ÖLÇ", "Rulman yuvası 60 °C'yi geçince ele dokunulmaz olur. Kızılötesi termometre 5 saniyede ölçer; ani sıcaklık artışı arızanın ilk sinyalidir.",
+           "rulman sıcaklığı, rulman ısınması nedenleri, rulman arıza belirtisi"),
+    _kod(14, "6205 2RS", "25 × 52 × 15", ["Elektrik motoru", "Pompa", "Konveyör"],
+         "Sanayide en çok dönen kodlardan biri. Çamaşır makinesi kazanlarında da karşınıza çıkar.", "6205 rulman, 6205 2rs ölçüleri, 6205 fiyat", "sanayi"),
+    _kod(15, "6802 ZZ", "15 × 24 × 5", ["Bisiklet göbeği", "Drone & robotik", "İnce mekanizma"],
+         "5 mm kalınlık: yer olmayan yerde çözüm. 6800 serisi ince kesit.", "6802 rulman, 6802zz, ince kesit rulman", "bisiklet"),
+    _terim(16, "C3", "Standarttan daha büyük iç boşluk. Mil ısınıp genleştiğinde boşluk sıfırlanmasın diye seçilir. Elektrik motorlarında neredeyse standart.",
+           "c3 rulman ne demek, c3 boşluk, 6204 c3"),
+    _soru(17, "Kutusuz ama parlak rulman orijinaldir.", "ŞÜPHELİ. Parlaklık kaliteyi göstermez. Lazer markalama derinliğine, kutu–lot eşleşmesine ve faturaya bak. Emin değilsen fotoğrafını gönder.",
+          "sahte rulman nasıl anlaşılır, orijinal rulman kontrolü"),
+    _ipucu(18, "MONTAJ ÖNCESİ TEMİZLİK", "Mili ve yuvayı çapaktan, eski gresten ve talaştan temizle; ince bir yağ filmi sür. Kum tanesi kadar kir rulman ömrünü ciddi kısaltır.",
+           "rulman montajı temizlik, rulman ömrü nasıl uzar"),
+    _kod(19, "6203 2RS", "17 × 40 × 12", ["Motosiklet", "Kasnak & gergi", "Kompresör"],
+         "Küçük motosikletlerde ve kasnak sistemlerinde standart. 6203 ZZ ve 2RS stokta.", "6203 rulman, 6203 2rs, 6203 zz ölçüleri", "moto"),
+    _kod(20, "30204", "20 × 47 × 15,25", ["Direksiyon", "Redüktör", "Aks"],
+         "Konik makaralı: radyal ve tek yön eksenel yükü birlikte taşır. Çift takılır, ön yükle ayarlanır.", "30204 rulman, 30204 konik rulman ölçüleri", "sanayi"),
+    _terim(21, "KONİK MAKARALI", "Makaralar ve yuvarlanma yolları konik. Radyal + tek yönlü eksenel yük. Genellikle karşılıklı çift kullanılır ve montajda ön yük verilir.",
+           "konik makaralı rulman nedir, konik rulman kullanım alanları", "sanayi"),
+    _soru(22, "Daha fazla gres, daha uzun ömür demektir.", "YANLIŞ. Fazla gres çalkalanır, ısınır ve keçeyi zorlar. Açık rulmanda yuva boş hacminin yaklaşık üçte biri yeterlidir.",
+          "rulman gres miktarı, rulman fazla gres, rulman yağlama"),
+    _kod(23, "6902 2RS", "15 × 28 × 7", ["Bisiklet göbek", "RC & model", "Robotik"],
+         "6900 serisi: 6800'den biraz daha kalın, daha yüklü ince kesit.", "6902 rulman, 6902 2rs, bisiklet göbek rulmanı", "bisiklet"),
+    _ipucu(24, "SESİ KAYDET", "Makinenin normal sesini telefonla 10 saniye kaydet; ayda bir aynı noktadan tekrar dinle. Tonun değişmesi arızayı aylar önce haber verir.",
+           "rulman sesi nasıl anlaşılır, rulman uğultusu, makine sesi kontrolü"),
+    _kod(25, "6206 2RS", "30 × 62 × 16", ["Pompa", "Fan", "Tarım makinesi"],
+         "30 mm mil için ilk akla gelen kod. Çamaşır makinesi kazanlarında 6205 ile birlikte kullanılır.", "6206 rulman, 6206 2rs ölçüleri, 6206 fiyat", "sanayi"),
+    _terim(26, "ÖN YÜK", "Montajda rulmana bilinçli verilen küçük eksenel sıkılık. Konik rulmanlarda boşluğu sıfırlar; direksiyon ve mil sistemlerinde titreşimi keser.",
+           "rulman ön yük nedir, konik rulman ayarı", "sanayi"),
+    _kod(27, "6900 ZZ", "10 × 22 × 6", ["Mini scooter", "Drone", "Model & hobi"],
+         "10 mm mil, 22 mm yuva. Küçük ama tam bir sabit bilyalı rulman.", "6900 rulman, 6900zz ölçüleri", "scooter"),
+    _soru(28, "ZZ, 2RS'ten daha hızlı döner.", "DOĞRU. Metal kapak bileziğe temas etmez, sürtünme düşüktür. 2RS'in kauçuk keçesi sürter ama toz ve suya karşı çok daha iyi korur.",
+          "zz 2rs farkı, zz mi 2rs mi, kapaklı rulman"),
+    _ipucu(29, "ISITARAK TAK", "Büyük rulmanı 80–100 °C'ye ısıt (indüksiyon ısıtıcı veya yağ banyosu), genleşince mile kaydır. Çekiç değil, ısı.",
+           "rulman ısıtarak montaj, indüksiyon ısıtıcı rulman, büyük rulman montajı", "sanayi"),
+    _kod(30, "6305 2RS", "25 × 62 × 17", ["Ağır hizmet motor", "Kırıcı", "Tarım"],
+         "6205 ile aynı 25 mm mil, çok daha yüksek yük. Darbeli çalışan makinelerin tercihi.", "6305 rulman, 6305 2rs ölçüleri", "sanayi"),
+    _terim(31, "RS / 2RS", "Rubber Seal: kauçuk keçe. RS tek taraf, 2RS çift taraf keçeli. Toz ve suya kapalı, gres içeride. Dış ortamda çalışan her rulmanın ilk tercihi.",
+           "2rs ne demek, rs rulman, keçeli rulman"),
+    _kod(32, "6207 2RS", "35 × 72 × 17", ["Elektrik motoru", "Pompa", "Redüktör"],
+         "35 mm mil. Orta güçte elektrik motorlarının ön ve arka yatağında sık karşılaşılır.", "6207 rulman, 6207 2rs, 6207 fiyat", "sanayi"),
+    _kod(33, "6202 ZZ", "15 × 35 × 11", ["Fan", "Alternatör", "Küçük motor"],
+         "15 mm mil için standart. Fan ve küçük motorların vazgeçilmezi.", "6202 rulman, 6202 zz ölçüleri, 6202 fiyat"),
+    _soru(34, "Kaykaydaki 608 ile 3D yazıcıdaki 608 aynıdır.", "DOĞRU. İkisi de 8 × 22 × 7 mm. Fark hassasiyet sınıfı (ABEC) ve kapak tipinde; ölçü her yerde aynıdır.",
+          "608 rulman kullanım alanları, 608 ölçüleri", "kaykay"),
+    _ipucu(35, "AÇIK RAFTA BEKLETME", "Rulmanı orijinal ambalajında, kuru ve titreşimsiz bir yerde sakla. Açık rafta nem ilk aydan pas başlatır; titreşim duran bilyada iz yapar.",
+           "rulman saklama koşulları, rulman depolama, rulman paslanması"),
+    _terim(36, "PİTTİNG", "Yuvarlanma yüzeyinde oluşan küçük çukurlar. Yorulma, kir veya aşırı yükün izi. Ses ve titreşimin en yaygın kök nedeni; başladıysa geri dönüşü yok.",
+           "pitting nedir, rulman çukurlaşma, rulman arıza analizi"),
+    _kod(37, "32005", "25 × 47 × 15", ["Direksiyon", "Aks", "Redüktör"],
+         "Konik makaralı, 30205'in ince kesitli kardeşi: aynı mil, daha küçük dış çap.", "32005 rulman, 32005 konik rulman ölçüleri", "sanayi"),
+    _kod(38, "6008 2RS", "40 × 68 × 15", ["Pompa", "Mil yatağı", "Takım tezgâhı"],
+         "40 mm mil için hafif kesit. Yüksek devir, orta yük.", "6008 rulman, 6008 2rs ölçüleri", "sanayi"),
+    _soru(39, "Rulman mile sıkı, yuvaya boş takılır.", "GENELDE DOĞRU. Dönen bilezik sıkı geçme, sabit bilezik hafif geçme. Çoğu uygulamada iç bilezik döner: mile sıkı, yuvaya kaydırmalı.",
+          "rulman geçme toleransı, rulman mile nasıl takılır"),
+    _kod(40, "NU 204", "20 × 47 × 14", ["Redüktör", "Motor serbest ucu", "Takım tezgâhı"],
+         "Silindirik makaralı: 6204 ile aynı ölçü, çok daha yüksek radyal yük. Eksenel yük taşımaz.", "nu 204 rulman, silindirik makaralı rulman ölçüleri", "sanayi"),
+    _terim(41, "OYNAK BİLYALI", "1200 / 2200 serisi. Dış bileziğin iç yüzeyi küreseldir; mil eğikliğini (yaklaşık 2–3°) tolere eder. Uzun mil ve konveyörlerde kullanılır.",
+           "oynak bilyalı rulman nedir, 1200 serisi rulman", "sanayi"),
+    _ipucu(42, "KEÇE YÖNÜNE DİKKAT", "Tek keçeli (RS) rulmanda keçe kirin geldiği tarafa bakmalı. Ters takılan keçe, açık rulman gibi çalışır.",
+           "rs rulman keçe yönü, tek keçeli rulman montajı"),
+    _kod(43, "6004 2RS", "20 × 42 × 12", ["E-scooter tekerlek", "Çim biçme", "Küçük motor"],
+         "20 mm mil, 42 mm yuva. Scooter ve bahçe makinelerinde 6204'ün hafif kesitli alternatifi.", "6004 rulman, 6004 2rs ölçüleri, scooter rulmanı", "scooter"),
+    _soru(44, "Rulman kodu her markada aynı ölçüyü verir.", "DOĞRU. 6204 hangi markadan olsun 20 × 47 × 14 mm'dir (ISO 15). Markalar arasındaki fark ölçüde değil; malzeme, tolerans ve ömürdedir.",
+          "rulman kodları standart, rulman kodu ölçü"),
+    _kod(45, "6010 2RS", "50 × 80 × 16", ["Pompa", "Mil yatağı", "Konveyör"],
+         "50 mm mil için hafif kesit. Büyük ölçülerde stok bilgisini siteden anlık görebilirsiniz.", "6010 rulman, 6010 2rs ölçüleri", "sanayi"),
+    _ipucu(46, "SÖKTÜĞÜNÜ TEKRAR TAKMA", "Çektirmeyle çıkan rulmanın bilezikleri gerilir, bilya yolları iz alır. Ekonomik görünür; erken biter ve mili de götürür.",
+           "sökülen rulman tekrar kullanılır mı, rulman sökme"),
+    _terim(47, "YATAKLI RULMAN", "Rulman ve dökme yuva tek parça: UCP ayaklı, UCF kare flanşlı, UCFL oval flanşlı. Setuskurla mile bağlanır; konveyör ve tarımın standart yatağı.",
+           "yataklı rulman nedir, ucp ucf ucfl farkı", "sanayi"),
+    _kod(48, "UCP 205", "Mil çapı 25", ["Konveyör", "Tarım makinesi", "Tekstil"],
+         "Ayaklı yataklı ünite. İçindeki rulman UC 205 (25 × 52 × 34,1). Yuva ve rulman ayrı ayrı da stokta.", "ucp 205 rulman, ucp 205 yatak, uc 205", "sanayi"),
+    _soru(49, "Makaralı rulman, bilyalıdan daha fazla yük taşır.", "DOĞRU. Makaranın çizgi teması bilyanın nokta temasından daha geniş yüzeye yayılır. Bilyalı ise daha hızlı döner ve daha az ısınır.",
+          "bilyalı makaralı rulman farkı, hangi rulman daha çok yük taşır", "sanayi"),
+    _kod(50, "1204", "20 × 47 × 14", ["Konveyör", "Tarım", "Fan"],
+         "Oynak bilyalı: 6204 ölçüsünde, mil eğikliğini tolere eder. Uzun ve esnek millerde.", "1204 rulman, 1204 oynak bilyalı ölçüleri", "sanayi"),
+    _ipucu(51, "AYDA 3 DAKİKA", "Ses, sıcaklık, titreşim: her rulman noktasına ayda bir 3 dakika ayır. Bu küçük alışkanlık yıllık plansız duruşu önler.",
+           "kestirimci bakım rulman, rulman kontrol listesi"),
+    _kod(52, "6300 2RS", "10 × 35 × 11", ["Küçük redüktör", "Motosiklet mekanizma", "Elektrikli alet"],
+         "10 mm mil için en yüklü sabit bilyalı seçenek. 6000 ve 6200'den kalın ve güçlü.", "6300 rulman, 6300 2rs ölçüleri"),
+    _terim(53, "LAZER MARKALAMA", "Orijinal rulmanda kod, marka ve menşei lazerle kazınır: eşit derinlik, net kenar. Silik, kaymış veya yalnızca boya baskılı yazı şüphe nedenidir.",
+           "rulman lazer markalama, orijinal rulman işareti"),
+    _kod(54, "6308 2RS", "40 × 90 × 23", ["Kırıcı", "Değirmen", "Ağır motor"],
+         "40 mm mil, ağır hizmet. Darbeli yük altında çalışan makinelerin tercihi.", "6308 rulman, 6308 2rs ölçüleri, 6308 fiyat", "sanayi"),
+    _ipucu(55, "MOTOR RULMANINDA C3", "Elektrik motorları çalışırken ısınır; mil genleşir. Bu yüzden motor rulmanlarında çoğunlukla C3 boşluk kullanılır. Etiketteki koda bak, aynısını iste.",
+           "elektrik motoru rulmanı c3, motor rulmanı seçimi", "sanayi"),
+    _soru(56, "Ses yoksa rulman sağlamdır.", "YANLIŞ. Pitting başlangıcı sessizdir. Titreşim ve sıcaklık artışı sesten aylar önce sinyal verir; sadece kulağa güvenme.",
+          "rulman arızası belirtileri, sessiz rulman arızası"),
+    _kod(57, "6209 2RS", "45 × 85 × 19", ["Pompa", "Fan", "Redüktör"],
+         "45 mm mil. Yıl sonu duruşu için kritik listenizde varsa şimdiden ayırtın.", "6209 rulman, 6209 2rs ölçüleri", "sanayi"),
+    _terim(58, "NLGI 2", "Gresin kıvam sınıfı. Rulmanlarda en yaygını NLGI 2. NLGI 1 daha akışkan (soğuk ortam, merkezi yağlama), NLGI 3 daha katı (dik mil, yüksek sıcaklık).",
+           "nlgi 2 gres, rulman gresi seçimi, nlgi ne demek", "sanayi"),
+    _kod(59, "UCF 206", "Mil çapı 30", ["Duvar & plaka montajı", "Konveyör", "Paketleme"],
+         "Kare flanşlı yataklı ünite. İç rulmanı UC 206. Dört cıvatayla plakaya bağlanır.", "ucf 206 rulman, ucf 206 yatak, uc 206", "sanayi"),
+    _ipucu(60, "ÖLÇÜNÜ YAZ, GERİSİNİ BIRAK", "İç çap, dış çap, kalınlık. Kodu bilmesen de bu üç ölçüyle rulmanını buluruz. DM'den yaz, aynı gün cevap.",
+           "ölçüye göre rulman bulma, rulman kodu bulma", "genel"),
+]
+
+
+def sabah_ig(s):
+    """Sabah kartının IG/FB metni – alanlardan üretilir."""
+    if s["tip"] == "kod":
+        return (f"Günün kodu: {s['baslik']}\n"
+                f"Ölçü: {s['olcu']} mm (iç çap × dış çap × kalınlık)\n"
+                f"Kullanım: {', '.join(s['kullanim'])}\n\n{s['metin']}\n\n"
+                f"Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com")
+    if s["tip"] == "terim":
+        return f"Günün terimi: {s['baslik']}\n\n{s['metin']}\n\nSorunuz varsa yorumlara yazın, cevaplıyoruz."
+    if s["tip"] == "ipucu":
+        return f"Bakım ipucu: {s['baslik'].capitalize()}\n\n{s['metin']}\n\nKaydet; bakım günü lazım olur."
+    return f"Doğru mu, yanlış mı?\n\n\"{s['baslik']}\"\n\nCevap: {s['metin']}"
+
+
+def sabah_alt_text(s):
+    etiket = {"kod": "Günün kodu kartı", "terim": "Günün terimi kartı", "ipucu": "Bakım ipucu kartı", "soru": "Doğru mu yanlış mı kartı"}[s["tip"]]
+    b = s["baslik"]
+    return f"{etiket}: {b}" + (f" rulman, {s['olcu']} mm" if s["tip"] == "kod" else "")
+
+
+# ---------------------------------------------------------------------------
+# AKŞAM STORY (18:30) – günün ana gönderisine bağlı anket. soru=None ise sadece mesaj + link.
+#   (gun, soru, seçenek A, seçenek B)  veya  (gun, None, mesaj, None)
+
+_S = [
+    (1, "Rulmanı nereden alıyorsun?", "Sanayi çarşısı", "Online"),
+    (2, "Elinden en çok hangi seri geçiyor?", "6200", "6300"),
+    (3, "Senin tercihin?", "ZZ", "2RS"),
+    (4, "Tekerlek rulmanını en son ne zaman değiştirdin?", "1 yıl içinde", "Hatırlamıyorum"),
+    (5, "Rulmanda önceliğin?", "Marka", "Fiyat"),
+    (6, "6204-2RS C3 kodunu okuyabilir misin?", "Evet", "Öğrenmek isterim"),
+    (7, "Makinende garip bir ses var mı?", "Var", "Yok"),
+    (8, "Scooter'ın markası?", "Xiaomi / Segway", "Diğer"),
+    (9, "6300 serisini nerede kullanıyorsun?", "Motosiklet", "Sanayi"),
+    (10, "C3 boşluk ne demek biliyor muydun?", "Biliyordum", "Yeni öğrendim"),
+    (11, "Rulmanın bittiğini ilk nasıl anlarsın?", "Ses", "Titreşim"),
+    (12, "Acil rulmanı kaç günde alabiliyorsun?", "1 gün", "3+ gün"),
+    (13, "Elinin altında kumpas var mı?", "Var", "Yok"),
+    (14, "2RS rulmanı hiç gresledin mi?", "Evet", "Hayır"),
+    (15, "Göbek rulmanını kim değiştiriyor?", "Kendim", "Servis"),
+    (16, "İnce kesit rulman kullanıyor musun?", "Evet", "Hayır"),
+    (17, "Kaç tedarikçiden alım yapıyorsun?", "1–2", "3+"),
+    (18, "Rulmanı hiç çekiçle taktın mı?", "Evet 🙈", "Hayır"),
+    (19, "Yamansa marka setleri denedin mi?", "Evet", "Henüz"),
+    (20, "Motorun?", "Honda / Yamaha", "Diğer"),
+    (21, "Katılıyor musun?", "Evet", "Kesinlikle"),
+    (22, "İşinde hangisi daha çok?", "Konik", "Silindirik"),
+    (23, "6800 / 6900 nerede karşına çıkıyor?", "Bisiklet", "Drone / robotik"),
+    (24, "Stok bilgisine nasıl bakıyorsun?", "Siteden", "Telefonla"),
+    (25, "Kumpasla ölçüm yapabiliyor musun?", "Evet", "Öğrenmek isterim"),
+    (26, "Senin makinende hangisi?", "6204", "6304"),
+    (27, "Bize en çok ne soruyorsun?", "Fiyat", "Muadil"),
+    (28, "Ön + arka set ister misin?", "Evet", "Sadece ön"),
+    (29, "Yamansa'yı ne zamandır tanıyorsun?", "5+ yıl", "Yeni tanıştım"),
+    (30, "Sitedeki ölçü filtresini denedin mi?", "Evet", "Şimdi deneyeceğim"),
+    (31, "Kapak kodlarını karıştırıyor musun?", "Evet", "Hayır"),
+    (32, "Büyük ölçüde en çok?", "6206–6207", "6208+"),
+    (33, "Çamaşır makinesinde rulman değiştirdin mi?", "Evet", "Hayır"),
+    (34, "608'i nerede kullanıyorsun?", "Kaykay / paten", "3D yazıcı / hobi"),
+    (35, "Katılıyor musun?", "Evet", "Kesinlikle"),
+    (36, "Sende rulman en çok neden bitiyor?", "Kir / su", "Montaj hatası"),
+    (37, "Konik rulman çiftini kim ayarlıyor?", "Kendim", "Servis"),
+    (38, "Kritik yedek listen var mı?", "Var", "Yok"),
+    (39, None, "Nice yüzyıllara. Yaşasın Cumhuriyet!", None),
+    (40, "Uygulaman için hangisi?", "Bilyalı", "Makaralı"),
+    (41, "Direksiyonda boşluk hissediyor musun?", "Evet", "Hayır"),
+    (42, "Katılıyor musun?", "Evet", "Kesinlikle"),
+    (43, "NU ile NJ farkını biliyor muydun?", "Biliyordum", "Yeni öğrendim"),
+    (44, "Kodun ek harflerine bakar mısın?", "Bakarım", "Sadece ana kod"),
+    (45, "Cari hesapla çalışmak ister misin?", "Evet", "Bilgi istiyorum"),
+    (46, "Rulmanı nasıl söküyorsun?", "Çektirme", "Çekiç / keski"),
+    (47, "Şehrinde paylaşımlı scooter var mı?", "Var", "Yok"),
+    (48, "Bunlardan birini biliyor muydun?", "Evet", "Hayır"),
+    (49, "Katılıyor musun?", "Evet", "Kesinlikle"),
+    (50, "Oynak rulman kullandın mı?", "Evet", "Hayır"),
+    (51, None, "10 Kasım 09.05 — Ulu Önder Atatürk'ü özlemle anıyoruz.", None),
+    (52, "Senin uygulaman?", "Açık", "Kapaklı"),
+    (53, "Sahte rulmanla karşılaştın mı?", "Evet", "Hayır"),
+    (54, "Ağır hizmette kodun?", "6306–6308", "6309+"),
+    (55, "Motor bakımı / sarımı yapıyor musun?", "Evet", "Hayır"),
+    (56, "Katılıyor musun?", "Evet", "Kesinlikle"),
+    (57, "Yıl sonu duruş planın hazır mı?", "Hazır", "Henüz değil"),
+    (58, "Gresi neye göre seçiyorsun?", "Katalog", "Alışkanlık"),
+    (59, "Sende hangisi var?", "UCP", "UCF / UCFL"),
+    (60, None, "Sorunu DM'den yaz, aynı gün cevaplıyoruz.", None),
+]
+
+AKSAM = [dict(gun=g, soru=q, a=a, b=b) for g, q, a, b in _S]
+
+POST_BY_GUN = {p["gun"]: p for p in POSTS}

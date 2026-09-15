@@ -3,9 +3,13 @@
 """icerik_verisi.POSTS -> HTML/CSS şablon -> PNG (Playwright + Chrome).
 
 Kullanım:
-  python3 gorsel_uret.py            # tüm gönderiler (kare + LinkedIn yatay)
-  python3 gorsel_uret.py 3 7        # yalnız 3. ve 7. gün
-  python3 gorsel_uret.py --marka    # profil + kapak görselleri
+  python3 gorsel_uret.py                 # tüm günler, 3 slot (sabah kartı + ana gönderi kare/LinkedIn + story)
+  python3 gorsel_uret.py 3 7             # yalnız 3. ve 7. gün
+  python3 gorsel_uret.py --slot sabah    # yalnız bir slot: sabah | ana | story
+  python3 gorsel_uret.py --marka         # profil + kapak görselleri
+
+Çıktılar: gonderiler/gunXX_sabah.png (09:00, 1080²), gunXX_kare.png + gunXX_linkedin.png (12:30 / LI 09:00),
+          gunXX_story.png (18:30, 1080×1920)
 """
 import base64
 import sys
@@ -13,7 +17,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-from icerik_verisi import POSTS, SITE, TEL
+from icerik_verisi import AKSAM, POST_BY_GUN, POSTS, SABAH, SITE, TEL
 
 HERE = Path(__file__).resolve().parent
 FOTO = HERE / "fotolar"
@@ -366,6 +370,152 @@ TEMPLATES = dict(hero=t_hero, split=t_split, urun=t_urun, karsilastirma=t_karsil
                  kod=t_kod, alinti=t_alinti, bilgi=t_bilgi, olcu=t_olcu, istatistik=t_istatistik)
 
 
+# ------------------------------------------------------------------ 09:00 sabah kartları (1080²)
+
+SABAH_ETIKET = {"kod": "GÜNÜN KODU", "terim": "GÜNÜN TERİMİ", "ipucu": "BAKIM İPUCU", "soru": "DOĞRU MU, YANLIŞ MI?"}
+SABAH_FOTO = {"terim": ["19911427.jpg", "7565159.jpg", "20607184.jpg", "2760241.jpg"],
+              "ipucu": ["18845071.jpg", "38264258.jpg", "9242171.jpg", "4483608.jpg"],
+              "soru": ["35568191.jpg", "8956445.jpg", "19911421.jpg", "3862614.jpg"]}
+
+
+def sabah_foto(s):
+    lst = SABAH_FOTO[s["tip"]]
+    idx = sum(1 for x in SABAH if x["tip"] == s["tip"] and x["gun"] < s["gun"])
+    return lst[idx % len(lst)]
+
+
+def t_sabah_kod(s):
+    kod = s["baslik"]
+    fs = 168 if len(kod) <= 7 else 136
+    if "×" in s["olcu"]:
+        parts = [x.strip() for x in s["olcu"].split("×")]
+        labels = [("d", "İÇ ÇAP"), ("D", "DIŞ ÇAP"), ("B", "KALINLIK")]
+        boxes = "".join(
+            f"""<div style="flex:1;border:2px solid rgba(1,27,84,.15);border-radius:10px;padding:22px 26px;background:#fff">
+                  <div style="font-family:Montserrat;font-weight:700;letter-spacing:.16em;font-size:15px;color:var(--orange)"><span class="num" style="font-size:22px;color:var(--blue);margin-right:10px">{l}</span>{t}</div>
+                  <div class="num" style="font-size:58px;color:var(--navy);line-height:1;margin-top:10px">{v}<span style="font-size:20px;opacity:.5;margin-left:6px;font-weight:600">mm</span></div>
+                </div>"""
+            for (l, t), v in zip(labels, parts))
+    else:
+        boxes = f"""<div style="border:2px solid rgba(1,27,84,.15);border-radius:10px;padding:22px 34px;background:#fff">
+                  <div style="font-family:Montserrat;font-weight:700;letter-spacing:.16em;font-size:15px;color:var(--orange)">MİL ÇAPI</div>
+                  <div class="num" style="font-size:58px;color:var(--navy);line-height:1;margin-top:10px">{s['olcu'].split()[-1]}<span style="font-size:20px;opacity:.5;margin-left:6px;font-weight:600">mm</span></div>
+                </div>"""
+    chips = "".join(f'<div style="border:2px solid var(--navy);border-radius:999px;padding:12px 22px;font-family:Montserrat;font-weight:700;font-size:19px;color:var(--navy);white-space:nowrap">{k}</div>' for k in s["kullanim"])
+    if "×" in s["olcu"]:
+        sag = bearing_svg(340)
+    else:
+        sag = (f'<div style="width:340px;height:340px;border-radius:50%;overflow:hidden;border:6px solid #fff;box-shadow:0 20px 50px rgba(1,27,84,.18)">'
+               f'<img src="{b64(FOTO / "yatakli_rulman_pd.jpg")}" style="width:100%;height:100%;object-fit:cover"></div>')
+    return f"""
+    <div class="canvas dark" style="background:var(--mist)">
+      <div class="grid" style="background-image:linear-gradient(rgba(1,27,84,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(1,27,84,.05) 1px,transparent 1px)"></div>
+      <div style="position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;background:var(--navy);opacity:.05"></div>
+      {head('dark', SABAH_ETIKET['kod'])}
+      <div style="position:absolute;left:var(--pad);top:196px;z-index:4">
+        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange)">GÜN {s['gun']:02d} · 09:00</div>
+        <div class="num" style="font-size:{fs}px;color:var(--navy);line-height:.95;letter-spacing:-.03em;margin-top:6px;white-space:nowrap">{kod}</div>
+      </div>
+      <div style="position:absolute;right:var(--pad);top:400px;z-index:3">{sag}</div>
+      <div style="position:absolute;left:var(--pad);top:440px;width:600px;display:flex;gap:16px;z-index:4">{boxes}</div>
+      <div style="position:absolute;left:var(--pad);top:630px;width:640px;display:flex;flex-wrap:wrap;gap:12px;z-index:4">{chips}</div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:790px;z-index:4">
+        <div class="bar" style="margin:0 0 22px"></div>
+        <p class="sub" style="font-size:26px;color:var(--ink);opacity:.85;max-width:920px">{s['metin']}</p>
+      </div>
+      {foot('dark')}
+    </div>"""
+
+
+def t_sabah_kart(s):
+    tip = s["tip"]
+    foto = b64(FOTO / sabah_foto(s))
+    label = f'<div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:22px">GÜN {s["gun"]:02d} · 09:00 · {SABAH_ETIKET[tip]}</div>'
+    if tip == "soru":
+        body = f"""
+        <div style="position:absolute;left:var(--pad);right:var(--pad);top:200px;z-index:4">
+          {label}
+          <div style="display:flex;gap:14px;margin-bottom:34px">
+            <div style="border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:10px 26px;font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.08em">DOĞRU</div>
+            <div style="border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:10px 26px;font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.08em">YANLIŞ</div>
+          </div>
+          <h1 style="font-family:Montserrat;font-weight:500;font-style:italic;font-size:66px;line-height:1.14;letter-spacing:-.01em">“{s['baslik']}”</h1>
+        </div>
+        <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:150px;z-index:4;background:var(--orange);border-radius:12px;padding:34px 40px;box-shadow:0 30px 60px rgba(0,0,0,.35)">
+          <div style="font-family:Montserrat;font-weight:800;letter-spacing:.18em;font-size:16px;opacity:.85;margin-bottom:12px">CEVAP</div>
+          <p style="font-size:26px;line-height:1.38;font-weight:500">{s['metin']}</p>
+        </div>"""
+    else:
+        n = len(s["baslik"])
+        fs = 128 if n <= 8 else 104 if n <= 14 else 84 if n <= 22 else 72
+        body = f"""
+        <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:150px;z-index:4">
+          {label}
+          <h1 style="font-size:{fs}px;max-width:940px">{s['baslik']}</h1>
+          <div class="bar"></div>
+          <p class="sub" style="font-size:28px;max-width:900px;line-height:1.42">{s['metin']}</p>
+        </div>"""
+    return f"""
+    <div class="canvas">
+      <div class="photo dim{' mono' if tip == 'soru' else ''}" style="background-image:url('{foto}')"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,27,84,.35),rgba(7,15,43,.9))"></div>
+      <div class="grid"></div>
+      {head('', SABAH_ETIKET[tip], fill=(tip == 'ipucu'))}
+      {body}
+      {foot()}
+    </div>"""
+
+
+def t_sabah(s):
+    return t_sabah_kod(s) if s["tip"] == "kod" else t_sabah_kart(s)
+
+
+# ------------------------------------------------------------------ 18:30 story (1080×1920)
+
+def t_story(a):
+    """Günün ana gönderisine bağlı dikey story: foto + başlık + anket kartı + link alanı.
+    Üst 250px / alt 250px Instagram arayüzü için boş bırakılır."""
+    p = POST_BY_GUN[a["gun"]]
+    n = p["baslik"].count("<br>") + 1
+    h1 = 92 if n <= 2 else 80 if n == 3 else 68
+    if a["soru"]:
+        card = f"""
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);border-radius:24px;padding:44px 44px 40px">
+          <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:16px">ANKET</div>
+          <div style="font-family:Montserrat;font-weight:800;font-size:40px;line-height:1.2;letter-spacing:-.01em">{a['soru']}</div>
+          <div style="display:flex;gap:16px;margin-top:34px">
+            <div style="flex:1;background:#fff;color:var(--navy);border-radius:999px;padding:24px 20px;text-align:center;font-family:Montserrat;font-weight:800;font-size:28px">{a['a']}</div>
+            <div style="flex:1;background:var(--orange);color:#fff;border-radius:999px;padding:24px 20px;text-align:center;font-family:Montserrat;font-weight:800;font-size:28px">{a['b']}</div>
+          </div>
+        </div>"""
+    else:
+        card = f"""
+        <div style="border-left:10px solid var(--orange);padding:10px 0 10px 40px">
+          <div style="font-family:Montserrat;font-weight:500;font-style:italic;font-size:56px;line-height:1.16">{a['a']}</div>
+        </div>"""
+    return f"""
+    <div class="canvas" style="background:var(--navy)">
+      <div class="photo" style="top:0;height:50%;background-image:url('{b64(FOTO / p['foto'])}');filter:saturate(.8)"></div>
+      <div style="position:absolute;top:0;height:50%;left:0;right:0;background:linear-gradient(180deg,rgba(7,15,43,.55) 0%,rgba(7,15,43,0) 30%,rgba(1,27,84,0) 55%,var(--navy) 100%)"></div>
+      <div class="grid"></div>
+      <div class="head" style="top:250px">
+        <div class="brand"><img src="{LOGO_ICON}"><div class="sep"></div><span>YAMANSA</span></div>
+        <div class="tag fill">{p['etiket']}</div>
+      </div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:880px;z-index:4">
+        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--steel);margin-bottom:18px">BUGÜNÜN GÖNDERİSİ</div>
+        <h1 style="font-size:{h1}px;line-height:1.06">{p['baslik']}</h1>
+        <div class="bar"></div>
+      </div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:1280px;z-index:4">{card}</div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:250px;z-index:4;display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:24px;opacity:.85">Detaylar bugünkü gönderide ↑</div>
+        <div style="border:2px solid #fff;border-radius:999px;padding:14px 28px;font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.04em">yamansarulman.com</div>
+      </div>
+      <div class="foot" style="bottom:120px;opacity:.45"><span>{SITE.replace('https://www.', '')}</span><div class="line"></div><span>{TEL}</span></div>
+    </div>"""
+
+
 def page_html(body, W, H):
     return f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><style>{CSS}
     html,body{{width:{W}px;height:{H}px}}</style></head><body>{body}</body></html>"""
@@ -425,7 +575,7 @@ def brand_assets():
     return items
 
 
-def render_all(days=None, brand=False):
+def render_all(days=None, brand=False, slots=("sabah", "ana", "story")):
     OUT.mkdir(exist_ok=True)
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=CHROME, headless=True)
@@ -444,20 +594,43 @@ def render_all(days=None, brand=False):
             for name, W, H, body in brand_assets():
                 shot(page_html(body, W, H), W, H, OUT / "marka" / name)
                 print("ok", name)
-        for p in POSTS:
-            if days and p["gun"] not in days:
-                continue
-            fn = TEMPLATES[p["sablon"]]
-            for fmt in ("kare", "linkedin"):
-                if fmt == "linkedin" and "LI" not in p["platform"]:
+        if "sabah" in slots:
+            for s in SABAH:
+                if days and s["gun"] not in days:
                     continue
-                W, H = FORMATS[fmt]
-                out = OUT / f"gun{p['gun']:02d}_{fmt}.png"
-                shot(page_html(fn(p, W, H), W, H), W, H, out)
+                W, H = FORMATS["kare"]
+                out = OUT / f"gun{s['gun']:02d}_sabah.png"
+                shot(page_html(t_sabah(s), W, H), W, H, out)
+                print("ok", out.name)
+        if "ana" in slots:
+            for p in POSTS:
+                if days and p["gun"] not in days:
+                    continue
+                fn = TEMPLATES[p["sablon"]]
+                for fmt in ("kare", "linkedin"):
+                    if fmt == "linkedin" and "LI" not in p["platform"]:
+                        continue
+                    W, H = FORMATS[fmt]
+                    out = OUT / f"gun{p['gun']:02d}_{fmt}.png"
+                    shot(page_html(fn(p, W, H), W, H), W, H, out)
+                    print("ok", out.name)
+        if "story" in slots:
+            for a in AKSAM:
+                if days and a["gun"] not in days:
+                    continue
+                W, H = FORMATS["story"]
+                out = OUT / f"gun{a['gun']:02d}_story.png"
+                shot(page_html(t_story(a), W, H), W, H, out)
                 print("ok", out.name)
         browser.close()
 
 
 if __name__ == "__main__":
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    render_all(days={int(a) for a in args} or None, brand="--marka" in sys.argv)
+    argv = sys.argv[1:]
+    slots = ("sabah", "ana", "story")
+    if "--slot" in argv:
+        i = argv.index("--slot")
+        slots = tuple(argv[i + 1].split(","))
+        del argv[i:i + 2]
+    args = [a for a in argv if not a.startswith("--")]
+    render_all(days={int(a) for a in args} or None, brand="--marka" in argv, slots=slots)

@@ -4,10 +4,22 @@
 **Kanallar:** Instagram (IG), Facebook (FB), LinkedIn (LI)  
 **Site:** https://www.yamansarulman.com · **Tel:** 0212 670 02 05 · **Adres:** İkitelli OSB, Heskop San. Sit. M4 Blok No:47, Başakşehir / İstanbul
 
+## Günlük 3 paylaşım düzeni
+
+| Saat | Slot | Kanal | Format | Görsel | İçerik |
+|---|---|---|---|---|---|
+| 09:00 | Sabah kartı | IG + FB (LinkedIn günlerinde LI ana gönderi de 09:00) | Kare 1080×1080 | `gunXX_sabah.png` | Günün kodu (ölçü + kullanım) / günün terimi / bakım ipucu / doğru-yanlış |
+| 12:30 | Ana gönderi | IG + FB (+ LI) | Kare 1080×1080, LI 1200×627 | `gunXX_kare.png`, `gunXX_linkedin.png` | Uzun metin, SEO anahtar kelimeleri, UTM link, blog önerisi |
+| 18:30 | Story | IG + FB story | Dikey 1080×1920 | `gunXX_story.png` | Günün konusuna bağlı anket + link etiketi; 24 saat görünür, ilgili olanlar Highlight'a eklenir |
+
+Toplam: 60 gün × 3 slot = 180 paylaşım (+ LinkedIn günlerinde ayrıca LI gönderisi).
+
 ## Paylaşım kuralları
 
-- IG/FB: 12:30 (öğle arası), LinkedIn: 09:00 (iş günü başlangıcı). Hafta sonu sadece IG/FB.
-- Her gönderi `gonderiler/gunXX_kare.png` (IG/FB) ve varsa `gonderiler/gunXX_linkedin.png` (LI) görselini kullanır.
+- Sabah kartı 09:00, ana gönderi 12:30 (öğle arası), story 18:30 (iş çıkışı). LinkedIn: 09:00 (iş günü başlangıcı). Hafta sonu sadece IG/FB.
+- Sabah kartı metni kısa tutulur (kod/terim + 2–3 cümle); hashtag seti ana gönderiyle aynı kurala uyar. Link: UTM `utm_campaign=sabah`.
+- Story'de anket etiketi görseldeki iki butonun, link etiketi alt sağdaki `yamansarulman.com` kutusunun üzerine yerleştirilir. Üst/alt 250 px Instagram arayüzü için boş bırakılmıştır.
+- Her ana gönderi `gonderiler/gunXX_kare.png` (IG/FB) ve varsa `gonderiler/gunXX_linkedin.png` (LI) görselini kullanır.
 - Instagram'da link biyografide (yamansarulman.com); metindeki UTM linki Facebook ve LinkedIn'de doğrudan paylaşılır.
 - Alt metin (erişilebilirlik) alanı her platformda doldurulur; SEO için görsel açıklaması olarak da işe yarar.
 - Her gönderiye eşlik eden **blog / site sayfası** önerisi, gönderi tarihinden önce siteye eklenirse link otoritesi için en iyi sonucu verir.
@@ -27,72 +39,93 @@
 
 ## Özet tablo
 
-| Gün | Tarih | Platform | Tema | Başlık | SEO anahtar kelimeler | Görsel |
+| Gün | Tarih | Platform | 09:00 Sabah kartı | 12:30 Ana gönderi (tema) | SEO anahtar kelimeler | 18:30 Story anketi |
 |---|---|---|---|---|---|---|
-| 1 | 21 Eyl 2026 Pzt | IG, FB, LI | Marka | RULMANDA DOĞRU ADRES. | rulman, rulman tedarikçisi İstanbul, rulman satış | gun01_kare.png, gun01_linkedin.png |
-| 2 | 22 Eyl 2026 Sal | IG, FB | Ürün | 6200 SERİSİ SABİT BİLYALI | 6204 rulman, 6203 rulman, 6200 serisi rulman ölçüleri | gun02_kare.png |
-| 3 | 23 Eyl 2026 Çar | IG, FB, LI | Teknik | ZZ Mİ, 2RS Mİ? | zz rulman 2rs rulman farkı, kapaklı rulman keçeli rulman | gun03_kare.png, gun03_linkedin.png |
-| 4 | 24 Eyl 2026 Per | IG, FB, LI | Uygulama | TEKERLEK RULMANI SETLERİ | motosiklet tekerlek rulmanı, honda tekerlek rulmanı, bajaj rulman | gun04_kare.png, gun04_linkedin.png |
-| 5 | 25 Eyl 2026 Cum | IG, FB | Marka | ORİJİNAL. FATURALI. STOKTAN. | skf rulman, fag rulman, ors rulman, orijinal rulman | gun05_kare.png |
-| 6 | 26 Eyl 2026 Cmt | IG, FB | Teknik | RULMAN KODU NASIL OKUNUR? | rulman kodu okuma, rulman numarası ne anlama gelir, 6204 2rs c3 | gun06_kare.png |
-| 7 | 27 Eyl 2026 Paz | IG, FB | Marka | “Bir makinenin sesi, rulmanının sağlığıdır.” | rulman bakımı, rulman sesi | gun07_kare.png |
-| 8 | 28 Eyl 2026 Pzt | IG, FB, LI | Uygulama | SCOOTER RULMANLARI STOKTA | scooter rulmanı, xiaomi scooter rulman, ninebot rulman, dualtron rulman | gun08_kare.png, gun08_linkedin.png |
-| 9 | 29 Eyl 2026 Sal | IG, FB | Ürün | 6300 SERİSİ AĞIR HİZMET | 6304 rulman, 6303 rulman, 6300 serisi rulman ölçüleri | gun09_kare.png |
-| 10 | 30 Eyl 2026 Çar | IG, FB, LI | Teknik | C3 BOŞLUK NE DEMEK? | c3 rulman ne demek, rulman boşluk sınıfı, c3 rulman farkı | gun10_kare.png, gun10_linkedin.png |
-| 11 | 1 Eki 2026 Per | IG, FB | Teknik | RULMAN BİTTİ Mİ? 5 İŞARET | rulman arızası belirtileri, tekerlek rulmanı sesi, rulman bozulduğu nasıl anlaşılır | gun11_kare.png |
-| 12 | 2 Eki 2026 Cum | IG, FB, LI | Kurumsal | STOKTAN, AYNI GÜN KARGO. | rulman kargo, hızlı rulman tedariki, rulmancı istanbul ikitelli | gun12_kare.png, gun12_linkedin.png |
-| 13 | 3 Eki 2026 Cmt | IG, FB | CTA | İÇ ÇAP × DIŞ ÇAP × KALINLIK | ölçüye göre rulman bulma, rulman ölçü tablosu, rulman ölçüsü nasıl bulunur | gun13_kare.png |
-| 14 | 4 Eki 2026 Paz | IG, FB | Teknik | 2RS'İN İÇİNDE NE VAR? | rulman gresi, keçeli rulman yağlama, 2rs rulman gres | gun14_kare.png |
-| 15 | 5 Eki 2026 Pzt | IG, FB | Uygulama | GÖBEK RULMANLARI | bisiklet göbek rulmanı, salcano rulman, bisiklet rulmanı ölçüleri | gun15_kare.png |
-| 16 | 6 Eki 2026 Sal | IG, FB | Ürün | 6000 SERİSİ HAFİF KESİT | 6004 rulman, 6002 rulman, 6000 serisi rulman ölçüleri | gun16_kare.png |
-| 17 | 7 Eki 2026 Çar | IG, FB, LI | Kurumsal | TEK KAYNAK, BÜTÜN MARKALAR. | rulman toptan, rulman bayilik, rulman b2b tedarik | gun17_kare.png, gun17_linkedin.png |
-| 18 | 8 Eki 2026 Per | IG, FB | Teknik | MONTAJDA 5 ÖLÜMCÜL HATA | rulman montajı nasıl yapılır, rulman takma hataları, rulman çakma | gun18_kare.png |
-| 19 | 9 Eki 2026 Cum | IG, FB | Ürün | BÜTÇE DOSTU, TEST EDİLMİŞ. | uygun fiyatlı rulman, yamansa rulman seti, ekonomik rulman | gun19_kare.png |
-| 20 | 10 Eki 2026 Cmt | IG, FB, LI | Uygulama | HANGİ MOTOR, HANGİ RULMAN? | yamaha rulman, ktm tekerlek rulmanı, mondial rulman, rks rulman | gun20_kare.png, gun20_linkedin.png |
-| 21 | 11 Eki 2026 Paz | IG, FB | Marka | “Kalite, duyulmayan sestir.” | kaliteli rulman | gun21_kare.png |
-| 22 | 12 Eki 2026 Pzt | IG, FB, LI | Ürün | KONİK. SİLİNDİRİK. OYNAK. | konik makaralı rulman, silindirik makaralı rulman, oynak bilyalı rulman | gun22_kare.png, gun22_linkedin.png |
-| 23 | 13 Eki 2026 Sal | IG, FB | Ürün | 6800 / 6900 İNCE KESİT | 6900 rulman, 6800 rulman, ince kesit rulman, 61900 rulman | gun23_kare.png |
-| 24 | 14 Eki 2026 Çar | IG, FB, LI | Kurumsal | STOK, HER GÜN GÜNCELLENİR. | rulman stok sorgulama, online rulman satış, rulman fiyat listesi | gun24_kare.png, gun24_linkedin.png |
-| 25 | 15 Eki 2026 Per | IG, FB | Teknik | KUMPASLA RULMAN ÖLÇÜMÜ | rulman ölçüsü nasıl alınır, kumpasla rulman ölçme, rulman iç çap dış çap | gun25_kare.png |
-| 26 | 16 Eki 2026 Cum | IG, FB | Teknik | 6204 MÜ, 6304 MÜ? | 6204 6304 farkı, 6204 rulman ölçüsü, 6304 rulman ölçüsü | gun26_kare.png |
-| 27 | 17 Eki 2026 Cmt | IG, FB, LI | Kurumsal | ÖLÇÜ. MUADİL. MARKA ÖNERİSİ. | rulman muadil bulma, rulman teknik destek, rulman danışmanlık | gun27_kare.png, gun27_linkedin.png |
-| 28 | 18 Eki 2026 Paz | IG, FB | CTA | ÖN + ARKA SET, KARGO BİZDEN. | motosiklet rulman seti, ücretsiz kargo rulman | gun28_kare.png |
-| 29 | 19 Eki 2026 Pzt | IG, FB, LI | Marka | 40 YILA YAKIN TECRÜBE. | rulman firması istanbul, köklü rulman tedarikçisi, yamansa rulman hakkında | gun29_kare.png, gun29_linkedin.png |
-| 30 | 20 Eki 2026 Sal | IG, FB, LI | CTA | ÖLÇÜNÜ GİR, RULMANINI BUL. | online rulman katalog, rulman ölçü filtresi, rulman satın al | gun30_kare.png, gun30_linkedin.png |
-| 31 | 21 Eki 2026 Çar | IG, FB, LI | Teknik | Z, ZZ, RS, 2RS, 2RZ NE DEMEK? | 2rz rulman ne demek, z rulman zz rulman farkı, rs rulman, 2rs1 ddu | gun31_kare.png, gun31_linkedin.png |
-| 32 | 22 Eki 2026 Per | IG, FB | Ürün | 6206 – 6211 BÜYÜK ÖLÇÜLER | 6206 rulman, 6207 rulman, 6208 rulman, 6210 rulman ölçüleri | gun32_kare.png |
-| 33 | 23 Eki 2026 Cum | IG, FB, LI | Uygulama | ÇAMAŞIR MAKİNESİ RULMANI. | çamaşır makinesi rulmanı, çamaşır makinesi rulman ölçüsü, 6205 6206 rulman | gun33_kare.png, gun33_linkedin.png |
-| 34 | 24 Eki 2026 Cmt | IG, FB | Uygulama | 608: DÜNYANIN EN ÇOK SATAN RULMANI | 608 rulman, 608zz rulman, 608 2rs, kaykay rulmanı, paten rulmanı | gun34_kare.png |
-| 35 | 25 Eki 2026 Paz | IG, FB | Marka | “Dönen her şeyin altında bir rulman vardır.” | rulman | gun35_kare.png |
-| 36 | 26 Eki 2026 Pzt | IG, FB, LI | Teknik | RULMAN NEDEN ERKEN BİTER? | rulman neden bozulur, rulman ömrü, rulman arıza nedenleri, rulman erken bitmesi | gun36_kare.png, gun36_linkedin.png |
-| 37 | 27 Eki 2026 Sal | IG, FB | Ürün | 30200 SERİSİ KONİK RULMAN | 30204 rulman, 30205 rulman, konik makaralı rulman ölçüleri, 30200 serisi | gun37_kare.png |
-| 38 | 28 Eki 2026 Çar | IG, FB, LI | Kurumsal | KRİTİK YEDEK LİSTESİ | kritik yedek parça listesi, planlı bakım rulman, bakım stoğu | gun38_kare.png, gun38_linkedin.png |
-| 39 | 29 Eki 2026 Per | IG, FB, LI | Marka | CUMHURİYET BAYRAMIMIZ KUTLU OLSUN. |  | gun39_kare.png, gun39_linkedin.png |
-| 40 | 30 Eki 2026 Cum | IG, FB | Teknik | BİLYALI MI, MAKARALI MI? | bilyalı rulman makaralı rulman farkı, bilyalı rulman nedir, makaralı rulman nedir | gun40_kare.png |
-| 41 | 31 Eki 2026 Cmt | IG, FB | Uygulama | DİREKSİYON & SALINCAK RULMANLARI | motosiklet direksiyon rulmanı, boyun rulmanı, salıncak rulmanı, motosiklet konik rulman | gun41_kare.png |
-| 42 | 1 Kas 2026 Paz | IG, FB | Marka | “Doğru parça, doğru yerde, doğru zamanda.” | rulman tedarik | gun42_kare.png |
-| 43 | 2 Kas 2026 Pzt | IG, FB, LI | Ürün | NU, NJ, NUP, N NE DEMEK? | nu 205 rulman, silindirik makaralı rulman kodları, nj rulman, nup rulman | gun43_kare.png, gun43_linkedin.png |
-| 44 | 3 Kas 2026 Sal | IG, FB | Teknik | EK HARFLER NE DEMEK? | rulman ek harfleri, rulman son ekleri, rulman k ne demek, tn9 rulman, nr rulman | gun44_kare.png |
-| 45 | 4 Kas 2026 Çar | IG, FB, LI | Kurumsal | CARİ HESAP. TEK FATURA. DÜZENLİ SEVK. | kurumsal rulman tedariki, rulman fiyat listesi, rulman cari hesap, rulman çerçeve anlaşma | gun45_kare.png, gun45_linkedin.png |
-| 46 | 5 Kas 2026 Per | IG, FB | Teknik | RULMANI DOĞRU SÖKMEK | rulman sökme, rulman çektirme, rulman nasıl sökülür, rulman söküm yöntemleri | gun46_kare.png |
-| 47 | 6 Kas 2026 Cum | IG, FB, LI | Uygulama | PAYLAŞIMLI SCOOTER FİLOLARI | scooter filo yedek parça, scooter motor rulmanı, paylaşımlı scooter bakım, scooter tekerlek rulmanı | gun47_kare.png, gun47_linkedin.png |
-| 48 | 7 Kas 2026 Cmt | IG, FB | Marka | BUNLARI BİLİYOR MUYDUNUZ? | rulman tarihi, rulmanı kim icat etti, rulman hakkında bilgiler | gun48_kare.png |
-| 49 | 8 Kas 2026 Paz | IG, FB | Marka | “Sürtünme kaybettirir, rulman kazandırır.” | rulman enerji verimliliği | gun49_kare.png |
-| 50 | 9 Kas 2026 Pzt | IG, FB, LI | Ürün | 1200 SERİSİ OYNAK BİLYALI | oynak bilyalı rulman, 1204 rulman, 1205 rulman, 2205 rulman, 1200 serisi | gun50_kare.png, gun50_linkedin.png |
-| 51 | 10 Kas 2026 Sal | IG, FB, LI | Marka | Saygı, sevgi ve minnetle anıyoruz. |  | gun51_kare.png, gun51_linkedin.png |
-| 52 | 11 Kas 2026 Çar | IG, FB | Teknik | AÇIK MI, KAPAKLI MI? | açık rulman kapaklı rulman farkı, açık rulman yağlama, açık rulman nedir | gun52_kare.png |
-| 53 | 12 Kas 2026 Per | IG, FB, LI | Kurumsal | SAHTE RULMANA KARŞI 5 KONTROL | sahte rulman nasıl anlaşılır, orijinal skf rulman kontrol, sahte skf rulman, orijinal rulman | gun53_kare.png, gun53_linkedin.png |
-| 54 | 13 Kas 2026 Cum | IG, FB | Ürün | 6306 – 6311 AĞIR HİZMET | 6306 rulman, 6308 rulman, 6310 rulman, 6300 serisi rulman ölçüleri | gun54_kare.png |
-| 55 | 14 Kas 2026 Cmt | IG, FB | Uygulama | ELEKTRİK MOTORU RULMANLARI | elektrik motoru rulmanı, motor rulmanı değişimi, 6205 zz c3, motor sarım rulman | gun55_kare.png |
-| 56 | 15 Kas 2026 Paz | IG, FB | Marka | “Bakım masraf değil, sigortadır.” | planlı bakım | gun56_kare.png |
-| 57 | 16 Kas 2026 Pzt | IG, FB, LI | Kurumsal | ARALIK DURUŞU İÇİN LİSTEYİ KASIM'DA KAPATIN. | yıllık bakım duruşu, bakım duruşu yedek parça, yıl sonu bakım planı rulman | gun57_kare.png, gun57_linkedin.png |
-| 58 | 17 Kas 2026 Sal | IG, FB | Teknik | GRES SEÇİMİ: 4 KURAL | rulman gresi seçimi, rulman gres miktarı, lityum gres rulman, rulman yağlama | gun58_kare.png |
-| 59 | 18 Kas 2026 Çar | IG, FB, LI | Ürün | UCP · UCF · UCFL YATAKLI RULMANLAR | ucp 205 rulman, yataklı rulman, ucf 204, uc 206, ucp yatak fiyat | gun59_kare.png, gun59_linkedin.png |
-| 60 | 19 Kas 2026 Per | IG, FB, LI | CTA | SORUNUZ VARSA, CEVABI BİZDE. | rulman danışmanlık, rulman fiyat sor, rulman teknik destek, rulman whatsapp | gun60_kare.png, gun60_linkedin.png |
+| 1 | 21 Eyl 2026 Pzt | IG, FB, LI | Günün kodu: 6204 ZZ | RULMANDA DOĞRU ADRES. (Marka) | rulman, rulman tedarikçisi İstanbul, rulman satış | Rulmanı nereden alıyorsun? |
+| 2 | 22 Eyl 2026 Sal | IG, FB | Günün terimi: d × D × B | 6200 SERİSİ SABİT BİLYALI (Ürün) | 6204 rulman, 6203 rulman, 6200 serisi rulman ölçüleri | Elinden en çok hangi seri geçiyor? |
+| 3 | 23 Eyl 2026 Çar | IG, FB, LI | Bakım ipucu: KUTUYU KONTROL ET | ZZ Mİ, 2RS Mİ? (Teknik) | zz rulman 2rs rulman farkı, kapaklı rulman keçeli rulman | Senin tercihin? |
+| 4 | 24 Eyl 2026 Per | IG, FB, LI | Günün kodu: 6301 2RS | TEKERLEK RULMANI SETLERİ (Uygulama) | motosiklet tekerlek rulmanı, honda tekerlek rulmanı, bajaj rulman | Tekerlek rulmanını en son ne zaman değiştirdin? |
+| 5 | 25 Eyl 2026 Cum | IG, FB | Doğru mu, yanlış mı?: ZZ rulman yeniden greslenebilir. | ORİJİNAL. FATURALI. STOKTAN. (Marka) | skf rulman, fag rulman, ors rulman, orijinal rulman | Rulmanda önceliğin? |
+| 6 | 26 Eyl 2026 Cmt | IG, FB | Günün kodu: 608 ZZ | RULMAN KODU NASIL OKUNUR? (Teknik) | rulman kodu okuma, rulman numarası ne anlama gelir, 6204 2rs c3 | 6204-2RS C3 kodunu okuyabilir misin? |
+| 7 | 27 Eyl 2026 Paz | IG, FB | Günün terimi: ABEC | “Bir makinenin sesi, rulmanının sağlığıdır.” (Marka) | rulman bakımı, rulman sesi | Makinende garip bir ses var mı? |
+| 8 | 28 Eyl 2026 Pzt | IG, FB, LI | Bakım ipucu: ÇEKİÇLE VURMA | SCOOTER RULMANLARI STOKTA (Uygulama) | scooter rulmanı, xiaomi scooter rulman, ninebot rulman, dualtron rulman | Scooter'ın markası? |
+| 9 | 29 Eyl 2026 Sal | IG, FB | Günün kodu: 6304 2RS | 6300 SERİSİ AĞIR HİZMET (Ürün) | 6304 rulman, 6303 rulman, 6300 serisi rulman ölçüleri | 6300 serisini nerede kullanıyorsun? |
+| 10 | 30 Eyl 2026 Çar | IG, FB, LI | Doğru mu, yanlış mı?: 6204 ile 6004 aynı mile takılır. | C3 BOŞLUK NE DEMEK? (Teknik) | c3 rulman ne demek, rulman boşluk sınıfı, c3 rulman farkı | C3 boşluk ne demek biliyor muydun? |
+| 11 | 1 Eki 2026 Per | IG, FB | Günün kodu: 6001 2RS | RULMAN BİTTİ Mİ? 5 İŞARET (Teknik) | rulman arızası belirtileri, tekerlek rulmanı sesi, rulman bozulduğu nasıl anlaşılır | Rulmanın bittiğini ilk nasıl anlarsın? |
+| 12 | 2 Eki 2026 Cum | IG, FB, LI | Günün terimi: RADYAL / EKSENEL YÜK | STOKTAN, AYNI GÜN KARGO. (Kurumsal) | rulman kargo, hızlı rulman tedariki, rulmancı istanbul ikitelli | Acil rulmanı kaç günde alabiliyorsun? |
+| 13 | 3 Eki 2026 Cmt | IG, FB | Bakım ipucu: SICAKLIĞI ÖLÇ | İÇ ÇAP × DIŞ ÇAP × KALINLIK (CTA) | ölçüye göre rulman bulma, rulman ölçü tablosu, rulman ölçüsü nasıl bulunur | Elinin altında kumpas var mı? |
+| 14 | 4 Eki 2026 Paz | IG, FB | Günün kodu: 6205 2RS | 2RS'İN İÇİNDE NE VAR? (Teknik) | rulman gresi, keçeli rulman yağlama, 2rs rulman gres | 2RS rulmanı hiç gresledin mi? |
+| 15 | 5 Eki 2026 Pzt | IG, FB | Günün kodu: 6802 ZZ | GÖBEK RULMANLARI (Uygulama) | bisiklet göbek rulmanı, salcano rulman, bisiklet rulmanı ölçüleri | Göbek rulmanını kim değiştiriyor? |
+| 16 | 6 Eki 2026 Sal | IG, FB | Günün terimi: C3 | 6000 SERİSİ HAFİF KESİT (Ürün) | 6004 rulman, 6002 rulman, 6000 serisi rulman ölçüleri | İnce kesit rulman kullanıyor musun? |
+| 17 | 7 Eki 2026 Çar | IG, FB, LI | Doğru mu, yanlış mı?: Kutusuz ama parlak rulman orijinaldir. | TEK KAYNAK, BÜTÜN MARKALAR. (Kurumsal) | rulman toptan, rulman bayilik, rulman b2b tedarik | Kaç tedarikçiden alım yapıyorsun? |
+| 18 | 8 Eki 2026 Per | IG, FB | Bakım ipucu: MONTAJ ÖNCESİ TEMİZLİK | MONTAJDA 5 ÖLÜMCÜL HATA (Teknik) | rulman montajı nasıl yapılır, rulman takma hataları, rulman çakma | Rulmanı hiç çekiçle taktın mı? |
+| 19 | 9 Eki 2026 Cum | IG, FB | Günün kodu: 6203 2RS | BÜTÇE DOSTU, TEST EDİLMİŞ. (Ürün) | uygun fiyatlı rulman, yamansa rulman seti, ekonomik rulman | Yamansa marka setleri denedin mi? |
+| 20 | 10 Eki 2026 Cmt | IG, FB, LI | Günün kodu: 30204 | HANGİ MOTOR, HANGİ RULMAN? (Uygulama) | yamaha rulman, ktm tekerlek rulmanı, mondial rulman, rks rulman | Motorun? |
+| 21 | 11 Eki 2026 Paz | IG, FB | Günün terimi: KONİK MAKARALI | “Kalite, duyulmayan sestir.” (Marka) | kaliteli rulman | Katılıyor musun? |
+| 22 | 12 Eki 2026 Pzt | IG, FB, LI | Doğru mu, yanlış mı?: Daha fazla gres, daha uzun ömür demektir. | KONİK. SİLİNDİRİK. OYNAK. (Ürün) | konik makaralı rulman, silindirik makaralı rulman, oynak bilyalı rulman | İşinde hangisi daha çok? |
+| 23 | 13 Eki 2026 Sal | IG, FB | Günün kodu: 6902 2RS | 6800 / 6900 İNCE KESİT (Ürün) | 6900 rulman, 6800 rulman, ince kesit rulman, 61900 rulman | 6800 / 6900 nerede karşına çıkıyor? |
+| 24 | 14 Eki 2026 Çar | IG, FB, LI | Bakım ipucu: SESİ KAYDET | STOK, HER GÜN GÜNCELLENİR. (Kurumsal) | rulman stok sorgulama, online rulman satış, rulman fiyat listesi | Stok bilgisine nasıl bakıyorsun? |
+| 25 | 15 Eki 2026 Per | IG, FB | Günün kodu: 6206 2RS | KUMPASLA RULMAN ÖLÇÜMÜ (Teknik) | rulman ölçüsü nasıl alınır, kumpasla rulman ölçme, rulman iç çap dış çap | Kumpasla ölçüm yapabiliyor musun? |
+| 26 | 16 Eki 2026 Cum | IG, FB | Günün terimi: ÖN YÜK | 6204 MÜ, 6304 MÜ? (Teknik) | 6204 6304 farkı, 6204 rulman ölçüsü, 6304 rulman ölçüsü | Senin makinende hangisi? |
+| 27 | 17 Eki 2026 Cmt | IG, FB, LI | Günün kodu: 6900 ZZ | ÖLÇÜ. MUADİL. MARKA ÖNERİSİ. (Kurumsal) | rulman muadil bulma, rulman teknik destek, rulman danışmanlık | Bize en çok ne soruyorsun? |
+| 28 | 18 Eki 2026 Paz | IG, FB | Doğru mu, yanlış mı?: ZZ, 2RS'ten daha hızlı döner. | ÖN + ARKA SET, KARGO BİZDEN. (CTA) | motosiklet rulman seti, ücretsiz kargo rulman | Ön + arka set ister misin? |
+| 29 | 19 Eki 2026 Pzt | IG, FB, LI | Bakım ipucu: ISITARAK TAK | 40 YILA YAKIN TECRÜBE. (Marka) | rulman firması istanbul, köklü rulman tedarikçisi, yamansa rulman hakkında | Yamansa'yı ne zamandır tanıyorsun? |
+| 30 | 20 Eki 2026 Sal | IG, FB, LI | Günün kodu: 6305 2RS | ÖLÇÜNÜ GİR, RULMANINI BUL. (CTA) | online rulman katalog, rulman ölçü filtresi, rulman satın al | Sitedeki ölçü filtresini denedin mi? |
+| 31 | 21 Eki 2026 Çar | IG, FB, LI | Günün terimi: RS / 2RS | Z, ZZ, RS, 2RS, 2RZ NE DEMEK? (Teknik) | 2rz rulman ne demek, z rulman zz rulman farkı, rs rulman, 2rs1 ddu | Kapak kodlarını karıştırıyor musun? |
+| 32 | 22 Eki 2026 Per | IG, FB | Günün kodu: 6207 2RS | 6206 – 6211 BÜYÜK ÖLÇÜLER (Ürün) | 6206 rulman, 6207 rulman, 6208 rulman, 6210 rulman ölçüleri | Büyük ölçüde en çok? |
+| 33 | 23 Eki 2026 Cum | IG, FB, LI | Günün kodu: 6202 ZZ | ÇAMAŞIR MAKİNESİ RULMANI. (Uygulama) | çamaşır makinesi rulmanı, çamaşır makinesi rulman ölçüsü, 6205 6206 rulman | Çamaşır makinesinde rulman değiştirdin mi? |
+| 34 | 24 Eki 2026 Cmt | IG, FB | Doğru mu, yanlış mı?: Kaykaydaki 608 ile 3D yazıcıdaki 608 aynıdır. | 608: DÜNYANIN EN ÇOK SATAN RULMANI (Uygulama) | 608 rulman, 608zz rulman, 608 2rs, kaykay rulmanı, paten rulmanı | 608'i nerede kullanıyorsun? |
+| 35 | 25 Eki 2026 Paz | IG, FB | Bakım ipucu: AÇIK RAFTA BEKLETME | “Dönen her şeyin altında bir rulman vardır.” (Marka) | rulman | Katılıyor musun? |
+| 36 | 26 Eki 2026 Pzt | IG, FB, LI | Günün terimi: PİTTİNG | RULMAN NEDEN ERKEN BİTER? (Teknik) | rulman neden bozulur, rulman ömrü, rulman arıza nedenleri, rulman erken bitmesi | Sende rulman en çok neden bitiyor? |
+| 37 | 27 Eki 2026 Sal | IG, FB | Günün kodu: 32005 | 30200 SERİSİ KONİK RULMAN (Ürün) | 30204 rulman, 30205 rulman, konik makaralı rulman ölçüleri, 30200 serisi | Konik rulman çiftini kim ayarlıyor? |
+| 38 | 28 Eki 2026 Çar | IG, FB, LI | Günün kodu: 6008 2RS | KRİTİK YEDEK LİSTESİ (Kurumsal) | kritik yedek parça listesi, planlı bakım rulman, bakım stoğu | Kritik yedek listen var mı? |
+| 39 | 29 Eki 2026 Per | IG, FB, LI | Doğru mu, yanlış mı?: Rulman mile sıkı, yuvaya boş takılır. | CUMHURİYET BAYRAMIMIZ KUTLU OLSUN. (Marka) |  | Nice yüzyıllara. Yaşasın Cumhuriyet! |
+| 40 | 30 Eki 2026 Cum | IG, FB | Günün kodu: NU 204 | BİLYALI MI, MAKARALI MI? (Teknik) | bilyalı rulman makaralı rulman farkı, bilyalı rulman nedir, makaralı rulman nedir | Uygulaman için hangisi? |
+| 41 | 31 Eki 2026 Cmt | IG, FB | Günün terimi: OYNAK BİLYALI | DİREKSİYON & SALINCAK RULMANLARI (Uygulama) | motosiklet direksiyon rulmanı, boyun rulmanı, salıncak rulmanı, motosiklet konik rulman | Direksiyonda boşluk hissediyor musun? |
+| 42 | 1 Kas 2026 Paz | IG, FB | Bakım ipucu: KEÇE YÖNÜNE DİKKAT | “Doğru parça, doğru yerde, doğru zamanda.” (Marka) | rulman tedarik | Katılıyor musun? |
+| 43 | 2 Kas 2026 Pzt | IG, FB, LI | Günün kodu: 6004 2RS | NU, NJ, NUP, N NE DEMEK? (Ürün) | nu 205 rulman, silindirik makaralı rulman kodları, nj rulman, nup rulman | NU ile NJ farkını biliyor muydun? |
+| 44 | 3 Kas 2026 Sal | IG, FB | Doğru mu, yanlış mı?: Rulman kodu her markada aynı ölçüyü verir. | EK HARFLER NE DEMEK? (Teknik) | rulman ek harfleri, rulman son ekleri, rulman k ne demek, tn9 rulman, nr rulman | Kodun ek harflerine bakar mısın? |
+| 45 | 4 Kas 2026 Çar | IG, FB, LI | Günün kodu: 6010 2RS | CARİ HESAP. TEK FATURA. DÜZENLİ SEVK. (Kurumsal) | kurumsal rulman tedariki, rulman fiyat listesi, rulman cari hesap, rulman çerçeve anlaşma | Cari hesapla çalışmak ister misin? |
+| 46 | 5 Kas 2026 Per | IG, FB | Bakım ipucu: SÖKTÜĞÜNÜ TEKRAR TAKMA | RULMANI DOĞRU SÖKMEK (Teknik) | rulman sökme, rulman çektirme, rulman nasıl sökülür, rulman söküm yöntemleri | Rulmanı nasıl söküyorsun? |
+| 47 | 6 Kas 2026 Cum | IG, FB, LI | Günün terimi: YATAKLI RULMAN | PAYLAŞIMLI SCOOTER FİLOLARI (Uygulama) | scooter filo yedek parça, scooter motor rulmanı, paylaşımlı scooter bakım, scooter tekerlek rulmanı | Şehrinde paylaşımlı scooter var mı? |
+| 48 | 7 Kas 2026 Cmt | IG, FB | Günün kodu: UCP 205 | BUNLARI BİLİYOR MUYDUNUZ? (Marka) | rulman tarihi, rulmanı kim icat etti, rulman hakkında bilgiler | Bunlardan birini biliyor muydun? |
+| 49 | 8 Kas 2026 Paz | IG, FB | Doğru mu, yanlış mı?: Makaralı rulman, bilyalıdan daha fazla yük taşır. | “Sürtünme kaybettirir, rulman kazandırır.” (Marka) | rulman enerji verimliliği | Katılıyor musun? |
+| 50 | 9 Kas 2026 Pzt | IG, FB, LI | Günün kodu: 1204 | 1200 SERİSİ OYNAK BİLYALI (Ürün) | oynak bilyalı rulman, 1204 rulman, 1205 rulman, 2205 rulman, 1200 serisi | Oynak rulman kullandın mı? |
+| 51 | 10 Kas 2026 Sal | IG, FB, LI | Bakım ipucu: AYDA 3 DAKİKA | Saygı, sevgi ve minnetle anıyoruz. (Marka) |  | 10 Kasım 09.05 — Ulu Önder Atatürk'ü özlemle anıyoruz. |
+| 52 | 11 Kas 2026 Çar | IG, FB | Günün kodu: 6300 2RS | AÇIK MI, KAPAKLI MI? (Teknik) | açık rulman kapaklı rulman farkı, açık rulman yağlama, açık rulman nedir | Senin uygulaman? |
+| 53 | 12 Kas 2026 Per | IG, FB, LI | Günün terimi: LAZER MARKALAMA | SAHTE RULMANA KARŞI 5 KONTROL (Kurumsal) | sahte rulman nasıl anlaşılır, orijinal skf rulman kontrol, sahte skf rulman, orijinal rulman | Sahte rulmanla karşılaştın mı? |
+| 54 | 13 Kas 2026 Cum | IG, FB | Günün kodu: 6308 2RS | 6306 – 6311 AĞIR HİZMET (Ürün) | 6306 rulman, 6308 rulman, 6310 rulman, 6300 serisi rulman ölçüleri | Ağır hizmette kodun? |
+| 55 | 14 Kas 2026 Cmt | IG, FB | Bakım ipucu: MOTOR RULMANINDA C3 | ELEKTRİK MOTORU RULMANLARI (Uygulama) | elektrik motoru rulmanı, motor rulmanı değişimi, 6205 zz c3, motor sarım rulman | Motor bakımı / sarımı yapıyor musun? |
+| 56 | 15 Kas 2026 Paz | IG, FB | Doğru mu, yanlış mı?: Ses yoksa rulman sağlamdır. | “Bakım masraf değil, sigortadır.” (Marka) | planlı bakım | Katılıyor musun? |
+| 57 | 16 Kas 2026 Pzt | IG, FB, LI | Günün kodu: 6209 2RS | ARALIK DURUŞU İÇİN LİSTEYİ KASIM'DA KAPATIN. (Kurumsal) | yıllık bakım duruşu, bakım duruşu yedek parça, yıl sonu bakım planı rulman | Yıl sonu duruş planın hazır mı? |
+| 58 | 17 Kas 2026 Sal | IG, FB | Günün terimi: NLGI 2 | GRES SEÇİMİ: 4 KURAL (Teknik) | rulman gresi seçimi, rulman gres miktarı, lityum gres rulman, rulman yağlama | Gresi neye göre seçiyorsun? |
+| 59 | 18 Kas 2026 Çar | IG, FB, LI | Günün kodu: UCF 206 | UCP · UCF · UCFL YATAKLI RULMANLAR (Ürün) | ucp 205 rulman, yataklı rulman, ucf 204, uc 206, ucp yatak fiyat | Sende hangisi var? |
+| 60 | 19 Kas 2026 Per | IG, FB, LI | Bakım ipucu: ÖLÇÜNÜ YAZ, GERİSİNİ BIRAK | SORUNUZ VARSA, CEVABI BİZDE. (CTA) | rulman danışmanlık, rulman fiyat sor, rulman teknik destek, rulman whatsapp | Sorunu DM'den yaz, aynı gün cevaplıyoruz. |
 
 ## Gönderi detayları
 
 ### Gün 1 · 21 Eyl 2026 Pzt · IG, FB, LI · Marka
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun01_sabah.png`  
+**SEO anahtar kelimeler:** 6204 zz rulman, 6204 ölçüleri, 6204 rulman fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6204 ZZ rulman, 20 × 47 × 14 mm
+
+```
+Günün kodu: 6204 ZZ
+Ölçü: 20 × 47 × 14 mm (iç çap × dış çap × kalınlık)
+Kullanım: Motosiklet tekerlek, Elektrik motoru, Redüktör
+
+En çok sorulan rulman kodu. ZZ: iki tarafı metal kapaklı, ömür boyu yağlı.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun01_kare.png` · `gonderiler/gun01_linkedin.png`  
 **Başlık:** RULMANDA DOĞRU ADRES.  
@@ -115,7 +148,7 @@ Yamansa Rulman artık sosyal medyada! 1986'dan beri İkitelli OSB'den tüm Türk
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Yamansa Rulman olarak 1986'dan bu yana rulman ithalatı ve distribütörlüğü yapıyoruz. Bu sayfada sektör bilgisi, ürün serileri ve tedarik süreçlerimizi paylaşacağız.
@@ -129,7 +162,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun01_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Rulmanı nereden alıyorsun?”, seçenekler: “Sanayi çarşısı” / “Online” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: RULMANDA DOĞRU ADRES. başlığı, günün gönderi fotoğrafı ve anket: Rulmanı nereden alıyorsun?
+
 ### Gün 2 · 22 Eyl 2026 Sal · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun02_sabah.png`  
+**SEO anahtar kelimeler:** rulman ölçüleri, iç çap dış çap kalınlık, rulman ölçüsü nasıl bulunur  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: d × D × B
+
+```
+Günün terimi: d × D × B
+
+İç çap × dış çap × kalınlık. Rulmanı tanımlayan üç ölçü. Üzerindeki kod silinmiş olsa bile bu üçünü verirseniz doğru rulmanı buluruz.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun02_kare.png`  
 **Başlık:** 6200 SERİSİ SABİT BİLYALI  
@@ -155,7 +213,32 @@ ZZ mi 2RS mi? Yarın anlatıyoruz. Fiyat ve stok için DM veya yamansarulman.com
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun02_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Elinden en çok hangi seri geçiyor?”, seçenekler: “6200” / “6300” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6200 SERİSİ SABİT BİLYALI başlığı, günün gönderi fotoğrafı ve anket: Elinden en çok hangi seri geçiyor?
+
 ### Gün 3 · 23 Eyl 2026 Çar · IG, FB, LI · Teknik
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun03_sabah.png`  
+**SEO anahtar kelimeler:** orijinal rulman nasıl anlaşılır, sahte rulman, rulman kutusu  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: KUTUYU KONTROL ET
+
+```
+Bakım ipucu: Kutuyu kontrol et
+
+Orijinal üründe kutu üzerindeki kod, lot numarası ve rulmanın üstündeki lazer markalama birbirini tutar. Uyuşmuyorsa takma, sor.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun03_kare.png` · `gonderiler/gun03_linkedin.png`  
 **Başlık:** ZZ Mİ, 2RS Mİ?  
@@ -178,7 +261,7 @@ Kural: Tekerlekse 2RS, motorsa ZZ. Emin değilseniz ölçüyü yazın, birlikte 
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Rulman seçiminde kapak tipi çoğu zaman ihmal edilir; oysa arızaların önemli bir kısmı yanlış kapak seçiminden kaynaklanır.
@@ -194,7 +277,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun03_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Senin tercihin?”, seçenekler: “ZZ” / “2RS” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ZZ Mİ, 2RS Mİ? başlığı, günün gönderi fotoğrafı ve anket: Senin tercihin?
+
 ### Gün 4 · 24 Eyl 2026 Per · IG, FB, LI · Uygulama
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun04_sabah.png`  
+**SEO anahtar kelimeler:** 6301 rulman, 6301 2rs ölçüleri, motosiklet ön tekerlek rulmanı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6301 2RS rulman, 12 × 37 × 12 mm
+
+```
+Günün kodu: 6301 2RS
+Ölçü: 12 × 37 × 12 mm (iç çap × dış çap × kalınlık)
+Kullanım: Motosiklet ön tekerlek, Jeneratör, Küçük redüktör
+
+6201 ile aynı iç çap, daha kalın bilezik ve büyük bilya: daha fazla yük.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun04_kare.png` · `gonderiler/gun04_linkedin.png`  
 **Başlık:** TEKERLEK RULMANI SETLERİ  
@@ -215,7 +325,7 @@ Modelinizi yazın, doğru seti aynı gün kargolayalım.
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Motosiklet servisleri için en sık değişen parçalardan biri tekerlek rulmanı. Yanlış ölçü ya da düşük kaliteli rulman, birkaç ay içinde aynı arızayı tekrarlatır.
@@ -227,7 +337,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun04_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Tekerlek rulmanını en son ne zaman değiştirdin?”, seçenekler: “1 yıl içinde” / “Hatırlamıyorum” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: TEKERLEK RULMANI SETLERİ başlığı, günün gönderi fotoğrafı ve anket: Tekerlek rulmanını en son ne zaman değiştirdin?
+
 ### Gün 5 · 25 Eyl 2026 Cum · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun05_sabah.png`  
+**SEO anahtar kelimeler:** zz rulman gresleme, kapaklı rulman yağlama  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: ZZ rulman yeniden greslenebilir.
+
+```
+Doğru mu, yanlış mı?
+
+"ZZ rulman yeniden greslenebilir."
+
+Cevap: YANLIŞ. Metal kapaklar sökülmek için tasarlanmamıştır; rulman fabrikada ömür boyu yetecek gresle gelir. Bittiğinde komple değişir.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun05_kare.png`  
 **Başlık:** ORİJİNAL. FATURALI. STOKTAN.  
@@ -250,7 +385,34 @@ Marka tercihini yaz, fiyatı gönderelim.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun05_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Rulmanda önceliğin?”, seçenekler: “Marka” / “Fiyat” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ORİJİNAL. FATURALI. STOKTAN. başlığı, günün gönderi fotoğrafı ve anket: Rulmanda önceliğin?
+
 ### Gün 6 · 26 Eyl 2026 Cmt · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun06_sabah.png`  
+**SEO anahtar kelimeler:** 608 rulman, 608zz, kaykay rulmanı 608  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 608 ZZ rulman, 8 × 22 × 7 mm
+
+```
+Günün kodu: 608 ZZ
+Ölçü: 8 × 22 × 7 mm (iç çap × dış çap × kalınlık)
+Kullanım: Kaykay & paten, 3D yazıcı, Fan & hobi
+
+Dünyanın en çok üretilen rulmanı. ABEC sınıfı yükseldikçe tolerans daralır.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#kaykay #paten #608rulman #longboard #rulman #yamansarulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun06_kare.png`  
 **Başlık:** RULMAN KODU NASIL OKUNUR?  
@@ -276,7 +438,32 @@ Kaydet, lazım olur. Sorularınızı yoruma yazın.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun06_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “6204-2RS C3 kodunu okuyabilir misin?”, seçenekler: “Evet” / “Öğrenmek isterim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: RULMAN KODU NASIL OKUNUR? başlığı, günün gönderi fotoğrafı ve anket: 6204-2RS C3 kodunu okuyabilir misin?
+
 ### Gün 7 · 27 Eyl 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun07_sabah.png`  
+**SEO anahtar kelimeler:** abec ne demek, abec 7 rulman, abec 9 rulman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: ABEC
+
+```
+Günün terimi: ABEC
+
+Kaykay ve paten dünyasının hassasiyet sınıfı: ABEC 1, 3, 5, 7, 9. Sanayideki karşılığı ISO P0–P2. Yüksek ABEC "daha hızlı" değil, "daha dar toleranslı" demektir.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#kaykay #paten #608rulman #longboard #rulman #yamansarulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun07_kare.png`  
 **Başlık:** “Bir makinenin sesi, rulmanının sağlığıdır.”  
@@ -295,7 +482,32 @@ Bir makinenin sesi, rulmanının sağlığıdır.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun07_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Makinende garip bir ses var mı?”, seçenekler: “Var” / “Yok” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Bir makinenin sesi, rulmanının sağlığıdır.” başlığı, günün gönderi fotoğrafı ve anket: Makinende garip bir ses var mı?
+
 ### Gün 8 · 28 Eyl 2026 Pzt · IG, FB, LI · Uygulama
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun08_sabah.png`  
+**SEO anahtar kelimeler:** rulman montajı nasıl yapılır, rulman takma, rulman montaj hataları  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: ÇEKİÇLE VURMA
+
+```
+Bakım ipucu: Çeki̇çle vurma
+
+Rulmanı mile takarken kuvveti yalnızca iç bileziğe, yuvaya takarken yalnızca dış bileziğe uygula. Bilyalar üzerinden geçen darbe yolları çentikler.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun08_kare.png` · `gonderiler/gun08_linkedin.png`  
 **Başlık:** SCOOTER RULMANLARI STOKTA  
@@ -316,7 +528,7 @@ Modelinizi yazın, doğru ölçüyü gönderelim.
 #elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Mikro mobilite pazarı büyüdükçe e-scooter servis ağı da genişliyor. Bu araçlarda kullanılan ince kesit rulmanlar (6800/6900 serisi) klasik motosiklet rulmanlarından farklı toleranslar ister.
@@ -328,7 +540,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #elektrikliscooter #scooter #xiaomi #segway
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun08_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Scooter'ın markası?”, seçenekler: “Xiaomi / Segway” / “Diğer” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: SCOOTER RULMANLARI STOKTA başlığı, günün gönderi fotoğrafı ve anket: Scooter'ın markası?
+
 ### Gün 9 · 29 Eyl 2026 Sal · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun09_sabah.png`  
+**SEO anahtar kelimeler:** 6304 rulman, 6304 2rs, motosiklet arka tekerlek rulmanı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6304 2RS rulman, 20 × 52 × 15 mm
+
+```
+Günün kodu: 6304 2RS
+Ölçü: 20 × 52 × 15 mm (iç çap × dış çap × kalınlık)
+Kullanım: Motosiklet arka tekerlek, Tarım makinesi, Kompresör
+
+6204 ile aynı 20 mm iç çap; dış çap ve kalınlık daha büyük, yük kapasitesi daha yüksek.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun09_kare.png`  
 **Başlık:** 6300 SERİSİ AĞIR HİZMET  
@@ -354,7 +593,32 @@ Motosiklet arka tekerlek, tarım makinesi, redüktör. Stok için DM.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun09_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “6300 serisini nerede kullanıyorsun?”, seçenekler: “Motosiklet” / “Sanayi” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6300 SERİSİ AĞIR HİZMET başlığı, günün gönderi fotoğrafı ve anket: 6300 serisini nerede kullanıyorsun?
+
 ### Gün 10 · 30 Eyl 2026 Çar · IG, FB, LI · Teknik
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun10_sabah.png`  
+**SEO anahtar kelimeler:** 6204 6004 farkı, 6004 rulman ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: 6204 ile 6004 aynı mile takılır.
+
+```
+Doğru mu, yanlış mı?
+
+"6204 ile 6004 aynı mile takılır."
+
+Cevap: DOĞRU. İkisinin de iç çapı 20 mm. Fark dış çapta: 6204 → 47 mm, 6004 → 42 mm. Hangisinin gireceğini yuva belirler.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun10_kare.png` · `gonderiler/gun10_linkedin.png`  
 **Başlık:** C3 BOŞLUK NE DEMEK?  
@@ -378,7 +642,7 @@ Mil çalışırken ısınıyor ve genleşiyorsa C3 alın. Aksi halde rulman sık
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 "C3" rulman kodlarında en çok yanlış anlaşılan ek. C3, kalite ya da marka değil; iç boşluk (radyal klerans) sınıfıdır.
@@ -392,7 +656,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun10_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “C3 boşluk ne demek biliyor muydun?”, seçenekler: “Biliyordum” / “Yeni öğrendim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: C3 BOŞLUK NE DEMEK? başlığı, günün gönderi fotoğrafı ve anket: C3 boşluk ne demek biliyor muydun?
+
 ### Gün 11 · 1 Eki 2026 Per · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun11_sabah.png`  
+**SEO anahtar kelimeler:** 6001 rulman, 6001 2rs, scooter tekerlek rulmanı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6001 2RS rulman, 12 × 28 × 8 mm
+
+```
+Günün kodu: 6001 2RS
+Ölçü: 12 × 28 × 8 mm (iç çap × dış çap × kalınlık)
+Kullanım: E-scooter tekerlek, Elektrikli el aleti, Küçük motor
+
+Scooter tekerleklerinde en sık değişen kodlardan biri. 2RS: kauçuk keçeli, suya ve toza kapalı.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun11_kare.png`  
 **Başlık:** RULMAN BİTTİ Mİ? 5 İŞARET  
@@ -417,7 +708,32 @@ Birini bile fark ettiyseniz bekletmeyin; bitmiş rulman göbeği ve mili de boza
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun11_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Rulmanın bittiğini ilk nasıl anlarsın?”, seçenekler: “Ses” / “Titreşim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: RULMAN BİTTİ Mİ? 5 İŞARET başlığı, günün gönderi fotoğrafı ve anket: Rulmanın bittiğini ilk nasıl anlarsın?
+
 ### Gün 12 · 2 Eki 2026 Cum · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun12_sabah.png`  
+**SEO anahtar kelimeler:** radyal yük eksenel yük, rulman yük tipleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: RADYAL / EKSENEL YÜK
+
+```
+Günün terimi: RADYAL / EKSENEL YÜK
+
+Radyal yük mile dik, eksenel yük mil boyunca gelir. Sabit bilyalı rulman ikisini de taşır ama eksenelde sınırlıdır; konik makaralı eksenel yükte güçlüdür.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun12_kare.png` · `gonderiler/gun12_linkedin.png`  
 **Başlık:** STOKTAN, AYNI GÜN KARGO.  
@@ -438,7 +754,7 @@ yamansarulman.com üzerinden stok durumunu anlık görebilirsiniz.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Bakım duruşlarında en pahalı şey beklemektir. Bu nedenle stok politikamız net: en çok dönen serilerde derin stok, günlük güncellenen stok görünürlüğü ve saat 15:00'e kadar aynı gün sevkiyat.
@@ -450,7 +766,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun12_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Acil rulmanı kaç günde alabiliyorsun?”, seçenekler: “1 gün” / “3+ gün” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: STOKTAN, AYNI GÜN KARGO. başlığı, günün gönderi fotoğrafı ve anket: Acil rulmanı kaç günde alabiliyorsun?
+
 ### Gün 13 · 3 Eki 2026 Cmt · IG, FB · CTA
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun13_sabah.png`  
+**SEO anahtar kelimeler:** rulman sıcaklığı, rulman ısınması nedenleri, rulman arıza belirtisi  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: SICAKLIĞI ÖLÇ
+
+```
+Bakım ipucu: Sicakliği ölç
+
+Rulman yuvası 60 °C'yi geçince ele dokunulmaz olur. Kızılötesi termometre 5 saniyede ölçer; ani sıcaklık artışı arızanın ilk sinyalidir.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun13_kare.png`  
 **Başlık:** İÇ ÇAP × DIŞ ÇAP × KALINLIK  
@@ -474,7 +815,34 @@ Kumpasla üç ölçü al:
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun13_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Elinin altında kumpas var mı?”, seçenekler: “Var” / “Yok” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: İÇ ÇAP × DIŞ ÇAP × KALINLIK başlığı, günün gönderi fotoğrafı ve anket: Elinin altında kumpas var mı?
+
 ### Gün 14 · 4 Eki 2026 Paz · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun14_sabah.png`  
+**SEO anahtar kelimeler:** 6205 rulman, 6205 2rs ölçüleri, 6205 fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6205 2RS rulman, 25 × 52 × 15 mm
+
+```
+Günün kodu: 6205 2RS
+Ölçü: 25 × 52 × 15 mm (iç çap × dış çap × kalınlık)
+Kullanım: Elektrik motoru, Pompa, Konveyör
+
+Sanayide en çok dönen kodlardan biri. Çamaşır makinesi kazanlarında da karşınıza çıkar.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun14_kare.png`  
 **Başlık:** 2RS'İN İÇİNDE NE VAR?  
@@ -495,7 +863,34 @@ Keçeli rulmanlar fabrikada lityum bazlı gresle dolu gelir; keçe gresi içerid
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun14_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “2RS rulmanı hiç gresledin mi?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 2RS'İN İÇİNDE NE VAR? başlığı, günün gönderi fotoğrafı ve anket: 2RS rulmanı hiç gresledin mi?
+
 ### Gün 15 · 5 Eki 2026 Pzt · IG, FB · Uygulama
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun15_sabah.png`  
+**SEO anahtar kelimeler:** 6802 rulman, 6802zz, ince kesit rulman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6802 ZZ rulman, 15 × 24 × 5 mm
+
+```
+Günün kodu: 6802 ZZ
+Ölçü: 15 × 24 × 5 mm (iç çap × dış çap × kalınlık)
+Kullanım: Bisiklet göbeği, Drone & robotik, İnce mekanizma
+
+5 mm kalınlık: yer olmayan yerde çözüm. 6800 serisi ince kesit.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#bisiklet #salcano #bisikletyedekparça #bisiklettamir
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun15_kare.png`  
 **Başlık:** GÖBEK RULMANLARI  
@@ -514,7 +909,32 @@ Salcano ve yaygın markalar için ön/arka göbek, orta göbek (BB) ve pedal rul
 #bisiklet #salcano #bisikletyedekparça #bisiklettamir
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun15_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Göbek rulmanını kim değiştiriyor?”, seçenekler: “Kendim” / “Servis” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: GÖBEK RULMANLARI başlığı, günün gönderi fotoğrafı ve anket: Göbek rulmanını kim değiştiriyor?
+
 ### Gün 16 · 6 Eki 2026 Sal · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun16_sabah.png`  
+**SEO anahtar kelimeler:** c3 rulman ne demek, c3 boşluk, 6204 c3  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: C3
+
+```
+Günün terimi: C3
+
+Standarttan daha büyük iç boşluk. Mil ısınıp genleştiğinde boşluk sıfırlanmasın diye seçilir. Elektrik motorlarında neredeyse standart.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun16_kare.png`  
 **Başlık:** 6000 SERİSİ HAFİF KESİT  
@@ -540,7 +960,32 @@ Bisiklet göbeği, küçük elektrik motorları, ev aletleri. Stokta.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun16_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “İnce kesit rulman kullanıyor musun?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6000 SERİSİ HAFİF KESİT başlığı, günün gönderi fotoğrafı ve anket: İnce kesit rulman kullanıyor musun?
+
 ### Gün 17 · 7 Eki 2026 Çar · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun17_sabah.png`  
+**SEO anahtar kelimeler:** sahte rulman nasıl anlaşılır, orijinal rulman kontrolü  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Kutusuz ama parlak rulman orijinaldir.
+
+```
+Doğru mu, yanlış mı?
+
+"Kutusuz ama parlak rulman orijinaldir."
+
+Cevap: ŞÜPHELİ. Parlaklık kaliteyi göstermez. Lazer markalama derinliğine, kutu–lot eşleşmesine ve faturaya bak. Emin değilsen fotoğrafını gönder.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun17_kare.png` · `gonderiler/gun17_linkedin.png`  
 **Başlık:** TEK KAYNAK, BÜTÜN MARKALAR.  
@@ -561,7 +1006,7 @@ Bayi başvurusu için DM veya 0212 670 02 05.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Çok markalı rulman tedarikinde en büyük maliyet, dağınık tedarik zinciridir: farklı tedarikçiler, farklı teslim süreleri, farklı fatura ve kalite standartları.
@@ -573,7 +1018,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun17_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Kaç tedarikçiden alım yapıyorsun?”, seçenekler: “1–2” / “3+” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: TEK KAYNAK, BÜTÜN MARKALAR. başlığı, günün gönderi fotoğrafı ve anket: Kaç tedarikçiden alım yapıyorsun?
+
 ### Gün 18 · 8 Eki 2026 Per · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun18_sabah.png`  
+**SEO anahtar kelimeler:** rulman montajı temizlik, rulman ömrü nasıl uzar  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: MONTAJ ÖNCESİ TEMİZLİK
+
+```
+Bakım ipucu: Montaj öncesi̇ temi̇zli̇k
+
+Mili ve yuvayı çapaktan, eski gresten ve talaştan temizle; ince bir yağ filmi sür. Kum tanesi kadar kir rulman ömrünü ciddi kısaltır.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun18_kare.png`  
 **Başlık:** MONTAJDA 5 ÖLÜMCÜL HATA  
@@ -598,7 +1068,34 @@ Montaj kovanı veya pres kullanın. Kaydet, ustana gönder.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun18_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Rulmanı hiç çekiçle taktın mı?”, seçenekler: “Evet 🙈” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: MONTAJDA 5 ÖLÜMCÜL HATA başlığı, günün gönderi fotoğrafı ve anket: Rulmanı hiç çekiçle taktın mı?
+
 ### Gün 19 · 9 Eki 2026 Cum · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun19_sabah.png`  
+**SEO anahtar kelimeler:** 6203 rulman, 6203 2rs, 6203 zz ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6203 2RS rulman, 17 × 40 × 12 mm
+
+```
+Günün kodu: 6203 2RS
+Ölçü: 17 × 40 × 12 mm (iç çap × dış çap × kalınlık)
+Kullanım: Motosiklet, Kasnak & gergi, Kompresör
+
+Küçük motosikletlerde ve kasnak sistemlerinde standart. 6203 ZZ ve 2RS stokta.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun19_kare.png`  
 **Başlık:** BÜTÇE DOSTU, TEST EDİLMİŞ.  
@@ -619,7 +1116,34 @@ Aynı ölçüde SKF/FAG ile yan yana fiyat isteyin, karar sizin.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun19_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Yamansa marka setleri denedin mi?”, seçenekler: “Evet” / “Henüz” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: BÜTÇE DOSTU, TEST EDİLMİŞ. başlığı, günün gönderi fotoğrafı ve anket: Yamansa marka setleri denedin mi?
+
 ### Gün 20 · 10 Eki 2026 Cmt · IG, FB, LI · Uygulama
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun20_sabah.png`  
+**SEO anahtar kelimeler:** 30204 rulman, 30204 konik rulman ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 30204 rulman, 20 × 47 × 15,25 mm
+
+```
+Günün kodu: 30204
+Ölçü: 20 × 47 × 15,25 mm (iç çap × dış çap × kalınlık)
+Kullanım: Direksiyon, Redüktör, Aks
+
+Konik makaralı: radyal ve tek yön eksenel yükü birlikte taşır. Çift takılır, ön yükle ayarlanır.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun20_kare.png` · `gonderiler/gun20_linkedin.png`  
 **Başlık:** HANGİ MOTOR, HANGİ RULMAN?  
@@ -640,7 +1164,7 @@ Honda • Yamaha • Bajaj • KTM • CFMOTO • Suzuki • Mondial • RKS •
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Motosiklet sektöründe yerli montaj markaların (Mondial, RKS, Kuba, Yuki, Arora, Kanuni…) payı hızla artıyor ve bu modellerin rulman ölçüleri Japon markalarından farklılaşıyor.
@@ -652,7 +1176,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun20_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Motorun?”, seçenekler: “Honda / Yamaha” / “Diğer” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: HANGİ MOTOR, HANGİ RULMAN? başlığı, günün gönderi fotoğrafı ve anket: Motorun?
+
 ### Gün 21 · 11 Eki 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun21_sabah.png`  
+**SEO anahtar kelimeler:** konik makaralı rulman nedir, konik rulman kullanım alanları  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: KONİK MAKARALI
+
+```
+Günün terimi: KONİK MAKARALI
+
+Makaralar ve yuvarlanma yolları konik. Radyal + tek yönlü eksenel yük. Genellikle karşılıklı çift kullanılır ve montajda ön yük verilir.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun21_kare.png`  
 **Başlık:** “Kalite, duyulmayan sestir.”  
@@ -671,7 +1220,32 @@ Kalite, duyulmayan sestir.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun21_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Katılıyor musun?”, seçenekler: “Evet” / “Kesinlikle” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Kalite, duyulmayan sestir.” başlığı, günün gönderi fotoğrafı ve anket: Katılıyor musun?
+
 ### Gün 22 · 12 Eki 2026 Pzt · IG, FB, LI · Ürün
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun22_sabah.png`  
+**SEO anahtar kelimeler:** rulman gres miktarı, rulman fazla gres, rulman yağlama  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Daha fazla gres, daha uzun ömür demektir.
+
+```
+Doğru mu, yanlış mı?
+
+"Daha fazla gres, daha uzun ömür demektir."
+
+Cevap: YANLIŞ. Fazla gres çalkalanır, ısınır ve keçeyi zorlar. Açık rulmanda yuva boş hacminin yaklaşık üçte biri yeterlidir.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun22_kare.png` · `gonderiler/gun22_linkedin.png`  
 **Başlık:** KONİK. SİLİNDİRİK. OYNAK.  
@@ -695,7 +1269,7 @@ Redüktör, konveyör, pompa, tezgâh. Ölçü ve kodunuzu yazın.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Sanayi uygulamalarında rulman seçimi yük tipiyle başlar: radyal yük için silindirik makaralı (NU, NJ), birleşik yük için konik makaralı (30200/30300), eksen kaçıklığı olan uzun millerde oynak bilyalı (1200/2200) rulmanlar.
@@ -707,7 +1281,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun22_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “İşinde hangisi daha çok?”, seçenekler: “Konik” / “Silindirik” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: KONİK. SİLİNDİRİK. OYNAK. başlığı, günün gönderi fotoğrafı ve anket: İşinde hangisi daha çok?
+
 ### Gün 23 · 13 Eki 2026 Sal · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun23_sabah.png`  
+**SEO anahtar kelimeler:** 6902 rulman, 6902 2rs, bisiklet göbek rulmanı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6902 2RS rulman, 15 × 28 × 7 mm
+
+```
+Günün kodu: 6902 2RS
+Ölçü: 15 × 28 × 7 mm (iç çap × dış çap × kalınlık)
+Kullanım: Bisiklet göbek, RC & model, Robotik
+
+6900 serisi: 6800'den biraz daha kalın, daha yüklü ince kesit.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#bisiklet #salcano #bisikletyedekparça #bisiklettamir
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun23_kare.png`  
 **Başlık:** 6800 / 6900 İNCE KESİT  
@@ -733,7 +1334,32 @@ E-scooter tekerlekleri, drone motorları, bisiklet göbekleri. NMB ve TPI seçen
 #elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun23_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “6800 / 6900 nerede karşına çıkıyor?”, seçenekler: “Bisiklet” / “Drone / robotik” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6800 / 6900 İNCE KESİT başlığı, günün gönderi fotoğrafı ve anket: 6800 / 6900 nerede karşına çıkıyor?
+
 ### Gün 24 · 14 Eki 2026 Çar · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun24_sabah.png`  
+**SEO anahtar kelimeler:** rulman sesi nasıl anlaşılır, rulman uğultusu, makine sesi kontrolü  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: SESİ KAYDET
+
+```
+Bakım ipucu: Sesi̇ kaydet
+
+Makinenin normal sesini telefonla 10 saniye kaydet; ayda bir aynı noktadan tekrar dinle. Tonun değişmesi arızayı aylar önce haber verir.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun24_kare.png` · `gonderiler/gun24_linkedin.png`  
 **Başlık:** STOK, HER GÜN GÜNCELLENİR.  
@@ -754,7 +1380,7 @@ yamansarulman.com'da gördüğünüz stok, o günün gerçek stoğu. Her sabah g
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 B2B e-ticarette en büyük güven sorunu stok bilgisinin gerçek olmamasıdır. Yamansa'da ürün sayfalarındaki stok her gün otomatik olarak güncellenir; satın alma ekipleri telefonla doğrulama yapmak zorunda kalmaz.
@@ -766,7 +1392,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun24_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Stok bilgisine nasıl bakıyorsun?”, seçenekler: “Siteden” / “Telefonla” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: STOK, HER GÜN GÜNCELLENİR. başlığı, günün gönderi fotoğrafı ve anket: Stok bilgisine nasıl bakıyorsun?
+
 ### Gün 25 · 15 Eki 2026 Per · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun25_sabah.png`  
+**SEO anahtar kelimeler:** 6206 rulman, 6206 2rs ölçüleri, 6206 fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6206 2RS rulman, 30 × 62 × 16 mm
+
+```
+Günün kodu: 6206 2RS
+Ölçü: 30 × 62 × 16 mm (iç çap × dış çap × kalınlık)
+Kullanım: Pompa, Fan, Tarım makinesi
+
+30 mm mil için ilk akla gelen kod. Çamaşır makinesi kazanlarında 6205 ile birlikte kullanılır.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun25_kare.png`  
 **Başlık:** KUMPASLA RULMAN ÖLÇÜMÜ  
@@ -790,7 +1443,32 @@ Kod silindi, rulman elimde: ne yapayım?
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun25_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Kumpasla ölçüm yapabiliyor musun?”, seçenekler: “Evet” / “Öğrenmek isterim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: KUMPASLA RULMAN ÖLÇÜMÜ başlığı, günün gönderi fotoğrafı ve anket: Kumpasla ölçüm yapabiliyor musun?
+
 ### Gün 26 · 16 Eki 2026 Cum · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun26_sabah.png`  
+**SEO anahtar kelimeler:** rulman ön yük nedir, konik rulman ayarı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: ÖN YÜK
+
+```
+Günün terimi: ÖN YÜK
+
+Montajda rulmana bilinçli verilen küçük eksenel sıkılık. Konik rulmanlarda boşluğu sıfırlar; direksiyon ve mil sistemlerinde titreşimi keser.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun26_kare.png`  
 **Başlık:** 6204 MÜ, 6304 MÜ?  
@@ -812,7 +1490,34 @@ Kural: Yuva ölçüsü neyse o. 47 mm yuvaya 6304 girmez; 52 mm yuvada 6204 dön
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun26_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Senin makinende hangisi?”, seçenekler: “6204” / “6304” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6204 MÜ, 6304 MÜ? başlığı, günün gönderi fotoğrafı ve anket: Senin makinende hangisi?
+
 ### Gün 27 · 17 Eki 2026 Cmt · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun27_sabah.png`  
+**SEO anahtar kelimeler:** 6900 rulman, 6900zz ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6900 ZZ rulman, 10 × 22 × 6 mm
+
+```
+Günün kodu: 6900 ZZ
+Ölçü: 10 × 22 × 6 mm (iç çap × dış çap × kalınlık)
+Kullanım: Mini scooter, Drone, Model & hobi
+
+10 mm mil, 22 mm yuva. Küçük ama tam bir sabit bilyalı rulman.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun27_kare.png` · `gonderiler/gun27_linkedin.png`  
 **Başlık:** ÖLÇÜ. MUADİL. MARKA ÖNERİSİ.  
@@ -833,7 +1538,7 @@ DM, WhatsApp veya 0212 670 02 05.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Bakım ekiplerinin sık karşılaştığı sorun: eski makinelerde üretimi durmuş ya da farklı standartta kodlanmış rulmanlar. Bu durumda doğru muadili bulmak, makinenin ömrünü belirler.
@@ -845,7 +1550,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun27_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Bize en çok ne soruyorsun?”, seçenekler: “Fiyat” / “Muadil” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ÖLÇÜ. MUADİL. MARKA ÖNERİSİ. başlığı, günün gönderi fotoğrafı ve anket: Bize en çok ne soruyorsun?
+
 ### Gün 28 · 18 Eki 2026 Paz · IG, FB · CTA
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun28_sabah.png`  
+**SEO anahtar kelimeler:** zz 2rs farkı, zz mi 2rs mi, kapaklı rulman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: ZZ, 2RS'ten daha hızlı döner.
+
+```
+Doğru mu, yanlış mı?
+
+"ZZ, 2RS'ten daha hızlı döner."
+
+Cevap: DOĞRU. Metal kapak bileziğe temas etmez, sürtünme düşüktür. 2RS'in kauçuk keçesi sürter ama toz ve suya karşı çok daha iyi korur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun28_kare.png`  
 **Başlık:** ÖN + ARKA SET, KARGO BİZDEN.  
@@ -866,7 +1596,32 @@ Kampanya 25 Ekim'e kadar geçerlidir.
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun28_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Ön + arka set ister misin?”, seçenekler: “Evet” / “Sadece ön” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ÖN + ARKA SET, KARGO BİZDEN. başlığı, günün gönderi fotoğrafı ve anket: Ön + arka set ister misin?
+
 ### Gün 29 · 19 Eki 2026 Pzt · IG, FB, LI · Marka
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun29_sabah.png`  
+**SEO anahtar kelimeler:** rulman ısıtarak montaj, indüksiyon ısıtıcı rulman, büyük rulman montajı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: ISITARAK TAK
+
+```
+Bakım ipucu: Isitarak tak
+
+Büyük rulmanı 80–100 °C'ye ısıt (indüksiyon ısıtıcı veya yağ banyosu), genleşince mile kaydır. Çekiç değil, ısı.
+
+Kaydet; bakım günü lazım olur.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun29_kare.png` · `gonderiler/gun29_linkedin.png`  
 **Başlık:** 40 YILA YAKIN TECRÜBE.  
@@ -887,7 +1642,7 @@ Bizi takip ettiğiniz için teşekkürler.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Yamansa Rulman 1986'da İkitelli'de kuruldu. 40 yıla yaklaşan sürede rulman ithalatı ve distribütörlüğünde uzmanlaştık; kendi alanında uzman üreticilerin yeni nesil rulmanlarını Türkiye pazarına sunduk.
@@ -899,7 +1654,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun29_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Yamansa'yı ne zamandır tanıyorsun?”, seçenekler: “5+ yıl” / “Yeni tanıştım” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 40 YILA YAKIN TECRÜBE. başlığı, günün gönderi fotoğrafı ve anket: Yamansa'yı ne zamandır tanıyorsun?
+
 ### Gün 30 · 20 Eki 2026 Sal · IG, FB, LI · CTA
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun30_sabah.png`  
+**SEO anahtar kelimeler:** 6305 rulman, 6305 2rs ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6305 2RS rulman, 25 × 62 × 17 mm
+
+```
+Günün kodu: 6305 2RS
+Ölçü: 25 × 62 × 17 mm (iç çap × dış çap × kalınlık)
+Kullanım: Ağır hizmet motor, Kırıcı, Tarım
+
+6205 ile aynı 25 mm mil, çok daha yüksek yük. Darbeli çalışan makinelerin tercihi.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun30_kare.png` · `gonderiler/gun30_linkedin.png`  
 **Başlık:** ÖLÇÜNÜ GİR, RULMANINI BUL.  
@@ -920,7 +1702,7 @@ Kaçırdığınız gönderiler için profilimize göz atın. Sorularınız için
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Bir aylık içerik serimizde rulman kodlarını, kapak ve boşluk sınıflarını, ölçü almayı ve montaj hatalarını ele aldık. Tüm içeriklere sayfamızdan ulaşabilirsiniz.
@@ -932,7 +1714,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun30_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Sitedeki ölçü filtresini denedin mi?”, seçenekler: “Evet” / “Şimdi deneyeceğim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ÖLÇÜNÜ GİR, RULMANINI BUL. başlığı, günün gönderi fotoğrafı ve anket: Sitedeki ölçü filtresini denedin mi?
+
 ### Gün 31 · 21 Eki 2026 Çar · IG, FB, LI · Teknik
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun31_sabah.png`  
+**SEO anahtar kelimeler:** 2rs ne demek, rs rulman, keçeli rulman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: RS / 2RS
+
+```
+Günün terimi: RS / 2RS
+
+Rubber Seal: kauçuk keçe. RS tek taraf, 2RS çift taraf keçeli. Toz ve suya kapalı, gres içeride. Dış ortamda çalışan her rulmanın ilk tercihi.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun31_kare.png` · `gonderiler/gun31_linkedin.png`  
 **Başlık:** Z, ZZ, RS, 2RS, 2RZ NE DEMEK?  
@@ -956,7 +1763,7 @@ Kaydet; ölçünüzü yazarken harfleri de yazın, tam eşleşme gönderelim.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Rulman kodlarındaki kapak ekleri markadan markaya değişir ve satın almada sık karışıklık yaratır: SKF 2RS1 / 2RZ, NSK DDU / VV, FAG 2RSR / 2HRS aynı işlevi karşılar.
@@ -970,7 +1777,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun31_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Kapak kodlarını karıştırıyor musun?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: Z, ZZ, RS, 2RS, 2RZ NE DEMEK? başlığı, günün gönderi fotoğrafı ve anket: Kapak kodlarını karıştırıyor musun?
+
 ### Gün 32 · 22 Eki 2026 Per · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun32_sabah.png`  
+**SEO anahtar kelimeler:** 6207 rulman, 6207 2rs, 6207 fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6207 2RS rulman, 35 × 72 × 17 mm
+
+```
+Günün kodu: 6207 2RS
+Ölçü: 35 × 72 × 17 mm (iç çap × dış çap × kalınlık)
+Kullanım: Elektrik motoru, Pompa, Redüktör
+
+35 mm mil. Orta güçte elektrik motorlarının ön ve arka yatağında sık karşılaşılır.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun32_kare.png`  
 **Başlık:** 6206 – 6211 BÜYÜK ÖLÇÜLER  
@@ -996,7 +1830,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun32_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Büyük ölçüde en çok?”, seçenekler: “6206–6207” / “6208+” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6206 – 6211 BÜYÜK ÖLÇÜLER başlığı, günün gönderi fotoğrafı ve anket: Büyük ölçüde en çok?
+
 ### Gün 33 · 23 Eki 2026 Cum · IG, FB, LI · Uygulama
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun33_sabah.png`  
+**SEO anahtar kelimeler:** 6202 rulman, 6202 zz ölçüleri, 6202 fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6202 ZZ rulman, 15 × 35 × 11 mm
+
+```
+Günün kodu: 6202 ZZ
+Ölçü: 15 × 35 × 11 mm (iç çap × dış çap × kalınlık)
+Kullanım: Fan, Alternatör, Küçük motor
+
+15 mm mil için standart. Fan ve küçük motorların vazgeçilmezi.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun33_kare.png` · `gonderiler/gun33_linkedin.png`  
 **Başlık:** ÇAMAŞIR MAKİNESİ RULMANI.  
@@ -1019,7 +1880,7 @@ Marka ne olursa olsun kodu rulmanın üzerinde yazar; silinmişse üç ölçüy�
 #çamaşırmakinesi #beyazeşya #beyazeşyatamir #çamaşırmakinesirulmanı #rulman #yamansarulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Beyaz eşya servislerinde en yüksek adetli rulman değişimi çamaşır makinesi kazan rulmanlarıdır. Çoğu model 6204–6206 ve 6305–6306 kodlarını kullanır; keçe ile birlikte set olarak değişmesi gerekir.
@@ -1031,7 +1892,32 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #çamaşırmakinesi #beyazeşya #beyazeşyatamir #çamaşırmakinesirulmanı
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun33_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Çamaşır makinesinde rulman değiştirdin mi?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ÇAMAŞIR MAKİNESİ RULMANI. başlığı, günün gönderi fotoğrafı ve anket: Çamaşır makinesinde rulman değiştirdin mi?
+
 ### Gün 34 · 24 Eki 2026 Cmt · IG, FB · Uygulama
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun34_sabah.png`  
+**SEO anahtar kelimeler:** 608 rulman kullanım alanları, 608 ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Kaykaydaki 608 ile 3D yazıcıdaki 608 aynıdır.
+
+```
+Doğru mu, yanlış mı?
+
+"Kaykaydaki 608 ile 3D yazıcıdaki 608 aynıdır."
+
+Cevap: DOĞRU. İkisi de 8 × 22 × 7 mm. Fark hassasiyet sınıfı (ABEC) ve kapak tipinde; ölçü her yerde aynıdır.
+
+#kaykay #paten #608rulman #longboard #rulman #yamansarulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun34_kare.png`  
 **Başlık:** 608: DÜNYANIN EN ÇOK SATAN RULMANI  
@@ -1056,7 +1942,32 @@ Adetli fiyat için DM. Hafta sonu keyifli sürüşler.
 #kaykay #paten #608rulman #longboard #rulman #yamansarulman
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun34_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “608'i nerede kullanıyorsun?”, seçenekler: “Kaykay / paten” / “3D yazıcı / hobi” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 608: DÜNYANIN EN ÇOK SATAN RULMANI başlığı, günün gönderi fotoğrafı ve anket: 608'i nerede kullanıyorsun?
+
 ### Gün 35 · 25 Eki 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun35_sabah.png`  
+**SEO anahtar kelimeler:** rulman saklama koşulları, rulman depolama, rulman paslanması  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: AÇIK RAFTA BEKLETME
+
+```
+Bakım ipucu: Açik rafta bekletme
+
+Rulmanı orijinal ambalajında, kuru ve titreşimsiz bir yerde sakla. Açık rafta nem ilk aydan pas başlatır; titreşim duran bilyada iz yapar.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun35_kare.png`  
 **Başlık:** “Dönen her şeyin altında bir rulman vardır.”  
@@ -1075,7 +1986,32 @@ Dönen her şeyin altında bir rulman vardır.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun35_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Katılıyor musun?”, seçenekler: “Evet” / “Kesinlikle” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Dönen her şeyin altında bir rulman vardır.” başlığı, günün gönderi fotoğrafı ve anket: Katılıyor musun?
+
 ### Gün 36 · 26 Eki 2026 Pzt · IG, FB, LI · Teknik
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun36_sabah.png`  
+**SEO anahtar kelimeler:** pitting nedir, rulman çukurlaşma, rulman arıza analizi  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: PİTTİNG
+
+```
+Günün terimi: PİTTİNG
+
+Yuvarlanma yüzeyinde oluşan küçük çukurlar. Yorulma, kir veya aşırı yükün izi. Ses ve titreşimin en yaygın kök nedeni; başladıysa geri dönüşü yok.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun36_kare.png` · `gonderiler/gun36_linkedin.png`  
 **Başlık:** RULMAN NEDEN ERKEN BİTER?  
@@ -1100,7 +2036,7 @@ Bitmiş rulmanı atmayın; fotoğrafını DM'den gönderin, iz tipinden nedeni b
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Saha verilerine göre rulman arızalarının yalnızca küçük bir kısmı malzeme yorulmasından kaynaklanır; çoğunluğu yağlama, kirlenme ve montaj hatalarına bağlıdır.
@@ -1114,7 +2050,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #rulmanteknik #makinebakım #bakımonarım #mühendislik
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun36_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Sende rulman en çok neden bitiyor?”, seçenekler: “Kir / su” / “Montaj hatası” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: RULMAN NEDEN ERKEN BİTER? başlığı, günün gönderi fotoğrafı ve anket: Sende rulman en çok neden bitiyor?
+
 ### Gün 37 · 27 Eki 2026 Sal · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun37_sabah.png`  
+**SEO anahtar kelimeler:** 32005 rulman, 32005 konik rulman ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 32005 rulman, 25 × 47 × 15 mm
+
+```
+Günün kodu: 32005
+Ölçü: 25 × 47 × 15 mm (iç çap × dış çap × kalınlık)
+Kullanım: Direksiyon, Aks, Redüktör
+
+Konik makaralı, 30205'in ince kesitli kardeşi: aynı mil, daha küçük dış çap.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun37_kare.png`  
 **Başlık:** 30200 SERİSİ KONİK RULMAN  
@@ -1140,7 +2103,34 @@ Konik rulmanlar çift olarak çalışır; ön yük ayarı ömrü belirler. Araç
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun37_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Konik rulman çiftini kim ayarlıyor?”, seçenekler: “Kendim” / “Servis” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 30200 SERİSİ KONİK RULMAN başlığı, günün gönderi fotoğrafı ve anket: Konik rulman çiftini kim ayarlıyor?
+
 ### Gün 38 · 28 Eki 2026 Çar · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun38_sabah.png`  
+**SEO anahtar kelimeler:** 6008 rulman, 6008 2rs ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6008 2RS rulman, 40 × 68 × 15 mm
+
+```
+Günün kodu: 6008 2RS
+Ölçü: 40 × 68 × 15 mm (iç çap × dış çap × kalınlık)
+Kullanım: Pompa, Mil yatağı, Takım tezgâhı
+
+40 mm mil için hafif kesit. Yüksek devir, orta yük.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun38_kare.png` · `gonderiler/gun38_linkedin.png`  
 **Başlık:** KRİTİK YEDEK LİSTESİ  
@@ -1166,7 +2156,7 @@ Listenizi çıkarmada yardımcı oluyoruz; makine listenizi DM'den gönderin.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Planlı bakımın en ucuz sigortası kritik yedek listesidir. Yüksek duruş maliyetli ekipmanların rulman kodları, adetleri ve onaylı muadilleri tek bir listede tutulmalı; tedarik süresi uzun kalemler rafta bekletilmelidir.
@@ -1178,7 +2168,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun38_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Kritik yedek listen var mı?”, seçenekler: “Var” / “Yok” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: KRİTİK YEDEK LİSTESİ başlığı, günün gönderi fotoğrafı ve anket: Kritik yedek listen var mı?
+
 ### Gün 39 · 29 Eki 2026 Per · IG, FB, LI · Marka
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun39_sabah.png`  
+**SEO anahtar kelimeler:** rulman geçme toleransı, rulman mile nasıl takılır  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Rulman mile sıkı, yuvaya boş takılır.
+
+```
+Doğru mu, yanlış mı?
+
+"Rulman mile sıkı, yuvaya boş takılır."
+
+Cevap: GENELDE DOĞRU. Dönen bilezik sıkı geçme, sabit bilezik hafif geçme. Çoğu uygulamada iç bilezik döner: mile sıkı, yuvaya kaydırmalı.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun39_kare.png` · `gonderiler/gun39_linkedin.png`  
 **Başlık:** CUMHURİYET BAYRAMIMIZ KUTLU OLSUN.  
@@ -1197,7 +2212,7 @@ Cumhuriyetimizin 103. yılı kutlu olsun.
 #29Ekim #CumhuriyetBayramı #Cumhuriyet #yamansarulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Cumhuriyetimizin 103. yılı kutlu olsun. Üreten ve çalışan Türkiye'nin bir parçası olmaktan gurur duyuyoruz.
@@ -1207,7 +2222,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #29Ekim #CumhuriyetBayramı #Cumhuriyet #yamansarulman
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun39_story.png` (1080×1920)  
+**Etiketler:** Anket yok; yalnız link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story. İstenirse “Soru sor” etiketi eklenebilir.  
+**Alt metin:** Dikey story: CUMHURİYET BAYRAMIMIZ KUTLU OLSUN. başlığı, günün gönderi fotoğrafı ve mesaj: Nice yüzyıllara. Yaşasın Cumhuriyet!
+
 ### Gün 40 · 30 Eki 2026 Cum · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun40_sabah.png`  
+**SEO anahtar kelimeler:** nu 204 rulman, silindirik makaralı rulman ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: NU 204 rulman, 20 × 47 × 14 mm
+
+```
+Günün kodu: NU 204
+Ölçü: 20 × 47 × 14 mm (iç çap × dış çap × kalınlık)
+Kullanım: Redüktör, Motor serbest ucu, Takım tezgâhı
+
+Silindirik makaralı: 6204 ile aynı ölçü, çok daha yüksek radyal yük. Eksenel yük taşımaz.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun40_kare.png`  
 **Başlık:** BİLYALI MI, MAKARALI MI?  
@@ -1229,7 +2271,32 @@ Aynı yuvaya ikisi de giriyorsa yük ve devre bakın. Emin değilseniz uygulamay
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun40_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Uygulaman için hangisi?”, seçenekler: “Bilyalı” / “Makaralı” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: BİLYALI MI, MAKARALI MI? başlığı, günün gönderi fotoğrafı ve anket: Uygulaman için hangisi?
+
 ### Gün 41 · 31 Eki 2026 Cmt · IG, FB · Uygulama
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun41_sabah.png`  
+**SEO anahtar kelimeler:** oynak bilyalı rulman nedir, 1200 serisi rulman  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: OYNAK BİLYALI
+
+```
+Günün terimi: OYNAK BİLYALI
+
+1200 / 2200 serisi. Dış bileziğin iç yüzeyi küreseldir; mil eğikliğini (yaklaşık 2–3°) tolere eder. Uzun mil ve konveyörlerde kullanılır.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun41_kare.png`  
 **Başlık:** DİREKSİYON & SALINCAK RULMANLARI  
@@ -1252,7 +2319,32 @@ Marka + model yaz, tam seti aynı gün kargolayalım. Kış bakımı için ideal
 #motosiklet #motosikletyedekparça #tekerlekrulmanı #motorrulmanı #honda #yamaha #bajaj #ktm #cfmoto #mondial
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun41_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Direksiyonda boşluk hissediyor musun?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: DİREKSİYON & SALINCAK RULMANLARI başlığı, günün gönderi fotoğrafı ve anket: Direksiyonda boşluk hissediyor musun?
+
 ### Gün 42 · 1 Kas 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun42_sabah.png`  
+**SEO anahtar kelimeler:** rs rulman keçe yönü, tek keçeli rulman montajı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: KEÇE YÖNÜNE DİKKAT
+
+```
+Bakım ipucu: Keçe yönüne di̇kkat
+
+Tek keçeli (RS) rulmanda keçe kirin geldiği tarafa bakmalı. Ters takılan keçe, açık rulman gibi çalışır.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun42_kare.png`  
 **Başlık:** “Doğru parça, doğru yerde, doğru zamanda.”  
@@ -1271,7 +2363,34 @@ Kasım'a hoş geldiniz. Yarın silindirik makaralı kodlarıyla devam.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun42_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Katılıyor musun?”, seçenekler: “Evet” / “Kesinlikle” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Doğru parça, doğru yerde, doğru zamanda.” başlığı, günün gönderi fotoğrafı ve anket: Katılıyor musun?
+
 ### Gün 43 · 2 Kas 2026 Pzt · IG, FB, LI · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun43_sabah.png`  
+**SEO anahtar kelimeler:** 6004 rulman, 6004 2rs ölçüleri, scooter rulmanı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6004 2RS rulman, 20 × 42 × 12 mm
+
+```
+Günün kodu: 6004 2RS
+Ölçü: 20 × 42 × 12 mm (iç çap × dış çap × kalınlık)
+Kullanım: E-scooter tekerlek, Çim biçme, Küçük motor
+
+20 mm mil, 42 mm yuva. Scooter ve bahçe makinelerinde 6204'ün hafif kesitli alternatifi.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun43_kare.png` · `gonderiler/gun43_linkedin.png`  
 **Başlık:** NU, NJ, NUP, N NE DEMEK?  
@@ -1295,7 +2414,7 @@ Redüktör, elektrik motoru, vinç. Kodun tamamını yazın, doğru tipi gönder
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Silindirik makaralı rulman seçiminde ölçü kadar flanş düzeni de kritiktir. NU tipi serbest yatak (ısıl genleşmeyi alır), NJ tek yönlü, NUP çift yönlü sabit yatak olarak kullanılır. Yanlış tip seçimi, mil ekseninde istenmeyen kuvvet birikmesine yol açar.
@@ -1307,7 +2426,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun43_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “NU ile NJ farkını biliyor muydun?”, seçenekler: “Biliyordum” / “Yeni öğrendim” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: NU, NJ, NUP, N NE DEMEK? başlığı, günün gönderi fotoğrafı ve anket: NU ile NJ farkını biliyor muydun?
+
 ### Gün 44 · 3 Kas 2026 Sal · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun44_sabah.png`  
+**SEO anahtar kelimeler:** rulman kodları standart, rulman kodu ölçü  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Rulman kodu her markada aynı ölçüyü verir.
+
+```
+Doğru mu, yanlış mı?
+
+"Rulman kodu her markada aynı ölçüyü verir."
+
+Cevap: DOĞRU. 6204 hangi markadan olsun 20 × 47 × 14 mm'dir (ISO 15). Markalar arasındaki fark ölçüde değil; malzeme, tolerans ve ömürdedir.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun44_kare.png`  
 **Başlık:** EK HARFLER NE DEMEK?  
@@ -1332,7 +2476,34 @@ Siparişte kodu harfleriyle birlikte yazın; sonradan 'uymadı' derdi yaşamayı
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun44_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Kodun ek harflerine bakar mısın?”, seçenekler: “Bakarım” / “Sadece ana kod” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: EK HARFLER NE DEMEK? başlığı, günün gönderi fotoğrafı ve anket: Kodun ek harflerine bakar mısın?
+
 ### Gün 45 · 4 Kas 2026 Çar · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun45_sabah.png`  
+**SEO anahtar kelimeler:** 6010 rulman, 6010 2rs ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6010 2RS rulman, 50 × 80 × 16 mm
+
+```
+Günün kodu: 6010 2RS
+Ölçü: 50 × 80 × 16 mm (iç çap × dış çap × kalınlık)
+Kullanım: Pompa, Mil yatağı, Konveyör
+
+50 mm mil için hafif kesit. Büyük ölçülerde stok bilgisini siteden anlık görebilirsiniz.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun45_kare.png` · `gonderiler/gun45_linkedin.png`  
 **Başlık:** CARİ HESAP. TEK FATURA. DÜZENLİ SEVK.  
@@ -1357,7 +2528,7 @@ Satın alma ekibinizle 15 dakikalık görüşme için DM veya 0212 670 02 05.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Satın alma birimleri için rulman tedarikinde asıl maliyet, işlem sayısıdır. Yamansa kurumsal programı bu yükü azaltmak için tasarlandı: cari hesap ve vade, aylık tek fatura, sık kullanılan kodlar için 6 ay sabit fiyat listesi ve planlı sevkiyat.
@@ -1369,7 +2540,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun45_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Cari hesapla çalışmak ister misin?”, seçenekler: “Evet” / “Bilgi istiyorum” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: CARİ HESAP. TEK FATURA. DÜZENLİ SEVK. başlığı, günün gönderi fotoğrafı ve anket: Cari hesapla çalışmak ister misin?
+
 ### Gün 46 · 5 Kas 2026 Per · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun46_sabah.png`  
+**SEO anahtar kelimeler:** sökülen rulman tekrar kullanılır mı, rulman sökme  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: SÖKTÜĞÜNÜ TEKRAR TAKMA
+
+```
+Bakım ipucu: Söktüğünü tekrar takma
+
+Çektirmeyle çıkan rulmanın bilezikleri gerilir, bilya yolları iz alır. Ekonomik görünür; erken biter ve mili de götürür.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun46_kare.png`  
 **Başlık:** RULMANI DOĞRU SÖKMEK  
@@ -1394,7 +2590,32 @@ Yeni rulman eğri yuvaya oturmaz. Kaydet, ustana gönder.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun46_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Rulmanı nasıl söküyorsun?”, seçenekler: “Çektirme” / “Çekiç / keski” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: RULMANI DOĞRU SÖKMEK başlığı, günün gönderi fotoğrafı ve anket: Rulmanı nasıl söküyorsun?
+
 ### Gün 47 · 6 Kas 2026 Cum · IG, FB, LI · Uygulama
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun47_sabah.png`  
+**SEO anahtar kelimeler:** yataklı rulman nedir, ucp ucf ucfl farkı  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: YATAKLI RULMAN
+
+```
+Günün terimi: YATAKLI RULMAN
+
+Rulman ve dökme yuva tek parça: UCP ayaklı, UCF kare flanşlı, UCFL oval flanşlı. Setuskurla mile bağlanır; konveyör ve tarımın standart yatağı.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun47_kare.png` · `gonderiler/gun47_linkedin.png`  
 **Başlık:** PAYLAŞIMLI SCOOTER FİLOLARI  
@@ -1418,7 +2639,7 @@ Filo büyüklüğünüzü yazın, teklif gönderelim.
 #elektrikliscooter #scooter #xiaomi #segway #ninebot #dualtron #navee #scooteryedekparça
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Paylaşımlı mikro mobilite filolarında araç başına bakım maliyetinin önemli kısmı tekerlek ve motor rulmanlarından gelir; yoğun kullanım ve dış ortam rulman ömrünü kısaltır.
@@ -1430,7 +2651,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #elektrikliscooter #scooter #xiaomi #segway
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun47_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Şehrinde paylaşımlı scooter var mı?”, seçenekler: “Var” / “Yok” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: PAYLAŞIMLI SCOOTER FİLOLARI başlığı, günün gönderi fotoğrafı ve anket: Şehrinde paylaşımlı scooter var mı?
+
 ### Gün 48 · 7 Kas 2026 Cmt · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun48_sabah.png`  
+**SEO anahtar kelimeler:** ucp 205 rulman, ucp 205 yatak, uc 205  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: UCP 205 rulman, Mil çapı 25 mm
+
+```
+Günün kodu: UCP 205
+Ölçü: Mil çapı 25 mm (iç çap × dış çap × kalınlık)
+Kullanım: Konveyör, Tarım makinesi, Tekstil
+
+Ayaklı yataklı ünite. İçindeki rulman UC 205 (25 × 52 × 34,1). Yuva ve rulman ayrı ayrı da stokta.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun48_kare.png`  
 **Başlık:** BUNLARI BİLİYOR MUYDUNUZ?  
@@ -1455,7 +2703,32 @@ Hangisini bilmiyordunuz? Yoruma yazın.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun48_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Bunlardan birini biliyor muydun?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: BUNLARI BİLİYOR MUYDUNUZ? başlığı, günün gönderi fotoğrafı ve anket: Bunlardan birini biliyor muydun?
+
 ### Gün 49 · 8 Kas 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun49_sabah.png`  
+**SEO anahtar kelimeler:** bilyalı makaralı rulman farkı, hangi rulman daha çok yük taşır  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Makaralı rulman, bilyalıdan daha fazla yük taşır.
+
+```
+Doğru mu, yanlış mı?
+
+"Makaralı rulman, bilyalıdan daha fazla yük taşır."
+
+Cevap: DOĞRU. Makaranın çizgi teması bilyanın nokta temasından daha geniş yüzeye yayılır. Bilyalı ise daha hızlı döner ve daha az ısınır.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun49_kare.png`  
 **Başlık:** “Sürtünme kaybettirir, rulman kazandırır.”  
@@ -1474,7 +2747,34 @@ Sürtünme kaybettirir, rulman kazandırır.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun49_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Katılıyor musun?”, seçenekler: “Evet” / “Kesinlikle” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Sürtünme kaybettirir, rulman kazandırır.” başlığı, günün gönderi fotoğrafı ve anket: Katılıyor musun?
+
 ### Gün 50 · 9 Kas 2026 Pzt · IG, FB, LI · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun50_sabah.png`  
+**SEO anahtar kelimeler:** 1204 rulman, 1204 oynak bilyalı ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 1204 rulman, 20 × 47 × 14 mm
+
+```
+Günün kodu: 1204
+Ölçü: 20 × 47 × 14 mm (iç çap × dış çap × kalınlık)
+Kullanım: Konveyör, Tarım, Fan
+
+Oynak bilyalı: 6204 ölçüsünde, mil eğikliğini tolere eder. Uzun ve esnek millerde.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun50_kare.png` · `gonderiler/gun50_linkedin.png`  
 **Başlık:** 1200 SERİSİ OYNAK BİLYALI  
@@ -1500,7 +2800,7 @@ Dış çapları 6200 serisiyle aynı; iki sıra bilya ve küresel dış yuvarlan
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Uzun miller, kaynaklı yataklar ve tarım/konveyör uygulamalarında eksen kaçıklığı kaçınılmazdır. Oynak bilyalı rulmanlar (1200/1300/2200/2300 serileri) küresel dış yuvarlanma yoluyla birkaç derece açısal kaçıklığı tolere eder.
@@ -1512,7 +2812,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun50_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Oynak rulman kullandın mı?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 1200 SERİSİ OYNAK BİLYALI başlığı, günün gönderi fotoğrafı ve anket: Oynak rulman kullandın mı?
+
 ### Gün 51 · 10 Kas 2026 Sal · IG, FB, LI · Marka
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun51_sabah.png`  
+**SEO anahtar kelimeler:** kestirimci bakım rulman, rulman kontrol listesi  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: AYDA 3 DAKİKA
+
+```
+Bakım ipucu: Ayda 3 daki̇ka
+
+Ses, sıcaklık, titreşim: her rulman noktasına ayda bir 3 dakika ayır. Bu küçük alışkanlık yıllık plansız duruşu önler.
+
+Kaydet; bakım günü lazım olur.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun51_kare.png` · `gonderiler/gun51_linkedin.png`  
 **Başlık:** Saygı, sevgi ve minnetle anıyoruz.  
@@ -1531,7 +2856,7 @@ Cumhuriyetimizin kurucusu Gazi Mustafa Kemal Atatürk'ü saygı, sevgi ve minnet
 #10Kasım #Atatürk #SaygıylaAnıyoruz #yamansarulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Cumhuriyetimizin kurucusu Gazi Mustafa Kemal Atatürk'ü aramızdan ayrılışının 88. yılında saygı, sevgi ve minnetle anıyoruz.
@@ -1541,7 +2866,34 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 #10Kasım #Atatürk #SaygıylaAnıyoruz #yamansarulman
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun51_story.png` (1080×1920)  
+**Etiketler:** Anket yok; yalnız link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story. İstenirse “Soru sor” etiketi eklenebilir.  
+**Alt metin:** Dikey story: Saygı, sevgi ve minnetle anıyoruz. başlığı, günün gönderi fotoğrafı ve mesaj: 10 Kasım 09.05 — Ulu Önder Atatürk'ü özlemle anıyoruz.
+
 ### Gün 52 · 11 Kas 2026 Çar · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun52_sabah.png`  
+**SEO anahtar kelimeler:** 6300 rulman, 6300 2rs ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6300 2RS rulman, 10 × 35 × 11 mm
+
+```
+Günün kodu: 6300 2RS
+Ölçü: 10 × 35 × 11 mm (iç çap × dış çap × kalınlık)
+Kullanım: Küçük redüktör, Motosiklet mekanizma, Elektrikli alet
+
+10 mm mil için en yüklü sabit bilyalı seçenek. 6000 ve 6200'den kalın ve güçlü.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun52_kare.png`  
 **Başlık:** AÇIK MI, KAPAKLI MI?  
@@ -1563,7 +2915,32 @@ Kural: Yuvada yağ dolaşımı varsa açık, yoksa kapaklı. Uygulamanızı yaz�
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun52_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Senin uygulaman?”, seçenekler: “Açık” / “Kapaklı” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: AÇIK MI, KAPAKLI MI? başlığı, günün gönderi fotoğrafı ve anket: Senin uygulaman?
+
 ### Gün 53 · 12 Kas 2026 Per · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun53_sabah.png`  
+**SEO anahtar kelimeler:** rulman lazer markalama, orijinal rulman işareti  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: LAZER MARKALAMA
+
+```
+Günün terimi: LAZER MARKALAMA
+
+Orijinal rulmanda kod, marka ve menşei lazerle kazınır: eşit derinlik, net kenar. Silik, kaymış veya yalnızca boya baskılı yazı şüphe nedenidir.
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun53_kare.png` · `gonderiler/gun53_linkedin.png`  
 **Başlık:** SAHTE RULMANA KARŞI 5 KONTROL  
@@ -1588,7 +2965,7 @@ Sahte rulman ucuz değildir; makineyle birlikte bitince pahalıdır.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Sahte rulman, sektörün en büyük görünmez maliyetidir: gerçek malzeme ve ısıl işlem standardını taşımayan ürünler, planlanan ömrün küçük bir kısmında bozulur ve mil, yuva, hatta redüktörü birlikte götürür.
@@ -1600,7 +2977,34 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun53_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Sahte rulmanla karşılaştın mı?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: SAHTE RULMANA KARŞI 5 KONTROL başlığı, günün gönderi fotoğrafı ve anket: Sahte rulmanla karşılaştın mı?
+
 ### Gün 54 · 13 Kas 2026 Cum · IG, FB · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun54_sabah.png`  
+**SEO anahtar kelimeler:** 6308 rulman, 6308 2rs ölçüleri, 6308 fiyat  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6308 2RS rulman, 40 × 90 × 23 mm
+
+```
+Günün kodu: 6308 2RS
+Ölçü: 40 × 90 × 23 mm (iç çap × dış çap × kalınlık)
+Kullanım: Kırıcı, Değirmen, Ağır motor
+
+40 mm mil, ağır hizmet. Darbeli yük altında çalışan makinelerin tercihi.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun54_kare.png`  
 **Başlık:** 6306 – 6311 AĞIR HİZMET  
@@ -1626,7 +3030,32 @@ Redüktör, vinç, kompresör, tarım makinesi. C3 ve ZZ/2RS seçenekleriyle; SK
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun54_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Ağır hizmette kodun?”, seçenekler: “6306–6308” / “6309+” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: 6306 – 6311 AĞIR HİZMET başlığı, günün gönderi fotoğrafı ve anket: Ağır hizmette kodun?
+
 ### Gün 55 · 14 Kas 2026 Cmt · IG, FB · Uygulama
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun55_sabah.png`  
+**SEO anahtar kelimeler:** elektrik motoru rulmanı c3, motor rulmanı seçimi  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: MOTOR RULMANINDA C3
+
+```
+Bakım ipucu: Motor rulmaninda c3
+
+Elektrik motorları çalışırken ısınır; mil genleşir. Bu yüzden motor rulmanlarında çoğunlukla C3 boşluk kullanılır. Etiketteki koda bak, aynısını iste.
+
+Kaydet; bakım günü lazım olur.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun55_kare.png`  
 **Başlık:** ELEKTRİK MOTORU RULMANLARI  
@@ -1650,7 +3079,32 @@ Motor etiketindeki gücü ve rulman kodunu yaz, setini gönderelim.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun55_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Motor bakımı / sarımı yapıyor musun?”, seçenekler: “Evet” / “Hayır” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ELEKTRİK MOTORU RULMANLARI başlığı, günün gönderi fotoğrafı ve anket: Motor bakımı / sarımı yapıyor musun?
+
 ### Gün 56 · 15 Kas 2026 Paz · IG, FB · Marka
+
+#### 09:00 · Sabah kartı · Doğru mu, yanlış mı? · IG + FB
+
+**Görsel:** `gonderiler/gun56_sabah.png`  
+**SEO anahtar kelimeler:** rulman arızası belirtileri, sessiz rulman arızası  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Doğru mu yanlış mı kartı: Ses yoksa rulman sağlamdır.
+
+```
+Doğru mu, yanlış mı?
+
+"Ses yoksa rulman sağlamdır."
+
+Cevap: YANLIŞ. Pitting başlangıcı sessizdir. Titreşim ve sıcaklık artışı sesten aylar önce sinyal verir; sadece kulağa güvenme.
+
+#rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun56_kare.png`  
 **Başlık:** “Bakım masraf değil, sigortadır.”  
@@ -1669,7 +3123,34 @@ Bakım masraf değil, sigortadır.
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun56_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Katılıyor musun?”, seçenekler: “Evet” / “Kesinlikle” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: “Bakım masraf değil, sigortadır.” başlığı, günün gönderi fotoğrafı ve anket: Katılıyor musun?
+
 ### Gün 57 · 16 Kas 2026 Pzt · IG, FB, LI · Kurumsal
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun57_sabah.png`  
+**SEO anahtar kelimeler:** 6209 rulman, 6209 2rs ölçüleri  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: 6209 2RS rulman, 45 × 85 × 19 mm
+
+```
+Günün kodu: 6209 2RS
+Ölçü: 45 × 85 × 19 mm (iç çap × dış çap × kalınlık)
+Kullanım: Pompa, Fan, Redüktör
+
+45 mm mil. Yıl sonu duruşu için kritik listenizde varsa şimdiden ayırtın.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun57_kare.png` · `gonderiler/gun57_linkedin.png`  
 **Başlık:** ARALIK DURUŞU İÇİN LİSTEYİ KASIM'DA KAPATIN.  
@@ -1693,7 +3174,7 @@ DM veya 0212 670 02 05.
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Yıl sonu bakım duruşlarında en sık yaşanan sorun, aynı haftada tüm sektörün aynı rulman kodlarına yönelmesidir. İthal ve özel kalemlerde tedarik süresi bu dönemde belirgin şekilde uzar.
@@ -1705,7 +3186,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun57_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Yıl sonu duruş planın hazır mı?”, seçenekler: “Hazır” / “Henüz değil” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: ARALIK DURUŞU İÇİN LİSTEYİ KASIM'DA KAPATIN. başlığı, günün gönderi fotoğrafı ve anket: Yıl sonu duruş planın hazır mı?
+
 ### Gün 58 · 17 Kas 2026 Sal · IG, FB · Teknik
+
+#### 09:00 · Sabah kartı · Günün terimi · IG + FB
+
+**Görsel:** `gonderiler/gun58_sabah.png`  
+**SEO anahtar kelimeler:** nlgi 2 gres, rulman gresi seçimi, nlgi ne demek  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün terimi kartı: NLGI 2
+
+```
+Günün terimi: NLGI 2
+
+Gresin kıvam sınıfı. Rulmanlarda en yaygını NLGI 2. NLGI 1 daha akışkan (soğuk ortam, merkezi yağlama), NLGI 3 daha katı (dik mil, yüksek sıcaklık).
+
+Sorunuz varsa yorumlara yazın, cevaplıyoruz.
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB
 
 **Görsel:** `gonderiler/gun58_kare.png`  
 **Başlık:** GRES SEÇİMİ: 4 KURAL  
@@ -1729,7 +3235,34 @@ Uygulama sıcaklığı ve devrini yazın, gres tipini birlikte seçelim.
 #rulmanteknik #makinebakım #bakımonarım #mühendislik #tekniker
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun58_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Gresi neye göre seçiyorsun?”, seçenekler: “Katalog” / “Alışkanlık” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: GRES SEÇİMİ: 4 KURAL başlığı, günün gönderi fotoğrafı ve anket: Gresi neye göre seçiyorsun?
+
 ### Gün 59 · 18 Kas 2026 Çar · IG, FB, LI · Ürün
+
+#### 09:00 · Sabah kartı · Günün kodu · IG + FB
+
+**Görsel:** `gonderiler/gun59_sabah.png`  
+**SEO anahtar kelimeler:** ucf 206 rulman, ucf 206 yatak, uc 206  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Günün kodu kartı: UCF 206 rulman, Mil çapı 30 mm
+
+```
+Günün kodu: UCF 206
+Ölçü: Mil çapı 30 mm (iç çap × dış çap × kalınlık)
+Kullanım: Duvar & plaka montajı, Konveyör, Paketleme
+
+Kare flanşlı yataklı ünite. İç rulmanı UC 206. Dört cıvatayla plakaya bağlanır.
+
+Stokta. Kodu yaz, aynı gün kargolayalım: yamansarulman.com
+
+#endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun59_kare.png` · `gonderiler/gun59_linkedin.png`  
 **Başlık:** UCP · UCF · UCFL YATAKLI RULMANLAR  
@@ -1753,7 +3286,7 @@ Konveyör, tarım makinesi, tekstil, gıda hattı. Kod veya mil çapını yaz, g
 #endüstri #makineimalat #fabrika #bakım #konikrulman #silindirikrulman
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 Yataklı rulman üniteleri (UCP, UCF, UCFL, UCT) konveyör, tarım ve tesis makinelerinde en pratik yataklama çözümüdür: yuva ve rulman tek parça gelir, setuskurla mile bağlanır, açısal kaçıklığı tolere eder.
@@ -1765,7 +3298,32 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 #endüstri #makineimalat #fabrika #bakım
 ```
 
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun59_story.png` (1080×1920)  
+**Etiketler:** Anket etiketi ekle → soru: “Sende hangisi var?”, seçenekler: “UCP” / “UCF / UCFL” (etiketi görseldeki iki butonun üzerine yerleştir). Link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story (alt sağdaki yamansarulman.com kutusunun üzerine).  
+**Alt metin:** Dikey story: UCP · UCF · UCFL YATAKLI RULMANLAR başlığı, günün gönderi fotoğrafı ve anket: Sende hangisi var?
+
 ### Gün 60 · 19 Kas 2026 Per · IG, FB, LI · CTA
+
+#### 09:00 · Sabah kartı · Bakım ipucu · IG + FB
+
+**Görsel:** `gonderiler/gun60_sabah.png`  
+**SEO anahtar kelimeler:** ölçüye göre rulman bulma, rulman kodu bulma  
+**Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=sabah  
+**Alt metin:** Bakım ipucu kartı: ÖLÇÜNÜ YAZ, GERİSİNİ BIRAK
+
+```
+Bakım ipucu: Ölçünü yaz, geri̇si̇ni̇ birak
+
+İç çap, dış çap, kalınlık. Kodu bilmesen de bu üç ölçüyle rulmanını buluruz. DM'den yaz, aynı gün cevap.
+
+Kaydet; bakım günü lazım olur.
+
+#rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
+```
+
+#### 12:30 · Ana gönderi · IG, FB, LI
 
 **Görsel:** `gonderiler/gun60_kare.png` · `gonderiler/gun60_linkedin.png`  
 **Başlık:** SORUNUZ VARSA, CEVABI BİZDE.  
@@ -1786,7 +3344,7 @@ Stok ve fiyat: yamansarulman.com · 0212 670 02 05
 #rulman #yamansarulman #rulmanfiyatları #sanayi #yedekparça #istanbul #ikitelli
 ```
 
-**LinkedIn metni:**
+**LinkedIn metni (09:00):**
 
 ```
 İki aylık içerik serimizde rulman seçimi, kodlama, montaj–söküm ve planlı bakım konularını ele aldık. Teşekkürler.
@@ -1799,3 +3357,9 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 
 #rulman #yamansarulman #rulmanfiyatları #sanayi
 ```
+
+#### 18:30 · Story · IG + FB
+
+**Görsel:** `gonderiler/gun60_story.png` (1080×1920)  
+**Etiketler:** Anket yok; yalnız link etiketi: https://www.yamansarulman.com/?utm_source=instagram&utm_medium=story&utm_campaign=story. İstenirse “Soru sor” etiketi eklenebilir.  
+**Alt metin:** Dikey story: SORUNUZ VARSA, CEVABI BİZDE. başlığı, günün gönderi fotoğrafı ve mesaj: Sorunu DM'den yaz, aynı gün cevaplıyoruz.
