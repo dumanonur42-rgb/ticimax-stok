@@ -373,6 +373,7 @@ TEMPLATES = dict(hero=t_hero, split=t_split, urun=t_urun, karsilastirma=t_karsil
 # ------------------------------------------------------------------ 09:00 sabah kartları (1080²)
 
 SABAH_ETIKET = {"kod": "GÜNÜN KODU", "terim": "GÜNÜN TERİMİ", "ipucu": "BAKIM İPUCU", "soru": "DOĞRU MU, YANLIŞ MI?"}
+SABAH_USTBASLIK = {"kod": "STOKTA · AYNI GÜN KARGO", "terim": "RULMAN SÖZLÜĞÜ", "ipucu": "SAHADAN NOT", "soru": "BİLGİ TESTİ"}
 SABAH_FOTO = {"terim": ["19911427.jpg", "7565159.jpg", "20607184.jpg", "2760241.jpg"],
               "ipucu": ["18845071.jpg", "38264258.jpg", "9242171.jpg", "4483608.jpg"],
               "soru": ["35568191.jpg", "8956445.jpg", "19911421.jpg", "3862614.jpg"]}
@@ -413,7 +414,7 @@ def t_sabah_kod(s):
       <div style="position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;background:var(--navy);opacity:.05"></div>
       {head('dark', SABAH_ETIKET['kod'])}
       <div style="position:absolute;left:var(--pad);top:196px;z-index:4">
-        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange)">GÜN {s['gun']:02d} · 09:00</div>
+        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange)">{SABAH_USTBASLIK['kod']}</div>
         <div class="num" style="font-size:{fs}px;color:var(--navy);line-height:.95;letter-spacing:-.03em;margin-top:6px;white-space:nowrap">{kod}</div>
       </div>
       <div style="position:absolute;right:var(--pad);top:400px;z-index:3">{sag}</div>
@@ -430,7 +431,7 @@ def t_sabah_kod(s):
 def t_sabah_kart(s):
     tip = s["tip"]
     foto = b64(FOTO / sabah_foto(s))
-    label = f'<div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:22px">GÜN {s["gun"]:02d} · 09:00 · {SABAH_ETIKET[tip]}</div>'
+    label = f'<div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:22px">{SABAH_USTBASLIK[tip]}</div>'
     if tip == "soru":
         body = f"""
         <div style="position:absolute;left:var(--pad);right:var(--pad);top:200px;z-index:4">
@@ -503,13 +504,13 @@ def t_story(a):
         <div class="tag fill">{p['etiket']}</div>
       </div>
       <div style="position:absolute;left:var(--pad);right:var(--pad);top:880px;z-index:4">
-        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--steel);margin-bottom:18px">BUGÜNÜN GÖNDERİSİ</div>
+        <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--steel);margin-bottom:18px">YENİ PAYLAŞIM</div>
         <h1 style="font-size:{h1}px;line-height:1.06">{p['baslik']}</h1>
         <div class="bar"></div>
       </div>
       <div style="position:absolute;left:var(--pad);right:var(--pad);top:1280px;z-index:4">{card}</div>
       <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:250px;z-index:4;display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:24px;opacity:.85">Detaylar bugünkü gönderide ↑</div>
+        <div style="font-size:24px;opacity:.85">Detaylar profilde ↑</div>
         <div style="border:2px solid #fff;border-radius:999px;padding:14px 28px;font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.04em">yamansarulman.com</div>
       </div>
       <div class="foot" style="bottom:120px;opacity:.45"><span>{SITE.replace('https://www.', '')}</span><div class="line"></div><span>{TEL}</span></div>
