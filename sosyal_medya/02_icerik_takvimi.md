@@ -398,7 +398,7 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 **Başlık:** RULMAN BİTTİ Mİ? 5 İŞARET  
 **SEO anahtar kelimeler:** rulman arızası belirtileri, tekerlek rulmanı sesi, rulman bozulduğu nasıl anlaşılır  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=ariza  
-**Alt metin:** Motosiklet arka tekerlek fotoğrafı; rulman arızasının 5 belirtisi listesi  
+**Alt metin:** Motosiklet jant göbeği ve tel jant yakın çekim; rulman arızasının 5 belirtisi listesi  
 **Eşlik eden blog/site sayfası:** Rulman arızası belirtileri: sesten titreşime 5 kontrol noktası
 
 **Instagram / Facebook metni:**
@@ -772,7 +772,7 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 **Başlık:** KUMPASLA RULMAN ÖLÇÜMÜ  
 **SEO anahtar kelimeler:** rulman ölçüsü nasıl alınır, kumpasla rulman ölçme, rulman iç çap dış çap  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=kumpas  
-**Alt metin:** Metal makine parçası; kumpasla rulman ölçümü 3 adım listesi  
+**Alt metin:** Kumpasla ölçüm yapılan atölye masası; kumpasla rulman ölçümü 3 adım listesi  
 **Eşlik eden blog/site sayfası:** Kumpasla rulman ölçümü ve ölçüden kod bulma tablosu
 
 **Instagram / Facebook metni:**
@@ -1002,7 +1002,7 @@ https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campai
 **Başlık:** ÇAMAŞIR MAKİNESİ RULMANI.  
 **SEO anahtar kelimeler:** çamaşır makinesi rulmanı, çamaşır makinesi rulman ölçüsü, 6205 6206 rulman  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=camasir-makinesi  
-**Alt metin:** Eski dişli ve rulman parçaları yığını üzerinde 'Çamaşır makinesi rulmanı' başlığı  
+**Alt metin:** Paslanmaz çamaşır makinesi kazanı yakın çekim üzerinde 'Çamaşır makinesi rulmanı' başlığı  
 **Eşlik eden blog/site sayfası:** Çamaşır makinesi rulmanı ölçüleri: marka-model bazlı 6204/6205/6206/6305/6306 tablosu
 
 **Instagram / Facebook metni:**
@@ -1081,7 +1081,7 @@ Dönen her şeyin altında bir rulman vardır.
 **Başlık:** RULMAN NEDEN ERKEN BİTER?  
 **SEO anahtar kelimeler:** rulman neden bozulur, rulman ömrü, rulman arıza nedenleri, rulman erken bitmesi  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=ariza-analizi  
-**Alt metin:** Paslanmış dişli ve rulman yakın çekim; rulmanın erken bitmesinin 5 nedeni listesi  
+**Alt metin:** Yüzeyi çukurlaşmış (pitting) aşınmış rulman bileziği yakın çekim; rulmanın erken bitmesinin 5 nedeni listesi  
 **Eşlik eden blog/site sayfası:** Rulman arıza analizi: yüzey izlerinden nedeni okumak (yağlama, kirlenme, montaj, hizasızlık)
 
 **Instagram / Facebook metni:**
@@ -1120,7 +1120,7 @@ https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaig
 **Başlık:** 30200 SERİSİ KONİK RULMAN  
 **SEO anahtar kelimeler:** 30204 rulman, 30205 rulman, konik makaralı rulman ölçüleri, 30200 serisi  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=konik-30200  
-**Alt metin:** 30203'ten 30208'e konik makaralı rulman ölçü tablosu  
+**Alt metin:** Konik makaralı rulman ürün fotoğrafı ve 30203'ten 30208'e ölçü tablosu  
 **Eşlik eden blog/site sayfası:** 30200 / 30300 / 32000 konik makaralı rulman ölçü tablosu ve ön yük ayarı
 
 **Instagram / Facebook metni:**
@@ -1569,7 +1569,7 @@ Kural: Yuvada yağ dolaşımı varsa açık, yoksa kapaklı. Uygulamanızı yaz�
 **Başlık:** SAHTE RULMANA KARŞI 5 KONTROL  
 **SEO anahtar kelimeler:** sahte rulman nasıl anlaşılır, orijinal skf rulman kontrol, sahte skf rulman, orijinal rulman  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=sahte-rulman  
-**Alt metin:** Karanlık zeminde kam mili yakın çekim; sahte rulmana karşı 5 kontrol listesi  
+**Alt metin:** Parlak bilyalı rulmanlar ve bilezikler; sahte rulmana karşı 5 kontrol listesi  
 **Eşlik eden blog/site sayfası:** Sahte rulman nasıl anlaşılır? SKF, FAG, ORS orijinallik kontrol rehberi
 
 **Instagram / Facebook metni:**
@@ -1632,7 +1632,7 @@ Redüktör, vinç, kompresör, tarım makinesi. C3 ve ZZ/2RS seçenekleriyle; SK
 **Başlık:** ELEKTRİK MOTORU RULMANLARI  
 **SEO anahtar kelimeler:** elektrik motoru rulmanı, motor rulmanı değişimi, 6205 zz c3, motor sarım rulman  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=instagram&utm_medium=social&utm_campaign=elektrik-motoru  
-**Alt metin:** Karanlık ortamda motor bloğu yakın çekim; elektrik motoru rulmanları  
+**Alt metin:** Atölye tezgâhında redüktörlü elektrik motoru; elektrik motoru rulmanları  
 **Eşlik eden blog/site sayfası:** Elektrik motoru rulmanı seçimi: neden ZZ ve C3? Güce göre rulman kodu tablosu
 
 **Instagram / Facebook metni:**
@@ -1735,7 +1735,7 @@ Uygulama sıcaklığı ve devrini yazın, gres tipini birlikte seçelim.
 **Başlık:** UCP · UCF · UCFL YATAKLI RULMANLAR  
 **SEO anahtar kelimeler:** ucp 205 rulman, yataklı rulman, ucf 204, uc 206, ucp yatak fiyat  
 **Link (UTM):** https://www.yamansarulman.com/?utm_source=linkedin&utm_medium=social&utm_campaign=yatakli  
-**Alt metin:** Zincir ve dişli parçaları; UCP, UCF, UCFL yataklı rulman üniteleri tanıtımı  
+**Alt metin:** Ayaklı (UCP tipi) yataklı rulman ünitesi ürün fotoğrafı; UCP, UCF, UCFL yataklı rulman tanıtımı  
 **Eşlik eden blog/site sayfası:** UCP, UCF, UCFL yataklı rulman tipleri ve UC 204–212 ölçü tablosu
 
 **Instagram / Facebook metni:**
