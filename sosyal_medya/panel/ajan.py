@@ -23,6 +23,15 @@ from yollar import AJAN_LOG, KILIT, KOMUT, SHOTS
 
 DUR_BAYRAK = KOMUT / "DUR"
 MESGUL_BAYRAK = KOMUT / "PANEL_MESGUL"  # panel tarayıcıyı kullanıyor (giriş penceresi vb.)
+bildirici = None  # tepsi simgesi varsa (baslik, mesaj) -> Windows bildirimi
+
+
+def bildir(baslik, mesaj):
+    if bildirici:
+        try:
+            bildirici(baslik, mesaj)
+        except Exception:  # noqa: BLE001
+            pass
 
 
 def panel_mesgul():
@@ -85,6 +94,9 @@ def slot_isi(ctx, ayar, gun, slot, platformlar, go=True):
                           else paylas.ig_post(ctx, d["img"], d["ig"], d["alt"], go, shot))
         out.append(log_ekle(tip="slot", gun=gun, slot=slot, platform=p, durum=durum, url=url, ekran=shot.name))
         yaz(f"{slot} gün {gun} {p}: {durum} {url}")
+        if go:
+            bildir(f"{'Facebook' if p == 'fb' else 'Instagram'} · {slot} (Gün {gun})",
+                   "Paylaşım yayında ✔" if durum == "OK" else f"Sonuç: {durum} {url or ''}".strip())
         if durum == "BLOK":
             _blok_kaydet(f"{p}: {url}")
     return out
@@ -100,6 +112,7 @@ def _blok_kaydet(neden):
         a["grup"]["aktif"] = False
         ayar_yaz(a)
     yaz(f"BLOK: {neden} – grup turları kapatıldı")
+    bildir("Facebook engeli", f"{neden}\nGrup turları kapatıldı; panelden kontrol edin.")
 
 
 def grup_turu(ctx, ayar, secili=None, ara_is=None, go=True):

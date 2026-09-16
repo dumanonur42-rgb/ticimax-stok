@@ -49,6 +49,23 @@ def kurulu():
     return ok
 
 
+def yol_guncel():
+    """Kurulu görev bu exe'yi mi çalıştırıyor? (uygulama taşındı/güncellendiyse False)"""
+    if os.name != "nt":
+        return True
+    ok, xml = _schtasks("/Query", "/TN", GOREV, "/XML")
+    if not ok:
+        return True
+    exe, _ = _exe_ve_arg()
+    return escape(exe).lower() in xml.lower()
+
+
+def tamamen_kaldir():
+    """Kaldırıcı için: çalışan ajanı durdur, zamanlanmış görevleri sil."""
+    durdur()
+    return kaldir()
+
+
 def uyandirma_saatleri(ayar):
     """Uyandırma tetikleyicisi kurulacak saatler: aktif slotlar + (grup turları açıksa) aktif turlar."""
     saatler = {s["saat"] for s in ayar["slotlar"].values() if s["aktif"]}

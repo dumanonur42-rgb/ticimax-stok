@@ -5,6 +5,8 @@
   python -m panel --ajan-tek -> vadesi gelen işleri bir kez çalıştır ve çık
   python -m panel --uyandir  -> Görev Zamanlayıcı uyandırma görevi: ajanı başlat/PC'yi iş bitene dek uyanık tut
   python -m panel --dogrula  -> paket bütünlük kontrolü (CI); sonucu dogrula.txt'ye yazar
+  python -m panel --durdur   -> kurulum güncellemesi öncesi: çalışan ajanı kapat (görevler kalır)
+  python -m panel --kaldir   -> kaldırıcı kancası: ajanı durdur, zamanlanmış görevleri sil
 """
 import os
 import sys
@@ -105,7 +107,16 @@ def main(argv=None):
         return dogrula()
     if "--ajan" in argv:
         import ajan
-        return ajan.dongu()
+        import tepsi
+        return tepsi.calistir(ajan.dongu)
+    if "--durdur" in argv:
+        import gorev
+        gorev.durdur()
+        return 0
+    if "--kaldir" in argv:
+        import gorev
+        gorev.tamamen_kaldir()
+        return 0
     if "--ajan-tek" in argv:
         import ajan
         return ajan.tek_sefer()

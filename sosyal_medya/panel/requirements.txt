@@ -1,3 +1,4 @@
 customtkinter>=5.2,<7
 playwright>=1.49,<2
 pillow>=10,<13
+pystray>=0.19,<0.20

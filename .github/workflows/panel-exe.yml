@@ -1,4 +1,4 @@
-name: Yamansa Panel Windows exe
+name: Yamansa Panel Windows kurulum
 
 on:
   workflow_dispatch:
@@ -25,15 +25,19 @@ jobs:
       - name: PyInstaller
         working-directory: sosyal_medya/panel
         run: python -m PyInstaller --noconfirm --clean YamansaPanel.spec
-      - name: Chromium'u pakete göm (kullanıcı hiçbir tarayıcı kurmaz)
+      - name: Chromium'u pakete göm (kullanıcı hiçbir tarayıcı kurmaz) + gereksiz dil dosyalarını at
         working-directory: sosyal_medya/panel
         run: |
           $env:PLAYWRIGHT_BROWSERS_PATH = "$PWD\dist\YamansaPanel\_internal\tarayicilar"
           python -m playwright install chromium --no-shell
           Get-ChildItem $env:PLAYWRIGHT_BROWSERS_PATH | Format-Table Name, LastWriteTime -AutoSize | Out-String | Write-Host
+          # Chromium 'locales': yalnızca tr + en-US kalsın (~50 dil dosyası gereksiz)
+          Get-ChildItem $env:PLAYWRIGHT_BROWSERS_PATH -Recurse -Directory -Filter locales | ForEach-Object {
+            Get-ChildItem $_.FullName -Filter *.pak | Where-Object { $_.BaseName -notin @("tr", "en-US") } | Remove-Item
+          }
           $mb = [math]::Round((Get-ChildItem dist\YamansaPanel -Recurse | Measure-Object Length -Sum).Sum / 1MB)
           Write-Host "Paket boyutu: $mb MB"
-      - name: Duman testi (--dogrula, --ajan-tek)
+      - name: Duman testi (--dogrula, --ajan-tek, --durdur)
         working-directory: sosyal_medya/panel/dist/YamansaPanel
         timeout-minutes: 8
         run: |
@@ -56,32 +60,43 @@ jobs:
           Write-Host "ajan-tek exit: $kod"
           Get-Content "$env:LOCALAPPDATA\YamansaPanel\ajan.log" -ErrorAction SilentlyContinue
           if ($kod -gt 1) { exit 1 }
-      - name: Paket
-        working-directory: sosyal_medya/panel/dist
+          $kod = Calistir '--durdur' 60
+          Write-Host "durdur exit: $kod"
+          if ($kod -ne 0) { exit 1 }
+          (Get-Item .\YamansaPanel.exe).VersionInfo | Format-List FileDescription, ProductName, FileVersion, CompanyName | Out-String | Write-Host
+      - name: Inno Setup – tek dosya YamansaPanel_Kurulum.exe
+        working-directory: sosyal_medya/panel
         run: |
-          @"
-          YAMANSA SOSYAL MEDYA PANELI (.exe)
-
-          KURULUM (2 adim; Chrome/Opera vb. KURMANIZ GEREKMEZ, tarayici uygulamanin icinde gelir):
-          1) ZIP'i bir klasore cikarin, YamansaPanel\YamansaPanel.exe'ye cift tiklayin (Python gerekmez).
-             Windows "Bilinmeyen yayimci" uyarisi verirse: Ek bilgi > Yine de calistir.
-          2) Acilan HESAPLAR sayfasinda "KURULUMU BASLAT" deyin: Facebook ve Instagram sekmeleri acilir,
-             ikisine de kendiniz giris yapin, pencereyi kapatin. Girisler dogrulanir ve otomatik baslatma
-             kendiliginden kurulur. Bitti; paneli kapatabilirsiniz.
-
-          ZAMANLAYICI sayfasi: saatler 09:00 / 12:30 / 18:30 (degistirebilirsiniz).
-             Panel kapaliyken de arka plan ajani paylasimlari atar.
-             PC UYKU MODUNDAYSA: Gorev Zamanlayici paylasim saatlerinde PC'yi uyandirir, paylasir,
-             PC tekrar uyur. Bunun icin Guc Secenekleri > Gelismis > Uyku > "Uyandirma zamanlayicilarina
-             izin ver" ETKIN olmali (kurulum bunu otomatik acmayi dener). Dizustu kapagi kapaliyken
-             uyanmaz; TAMAMEN KAPALI PC hic uyandirilamaz.
-             Kacirilan paylasimlar PC acilinca 3 saat icindeyse (Gecikme toleransi) telafi edilir.
-          FACEBOOK GRUPLARI: grup turlari varsayilan KAPALI; once "Deneme turu" ile bakin.
-
-          Veriler: %LOCALAPPDATA%\YamansaPanel (ayarlar, loglar, ekran goruntuleri, profil)
-          "@ | Set-Content YamansaPanel\OKU_BENI.txt
-          Compress-Archive -Path YamansaPanel -DestinationPath YamansaPanel_exe.zip
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          & $iscc /Qp kurulum.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          $mb = [math]::Round((Get-Item dist\YamansaPanel_Kurulum.exe).Length / 1MB)
+          Write-Host "Kurulum dosyasi: $mb MB"
+      - name: Kurulum testi (sessiz kur -> kurulu exe --dogrula -> sessiz kaldır)
+        working-directory: sosyal_medya/panel/dist
+        timeout-minutes: 10
+        run: |
+          $p = Start-Process -FilePath .\YamansaPanel_Kurulum.exe -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/LOG=kur.log' -PassThru -Wait
+          Write-Host "kurulum exit: $($p.ExitCode)"
+          Get-Content kur.log -Tail 15
+          if ($p.ExitCode -ne 0) { exit 1 }
+          $hedef = "$env:LOCALAPPDATA\Programs\YamansaPanel"
+          if (-not (Test-Path "$hedef\YamansaPanel.exe")) { Write-Host "kurulu exe yok"; exit 1 }
+          if (-not (Test-Path "$hedef\_internal\tarayicilar")) { Write-Host "kurulu Chromium yok"; exit 1 }
+          Push-Location $hedef
+          $q = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--dogrula' -PassThru
+          if (-not $q.WaitForExit(120000)) { Stop-Process -Id $q.Id -Force; Write-Host "dogrula bitmedi"; exit 1 }
+          Get-Content dogrula.txt
+          Pop-Location
+          if ($q.ExitCode -ne 0) { exit 1 }
+          $u = Start-Process -FilePath "$hedef\unins000.exe" -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART' -PassThru -Wait
+          Write-Host "kaldirma exit: $($u.ExitCode)"
+          Start-Sleep -Seconds 3
+          if (Test-Path "$hedef\YamansaPanel.exe") { Write-Host "kaldirma sonrasi exe kaldi"; exit 1 }
+          schtasks /Query /TN YamansaAjan 2>$null; if ($LASTEXITCODE -eq 0) { Write-Host "YamansaAjan gorevi silinmedi"; exit 1 }
+          Write-Host "Kurulum/kaldirma testi OK"
       - uses: actions/upload-artifact@v4
         with:
-          name: YamansaPanel_exe
-          path: sosyal_medya/panel/dist/YamansaPanel_exe.zip
+          name: YamansaPanel_Kurulum
+          path: sosyal_medya/panel/dist/YamansaPanel_Kurulum.exe

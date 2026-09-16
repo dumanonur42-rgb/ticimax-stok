@@ -12,7 +12,7 @@ import webbrowser
 from tkinter import messagebox, ttk
 
 import customtkinter as ctk
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageTk
 
 import ajan
 import gorev
@@ -47,7 +47,19 @@ GUNLER_UZUN = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumarte
 AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
 MENU = [("pano", "◉", "Pano"), ("takvim", "▦", "Takvim & İçerik"), ("gruplar", "♟", "Facebook Grupları"),
         ("zaman", "◷", "Zamanlayıcı"), ("log", "≣", "Loglar & Kanıt"), ("hesap", "⚿", "Hesaplar"), ("ayar", "⚙", "Ayarlar")]
-SURUM = "v2.0"
+SURUM = "v2.1"
+UYGULAMA_KIMLIK = "YamansaRulman.SosyalMedyaPaneli"  # Windows görev çubuğu grubu / kısayol simgesi eşleşmesi
+
+
+def pencere_kimligi():
+    """Windows'ta uygulamayı kendi kimliğiyle tanıtır (python.exe/tk yerine Yamansa simgesi ve grubu)."""
+    if os.name != "nt":
+        return
+    try:
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(UYGULAMA_KIMLIK)
+    except Exception:  # noqa: BLE001
+        pass
 
 
 def ton(renk, oran=0.16, zemin=KART):
@@ -93,10 +105,7 @@ class Uygulama(ctk.CTk):
         self.title("Yamansa Rulman · Sosyal Medya Paneli")
         self._pencere_boyutu()
         self.configure(fg_color=BG)
-        try:
-            self.iconbitmap(str(KOK / "panel" / "yamansa.ico"))
-        except Exception:
-            pass
+        self._simge_ayarla()
         self.ayar = ayar_oku()
         self._img_cache = {}
         self._font_cache = {}
@@ -112,6 +121,30 @@ class Uygulama(ctk.CTk):
         g = durum_oku().get("giris", {})
         self.sayfa("pano" if g.get("fb") and g.get("ig") else "hesap")
         self.after(1000, self._yenile)
+        self.after(1500, self._gorev_yolu_kontrol)
+
+    def _simge_ayarla(self):
+        panel = KOK / "panel"
+        try:
+            if os.name == "nt":
+                self.iconbitmap(default=str(panel / "yamansa.ico"))
+            self._simge_png = ImageTk.PhotoImage(Image.open(panel / "simge.png").resize((256, 256), Image.LANCZOS))
+            self.iconphoto(True, self._simge_png)
+        except Exception:  # noqa: BLE001  simge dosyası yoksa varsayılan kalsın
+            pass
+
+    def _gorev_yolu_kontrol(self):
+        """Uygulama başka klasöre kuruldu/güncellendiyse zamanlanmış görevleri yeni exe'ye bağlar."""
+        def isle():
+            if gorev.kurulu() and not gorev.yol_guncel():
+                gorev.kur(self.ayar, calistir=False)
+                return True
+            return False
+        self.arka_planda(isle, lambda ok: ok and self._y_hesap_varsa())
+
+    def _y_hesap_varsa(self):
+        if "hesap" in self._sayfalar:
+            self._y_hesap()
 
     def _pencere_boyutu(self):
         ew, eh = self.winfo_screenwidth(), self.winfo_screenheight()
@@ -1217,8 +1250,8 @@ class Uygulama(ctk.CTk):
         ic.pack(fill="x", padx=24, pady=22)
         self.rozet(ic, "TEK TIKLA KURULUM", TURUNCU).pack(anchor="w")
         ctk.CTkLabel(ic, text="3 adımda hazır", font=self.F(24, "bold"), anchor="w").pack(anchor="w", pady=(10, 4))
-        for i, (b, a) in enumerate((("Facebook ve Instagram sekmeleri açılır", "kendi kullanıcı adı/şifrenizle giriş yapın (gerekirse SMS/2FA)"),
-                                    ("Pencereyi kapatın", "girişler otomatik doğrulanır, oturum bu PC'de saklanır"),
+        for i, (b, a) in enumerate((("Facebook giriş penceresi açılır", "kendi kullanıcı adı/şifrenizle giriş yapın (gerekirse SMS/2FA); giriş algılanınca pencere kendiliğinden kapanır"),
+                                    ("Instagram giriş penceresi açılır", "aynı şekilde giriş yapın; oturumlar bu PC'de saklanır"),
                                     ("Otomatik başlatma kurulur", "panel kapalıyken de paylaşım, PC uykudaysa uyandırma")), 1):
             r = ctk.CTkFrame(ic, fg_color="transparent", width=1, height=1)
             r.pack(fill="x", pady=4)
@@ -1227,7 +1260,10 @@ class Uygulama(ctk.CTk):
             m.pack(side="left", fill="x", expand=True, padx=(12, 0))
             ctk.CTkLabel(m, text=b, font=self.F(13, "bold"), anchor="w").pack(anchor="w")
             ctk.CTkLabel(m, text=a, font=self.F(12), text_color=METIN2, anchor="w", justify="left", wraplength=520).pack(anchor="w")
-        self.btn(ic, "KURULUMU BAŞLAT", self._hizli_kurulum, height=50, width=240, font=self.F(15, "bold"), corner_radius=12).pack(anchor="w", pady=(18, 0))
+        self._h_kur_btn = self.btn(ic, "KURULUMU BAŞLAT", self._hizli_kurulum, height=50, width=240, font=self.F(15, "bold"), corner_radius=12)
+        self._h_kur_btn.pack(anchor="w", pady=(18, 0))
+        self._h_adim = ctk.CTkLabel(ic, text="", font=self.F(12, "bold"), text_color=SARI, anchor="w", justify="left", wraplength=560)
+        self._h_adim.pack(anchor="w", pady=(10, 0))
         # tarayıcı + giriş
         k = self.kart(sol, "Tarayıcı")
         k.pack(fill="x", pady=(0, 14))
@@ -1244,7 +1280,7 @@ class Uygulama(ctk.CTk):
         self.btn(r2, "Facebook'a giriş yap", lambda: self._giris("fb"), "mavi").pack(side="left", padx=(0, 6))
         self.btn(r2, "Instagram'a giriş yap", lambda: self._giris("ig"), "mavi").pack(side="left", padx=6)
         self.btn(r2, "Durumu kontrol et", self._giris_kontrol, "ikincil").pack(side="left", padx=6)
-        ctk.CTkLabel(k2, text="Giriş penceresi açılır → kullanıcı adı/şifre ile girin (gerekirse SMS/2FA) → pencereyi kapatın. Facebook'ta Yamansa Rulman Sayfası'nı yöneten hesapla girin.",
+        ctk.CTkLabel(k2, text="Giriş penceresi açılır → kullanıcı adı/şifre ile girin (gerekirse SMS/2FA) → giriş algılanınca pencere kendiliğinden kapanır. Facebook'ta Yamansa Rulman Sayfası'nı yöneten hesapla girin.",
                      font=self.F(11), text_color=METIN3, anchor="w", wraplength=760, justify="left").pack(fill="x", padx=18, pady=(0, 14))
         # sağ sütun: durum + hesap bilgileri
         dk = self.kart(sag, "Kurulum durumu")
@@ -1305,49 +1341,90 @@ class Uygulama(ctk.CTk):
             return False
         return True
 
+    def _giris_konumu(self):
+        """Giriş penceresini panelin ortasına yerleştirir."""
+        w, h = tarayici.GIRIS_PENCERE
+        try:
+            return (max(0, self.winfo_rootx() + (self.winfo_width() - w) // 2),
+                    max(0, self.winfo_rooty() + (self.winfo_height() - h) // 2 - 20))
+        except tk.TclError:
+            return None
+
+    def _giris_adimi(self, siteler):
+        """tarayici.giris_penceresi için ilerleme geri çağrısı: kahraman karttaki adım satırını günceller."""
+        toplam = len(siteler)
+
+        def bildir(site, durum):
+            n = siteler.index(site) + 1
+            ad = tarayici.SITE_AD[site]
+            metin, renk = {
+                "acildi": (f"Adım {n}/{toplam} · {ad} giriş penceresi açıldı — giriş yapın, pencere kendiliğinden kapanır.", SARI),
+                "giris": (f"Adım {n}/{toplam} · {ad} girişi algılandı ✔", YESIL),
+                "kapatildi": (f"Adım {n}/{toplam} · {ad} penceresi giriş görülmeden kapatıldı.", KIRMIZI),
+                "zaman_asimi": (f"Adım {n}/{toplam} · {ad} girişi zaman aşımına uğradı.", KIRMIZI),
+            }[durum]
+            self.after(0, lambda: self._h_adim.configure(text=metin, text_color=renk))
+        return bildir
+
+    def _giris_kaydet(self, g):
+        d = durum_oku()
+        eski = d.get("giris", {})
+        d["giris"] = {"fb": g.get("fb", eski.get("fb", False)), "ig": g.get("ig", eski.get("ig", False)),
+                      "zaman": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        durum_yaz(d)
+        return d["giris"]
+
+    def _giris_akisi(self, siteler, bitti):
+        """Giriş pencerelerini arka planda açar; süre boyunca KURULUMU BAŞLAT kilitli kalır."""
+        self._h_kur_btn.configure(state="disabled")
+        self._h_adim.configure(text="Giriş penceresi hazırlanıyor…", text_color=SARI)
+        konum = self._giris_konumu()
+
+        def isle():
+            try:
+                return self._giris_kaydet(tarayici.giris_penceresi(siteler, self._giris_adimi(siteler), konum))
+            finally:
+                self.after(0, lambda: self._h_kur_btn.configure(state="normal"))
+        self.arka_planda(isle, bitti, mesgul=True)
+
     def _giris(self, site):
         if not self._giris_hazir():
             return
-        messagebox.showinfo("Giriş", "Tarayıcı penceresi açılıyor. Giriş yapın, sonra pencereyi KAPATIN; durum otomatik kontrol edilir.")
-        self.arka_planda(lambda: (tarayici.giris_penceresi(site), self._giris_kontrol_ic())[1], lambda _r: self._y_hesap(), mesgul=True)
+        self._giris_akisi([site], lambda _g: self._y_hesap())
 
     def _hizli_kurulum(self):
         if not self._giris_hazir():
             return
-        messagebox.showinfo("Hızlı kurulum", "Tarayıcı penceresi açılıyor: 1. sekme Facebook, 2. sekme Instagram.\n\n"
-                            "İkisine de giriş yapın (gerekirse SMS/2FA), sonra pencereyi KAPATIN. Gerisi otomatik.")
-
-        def isle():
-            tarayici.giris_penceresi(("fb", "ig"))
-            return self._giris_kontrol_ic()
 
         def bitti(g):
+            self._h_kur_btn.configure(state="normal")
             self._y_hesap()
             eksik = [ad for k, ad in (("fb", "Facebook"), ("ig", "Instagram")) if not g.get(k)]
             if eksik:
+                self._h_adim.configure(text=f"{' ve '.join(eksik)} girişi görülmedi — KURULUMU BAŞLAT ile tekrar deneyin.", text_color=KIRMIZI)
                 return messagebox.showwarning("Giriş eksik", f"{' ve '.join(eksik)} girişi görülmedi. 'KURULUMU BAŞLAT' ile tekrar deneyin "
-                                              "(pencereyi giriş tamamlandıktan sonra kapatın).")
+                                              "(giriş tamamlanmadan pencereyi kapatmayın).")
+            self._h_adim.configure(text="Girişler tamam ✔ · otomatik başlatma kuruluyor…", text_color=YESIL)
             ok, msg = gorev.kur(self.ayar)
             self._y_hesap()
             if "pano" in self._sayfalar:
                 self._y_pano()
             if ok:
                 saatler = ", ".join(gorev.uyandirma_saatleri(self.ayar))
+                self._h_adim.configure(text=f"Kurulum tamamlandı ✔ · paylaşımlar {saatler} saatlerinde arka planda atılır.", text_color=YESIL)
                 messagebox.showinfo("Kurulum tamamlandı ✔", "Facebook ve Instagram girişleri tamam, otomatik başlatma kuruldu.\n\n"
                                     f"Paylaşımlar panel kapalıyken de {saatler} saatlerinde atılır; PC uykudaysa uyandırılır. "
                                     "Artık paneli kapatabilirsiniz.")
             else:
+                self._h_adim.configure(text="Girişler tamam ✔ · otomatik başlatma kurulamadı (Zamanlayıcı sayfasından tekrar deneyin).", text_color=SARI)
                 messagebox.showwarning("Girişler tamam, otomatik başlatma kurulamadı",
                                        f"{msg}\n\nPano sayfasından 'Otomatik başlatmayı kur' ile tekrar deneyin.")
-        self.arka_planda(isle, bitti, mesgul=True)
+        self._giris_akisi(["fb", "ig"], bitti)
 
     def _giris_kontrol_ic(self):
         with tarayici.ac(gizli=True) as ctx:
             g = tarayici.giris_kontrol(ctx)
-        d = durum_oku()
-        d["giris"] = dict(g, zaman=dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        durum_yaz(d)
-        return g
+        return self._giris_kaydet(g)
 
     def _giris_kontrol(self):
         if not self._giris_hazir():
@@ -1393,5 +1470,6 @@ class Uygulama(ctk.CTk):
 
 
 def calistir():
+    pencere_kimligi()
     app = Uygulama()
     app.mainloop()
