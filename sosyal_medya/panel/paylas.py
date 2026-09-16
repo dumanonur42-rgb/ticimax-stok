@@ -253,15 +253,37 @@ def ig_story(ctx, img, go, shot):
                 if not _tikla_metin(page, "Your story", "Hikayen", timeout=4000):
                     page.locator("[aria-label='New story'], [aria-label='Yeni hikaye']").first.click()
             fc.value.set_files(str(img))
-        page.wait_for_timeout(8000)
+        page.wait_for_timeout(5000)
+        ekle_re = re.compile(r"Add to (your )?story|Hikayene ekle|Hikayeye ekle", re.I)
+        ekle = None
+        for _ in range(12):  # yükleme/işleme yavaş PC'de 30-40 sn sürebilir
+            ekle = _ilk(page, lambda p: p.get_by_role("button", name=ekle_re),
+                        lambda p: p.locator("button, [role='button']").filter(has_text=ekle_re),
+                        lambda p: p.get_by_text(ekle_re), timeout=1500)
+            if ekle:
+                break
+            _ig_popup_kapat(page)
+            page.wait_for_timeout(2500)
         page.screenshot(path=str(shot))
-        if "/create/story" not in page.url and not page.get_by_text(re.compile("Add to your story|Hikayene ekle")).count():
-            return "FAIL", "hikaye düzenleyici açılmadı"
+        if not ekle:
+            if "/create/story" not in page.url:
+                return "FAIL", "hikaye düzenleyici açılmadı"
+            return "FAIL", "'Hikayene ekle' düğmesi yok"
         if not go:
             return "DRY", ""
-        if not _tikla_metin(page, "Add to your story", "Hikayene ekle", timeout=5000):
-            return "FAIL", "'Hikayene ekle' düğmesi yok"
-        page.wait_for_timeout(15000)
+        ekle.scroll_into_view_if_needed()
+        try:
+            ekle.click(timeout=8000)
+        except Exception:
+            ekle.click(force=True, timeout=8000)
+        for _ in range(20):  # paylaşım bitince düzenleyici kapanır (ana sayfaya döner)
+            page.wait_for_timeout(1500)
+            if "/create/story" not in page.url:
+                break
+        page.wait_for_timeout(3000)
+        if "/create/story" in page.url and _ilk(page, lambda p: p.get_by_role("button", name=ekle_re), timeout=1000):
+            page.screenshot(path=str(shot))
+            return "FAIL", "'Hikayene ekle' tıklandı ama paylaşım tamamlanmadı"
         return "OK", f"https://www.instagram.com/stories/{IG_USER}/"
     except Exception as e:
         page.screenshot(path=str(shot))
