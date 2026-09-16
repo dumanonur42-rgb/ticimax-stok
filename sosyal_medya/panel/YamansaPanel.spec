@@ -53,6 +53,7 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
+    [("X utf8", None, "OPTION")],  # Türkçe Windows'ta (cp1254) open()/subprocess varsayılanı UTF-8 olsun
     exclude_binaries=True,
     name="YamansaPanel",
     console=False,

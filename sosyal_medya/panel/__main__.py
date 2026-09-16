@@ -15,6 +15,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import yollar  # noqa: E402,F401  (sys.path'e sosyal_medya/, otomasyon/, grup_paylasim/ ekler)
 
+for _akis in (sys.stdout, sys.stderr):  # konsol kod sayfası Türkçe karakteri yazamasa da log satırı düşmesin
+    if _akis is not None and hasattr(_akis, "reconfigure"):
+        _akis.reconfigure(errors="replace")
+
 
 def dogrula():
     """İçerik/görsel/sürücü çözümlemesini test eder; pencereli exe'de stdout olmadığı için dosyaya yazar."""
@@ -36,6 +40,17 @@ def dogrula():
             yaz(f"HATA {ad}:\n{traceback.format_exc()}")
 
     yaz(f"frozen={getattr(sys, 'frozen', False)} kok={yollar.KOK} veri={yollar.VERI}")
+
+    def _kodlama():
+        import locale
+        # Windows ANSI kod sayfaları (ör. Türkçe cp1254) UTF-8 içeriği çözemez; paket UTF-8 modunda çalışmalı.
+        if getattr(sys, "frozen", False):
+            assert sys.flags.utf8_mode == 1, "UTF-8 modu kapalı"
+            p = yollar.GRUP / "gruplar.json"
+            with open(p) as f:
+                assert f.read() == p.read_bytes().decode("utf-8"), "open() varsayılanı UTF-8 değil"
+        return f"utf8_mode={sys.flags.utf8_mode} tercih={locale.getpreferredencoding(False)} fs={sys.getfilesystemencoding()}"
+    kontrol("kodlama (UTF-8)", _kodlama)
     try:
         import icerik
         import ayarlar
@@ -101,10 +116,39 @@ def dogrula():
     return 2 if hata else 0
 
 
+def _hata_yakala(tur, deger, iz, pencere=False):
+    """Beklenmedik hata: hata.log'a yaz; panelde anlaşılır bir pencere göster (ajan modlarında sessiz)."""
+    import datetime
+    import traceback
+    metin = "".join(traceback.format_exception(tur, deger, iz))
+    try:
+        with (yollar.VERI / "hata.log").open("a", encoding="utf-8") as f:
+            f.write(f"\n===== {datetime.datetime.now():%Y-%m-%d %H:%M:%S} =====\n{metin}")
+    except Exception:  # noqa: BLE001
+        pass
+    if not pencere:
+        return sys.__excepthook__(tur, deger, iz)
+    try:
+        import tkinter as tk
+        from tkinter import messagebox
+        kok = tk.Tk()
+        kok.withdraw()
+        messagebox.showerror(
+            "Yamansa Paneli – beklenmedik hata",
+            f"{tur.__name__}: {deger}\n\nAyrıntı: {yollar.VERI / 'hata.log'}\n"
+            "Bu dosyayı destek için gönderebilirsiniz.",
+        )
+        kok.destroy()
+    except Exception:  # noqa: BLE001
+        pass
+    sys.__excepthook__(tur, deger, iz)
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     if "--dogrula" in argv:
         return dogrula()
+    sys.excepthook = _hata_yakala
     if "--ajan" in argv:
         import ajan
         import tepsi
@@ -123,6 +167,7 @@ def main(argv=None):
     if "--uyandir" in argv:
         import ajan
         return ajan.uyandir()
+    sys.excepthook = lambda *h: _hata_yakala(*h, pencere=True)
     import arayuz
     arayuz.calistir()
     return 0

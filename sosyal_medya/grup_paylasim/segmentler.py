@@ -35,7 +35,7 @@ def segment_of(name):
 
 
 def gruplar():
-    gs = json.load(open(Path(__file__).resolve().parent / "gruplar.json"))
+    gs = json.loads((Path(__file__).resolve().parent / "gruplar.json").read_text(encoding="utf-8"))
     for g in gs:
         g["segment"] = segment_of(g["name"])
     return gs

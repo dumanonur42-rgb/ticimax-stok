@@ -47,7 +47,8 @@ def tarayici_kur(cikti=print):
         env.update(get_driver_env())
     else:
         cmd = [sys.executable, "-m", "playwright", "install", "chromium", "--no-shell"]
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env,
+                         encoding="utf-8", errors="replace")
     for satir in p.stdout:
         cikti(satir.rstrip())
     ok = p.wait() == 0
