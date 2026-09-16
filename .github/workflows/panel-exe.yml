@@ -25,13 +25,18 @@ jobs:
       - name: PyInstaller
         working-directory: sosyal_medya/panel
         run: python -m PyInstaller --noconfirm --clean YamansaPanel.spec
-      - name: Duman testi (--ajan-tek)
+      - name: Duman testi (--dogrula, --ajan-tek)
         working-directory: sosyal_medya/panel/dist/YamansaPanel
         run: |
-          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--ajan-tek' -Wait -PassThru
-          Write-Host "exit: $($p.ExitCode)"
-          if ($p.ExitCode -gt 1) { exit 1 }
+          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--dogrula' -Wait -PassThru -NoNewWindow
+          Write-Host "dogrula exit: $($p.ExitCode)"
+          Get-Content dogrula.txt -ErrorAction SilentlyContinue
+          Remove-Item dogrula.txt -ErrorAction SilentlyContinue
+          if ($p.ExitCode -ne 0) { exit 1 }
+          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--ajan-tek' -Wait -PassThru -NoNewWindow
+          Write-Host "ajan-tek exit: $($p.ExitCode)"
           Get-Content "$env:LOCALAPPDATA\YamansaPanel\ajan.log" -ErrorAction SilentlyContinue
+          if ($p.ExitCode -gt 1) { exit 1 }
       - name: Paket
         working-directory: sosyal_medya/panel/dist
         run: |
