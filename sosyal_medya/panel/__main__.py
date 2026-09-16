@@ -47,7 +47,7 @@ def dogrula():
         if getattr(sys, "frozen", False):
             assert sys.flags.utf8_mode == 1, "UTF-8 modu kapalı"
             p = yollar.GRUP / "gruplar.json"
-            with open(p) as f:
+            with open(p, newline="") as f:  # newline="": CRLF dönüşümü karşılaştırmayı bozmasın
                 assert f.read() == p.read_bytes().decode("utf-8"), "open() varsayılanı UTF-8 değil"
         return f"utf8_mode={sys.flags.utf8_mode} tercih={locale.getpreferredencoding(False)} fs={sys.getfilesystemencoding()}"
     kontrol("kodlama (UTF-8)", _kodlama)
