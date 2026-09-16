@@ -6,8 +6,10 @@
 - YamansaUyandir:  her aktif slot/grup turu saatinde PC'yi uykudan uyandırır ve `--uyandir` çalıştırır
                    (ajan yoksa başlatır, iş bitene kadar PC'yi uyanık tutar; paylaşımı ajan yapar).
 """
+import ctypes
 import datetime as dt
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -74,9 +76,32 @@ def uyandirma_saatleri(ayar):
     return sorted(saatler)
 
 
+def _kullanici():
+    """DOMAIN\\kullanici (whoami); yönetici olmayan hesap yalnızca kendi adına görev kurabilir."""
+    if os.name == "nt":
+        try:  # GetUserNameExW(NameSamCompatible) -> "DOMAIN\kullanici" (Unicode; Türkçe karakterli adlar bozulmaz)
+            buf = ctypes.create_unicode_buffer(512)
+            n = ctypes.c_ulong(512)
+            if ctypes.windll.secur32.GetUserNameExW(2, buf, ctypes.byref(n)) and buf.value:
+                return buf.value
+        except Exception:
+            pass
+        r = subprocess.run(["whoami"], capture_output=True, text=True, creationflags=_GIZLI,
+                           encoding="cp857", errors="replace")
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    return f"{os.environ.get('USERDOMAIN', '')}\\{os.environ.get('USERNAME', '')}".strip("\\")
+
+
+def _erisim_hatasi(mesaj):
+    m = mesaj.lower()
+    return "engellendi" in m or "denied" in m or "0x80070005" in m
+
+
 def _xml(tetikleyiciler, sure_siniri="PT0S", uyandir=False, arg="--ajan"):
     exe, arg = _exe_ve_arg(arg)
-    kullanici = f"{os.environ.get('USERDOMAIN', '')}\\{os.environ.get('USERNAME', '')}".strip("\\")
+    kullanici = _kullanici()
+    tetikleyiciler = tetikleyiciler.replace("{KULLANICI}", escape(kullanici))
     return f"""<?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.4" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo><Description>Yamansa Sosyal Medya Paneli arka plan ajanı</Description></RegistrationInfo>
@@ -128,7 +153,9 @@ def _gorev_yaz(ad, xml):
 
 def _ajan_xml():
     simdi = dt.datetime.now().replace(second=0, microsecond=0)
-    t = f"""    <LogonTrigger><Enabled>true</Enabled><Delay>PT30S</Delay></LogonTrigger>
+    # LogonTrigger'da UserId şart: kullanıcı belirtilmeyen ("herhangi bir kullanıcı") oturum açma
+    # tetikleyicisi yalnızca yönetici tarafından kaydedilebilir -> standart hesapta 'Erişim engellendi'.
+    t = f"""    <LogonTrigger><Enabled>true</Enabled><Delay>PT30S</Delay><UserId>{{KULLANICI}}</UserId></LogonTrigger>
     <TimeTrigger>
       <Repetition><Interval>PT15M</Interval><StopAtDurationEnd>false</StopAtDurationEnd></Repetition>
       <StartBoundary>{simdi:%Y-%m-%dT%H:%M:%S}</StartBoundary>
@@ -175,26 +202,62 @@ def uyandirma_izni():
                 "Uyandırma zamanlayıcılarına izin ver = Etkin yapın.")
 
 
+def _yukseltilmis_kur(gorevler):
+    """Yedek yol: görevleri tek UAC onayıyla (yönetici) kaydeder. gorevler = {ad: xml}. -> (ok, mesaj)"""
+    d = Path(tempfile.mkdtemp(prefix="yamansa_gorev_"))
+    try:
+        satirlar = ["$ErrorActionPreference = 'Stop'"]
+        for ad, xml in gorevler.items():
+            yol = d / f"{ad}.xml"
+            yol.write_text(xml, encoding="utf-16")
+            satirlar.append(f"schtasks /Delete /F /TN {ad} 2>$null")
+            satirlar.append(f"schtasks /Create /F /TN {ad} /XML '{yol}'")
+            satirlar.append("if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }")
+        ps1 = d / "kur.ps1"
+        ps1.write_text("\r\n".join(satirlar) + "\r\nexit 0\r\n", encoding="utf-8-sig")
+        komut = ("$p = Start-Process -FilePath powershell -Verb RunAs -Wait -PassThru -WindowStyle Hidden "
+                 f"-ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','\"{ps1}\"'; exit $p.ExitCode")
+        r = subprocess.run(["powershell", "-NoProfile", "-Command", komut], capture_output=True,
+                           creationflags=_GIZLI, timeout=180)
+        if r.returncode != 0:
+            return False, ("Erişim engellendi: Windows yönetici onayı (UAC) verilmedi veya görev kaydı reddedildi. "
+                           "Tekrar deneyip 'Evet' deyin ya da uygulamayı bir kez sağ tık > Yönetici olarak çalıştır ile açın.")
+        if not kurulu():
+            return False, "Görev yönetici izniyle de kaydedilemedi."
+        return True, "Görevler yönetici onayıyla kuruldu."
+    except Exception as e:  # noqa: BLE001
+        return False, f"Yönetici onayı alınamadı: {e}"
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def kur(ayar=None, calistir=True):
     """Oturum açılışında başlat + 15 dk'da bir kontrol + slot saatlerinde uykudan uyandır."""
     if os.name != "nt":
         return False, "Otomatik başlatma yalnızca Windows'ta kurulur; ajanı 'Ajanı şimdi başlat' ile elle çalıştırın."
+    if ayar is None:
+        from ayarlar import ayar_oku
+        ayar = ayar_oku()
     for eski in _ESKI:
         _schtasks("/Delete", "/F", "/TN", eski)
-    ok1, m1 = _gorev_yaz(GOREV, _ajan_xml())
+    saatler = uyandirma_saatleri(ayar)
+    ok, m1 = _gorev_yaz(GOREV, _ajan_xml())
     mesaj = [m1]
-    if ok1:
+    if ok:
+        ok, m2 = uyandirma_guncelle(ayar)
+        mesaj.append(m2)
+    if not ok and any(_erisim_hatasi(m) for m in mesaj):
+        gorevler = {GOREV: _ajan_xml()}
+        if saatler:
+            gorevler[GOREV_UYANDIR] = _uyandir_xml(saatler)
+        ok, m = _yukseltilmis_kur(gorevler)
+        mesaj = [m]
+    if ok:
         if calistir:
             _schtasks("/Run", "/TN", GOREV)
-        if ayar is None:
-            from ayarlar import ayar_oku
-            ayar = ayar_oku()
-        ok2, m2 = uyandirma_guncelle(ayar)
-        ok1 = ok1 and ok2
-        mesaj.append(m2)
         _, m3 = uyandirma_izni()
         mesaj.append(m3)
-    return ok1, "\n".join(m for m in mesaj if m).strip()
+    return ok, "\n".join(m for m in mesaj if m).strip()
 
 
 def kaldir():
