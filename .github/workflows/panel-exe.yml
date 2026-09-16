@@ -1,0 +1,55 @@
+name: Yamansa Panel Windows exe
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "sosyal_medya/panel/**"
+      - ".github/workflows/panel-exe.yml"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bağımlılıklar
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r sosyal_medya/panel/requirements.txt pyinstaller
+      - name: PyInstaller
+        working-directory: sosyal_medya/panel
+        run: python -m PyInstaller --noconfirm --clean YamansaPanel.spec
+      - name: Duman testi (--ajan-tek)
+        working-directory: sosyal_medya/panel/dist/YamansaPanel
+        run: |
+          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--ajan-tek' -Wait -PassThru
+          Write-Host "exit: $($p.ExitCode)"
+          if ($p.ExitCode -gt 1) { exit 1 }
+          Get-Content "$env:LOCALAPPDATA\YamansaPanel\ajan.log" -ErrorAction SilentlyContinue
+      - name: Paket
+        working-directory: sosyal_medya/panel/dist
+        run: |
+          @"
+          YAMANSA SOSYAL MEDYA PANELI (.exe)
+
+          1) YamansaPanel.exe'ye cift tiklayin (Python gerekmez).
+             Windows "Bilinmeyen yayimci" uyarisi verirse: Ek bilgi > Yine de calistir.
+          2) HESAPLAR sayfasi: "Tarayiciyi kur" (Chromium indirilir, bir kez), sonra
+             "Facebook giris" ve "Instagram giris": acilan pencerede kendiniz giris yapin.
+          3) ZAMANLAYICI sayfasi: saatleri kontrol edin, "Otomatik baslatmayi kur" deyin.
+             Panel kapaliyken de arka plan ajani paylasimlari atar (PC acik olmali).
+          4) FACEBOOK GRUPLARI: grup turlari varsayilan KAPALI; once "Deneme turu" ile bakin.
+
+          Veriler: %LOCALAPPDATA%\YamansaPanel (ayarlar, loglar, ekran goruntuleri, profil)
+          "@ | Set-Content YamansaPanel\OKU_BENI.txt
+          Compress-Archive -Path YamansaPanel -DestinationPath YamansaPanel_exe.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YamansaPanel_exe
+          path: sosyal_medya/panel/dist/YamansaPanel_exe.zip

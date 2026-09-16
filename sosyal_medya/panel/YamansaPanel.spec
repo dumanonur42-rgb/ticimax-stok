@@ -7,6 +7,7 @@ gonderiler/, grup_paylasim/, otomasyon/ ve icerik_verisi.py'yi bulur.
 from pathlib import Path
 
 import customtkinter
+from PyInstaller.utils.hooks import collect_data_files
 
 PANEL = Path(SPECPATH)
 KOK = PANEL.parent  # sosyal_medya/
@@ -20,6 +21,7 @@ datas = [
     (str(KOK / "grup_paylasim" / "gruplar.json"), "grup_paylasim"),
     (str(Path(customtkinter.__file__).parent), "customtkinter"),
 ]
+datas += collect_data_files("playwright")  # driver/ (node + package) – tarayıcı sürücüsü
 datas += [(str(p), "grup_paylasim/gorseller") for p in (KOK / "grup_paylasim" / "gorseller").glob("*.png")
           if not p.name.startswith("_")]
 datas += [(str(p), "gonderiler") for p in (KOK / "gonderiler").glob("gun*_*.png")
@@ -30,8 +32,10 @@ a = Analysis(
     pathex=[str(PANEL), str(KOK), str(KOK / "otomasyon"), str(KOK / "grup_paylasim")],
     datas=datas,
     hiddenimports=["arayuz", "ajan", "ayarlar", "gorev", "icerik", "paylas", "tarayici", "yollar",
-                   "gunluk_metin", "icerik_verisi", "segmentler", "varyantlar", "PIL._tkinter_finder"],
-    excludes=["matplotlib", "numpy", "scipy", "pandas"],
+                   "PIL._tkinter_finder"],
+    # İçerik modülleri PYZ'ye alınmaz; datas'taki .py dosyalarından (yollar.py'nin eklediği sys.path)
+    # yüklenir ki segmentler.py `Path(__file__).parent / "gruplar.json"` doğru klasörü bulsun.
+    excludes=["matplotlib", "numpy", "scipy", "pandas", "gunluk_metin", "icerik_verisi", "segmentler", "varyantlar"],
     noarchive=False,
 )
 pyz = PYZ(a.pure)
