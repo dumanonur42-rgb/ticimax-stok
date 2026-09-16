@@ -14,18 +14,31 @@ import yollar  # noqa: E402,F401  (sys.path'e sosyal_medya/, otomasyon/, grup_pa
 
 def dogrula():
     """İçerik/görsel/sürücü çözümlemesini test eder; pencereli exe'de stdout olmadığı için dosyaya yazar."""
-    satirlar, hata = [], False
+    import traceback
+    rapor = open("dogrula.txt", "w", encoding="utf-8")
+    hata = False
+
+    def yaz(s):
+        rapor.write(s + "\n")
+        rapor.flush()
 
     def kontrol(ad, fn):
         nonlocal hata
+        yaz(f"...  {ad}")
         try:
-            satirlar.append(f"OK   {ad}: {fn()}")
-        except Exception as e:  # noqa: BLE001
+            yaz(f"OK   {ad}: {fn()}")
+        except Exception:  # noqa: BLE001
             hata = True
-            satirlar.append(f"HATA {ad}: {type(e).__name__}: {e}")
+            yaz(f"HATA {ad}:\n{traceback.format_exc()}")
 
-    import icerik
-    import ayarlar
+    yaz(f"frozen={getattr(sys, 'frozen', False)} kok={yollar.KOK} veri={yollar.VERI}")
+    try:
+        import icerik
+        import ayarlar
+    except Exception:  # noqa: BLE001
+        yaz("HATA import:\n" + traceback.format_exc())
+        rapor.close()
+        return 2
     kontrol("ayarlar", lambda: sorted(ayarlar.ayar_oku()["slotlar"]))
     for slot in ("sabah", "ana", "story"):
         def _slot(s=slot):
@@ -51,7 +64,8 @@ def dogrula():
     kontrol("playwright sürücüsü", _surucu)
     kontrol("modüller", lambda: [__import__(m).__name__ for m in ("ajan", "paylas", "tarayici", "gorev", "arayuz")])
 
-    Path("dogrula.txt").write_text("\n".join(satirlar) + "\n", encoding="utf-8")
+    yaz("BITTI")
+    rapor.close()
     return 2 if hata else 0
 
 

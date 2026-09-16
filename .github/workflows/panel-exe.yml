@@ -27,16 +27,27 @@ jobs:
         run: python -m PyInstaller --noconfirm --clean YamansaPanel.spec
       - name: Duman testi (--dogrula, --ajan-tek)
         working-directory: sosyal_medya/panel/dist/YamansaPanel
+        timeout-minutes: 8
         run: |
-          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--dogrula' -Wait -PassThru -NoNewWindow
-          Write-Host "dogrula exit: $($p.ExitCode)"
+          function Calistir($arg, $sn) {
+            $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList $arg -PassThru
+            if (-not $p.WaitForExit($sn * 1000)) {
+              Write-Host "$arg : $sn sn icinde bitmedi, olduruluyor (muhtemelen hata penceresi)"
+              Get-Process | Where-Object { $_.MainWindowTitle } | Format-Table Id, ProcessName, MainWindowTitle -AutoSize | Out-String | Write-Host
+              Stop-Process -Id $p.Id -Force
+              return 99
+            }
+            return $p.ExitCode
+          }
+          $kod = Calistir '--dogrula' 120
+          Write-Host "dogrula exit: $kod"
           Get-Content dogrula.txt -ErrorAction SilentlyContinue
           Remove-Item dogrula.txt -ErrorAction SilentlyContinue
-          if ($p.ExitCode -ne 0) { exit 1 }
-          $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--ajan-tek' -Wait -PassThru -NoNewWindow
-          Write-Host "ajan-tek exit: $($p.ExitCode)"
+          if ($kod -ne 0) { exit 1 }
+          $kod = Calistir '--ajan-tek' 120
+          Write-Host "ajan-tek exit: $kod"
           Get-Content "$env:LOCALAPPDATA\YamansaPanel\ajan.log" -ErrorAction SilentlyContinue
-          if ($p.ExitCode -gt 1) { exit 1 }
+          if ($kod -gt 1) { exit 1 }
       - name: Paket
         working-directory: sosyal_medya/panel/dist
         run: |
