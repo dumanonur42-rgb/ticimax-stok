@@ -3,8 +3,10 @@
   python -m panel            -> masaüstü panel
   python -m panel --ajan     -> arka plan ajanı (zamanlayıcı)
   python -m panel --ajan-tek -> vadesi gelen işleri bir kez çalıştır ve çık
+  python -m panel --uyandir  -> Görev Zamanlayıcı uyandırma görevi: ajanı başlat/PC'yi iş bitene dek uyanık tut
   python -m panel --dogrula  -> paket bütünlük kontrolü (CI); sonucu dogrula.txt'ye yazar
 """
+import os
 import sys
 from pathlib import Path
 
@@ -64,6 +66,22 @@ def dogrula():
     kontrol("playwright sürücüsü", _surucu)
     kontrol("modüller", lambda: [__import__(m).__name__ for m in ("ajan", "paylas", "tarayici", "gorev", "arayuz")])
 
+    if os.name == "nt":
+        def _gorev():
+            import gorev
+            a = ayarlar.ayar_oku()
+            a["grup"]["aktif"] = True  # tur saatleri de tetikleyiciye girsin
+            ok, msg = gorev.kur(a, calistir=False)
+            try:
+                assert ok, msg
+                assert gorev.kurulu(), "YamansaAjan sorgulanamadı"
+                ok2, q = gorev._schtasks("/Query", "/TN", gorev.GOREV_UYANDIR, "/XML")
+                assert ok2 and "<WakeToRun>true</WakeToRun>" in q, q[:300]
+                return f"{gorev.GOREV} + {gorev.GOREV_UYANDIR} {gorev.uyandirma_saatleri(a)}"
+            finally:
+                gorev.kaldir()
+        kontrol("görev zamanlayıcı", _gorev)
+
     yaz("BITTI")
     rapor.close()
     return 2 if hata else 0
@@ -79,6 +97,9 @@ def main(argv=None):
     if "--ajan-tek" in argv:
         import ajan
         return ajan.tek_sefer()
+    if "--uyandir" in argv:
+        import ajan
+        return ajan.uyandir()
     import arayuz
     arayuz.calistir()
     return 0

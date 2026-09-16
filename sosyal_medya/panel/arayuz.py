@@ -187,6 +187,7 @@ class Uygulama(ctk.CTk):
     def kaydet(self):
         ayar_yaz(self.ayar)
         self.ayar = ayar_oku()
+        gorev.uyandirma_guncelle(self.ayar)  # slot/tur saatleri değişince uyandırma tetikleyicileri yenilenir
 
     # ============================================================ PANO
     def _s_pano(self):
@@ -270,7 +271,7 @@ class Uygulama(ctk.CTk):
         a = d.get("ajan", {})
         self._pano_ajan.configure(
             text=(f"Durum: {'ÇALIŞIYOR' if canli else 'KAPALI'}\nİş: {a.get('is_', '-')}\nSon sinyal: {a.get('son_nabiz', '-')}\n"
-                  f"Otomatik başlatma (Windows): {'kurulu' if gorev.kurulu() else 'kurulu değil'}"),
+                  f"Otomatik başlatma (Windows): {'kurulu · uykudan uyandırma ' + ', '.join(gorev.uyandirma_saatleri(self.ayar)) if gorev.kurulu() else 'kurulu değil'}"),
             text_color="#2ECC71" if canli else "#E74C3C")
         s = ajan.sonraki_isler(self.ayar, d)
         self._pano_yaklasan.configure(text="\n".join(f"{z:%d.%m %H:%M}  {ad}" for z, ad in s) or "Planlı iş yok (Zamanlayıcı sayfasından açın)")
@@ -311,9 +312,11 @@ class Uygulama(ctk.CTk):
         return k
 
     def _ajan_kur(self):
-        ok, msg = gorev.kur()
+        ok, msg = gorev.kur(self.ayar)
         if ok:
-            messagebox.showinfo("Kuruldu", "Ajan Windows Görev Zamanlayıcı'ya eklendi: oturum açılışında otomatik başlar, kapanırsa 15 dk içinde yeniden başlatılır.\nPanel kapalı olsa da paylaşımlar saatinde atılır (PC açık olmalı).")
+            saatler = ", ".join(gorev.uyandirma_saatleri(self.ayar))
+            messagebox.showinfo("Kuruldu", "Ajan Windows Görev Zamanlayıcı'ya eklendi: oturum açılışında otomatik başlar, kapanırsa 15 dk içinde yeniden başlatılır.\n"
+                                f"PC uyku modundaysa {saatler} saatlerinde kendisi uyanır, paylaşır ve tekrar uyur (tamamen kapalı PC uyandırılamaz).\n\n{msg}")
         else:
             messagebox.showwarning("Kurulamadı", msg)
         self._y_pano()
@@ -644,7 +647,7 @@ class Uygulama(ctk.CTk):
     def _s_zaman(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
         ctk.CTkLabel(f, text="Günlük paylaşım slotları (Instagram + Facebook)", font=self.font_b, anchor="w").pack(fill="x")
-        ctk.CTkLabel(f, text="Ajan çalışıyorsa bu saatlerde otomatik paylaşır; PC kapalıysa açıldığında tolerans süresi içinde telafi eder.",
+        ctk.CTkLabel(f, text="Ajan bu saatlerde otomatik paylaşır; PC uykudaysa Görev Zamanlayıcı uyandırır, kapalıysa açıldığında tolerans süresi içinde telafi eder.",
                      font=self.font_k, text_color=STEEL, anchor="w").pack(fill="x", pady=(0, 8))
         self._z = {}
         for slot, s in self.ayar["slotlar"].items():

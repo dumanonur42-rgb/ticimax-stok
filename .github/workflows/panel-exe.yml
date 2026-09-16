@@ -59,7 +59,12 @@ jobs:
           2) HESAPLAR sayfasi: "Tarayiciyi kur" (Chromium indirilir, bir kez), sonra
              "Facebook giris" ve "Instagram giris": acilan pencerede kendiniz giris yapin.
           3) ZAMANLAYICI sayfasi: saatleri kontrol edin, "Otomatik baslatmayi kur" deyin.
-             Panel kapaliyken de arka plan ajani paylasimlari atar (PC acik olmali).
+             Panel kapaliyken de arka plan ajani paylasimlari atar.
+             PC UYKU MODUNDAYSA: Gorev Zamanlayici paylasim saatlerinde PC'yi uyandirir, paylasir,
+             PC tekrar uyur. Bunun icin Guc Secenekleri > Gelismis > Uyku > "Uyandirma zamanlayicilarina
+             izin ver" ETKIN olmali (kurulum bunu otomatik acmayi dener). Dizustu kapagi kapaliyken
+             uyanmaz; TAMAMEN KAPALI PC hic uyandirilamaz.
+             Kacirilan paylasimlar PC acilinca 3 saat icindeyse (Gecikme toleransi) telafi edilir.
           4) FACEBOOK GRUPLARI: grup turlari varsayilan KAPALI; once "Deneme turu" ile bakin.
 
           Veriler: %LOCALAPPDATA%\YamansaPanel (ayarlar, loglar, ekran goruntuleri, profil)

@@ -10,6 +10,7 @@ Kurallar:
 import datetime as dt
 import json
 import os
+import socket
 import sys
 import time
 import traceback
@@ -55,7 +56,18 @@ def ajan_canli():
         pid = int(d["pid"])
     except Exception:
         return False
-    return (dt.datetime.now() - t).total_seconds() < 90 and pid_calisiyor(pid)
+    return (dt.datetime.now() - t).total_seconds() < 600 and pid_calisiyor(pid)
+
+
+_ES_CONTINUOUS, _ES_SYSTEM_REQUIRED = 0x80000000, 0x00000001
+
+
+def uyanik_tut(acik):
+    """Windows: iş sürerken PC'nin uykuya dalmasını engeller (uykudan uyandırılmış PC 2 dk'da tekrar uyur)."""
+    if os.name != "nt":
+        return
+    import ctypes
+    ctypes.windll.kernel32.SetThreadExecutionState(_ES_CONTINUOUS | (_ES_SYSTEM_REQUIRED if acik else 0))
 
 
 # ---------------------------------------------------------------- işler
@@ -351,10 +363,45 @@ def tek_sefer():
     return 0
 
 
+def ag_bekle(sn=90):
+    """Uykudan uyanan PC'de Wi-Fi'nin gelmesini bekler (en fazla sn). -> internet var mı"""
+    son = time.time() + sn
+    while True:
+        try:
+            socket.create_connection(("www.facebook.com", 443), timeout=5).close()
+            return True
+        except OSError:
+            if time.time() >= son:
+                return False
+            _nabiz(is_="internet bekleniyor")
+            time.sleep(5)
+
+
+def uyandir():
+    """--uyandir: Görev Zamanlayıcı PC'yi uyandırdığında çalışır. Ajan yoksa başlatır; vadesi gelen işler
+    bitene kadar (en fazla 20 dk) PC'yi uyanık tutar, sonra çıkar."""
+    uyanik_tut(True)
+    try:
+        if not ajan_canli():
+            import gorev
+            gorev.simdi_baslat()
+            yaz("uyandırma: ajan çalışmıyordu, başlatıldı")
+        son = time.time() + 20 * 60
+        time.sleep(30)  # ajan işi görüp başlasın
+        while time.time() < son:
+            d = durum_oku()
+            mesgul = d.get("ajan", {}).get("is_", "") not in ("bekliyor", "giriş bekleniyor", "internet bekleniyor", "durdu", "")
+            if not mesgul and not vadesi_gelenler(ayar_oku(), d):
+                break
+            time.sleep(15)
+    finally:
+        uyanik_tut(False)
+    return 0
+
+
 def dongu():
     if not _kilit_al():
-        yaz("başka bir ajan zaten çalışıyor, çıkılıyor")
-        return 2
+        return 2  # başka bir ajan zaten çalışıyor (15 dk'lık kontrol görevi normalde buraya düşer)
     yaz("ajan başladı")
     _nabiz(is_="bekliyor", baslangic=_zaman())
     bekleme = 20
@@ -376,14 +423,23 @@ def dongu():
                         yaz("Chromium kurulu değil – panelden 'Tarayıcıyı kur' çalıştırın")
                         time.sleep(60)
                         continue
-                    with tarayici.ac(gizli=ayar["gizli_pencere"]) as ctx:
-                        for k in komutlar:
-                            try:
-                                komut_isle(ctx, k)
-                            except Exception as e:
-                                yaz(f"komut hatası {k}: {e}\n{traceback.format_exc()}")
-                        if vadeli_isleri_calistir(ctx):
-                            bekleme = 300  # oturum yok: giriş bekleniyor, 5 dk'da bir yeniden dene
+                    uyanik_tut(True)
+                    try:
+                        if not ag_bekle():
+                            yaz("internet yok, 60 sn sonra yeniden denenecek")
+                            _nabiz(is_="internet bekleniyor")
+                            time.sleep(60)
+                            continue
+                        with tarayici.ac(gizli=ayar["gizli_pencere"]) as ctx:
+                            for k in komutlar:
+                                try:
+                                    komut_isle(ctx, k)
+                                except Exception as e:
+                                    yaz(f"komut hatası {k}: {e}\n{traceback.format_exc()}")
+                            if vadeli_isleri_calistir(ctx):
+                                bekleme = 300  # oturum yok: giriş bekleniyor, 5 dk'da bir yeniden dene
+                    finally:
+                        uyanik_tut(False)
                 _nabiz(is_="bekliyor")
             except Exception as e:
                 yaz(f"döngü hatası: {e}\n{traceback.format_exc()}")
