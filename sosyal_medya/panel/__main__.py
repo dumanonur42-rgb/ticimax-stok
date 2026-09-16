@@ -66,6 +66,18 @@ def dogrula():
     kontrol("playwright sürücüsü", _surucu)
     kontrol("modüller", lambda: [__import__(m).__name__ for m in ("ajan", "paylas", "tarayici", "gorev", "arayuz")])
 
+    def _tarayici():
+        import tarayici
+        if not tarayici.tarayici_kurulu():
+            assert not getattr(sys, "frozen", False), f"pakette Chromium yok: {tarayici.GOMULU}"
+            return "kurulu değil (geliştirme ortamı)"
+        with tarayici.ac(gizli=True) as ctx:
+            page = ctx.new_page()
+            page.goto("about:blank")
+            surum = ctx.browser.version if ctx.browser else "?"
+        return f"{'gömülü' if tarayici.gomulu() else 'indirilmiş'} Chromium {surum} @ {tarayici.tarayici_dizini()}"
+    kontrol("tarayıcı (Chromium açılıyor)", _tarayici)
+
     if os.name == "nt":
         def _gorev():
             import gorev

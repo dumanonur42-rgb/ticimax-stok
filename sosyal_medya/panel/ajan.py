@@ -356,7 +356,7 @@ def tek_sefer():
         print("ajan zaten çalışıyor, işleri o yapacak")
         return 0
     if not tarayici.tarayici_kurulu():
-        print("Chromium kurulu değil – panelden 'Tarayıcıyı kur' çalıştırın")
+        print("Tarayıcı bulunamadı – panelde Hesaplar > 'Tarayıcıyı indir'")
         return 1
     with tarayici.ac(gizli=ayar["gizli_pencere"]) as ctx:
         vadeli_isleri_calistir(ctx)
@@ -420,7 +420,7 @@ def dongu():
                         time.sleep(10)
                         continue
                     if not tarayici.tarayici_kurulu():
-                        yaz("Chromium kurulu değil – panelden 'Tarayıcıyı kur' çalıştırın")
+                        yaz("Tarayıcı bulunamadı – panelde Hesaplar > 'Tarayıcıyı indir'")
                         time.sleep(60)
                         continue
                     uyanik_tut(True)

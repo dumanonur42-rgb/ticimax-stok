@@ -63,7 +63,8 @@ class Uygulama(ctk.CTk):
         self._kenar()
         self._govde()
         self._durum_cubugu()
-        self.sayfa("pano")
+        g = durum_oku().get("giris", {})
+        self.sayfa("pano" if g.get("fb") and g.get("ig") else "hesap")
         self.after(1000, self._yenile)
 
     # ------------------------------------------------------------ iskelet
@@ -177,7 +178,7 @@ class Uygulama(ctk.CTk):
             messagebox.showinfo("Gönderildi", "Komut ajana iletildi; 1-3 dk içinde Loglar sayfasında görünür.")
         else:
             if not tarayici.tarayici_kurulu():
-                return messagebox.showwarning("Tarayıcı", "Önce Hesaplar sayfasından 'Tarayıcıyı kur' çalıştırın.")
+                return messagebox.showwarning("Tarayıcı", "Tarayıcı bulunamadı; Hesaplar sayfasından 'Tarayıcıyı indir' deyin.")
 
             def isle():
                 with tarayici.ac(gizli=self.ayar["gizli_pencere"]) as ctx:
@@ -624,7 +625,7 @@ class Uygulama(ctk.CTk):
             messagebox.showinfo("Gönderildi", "Tur ajana iletildi; ilerleme Pano'da görünür.")
         else:
             if not tarayici.tarayici_kurulu():
-                return messagebox.showwarning("Tarayıcı", "Önce Hesaplar sayfasından 'Tarayıcıyı kur' çalıştırın.")
+                return messagebox.showwarning("Tarayıcı", "Tarayıcı bulunamadı; Hesaplar sayfasından 'Tarayıcıyı indir' deyin.")
 
             def isle():
                 with tarayici.ac(gizli=self.ayar["gizli_pencere"]) as ctx:
@@ -786,19 +787,26 @@ class Uygulama(ctk.CTk):
     # ============================================================ HESAPLAR
     def _s_hesap(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
-        ctk.CTkLabel(f, text="Hesaplar ve tarayıcı", font=self.font_b, anchor="w").pack(fill="x")
-        ctk.CTkLabel(f, text="Paylaşımlar bu PC'de, uygulamanın kendi tarayıcı profiliyle yapılır. Facebook ve Instagram'a bir kez kendiniz giriş yaparsınız; oturum saklanır.",
+        ctk.CTkLabel(f, text="Hesaplar ve kurulum", font=self.font_b, anchor="w").pack(fill="x")
+        ctk.CTkLabel(f, text="Chrome, Opera vb. kurmanız GEREKMEZ: uygulama kendi tarayıcısıyla gelir. Facebook ve Instagram'a bir kez kendiniz giriş yaparsınız; oturum bu PC'de saklanır.",
                      font=self.font_k, text_color=STEEL, anchor="w", wraplength=900, justify="left").pack(fill="x", pady=(0, 10))
-        k = self.kart(f, "1) Tarayıcı (Chromium)")
+        k0 = self.kart(f, "Hızlı kurulum (tek tık)")
+        k0.pack(fill="x", pady=4)
+        r0 = ctk.CTkFrame(k0, fg_color="transparent")
+        r0.pack(fill="x", padx=12, pady=(0, 10))
+        ctk.CTkLabel(r0, text="Facebook + Instagram sekmeleri açılır → ikisine de giriş yapın → pencereyi kapatın.\nGirişler doğrulanır ve otomatik başlatma (panel kapalıyken paylaşım, uykudan uyandırma) kendiliğinden kurulur.",
+                     font=self.font_m, justify="left", anchor="w").pack(side="left")
+        ctk.CTkButton(r0, text="KURULUMU BAŞLAT", fg_color=TURUNCU, hover_color="#d95a00", height=44, width=190,
+                      font=ctk.CTkFont("Segoe UI", 14, "bold"), command=self._hizli_kurulum).pack(side="right", padx=4)
+        k = self.kart(f, "Tarayıcı")
         k.pack(fill="x", pady=4)
         r = ctk.CTkFrame(k, fg_color="transparent")
         r.pack(fill="x", padx=12, pady=(0, 10))
-        self._h_tar = ctk.CTkLabel(r, text="", font=self.font_m)
+        self._h_tar = ctk.CTkLabel(r, text="", font=self.font_m, justify="left", anchor="w")
         self._h_tar.pack(side="left")
-        ctk.CTkButton(r, text="Tarayıcıyı kur / güncelle", fg_color=TURUNCU, hover_color="#d95a00", command=self._tarayici_kur).pack(side="right")
+        self._h_tar_btn = ctk.CTkButton(r, text="Tarayıcıyı indir", fg_color=TURUNCU, hover_color="#d95a00", command=self._tarayici_kur)
         self._h_cikti = ctk.CTkTextbox(k, height=90, font=("Consolas", 10), fg_color=MID)
-        self._h_cikti.pack(fill="x", padx=12, pady=(0, 10))
-        k2 = self.kart(f, "2) Giriş")
+        k2 = self.kart(f, "Giriş (tek tek)")
         k2.pack(fill="x", pady=4)
         r2 = ctk.CTkFrame(k2, fg_color="transparent")
         r2.pack(fill="x", padx=12, pady=(0, 10))
@@ -809,7 +817,7 @@ class Uygulama(ctk.CTk):
         ctk.CTkButton(r2, text="Durumu kontrol et", fg_color="transparent", border_width=1, border_color=STEEL, command=self._giris_kontrol).pack(side="right", padx=4)
         ctk.CTkLabel(k2, text="Giriş penceresi açılır → kullanıcı adı/şifre ile girin (gerekirse SMS/2FA) → pencereyi kapatın. Facebook'ta Yamansa Rulman Sayfası'nı yöneten hesapla girin.",
                      font=self.font_k, text_color=STEEL, anchor="w", wraplength=900, justify="left").pack(fill="x", padx=14, pady=(0, 10))
-        k3 = self.kart(f, "3) Hesap bilgileri")
+        k3 = self.kart(f, "Hesap bilgileri")
         k3.pack(fill="x", pady=4)
         ctk.CTkLabel(k3, text="Facebook Sayfası: https://www.facebook.com/yamansarulman/\nInstagram: @yamansarulman\nWhatsApp: 0552 610 93 63 · Web: yamansarulman.com · E-posta: info@yamansa.com.tr",
                      font=self.font_k, anchor="w", justify="left").pack(fill="x", padx=14, pady=(0, 10))
@@ -817,8 +825,18 @@ class Uygulama(ctk.CTk):
         return f
 
     def _y_hesap(self):
-        self._h_tar.configure(text=("Kurulu ✔" if tarayici.tarayici_kurulu() else "Kurulu değil – önce kurun") + f"   ({tarayici.TARAYICILAR})",
-                              text_color="#2ECC71" if tarayici.tarayici_kurulu() else "#E74C3C")
+        if tarayici.gomulu():
+            self._h_tar.configure(text="Hazır ✔  (uygulamayla birlikte geldi, kurulum gerekmez)", text_color="#2ECC71")
+            self._h_tar_btn.pack_forget()
+            self._h_cikti.pack_forget()
+        elif tarayici.tarayici_kurulu():
+            self._h_tar.configure(text=f"Hazır ✔  ({tarayici.TARAYICILAR})", text_color="#2ECC71")
+            self._h_tar_btn.pack_forget()
+            self._h_cikti.pack_forget()
+        else:
+            self._h_tar.configure(text="Tarayıcı bulunamadı – 'Tarayıcıyı indir' deyin (bir kez, internet gerekir)", text_color="#E74C3C")
+            self._h_tar_btn.pack(side="right")
+            self._h_cikti.pack(fill="x", padx=12, pady=(0, 10))
         g = durum_oku().get("giris")
         if g:
             self._h_giris.configure(text=f"Facebook: {'giriş yapılmış ✔' if g.get('fb') else 'giriş yok ✖'}    Instagram: {'giriş yapılmış ✔' if g.get('ig') else 'giriş yok ✖'}    (kontrol: {g.get('zaman', '')})")
@@ -830,15 +848,51 @@ class Uygulama(ctk.CTk):
 
         def yaz(s):
             self.after(0, lambda: (self._h_cikti.insert("end", s + "\n"), self._h_cikti.see("end")))
-        self.arka_planda(lambda: tarayici.tarayici_kur(yaz), lambda ok: (yaz("Tamamlandı ✔" if ok else "HATA: kurulum başarısız"), self._y_hesap()))
+        self.arka_planda(lambda: tarayici.tarayici_kur(yaz), lambda ok: (yaz("Tamamlandı ✔" if ok else "HATA: indirme başarısız (internet/antivirüs?)"), self._y_hesap()))
+
+    def _giris_hazir(self):
+        if not tarayici.tarayici_kurulu():
+            messagebox.showwarning("Tarayıcı", "Tarayıcı bulunamadı; bu sayfadaki 'Tarayıcıyı indir' düğmesine basın.")
+            return False
+        if ajan.ajan_canli() and "bekliyor" not in durum_oku().get("ajan", {}).get("is_", "bekliyor"):
+            messagebox.showwarning("Ajan meşgul", "Ajan şu an paylaşım yapıyor; bitince tekrar deneyin.")
+            return False
+        return True
 
     def _giris(self, site):
-        if not tarayici.tarayici_kurulu():
-            return messagebox.showwarning("Tarayıcı", "Önce tarayıcıyı kurun.")
-        if ajan.ajan_canli() and "bekliyor" not in durum_oku().get("ajan", {}).get("is_", "bekliyor"):
-            return messagebox.showwarning("Ajan meşgul", "Ajan şu an paylaşım yapıyor; bitince tekrar deneyin.")
+        if not self._giris_hazir():
+            return
         messagebox.showinfo("Giriş", "Tarayıcı penceresi açılıyor. Giriş yapın, sonra pencereyi KAPATIN; durum otomatik kontrol edilir.")
         self.arka_planda(lambda: (tarayici.giris_penceresi(site), self._giris_kontrol_ic())[1], lambda _r: self._y_hesap(), mesgul=True)
+
+    def _hizli_kurulum(self):
+        if not self._giris_hazir():
+            return
+        messagebox.showinfo("Hızlı kurulum", "Tarayıcı penceresi açılıyor: 1. sekme Facebook, 2. sekme Instagram.\n\n"
+                            "İkisine de giriş yapın (gerekirse SMS/2FA), sonra pencereyi KAPATIN. Gerisi otomatik.")
+
+        def isle():
+            tarayici.giris_penceresi(("fb", "ig"))
+            return self._giris_kontrol_ic()
+
+        def bitti(g):
+            self._y_hesap()
+            eksik = [ad for k, ad in (("fb", "Facebook"), ("ig", "Instagram")) if not g.get(k)]
+            if eksik:
+                return messagebox.showwarning("Giriş eksik", f"{' ve '.join(eksik)} girişi görülmedi. 'KURULUMU BAŞLAT' ile tekrar deneyin "
+                                              "(pencereyi giriş tamamlandıktan sonra kapatın).")
+            ok, msg = gorev.kur(self.ayar)
+            if "pano" in self._sayfalar:
+                self._y_pano()
+            if ok:
+                saatler = ", ".join(gorev.uyandirma_saatleri(self.ayar))
+                messagebox.showinfo("Kurulum tamamlandı ✔", "Facebook ve Instagram girişleri tamam, otomatik başlatma kuruldu.\n\n"
+                                    f"Paylaşımlar panel kapalıyken de {saatler} saatlerinde atılır; PC uykudaysa uyandırılır. "
+                                    "Artık paneli kapatabilirsiniz.")
+            else:
+                messagebox.showwarning("Girişler tamam, otomatik başlatma kurulamadı",
+                                       f"{msg}\n\nPano sayfasından 'Otomatik başlatmayı kur' ile tekrar deneyin.")
+        self.arka_planda(isle, bitti, mesgul=True)
 
     def _giris_kontrol_ic(self):
         with tarayici.ac(gizli=True) as ctx:
@@ -849,8 +903,8 @@ class Uygulama(ctk.CTk):
         return g
 
     def _giris_kontrol(self):
-        if not tarayici.tarayici_kurulu():
-            return messagebox.showwarning("Tarayıcı", "Önce tarayıcıyı kurun.")
+        if not self._giris_hazir():
+            return
         self.arka_planda(self._giris_kontrol_ic, lambda _r: self._y_hesap(), mesgul=True)
 
     # ============================================================ AYARLAR
