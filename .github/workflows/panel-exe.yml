@@ -96,6 +96,7 @@ jobs:
           if (Test-Path "$hedef\YamansaPanel.exe") { Write-Host "kaldirma sonrasi exe kaldi"; exit 1 }
           schtasks /Query /TN YamansaAjan 2>$null; if ($LASTEXITCODE -eq 0) { Write-Host "YamansaAjan gorevi silinmedi"; exit 1 }
           Write-Host "Kurulum/kaldirma testi OK"
+          exit 0
       - uses: actions/upload-artifact@v4
         with:
           name: YamansaPanel_Kurulum
