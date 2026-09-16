@@ -445,7 +445,8 @@ class Uygulama(ctk.CTk):
         grup = x.get("tip") == "grup"
         hedef = x.get("grup", "")[:70] if grup else f"Gün {x.get('gun', '?'):02d} · {SLOT_AD.get(x.get('slot'), x.get('slot', ''))} · {x.get('platform', '').upper()}"
         tip = f"Grup · {icerik.SEGMENT_AD.get(x.get('segment'), '')}" if grup else "Sosyal medya"
-        notu = (x.get("url") or x.get("notu") or "").strip().splitlines()
+        oncelik = (x.get("notu"), x.get("url")) if grup and x.get("durum") != "OK" else (x.get("url"), x.get("notu"))
+        notu = (oncelik[0] or oncelik[1] or "").strip().splitlines()
         return (x["zaman"][:16], tip, hedef, DURUM_AD.get(x["durum"], x["durum"]), notu[0][:120] if notu else "")
 
     # ============================================================ PANO
