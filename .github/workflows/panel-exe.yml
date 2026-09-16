@@ -29,7 +29,7 @@ jobs:
         working-directory: sosyal_medya/panel
         run: |
           $env:PLAYWRIGHT_BROWSERS_PATH = "$PWD\dist\YamansaPanel\_internal\tarayicilar"
-          python -m playwright install chromium
+          python -m playwright install chromium --no-shell
           Get-ChildItem $env:PLAYWRIGHT_BROWSERS_PATH | Format-Table Name, LastWriteTime -AutoSize | Out-String | Write-Host
           $mb = [math]::Round((Get-ChildItem dist\YamansaPanel -Recurse | Measure-Object Length -Sum).Sum / 1MB)
           Write-Host "Paket boyutu: $mb MB"

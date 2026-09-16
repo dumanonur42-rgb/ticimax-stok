@@ -40,10 +40,10 @@ def tarayici_kur(cikti=print):
     env = dict(os.environ, PLAYWRIGHT_BROWSERS_PATH=str(TARAYICILAR))
     if getattr(sys, "frozen", False):
         from playwright._impl._driver import compute_driver_executable, get_driver_env
-        cmd = [*compute_driver_executable(), "install", "chromium"]
+        cmd = [*compute_driver_executable(), "install", "chromium", "--no-shell"]
         env.update(get_driver_env())
     else:
-        cmd = [sys.executable, "-m", "playwright", "install", "chromium"]
+        cmd = [sys.executable, "-m", "playwright", "install", "chromium", "--no-shell"]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env)
     for satir in p.stdout:
         cikti(satir.rstrip())
@@ -58,7 +58,8 @@ def ac(gizli=False):
     os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(tarayici_dizini())
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(
-            str(PROFIL), headless=gizli, locale="tr-TR", timezone_id="Europe/Istanbul",
+            str(PROFIL), headless=gizli, channel="chromium",  # gizli modda da tam Chromium (headless shell gerekmez)
+            locale="tr-TR", timezone_id="Europe/Istanbul",
             viewport={"width": 1366, "height": 850}, user_agent=UA_MASAUSTU if gizli else None,
             args=["--disable-blink-features=AutomationControlled", "--start-maximized"],
             ignore_default_args=["--enable-automation"],
