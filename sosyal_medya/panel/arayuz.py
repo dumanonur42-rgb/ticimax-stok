@@ -417,8 +417,9 @@ class Uygulama(ctk.CTk):
         s1.pack(fill="x", padx=12, pady=8)
         g = self.ayar["grup"]
         self._g_aktif = ctk.BooleanVar(value=g["aktif"])
-        ctk.CTkSwitch(s1, text="Grup turları zamanlayıcıda AÇIK", variable=self._g_aktif, progress_color=TURUNCU,
-                      font=ctk.CTkFont("Segoe UI", 13, "bold"), command=self._grup_ayar_kaydet).pack(side="left", padx=(0, 20))
+        self._g_switch = ctk.CTkSwitch(s1, text=self._g_switch_metin(g["aktif"]), variable=self._g_aktif, progress_color=TURUNCU,
+                                       font=ctk.CTkFont("Segoe UI", 13, "bold"), command=self._grup_ayar_kaydet)
+        self._g_switch.pack(side="left", padx=(0, 20))
         self._g_tur_vars = []
         for i, t in enumerate(g["turlar"]):
             v = ctk.BooleanVar(value=t["aktif"])
@@ -517,9 +518,14 @@ class Uygulama(ctk.CTk):
                 seg[g["segment_ad"]] = seg.get(g["segment_ad"], 0) + 1
         self._g_bilgi.configure(text=f"{len(gs)} grup · {acik} açık · " + " · ".join(f"{k} {v}" for k, v in sorted(seg.items(), key=lambda kv: -kv[1])))
 
+    @staticmethod
+    def _g_switch_metin(aktif):
+        return "Grup turları zamanlayıcıda: " + ("AÇIK" if aktif else "KAPALI")
+
     def _grup_ayar_kaydet(self):
         g = self.ayar["grup"]
         g["aktif"] = self._g_aktif.get()
+        self._g_switch.configure(text=self._g_switch_metin(g["aktif"]))
         turlar = []
         for v, e in self._g_tur_vars:
             saat = e.get().strip()
