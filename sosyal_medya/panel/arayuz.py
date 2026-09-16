@@ -1,4 +1,7 @@
-"""Yamansa Sosyal Medya Paneli – masaüstü arayüz (CustomTkinter)."""
+"""Yamansa Sosyal Medya Paneli – masaüstü arayüz (CustomTkinter).
+
+Tasarım sistemi: koyu kurumsal tema, Yamansa lacivert/turuncu paleti, kart + rozet + istatistik bileşenleri.
+"""
 import datetime as dt
 import os
 import subprocess
@@ -9,7 +12,7 @@ import webbrowser
 from tkinter import messagebox, ttk
 
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageDraw
 
 import ajan
 import gorev
@@ -19,11 +22,44 @@ from ayarlar import ayar_oku, ayar_yaz, durum_oku, durum_yaz, log_oku
 from yollar import KOK, SHOTS, VERI
 
 ctk.set_appearance_mode("dark")
-NAVY, MID, MAVI, TURUNCU, MIST, STEEL = "#011B54", "#070F2B", "#1E5BD6", "#FF6A00", "#F2F4F8", "#B8C0CC"
-KART = "#0F1A3D"
-DURUM_RENK = {"OK": "#2ECC71", "PENDING": "#F1C40F", "FAIL": "#E74C3C", "BLOK": "#FF3B3B", "DRY": STEEL}
-SLOT_AD = {"sabah": "Sabah kartı 09:00", "ana": "Ana gönderi 12:30", "story": "Story 18:30"}
+
+# ---------------------------------------------------------------- tasarım belirteçleri
+BG = "#060A18"          # pencere zemini
+YAN = "#0A1128"         # kenar menü
+KART = "#0E1733"        # kart yüzeyi
+KART2 = "#141F45"       # iç yüzey / hover
+CIZGI = "#1D2B58"       # kenarlık
+METIN = "#F3F6FC"
+METIN2 = "#97A3C4"
+METIN3 = "#5E6C92"
+TURUNCU, TURUNCU_H = "#FF6A00", "#E35E00"
+MAVI, MAVI_H = "#3D7BFF", "#2F63D6"
+YESIL, SARI, KIRMIZI, MOR = "#22C55E", "#F5B301", "#EF4444", "#A78BFA"
+NAVY, MID, MIST, STEEL = "#011B54", BG, METIN, METIN2  # geriye dönük adlar
+
+DURUM_RENK = {"OK": YESIL, "PENDING": SARI, "FAIL": KIRMIZI, "BLOK": "#FF3B3B", "DRY": METIN2}
+DURUM_AD = {"OK": "Yayında", "PENDING": "Onay bekliyor", "FAIL": "Başarısız", "BLOK": "Engel", "DRY": "Deneme"}
+SLOT_AD = {"sabah": "Sabah kartı", "ana": "Ana gönderi", "story": "Story"}
+SLOT_RENK = {"sabah": SARI, "ana": MAVI, "story": MOR}
+SLOT_IKON = {"sabah": "☀", "ana": "◆", "story": "◑"}
 GUNLER = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"]
+GUNLER_UZUN = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]
+AYLAR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+MENU = [("pano", "◉", "Pano"), ("takvim", "▦", "Takvim & İçerik"), ("gruplar", "♟", "Facebook Grupları"),
+        ("zaman", "◷", "Zamanlayıcı"), ("log", "≣", "Loglar & Kanıt"), ("hesap", "⚿", "Hesaplar"), ("ayar", "⚙", "Ayarlar")]
+SURUM = "v2.0"
+
+
+def ton(renk, oran=0.16, zemin=KART):
+    """Renk ile zemini karıştırır (rozet arka planı gibi yumuşak tonlar için)."""
+    r1, g1, b1 = (int(renk[i:i + 2], 16) for i in (1, 3, 5))
+    r2, g2, b2 = (int(zemin[i:i + 2], 16) for i in (1, 3, 5))
+    k = lambda a, b: int(a * oran + b * (1 - oran))  # noqa: E731
+    return f"#{k(r1, r2):02x}{k(g1, g2):02x}{k(b1, b2):02x}"
+
+
+def tarih_uzun(t):
+    return f"{GUNLER_UZUN[t.weekday()]}, {t.day} {AYLAR[t.month - 1]} {t.year}"
 
 
 def ac_dosya(p):
@@ -36,10 +72,16 @@ def ac_dosya(p):
         subprocess.Popen(["xdg-open", p])
 
 
-def kucult(path, w):
+def kucult(path, w, radius=0, zemin=KART):
+    """Görseli genişliğe göre küçültür; radius verilirse köşeleri yuvarlatıp kart zeminine oturtur."""
     try:
-        im = Image.open(path)
+        im = Image.open(path).convert("RGBA")
         h = int(im.height * w / im.width)
+        im = im.resize((w, h), Image.LANCZOS)
+        if radius:
+            mask = Image.new("L", (w, h), 0)
+            ImageDraw.Draw(mask).rounded_rectangle((0, 0, w - 1, h - 1), radius, fill=255)
+            im = Image.composite(im, Image.new("RGBA", (w, h), zemin), mask)
         return ctk.CTkImage(light_image=im, dark_image=im, size=(w, h))
     except Exception:
         return None
@@ -49,69 +91,213 @@ class Uygulama(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Yamansa Rulman · Sosyal Medya Paneli")
-        self.geometry("1380x860")
-        self.minsize(1150, 720)
-        self.configure(fg_color=MID)
+        self.geometry("1440x900")
+        self.minsize(1180, 740)
+        self.configure(fg_color=BG)
+        try:
+            self.iconbitmap(str(KOK / "panel" / "yamansa.ico"))
+        except Exception:
+            pass
         self.ayar = ayar_oku()
         self._img_cache = {}
+        self._font_cache = {}
         self._sayfalar = {}
         self._aktif = None
-        self.font_b = ctk.CTkFont("Segoe UI", 20, "bold")
-        self.font_m = ctk.CTkFont("Segoe UI", 13)
-        self.font_k = ctk.CTkFont("Segoe UI", 11)
+        self.font_b = self.F(20, "bold")
+        self.font_m = self.F(13)
+        self.font_k = self.F(11)
         self._ttk_stil()
         self._kenar()
-        self._govde()
         self._durum_cubugu()
+        self._govde()
         g = durum_oku().get("giris", {})
         self.sayfa("pano" if g.get("fb") and g.get("ig") else "hesap")
         self.after(1000, self._yenile)
 
-    # ------------------------------------------------------------ iskelet
+    # ------------------------------------------------------------ tasarım sistemi
+    def F(self, boyut, agirlik="normal"):
+        k = (boyut, agirlik)
+        if k not in self._font_cache:
+            self._font_cache[k] = ctk.CTkFont("Segoe UI", boyut, agirlik)
+        return self._font_cache[k]
+
     def _ttk_stil(self):
         s = ttk.Style(self)
         s.theme_use("clam")
-        s.configure("Treeview", background=KART, fieldbackground=KART, foreground=MIST, rowheight=26, borderwidth=0,
-                    font=("Segoe UI", 10))
-        s.configure("Treeview.Heading", background=NAVY, foreground=MIST, font=("Segoe UI", 10, "bold"), relief="flat")
-        s.map("Treeview", background=[("selected", MAVI)])
+        s.configure("Treeview", background=KART, fieldbackground=KART, foreground=METIN, rowheight=30, borderwidth=0,
+                    relief="flat", font=("Segoe UI", 10))
+        s.configure("Treeview.Heading", background=KART2, foreground=METIN2, font=("Segoe UI", 10, "bold"), relief="flat",
+                    borderwidth=0, padding=(8, 8))
+        s.map("Treeview.Heading", background=[("active", KART2)])
+        s.map("Treeview", background=[("selected", ton(MAVI, 0.45))], foreground=[("selected", METIN)])
+        s.layout("Treeview", [("Treeview.treearea", {"sticky": "nswe"})])
+        s.configure("Vertical.TScrollbar", background=KART2, troughcolor=KART, bordercolor=KART, arrowcolor=METIN2,
+                    lightcolor=KART2, darkcolor=KART2, relief="flat", gripcount=0)
+        s.map("Vertical.TScrollbar", background=[("active", CIZGI)])
 
+    def kart(self, parent, baslik=None, alt=None, **kw):
+        kw.setdefault("fg_color", KART)
+        kw.setdefault("corner_radius", 16)
+        kw.setdefault("border_width", 1)
+        kw.setdefault("border_color", CIZGI)
+        f = ctk.CTkFrame(parent, **kw)
+        f.ust = None
+        if baslik:
+            ust = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+            ust.pack(fill="x", padx=18, pady=(14, 6))
+            ctk.CTkLabel(ust, text=baslik, font=self.F(14, "bold"), anchor="w").pack(side="left")
+            if alt:
+                ctk.CTkLabel(ust, text=alt, font=self.F(11), text_color=METIN3, anchor="w").pack(side="left", padx=(10, 0), pady=(2, 0))
+            f.ust = ust
+        return f
+
+    def rozet(self, parent, text, renk, **kw):
+        kw.setdefault("font", self.F(10, "bold"))
+        return ctk.CTkLabel(parent, text=f"  {text}  ", text_color=renk, fg_color=ton(renk, 0.18), corner_radius=999, height=22, **kw)
+
+    def rozet_ayarla(self, r, text, renk):
+        r.configure(text=f"  {text}  ", text_color=renk, fg_color=ton(renk, 0.18))
+
+    def btn(self, parent, text, cmd=None, tur="birincil", **kw):
+        stil = {
+            "birincil": dict(fg_color=TURUNCU, hover_color=TURUNCU_H, text_color="white"),
+            "mavi": dict(fg_color=MAVI, hover_color=MAVI_H, text_color="white"),
+            "ikincil": dict(fg_color=KART2, hover_color=CIZGI, text_color=METIN, border_width=1, border_color=CIZGI),
+            "hayalet": dict(fg_color="transparent", hover_color=KART2, text_color=METIN2),
+            "tehlike": dict(fg_color="#3A1420", hover_color="#571E30", text_color="#FCA5A5", border_width=1, border_color="#571E30"),
+        }[tur]
+        kw = {**dict(height=36, corner_radius=10, font=self.F(12, "bold")), **stil, **kw}
+        return ctk.CTkButton(parent, text=text, command=cmd, **kw)
+
+    def sayfa_basligi(self, parent, baslik, alt=None):
+        u = ctk.CTkFrame(parent, fg_color="transparent", width=1, height=1)
+        u.pack(fill="x", pady=(2, 16))
+        sol = ctk.CTkFrame(u, fg_color="transparent", width=1, height=1)
+        sol.pack(side="left")
+        b = ctk.CTkLabel(sol, text=baslik, font=self.F(24, "bold"), anchor="w")
+        b.pack(anchor="w")
+        a = None
+        if alt is not None:
+            a = ctk.CTkLabel(sol, text=alt, font=self.F(12), text_color=METIN2, anchor="w", justify="left", wraplength=900)
+            a.pack(anchor="w", pady=(2, 0))
+        sag = ctk.CTkFrame(u, fg_color="transparent", width=1, height=1)
+        sag.pack(side="right", pady=(6, 0))
+        sag.baslik, sag.alt = b, a
+        return sag
+
+    def istatistik(self, parent, etiket, renk):
+        k = ctk.CTkFrame(parent, fg_color=KART, corner_radius=16, border_width=1, border_color=CIZGI)
+        ctk.CTkFrame(k, width=4, height=10, fg_color=renk, corner_radius=2).pack(side="left", fill="y", padx=(16, 0), pady=18)
+        ic = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        ic.pack(side="left", fill="both", expand=True, padx=14, pady=14)
+        ctk.CTkLabel(ic, text=etiket.upper(), font=self.F(10, "bold"), text_color=METIN3, anchor="w").pack(fill="x")
+        deger = ctk.CTkLabel(ic, text="—", font=self.F(26, "bold"), anchor="w")
+        deger.pack(fill="x", pady=(2, 0))
+        alt = ctk.CTkLabel(ic, text="", font=self.F(11), text_color=METIN2, anchor="w")
+        alt.pack(fill="x")
+        return k, deger, alt
+
+    def durum_satiri(self, parent, ad):
+        r = ctk.CTkFrame(parent, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", padx=18, pady=3)
+        nokta = ctk.CTkLabel(r, text="●", font=self.F(12), text_color=METIN3, width=14)
+        nokta.pack(side="left")
+        ctk.CTkLabel(r, text=ad, font=self.F(12), text_color=METIN2, anchor="w").pack(side="left", padx=(8, 0))
+        deger = ctk.CTkLabel(r, text="—", font=self.F(12, "bold"), anchor="e", text_color=METIN)
+        deger.pack(side="right")
+        return nokta, deger
+
+    def durum_ayarla(self, satir, metin, renk):
+        nokta, deger = satir
+        nokta.configure(text_color=renk)
+        deger.configure(text=metin, text_color=renk)
+
+    def ayrac(self, parent, padx=18, pady=8):
+        ctk.CTkFrame(parent, height=1, fg_color=CIZGI).pack(fill="x", padx=padx, pady=pady)
+
+    def alan(self, parent, etiket, genislik=80, deger=""):
+        """Etiket + giriş kutusu (dikey), satır içi kullanım."""
+        f = ctk.CTkFrame(parent, fg_color="transparent", width=1, height=1)
+        ctk.CTkLabel(f, text=etiket.upper(), font=self.F(9, "bold"), text_color=METIN3, anchor="w").pack(anchor="w")
+        e = ctk.CTkEntry(f, width=genislik, height=34, font=self.F(12), fg_color=KART2, border_color=CIZGI, corner_radius=8)
+        e.insert(0, str(deger))
+        e.pack(anchor="w", pady=(2, 0))
+        return f, e
+
+    def onay(self, parent, text, var, **kw):
+        kw = {**dict(font=self.F(12), checkbox_width=20, checkbox_height=20, corner_radius=6, fg_color=MAVI,
+                     hover_color=MAVI_H, border_color=METIN3, border_width=2), **kw}
+        return ctk.CTkCheckBox(parent, text=text, variable=var, **kw)
+
+    def anahtar(self, parent, text, var, cmd=None, **kw):
+        kw = {**dict(font=self.F(13, "bold"), progress_color=TURUNCU, button_color=METIN, button_hover_color=MIST,
+                     fg_color=KART2), **kw}
+        return ctk.CTkSwitch(parent, text=text, variable=var, command=cmd, **kw)
+
+    # ------------------------------------------------------------ iskelet
     def _kenar(self):
-        k = ctk.CTkFrame(self, width=210, corner_radius=0, fg_color=NAVY)
+        k = ctk.CTkFrame(self, width=240, corner_radius=0, fg_color=YAN, border_width=0)
         k.pack(side="left", fill="y")
-        logo = kucult(KOK / "logo_yamansa.png", 160)
-        ctk.CTkLabel(k, image=logo, text="" if logo else "YAMANSA", font=self.font_b).pack(pady=(24, 4))
-        ctk.CTkLabel(k, text="Sosyal Medya Paneli", font=self.font_k, text_color=STEEL).pack(pady=(0, 18))
+        k.pack_propagate(False)
+        ctk.CTkFrame(self, width=1, corner_radius=0, fg_color=CIZGI).pack(side="left", fill="y")
+        marka = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        marka.pack(fill="x", padx=20, pady=(26, 10))
+        logo = kucult(KOK / "logo_yamansa.png", 168, zemin=YAN)
+        ctk.CTkLabel(marka, image=logo, text="" if logo else "YAMANSA", font=self.F(22, "bold")).pack(anchor="w")
+        ctk.CTkLabel(marka, text="SOSYAL MEDYA KOMUTA MERKEZİ", font=self.F(9, "bold"), text_color=METIN3).pack(anchor="w", pady=(8, 0))
+        self.ayrac(k, padx=20, pady=(10, 14))
+        ctk.CTkLabel(k, text="MENÜ", font=self.F(9, "bold"), text_color=METIN3, anchor="w").pack(fill="x", padx=26, pady=(0, 6))
         self._menu = {}
-        for key, ad in [("pano", "◉  Pano"), ("takvim", "▦  Takvim & İçerik"), ("gruplar", "♟  Facebook Grupları"),
-                        ("zaman", "◷  Zamanlayıcı"), ("log", "≡  Loglar & Kanıt"), ("hesap", "⚿  Hesaplar"),
-                        ("ayar", "⚙  Ayarlar")]:
-            b = ctk.CTkButton(k, text=ad, anchor="w", height=40, corner_radius=8, fg_color="transparent",
-                              hover_color=KART, font=self.font_m, command=lambda kk=key: self.sayfa(kk))
-            b.pack(fill="x", padx=12, pady=3)
-            self._menu[key] = b
-        ctk.CTkLabel(k, text=f"Veri: {VERI}", font=("Segoe UI", 9), text_color=STEEL, wraplength=180,
-                     justify="left").pack(side="bottom", pady=12, padx=12)
+        for key, ikon, ad in MENU:
+            satir = ctk.CTkFrame(k, fg_color="transparent", height=42)
+            satir.pack(fill="x", padx=(0, 14), pady=2)
+            gost = ctk.CTkFrame(satir, width=3, height=10, fg_color="transparent", corner_radius=2)
+            gost.pack(side="left", fill="y", pady=9)
+            b = ctk.CTkButton(satir, text=f"{ikon}    {ad}", anchor="w", height=42, corner_radius=10, fg_color="transparent",
+                              hover_color=KART2, text_color=METIN2, font=self.F(13), command=lambda kk=key: self.sayfa(kk))
+            b.pack(side="left", fill="both", expand=True, padx=(11, 0))
+            self._menu[key] = (b, gost)
+        # alt sistem kartı
+        ctk.CTkLabel(k, text=f"Yamansa Rulman · {SURUM}", font=self.F(9), text_color=METIN3).pack(side="bottom", pady=(0, 10))
+        alt = ctk.CTkFrame(k, fg_color=KART, corner_radius=14, border_width=1, border_color=CIZGI)
+        alt.pack(side="bottom", fill="x", padx=14, pady=(14, 8))
+        ctk.CTkLabel(alt, text="SİSTEM", font=self.F(9, "bold"), text_color=METIN3, anchor="w").pack(fill="x", padx=14, pady=(12, 4))
+        r = ctk.CTkFrame(alt, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", padx=14)
+        self._yan_nokta = ctk.CTkLabel(r, text="●", font=self.F(12), text_color=METIN3, width=14)
+        self._yan_nokta.pack(side="left")
+        self._yan_ajan = ctk.CTkLabel(r, text="Ajan", font=self.F(12, "bold"), anchor="w")
+        self._yan_ajan.pack(side="left", padx=(6, 0))
+        self._yan_gun = ctk.CTkLabel(alt, text="", font=self.F(11), text_color=METIN2, anchor="w")
+        self._yan_gun.pack(fill="x", padx=14, pady=(8, 2))
+        self._yan_bar = ctk.CTkProgressBar(alt, height=6, progress_color=TURUNCU, fg_color=KART2, corner_radius=3)
+        self._yan_bar.pack(fill="x", padx=14, pady=(0, 12))
+        self._yan_bar.set(0)
 
     def _govde(self):
-        self._icerik = ctk.CTkFrame(self, fg_color="transparent")
-        self._icerik.pack(side="top", fill="both", expand=True, padx=16, pady=(14, 0))
+        self._icerik = ctk.CTkFrame(self, fg_color="transparent", width=1, height=1)
+        self._icerik.pack(side="top", fill="both", expand=True, padx=24, pady=(20, 0))
 
     def _durum_cubugu(self):
-        c = ctk.CTkFrame(self, height=34, corner_radius=0, fg_color=NAVY)
+        ctk.CTkFrame(self, height=1, corner_radius=0, fg_color=CIZGI).pack(side="bottom", fill="x")
+        c = ctk.CTkFrame(self, height=34, corner_radius=0, fg_color=YAN)
         c.pack(side="bottom", fill="x")
-        self._sb_ajan = ctk.CTkLabel(c, text="", font=self.font_k)
-        self._sb_ajan.pack(side="left", padx=14)
-        self._sb_sonraki = ctk.CTkLabel(c, text="", font=self.font_k, text_color=STEEL)
+        self._sb_ajan = ctk.CTkLabel(c, text="", font=self.F(11, "bold"))
+        self._sb_ajan.pack(side="left", padx=(18, 14))
+        self._sb_sonraki = ctk.CTkLabel(c, text="", font=self.F(11), text_color=METIN2)
         self._sb_sonraki.pack(side="left", padx=14)
-        self._sb_saat = ctk.CTkLabel(c, text="", font=self.font_k, text_color=STEEL)
-        self._sb_saat.pack(side="right", padx=14)
+        self._sb_saat = ctk.CTkLabel(c, text="", font=self.F(11), text_color=METIN2)
+        self._sb_saat.pack(side="right", padx=18)
+        ctk.CTkLabel(c, text=f"Veri: {VERI}", font=self.F(9), text_color=METIN3).pack(side="right", padx=14)
 
     def sayfa(self, key):
         for f in self._sayfalar.values():
             f.pack_forget()
-        for kk, b in self._menu.items():
-            b.configure(fg_color=KART if kk == key else "transparent")
+        for kk, (b, gost) in self._menu.items():
+            aktif = kk == key
+            b.configure(fg_color=KART2 if aktif else "transparent", text_color=METIN if aktif else METIN2,
+                        font=self.F(13, "bold" if aktif else "normal"))
+            gost.configure(fg_color=TURUNCU if aktif else "transparent")
         if key not in self._sayfalar:
             self._sayfalar[key] = getattr(self, f"_s_{key}")()
         self._sayfalar[key].pack(fill="both", expand=True)
@@ -126,10 +312,15 @@ class Uygulama(ctk.CTk):
             canli = ajan.ajan_canli()
             a = d.get("ajan", {})
             self._sb_ajan.configure(text=("●  Ajan çalışıyor · " + a.get("is_", "")) if canli else "○  Ajan kapalı – zamanlanmış paylaşımlar atılmaz",
-                                    text_color="#2ECC71" if canli else "#E74C3C")
+                                    text_color=YESIL if canli else KIRMIZI)
+            self._yan_nokta.configure(text_color=YESIL if canli else KIRMIZI)
+            self._yan_ajan.configure(text="Ajan çalışıyor" if canli else "Ajan kapalı", text_color=YESIL if canli else KIRMIZI)
+            gun = icerik.gun_no(self.ayar)
+            self._yan_gun.configure(text=f"İçerik günü {gun} / {icerik.SON_GUN}")
+            self._yan_bar.set(min(1, max(0, gun / icerik.SON_GUN)))
             s = ajan.sonraki_isler(self.ayar, d, adet=1)
             self._sb_sonraki.configure(text=f"Sıradaki: {s[0][0]:%d.%m %H:%M} · {s[0][1]}" if s else "Sıradaki iş yok")
-            self._sb_saat.configure(text=dt.datetime.now().strftime("%d.%m.%Y %H:%M"))
+            self._sb_saat.configure(text=dt.datetime.now().strftime("%d.%m.%Y  %H:%M"))
             if self._aktif in ("pano", "log", "gruplar"):
                 getattr(self, f"_y_{self._aktif}")()
         except Exception as e:
@@ -137,17 +328,15 @@ class Uygulama(ctk.CTk):
         self.after(5000, self._yenile)
 
     # ------------------------------------------------------------ yardımcılar
-    def kart(self, parent, baslik=None, **kw):
-        f = ctk.CTkFrame(parent, fg_color=KART, corner_radius=12, **kw)
-        if baslik:
-            ctk.CTkLabel(f, text=baslik, font=ctk.CTkFont("Segoe UI", 14, "bold"), anchor="w").pack(fill="x", padx=14, pady=(10, 4))
-        return f
-
-    def img(self, path, w):
-        k = (str(path), w)
+    def img(self, path, w, radius=12, zemin=KART):
+        k = (str(path), w, radius, zemin)
         if k not in self._img_cache:
-            self._img_cache[k] = kucult(path, w)
+            self._img_cache[k] = kucult(path, w, radius, zemin)
         return self._img_cache[k]
+
+    def kopyala(self, metin):
+        self.clipboard_clear()
+        self.clipboard_append(metin)
 
     def arka_planda(self, fn, bitince=None, mesgul=False):
         """Uzun işi thread'de çalıştırır; panel tarayıcıyı kullanıyorsa ajana 'meşgul' bayrağı bırakır."""
@@ -169,7 +358,7 @@ class Uygulama(ctk.CTk):
     def paylas_simdi(self, gun, slot, platformlar, go=True):
         if not platformlar:
             return messagebox.showwarning("Platform", "En az bir platform seçin (Facebook / Instagram).")
-        ad = SLOT_AD[slot]
+        ad = f"{SLOT_AD[slot]} {self.ayar['slotlar'][slot]['saat']}"
         ne = "PAYLAŞILACAK" if go else "deneme (paylaş tuşuna basılmaz)"
         if not messagebox.askyesno("Onay", f"Gün {gun} · {ad}\n{' + '.join(p.upper() for p in platformlar)}\n\n{ne}. Devam?"):
             return
@@ -190,48 +379,95 @@ class Uygulama(ctk.CTk):
         self.ayar = ayar_oku()
         gorev.uyandirma_guncelle(self.ayar)  # slot/tur saatleri değişince uyandırma tetikleyicileri yenilenir
 
+    def _log_tablosu(self, parent, yukseklik=None):
+        """Ortak log tablosu (Pano + Loglar)."""
+        cols = ("zaman", "tip", "hedef", "durum", "notu")
+        tree = ttk.Treeview(parent, columns=cols, show="headings", **({"height": yukseklik} if yukseklik else {}))
+        for c, ad, w, st in (("zaman", "Zaman", 130, False), ("tip", "Tür", 150, False), ("hedef", "Hedef", 300, True),
+                             ("durum", "Durum", 110, False), ("notu", "Link / Not", 420, True)):
+            tree.heading(c, text=ad, anchor="w")
+            tree.column(c, width=w, anchor="w", stretch=st)
+        for durum, renk in DURUM_RENK.items():
+            tree.tag_configure(durum, foreground=renk)
+        tree.tag_configure("serit", background="#111B3B")
+        return tree
+
+    def _log_satiri(self, x):
+        grup = x.get("tip") == "grup"
+        hedef = x.get("grup", "")[:70] if grup else f"Gün {x.get('gun', '?'):02d} · {SLOT_AD.get(x.get('slot'), x.get('slot', ''))} · {x.get('platform', '').upper()}"
+        tip = f"Grup · {icerik.SEGMENT_AD.get(x.get('segment'), '')}" if grup else "Sosyal medya"
+        notu = (x.get("url") or x.get("notu") or "").strip().splitlines()
+        return (x["zaman"][:16], tip, hedef, DURUM_AD.get(x["durum"], x["durum"]), notu[0][:120] if notu else "")
+
     # ============================================================ PANO
     def _s_pano(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
-        self._pano_ust = ctk.CTkFrame(f, fg_color="transparent")
-        self._pano_ust.pack(fill="x")
-        self._pano_blok = ctk.CTkLabel(f, text="", font=ctk.CTkFont("Segoe UI", 13, "bold"), text_color="white",
-                                       fg_color="#B3261E", corner_radius=8, height=36)
-        satir = ctk.CTkFrame(f, fg_color="transparent")
-        satir.pack(fill="x", pady=(10, 0))
-        self._pano_slotlar = ctk.CTkFrame(satir, fg_color="transparent")
+        sag = self.sayfa_basligi(f, "Pano", "")
+        self._pano_baslik = (sag.baslik, sag.alt)
+        self._pano_rozet_ajan = self.rozet(sag, "AJAN", METIN2)
+        self._pano_rozet_ajan.pack(side="left", padx=4)
+        self._pano_rozet_grup = self.rozet(sag, "GRUP TURLARI", METIN2)
+        self._pano_rozet_grup.pack(side="left", padx=4)
+        self._pano_rozet_oto = self.rozet(sag, "OTOMATİK BAŞLATMA", METIN2)
+        self._pano_rozet_oto.pack(side="left", padx=4)
+        self._pano_blok = ctk.CTkLabel(f, text="", font=self.F(12, "bold"), text_color="#FECACA", fg_color="#4C1D2B",
+                                       corner_radius=12, height=40, anchor="w", padx=16)
+        # KPI şeridi
+        kpi = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        kpi.pack(fill="x", pady=(0, 14))
+        self._kpi = {}
+        for i, (key, etiket, renk) in enumerate((("bugun", "Bugünkü paylaşımlar", TURUNCU), ("basari", "7 günlük başarı", YESIL),
+                                                  ("toplam", "Toplam yayın", MAVI), ("grup", "Facebook grupları", MOR))):
+            k, deger, alt = self.istatistik(kpi, etiket, renk)
+            k.grid(row=0, column=i, sticky="nsew", padx=(0 if i == 0 else 7, 0 if i == 3 else 7))
+            kpi.grid_columnconfigure(i, weight=1, uniform="kpi")
+            self._kpi[key] = (deger, alt)
+        # ana satır
+        satir = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        satir.pack(fill="x")
+        self._pano_slotlar = ctk.CTkFrame(satir, fg_color="transparent", width=1, height=1)
         self._pano_slotlar.pack(side="left", fill="both", expand=True)
-        sag = ctk.CTkFrame(satir, fg_color="transparent", width=360)
-        sag.pack(side="left", fill="y", padx=(12, 0))
-        # ajan kartı
-        ak = self.kart(sag, "Arka plan ajanı")
-        ak.pack(fill="x", pady=(0, 10))
-        self._pano_ajan = ctk.CTkLabel(ak, text="", font=self.font_m, justify="left", anchor="w", wraplength=320)
-        self._pano_ajan.pack(fill="x", padx=14)
-        bs = ctk.CTkFrame(ak, fg_color="transparent")
-        bs.pack(fill="x", padx=10, pady=8)
-        ctk.CTkButton(bs, text="Otomatik başlatmayı kur", fg_color=TURUNCU, hover_color="#d95a00", width=170,
-                      command=self._ajan_kur).pack(side="left", padx=4)
-        ctk.CTkButton(bs, text="Şimdi başlat", width=100, command=self._ajan_baslat).pack(side="left", padx=4)
-        ctk.CTkButton(bs, text="Durdur", width=70, fg_color="#5a2020", hover_color="#7a2a2a", command=self._ajan_durdur).pack(side="left", padx=4)
+        sag = ctk.CTkFrame(satir, fg_color="transparent", width=340)
+        sag.pack(side="left", fill="y", padx=(14, 0))
+        sag.pack_propagate(False)
+        # sistem durumu
+        sk = self.kart(sag, "Sistem durumu", "canlı")
+        sk.pack(fill="x", pady=(0, 12))
+        self._pano_sd = {ad: self.durum_satiri(sk, etiket) for ad, etiket in (
+            ("ajan", "Arka plan ajanı"), ("oto", "Otomatik başlatma"), ("tarayici", "Tarayıcı"),
+            ("fb", "Facebook oturumu"), ("ig", "Instagram oturumu"))}
+        self._pano_ajan_is = ctk.CTkLabel(sk, text="", font=self.F(11), text_color=METIN3, anchor="w", wraplength=290, justify="left")
+        self._pano_ajan_is.pack(fill="x", padx=18, pady=(6, 0))
+        bs = ctk.CTkFrame(sk, fg_color="transparent", width=1, height=1)
+        bs.pack(fill="x", padx=14, pady=(10, 14))
+        self.btn(bs, "Otomatik başlatmayı kur", self._ajan_kur, height=36).pack(fill="x", padx=4, pady=(0, 6))
+        bs2 = ctk.CTkFrame(bs, fg_color="transparent", width=1, height=1)
+        bs2.pack(fill="x")
+        self.btn(bs2, "Ajanı başlat", self._ajan_baslat, "ikincil", height=32).pack(side="left", padx=4, fill="x", expand=True)
+        self.btn(bs2, "Durdur", self._ajan_durdur, "tehlike", height=32).pack(side="left", padx=4, fill="x", expand=True)
         # yaklaşan
-        yk = self.kart(sag, "Yaklaşan işler")
-        yk.pack(fill="x", pady=(0, 10))
-        self._pano_yaklasan = ctk.CTkLabel(yk, text="", font=self.font_k, justify="left", anchor="w")
-        self._pano_yaklasan.pack(fill="x", padx=14, pady=(0, 10))
+        yk = self.kart(sag, "Yaklaşan işler", "otomatik")
+        yk.pack(fill="x", pady=(0, 12))
+        self._pano_yaklasan = ctk.CTkFrame(yk, fg_color="transparent", width=1, height=1)
+        self._pano_yaklasan.pack(fill="x", padx=18, pady=(0, 12))
+        self._pano_yaklasan_imza = None
         # grup turu
         gk = self.kart(sag, "Grup turu")
         gk.pack(fill="x")
-        self._pano_grup = ctk.CTkLabel(gk, text="", font=self.font_k, justify="left", anchor="w", wraplength=320)
-        self._pano_grup.pack(fill="x", padx=14)
-        self._pano_grup_bar = ctk.CTkProgressBar(gk, progress_color=TURUNCU)
-        self._pano_grup_bar.pack(fill="x", padx=14, pady=(4, 10))
+        self._pano_grup_rozet = self.rozet(gk.ust, "KAPALI", METIN2)
+        self._pano_grup_rozet.pack(side="right")
+        self._pano_grup = ctk.CTkLabel(gk, text="", font=self.F(11), text_color=METIN2, justify="left", anchor="w", wraplength=290)
+        self._pano_grup.pack(fill="x", padx=18)
+        self._pano_grup_bar = ctk.CTkProgressBar(gk, height=6, progress_color=TURUNCU, fg_color=KART2, corner_radius=3)
+        self._pano_grup_bar.pack(fill="x", padx=18, pady=(8, 14))
         self._pano_grup_bar.set(0)
-        # son loglar
-        lk = self.kart(f, "Son paylaşımlar")
-        lk.pack(fill="x", pady=(12, 0))
-        self._pano_log = ctk.CTkLabel(lk, text="", font=("Consolas", 11), justify="left", anchor="w")
-        self._pano_log.pack(fill="x", padx=14, pady=(0, 10))
+        # son paylaşımlar
+        lk = self.kart(f, "Son paylaşımlar", "son 8 kayıt")
+        lk.pack(fill="x", pady=(14, 0))
+        self.btn(lk.ust, "Tümünü gör  →", lambda: self.sayfa("log"), "hayalet", height=28, font=self.F(11, "bold")).pack(side="right")
+        self._pano_tree = self._log_tablosu(lk, yukseklik=8)
+        self._pano_tree.pack(fill="x", padx=12, pady=(4, 12))
+        self._pano_tree_imza = None
         self._pano_slot_widgets = None
         return f
 
@@ -239,77 +475,143 @@ class Uygulama(ctk.CTk):
         d = durum_oku()
         gun = icerik.gun_no(self.ayar)
         bugun = dt.date.today()
-        for w in self._pano_ust.winfo_children():
-            w.destroy()
-        ctk.CTkLabel(self._pano_ust, text=f"Bugün · {bugun:%d.%m.%Y} {GUNLER[bugun.weekday()]} · İçerik günü {gun}/{icerik.SON_GUN}",
-                     font=self.font_b, anchor="w").pack(side="left")
+        saat = dt.datetime.now().hour
+        selam = "Günaydın" if saat < 12 else "İyi günler" if saat < 18 else "İyi akşamlar"
+        baslik, alt = self._pano_baslik[0], self._pano_baslik[1]
+        baslik.configure(text=f"{selam}, Yamansa Rulman")
+        alt.configure(text=f"{tarih_uzun(bugun)}  ·  İçerik günü {gun}/{icerik.SON_GUN}  ·  60 günlük planın %{int(gun / icerik.SON_GUN * 100)}'i")
+        canli = ajan.ajan_canli()
+        kurulu = gorev.kurulu()
+        self.rozet_ayarla(self._pano_rozet_ajan, "AJAN ÇALIŞIYOR" if canli else "AJAN KAPALI", YESIL if canli else KIRMIZI)
+        self.rozet_ayarla(self._pano_rozet_grup, "GRUP TURLARI " + ("AÇIK" if self.ayar["grup"]["aktif"] else "KAPALI"),
+                          TURUNCU if self.ayar["grup"]["aktif"] else METIN2)
+        self.rozet_ayarla(self._pano_rozet_oto, "OTOMATİK BAŞLATMA " + ("KURULU" if kurulu else "YOK"), YESIL if kurulu else SARI)
         blok = d.get("blok")
         if blok:
             self._pano_blok.configure(text=f"⚠  Facebook engeli görüldü ({blok['zaman']}): {blok['neden']}  – grup turları kapatıldı. Engeli sıfırlamak için Gruplar sayfasına bakın.")
-            self._pano_blok.pack(fill="x", pady=(8, 0), before=self._pano_slotlar.master)
+            self._pano_blok.pack(fill="x", pady=(0, 12), before=self._kpi["bugun"][0].master)
         else:
             self._pano_blok.pack_forget()
+        # KPI
+        loglar = log_oku()
+        slotlar = [x for x in loglar if x.get("tip") == "slot"]
+        bugun_s = bugun.isoformat()
+        bugun_l = [x for x in slotlar if x["zaman"][:10] == bugun_s]
+        hedef = sum(len(s["platformlar"]) for s in self.ayar["slotlar"].values() if s["aktif"])
+        ok_bugun = sum(x["durum"] == "OK" for x in bugun_l)
+        self._kpi["bugun"][0].configure(text=f"{ok_bugun} / {hedef}")
+        self._kpi["bugun"][1].configure(text=f"{sum(x['durum'] == 'FAIL' for x in bugun_l)} başarısız · {len(bugun_l)} deneme" if bugun_l else "Henüz paylaşım yok")
+        hafta = [x for x in slotlar if x["zaman"][:10] >= (bugun - dt.timedelta(days=7)).isoformat() and x["durum"] in ("OK", "FAIL")]
+        oran = round(100 * sum(x["durum"] == "OK" for x in hafta) / len(hafta)) if hafta else None
+        self._kpi["basari"][0].configure(text=f"%{oran}" if oran is not None else "—",
+                                         text_color=YESIL if (oran or 0) >= 80 else SARI if (oran or 0) >= 50 else METIN)
+        self._kpi["basari"][1].configure(text=f"{len(hafta)} paylaşım denemesi" if hafta else "Son 7 günde veri yok")
+        toplam_ok = sum(x["durum"] == "OK" for x in loglar)
+        self._kpi["toplam"][0].configure(text=str(toplam_ok))
+        self._kpi["toplam"][1].configure(text=f"{sum(x['durum'] == 'OK' for x in slotlar)} sosyal · {toplam_ok - sum(x['durum'] == 'OK' for x in slotlar)} grup")
+        gs = icerik.gruplar(self.ayar)
+        acik = sum(g["acik"] for g in gs)
+        self._kpi["grup"][0].configure(text=f"{acik} / {len(gs)}")
+        self._kpi["grup"][1].configure(text="açık grup · turlar " + ("AÇIK" if self.ayar["grup"]["aktif"] else "KAPALI"))
         # slot kartları (günde 1 kez kur)
         if self._pano_slot_widgets != gun:
             self._pano_slot_widgets = gun
             for w in self._pano_slotlar.winfo_children():
                 w.destroy()
-            for slot in ("sabah", "ana", "story"):
-                self._slot_karti(self._pano_slotlar, gun, slot).pack(side="left", fill="both", expand=True, padx=(0, 10))
-        yapildi = d.get("yapildi", {}).get(bugun.isoformat(), {})
+            for i, slot in enumerate(("sabah", "ana", "story")):
+                self._slot_karti(self._pano_slotlar, gun, slot).grid(row=0, column=i, sticky="nsew", padx=(0, 12))
+                self._pano_slotlar.grid_columnconfigure(i, weight=1, uniform="slot")
+        yapildi = d.get("yapildi", {}).get(bugun_s, {})
         for slot, lbl in self._slot_durum_lbl.items():
-            kayit = [x for x in log_oku() if x.get("tip") == "slot" and x.get("gun") == gun and x.get("slot") == slot and x["zaman"][:10] == bugun.isoformat()]
+            kayit = [x for x in slotlar if x.get("gun") == gun and x.get("slot") == slot and x["zaman"][:10] == bugun_s]
             if kayit:
-                lbl.configure(text="  ".join(f"{x['platform'].upper()}: {x['durum']}" for x in kayit[-2:]),
-                              text_color=DURUM_RENK.get(kayit[-1]["durum"], MIST))
+                self.rozet_ayarla(lbl, "  ".join(f"{x['platform'].upper()} {DURUM_AD.get(x['durum'], x['durum'])}" for x in kayit[-2:]),
+                                  DURUM_RENK.get(kayit[-1]["durum"], METIN))
             elif slot in yapildi:
-                lbl.configure(text="İşlendi (log yok)", text_color=STEEL)
+                self.rozet_ayarla(lbl, "İŞLENDİ", METIN2)
             else:
                 s = self.ayar["slotlar"][slot]
-                lbl.configure(text=f"Planlı {s['saat']}" if s["aktif"] else "Zamanlayıcı kapalı", text_color=STEEL)
-        # ajan
-        canli = ajan.ajan_canli()
+                self.rozet_ayarla(lbl, f"PLANLI {s['saat']}" if s["aktif"] else "ZAMANLAYICI KAPALI", MAVI if s["aktif"] else METIN3)
+        # sistem durumu
         a = d.get("ajan", {})
-        self._pano_ajan.configure(
-            text=(f"Durum: {'ÇALIŞIYOR' if canli else 'KAPALI'}\nİş: {a.get('is_', '-')}\nSon sinyal: {a.get('son_nabiz', '-')}\n"
-                  f"Otomatik başlatma (Windows): {'kurulu · uykudan uyandırma ' + ', '.join(gorev.uyandirma_saatleri(self.ayar)) if gorev.kurulu() else 'kurulu değil'}"),
-            text_color="#2ECC71" if canli else "#E74C3C")
+        self.durum_ayarla(self._pano_sd["ajan"], "Çalışıyor" if canli else "Kapalı", YESIL if canli else KIRMIZI)
+        self.durum_ayarla(self._pano_sd["oto"], "Kurulu" if kurulu else "Kurulu değil", YESIL if kurulu else SARI)
+        tar = tarayici.tarayici_kurulu()
+        self.durum_ayarla(self._pano_sd["tarayici"], ("Gömülü" if tarayici.gomulu() else "Hazır") if tar else "Yok", YESIL if tar else KIRMIZI)
+        g = d.get("giris", {})
+        for p in ("fb", "ig"):
+            self.durum_ayarla(self._pano_sd[p], "Giriş yapılmış" if g.get(p) else "Giriş yok", YESIL if g.get(p) else KIRMIZI)
+        self._pano_ajan_is.configure(text=(f"İş: {a.get('is_', '-')}  ·  Son sinyal: {a.get('son_nabiz', '-')}\n"
+                                           + (f"Uykudan uyandırma: {', '.join(gorev.uyandirma_saatleri(self.ayar))}" if kurulu else
+                                              "Panel kapalıyken paylaşım için otomatik başlatmayı kurun.")))
+        # yaklaşan işler
         s = ajan.sonraki_isler(self.ayar, d)
-        self._pano_yaklasan.configure(text="\n".join(f"{z:%d.%m %H:%M}  {ad}" for z, ad in s) or "Planlı iş yok (Zamanlayıcı sayfasından açın)")
+        imza = tuple(s)
+        if imza != self._pano_yaklasan_imza:
+            self._pano_yaklasan_imza = imza
+            for w in self._pano_yaklasan.winfo_children():
+                w.destroy()
+            if not s:
+                ctk.CTkLabel(self._pano_yaklasan, text="Planlı iş yok — Zamanlayıcı sayfasından slot açın.", font=self.F(11),
+                             text_color=METIN3, anchor="w").pack(fill="x")
+            for i, (z, ad) in enumerate(s):
+                r = ctk.CTkFrame(self._pano_yaklasan, fg_color="transparent", width=1, height=1)
+                r.pack(fill="x", pady=2)
+                ctk.CTkLabel(r, text=f"{z:%H:%M}", font=self.F(12, "bold"), text_color=TURUNCU if i == 0 else METIN, width=44, anchor="w").pack(side="left")
+                ctk.CTkLabel(r, text=f"{z:%d.%m}", font=self.F(10), text_color=METIN3, width=38, anchor="w").pack(side="left")
+                ctk.CTkLabel(r, text=ad, font=self.F(11), text_color=METIN if i == 0 else METIN2, anchor="w").pack(side="left", fill="x", expand=True)
+        # grup turu
         gt = d.get("grup_turu", {})
         if gt.get("aktif"):
-            self._pano_grup.configure(text=f"Tur {gt['tur_no']} sürüyor: {gt['islenen']}/{gt['toplam']}\nSon: {gt.get('son', '')}")
+            self.rozet_ayarla(self._pano_grup_rozet, "SÜRÜYOR", TURUNCU)
+            self._pano_grup.configure(text=f"Tur {gt['tur_no']}: {gt['islenen']}/{gt['toplam']} grup işlendi\nSon: {gt.get('son', '')}")
             self._pano_grup_bar.set(gt["islenen"] / max(1, gt["toplam"]))
         else:
-            self._pano_grup.configure(text=(f"Son tur {gt.get('tur_no')}: {gt.get('ozet', {})} · {gt.get('bitis', '')}" if gt else "Henüz tur yapılmadı")
-                                      + f"\nGrup turları: {'AÇIK' if self.ayar['grup']['aktif'] else 'KAPALI'}")
+            self.rozet_ayarla(self._pano_grup_rozet, "AÇIK" if self.ayar["grup"]["aktif"] else "KAPALI",
+                              TURUNCU if self.ayar["grup"]["aktif"] else METIN2)
+            ozet = gt.get("ozet", {})
+            self._pano_grup.configure(text=(f"Son tur {gt.get('tur_no')} · {gt.get('bitis', '')}\n" + " · ".join(f"{DURUM_AD.get(k, k)} {v}" for k, v in ozet.items())
+                                            if gt else "Henüz tur yapılmadı. Turlar siz açmadan çalışmaz."))
             self._pano_grup_bar.set(0)
-        son = log_oku()[-8:][::-1]
-        self._pano_log.configure(text="\n".join(
-            f"{x['zaman'][5:16]}  {x['durum']:7}  " + (f"{x['slot']:6} g{x['gun']:02d} {x['platform'].upper():2}  {x.get('url', '')[:60]}" if x.get("tip") == "slot"
-                                                    else f"GRUP {x.get('grup', '')[:40]}  {x.get('notu', '')}") for x in son) or "Kayıt yok")
+        # son loglar
+        son = loglar[-8:][::-1]
+        imza = tuple((x["zaman"], x["durum"]) for x in son)
+        if imza != self._pano_tree_imza:
+            self._pano_tree_imza = imza
+            self._pano_tree.delete(*self._pano_tree.get_children())
+            for i, x in enumerate(son):
+                self._pano_tree.insert("", "end", values=self._log_satiri(x), tags=(x["durum"],) + (("serit",) if i % 2 else ()))
+            if not son:
+                self._pano_tree.insert("", "end", values=("", "", "Henüz kayıt yok", "", ""))
 
     def _slot_karti(self, parent, gun, slot):
-        k = self.kart(parent, SLOT_AD[slot])
+        renk = SLOT_RENK[slot]
+        k = self.kart(parent)
+        ust = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        ust.pack(fill="x", padx=16, pady=(14, 8))
+        ctk.CTkLabel(ust, text=SLOT_IKON[slot], font=self.F(14, "bold"), text_color=renk, width=22).pack(side="left")
+        ctk.CTkLabel(ust, text=SLOT_AD[slot], font=self.F(14, "bold"), anchor="w").pack(side="left", padx=(4, 0))
+        self.rozet(ust, self.ayar["slotlar"][slot]["saat"], renk).pack(side="right")
         try:
             d = icerik.slot_icerik(gun, slot)
-            im = self.img(d["img"], 150 if slot == "story" else 230)
-            ctk.CTkLabel(k, image=im, text="").pack(pady=4)
-            ctk.CTkLabel(k, text=d["baslik"][:60], font=self.font_k, wraplength=230).pack()
+            im = self.img(d["img"], 124 if slot == "story" else 220)
+            ctk.CTkLabel(k, image=im, text="").pack(pady=(2, 8))
+            ctk.CTkLabel(k, text=d["baslik"][:70], font=self.F(12, "bold"), text_color=METIN, wraplength=230, justify="center").pack(padx=12)
         except Exception as e:
-            ctk.CTkLabel(k, text=f"İçerik yok: {e}", text_color="#E74C3C", wraplength=230).pack(pady=20)
+            ctk.CTkLabel(k, text=f"İçerik yok: {e}", text_color=KIRMIZI, wraplength=230).pack(pady=40)
         if not hasattr(self, "_slot_durum_lbl"):
             self._slot_durum_lbl = {}
-        self._slot_durum_lbl[slot] = ctk.CTkLabel(k, text="", font=ctk.CTkFont("Segoe UI", 12, "bold"))
-        self._slot_durum_lbl[slot].pack(pady=(4, 2))
-        alt = ctk.CTkFrame(k, fg_color="transparent")
-        alt.pack(pady=(2, 10))
+        self._slot_durum_lbl[slot] = self.rozet(k, "", METIN2)
+        self._slot_durum_lbl[slot].pack(pady=(8, 0))
+        self.ayrac(k, padx=16, pady=(10, 8))
+        alt = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        alt.pack(fill="x", padx=16, pady=(0, 14))
         fb = ctk.BooleanVar(value=True)
         ig = ctk.BooleanVar(value=True)
-        ctk.CTkCheckBox(alt, text="FB", variable=fb, width=50).pack(side="left", padx=4)
-        ctk.CTkCheckBox(alt, text="IG", variable=ig, width=50).pack(side="left", padx=4)
-        ctk.CTkButton(alt, text="Şimdi paylaş", width=110, fg_color=TURUNCU, hover_color="#d95a00",
-                      command=lambda: self.paylas_simdi(gun, slot, [p for p, v in (("fb", fb), ("ig", ig)) if v.get()])).pack(side="left", padx=4)
+        self.onay(alt, "FB", fb, width=52).pack(side="left")
+        self.onay(alt, "IG", ig, width=52).pack(side="left", padx=(6, 0))
+        self.btn(alt, "Şimdi paylaş", lambda: self.paylas_simdi(gun, slot, [p for p, v in (("fb", fb), ("ig", ig)) if v.get()]),
+                 height=34, width=112).pack(side="right")
         return k
 
     def _ajan_kur(self):
@@ -320,7 +622,8 @@ class Uygulama(ctk.CTk):
                                 f"PC uyku modundaysa {saatler} saatlerinde kendisi uyanır, paylaşır ve tekrar uyur (tamamen kapalı PC uyandırılamaz).\n\n{msg}")
         else:
             messagebox.showwarning("Kurulamadı", msg)
-        self._y_pano()
+        if "pano" in self._sayfalar:
+            self._y_pano()
 
     def _ajan_baslat(self):
         if ajan.ajan_canli():
@@ -335,155 +638,198 @@ class Uygulama(ctk.CTk):
 
     # ============================================================ TAKVİM
     def _s_takvim(self):
-        f = ctk.CTkFrame(self._icerik, fg_color="transparent")
-        sol = self.kart(f, "60 günlük plan", width=330)
-        sol.pack(side="left", fill="y", padx=(0, 12))
+        f = ctk.CTkFrame(self._icerik, fg_color="transparent", width=1, height=1)
+        self.sayfa_basligi(f, "Takvim & İçerik", "60 günlük plan · her gün sabah kartı, ana gönderi ve story. Bir günü seçin, metinleri kopyalayın veya hemen paylaşın.")
+        govde = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        govde.pack(fill="both", expand=True)
+        sol = self.kart(govde, "60 günlük plan", width=340)
+        sol.pack(side="left", fill="y", padx=(0, 14))
         sol.pack_propagate(False)
-        self._takvim_liste = ctk.CTkScrollableFrame(sol, fg_color="transparent")
-        self._takvim_liste.pack(fill="both", expand=True, padx=6, pady=6)
+        self._takvim_liste = ctk.CTkScrollableFrame(sol, fg_color="transparent", scrollbar_button_color=KART2, scrollbar_button_hover_color=CIZGI)
+        self._takvim_liste.pack(fill="both", expand=True, padx=8, pady=(0, 8))
         self._takvim_btn = {}
         bas = dt.date.fromisoformat(self.ayar["baslangic"])
         bugun_g = icerik.gun_no(self.ayar)
+        self._takvim_bugun = bugun_g
         for g in range(1, icerik.SON_GUN + 1):
             t = bas + dt.timedelta(days=g - 1)
             try:
                 baslik = icerik.slot_icerik(g, "ana")["baslik"]
             except Exception:
                 baslik = "-"
-            b = ctk.CTkButton(self._takvim_liste, anchor="w", height=34, corner_radius=6,
-                              fg_color=MAVI if g == bugun_g else "transparent", hover_color=NAVY, font=self.font_k,
-                              text=f"Gün {g:02d} · {t:%d.%m} {GUNLER[t.weekday()]} · {baslik[:26]}",
+            isaret = "●  " if g == bugun_g else "     "
+            b = ctk.CTkButton(self._takvim_liste, anchor="w", height=38, corner_radius=8, fg_color="transparent", hover_color=KART2,
+                              text_color=METIN if g >= bugun_g else METIN3, font=self.F(11),
+                              text=f"{isaret}Gün {g:02d}   {t:%d.%m} {GUNLER[t.weekday()]}   {baslik[:24]}",
                               command=lambda gg=g: self._takvim_sec(gg))
             b.pack(fill="x", pady=1)
             self._takvim_btn[g] = b
-        self._takvim_sag = ctk.CTkScrollableFrame(f, fg_color="transparent")
+        self._takvim_sag = ctk.CTkScrollableFrame(govde, fg_color="transparent")
         self._takvim_sag.pack(side="left", fill="both", expand=True)
         self._takvim_sec(bugun_g if 1 <= bugun_g <= icerik.SON_GUN else 1)
         return f
 
     def _takvim_sec(self, gun):
+        for g, b in self._takvim_btn.items():
+            b.configure(fg_color=ton(MAVI, 0.35) if g == gun else "transparent",
+                        text_color=METIN if g == gun or g >= self._takvim_bugun else METIN3)
         for w in self._takvim_sag.winfo_children():
             w.destroy()
         bas = dt.date.fromisoformat(self.ayar["baslangic"])
         t = bas + dt.timedelta(days=gun - 1)
-        ctk.CTkLabel(self._takvim_sag, text=f"Gün {gun} · {t:%d %B %Y}", font=self.font_b, anchor="w").pack(fill="x")
+        ust = ctk.CTkFrame(self._takvim_sag, fg_color="transparent", width=1, height=1)
+        ust.pack(fill="x", pady=(0, 6))
+        ctk.CTkLabel(ust, text=f"Gün {gun}", font=self.F(22, "bold"), anchor="w").pack(side="left")
+        ctk.CTkLabel(ust, text=tarih_uzun(t), font=self.F(13), text_color=METIN2, anchor="w").pack(side="left", padx=(12, 0), pady=(6, 0))
+        if gun == self._takvim_bugun:
+            self.rozet(ust, "BUGÜN", TURUNCU).pack(side="left", padx=12, pady=(6, 0))
         for slot in ("sabah", "ana", "story"):
-            k = self.kart(self._takvim_sag, SLOT_AD[slot])
+            renk = SLOT_RENK[slot]
+            k = self.kart(self._takvim_sag)
             k.pack(fill="x", pady=(8, 0))
-            ic = ctk.CTkFrame(k, fg_color="transparent")
-            ic.pack(fill="x", padx=10, pady=(0, 10))
+            bas_s = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+            bas_s.pack(fill="x", padx=18, pady=(14, 6))
+            ctk.CTkLabel(bas_s, text=SLOT_IKON[slot], font=self.F(14, "bold"), text_color=renk, width=22).pack(side="left")
+            ctk.CTkLabel(bas_s, text=SLOT_AD[slot], font=self.F(14, "bold"), anchor="w").pack(side="left", padx=(4, 0))
+            self.rozet(bas_s, self.ayar["slotlar"][slot]["saat"], renk).pack(side="left", padx=10)
+            ic = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+            ic.pack(fill="x", padx=18, pady=(0, 14))
             try:
                 d = icerik.slot_icerik(gun, slot)
             except Exception as e:
-                ctk.CTkLabel(ic, text=str(e), text_color="#E74C3C").pack()
+                ctk.CTkLabel(ic, text=str(e), text_color=KIRMIZI).pack()
                 continue
-            im = self.img(d["img"], 160 if slot == "story" else 260)
-            solk = ctk.CTkFrame(ic, fg_color="transparent")
-            solk.pack(side="left", padx=(0, 12))
+            im = self.img(d["img"], 150 if slot == "story" else 260)
+            solk = ctk.CTkFrame(ic, fg_color="transparent", width=1, height=1)
+            solk.pack(side="left", padx=(0, 16))
             ctk.CTkLabel(solk, image=im, text="").pack()
-            ctk.CTkButton(solk, text="Görseli aç", width=110, fg_color="transparent", border_width=1, border_color=STEEL,
-                          command=lambda p=d["img"]: ac_dosya(p)).pack(pady=4)
-            sagk = ctk.CTkFrame(ic, fg_color="transparent")
+            self.btn(solk, "Görseli aç", lambda p=d["img"]: ac_dosya(p), "ikincil", height=30, font=self.F(11, "bold")).pack(pady=(8, 0), fill="x")
+            sagk = ctk.CTkFrame(ic, fg_color="transparent", width=1, height=1)
             sagk.pack(side="left", fill="both", expand=True)
             if slot != "story":
-                tabs = ctk.CTkTabview(sagk, height=230, fg_color=MID, segmented_button_selected_color=MAVI)
+                tabs = ctk.CTkTabview(sagk, height=230, fg_color=KART2, corner_radius=12, border_width=0,
+                                      segmented_button_fg_color=KART, segmented_button_selected_color=MAVI,
+                                      segmented_button_selected_hover_color=MAVI_H, segmented_button_unselected_color=KART,
+                                      segmented_button_unselected_hover_color=KART2, text_color=METIN)
                 tabs.pack(fill="both", expand=True)
-                for ad, metin in (("Facebook", d["fb"]), ("Instagram", d["ig"]), ("Alt metin", d["alt"])):
+                metinler = (("Facebook", d["fb"]), ("Instagram", d["ig"]), ("Alt metin", d["alt"]))
+                for ad, metin in metinler:
                     tabs.add(ad)
-                    tb = ctk.CTkTextbox(tabs.tab(ad), font=self.font_k, fg_color=MID, wrap="word")
+                    tb = ctk.CTkTextbox(tabs.tab(ad), font=self.F(12), fg_color=KART2, text_color=METIN, wrap="word",
+                                        scrollbar_button_color=CIZGI)
                     tb.pack(fill="both", expand=True)
                     tb.insert("1.0", metin)
                     tb.configure(state="disabled")
+                kopya = ctk.CTkFrame(sagk, fg_color="transparent", width=1, height=1)
+                kopya.pack(fill="x", pady=(6, 0))
+                for ad, metin in metinler:
+                    self.btn(kopya, f"{ad} kopyala", lambda m=metin: self.kopyala(m), "hayalet", height=26, width=120,
+                             font=self.F(10, "bold")).pack(side="left", padx=(0, 4))
             else:
-                ctk.CTkLabel(sagk, text=f"{d['baslik']}\n\nFB story linki: {d['link']}\nAlt: {d['alt']}", font=self.font_k,
-                             justify="left", anchor="w", wraplength=560).pack(fill="x", pady=8)
-            alt = ctk.CTkFrame(sagk, fg_color="transparent")
-            alt.pack(fill="x", pady=(6, 0))
+                bilgi = ctk.CTkFrame(sagk, fg_color=KART2, corner_radius=12)
+                bilgi.pack(fill="x")
+                ctk.CTkLabel(bilgi, text=d["baslik"], font=self.F(13, "bold"), justify="left", anchor="w", wraplength=560).pack(fill="x", padx=14, pady=(12, 4))
+                ctk.CTkLabel(bilgi, text=f"FB story linki: {d['link']}\nAlt metin: {d['alt']}", font=self.F(11), text_color=METIN2,
+                             justify="left", anchor="w", wraplength=560).pack(fill="x", padx=14, pady=(0, 12))
+            alt = ctk.CTkFrame(sagk, fg_color="transparent", width=1, height=1)
+            alt.pack(fill="x", pady=(10, 0))
             fb, ig = ctk.BooleanVar(value=True), ctk.BooleanVar(value=True)
-            ctk.CTkCheckBox(alt, text="Facebook", variable=fb, width=90).pack(side="left", padx=4)
-            ctk.CTkCheckBox(alt, text="Instagram", variable=ig, width=90).pack(side="left", padx=4)
+            self.onay(alt, "Facebook", fb, width=90).pack(side="left", padx=(0, 4))
+            self.onay(alt, "Instagram", ig, width=90).pack(side="left", padx=4)
             sec = lambda: [p for p, v in (("fb", fb), ("ig", ig)) if v.get()]  # noqa: E731
-            ctk.CTkButton(alt, text="Şimdi paylaş", width=120, fg_color=TURUNCU, hover_color="#d95a00",
-                          command=lambda s=slot, sc=sec: self.paylas_simdi(gun, s, sc())).pack(side="left", padx=4)
-            ctk.CTkButton(alt, text="Deneme (paylaşmadan)", width=150, fg_color="transparent", border_width=1, border_color=STEEL,
-                          command=lambda s=slot, sc=sec: self.paylas_simdi(gun, s, sc(), go=False)).pack(side="left", padx=4)
+            self.btn(alt, "Deneme", lambda s=slot, sc=sec: self.paylas_simdi(gun, s, sc(), go=False), "ikincil",
+                     height=34, width=90).pack(side="right")
+            self.btn(alt, "Şimdi paylaş", lambda s=slot, sc=sec: self.paylas_simdi(gun, s, sc()), height=34, width=120).pack(side="right", padx=(0, 8))
 
     # ============================================================ GRUPLAR
     def _s_gruplar(self):
-        f = ctk.CTkFrame(self._icerik, fg_color="transparent")
-        ust = self.kart(f)
-        ust.pack(fill="x")
-        s1 = ctk.CTkFrame(ust, fg_color="transparent")
-        s1.pack(fill="x", padx=12, pady=8)
+        f = ctk.CTkFrame(self._icerik, fg_color="transparent", width=1, height=1)
+        sag = self.sayfa_basligi(f, "Facebook Grupları", "Segment bazlı satış ilanları · turlar varsayılan KAPALI, siz açmadan hiçbir gruba paylaşım yapılmaz.")
+        self._g_rozet = self.rozet(sag, "TURLAR KAPALI", METIN2)
+        self._g_rozet.pack(side="left")
         g = self.ayar["grup"]
+        ust = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        ust.pack(fill="x")
+        # zamanlayıcı kartı
+        zk = self.kart(ust, "Tur zamanlayıcısı", "ajan bu saatlerde tüm açık gruplara döner")
+        zk.pack(side="left", fill="both", expand=True, padx=(0, 14))
+        s1 = ctk.CTkFrame(zk, fg_color="transparent", width=1, height=1)
+        s1.pack(fill="x", padx=18, pady=(4, 14))
         self._g_aktif = ctk.BooleanVar(value=g["aktif"])
-        self._g_switch = ctk.CTkSwitch(s1, text=self._g_switch_metin(g["aktif"]), variable=self._g_aktif, progress_color=TURUNCU,
-                                       font=ctk.CTkFont("Segoe UI", 13, "bold"), command=self._grup_ayar_kaydet)
-        self._g_switch.pack(side="left", padx=(0, 20))
+        self._g_switch = self.anahtar(s1, self._g_switch_metin(g["aktif"]), self._g_aktif, self._grup_ayar_kaydet)
+        self._g_switch.pack(anchor="w", pady=(0, 12))
+        satir = ctk.CTkFrame(s1, fg_color="transparent", width=1, height=1)
+        satir.pack(fill="x")
         self._g_tur_vars = []
         for i, t in enumerate(g["turlar"]):
             v = ctk.BooleanVar(value=t["aktif"])
-            e = ctk.CTkEntry(s1, width=60, font=self.font_k)
-            e.insert(0, t["saat"])
-            ctk.CTkCheckBox(s1, text=f"Tur {i + 1}", variable=v, width=70, command=self._grup_ayar_kaydet).pack(side="left")
-            e.pack(side="left", padx=(0, 14))
+            kutu, e = self.alan(satir, f"Tur {i + 1} saati", 74, t["saat"])
+            kutu.pack(side="left", padx=(0, 10))
+            self.onay(kutu, "Aktif", v, command=self._grup_ayar_kaydet, font=self.F(10)).pack(anchor="w", pady=(4, 0))
             e.bind("<FocusOut>", lambda _e: self._grup_ayar_kaydet())
             self._g_tur_vars.append((v, e))
-        ctk.CTkLabel(s1, text="Gruplar arası (sn)", font=self.font_k).pack(side="left")
-        self._g_ara = ctk.CTkEntry(s1, width=60, font=self.font_k)
-        self._g_ara.insert(0, str(g["ara_sn"]))
-        self._g_ara.pack(side="left", padx=(4, 14))
+        kutu, self._g_ara = self.alan(satir, "Gruplar arası (sn)", 90, g["ara_sn"])
+        kutu.pack(side="left", padx=(0, 10))
         self._g_ara.bind("<FocusOut>", lambda _e: self._grup_ayar_kaydet())
-        ctk.CTkLabel(s1, text="Tur başına en fazla", font=self.font_k).pack(side="left")
-        self._g_limit = ctk.CTkEntry(s1, width=50, font=self.font_k)
-        self._g_limit.insert(0, str(g["gunluk_limit"]))
-        self._g_limit.pack(side="left", padx=(4, 14))
+        kutu, self._g_limit = self.alan(satir, "Tur başına en fazla", 90, g["gunluk_limit"])
+        kutu.pack(side="left", padx=(0, 10))
         self._g_limit.bind("<FocusOut>", lambda _e: self._grup_ayar_kaydet())
-        ctk.CTkLabel(s1, text="Varyant", font=self.font_k).pack(side="left")
-        self._g_var = ctk.CTkOptionMenu(s1, values=["auto", "1", "2", "3"], width=80, fg_color=NAVY, command=lambda _v: self._grup_ayar_kaydet())
+        vk = ctk.CTkFrame(satir, fg_color="transparent", width=1, height=1)
+        vk.pack(side="left")
+        ctk.CTkLabel(vk, text="VARYANT", font=self.F(9, "bold"), text_color=METIN3, anchor="w").pack(anchor="w")
+        self._g_var = ctk.CTkOptionMenu(vk, values=["auto", "1", "2", "3"], width=90, height=34, fg_color=KART2, button_color=CIZGI,
+                                        button_hover_color=MAVI, dropdown_fg_color=KART2, font=self.F(12), command=lambda _v: self._grup_ayar_kaydet())
         self._g_var.set(g["varyant"])
-        self._g_var.pack(side="left", padx=4)
-        s2 = ctk.CTkFrame(ust, fg_color="transparent")
-        s2.pack(fill="x", padx=12, pady=(0, 10))
-        ctk.CTkButton(s2, text="▶ Seçili gruplara tur başlat", fg_color=TURUNCU, hover_color="#d95a00", command=self._grup_tur_baslat).pack(side="left", padx=(0, 6))
-        ctk.CTkButton(s2, text="▶ Deneme turu (paylaşmaz)", fg_color="transparent", border_width=1, border_color=STEEL,
-                      command=lambda: self._grup_tur_baslat(go=False)).pack(side="left", padx=6)
-        ctk.CTkButton(s2, text="■ Turu durdur", fg_color="#5a2020", hover_color="#7a2a2a", command=self._grup_dur).pack(side="left", padx=6)
-        ctk.CTkButton(s2, text="+ Grup ekle", command=self._grup_ekle).pack(side="left", padx=6)
-        ctk.CTkButton(s2, text="Segment görselini aç", command=self._grup_gorsel_ac).pack(side="left", padx=6)
-        ctk.CTkButton(s2, text="Tümünü aç", width=90, command=lambda: self._grup_hepsi(True)).pack(side="left", padx=6)
-        ctk.CTkButton(s2, text="Tümünü kapat", width=100, command=lambda: self._grup_hepsi(False)).pack(side="left", padx=6)
-        s3 = ctk.CTkFrame(ust, fg_color="transparent")
-        s3.pack(fill="x", padx=14, pady=(0, 8))
-        self._g_bilgi = ctk.CTkLabel(s3, text="", font=self.font_k, text_color=STEEL, anchor="w")
-        self._g_bilgi.pack(side="left", fill="x", expand=True)
-        ctk.CTkButton(s3, text="Engel kaydını sıfırla", width=150, height=24, font=self.font_k, fg_color="transparent",
-                      border_width=1, border_color=STEEL, command=self._blok_sifirla).pack(side="right")
+        self._g_var.pack(anchor="w", pady=(2, 0))
+        # işlem kartı
+        ik = self.kart(ust, "Tur işlemleri", width=400)
+        ik.pack(side="left", fill="y")
+        ik.pack_propagate(False)
+        s2 = ctk.CTkFrame(ik, fg_color="transparent", width=1, height=1)
+        s2.pack(fill="x", padx=14, pady=(4, 14))
+        self.btn(s2, "▶  Seçili gruplara tur başlat", self._grup_tur_baslat, height=36).pack(fill="x", pady=2)
+        r = ctk.CTkFrame(s2, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", pady=2)
+        self.btn(r, "Deneme turu", lambda: self._grup_tur_baslat(go=False), "ikincil", height=34).pack(side="left", fill="x", expand=True, padx=(0, 3))
+        self.btn(r, "■  Turu durdur", self._grup_dur, "tehlike", height=34).pack(side="left", fill="x", expand=True, padx=(3, 0))
+        r2 = ctk.CTkFrame(s2, fg_color="transparent", width=1, height=1)
+        r2.pack(fill="x", pady=2)
+        self.btn(r2, "+ Grup ekle", self._grup_ekle, "ikincil", height=32, font=self.F(11, "bold")).pack(side="left", fill="x", expand=True, padx=(0, 3))
+        self.btn(r2, "Segment görseli", self._grup_gorsel_ac, "ikincil", height=32, font=self.F(11, "bold")).pack(side="left", fill="x", expand=True, padx=(3, 0))
+        r3 = ctk.CTkFrame(s2, fg_color="transparent", width=1, height=1)
+        r3.pack(fill="x", pady=2)
+        self.btn(r3, "Tümünü aç", lambda: self._grup_hepsi(True), "hayalet", height=30, width=90, font=self.F(11, "bold")).pack(side="left", fill="x", expand=True)
+        self.btn(r3, "Tümünü kapat", lambda: self._grup_hepsi(False), "hayalet", height=30, width=90, font=self.F(11, "bold")).pack(side="left", fill="x", expand=True)
+        self.btn(r3, "Engeli sıfırla", self._blok_sifirla, "hayalet", height=30, width=90, font=self.F(11, "bold"), text_color="#FCA5A5").pack(side="left", fill="x", expand=True)
         # tablo
-        tk_ = self.kart(f)
-        tk_.pack(fill="both", expand=True, pady=(10, 0))
+        tk_ = self.kart(f, "Grup listesi")
+        tk_.pack(fill="both", expand=True, pady=(14, 0))
+        self._g_bilgi = ctk.CTkLabel(tk_.ust, text="", font=self.F(11), text_color=METIN2, anchor="e")
+        self._g_bilgi.pack(side="right")
+        self._g_segment_ozet = ctk.CTkLabel(tk_, text="", font=self.F(10), text_color=METIN3, anchor="w", justify="left", wraplength=1000)
+        self._g_segment_ozet.pack(fill="x", padx=18, pady=(0, 6))
         cols = ("acik", "ad", "segment", "uye", "son", "notu")
         self._g_tree = ttk.Treeview(tk_, columns=cols, show="headings", selectmode="extended")
-        for c, ad, w in (("acik", "Açık", 50), ("ad", "Grup", 420), ("segment", "Segment", 170), ("uye", "Üye", 70),
-                         ("son", "Son durum", 180), ("notu", "Not", 300)):
-            self._g_tree.heading(c, text=ad)
-            self._g_tree.column(c, width=w, anchor="w" if c in ("ad", "notu") else "center")
+        for c, ad, w, st in (("acik", "Durum", 80, False), ("ad", "Grup", 400, True), ("segment", "Segment", 190, False), ("uye", "Üye", 80, False),
+                             ("son", "Son paylaşım", 190, False), ("notu", "Not", 280, True)):
+            self._g_tree.heading(c, text=ad, anchor="w")
+            self._g_tree.column(c, width=w, anchor="w", stretch=st)
         sb = ttk.Scrollbar(tk_, orient="vertical", command=self._g_tree.yview)
         self._g_tree.configure(yscrollcommand=sb.set)
-        self._g_tree.pack(side="left", fill="both", expand=True, padx=(8, 0), pady=8)
-        sb.pack(side="left", fill="y", pady=8)
+        self._g_tree.pack(side="left", fill="both", expand=True, padx=(12, 0), pady=(4, 12))
+        sb.pack(side="left", fill="y", pady=(4, 12), padx=(0, 8))
         self._g_tree.bind("<Double-1>", self._grup_cift_tik)
         self._g_tree.bind("<Button-3>", self._grup_sag_tik)
-        self._g_menu = tk.Menu(self, tearoff=0, bg=KART, fg=MIST)
+        self._g_menu = tk.Menu(self, tearoff=0, bg=KART2, fg=METIN, activebackground=MAVI, activeforeground="white", bd=0)
         self._g_menu.add_command(label="Aç / kapat", command=self._grup_ac_kapat)
-        seg_menu = tk.Menu(self._g_menu, tearoff=0, bg=KART, fg=MIST)
+        seg_menu = tk.Menu(self._g_menu, tearoff=0, bg=KART2, fg=METIN, activebackground=MAVI, activeforeground="white", bd=0)
         for s in icerik.segmentler():
             seg_menu.add_command(label=icerik.SEGMENT_AD.get(s, s), command=lambda ss=s: self._grup_segment(ss))
         self._g_menu.add_cascade(label="Segment değiştir", menu=seg_menu)
         self._g_menu.add_command(label="Grubu tarayıcıda aç", command=lambda: [webbrowser.open(u) for u in self._grup_secili()])
         self._g_menu.add_command(label="Listeden sil (eklenen)", command=self._grup_sil)
-        ctk.CTkLabel(f, text="Çift tık: aç/kapat · Sağ tık: segment değiştir, tarayıcıda aç · Segment → hangi satış görseli/metni kullanılacağını belirler.",
-                     font=self.font_k, text_color=STEEL, anchor="w").pack(fill="x", pady=(4, 0))
+        ctk.CTkLabel(f, text="Çift tık: aç/kapat  ·  Sağ tık: segment değiştir, tarayıcıda aç  ·  Segment, hangi satış görseli/metninin kullanılacağını belirler.",
+                     font=self.F(10), text_color=METIN3, anchor="w").pack(fill="x", pady=(6, 0))
         self._g_son_imza = None
         return f
 
@@ -494,29 +840,33 @@ class Uygulama(ctk.CTk):
             if x.get("tip") == "grup":
                 son[x["url"]] = x
         imza = (len(gs), tuple(self.ayar["grup"]["kapali"]), tuple((u, x["zaman"]) for u, x in son.items()),
-                tuple(g["segment"] for g in gs))
+                tuple(g["segment"] for g in gs), self.ayar["grup"]["aktif"])
         if imza == self._g_son_imza:
             return
         self._g_son_imza = imza
+        self.rozet_ayarla(self._g_rozet, "TURLAR " + ("AÇIK" if self.ayar["grup"]["aktif"] else "KAPALI"),
+                          TURUNCU if self.ayar["grup"]["aktif"] else METIN2)
         secili = set(self._g_tree.selection())
         self._g_tree.delete(*self._g_tree.get_children())
-        for g in gs:
+        for i, g in enumerate(gs):
             s = son.get(g["url"])
             iid = self._g_tree.insert("", "end", iid=g["url"], values=(
-                "✔" if g["acik"] else "—", g["name"], g["segment_ad"], g.get("uye", ""),
-                f"{s['durum']} · {s['zaman'][5:16]}" if s else "-", (s or {}).get("notu", "")),
-                tags=(s["durum"] if s else "yok", "kapali" if not g["acik"] else "acik"))
+                "●  Açık" if g["acik"] else "○  Kapalı", g["name"], g["segment_ad"], g.get("uye", ""),
+                f"{DURUM_AD.get(s['durum'], s['durum'])} · {s['zaman'][5:16]}" if s else "—", (s or {}).get("notu", "")),
+                tags=(s["durum"] if s else "yok", "kapali" if not g["acik"] else "acik") + (("serit",) if i % 2 else ()))
             if iid in secili:
                 self._g_tree.selection_add(iid)
         for durum, renk in DURUM_RENK.items():
             self._g_tree.tag_configure(durum, foreground=renk)
-        self._g_tree.tag_configure("kapali", foreground="#6c7383")
+        self._g_tree.tag_configure("serit", background="#111B3B")
+        self._g_tree.tag_configure("kapali", foreground=METIN3)
         acik = sum(g["acik"] for g in gs)
         seg = {}
         for g in gs:
             if g["acik"]:
                 seg[g["segment_ad"]] = seg.get(g["segment_ad"], 0) + 1
-        self._g_bilgi.configure(text=f"{len(gs)} grup · {acik} açık · " + " · ".join(f"{k} {v}" for k, v in sorted(seg.items(), key=lambda kv: -kv[1])))
+        self._g_bilgi.configure(text=f"{len(gs)} grup · {acik} açık")
+        self._g_segment_ozet.configure(text="Segmentler:  " + "   ·   ".join(f"{k} {v}" for k, v in sorted(seg.items(), key=lambda kv: -kv[1])))
 
     @staticmethod
     def _g_switch_metin(aktif):
@@ -546,6 +896,8 @@ class Uygulama(ctk.CTk):
             pass
         g["varyant"] = self._g_var.get()
         self.kaydet()
+        self._g_son_imza = None
+        self._y_gruplar()
         if g["aktif"] and g["ara_sn"] < 120:
             messagebox.showwarning("Hız uyarısı", "Gruplar arası 120 sn'nin altı Facebook'un 'çok hızlı' engelini tetikleyebilir. 180 sn önerilir.")
 
@@ -607,20 +959,22 @@ class Uygulama(ctk.CTk):
         d = durum_oku()
         key, img, text = icerik.varyant(gs[sec[0]]["segment"], d.get("tur_no", 0) + 1, self.ayar["grup"]["varyant"])
         ac_dosya(img)
-        pencere = ctk.CTkToplevel(self)
+        pencere = ctk.CTkToplevel(self, fg_color=BG)
         pencere.title(f"Metin · {key}")
-        pencere.geometry("620x520")
-        tb = ctk.CTkTextbox(pencere, wrap="word", font=self.font_m)
-        tb.pack(fill="both", expand=True, padx=10, pady=10)
+        pencere.geometry("640x540")
+        ctk.CTkLabel(pencere, text=f"Satış metni · {key}", font=self.F(15, "bold"), anchor="w").pack(fill="x", padx=16, pady=(14, 4))
+        tb = ctk.CTkTextbox(pencere, wrap="word", font=self.F(12), fg_color=KART, text_color=METIN, corner_radius=12)
+        tb.pack(fill="both", expand=True, padx=16, pady=(0, 8))
         tb.insert("1.0", text)
+        self.btn(pencere, "Metni kopyala", lambda: self.kopyala(text), "ikincil", height=32).pack(anchor="e", padx=16, pady=(0, 14))
 
     def _grup_tur_baslat(self, go=True):
         sec = self._grup_secili()
         gs = [g for g in icerik.gruplar(self.ayar) if g["acik"] and (not sec or g["url"] in sec)]
         if not gs:
-            return messagebox.showinfo("Grup yok", "Açık (✔) grup yok. Çift tıkla açın veya grup seçin.")
+            return messagebox.showinfo("Grup yok", "Açık grup yok. Çift tıkla açın veya grup seçin.")
         if durum_oku().get("blok"):
-            return messagebox.showwarning("Engel", "Facebook engeli kayıtlı. Önce 'Engel kaydını sıfırla' (engelin kalktığından eminseniz).")
+            return messagebox.showwarning("Engel", "Facebook engeli kayıtlı. Önce 'Engeli sıfırla' (engelin kalktığından eminseniz).")
         sure = len(gs) * self.ayar["grup"]["ara_sn"] / 60
         if not messagebox.askyesno("Tur başlat", f"{len(gs)} gruba {'PAYLAŞIM' if go else 'DENEME (paylaşmaz)'}\n"
                                                  f"Aralık {self.ayar['grup']['ara_sn']} sn → yaklaşık {sure:.0f} dk.\n\nBaşlasın mı?"):
@@ -653,45 +1007,52 @@ class Uygulama(ctk.CTk):
     # ============================================================ ZAMANLAYICI
     def _s_zaman(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
-        ctk.CTkLabel(f, text="Günlük paylaşım slotları (Instagram + Facebook)", font=self.font_b, anchor="w").pack(fill="x")
-        ctk.CTkLabel(f, text="Ajan bu saatlerde otomatik paylaşır; PC uykudaysa Görev Zamanlayıcı uyandırır, kapalıysa açıldığında tolerans süresi içinde telafi eder.",
-                     font=self.font_k, text_color=STEEL, anchor="w").pack(fill="x", pady=(0, 8))
+        self.sayfa_basligi(f, "Zamanlayıcı", "Ajan bu saatlerde otomatik paylaşır; PC uykudaysa Görev Zamanlayıcı uyandırır, kapalıysa açıldığında tolerans süresi içinde telafi eder.")
+        govde = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        govde.pack(fill="x")
+        sol = ctk.CTkFrame(govde, fg_color="transparent", width=1, height=1)
+        sol.pack(side="left", fill="both", expand=True, padx=(0, 14))
         self._z = {}
         for slot, s in self.ayar["slotlar"].items():
-            k = self.kart(f)
-            k.pack(fill="x", pady=4)
-            r = ctk.CTkFrame(k, fg_color="transparent")
-            r.pack(fill="x", padx=12, pady=10)
+            renk = SLOT_RENK.get(slot, MAVI)
+            k = self.kart(sol)
+            k.pack(fill="x", pady=(0, 10))
+            r = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+            r.pack(fill="x", padx=18, pady=14)
+            ctk.CTkFrame(r, width=4, height=10, fg_color=renk, corner_radius=2).pack(side="left", fill="y", padx=(0, 14))
+            solk = ctk.CTkFrame(r, fg_color="transparent", width=1, height=1)
+            solk.pack(side="left")
+            ctk.CTkLabel(solk, text=f"{SLOT_IKON.get(slot, '◆')}  {s['ad']}", font=self.F(15, "bold"), anchor="w").pack(anchor="w")
+            ctk.CTkLabel(solk, text="Instagram + Facebook · günde 1 kez", font=self.F(11), text_color=METIN3, anchor="w").pack(anchor="w")
             akt = ctk.BooleanVar(value=s["aktif"])
-            ctk.CTkSwitch(r, text=s["ad"], variable=akt, progress_color=TURUNCU, font=ctk.CTkFont("Segoe UI", 13, "bold"), width=200).pack(side="left")
-            ctk.CTkLabel(r, text="Saat", font=self.font_k).pack(side="left", padx=(20, 4))
-            saat = ctk.CTkEntry(r, width=70, font=self.font_m)
-            saat.insert(0, s["saat"])
-            saat.pack(side="left")
+            self.anahtar(r, "", akt, width=46).pack(side="right", padx=(16, 0))
             fb = ctk.BooleanVar(value="fb" in s["platformlar"])
             ig = ctk.BooleanVar(value="ig" in s["platformlar"])
-            ctk.CTkCheckBox(r, text="Facebook", variable=fb).pack(side="left", padx=(24, 8))
-            ctk.CTkCheckBox(r, text="Instagram", variable=ig).pack(side="left")
+            self.onay(r, "Instagram", ig, width=100).pack(side="right", padx=6)
+            self.onay(r, "Facebook", fb, width=100).pack(side="right", padx=6)
+            kutu, saat = self.alan(r, "Saat", 76, s["saat"])
+            kutu.pack(side="right", padx=(0, 18))
             self._z[slot] = (akt, saat, fb, ig)
-        k = self.kart(f, "Genel")
-        k.pack(fill="x", pady=(12, 4))
-        r = ctk.CTkFrame(k, fg_color="transparent")
-        r.pack(fill="x", padx=12, pady=(0, 10))
-        ctk.CTkLabel(r, text="Gün 1 tarihi", font=self.font_k).pack(side="left")
-        self._z_bas = ctk.CTkEntry(r, width=110, font=self.font_m)
-        self._z_bas.insert(0, self.ayar["baslangic"])
-        self._z_bas.pack(side="left", padx=(6, 20))
+        k = self.kart(sol, "Genel")
+        k.pack(fill="x", pady=(4, 10))
+        r = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", padx=18, pady=(4, 14))
+        kutu, self._z_bas = self.alan(r, "Gün 1 tarihi", 120, self.ayar["baslangic"])
+        kutu.pack(side="left", padx=(0, 18))
+        kutu, self._z_tol = self.alan(r, "Gecikme toleransı (dk)", 90, self.ayar["gecikme_toleransi_dk"])
+        kutu.pack(side="left", padx=(0, 24))
+        sec = ctk.CTkFrame(r, fg_color="transparent", width=1, height=1)
+        sec.pack(side="left", pady=(14, 0))
         self._z_dongu = ctk.BooleanVar(value=self.ayar["dongu"])
-        ctk.CTkCheckBox(r, text="60 gün bitince başa dön", variable=self._z_dongu).pack(side="left", padx=(0, 20))
-        ctk.CTkLabel(r, text="Gecikme toleransı (dk)", font=self.font_k).pack(side="left")
-        self._z_tol = ctk.CTkEntry(r, width=60, font=self.font_m)
-        self._z_tol.insert(0, str(self.ayar["gecikme_toleransi_dk"]))
-        self._z_tol.pack(side="left", padx=6)
+        self.onay(sec, "60 gün bitince başa dön", self._z_dongu).pack(side="left", padx=(0, 20))
         self._z_gizli = ctk.BooleanVar(value=self.ayar["gizli_pencere"])
-        ctk.CTkCheckBox(r, text="Paylaşırken tarayıcı penceresini gizle", variable=self._z_gizli).pack(side="left", padx=(20, 0))
-        ctk.CTkButton(f, text="Kaydet", fg_color=TURUNCU, hover_color="#d95a00", width=160, height=38, command=self._zaman_kaydet).pack(anchor="w", pady=12)
-        self._z_onizleme = ctk.CTkLabel(f, text="", font=("Consolas", 11), justify="left", anchor="w", text_color=STEEL)
-        self._z_onizleme.pack(fill="x")
+        self.onay(sec, "Paylaşırken tarayıcı penceresini gizle", self._z_gizli).pack(side="left")
+        self.btn(sol, "Ayarları kaydet", self._zaman_kaydet, width=180, height=40, font=self.F(13, "bold")).pack(anchor="w", pady=(4, 12))
+        sag = self.kart(govde, "Önümüzdeki işler", "ilk 9", width=360)
+        sag.pack(side="left", fill="y")
+        sag.pack_propagate(False)
+        self._z_onizleme = ctk.CTkFrame(sag, fg_color="transparent", width=1, height=1)
+        self._z_onizleme.pack(fill="both", expand=True, padx=18, pady=(4, 14))
         self._zaman_onizle()
         return f
 
@@ -714,39 +1075,51 @@ class Uygulama(ctk.CTk):
         self.kaydet()
         self._zaman_onizle()
         self._sayfalar.pop("takvim", None)
+        if "pano" in self._sayfalar:
+            self._pano_slot_widgets = None
         messagebox.showinfo("Kaydedildi", "Zamanlayıcı ayarları kaydedildi; ajan 20 sn içinde yeni ayarları kullanır.")
 
     def _zaman_onizle(self):
+        for w in self._z_onizleme.winfo_children():
+            w.destroy()
         s = ajan.sonraki_isler(self.ayar, durum_oku(), adet=9)
-        self._z_onizleme.configure(text="Önümüzdeki işler:\n" + "\n".join(f"  {z:%a %d.%m %H:%M}  {ad}" for z, ad in s))
+        if not s:
+            ctk.CTkLabel(self._z_onizleme, text="Planlı iş yok", font=self.F(11), text_color=METIN3, anchor="w").pack(fill="x")
+        for i, (z, ad) in enumerate(s):
+            r = ctk.CTkFrame(self._z_onizleme, fg_color="transparent", width=1, height=1)
+            r.pack(fill="x", pady=3)
+            ctk.CTkLabel(r, text=f"{z:%H:%M}", font=self.F(13, "bold"), text_color=TURUNCU if i == 0 else METIN, width=48, anchor="w").pack(side="left")
+            ctk.CTkLabel(r, text=f"{GUNLER[z.weekday()]} {z:%d.%m}", font=self.F(10), text_color=METIN3, width=64, anchor="w").pack(side="left")
+            ctk.CTkLabel(r, text=ad, font=self.F(11), text_color=METIN2, anchor="w", wraplength=190, justify="left").pack(side="left", fill="x", expand=True)
 
     # ============================================================ LOGLAR
     def _s_log(self):
-        f = ctk.CTkFrame(self._icerik, fg_color="transparent")
-        ust = ctk.CTkFrame(f, fg_color="transparent")
-        ust.pack(fill="x", pady=(0, 8))
-        ctk.CTkLabel(ust, text="Paylaşım kayıtları", font=self.font_b).pack(side="left")
-        self._l_filtre = ctk.CTkSegmentedButton(ust, values=["Hepsi", "Sosyal", "Grup", "Sorunlu"], selected_color=MAVI, command=lambda _v: self._y_log(True))
+        f = ctk.CTkFrame(self._icerik, fg_color="transparent", width=1, height=1)
+        sag = self.sayfa_basligi(f, "Loglar & Kanıt", "Her paylaşımın zamanı, hedefi, sonucu ve gönderi linki / ekran görüntüsü.")
+        self._l_rozet = {}
+        for durum in ("OK", "PENDING", "FAIL"):
+            r = self.rozet(sag, f"{DURUM_AD[durum]} 0", DURUM_RENK[durum])
+            r.pack(side="left", padx=3)
+            self._l_rozet[durum] = r
+        ust = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        ust.pack(fill="x", pady=(0, 12))
+        self._l_filtre = ctk.CTkSegmentedButton(ust, values=["Hepsi", "Sosyal", "Grup", "Sorunlu"], selected_color=MAVI, selected_hover_color=MAVI_H,
+                                                unselected_color=KART, unselected_hover_color=KART2, fg_color=KART, font=self.F(12, "bold"),
+                                                height=36, corner_radius=10, command=lambda _v: self._y_log(True))
         self._l_filtre.set("Hepsi")
-        self._l_filtre.pack(side="left", padx=20)
-        ctk.CTkButton(ust, text="Ekran görüntüsünü aç", command=self._log_ekran).pack(side="right", padx=4)
-        ctk.CTkButton(ust, text="Gönderiyi aç", command=self._log_url).pack(side="right", padx=4)
-        ctk.CTkButton(ust, text="Ekran klasörü", fg_color="transparent", border_width=1, border_color=STEEL, command=lambda: ac_dosya(SHOTS)).pack(side="right", padx=4)
-        ctk.CTkButton(ust, text="Ajan günlüğü", fg_color="transparent", border_width=1, border_color=STEEL, command=lambda: ac_dosya(VERI / "ajan.log")).pack(side="right", padx=4)
+        self._l_filtre.pack(side="left")
+        self.btn(ust, "Ekran görüntüsünü aç", self._log_ekran, "ikincil").pack(side="right", padx=4)
+        self.btn(ust, "Gönderiyi aç", self._log_url, "mavi").pack(side="right", padx=4)
+        self.btn(ust, "Ekran klasörü", lambda: ac_dosya(SHOTS), "hayalet").pack(side="right", padx=4)
+        self.btn(ust, "Ajan günlüğü", lambda: ac_dosya(VERI / "ajan.log"), "hayalet").pack(side="right", padx=4)
         k = self.kart(f)
         k.pack(fill="both", expand=True)
-        cols = ("zaman", "tip", "hedef", "durum", "notu")
-        self._l_tree = ttk.Treeview(k, columns=cols, show="headings")
-        for c, ad, w in (("zaman", "Zaman", 140), ("tip", "Tür", 110), ("hedef", "Hedef", 380), ("durum", "Durum", 90), ("notu", "Link / Not", 480)):
-            self._l_tree.heading(c, text=ad)
-            self._l_tree.column(c, width=w, anchor="w")
+        self._l_tree = self._log_tablosu(k)
         sb = ttk.Scrollbar(k, orient="vertical", command=self._l_tree.yview)
         self._l_tree.configure(yscrollcommand=sb.set)
-        self._l_tree.pack(side="left", fill="both", expand=True, padx=(8, 0), pady=8)
-        sb.pack(side="left", fill="y", pady=8)
+        self._l_tree.pack(side="left", fill="both", expand=True, padx=(12, 0), pady=12)
+        sb.pack(side="left", fill="y", pady=12, padx=(0, 8))
         self._l_tree.bind("<Double-1>", lambda _e: self._log_url())
-        for durum, renk in DURUM_RENK.items():
-            self._l_tree.tag_configure(durum, foreground=renk)
         self._l_kayit = {}
         self._l_son = None
         return f
@@ -757,17 +1130,21 @@ class Uygulama(ctk.CTk):
         if imza == self._l_son and not zorla:
             return
         self._l_son = imza
+        for durum, r in self._l_rozet.items():
+            self.rozet_ayarla(r, f"{DURUM_AD[durum]} {sum(x['durum'] == durum for x in d)}", DURUM_RENK[durum])
         flt = self._l_filtre.get()
         self._l_tree.delete(*self._l_tree.get_children())
         self._l_kayit = {}
+        n = 0
         for i, x in enumerate(reversed(d[-1500:])):
             grup = x.get("tip") == "grup"
             if flt == "Sosyal" and grup or flt == "Grup" and not grup or flt == "Sorunlu" and x["durum"] not in ("FAIL", "BLOK", "PENDING"):
                 continue
-            hedef = x.get("grup", "")[:60] if grup else f"Gün {x.get('gun', '?'):02d} · {x.get('slot', '')} · {x.get('platform', '').upper()}"
-            tip = f"Grup · {icerik.SEGMENT_AD.get(x.get('segment'), '')}" if grup else "Sosyal"
-            iid = self._l_tree.insert("", "end", iid=str(i), values=(x["zaman"], tip, hedef, x["durum"], x.get("url") or x.get("notu", "")), tags=(x["durum"],))
+            iid = self._l_tree.insert("", "end", iid=str(i), values=self._log_satiri(x), tags=(x["durum"],) + (("serit",) if n % 2 else ()))
             self._l_kayit[iid] = x
+            n += 1
+        if not n:
+            self._l_tree.insert("", "end", values=("", "", "Bu filtrede kayıt yok", "", ""))
 
     def _log_secili(self):
         s = self._l_tree.selection()
@@ -793,61 +1170,90 @@ class Uygulama(ctk.CTk):
     # ============================================================ HESAPLAR
     def _s_hesap(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
-        ctk.CTkLabel(f, text="Hesaplar ve kurulum", font=self.font_b, anchor="w").pack(fill="x")
-        ctk.CTkLabel(f, text="Chrome, Opera vb. kurmanız GEREKMEZ: uygulama kendi tarayıcısıyla gelir. Facebook ve Instagram'a bir kez kendiniz giriş yaparsınız; oturum bu PC'de saklanır.",
-                     font=self.font_k, text_color=STEEL, anchor="w", wraplength=900, justify="left").pack(fill="x", pady=(0, 10))
-        k0 = self.kart(f, "Hızlı kurulum (tek tık)")
-        k0.pack(fill="x", pady=4)
-        r0 = ctk.CTkFrame(k0, fg_color="transparent")
-        r0.pack(fill="x", padx=12, pady=(0, 10))
-        ctk.CTkLabel(r0, text="Facebook + Instagram sekmeleri açılır → ikisine de giriş yapın → pencereyi kapatın.\nGirişler doğrulanır ve otomatik başlatma (panel kapalıyken paylaşım, uykudan uyandırma) kendiliğinden kurulur.",
-                     font=self.font_m, justify="left", anchor="w").pack(side="left")
-        ctk.CTkButton(r0, text="KURULUMU BAŞLAT", fg_color=TURUNCU, hover_color="#d95a00", height=44, width=190,
-                      font=ctk.CTkFont("Segoe UI", 14, "bold"), command=self._hizli_kurulum).pack(side="right", padx=4)
-        k = self.kart(f, "Tarayıcı")
-        k.pack(fill="x", pady=4)
-        r = ctk.CTkFrame(k, fg_color="transparent")
-        r.pack(fill="x", padx=12, pady=(0, 10))
-        self._h_tar = ctk.CTkLabel(r, text="", font=self.font_m, justify="left", anchor="w")
+        self.sayfa_basligi(f, "Hesaplar & Kurulum", "Chrome, Opera vb. kurmanız GEREKMEZ: uygulama kendi tarayıcısıyla gelir. Facebook ve Instagram'a bir kez kendiniz giriş yaparsınız; oturum bu PC'de saklanır.")
+        govde = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
+        govde.pack(fill="x")
+        sol = ctk.CTkFrame(govde, fg_color="transparent", width=1, height=1)
+        sol.pack(side="left", fill="both", expand=True, padx=(0, 14))
+        # kahraman kart
+        k0 = ctk.CTkFrame(sol, fg_color=NAVY, corner_radius=18, border_width=1, border_color="#1E3A8A")
+        k0.pack(fill="x", pady=(0, 14))
+        ic = ctk.CTkFrame(k0, fg_color="transparent", width=1, height=1)
+        ic.pack(fill="x", padx=24, pady=22)
+        self.rozet(ic, "TEK TIKLA KURULUM", TURUNCU).pack(anchor="w")
+        ctk.CTkLabel(ic, text="3 adımda hazır", font=self.F(24, "bold"), anchor="w").pack(anchor="w", pady=(10, 4))
+        for i, (b, a) in enumerate((("Facebook ve Instagram sekmeleri açılır", "kendi kullanıcı adı/şifrenizle giriş yapın (gerekirse SMS/2FA)"),
+                                    ("Pencereyi kapatın", "girişler otomatik doğrulanır, oturum bu PC'de saklanır"),
+                                    ("Otomatik başlatma kurulur", "panel kapalıyken de paylaşım, PC uykudaysa uyandırma")), 1):
+            r = ctk.CTkFrame(ic, fg_color="transparent", width=1, height=1)
+            r.pack(fill="x", pady=4)
+            ctk.CTkLabel(r, text=str(i), font=self.F(12, "bold"), text_color="white", fg_color=TURUNCU, corner_radius=999, width=26, height=26).pack(side="left")
+            ctk.CTkLabel(r, text=b, font=self.F(13, "bold"), anchor="w").pack(side="left", padx=(12, 6))
+            ctk.CTkLabel(r, text=f"· {a}", font=self.F(12), text_color=METIN2, anchor="w").pack(side="left")
+        self.btn(ic, "KURULUMU BAŞLAT", self._hizli_kurulum, height=50, width=240, font=self.F(15, "bold"), corner_radius=12).pack(anchor="w", pady=(18, 0))
+        # tarayıcı + giriş
+        k = self.kart(sol, "Tarayıcı")
+        k.pack(fill="x", pady=(0, 14))
+        r = ctk.CTkFrame(k, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", padx=18, pady=(0, 14))
+        self._h_tar = ctk.CTkLabel(r, text="", font=self.F(12), justify="left", anchor="w")
         self._h_tar.pack(side="left")
-        self._h_tar_btn = ctk.CTkButton(r, text="Tarayıcıyı indir", fg_color=TURUNCU, hover_color="#d95a00", command=self._tarayici_kur)
-        self._h_cikti = ctk.CTkTextbox(k, height=90, font=("Consolas", 10), fg_color=MID)
-        k2 = self.kart(f, "Giriş (tek tek)")
-        k2.pack(fill="x", pady=4)
-        r2 = ctk.CTkFrame(k2, fg_color="transparent")
-        r2.pack(fill="x", padx=12, pady=(0, 10))
-        self._h_giris = ctk.CTkLabel(r2, text="", font=self.font_m, justify="left", anchor="w")
-        self._h_giris.pack(side="left")
-        ctk.CTkButton(r2, text="Facebook'a giriş yap", command=lambda: self._giris("fb")).pack(side="right", padx=4)
-        ctk.CTkButton(r2, text="Instagram'a giriş yap", command=lambda: self._giris("ig")).pack(side="right", padx=4)
-        ctk.CTkButton(r2, text="Durumu kontrol et", fg_color="transparent", border_width=1, border_color=STEEL, command=self._giris_kontrol).pack(side="right", padx=4)
+        self._h_tar_btn = self.btn(r, "Tarayıcıyı indir", self._tarayici_kur)
+        self._h_cikti = ctk.CTkTextbox(k, height=90, font=("Consolas", 10), fg_color=KART2, corner_radius=10)
+        k2 = self.kart(sol, "Giriş (tek tek)", "gerekirse hesapları ayrı ayrı bağlayın")
+        k2.pack(fill="x", pady=(0, 14))
+        r2 = ctk.CTkFrame(k2, fg_color="transparent", width=1, height=1)
+        r2.pack(fill="x", padx=18, pady=(0, 10))
+        self.btn(r2, "Facebook'a giriş yap", lambda: self._giris("fb"), "mavi").pack(side="left", padx=(0, 6))
+        self.btn(r2, "Instagram'a giriş yap", lambda: self._giris("ig"), "mavi").pack(side="left", padx=6)
+        self.btn(r2, "Durumu kontrol et", self._giris_kontrol, "ikincil").pack(side="left", padx=6)
         ctk.CTkLabel(k2, text="Giriş penceresi açılır → kullanıcı adı/şifre ile girin (gerekirse SMS/2FA) → pencereyi kapatın. Facebook'ta Yamansa Rulman Sayfası'nı yöneten hesapla girin.",
-                     font=self.font_k, text_color=STEEL, anchor="w", wraplength=900, justify="left").pack(fill="x", padx=14, pady=(0, 10))
-        k3 = self.kart(f, "Hesap bilgileri")
-        k3.pack(fill="x", pady=4)
-        ctk.CTkLabel(k3, text="Facebook Sayfası: https://www.facebook.com/yamansarulman/\nInstagram: @yamansarulman\nWhatsApp: 0552 610 93 63 · Web: yamansarulman.com · E-posta: info@yamansa.com.tr",
-                     font=self.font_k, anchor="w", justify="left").pack(fill="x", padx=14, pady=(0, 10))
+                     font=self.F(11), text_color=METIN3, anchor="w", wraplength=760, justify="left").pack(fill="x", padx=18, pady=(0, 14))
+        # sağ sütun: durum + hesap bilgileri
+        sag = ctk.CTkFrame(govde, fg_color="transparent", width=340)
+        sag.pack(side="left", fill="y")
+        sag.pack_propagate(False)
+        dk = self.kart(sag, "Kurulum durumu")
+        dk.pack(fill="x", pady=(0, 14))
+        self._h_sd = {ad: self.durum_satiri(dk, etiket) for ad, etiket in (
+            ("tarayici", "Tarayıcı"), ("fb", "Facebook oturumu"), ("ig", "Instagram oturumu"), ("oto", "Otomatik başlatma"))}
+        self._h_giris = ctk.CTkLabel(dk, text="", font=self.F(10), text_color=METIN3, anchor="w", wraplength=290, justify="left")
+        self._h_giris.pack(fill="x", padx=18, pady=(8, 14))
+        bk = self.kart(sag, "Hesap bilgileri")
+        bk.pack(fill="x")
+        for etiket, deger in (("Facebook Sayfası", "facebook.com/yamansarulman"), ("Instagram", "@yamansarulman"),
+                              ("WhatsApp", "0552 610 93 63"), ("Web", "yamansarulman.com"), ("E-posta", "info@yamansa.com.tr")):
+            r = ctk.CTkFrame(bk, fg_color="transparent", width=1, height=1)
+            r.pack(fill="x", padx=18, pady=3)
+            ctk.CTkLabel(r, text=etiket, font=self.F(11), text_color=METIN3, anchor="w").pack(side="left")
+            ctk.CTkLabel(r, text=deger, font=self.F(11, "bold"), anchor="e").pack(side="right")
+        ctk.CTkFrame(bk, fg_color="transparent", height=10).pack()
         self._y_hesap()
         return f
 
     def _y_hesap(self):
         if tarayici.gomulu():
-            self._h_tar.configure(text="Hazır ✔  (uygulamayla birlikte geldi, kurulum gerekmez)", text_color="#2ECC71")
+            self._h_tar.configure(text="Hazır ✔  Uygulamayla birlikte geldi, kurulum gerekmez.", text_color=YESIL)
             self._h_tar_btn.pack_forget()
             self._h_cikti.pack_forget()
+            self.durum_ayarla(self._h_sd["tarayici"], "Gömülü · hazır", YESIL)
         elif tarayici.tarayici_kurulu():
-            self._h_tar.configure(text=f"Hazır ✔  ({tarayici.TARAYICILAR})", text_color="#2ECC71")
+            self._h_tar.configure(text=f"Hazır ✔  ({tarayici.TARAYICILAR})", text_color=YESIL)
             self._h_tar_btn.pack_forget()
             self._h_cikti.pack_forget()
+            self.durum_ayarla(self._h_sd["tarayici"], "Hazır", YESIL)
         else:
-            self._h_tar.configure(text="Tarayıcı bulunamadı – 'Tarayıcıyı indir' deyin (bir kez, internet gerekir)", text_color="#E74C3C")
+            self._h_tar.configure(text="Tarayıcı bulunamadı – 'Tarayıcıyı indir' deyin (bir kez, internet gerekir)", text_color=KIRMIZI)
             self._h_tar_btn.pack(side="right")
-            self._h_cikti.pack(fill="x", padx=12, pady=(0, 10))
+            self._h_cikti.pack(fill="x", padx=18, pady=(0, 14))
+            self.durum_ayarla(self._h_sd["tarayici"], "Yok", KIRMIZI)
         g = durum_oku().get("giris")
-        if g:
-            self._h_giris.configure(text=f"Facebook: {'giriş yapılmış ✔' if g.get('fb') else 'giriş yok ✖'}    Instagram: {'giriş yapılmış ✔' if g.get('ig') else 'giriş yok ✖'}    (kontrol: {g.get('zaman', '')})")
-        else:
-            self._h_giris.configure(text="Henüz kontrol edilmedi")
+        for p in ("fb", "ig"):
+            var = bool(g and g.get(p))
+            self.durum_ayarla(self._h_sd[p], "Giriş yapılmış" if var else ("Giriş yok" if g else "Kontrol edilmedi"), YESIL if var else (KIRMIZI if g else METIN3))
+        kurulu = gorev.kurulu()
+        self.durum_ayarla(self._h_sd["oto"], "Kurulu" if kurulu else "Kurulu değil", YESIL if kurulu else SARI)
+        self._h_giris.configure(text=f"Son kontrol: {g.get('zaman', '')}" if g else "Girişler henüz kontrol edilmedi — KURULUMU BAŞLAT ile başlayın.")
 
     def _tarayici_kur(self):
         self._h_cikti.delete("1.0", "end")
@@ -888,6 +1294,7 @@ class Uygulama(ctk.CTk):
                 return messagebox.showwarning("Giriş eksik", f"{' ve '.join(eksik)} girişi görülmedi. 'KURULUMU BAŞLAT' ile tekrar deneyin "
                                               "(pencereyi giriş tamamlandıktan sonra kapatın).")
             ok, msg = gorev.kur(self.ayar)
+            self._y_hesap()
             if "pano" in self._sayfalar:
                 self._y_pano()
             if ok:
@@ -916,32 +1323,32 @@ class Uygulama(ctk.CTk):
     # ============================================================ AYARLAR
     def _s_ayar(self):
         f = ctk.CTkScrollableFrame(self._icerik, fg_color="transparent")
-        ctk.CTkLabel(f, text="Ayarlar", font=self.font_b, anchor="w").pack(fill="x")
+        self.sayfa_basligi(f, "Ayarlar", "Güvenlik, otomatik başlatma ve veri yönetimi.")
         k = self.kart(f, "Güvenlik")
-        k.pack(fill="x", pady=6)
+        k.pack(fill="x", pady=(0, 12))
         self._a_blok = ctk.BooleanVar(value=self.ayar["bildirim"]["blokta_dur"])
-        ctk.CTkCheckBox(k, text="Facebook engeli görülürse grup turlarını otomatik kapat (önerilir)", variable=self._a_blok,
-                        command=lambda: (self.ayar["bildirim"].__setitem__("blokta_dur", self._a_blok.get()), self.kaydet())).pack(anchor="w", padx=14, pady=(0, 10))
-        k2 = self.kart(f, "Otomatik başlatma (Windows Görev Zamanlayıcı)")
-        k2.pack(fill="x", pady=6)
-        r = ctk.CTkFrame(k2, fg_color="transparent")
-        r.pack(fill="x", padx=12, pady=(0, 10))
-        ctk.CTkButton(r, text="Kur", fg_color=TURUNCU, hover_color="#d95a00", command=self._ajan_kur).pack(side="left", padx=4)
-        ctk.CTkButton(r, text="Kaldır", fg_color="#5a2020", hover_color="#7a2a2a", command=lambda: (gorev.kaldir(), messagebox.showinfo("Kaldırıldı", "Otomatik başlatma kaldırıldı."))).pack(side="left", padx=4)
-        ctk.CTkLabel(r, text=f"Komut: {gorev.ajan_komutu()}", font=("Consolas", 10), text_color=STEEL).pack(side="left", padx=12)
+        self.onay(k, "Facebook engeli görülürse grup turlarını otomatik kapat (önerilir)", self._a_blok,
+                  command=lambda: (self.ayar["bildirim"].__setitem__("blokta_dur", self._a_blok.get()), self.kaydet())).pack(anchor="w", padx=18, pady=(0, 14))
+        k2 = self.kart(f, "Otomatik başlatma", "Windows Görev Zamanlayıcı")
+        k2.pack(fill="x", pady=(0, 12))
+        r = ctk.CTkFrame(k2, fg_color="transparent", width=1, height=1)
+        r.pack(fill="x", padx=18, pady=(0, 8))
+        self.btn(r, "Kur", self._ajan_kur, width=110).pack(side="left", padx=(0, 6))
+        self.btn(r, "Kaldır", lambda: (gorev.kaldir(), messagebox.showinfo("Kaldırıldı", "Otomatik başlatma kaldırıldı.")), "tehlike", width=110).pack(side="left", padx=6)
+        ctk.CTkLabel(k2, text=f"Komut: {gorev.ajan_komutu()}", font=("Consolas", 10), text_color=METIN3, anchor="w", wraplength=900, justify="left").pack(fill="x", padx=18, pady=(0, 14))
         k3 = self.kart(f, "Veri ve yedek")
-        k3.pack(fill="x", pady=6)
-        r3 = ctk.CTkFrame(k3, fg_color="transparent")
-        r3.pack(fill="x", padx=12, pady=(0, 10))
-        ctk.CTkButton(r3, text="Veri klasörünü aç", command=lambda: ac_dosya(VERI)).pack(side="left", padx=4)
-        ctk.CTkButton(r3, text="Bugünün 'yapıldı' işaretlerini sıfırla", fg_color="transparent", border_width=1, border_color=STEEL, command=self._yapildi_sifirla).pack(side="left", padx=4)
+        k3.pack(fill="x", pady=(0, 12))
+        r3 = ctk.CTkFrame(k3, fg_color="transparent", width=1, height=1)
+        r3.pack(fill="x", padx=18, pady=(0, 8))
+        self.btn(r3, "Veri klasörünü aç", lambda: ac_dosya(VERI), "ikincil").pack(side="left", padx=(0, 6))
+        self.btn(r3, "Bugünün 'yapıldı' işaretlerini sıfırla", self._yapildi_sifirla, "hayalet").pack(side="left", padx=6)
         ctk.CTkLabel(k3, text="'Yapıldı' sıfırlanırsa ajan bugünün slotlarını (saati geçmiş ve tolerans içindeyse) yeniden atar – çift paylaşım riski!",
-                     font=self.font_k, text_color=STEEL, anchor="w").pack(fill="x", padx=14, pady=(0, 10))
+                     font=self.F(11), text_color=METIN3, anchor="w").pack(fill="x", padx=18, pady=(0, 14))
         k4 = self.kart(f, "Hakkında")
-        k4.pack(fill="x", pady=6)
-        ctk.CTkLabel(k4, text="Yamansa Rulman Sosyal Medya Paneli · 60 günlük içerik (sabah kartı, ana gönderi, story) + 9 segment × 3 varyant grup ilanı.\n"
+        k4.pack(fill="x", pady=(0, 12))
+        ctk.CTkLabel(k4, text=f"Yamansa Rulman Sosyal Medya Paneli {SURUM} · 60 günlük içerik (sabah kartı, ana gönderi, story) + 9 segment × 3 varyant grup ilanı.\n"
                               "Paylaşımlar kendi PC'nizden, kendi hesabınızla yapılır; hiçbir şifre uygulamada saklanmaz (tarayıcı profili dışında).",
-                     font=self.font_k, anchor="w", justify="left", wraplength=900).pack(fill="x", padx=14, pady=(0, 10))
+                     font=self.F(11), text_color=METIN2, anchor="w", justify="left", wraplength=900).pack(fill="x", padx=18, pady=(0, 14))
         return f
 
     def _yapildi_sifirla(self):

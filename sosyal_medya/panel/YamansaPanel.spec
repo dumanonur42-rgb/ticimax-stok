@@ -15,6 +15,7 @@ KOK = PANEL.parent  # sosyal_medya/
 datas = [
     (str(KOK / "icerik_verisi.py"), "."),
     (str(KOK / "logo_yamansa.png"), "."),
+    (str(PANEL / "yamansa.ico"), "panel"),
     (str(KOK / "otomasyon" / "gunluk_metin.py"), "otomasyon"),
     (str(KOK / "grup_paylasim" / "segmentler.py"), "grup_paylasim"),
     (str(KOK / "grup_paylasim" / "varyantlar.py"), "grup_paylasim"),
