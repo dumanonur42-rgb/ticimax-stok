@@ -1,4 +1,5 @@
 import type { Facets, Product, ProductFilter } from '@shared/types'
+import { cardPrice } from '@shared/price'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { ArrowDown, ArrowUp, ChevronLeft, Download, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
@@ -25,7 +26,8 @@ const COLUMNS: Column[] = [
   { key: 'brand', label: 'Marka', width: '120px' },
   { key: 'dims', label: 'd × D × B', width: '140px' },
   { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
-  { key: 'price', label: 'Fiyat', width: '120px', sort: 'price', align: 'right' },
+  { key: 'price', label: 'Peşin Fiyat', width: '124px', sort: 'price', align: 'right' },
+  { key: 'card_price', label: 'K. Kartı Fiyatı', width: '132px', align: 'right' },
   { key: 'act', label: '', width: '112px' }
 ]
 
@@ -120,7 +122,8 @@ export function Catalog(): ReactNode {
     needed.forEach(loadPage)
   }, [vItems, rows, loadPage])
 
-  const cols = COLUMNS.filter((c) => showPrices || c.key !== 'price')
+  const cardPct = settings?.card_price_pct ?? 0
+  const cols = COLUMNS.filter((c) => showPrices || (c.key !== 'price' && c.key !== 'card_price'))
   const gridCols = cols.map((c) => c.width).join(' ')
 
   const toggleSort = (s: SortKey): void =>
@@ -305,7 +308,7 @@ export function Catalog(): ReactNode {
               <option value="relevance">Uygunluk</option>
               <option value="sku">Ürün kodu</option>
               <option value="stock">Stok</option>
-              {showPrices && <option value="price">Fiyat</option>}
+              {showPrices && <option value="price">Peşin fiyat</option>}
               <option value="updated">Güncelleme</option>
             </select>
           </label>
@@ -412,7 +415,15 @@ export function Catalog(): ReactNode {
                         {money(p.price, p.currency)}
                       </div>
                     )}
-                    <div className="cell" role="gridcell" style={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
+                    {showPrices && (
+                      <div className="cell right nowrap muted" role="gridcell">
+                        {(() => {
+                          const cp = cardPrice(p.price, p.card_price, cardPct)
+                          return cp == null ? <span className="faint">—</span> : money(cp, p.currency)
+                        })()}
+                      </div>
+                    )}
+                    <div className="cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                       <button
                         className="btn sm cart-btn"
                         onClick={(e) => {

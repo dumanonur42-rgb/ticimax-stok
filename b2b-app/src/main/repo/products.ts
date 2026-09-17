@@ -2,7 +2,7 @@ import type { Facets, FacetValue, Product, ProductFilter, ProductInput, ProductP
 import { getDb, normalize, normalizeText } from '../db'
 
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
-  list_price, min_order, shelf, barcode, image, description, equivalents, active, updated_at`
+  list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active, updated_at`
 
 interface Where {
   sql: string
@@ -158,13 +158,14 @@ export function saveProduct(p: Partial<Product> & ProductInput): Product {
     d_inner: p.d_inner ?? null,
     d_outer: p.d_outer ?? null,
     width: p.width ?? null,
-    list_price: p.list_price ?? null
+    list_price: p.list_price ?? null,
+    card_price: p.card_price ?? null
   }
   if (p.id) {
     db.prepare(
       `UPDATE products SET sku=@sku, sku_norm=@sku_norm, name=@name, name_norm=@name_norm, brand=@brand, category=@category,
        type=@type, seal=@seal, d_inner=@d_inner, d_outer=@d_outer, width=@width, stock=@stock, unit=@unit, price=@price,
-       currency=@currency, list_price=@list_price, min_order=@min_order, shelf=@shelf, barcode=@barcode, image=@image,
+       currency=@currency, list_price=@list_price, card_price=@card_price, min_order=@min_order, shelf=@shelf, barcode=@barcode, image=@image,
        description=@description, equivalents=@equivalents, active=@active, updated_at=datetime('now','localtime') WHERE id=@id`
     ).run(row)
     return getProduct(p.id)!
@@ -172,9 +173,9 @@ export function saveProduct(p: Partial<Product> & ProductInput): Product {
   const r = db
     .prepare(
       `INSERT INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-       price, currency, list_price, min_order, shelf, barcode, image, description, equivalents, active)
+       price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
        VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-       @currency,@list_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,@active)`
+       @currency,@list_price,@card_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,@active)`
     )
     .run(row)
   return getProduct(Number(r.lastInsertRowid))!

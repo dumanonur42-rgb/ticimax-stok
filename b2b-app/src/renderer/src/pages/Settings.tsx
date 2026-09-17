@@ -110,7 +110,7 @@ function Company({ s }: { s: S }): ReactNode {
   const text = (k: keyof S, label: string): ReactNode => (
     <Field label={label}>{(id) => <input id={id} className="input" value={String(f[k] ?? '')} onChange={(e) => setF({ ...f, [k]: e.target.value })} />}</Field>
   )
-  const numF = (k: 'rate_usd' | 'rate_eur' | 'vat_pct' | 'low_stock_threshold', label: string, hint?: string): ReactNode => (
+  const numF = (k: 'rate_usd' | 'rate_eur' | 'vat_pct' | 'low_stock_threshold' | 'card_price_pct', label: string, hint?: string): ReactNode => (
     <Field label={label} hint={hint}>
       {(id) => <input id={id} className="input" inputMode="decimal" value={f[k]} onChange={(e) => setF({ ...f, [k]: Number(e.target.value.replace(',', '.')) || 0 })} />}
     </Field>
@@ -132,6 +132,7 @@ function Company({ s }: { s: S }): ReactNode {
         )}
       </Field>
       {numF('vat_pct', 'KDV (%)')}
+      {numF('card_price_pct', 'Kredi kartı fiyat farkı (%)', 'Ürünün kendi kredi kartı fiyatı boşsa peşin fiyata bu yüzde eklenir; 0 ise kart fiyatı gösterilmez')}
       {numF('rate_usd', 'USD kuru (₺)')}
       {numF('rate_eur', 'EUR kuru (₺)')}
       {numF('low_stock_threshold', 'Kritik stok eşiği', 'Bu değerin altındaki ürünler "Azaldı" olarak işaretlenir')}

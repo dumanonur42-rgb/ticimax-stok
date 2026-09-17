@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS products (
   price REAL NOT NULL DEFAULT 0,
   currency TEXT NOT NULL DEFAULT 'TRY',
   list_price REAL,
+  card_price REAL,
   min_order REAL NOT NULL DEFAULT 1,
   shelf TEXT NOT NULL DEFAULT '',
   barcode TEXT NOT NULL DEFAULT '',
@@ -116,6 +117,7 @@ CREATE TABLE IF NOT EXISTS orders (
   customer_name TEXT NOT NULL DEFAULT '',
   status TEXT NOT NULL DEFAULT 'beklemede',
   note TEXT NOT NULL DEFAULT '',
+  payment TEXT NOT NULL DEFAULT 'pesin',
   currency TEXT NOT NULL DEFAULT 'TRY',
   subtotal REAL NOT NULL DEFAULT 0,
   discount REAL NOT NULL DEFAULT 0,
@@ -179,6 +181,8 @@ function migrate(d: DB): void {
   d.exec(SCHEMA)
   addColumnIfMissing(d, 'users', 'approved', 'INTEGER NOT NULL DEFAULT 1')
   addColumnIfMissing(d, 'users', 'created_at', "TEXT NOT NULL DEFAULT ''")
+  addColumnIfMissing(d, 'products', 'card_price', 'REAL')
+  addColumnIfMissing(d, 'orders', 'payment', "TEXT NOT NULL DEFAULT 'pesin'")
   const userCount = d.prepare('SELECT COUNT(*) c FROM users').get() as { c: number }
   const insertUser = d.prepare(`INSERT INTO users(username, password_hash, display_name, role, created_at) VALUES (?,?,?,?,datetime('now','localtime'))`)
   const exists = d.prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)

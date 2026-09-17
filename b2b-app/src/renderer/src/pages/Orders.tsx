@@ -5,6 +5,7 @@ import { Empty, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
+import { PAYMENT_LABEL } from '@shared/price'
 
 const FLOW: OrderStatus[] = ['beklemede', 'onaylandi', 'hazirlaniyor', 'teslim']
 
@@ -118,6 +119,8 @@ export function Orders(): ReactNode {
           <dl className="dl">
             <dt>Müşteri</dt>
             <dd>{detail.customer_name || '-'}</dd>
+            <dt>Ödeme</dt>
+            <dd>{PAYMENT_LABEL[detail.payment] ?? detail.payment}</dd>
             {detail.note && (
               <>
                 <dt>Not</dt>

@@ -70,8 +70,8 @@ export function createOrder(input: OrderInput, createdBy: string): Order {
   const tx = db.transaction((): number => {
     const r = db
       .prepare(
-        `INSERT INTO orders(order_no, customer_id, customer_name, status, note, currency, subtotal, discount, vat_pct, vat, total, created_by)
-         VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`
+        `INSERT INTO orders(order_no, customer_id, customer_name, status, note, payment, currency, subtotal, discount, vat_pct, vat, total, created_by)
+         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`
       )
       .run(
         nextOrderNo(),
@@ -79,6 +79,7 @@ export function createOrder(input: OrderInput, createdBy: string): Order {
         customer?.name ?? '',
         'beklemede',
         input.note ?? '',
+        input.payment === 'kart' ? 'kart' : 'pesin',
         input.currency,
         subtotal,
         discount,

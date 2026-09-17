@@ -590,9 +590,9 @@ export function seedDemo(target: number): number {
   const rows = generateDemoCatalog(target);
   const ins = db.prepare(
     `INSERT OR IGNORE INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-     price, currency, list_price, min_order, shelf, barcode, image, description, equivalents, active)
+     price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
      VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,'Adet',@price,'TRY',
-     @list_price,@min_order,@shelf,'','','',@equivalents,1)`,
+     @list_price,@card_price,@min_order,@shelf,'','','',@equivalents,1)`,
   );
   const tx = db.transaction(() => {
     let n = 0;
@@ -618,6 +618,7 @@ export function seedDemo(target: number): number {
         stock,
         price,
         list_price: Math.round(price * 1.35 * 100) / 100,
+        card_price: Math.round(price * 1.08 * 100) / 100,
         min_order: 1,
         shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`,
       });

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
+import { cardPrice } from '@shared/price'
 
 export function ProductDrawer({
   product,
@@ -20,6 +21,8 @@ export function ProductDrawer({
 }): ReactNode {
   const add = useCart((s) => s.add)
   const toast = useApp((s) => s.toast)
+  const cardPct = useApp((s) => s.settings?.card_price_pct ?? 0)
+  const cp = cardPrice(product.price, product.card_price, cardPct)
   const [qty, setQty] = useState(Math.max(1, product.min_order || 1))
   const [equivalents, setEquivalents] = useState<Product[]>([])
   const ref = useRef<HTMLDivElement>(null)
@@ -102,7 +105,7 @@ export function ProductDrawer({
             </dd>
             {showPrices && (
               <>
-                <dt>Fiyat</dt>
+                <dt>Peşin Fiyat</dt>
                 <dd>
                   <strong>{money(product.price, product.currency)}</strong>
                   {product.list_price != null && product.list_price > product.price && (
@@ -112,6 +115,8 @@ export function ProductDrawer({
                     </span>
                   )}
                 </dd>
+                <dt>Kredi Kartı Fiyatı</dt>
+                <dd>{cp == null ? <span className="muted">—</span> : <strong>{money(cp, product.currency)}</strong>}</dd>
               </>
             )}
             {product.min_order > 1 && (
@@ -178,7 +183,12 @@ export function ProductDrawer({
             </button>
           </div>
           <span className="spacer" />
-          {showPrices && <strong aria-live="polite">{money(product.price * qty, product.currency)}</strong>}
+          {showPrices && (
+            <span aria-live="polite" className="nowrap">
+              <strong>{money(product.price * qty, product.currency)}</strong>
+              {cp != null && <span className="muted small"> · kart {money(cp * qty, product.currency)}</span>}
+            </span>
+          )}
           <button className="btn primary" onClick={addNow}>
             <ShoppingCart size={16} aria-hidden /> Sepete ekle
           </button>

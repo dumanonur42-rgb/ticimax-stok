@@ -16,6 +16,7 @@ export interface Product {
   price: number
   currency: Currency
   list_price: number | null
+  card_price: number | null
   min_order: number
   shelf: string
   barcode: string
@@ -80,6 +81,8 @@ export interface Customer {
 }
 export type CustomerInput = Omit<Customer, 'id' | 'created_at'>
 
+export type PaymentType = 'pesin' | 'kart'
+
 export type OrderStatus = 'taslak' | 'beklemede' | 'onaylandi' | 'hazirlaniyor' | 'teslim' | 'iptal'
 
 export interface OrderItem {
@@ -101,6 +104,7 @@ export interface Order {
   customer_name: string
   status: OrderStatus
   note: string
+  payment: PaymentType
   currency: Currency
   subtotal: number
   discount: number
@@ -116,6 +120,7 @@ export interface Order {
 export interface OrderInput {
   customer_id: number | null
   note: string
+  payment: PaymentType
   currency: Currency
   vat_pct: number
   items: { product_id: number | null; sku: string; name: string; qty: number; unit_price: number; discount_pct: number }[]
@@ -159,6 +164,7 @@ export interface Settings {
   vat_pct: number
   low_stock_threshold: number
   show_prices_to_dealers: boolean
+  card_price_pct: number
   theme: 'system' | 'light' | 'dark' | 'contrast'
   font_scale: number
   reduce_motion: boolean

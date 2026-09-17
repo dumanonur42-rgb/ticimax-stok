@@ -13,6 +13,7 @@ export const DEFAULT_SETTINGS: Settings = {
   vat_pct: 20,
   low_stock_threshold: 5,
   show_prices_to_dealers: true,
+  card_price_pct: 0,
   theme: 'system',
   font_scale: 1,
   reduce_motion: false,

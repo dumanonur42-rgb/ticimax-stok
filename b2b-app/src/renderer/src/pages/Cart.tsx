@@ -1,4 +1,5 @@
-import type { Customer } from '@shared/types'
+import type { Customer, PaymentType } from '@shared/types'
+import { priceFor } from '@shared/price'
 import { Minus, Plus, Send, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Confirm, Empty, Field } from '@/components/ui'
@@ -25,13 +26,15 @@ export function Cart(): ReactNode {
   const vatPct = settings?.vat_pct ?? 20
   const currency = cart.lines[0]?.currency ?? settings?.default_currency ?? 'TRY'
   const mixedCurrency = cart.lines.some((l) => l.currency !== currency)
+  const cardPct = settings?.card_price_pct ?? 0
+  const lineUnit = (l: (typeof cart.lines)[number]): number => priceFor(cart.payment, l.unit_price, l.card_price, cardPct)
 
   const totals = useMemo(() => {
-    const gross = cart.lines.reduce((s, l) => s + l.qty * l.unit_price, 0)
+    const gross = cart.lines.reduce((s, l) => s + l.qty * lineUnit(l), 0)
     const subtotal = gross * (1 - discountPct / 100)
     const vat = subtotal * (vatPct / 100)
     return { gross, discount: gross - subtotal, subtotal, vat, total: subtotal + vat }
-  }, [cart.lines, discountPct, vatPct])
+  }, [cart.lines, cart.payment, cardPct, discountPct, vatPct])
 
   const overStock = cart.lines.filter((l) => l.qty > l.stock)
 
@@ -44,9 +47,10 @@ export function Cart(): ReactNode {
       const o = await api('orders:create', {
         customer_id: cart.customerId,
         note: cart.note,
+        payment: cart.payment,
         currency,
         vat_pct: vatPct,
-        items: cart.lines.map((l) => ({ product_id: l.product_id, sku: l.sku, name: l.name, qty: l.qty, unit_price: l.unit_price, discount_pct: discountPct }))
+        items: cart.lines.map((l) => ({ product_id: l.product_id, sku: l.sku, name: l.name, qty: l.qty, unit_price: lineUnit(l), discount_pct: discountPct }))
       })
       cart.clear()
       toast(`Sipariş oluşturuldu: ${o.order_no}`, 'success')
@@ -116,8 +120,8 @@ export function Cart(): ReactNode {
                     </button>
                   </div>
                 </td>
-                {showPrices && <td className="right nowrap">{money(l.unit_price, l.currency)}</td>}
-                {showPrices && <td className="right nowrap">{money(l.unit_price * l.qty, l.currency)}</td>}
+                {showPrices && <td className="right nowrap">{money(lineUnit(l), l.currency)}</td>}
+                {showPrices && <td className="right nowrap">{money(lineUnit(l) * l.qty, l.currency)}</td>}
                 <td>
                   <button className="btn ghost icon sm" onClick={() => cart.remove(l.product_id)} aria-label={`${l.sku} sepetten çıkar`}>
                     <Trash2 size={16} aria-hidden />
@@ -145,6 +149,14 @@ export function Cart(): ReactNode {
             )}
           </Field>
         )}
+        <Field label="Ödeme şekli">
+          {(id) => (
+            <select id={id} className="select" value={cart.payment} onChange={(e) => cart.setPayment(e.target.value as PaymentType)}>
+              <option value="pesin">Peşin</option>
+              <option value="kart">Kredi Kartı</option>
+            </select>
+          )}
+        </Field>
         <Field label="Sipariş notu">{(id) => <textarea id={id} className="input" rows={3} value={cart.note} onChange={(e) => cart.setNote(e.target.value)} placeholder="Teslimat, kargo, özel istekler…" />}</Field>
         {showPrices && (
           <dl className="dl" aria-live="polite">

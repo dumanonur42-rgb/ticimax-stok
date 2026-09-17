@@ -1,5 +1,6 @@
 import type { Order, Product, Settings } from '@shared/types'
 import * as XLSX from 'xlsx'
+import { PAYMENT_LABEL } from '@shared/price'
 import { TEMPLATE_HEADERS } from './importer'
 
 export function productsToXlsx(products: Product[], path: string): void {
@@ -15,7 +16,8 @@ export function productsToXlsx(products: Product[], path: string): void {
     Genişlik: p.width ?? '',
     Stok: p.stock,
     Birim: p.unit,
-    Fiyat: p.price,
+    'Peşin Fiyat': p.price,
+    'Kredi Kartı Fiyatı': p.card_price ?? '',
     'Para Birimi': p.currency,
     'Liste Fiyatı': p.list_price ?? '',
     'Min Sipariş': p.min_order,
@@ -32,8 +34,8 @@ export function productsToXlsx(products: Product[], path: string): void {
 export function templateXlsx(path: string): void {
   const ws = XLSX.utils.aoa_to_sheet([
     TEMPLATE_HEADERS,
-    ['6205-2RS', '6205 2RS Sabit Bilyalı Rulman', 'SKF', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', '2RS', 25, 52, 15, 120, 'Adet', 85.5, 'TRY', 110, 1, 'A-12', '', '6205-2RS1, 6205 DDU'],
-    ['6205-ZZ', '6205 ZZ Sabit Bilyalı Rulman', 'FAG', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', 'ZZ', 25, 52, 15, 40, 'Adet', 79, 'TRY', '', 1, 'A-12', '', '6205-2Z']
+    ['6205-2RS', '6205 2RS Sabit Bilyalı Rulman', 'SKF', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', '2RS', 25, 52, 15, 120, 'Adet', 85.5, 92, 'TRY', 110, 1, 'A-12', '', '6205-2RS1, 6205 DDU'],
+    ['6205-ZZ', '6205 ZZ Sabit Bilyalı Rulman', 'FAG', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', 'ZZ', 25, 52, 15, 40, 'Adet', 79, '', 'TRY', '', 1, 'A-12', '', '6205-2Z']
   ])
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws, 'Ürünler')
@@ -57,6 +59,7 @@ export function orderToXlsx(order: Order, path: string): void {
       [],
       ['Sipariş No', order.order_no],
       ['Müşteri', order.customer_name],
+      ['Ödeme', PAYMENT_LABEL[order.payment] ?? order.payment],
       ['Tarih', order.created_at],
       ['Ara Toplam', order.subtotal],
       ['İskonto', order.discount],
@@ -93,7 +96,7 @@ th{background:#f0f0f0}.r{text-align:right}.tot td{font-weight:bold}
 .head{display:flex;justify-content:space-between;gap:24px}
 </style></head><body>
 <div class="head"><div><h1>${esc(s.company_name)}</h1><div class="muted">${esc(s.company_address)}<br>${esc(s.company_phone)} ${esc(s.company_email)}<br>${esc(s.company_web)}</div></div>
-<div><h1>Sipariş ${esc(order.order_no)}</h1><div class="muted">Tarih: ${esc(order.created_at)}<br>Durum: ${esc(order.status)}</div></div></div>
+<div><h1>Sipariş ${esc(order.order_no)}</h1><div class="muted">Tarih: ${esc(order.created_at)}<br>Durum: ${esc(order.status)}<br>Ödeme: ${esc(PAYMENT_LABEL[order.payment] ?? order.payment)}</div></div></div>
 <p><strong>Müşteri:</strong> ${esc(order.customer_name || '-')}<br>${order.note ? `<strong>Not:</strong> ${esc(order.note)}` : ''}</p>
 <table><thead><tr><th>#</th><th>Stok Kodu</th><th>Ürün</th><th class="r">Miktar</th><th class="r">Birim Fiyat</th><th class="r">İsk.</th><th class="r">Tutar</th></tr></thead>
 <tbody>${items}</tbody>

@@ -4,7 +4,7 @@ Bayilerin stok görüp sipariş verdiği, kurulumlu (Windows `.exe`) rulman B2B 
 Veriler bilgisayarda yerel SQLite dosyasında tutulur; internet gerekmez.
 
 - **10.000+ ürün** – SQLite + FTS5 trigram arama, sanal liste (virtualized). Aramalar 12.000 üründe ~3–6 ms.
-- **Stok listesi içe aktarma** – Excel/CSV, Türkçe başlıklar otomatik eşlenir (Stok Kodu, Ürün Adı, Marka, İç Çap, Dış Çap, Genişlik, Stok, Fiyat…).
+- **Stok listesi içe aktarma** – Excel/CSV, Türkçe başlıklar otomatik eşlenir (Stok Kodu, Ürün Adı, Marka, İç Çap, Dış Çap, Genişlik, Stok, Peşin Fiyat, Kredi Kartı Fiyatı…).
   Modlar: güncelle/ekle, sadece stok-fiyat, tümünü değiştir.
 - **Rulman odaklı arama** – stok kodu / muadil / barkod; boşluk, tire ve Türkçe karakter duyarsız; d × D × B ölçü filtreleri.
 - **Sepet & sipariş** – bayi iskontosu, KDV, stok düşümü, iptal ile geri alma, Excel ve yazdırma.

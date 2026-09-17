@@ -28,7 +28,8 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['width', /^(genişlik|genislik|b|b ?\(mm\)|kalınlık|kalinlik|width|en)$/i],
   ['stock', /^(stok|stok ?adedi?|stok ?miktarı?|miktar|adet|mevcut|qty|quantity|stock|bakiye)$/i],
   ['unit', /^(birim|unit)$/i],
-  ['price', /^(fiyat|satış ?fiyatı?|satis ?fiyati?|birim ?fiyat|price|bayi ?fiyatı?|fiyat ?\(tl\))$/i],
+  ['price', /^(fiyat|peşin ?fiyatı?|pesin ?fiyati?|peşin|nakit ?fiyatı?|satış ?fiyatı?|satis ?fiyati?|birim ?fiyat|price|cash ?price|bayi ?fiyatı?|fiyat ?\(tl\))$/i],
+  ['card_price', /^(kredi ?kartı? ?fiyatı?|kredi ?karti? ?fiyati?|k\.? ?kartı? ?fiyatı?|kk ?fiyatı?|kart ?fiyatı?|kart ?fiyati?|kartlı ?fiyat|taksitli ?fiyat|card ?price|credit ?card)$/i],
   ['list_price', /^(liste ?fiyatı?|liste ?fiyati?|list ?price|perakende)$/i],
   ['currency', /^(para ?birimi|döviz|doviz|currency|pb)$/i],
   ['min_order', /^(min(imum)? ?sipariş|min ?adet|koli ?içi|paket)$/i],
@@ -152,12 +153,12 @@ export function runImport(opts: ImportOptions): ImportResult {
 
   const insertStmt = db.prepare(
     `INSERT INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-     price, currency, list_price, min_order, shelf, barcode, image, description, equivalents, active)
+     price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
      VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-     @currency,@list_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,1)`
+     @currency,@list_price,@card_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,1)`
   )
   const stockOnlyStmt = db.prepare(
-    `UPDATE products SET stock=@stock, price=COALESCE(@price, price), active=1, updated_at=datetime('now','localtime') WHERE id=@id`
+    `UPDATE products SET stock=@stock, price=COALESCE(@price, price), card_price=COALESCE(@card_price, card_price), active=1, updated_at=datetime('now','localtime') WHERE id=@id`
   )
 
   const seen = new Set<string>()
@@ -176,6 +177,7 @@ export function runImport(opts: ImportOptions): ImportResult {
 
       const stockVal = parseNumber(col(row, 'stock'))
       const priceVal = parseNumber(col(row, 'price'))
+      const cardVal = parseNumber(col(row, 'card_price'))
       const ex = existing.get(sku_norm)
 
       if (opts.mode === 'stock_only') {
@@ -184,11 +186,11 @@ export function runImport(opts: ImportOptions): ImportResult {
           return
         }
         const newStock = stockVal ?? ex.stock
-        if (newStock === ex.stock && (priceVal == null || priceVal === ex.price)) {
+        if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null) {
           unchanged++
           return
         }
-        stockOnlyStmt.run({ id: ex.id, stock: newStock, price: priceVal })
+        stockOnlyStmt.run({ id: ex.id, stock: newStock, price: priceVal, card_price: cardVal })
         updated++
         return
       }
@@ -211,6 +213,7 @@ export function runImport(opts: ImportOptions): ImportResult {
         price: priceVal ?? 0,
         currency: parseCurrency(col(row, 'currency'), opts.defaultCurrency),
         list_price: parseNumber(col(row, 'list_price')),
+        card_price: cardVal,
         min_order: parseNumber(col(row, 'min_order')) ?? 1,
         shelf: (col(row, 'shelf') ?? '').trim(),
         barcode: (col(row, 'barcode') ?? '').trim(),
@@ -231,6 +234,7 @@ export function runImport(opts: ImportOptions): ImportResult {
           ['width', 'width=@width'],
           ['unit', 'unit=@unit'],
           ['list_price', 'list_price=@list_price'],
+          ['card_price', 'card_price=@card_price'],
           ['min_order', 'min_order=@min_order'],
           ['shelf', 'shelf=@shelf'],
           ['barcode', 'barcode=@barcode'],
@@ -285,7 +289,8 @@ export const TEMPLATE_HEADERS = [
   'Genişlik',
   'Stok',
   'Birim',
-  'Fiyat',
+  'Peşin Fiyat',
+  'Kredi Kartı Fiyatı',
   'Para Birimi',
   'Liste Fiyatı',
   'Min Sipariş',

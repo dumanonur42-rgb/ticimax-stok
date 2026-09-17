@@ -19,6 +19,7 @@ const empty = (cur: Currency): ProductInput => ({
   price: 0,
   currency: cur,
   list_price: null,
+  card_price: null,
   min_order: 1,
   shelf: '',
   barcode: '',
@@ -68,7 +69,7 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
       {(id) => <input id={id} className="input" value={String(form[k] ?? '')} onChange={(e) => set(k, e.target.value as never)} />}
     </Field>
   )
-  const number = (k: 'd_inner' | 'd_outer' | 'width' | 'list_price', label: string): ReactNode => (
+  const number = (k: 'd_inner' | 'd_outer' | 'width' | 'list_price' | 'card_price', label: string): ReactNode => (
     <Field label={label}>
       {(id) => <input id={id} className="input" inputMode="decimal" value={form[k] ?? ''} onChange={(e) => set(k, numOrNull(e.target.value))} />}
     </Field>
@@ -116,7 +117,7 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
           {(id) => <input id={id} className="input" inputMode="decimal" value={form.stock} onChange={(e) => set('stock', Number(e.target.value.replace(',', '.')) || 0)} />}
         </Field>
         {text('unit', 'Birim')}
-        <Field label="Fiyat">
+        <Field label="Peşin fiyat">
           {(id) => <input id={id} className="input" inputMode="decimal" value={form.price} onChange={(e) => set('price', Number(e.target.value.replace(',', '.')) || 0)} />}
         </Field>
         <Field label="Para birimi">
@@ -128,6 +129,7 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
             </select>
           )}
         </Field>
+        {number('card_price', 'Kredi kartı fiyatı (boşsa Ayarlar\'daki yüzde uygulanır)')}
         {number('list_price', 'Liste fiyatı')}
         <Field label="Min. sipariş">
           {(id) => <input id={id} className="input" inputMode="numeric" value={form.min_order} onChange={(e) => set('min_order', Number(e.target.value) || 1)} />}

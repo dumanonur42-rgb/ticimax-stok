@@ -1,4 +1,4 @@
-import type { Product, Session, Settings } from '@shared/types'
+import type { Product, Session, Settings, PaymentType } from '@shared/types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
@@ -60,6 +60,7 @@ export interface CartLine {
   brand: string
   qty: number
   unit_price: number
+  card_price: number | null
   currency: Product['currency']
   stock: number
   min_order: number
@@ -69,12 +70,14 @@ interface CartState {
   lines: CartLine[]
   customerId: number | null
   note: string
+  payment: PaymentType
   add: (p: Product, qty?: number) => void
   setQty: (product_id: number, qty: number) => void
   remove: (product_id: number) => void
   clear: () => void
   setCustomer: (id: number | null) => void
   setNote: (n: string) => void
+  setPayment: (p: PaymentType) => void
   refreshFrom: (products: Product[]) => void
 }
 
@@ -84,6 +87,7 @@ export const useCart = create<CartState>()(
       lines: [],
       customerId: null,
       note: '',
+      payment: 'pesin',
       add: (p, qty) =>
         set((s) => {
           const step = qty ?? Math.max(1, p.min_order || 1)
@@ -99,6 +103,7 @@ export const useCart = create<CartState>()(
                 brand: p.brand,
                 qty: step,
                 unit_price: p.price,
+                card_price: p.card_price,
                 currency: p.currency,
                 stock: p.stock,
                 min_order: p.min_order || 1
@@ -114,11 +119,12 @@ export const useCart = create<CartState>()(
       clear: () => set({ lines: [], note: '' }),
       setCustomer: (customerId) => set({ customerId }),
       setNote: (note) => set({ note }),
+      setPayment: (payment) => set({ payment }),
       refreshFrom: (products) =>
         set((s) => ({
           lines: s.lines.map((l) => {
             const p = products.find((x) => x.id === l.product_id)
-            return p ? { ...l, unit_price: p.price, currency: p.currency, stock: p.stock, name: p.name, sku: p.sku } : l
+            return p ? { ...l, unit_price: p.price, card_price: p.card_price, currency: p.currency, stock: p.stock, name: p.name, sku: p.sku } : l
           })
         }))
     }),
