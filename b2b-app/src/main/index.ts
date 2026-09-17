@@ -4,6 +4,7 @@ import { getDb } from './db'
 import { registerIpc } from './ipc'
 import { dashboardStats } from './repo/dashboard'
 import { productFacets, searchProducts } from './repo/products'
+import { refreshLegacyDemo } from './repo/seed'
 import { runSelfCheck } from './selfcheck'
 import { startUpdater } from './updater'
 
@@ -141,6 +142,7 @@ if (process.argv.includes('--selfcheck')) {
   app.whenReady().then(() => {
     Menu.setApplicationMenu(null)
     getDb()
+    refreshLegacyDemo()
     registerIpc()
     createWindow()
     setImmediate(warmUp)

@@ -1,4 +1,4 @@
-import { CheckCircle2, LogIn, UserPlus } from 'lucide-react'
+import { LogIn, UserPlus } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import logo from '@/assets/logo.png'
 import { GlobeScene } from '@/components/Brand'
@@ -56,18 +56,7 @@ export function Login(): ReactNode {
         <img className="brand-logo" src={logo} alt="" />
         <div>
           <h2>Rulman stoklarına anında erişim</h2>
-          <p>Stok kodu, ölçü veya marka ile saniyeler içinde arayın; sepete ekleyin, siparişinizi oluşturun.</p>
-          <ul>
-            <li>
-              <CheckCircle2 size={18} /> 10.000+ üründe anında arama
-            </li>
-            <li>
-              <CheckCircle2 size={18} /> Muadil kodlar ve d × D × B ölçü filtresi
-            </li>
-            <li>
-              <CheckCircle2 size={18} /> Sipariş takibi ve Excel çıktısı
-            </li>
-          </ul>
+          <p>Stok kodu, ölçü veya marka ile arayın; sepete ekleyin, siparişinizi oluşturun.</p>
         </div>
         <small style={{ color: 'var(--navy-muted)' }}>yamansarulman.com</small>
         <GlobeScene size={420} />

@@ -176,7 +176,7 @@ export function registerIpc(): void {
   })
   handle('orders:setStatus', ({ id, status }) => {
     const s = requireRole()
-    if (s.user.role === 'bayi' && status !== 'iptal') throw new Error('Bayiler yalnızca iptal edebilir.')
+    if (s.user.role !== 'admin' && status !== 'iptal') throw new Error('Sipariş durumunu yalnızca yöneticiler değiştirebilir.')
     const r = setOrderStatus(id, status)
     broadcast('orders:changed')
     broadcast('products:changed')

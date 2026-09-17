@@ -1,12 +1,14 @@
 import { DEFAULT_ADMIN, DEFAULT_STAFF, getDb } from './db'
 import { searchProducts, productFacets } from './repo/products'
-import { seedDemo } from './repo/seed'
+import { refreshLegacyDemo, seedDemo } from './repo/seed'
 import { approveUser, deleteUser, listUsers, login, registerUser } from './repo/users'
 
 /** Headless sanity run: `electron . --selfcheck`. Seeds demo data, times searches, exits non-zero on failure. */
 export function runSelfCheck(): number {
   const t0 = performance.now()
   const db = getDb()
+  const refreshed = refreshLegacyDemo()
+  if (refreshed) console.log(`legacy demo catalogue regenerated: ${refreshed} products`)
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   const seeded = count < 10000 ? seedDemo(12000) : 0
   const total = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c

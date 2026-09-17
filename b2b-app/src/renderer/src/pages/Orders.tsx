@@ -181,7 +181,7 @@ export function Orders(): ReactNode {
               </button>
             )}
           </div>
-          {!isDealer && detail.status !== 'iptal' && detail.status !== 'teslim' && (
+          {isAdmin && detail.status !== 'iptal' && detail.status !== 'teslim' && (
             <div className="row wrap" role="group" aria-label="Durum değiştir">
               {FLOW.filter((s) => FLOW.indexOf(s) > FLOW.indexOf(detail.status)).map((s) => (
                 <button key={s} className="btn sm primary" onClick={() => setOrderStatus(s)}>
@@ -195,7 +195,7 @@ export function Orders(): ReactNode {
               Siparişi iptal et
             </button>
           )}
-          {!isDealer && detail.status === 'iptal' && (
+          {isAdmin && detail.status === 'iptal' && (
             <button className="btn sm" onClick={() => setOrderStatus('beklemede')}>
               İptali geri al
             </button>

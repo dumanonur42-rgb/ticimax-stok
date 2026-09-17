@@ -1,616 +1,364 @@
-import { getDb, normalize, normalizeText } from "../db";
+import { getDb, normalize, normalizeText } from '../db'
 
-const BRANDS = [
-  "SKF",
-  "FAG",
-  "NSK",
-  "NTN",
-  "KOYO",
-  "TIMKEN",
-  "ZKL",
-  "URB",
-  "NACHI",
-  "INA",
-  "KG",
-  "ORS",
-];
-const SEALS: [string, string][] = [
-  ["", "Açık"],
-  ["ZZ", "Metal Kapaklı"],
-  ["2RS", "Kauçuk Keçeli"],
-  ["2RS1", "Kauçuk Keçeli"],
-];
+// Demo catalogue for performance testing. Every SKU is a plain bearing
+// designation (no brand suffix) and unique; the brand lives in its own column.
+const BRANDS = ['SKF', 'FAG', 'NSK', 'NTN', 'KOYO', 'TIMKEN', 'ZKL', 'URB', 'NACHI', 'INA', 'KG', 'ORS']
+const PREMIUM = new Set(['SKF', 'FAG', 'TIMKEN', 'NSK', 'INA'])
 
-// series -> [prefix, list of (bore code, d, D, B)]
-const BALL_SERIES: Record<string, [number, number, number][]> = {
-  "60": [
-    [10, 26, 8],
-    [12, 28, 8],
-    [15, 32, 9],
-    [17, 35, 10],
-    [20, 42, 12],
-    [25, 47, 12],
-    [30, 55, 13],
-    [35, 62, 14],
-    [40, 68, 15],
-    [45, 75, 16],
-    [50, 80, 16],
-    [55, 90, 18],
-    [60, 95, 18],
-    [70, 110, 20],
-    [80, 125, 22],
-  ],
-  "62": [
-    [10, 30, 9],
-    [12, 32, 10],
-    [15, 35, 11],
-    [17, 40, 12],
-    [20, 47, 14],
-    [25, 52, 15],
-    [30, 62, 16],
-    [35, 72, 17],
-    [40, 80, 18],
-    [45, 85, 19],
-    [50, 90, 20],
-    [55, 100, 21],
-    [60, 110, 22],
-    [70, 125, 24],
-    [80, 140, 26],
-  ],
-  "63": [
-    [10, 35, 11],
-    [12, 37, 12],
-    [15, 42, 13],
-    [17, 47, 14],
-    [20, 52, 15],
-    [25, 62, 17],
-    [30, 72, 19],
-    [35, 80, 21],
-    [40, 90, 23],
-    [45, 100, 25],
-    [50, 110, 27],
-    [55, 120, 29],
-    [60, 130, 31],
-    [70, 150, 35],
-    [80, 170, 39],
-  ],
-  "16": [
-    [10, 28, 7],
-    [12, 30, 7],
-    [15, 35, 8],
-    [17, 40, 10],
-    [20, 42, 8],
-    [25, 47, 8],
-    [30, 55, 9],
-    [35, 62, 9],
-    [40, 68, 9],
-    [50, 80, 10],
-  ],
-  "68": [
-    [10, 19, 5],
-    [12, 21, 5],
-    [15, 24, 5],
-    [17, 26, 5],
-    [20, 32, 7],
-    [25, 37, 7],
-    [30, 42, 7],
-    [35, 47, 7],
-    [40, 52, 7],
-    [50, 65, 7],
-  ],
-  "69": [
-    [10, 22, 6],
-    [12, 24, 6],
-    [15, 28, 7],
-    [17, 30, 7],
-    [20, 37, 9],
-    [25, 42, 9],
-    [30, 47, 9],
-    [35, 55, 10],
-    [40, 62, 12],
-    [50, 72, 12],
-  ],
-};
-// angular contact (72/73) and self-aligning (12/22) share the same bore codes; only open/ C3 variants exist
-const OTHER_BALL: Record<string, [string, string, [number, number, number][]]> =
-  {
-    "72": [
-      "Eğik Bilyalı",
-      "Eğik Bilyalı Rulman",
-      [
-        [10, 30, 9],
-        [12, 32, 10],
-        [15, 35, 11],
-        [17, 40, 12],
-        [20, 47, 14],
-        [25, 52, 15],
-        [30, 62, 16],
-        [35, 72, 17],
-        [40, 80, 18],
-        [45, 85, 19],
-        [50, 90, 20],
-        [55, 100, 21],
-        [60, 110, 22],
-      ],
-    ],
-    "73": [
-      "Eğik Bilyalı",
-      "Eğik Bilyalı Rulman",
-      [
-        [10, 35, 11],
-        [12, 37, 12],
-        [15, 42, 13],
-        [17, 47, 14],
-        [20, 52, 15],
-        [25, 62, 17],
-        [30, 72, 19],
-        [35, 80, 21],
-        [40, 90, 23],
-        [45, 100, 25],
-        [50, 110, 27],
-      ],
-    ],
-    "12": [
-      "Oynak Bilyalı",
-      "Oynak Bilyalı Rulman",
-      [
-        [10, 30, 9],
-        [12, 32, 10],
-        [15, 35, 11],
-        [17, 40, 12],
-        [20, 47, 14],
-        [25, 52, 15],
-        [30, 62, 16],
-        [35, 72, 17],
-        [40, 80, 18],
-        [45, 85, 19],
-        [50, 90, 20],
-      ],
-    ],
-    "22": [
-      "Oynak Bilyalı",
-      "Oynak Bilyalı Rulman",
-      [
-        [10, 30, 14],
-        [12, 32, 14],
-        [15, 35, 14],
-        [17, 40, 16],
-        [20, 47, 18],
-        [25, 52, 18],
-        [30, 62, 20],
-        [35, 72, 23],
-        [40, 80, 23],
-        [45, 85, 23],
-        [50, 90, 23],
-      ],
-    ],
-  };
-const CLEARANCES = ["", "C3"];
-const BORE_CODE = (d: number): string =>
-  d < 20
-    ? { 10: "00", 12: "01", 15: "02", 17: "03" }[d]!
-    : String(d / 5).padStart(2, "0");
+// bore code -> d (mm)
+const BORES: [string, number][] = [
+  ['00', 10],
+  ['01', 12],
+  ['02', 15],
+  ['03', 17],
+  ...Array.from({ length: 41 }, (_, i): [string, number] => {
+    const code = i + 4
+    return [String(code).padStart(2, '0'), code * 5]
+  })
+]
 
-const TAPERED: [string, number, number, number][] = [
-  ["30204", 20, 47, 15.25],
-  ["30205", 25, 52, 16.25],
-  ["30206", 30, 62, 17.25],
-  ["30207", 35, 72, 18.25],
-  ["30208", 40, 80, 19.75],
-  ["30209", 45, 85, 20.75],
-  ["30210", 50, 90, 21.75],
-  ["30211", 55, 100, 22.75],
-  ["30212", 60, 110, 23.75],
-  ["30213", 65, 120, 24.75],
-  ["32204", 20, 47, 19.25],
-  ["32205", 25, 52, 19.25],
-  ["32206", 30, 62, 21.25],
-  ["32207", 35, 72, 24.25],
-  ["32208", 40, 80, 24.75],
-  ["32209", 45, 85, 24.75],
-  ["32210", 50, 90, 24.75],
-  ["32211", 55, 100, 26.75],
-  ["32212", 60, 110, 29.75],
-  ["32213", 65, 120, 32.75],
-  ["33205", 25, 52, 22],
-  ["33206", 30, 62, 25],
-  ["33207", 35, 72, 28],
-  ["33208", 40, 80, 32],
-  ["33209", 45, 85, 32],
-  ["33210", 50, 90, 32],
-];
-const SPHERICAL: [string, number, number, number][] = [
-  ["22205", 25, 52, 18],
-  ["22206", 30, 62, 20],
-  ["22207", 35, 72, 23],
-  ["22208", 40, 80, 23],
-  ["22209", 45, 85, 23],
-  ["22210", 50, 90, 23],
-  ["22211", 55, 100, 25],
-  ["22212", 60, 110, 28],
-  ["22213", 65, 120, 31],
-  ["22214", 70, 125, 31],
-  ["22215", 75, 130, 31],
-  ["22216", 80, 140, 33],
-  ["22308", 40, 90, 33],
-  ["22309", 45, 100, 36],
-  ["22310", 50, 110, 40],
-  ["22311", 55, 120, 43],
-  ["22312", 60, 130, 46],
-  ["22313", 65, 140, 48],
-];
-const CYL: [string, number, number, number][] = [
-  ["NU204", 20, 47, 14],
-  ["NU205", 25, 52, 15],
-  ["NU206", 30, 62, 16],
-  ["NU207", 35, 72, 17],
-  ["NU208", 40, 80, 18],
-  ["NU209", 45, 85, 19],
-  ["NU210", 50, 90, 20],
-  ["NU211", 55, 100, 21],
-  ["NU212", 60, 110, 22],
-  ["NJ205", 25, 52, 15],
-  ["NJ206", 30, 62, 16],
-  ["NJ207", 35, 72, 17],
-  ["NJ208", 40, 80, 18],
-  ["NJ209", 45, 85, 19],
-  ["NJ210", 50, 90, 20],
-  ["NUP205", 25, 52, 15],
-  ["NUP206", 30, 62, 16],
-  ["NUP207", 35, 72, 17],
-  ["N205", 25, 52, 15],
-  ["N206", 30, 62, 16],
-  ["N207", 35, 72, 17],
-  ["N208", 40, 80, 18],
-  ["NU2205", 25, 52, 18],
-  ["NU2206", 30, 62, 20],
-  ["NU2207", 35, 72, 23],
-];
-const THRUST: [string, number, number, number][] = [
-  ["51100", 10, 24, 9],
-  ["51101", 12, 26, 9],
-  ["51102", 15, 28, 9],
-  ["51103", 17, 30, 9],
-  ["51104", 20, 35, 10],
-  ["51105", 25, 42, 11],
-  ["51106", 30, 47, 11],
-  ["51107", 35, 52, 12],
-  ["51108", 40, 60, 13],
-  ["51109", 45, 65, 14],
-  ["51110", 50, 70, 14],
-  ["51111", 55, 78, 16],
-  ["51204", 20, 40, 14],
-  ["51205", 25, 47, 15],
-  ["51206", 30, 52, 16],
-  ["51207", 35, 62, 18],
-  ["51208", 40, 68, 19],
-  ["51209", 45, 73, 20],
-  ["51210", 50, 78, 22],
-];
-const INSERT: [string, number, number, number][] = [
-  ["UC201", 12, 47, 31],
-  ["UC202", 15, 47, 31],
-  ["UC203", 17, 47, 31],
-  ["UC204", 20, 47, 31],
-  ["UC205", 25, 52, 34.1],
-  ["UC206", 30, 62, 38.1],
-  ["UC207", 35, 72, 42.9],
-  ["UC208", 40, 80, 49.2],
-  ["UC209", 45, 85, 49.2],
-  ["UC210", 50, 90, 51.6],
-  ["UC211", 55, 100, 55.6],
-  ["UC212", 60, 110, 65.1],
-  ["UC213", 65, 120, 65.1],
-  ["UC214", 70, 125, 74.6],
-  ["UC215", 75, 130, 77.8],
-  ["UC216", 80, 140, 82.6],
-  ["UC217", 85, 150, 85.7],
-  ["UC218", 90, 160, 96],
-];
-const HOUSINGS: [string, string][] = [
-  ["P204", "Yatak Ayaklı P204"],
-  ["P205", "Yatak Ayaklı P205"],
-  ["P206", "Yatak Ayaklı P206"],
-  ["P207", "Yatak Ayaklı P207"],
-  ["P208", "Yatak Ayaklı P208"],
-  ["P209", "Yatak Ayaklı P209"],
-  ["P210", "Yatak Ayaklı P210"],
-  ["P211", "Yatak Ayaklı P211"],
-  ["P212", "Yatak Ayaklı P212"],
-  ["F204", "Flanşlı Yatak F204"],
-  ["F205", "Flanşlı Yatak F205"],
-  ["F206", "Flanşlı Yatak F206"],
-  ["F207", "Flanşlı Yatak F207"],
-  ["F208", "Flanşlı Yatak F208"],
-  ["FL204", "Oval Flanşlı FL204"],
-  ["FL205", "Oval Flanşlı FL205"],
-  ["FL206", "Oval Flanşlı FL206"],
-  ["FL207", "Oval Flanşlı FL207"],
-  ["T204", "Gergi Yatak T204"],
-  ["T205", "Gergi Yatak T205"],
-  ["T206", "Gergi Yatak T206"],
-  ["T207", "Gergi Yatak T207"],
-  ["T208", "Gergi Yatak T208"],
-];
-const NEEDLE: [string, number, number, number][] = [
-  ["HK0808", 8, 12, 8],
-  ["HK1010", 10, 14, 10],
-  ["HK1210", 12, 16, 10],
-  ["HK1212", 12, 16, 12],
-  ["HK1512", 15, 21, 12],
-  ["HK1612", 16, 22, 12],
-  ["HK2012", 20, 26, 12],
-  ["HK2016", 20, 26, 16],
-  ["HK2516", 25, 32, 16],
-  ["HK3016", 30, 37, 16],
-  ["HK3020", 30, 37, 20],
-  ["HK3520", 35, 42, 20],
-  ["HK4020", 40, 47, 20],
-  ["NA4900", 10, 22, 13],
-  ["NA4901", 12, 24, 13],
-  ["NA4902", 15, 28, 13],
-  ["NA4903", 17, 30, 13],
-  ["NA4904", 20, 37, 17],
-  ["NA4905", 25, 42, 17],
-  ["NA4906", 30, 47, 17],
-  ["NA4907", 35, 55, 20],
-  ["NA4908", 40, 62, 22],
-  ["NA4909", 45, 68, 22],
-  ["NA4910", 50, 72, 22],
-];
-const SEAL_SIZES: [number, number, number][] = [
-  [20, 30, 7],
-  [20, 35, 7],
-  [25, 35, 7],
-  [25, 40, 7],
-  [25, 47, 7],
-  [30, 42, 7],
-  [30, 47, 7],
-  [30, 52, 7],
-  [35, 47, 7],
-  [35, 52, 7],
-  [35, 55, 8],
-  [40, 52, 7],
-  [40, 55, 8],
-  [40, 62, 8],
-  [45, 60, 8],
-  [45, 62, 8],
-  [45, 65, 10],
-  [50, 65, 8],
-  [50, 68, 8],
-  [50, 72, 8],
-  [55, 72, 8],
-  [55, 80, 8],
-  [60, 80, 8],
-  [60, 85, 8],
-  [65, 85, 10],
-  [65, 90, 10],
-  [70, 90, 10],
-  [70, 100, 10],
-  [75, 100, 10],
-  [80, 100, 10],
-];
+// deep groove series: prefix, D = a·d + b, B = c·d + e
+const DEEP_GROOVE: [string, number, number, number, number][] = [
+  ['618', 1.17, 7.5, 0.08, 5],
+  ['619', 1.3, 9.5, 0.15, 5],
+  ['160', 1.3, 15, 0.05, 7],
+  ['60', 1.3, 15, 0.16, 8],
+  ['62', 1.7, 9.5, 0.25, 8.5],
+  ['63', 2.05, 11, 0.4, 7],
+  ['64', 2.0, 30, 0.4, 11]
+]
+// suffix, seal label, equivalence group
+const DG_SUFFIX: [string, string, string][] = [
+  ['', 'Açık', ''],
+  ['Z', 'Tek Metal Kapaklı', 'Z'],
+  ['ZZ', 'Metal Kapaklı', 'ZZ'],
+  ['2Z', 'Metal Kapaklı', 'ZZ'],
+  ['RS', 'Tek Kauçuk Keçeli', 'RS'],
+  ['2RS', 'Kauçuk Keçeli', '2RS'],
+  ['2RS1', 'Kauçuk Keçeli', '2RS'],
+  ['2RSR', 'Kauçuk Keçeli', '2RS'],
+  ['DDU', 'Kauçuk Keçeli', '2RS'],
+  ['LLU', 'Kauçuk Keçeli', '2RS'],
+  ['N', 'Açık (Segman Kanallı)', ''],
+  ['NR', 'Açık (Segmanlı)', ''],
+  ['TN9', 'Açık (Polyamid Kafes)', ''],
+  ['ZZ NR', 'Metal Kapaklı (Segmanlı)', 'ZZ'],
+  ['2RS NR', 'Kauçuk Keçeli (Segmanlı)', '2RS']
+]
+const DG_EQUIV: Record<string, string[]> = {
+  ZZ: ['ZZ', '2Z'],
+  '2RS': ['2RS', '2RS1', '2RSR', 'DDU', 'LLU']
+}
+const CLEARANCES = ['', 'C3']
+
+// prefix, type, D/B coefficients, suffix variants
+const ANGULAR: [string, number, number, number, number, string[]][] = [
+  ['72', 1.7, 9.5, 0.25, 8.5, ['B-TVP', 'B-TVP UA', 'B-MP', 'B-2RS-TVP', 'BECBP', 'BEGAP']],
+  ['73', 2.05, 11, 0.4, 7, ['B-TVP', 'B-TVP UA', 'B-MP', 'B-2RS-TVP', 'BECBP', 'BEGAP']]
+]
+const SELF_ALIGNING: [string, number, number, number, number, string[]][] = [
+  ['12', 1.7, 9.5, 0.25, 8.5, ['', 'K', 'TVH', 'K-TVH', '2RS']],
+  ['13', 2.05, 11, 0.4, 7, ['', 'K', 'TVH', 'K-TVH', '2RS']],
+  ['22', 1.7, 9.5, 0.4, 10, ['', 'K', 'TVH', 'K-TVH', '2RS']],
+  ['23', 2.05, 11, 0.6, 9, ['', 'K', 'TVH', 'K-TVH', '2RS']]
+]
+const TAPERED: [string, number, number, number, number, string[]][] = [
+  ['302', 1.7, 9.5, 0.3, 8, ['', 'J2/Q', 'A', 'X']],
+  ['303', 2.05, 11, 0.45, 8, ['', 'J2/Q', 'A', 'X']],
+  ['320', 1.45, 12, 0.3, 8, ['', 'X', 'XA']],
+  ['322', 1.7, 9.5, 0.45, 9, ['', 'J2/Q', 'A']],
+  ['323', 2.05, 11, 0.7, 10, ['', 'J2/Q', 'A']],
+  ['313', 2.05, 11, 0.45, 8, ['', 'J2/Q', 'A']]
+]
+const SPHERICAL: [string, number, number, number, number, string[]][] = [
+  ['222', 1.7, 9.5, 0.45, 10, ['', 'K', 'E', 'EK', 'CC/W33', 'CCK/W33', 'E1-XL']],
+  ['223', 2.05, 11, 0.7, 12, ['', 'K', 'E', 'EK', 'CC/W33', 'CCK/W33', 'E1-XL']],
+  ['213', 2.05, 11, 0.45, 9, ['', 'K', 'E', 'EK', 'CC/W33']],
+  ['230', 1.45, 12, 0.45, 8, ['', 'K', 'E', 'CC/W33', 'CCK/W33']],
+  ['231', 1.55, 14, 0.55, 10, ['', 'K', 'E', 'CC/W33', 'CCK/W33']],
+  ['232', 1.7, 9.5, 0.65, 12, ['', 'K', 'E', 'CC/W33', 'CCK/W33']],
+  ['240', 1.45, 12, 0.6, 10, ['', 'K', 'CC/W33', 'CCK/W33']]
+]
+const CYL_TYPES = ['NU', 'NJ', 'N', 'NUP', 'NF']
+const CYL: [string, number, number, number, number, string[]][] = [
+  ['2', 1.7, 9.5, 0.25, 8.5, ['', 'E', 'M', 'ECP', 'ECM']],
+  ['3', 2.05, 11, 0.4, 7, ['', 'E', 'M', 'ECP', 'ECM']],
+  ['22', 1.7, 9.5, 0.4, 10, ['', 'E', 'ECP']],
+  ['23', 2.05, 11, 0.6, 9, ['', 'E', 'ECP']],
+  ['10', 1.3, 15, 0.16, 8, ['', 'M', 'ECP']]
+]
+const THRUST: [string, number, number, number, number, string[]][] = [
+  ['511', 1.5, 10, 0.2, 7, ['']],
+  ['512', 1.7, 12, 0.3, 8, ['']],
+  ['513', 2.0, 14, 0.45, 9, ['']],
+  ['514', 2.3, 18, 0.6, 12, ['']],
+  ['532', 1.7, 12, 0.35, 9, ['U']]
+]
+const INSERT_TYPES: [string, string][] = [
+  ['UC', 'Yatak Rulmanı (UC)'],
+  ['UK', 'Yatak Rulmanı (UK, konik delik)'],
+  ['SA', 'Yatak Rulmanı (SA)'],
+  ['SB', 'Yatak Rulmanı (SB)'],
+  ['UCX', 'Yatak Rulmanı (UCX)']
+]
+const HOUSING_TYPES: [string, string][] = [
+  ['UCP', 'Ayaklı Yatak'],
+  ['UCF', 'Kare Flanşlı Yatak'],
+  ['UCFL', 'Oval Flanşlı Yatak'],
+  ['UCT', 'Gergi Yatak'],
+  ['UCPA', 'Ayaklı Yatak (Dar)'],
+  ['UCFC', 'Yuvarlak Flanşlı Yatak'],
+  ['UCPH', 'Ayaklı Yatak (Yüksek)'],
+  ['UCFB', 'Üç Delikli Flanşlı Yatak']
+]
+const HOUSING_ONLY: [string, string][] = [
+  ['P', 'Ayaklı Yatak Gövdesi'],
+  ['F', 'Kare Flanşlı Gövde'],
+  ['FL', 'Oval Flanşlı Gövde'],
+  ['T', 'Gergi Gövde'],
+  ['SN', 'Yatak Gövdesi SN']
+]
+const NEEDLE_TYPES: [string, string][] = [
+  ['HK', 'İğneli Rulman (Çekme Kovanlı)'],
+  ['BK', 'İğneli Rulman (Kapalı Kovanlı)'],
+  ['HK-2RS', 'İğneli Rulman (Keçeli)'],
+  ['NK', 'İğneli Rulman (İç Bileziksiz)'],
+  ['NKI', 'İğneli Rulman (İç Bilezikli)'],
+  ['NA49', 'İğneli Rulman NA49'],
+  ['NA69', 'İğneli Rulman NA69'],
+  ['RNA49', 'İğneli Rulman RNA49']
+]
+const SEAL_TYPES = ['TC', 'SC', 'TB', 'TG', 'VC']
 
 interface Row {
-  sku: string;
-  name: string;
-  brand: string;
-  category: string;
-  type: string;
-  seal: string;
-  d_inner: number | null;
-  d_outer: number | null;
-  width: number | null;
-  equivalents: string;
+  sku: string
+  name: string
+  brand: string
+  category: string
+  type: string
+  seal: string
+  d_inner: number | null
+  d_outer: number | null
+  width: number | null
+  equivalents: string
 }
 
 function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
+  let a = seed >>> 0
   return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
+    a = (a + 0x6d2b79f5) >>> 0
+    let t = a
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
 }
 
-export function generateDemoCatalog(target: number): Row[] {
-  const rows: Row[] = [];
-  const brandsFor = (n: number): string[] => BRANDS.slice(0, n);
+function hash(s: string): number {
+  let h = 2166136261
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619)
+  return h >>> 0
+}
 
-  for (const [series, list] of Object.entries(BALL_SERIES)) {
-    for (const [d, D, B] of list) {
-      const base = `${series}${BORE_CODE(d)}`;
-      for (const [suffix, sealName] of SEALS) {
-        for (const clearance of CLEARANCES) {
-          for (const brand of brandsFor(8)) {
-            const sku = `${suffix ? `${base}-${suffix}` : base}${clearance ? ` ${clearance}` : ""}`;
-            rows.push({
-              sku: `${sku} ${brand}`,
-              name: `${sku} ${sealName} Sabit Bilyalı Rulman ${d}x${D}x${B}${clearance ? " (C3 boşluklu)" : ""}`,
-              brand,
-              category: "Sabit Bilyalı Rulmanlar",
-              type: "Sabit Bilyalı",
-              seal: suffix || "Açık",
-              d_inner: d,
-              d_outer: D,
-              width: B,
-              equivalents:
-                suffix === "2RS"
-                  ? `${base}-2RS1, ${base} DDU, ${base} LLU`
-                  : suffix === "ZZ"
-                    ? `${base}-2Z, ${base} Z`
-                    : "",
-            });
-          }
-        }
-      }
-    }
+const dim = (d: number, a: number, b: number): number => Math.round(a * d + b)
+
+export function generateDemoCatalog(target: number): Row[] {
+  const rows: Row[] = []
+  const seen = new Set<string>()
+  // one brand per designation, chosen deterministically (premium brands more often)
+  const brandFor = (sku: string, pool: string[] = BRANDS): string => {
+    const h = hash(sku)
+    const weighted = h % 3 === 0 ? pool : pool.filter((b) => PREMIUM.has(b))
+    const list = weighted.length ? weighted : pool
+    return list[(h >>> 4) % list.length]
   }
-  for (const [series, [type, label, list]] of Object.entries(OTHER_BALL)) {
-    for (const [d, D, B] of list)
-      for (const clearance of CLEARANCES)
-        for (const brand of brandsFor(6)) {
-          const sku = `${series}${BORE_CODE(d)}${series.startsWith("7") ? "-B-TVP" : ""}${clearance ? ` ${clearance}` : ""}`;
-          rows.push({
-            sku: `${sku} ${brand}`,
-            name: `${sku} ${label} ${d}x${D}x${B}`,
-            brand,
-            category: `${type} Rulmanlar`,
+  const add = (r: Omit<Row, 'brand'> & { brand?: string }): void => {
+    const k = normalize(r.sku)
+    if (seen.has(k)) return
+    seen.add(k)
+    rows.push({ ...r, brand: r.brand ?? brandFor(r.sku) })
+  }
+  const family = (list: [string, number, number, number, number, string[]][], category: string, type: string, label: string, sep = ' '): void => {
+    for (const [prefix, a, b, c, e, variants] of list)
+      for (const [code, d] of BORES)
+        for (const v of variants)
+          add({
+            sku: `${prefix}${code}${v ? sep + v : ''}`,
+            name: `${prefix}${code}${v ? sep + v : ''} ${label} ${d}x${dim(d, a, b)}x${dim(d, c, e)}`,
+            category,
             type,
-            seal: "",
+            seal: '',
+            d_inner: d,
+            d_outer: dim(d, a, b),
+            width: dim(d, c, e),
+            equivalents: ''
+          })
+  }
+
+  for (const [prefix, a, b, c, e] of DEEP_GROOVE)
+    for (const [code, d] of BORES) {
+      const base = `${prefix}${code}`
+      for (const [suffix, sealName, group] of DG_SUFFIX)
+        for (const clearance of CLEARANCES) {
+          const sku = `${suffix ? `${base}-${suffix}` : base}${clearance ? ` ${clearance}` : ''}`
+          const eq = (DG_EQUIV[group] ?? [])
+            .filter((s) => s !== suffix)
+            .map((s) => `${base}-${s}${clearance ? ` ${clearance}` : ''}`)
+            .join(', ')
+          add({
+            sku,
+            name: `${sku} ${sealName} Sabit Bilyalı Rulman ${d}x${dim(d, a, b)}x${dim(d, c, e)}${clearance ? ' (C3 boşluklu)' : ''}`,
+            category: 'Sabit Bilyalı Rulmanlar',
+            type: 'Sabit Bilyalı',
+            seal: suffix.split(' ')[0] || 'Açık',
+            d_inner: d,
+            d_outer: dim(d, a, b),
+            width: dim(d, c, e),
+            equivalents: eq
+          })
+        }
+    }
+
+  family(ANGULAR, 'Eğik Bilyalı Rulmanlar', 'Eğik Bilyalı', 'Eğik Bilyalı Rulman', '-')
+  family(SELF_ALIGNING, 'Oynak Bilyalı Rulmanlar', 'Oynak Bilyalı', 'Oynak Bilyalı Rulman', '-')
+  family(TAPERED, 'Konik Makaralı Rulmanlar', 'Konik Makaralı', 'Konik Makaralı Rulman')
+  family(SPHERICAL, 'Oynak Makaralı Rulmanlar', 'Oynak Makaralı', 'Oynak Makaralı Rulman')
+  for (const t of CYL_TYPES)
+    family(
+      CYL.map(([p, a, b, c, e, v]): [string, number, number, number, number, string[]] => [`${t}${p}`, a, b, c, e, v]),
+      'Silindirik Makaralı Rulmanlar',
+      'Silindirik Makaralı',
+      'Silindirik Makaralı Rulman'
+    )
+  family(THRUST, 'Eksenel Bilyalı Rulmanlar', 'Eksenel Bilyalı', 'Eksenel Bilyalı Rulman')
+
+  const insertBores = BORES.slice(1, 30)
+  for (const [prefix, label] of INSERT_TYPES)
+    for (const [code, d] of insertBores)
+      add({
+        sku: `${prefix}2${code}`,
+        name: `${prefix}2${code} ${label} ${d}x${dim(d, 1.7, 9.5)}x${dim(d, 0.55, 14)}`,
+        category: 'Yatak Rulmanları',
+        type: label,
+        seal: '',
+        d_inner: d,
+        d_outer: dim(d, 1.7, 9.5),
+        width: dim(d, 0.55, 14),
+        equivalents: ''
+      })
+  for (const [prefix, label] of ['UC', 'UK'] as const)
+    for (const [code, d] of insertBores)
+      add({
+        sku: `${prefix}3${code}`,
+        name: `${prefix}3${code} Yatak Rulmanı ${d}x${dim(d, 2.05, 11)}x${dim(d, 0.7, 16)}`,
+        category: 'Yatak Rulmanları',
+        type: `Yatak Rulmanı (${label})`,
+        seal: '',
+        d_inner: d,
+        d_outer: dim(d, 2.05, 11),
+        width: dim(d, 0.7, 16),
+        equivalents: ''
+      })
+  const housingBrands = ['KG', 'ORS', 'ASAHI', 'FYH', 'NTN', 'SKF']
+  for (const [prefix, label] of HOUSING_TYPES)
+    for (const series of ['2', '3'])
+      for (const [code, d] of insertBores)
+        add({
+          sku: `${prefix}${series}${code}`,
+          name: `${prefix}${series}${code} ${label} (Ø${d})`,
+          brand: brandFor(`${prefix}${series}${code}`, housingBrands),
+          category: 'Yataklı Rulmanlar',
+          type: label,
+          seal: '',
+          d_inner: d,
+          d_outer: null,
+          width: null,
+          equivalents: ''
+        })
+  for (const [prefix, label] of HOUSING_ONLY)
+    for (const series of ['2', '3'])
+      for (const [code] of insertBores)
+        add({
+          sku: `${prefix}${series}${code}`,
+          name: `${prefix}${series}${code} ${label}`,
+          brand: brandFor(`${prefix}${series}${code}`, housingBrands),
+          category: 'Rulman Yatakları',
+          type: 'Yatak',
+          seal: '',
+          d_inner: null,
+          d_outer: null,
+          width: null,
+          equivalents: ''
+        })
+
+  const needleD = [6, 8, 10, 12, 14, 15, 16, 17, 18, 20, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 50, 55, 60, 65, 70, 75, 80]
+  for (const [prefix, label] of NEEDLE_TYPES)
+    for (const d of needleD)
+      for (const B of prefix.startsWith('NA') || prefix.startsWith('RNA') ? [0] : [8, 10, 12, 16, 20]) {
+        const dd = String(d).padStart(2, '0')
+        const isNA = B === 0
+        const width = isNA ? dim(d, 0.25, 10) : B
+        const outer = isNA ? dim(d, 1.55, 10) : d + (d < 20 ? 4 : d < 40 ? 7 : 10)
+        const [head, tail] = prefix.split('-')
+        const sku = isNA ? `${prefix}${dd}` : `${head}${dd}${String(B).padStart(2, '0')}${tail ? `-${tail}` : ''}`
+        add({
+          sku,
+          name: `${sku} ${label} ${d}x${outer}x${width}`,
+          category: 'İğneli Rulmanlar',
+          type: 'İğneli',
+          seal: tail ?? '',
+          d_inner: d,
+          d_outer: outer,
+          width,
+          equivalents: ''
+        })
+      }
+
+  const sealBrands = ['KOR', 'CFW', 'NAK', 'SOG', 'KG']
+  const sealD = Array.from({ length: 30 }, (_, i) => 10 + i * 5)
+  for (const d of sealD)
+    for (const extra of [10, 12, 15, 20, 25])
+      for (const B of d < 30 ? [7] : d < 60 ? [7, 8, 10] : [8, 10, 12])
+        for (const t of SEAL_TYPES) {
+          const D = d + extra
+          const sku = `${t} ${d}x${D}x${B}`
+          add({
+            sku,
+            name: `Yağ Keçesi ${sku}`,
+            brand: brandFor(sku, sealBrands),
+            category: 'Keçeler',
+            type: 'Yağ Keçesi',
+            seal: t,
             d_inner: d,
             d_outer: D,
             width: B,
-            equivalents: "",
-          });
+            equivalents: ''
+          })
         }
-  }
-  const push = (
-    list: [string, number, number, number][],
-    cat: string,
-    type: string,
-    names: string,
-    n: number,
-  ): void => {
-    for (const [code, d, D, B] of list)
-      for (const brand of brandsFor(n))
-        rows.push({
-          sku: `${code} ${brand}`,
-          name: `${code} ${names} ${d}x${D}x${B}`,
-          brand,
-          category: cat,
-          type,
-          seal: "",
-          d_inner: d,
-          d_outer: D,
-          width: B,
-          equivalents: "",
-        });
-  };
-  push(
-    TAPERED,
-    "Konik Makaralı Rulmanlar",
-    "Konik Makaralı",
-    "Konik Makaralı Rulman",
-    6,
-  );
-  push(
-    SPHERICAL,
-    "Oynak Makaralı Rulmanlar",
-    "Oynak Makaralı",
-    "Oynak Makaralı Rulman",
-    5,
-  );
-  push(
-    CYL,
-    "Silindirik Makaralı Rulmanlar",
-    "Silindirik Makaralı",
-    "Silindirik Makaralı Rulman",
-    5,
-  );
-  push(
-    THRUST,
-    "Eksenel Bilyalı Rulmanlar",
-    "Eksenel Bilyalı",
-    "Eksenel Bilyalı Rulman",
-    4,
-  );
-  push(INSERT, "Yatak Rulmanları", "Yatak Rulmanı (UC)", "Yatak Rulmanı", 5);
-  push(NEEDLE, "İğneli Rulmanlar", "İğneli", "İğneli Rulman", 4);
-  for (const [code, name] of HOUSINGS)
-    for (const brand of ["KG", "ORS", "ASAHI", "FYH", "NTN"])
-      rows.push({
-        sku: `${code} ${brand}`,
-        name: `${name} ${brand}`,
-        brand,
-        category: "Rulman Yatakları",
-        type: "Yatak",
-        seal: "",
-        d_inner: null,
-        d_outer: null,
-        width: null,
-        equivalents: "",
-      });
-  for (const [d, D, B] of SEAL_SIZES)
-    for (const brand of ["KOR", "CFW", "NAK", "SOG"])
-      for (const t of ["TC", "SC", "TB"])
-        rows.push({
-          sku: `${t} ${d}x${D}x${B} ${brand}`,
-          name: `Yağ Keçesi ${t} ${d}x${D}x${B}`,
-          brand,
-          category: "Keçeler",
-          type: "Yağ Keçesi",
-          seal: t,
-          d_inner: d,
-          d_outer: D,
-          width: B,
-          equivalents: "",
-        });
 
-  const seen = new Set<string>();
-  const unique = rows.filter((r) => {
-    const k = normalize(r.sku);
-    if (seen.has(k)) return false;
-    seen.add(k);
-    return true;
-  });
-  if (unique.length >= target) return unique.slice(0, target);
-  // pad with extra brand variants to reach the requested size
-  const extra: Row[] = [];
-  const extraBrands = [
-    "CRAFT",
-    "KBS",
-    "EZO",
-    "FBJ",
-    "PFI",
-    "KYK",
-    "MTK",
-    "ZVL",
-  ];
-  outer: for (const brand of extraBrands) {
-    for (const r of unique) {
-      if (r.category === "Rulman Yatakları" || r.category === "Keçeler")
-        continue;
-      const sku = r.sku.replace(/ [A-Z]+$/, ` ${brand}`);
-      const k = normalize(sku);
-      if (seen.has(k)) continue;
-      seen.add(k);
-      extra.push({ ...r, sku, brand });
-      if (unique.length + extra.length >= target) break outer;
-    }
-  }
-  return [...unique, ...extra];
+  // interleave categories so any prefix of the list is still a mixed catalogue
+  rows.sort((x, y) => hash(x.sku) - hash(y.sku))
+  return rows.slice(0, target)
 }
 
 export function seedDemo(target: number): number {
-  const db = getDb();
-  const rand = mulberry32(42);
-  const rows = generateDemoCatalog(target);
+  const db = getDb()
+  const rand = mulberry32(42)
+  const rows = generateDemoCatalog(target)
   const ins = db.prepare(
     `INSERT OR IGNORE INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
      price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
      VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,'Adet',@price,'TRY',
-     @list_price,@card_price,@min_order,@shelf,'','','',@equivalents,1)`,
-  );
+     @list_price,@card_price,@min_order,@shelf,'','','',@equivalents,1)`
+  )
   const tx = db.transaction(() => {
-    let n = 0;
+    let n = 0
     for (const r of rows) {
-      const size = (r.d_outer ?? 60) * (r.width ?? 12);
-      const premium = ["SKF", "FAG", "TIMKEN", "NSK", "INA"].includes(r.brand)
-        ? 2.2
-        : 1;
-      const price =
-        Math.round(size * 0.12 * premium * (0.8 + rand() * 0.6) * 100) / 100 +
-        15;
-      const stockRoll = rand();
-      const stock =
-        stockRoll < 0.15
-          ? 0
-          : stockRoll < 0.3
-            ? Math.floor(rand() * 5) + 1
-            : Math.floor(rand() * 400) + 5;
+      const size = (r.d_outer ?? 60) * (r.width ?? 12)
+      const premium = ['SKF', 'FAG', 'TIMKEN', 'NSK', 'INA'].includes(r.brand) ? 2.2 : 1
+      const price = Math.round(size * 0.12 * premium * (0.8 + rand() * 0.6) * 100) / 100 + 15
+      const stockRoll = rand()
+      const stock = stockRoll < 0.15 ? 0 : stockRoll < 0.3 ? Math.floor(rand() * 5) + 1 : Math.floor(rand() * 400) + 5
       const res = ins.run({
         ...r,
         sku_norm: normalize(r.sku),
@@ -620,48 +368,34 @@ export function seedDemo(target: number): number {
         list_price: Math.round(price * 1.35 * 100) / 100,
         card_price: Math.round(price * 1.08 * 100) / 100,
         min_order: 1,
-        shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`,
-      });
-      n += res.changes;
+        shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`
+      })
+      n += res.changes
     }
-    return n;
-  });
-  const n = tx();
-  db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')");
-  if (
-    (db.prepare("SELECT COUNT(*) c FROM customers").get() as { c: number })
-      .c === 0
-  ) {
-    const cIns = db.prepare(
-      `INSERT INTO customers(code, name, contact, phone, city, discount_pct, currency) VALUES (?,?,?,?,?,?,?)`,
-    );
-    cIns.run(
-      "B0001",
-      "Demir Makina San. Tic. Ltd. Şti.",
-      "Ahmet Demir",
-      "0532 000 00 01",
-      "İstanbul",
-      10,
-      "TRY",
-    );
-    cIns.run(
-      "B0002",
-      "Anadolu Hırdavat",
-      "Mehmet Kaya",
-      "0533 000 00 02",
-      "Ankara",
-      5,
-      "TRY",
-    );
-    cIns.run(
-      "B0003",
-      "Ege Endüstri Malzemeleri",
-      "Ayşe Yılmaz",
-      "0534 000 00 03",
-      "İzmir",
-      15,
-      "TRY",
-    );
+    return n
+  })
+  const n = tx()
+  db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
+  if ((db.prepare('SELECT COUNT(*) c FROM customers').get() as { c: number }).c === 0) {
+    const cIns = db.prepare(`INSERT INTO customers(code, name, contact, phone, city, discount_pct, currency) VALUES (?,?,?,?,?,?,?)`)
+    cIns.run('B0001', 'Demir Makina San. Tic. Ltd. Şti.', 'Ahmet Demir', '0532 000 00 01', 'İstanbul', 10, 'TRY')
+    cIns.run('B0002', 'Anadolu Hırdavat', 'Mehmet Kaya', '0533 000 00 02', 'Ankara', 5, 'TRY')
+    cIns.run('B0003', 'Ege Endüstri Malzemeleri', 'Ayşe Yılmaz', '0534 000 00 03', 'İzmir', 15, 'TRY')
   }
-  return n;
+  return n
+}
+
+/**
+ * Earlier demo builds stored the brand inside the SKU ("6205-2RS SKF"). When a database holds
+ * nothing but such rows and no real import has ever happened, regenerate the demo catalogue.
+ */
+export function refreshLegacyDemo(): number {
+  const db = getDb()
+  const c = (sql: string): number => (db.prepare(sql).get() as { c: number }).c
+  const total = c('SELECT COUNT(*) c FROM products')
+  if (total === 0 || c('SELECT COUNT(*) c FROM import_logs') > 0) return 0
+  const legacy = c("SELECT COUNT(*) c FROM products WHERE brand <> '' AND substr(sku, -length(brand) - 1) = ' ' || brand")
+  if (legacy !== total) return 0
+  db.exec('DELETE FROM products')
+  return seedDemo(12000)
 }

@@ -16,7 +16,9 @@ export function Dashboard(): ReactNode {
   const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
 
   const load = (): void => {
-    api('dashboard:stats', undefined).then(setStats).catch((e) => toast(e.message, 'error'))
+    api('dashboard:stats', undefined)
+      .then(setStats)
+      .catch((e) => toast(e.message, 'error'))
   }
   useEffect(() => {
     load()
@@ -110,23 +112,28 @@ export function Dashboard(): ReactNode {
         {isAdmin && stats.pendingUsers > 0 && (
           <Stat icon={<UserCheck size={18} aria-hidden />} label="Onay bekleyen kayıt" value={num(stats.pendingUsers)} onClick={() => go('settings', SETTINGS_TAB_USERS)} />
         )}
-        <div className="card stat">
-          <span className="muted label">Son stok aktarımı</span>
-          {stats.lastImport ? (
-            <span className="small">
-              <strong>{date(stats.lastImport.created_at)}</strong>
-              <br />
-              {stats.lastImport.filename} · +{stats.lastImport.inserted} / ~{stats.lastImport.updated}
-            </span>
-          ) : (
-            <span className="small muted">Henüz aktarım yapılmadı</span>
-          )}
-        </div>
+        {isAdmin && (
+          <div className="card stat">
+            <span className="muted label">Son stok aktarımı</span>
+            {stats.lastImport ? (
+              <span className="small">
+                <strong>{date(stats.lastImport.created_at)}</strong>
+                <br />
+                {stats.lastImport.filename} · +{stats.lastImport.inserted} / ~{stats.lastImport.updated}
+              </span>
+            ) : (
+              <span className="small muted">Henüz aktarım yapılmadı</span>
+            )}
+          </div>
+        )}
       </div>
 
       {stats.productCount === 0 && (
         <div className="card">
-          <Empty title="Henüz ürün yok" hint="Stok listenizi Excel/CSV olarak aktarın veya denemek için örnek rulman kataloğunu yükleyin.">
+          <Empty
+            title="Henüz ürün yok"
+            hint={isAdmin ? 'Stok listenizi Excel/CSV olarak aktarın veya denemek için örnek rulman kataloğunu yükleyin.' : 'Ürünler yüklendiğinde burada görünecek.'}
+          >
             <div className="row" style={{ justifyContent: 'center' }}>
               {isAdmin && (
                 <button className="btn primary" onClick={() => go('import')}>

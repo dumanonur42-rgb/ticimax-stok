@@ -90,7 +90,9 @@ export function App(): ReactNode {
       </>
     )
 
-  const Page = PAGES[page]
+  const role = session.user.role
+  const allowed = role === 'admin' || (page !== 'import' && page !== 'customers')
+  const Page = PAGES[allowed ? page : 'dashboard']
   return (
     <>
       <Shell>
