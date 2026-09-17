@@ -2,6 +2,8 @@ import { app, BrowserWindow, Menu, shell } from 'electron'
 import { join } from 'node:path'
 import { getDb } from './db'
 import { registerIpc } from './ipc'
+import { dashboardStats } from './repo/dashboard'
+import { productFacets, searchProducts } from './repo/products'
 import { runSelfCheck } from './selfcheck'
 
 const isDev = !app.isPackaged && !!process.env.ELECTRON_RENDERER_URL
@@ -16,6 +18,20 @@ function load(win: BrowserWindow, query?: Record<string, string>): void {
     win.loadURL(url.toString())
   } else {
     win.loadFile(join(__dirname, '../renderer/index.html'), { query })
+  }
+}
+
+/** Runs the first catalog/dashboard queries while the splash is on screen so SQLite's page cache and FTS index are hot. */
+function warmUp(): void {
+  try {
+    const db = getDb()
+    searchProducts({ limit: 200 })
+    productFacets({})
+    searchProducts({ q: '6205 2rs', limit: 50 })
+    dashboardStats()
+    db.pragma('optimize')
+  } catch (e) {
+    console.error('warm-up failed', e)
   }
 }
 
@@ -126,6 +142,7 @@ if (process.argv.includes('--selfcheck')) {
     getDb()
     registerIpc()
     createWindow()
+    setImmediate(warmUp)
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })

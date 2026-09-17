@@ -1104,10 +1104,11 @@ dialog.modal::backdrop {
   }
 }
 
-/* globe with a 3D ball-bearing ring spinning around it */
+/* globe with a 3D deep-groove ball bearing spinning around it */
 .globe-scene {
   --size: 220px;
-  --tilt: 26deg;
+  --tilt: -36deg;
+  --spin: 9s;
   width: var(--size);
   height: var(--size);
   position: relative;
@@ -1118,23 +1119,24 @@ dialog.modal::backdrop {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transform: rotateX(var(--tilt)) rotateZ(-8deg);
+  transform: rotateZ(-18deg) rotateX(var(--tilt));
 }
 .globe-scene .globe {
   position: absolute;
-  inset: 11%;
+  inset: 10%;
   border-radius: 50%;
   background: url('./assets/globe.png') center / cover no-repeat;
-  transform: rotateZ(8deg) rotateX(calc(var(--tilt) * -1));
-  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5));
+  transform: rotateX(calc(var(--tilt) * -1)) translateZ(calc(var(--size) * 0.1)) rotateZ(18deg);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
 }
 .globe-scene .ring {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  animation: ring-spin 7s linear infinite;
+  animation: ring-spin var(--spin) linear infinite;
 }
-.globe-scene .ring > div {
+.globe-scene .ring > div,
+.globe-scene .ball-pos {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
@@ -1147,33 +1149,15 @@ dialog.modal::backdrop {
   margin-top: calc(var(--h) / -2);
   translate: -50% 0;
   backface-visibility: hidden;
-  display: grid;
-  place-items: center;
 }
 .globe-scene .race.outer {
-  background: linear-gradient(
-    to bottom,
-    #f6f7f9 0%,
-    #cfd5dc 8%,
-    #8d97a3 22%,
-    #4a535e 34%,
-    #2a3139 50%,
-    #4a535e 66%,
-    #8d97a3 78%,
-    #cfd5dc 92%,
-    #f6f7f9 100%
-  );
-  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.25);
+  background: linear-gradient(to bottom, #f4f6f8 0%, #b8c0c9 14%, #6b7580 40%, #444c55 58%, #8a939d 80%, #d5dae0 94%, #7d868f 100%);
+}
+.globe-scene .race.groove {
+  background: linear-gradient(to bottom, #3a4149, #1b2026 60%, #2a3037);
 }
 .globe-scene .race.inner {
-  background: linear-gradient(to bottom, #7c8692, #3b434c 50%, #7c8692);
-}
-.globe-scene .ball {
-  width: calc(var(--h) * 0.56);
-  height: calc(var(--h) * 0.56);
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #e2e6ea 22%, #9aa4af 55%, #59636e 80%, #3a424b 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to bottom, #6a737d, #2b3239 50%, #505861);
 }
 .globe-scene .rim {
   position: absolute;
@@ -1183,18 +1167,65 @@ dialog.modal::backdrop {
   height: calc(var(--r) * 2);
   margin: calc(var(--r) * -1);
   border-radius: 50%;
-  background: radial-gradient(circle, transparent calc(var(--ri) - 0.5px), #aeb6bf var(--ri), #dfe4e9 calc(var(--ri) + (var(--r) - var(--ri)) * 0.5), #8b949f var(--r), transparent calc(var(--r) + 0.5px));
 }
 .globe-scene .rim.top {
   transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+  background:
+    radial-gradient(circle, transparent calc(var(--ri) + var(--tri) - 1.5px), rgba(0, 0, 0, 0.45) calc(var(--ri) + var(--tri)), transparent calc(var(--ri) + var(--tri) + 1.5px)),
+    radial-gradient(circle, transparent calc(var(--r) - var(--tro) - 1.5px), rgba(0, 0, 0, 0.45) calc(var(--r) - var(--tro)), transparent calc(var(--r) - var(--tro) + 1.5px)),
+    conic-gradient(from 30deg, #ffffff, #aeb6bf 14%, #f4f6f8 30%, #939ca6 47%, #ffffff 60%, #a4acb5 76%, #eef1f4 90%, #ffffff);
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent calc(var(--ri) - 0.5px),
+    #000 var(--ri),
+    #000 calc(var(--ri) + var(--tri)),
+    transparent calc(var(--ri) + var(--tri) + 0.5px),
+    transparent calc(var(--r) - var(--tro) - 0.5px),
+    #000 calc(var(--r) - var(--tro)),
+    #000 var(--r),
+    transparent calc(var(--r) + 0.5px)
+  );
+  mask: radial-gradient(
+    circle,
+    transparent calc(var(--ri) - 0.5px),
+    #000 var(--ri),
+    #000 calc(var(--ri) + var(--tri)),
+    transparent calc(var(--ri) + var(--tri) + 0.5px),
+    transparent calc(var(--r) - var(--tro) - 0.5px),
+    #000 calc(var(--r) - var(--tro)),
+    #000 var(--r),
+    transparent calc(var(--r) + 0.5px)
+  );
 }
 .globe-scene .rim.bottom {
   transform: rotateX(90deg) translateZ(calc(var(--h) / -2));
-  filter: brightness(0.6);
+  background: radial-gradient(circle, transparent calc(var(--ri) - 0.5px), #0e1216 var(--ri), #1f252c 55%, #0e1216 var(--r), transparent calc(var(--r) + 0.5px));
+}
+.globe-scene .ball {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--d);
+  height: var(--d);
+  margin: calc(var(--d) / -2);
+  margin-top: calc(var(--d) / -2 - var(--h) / 2 + var(--d) * 0.12);
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #ffffff 0%, #f1f3f5 12%, #bcc4cc 38%, #737d88 64%, #3f474f 84%, #6f7882 100%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transform: rotateX(calc(var(--tilt) * -1));
+  animation: ball-face var(--spin) linear infinite;
 }
 @keyframes ring-spin {
   to {
     transform: rotateY(360deg);
+  }
+}
+@keyframes ball-face {
+  from {
+    transform: rotateY(0deg) rotateX(calc(var(--tilt) * -1));
+  }
+  to {
+    transform: rotateY(-360deg) rotateX(calc(var(--tilt) * -1));
   }
 }
 @keyframes globe-in {
