@@ -1108,26 +1108,37 @@ dialog.modal::backdrop {
 .globe-scene {
   --size: 220px;
   --tilt: -36deg;
+  --roll: -18deg;
   --spin: 9s;
   width: var(--size);
   height: var(--size);
   position: relative;
-  perspective: calc(var(--size) * 4);
   animation: globe-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.globe-scene .layer {
+  position: absolute;
+  inset: 0;
+  perspective: calc(var(--size) * 4);
+}
+/* the ring's major axis (rolled by --roll = -18deg) splits it into the half behind and the half in front of the globe */
+.globe-scene .layer.back {
+  clip-path: polygon(-100% 98.7%, 200% 1.3%, 200% -200%, -100% -200%);
+}
+.globe-scene .layer.front {
+  clip-path: polygon(-100% 98.7%, 200% 1.3%, 200% 300%, -100% 300%);
 }
 .globe-scene .tilt {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transform: rotateZ(-18deg) rotateX(var(--tilt));
+  transform: rotateZ(var(--roll)) rotateX(var(--tilt));
 }
 .globe-scene .globe {
   position: absolute;
-  inset: 10%;
+  inset: 12%;
   border-radius: 50%;
   background: url('./assets/globe.png') center / cover no-repeat;
-  transform: rotateX(calc(var(--tilt) * -1)) translateZ(calc(var(--size) * 0.1)) rotateZ(18deg);
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
 }
 .globe-scene .ring {
   position: absolute;
