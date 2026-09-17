@@ -1,0 +1,204 @@
+export type Currency = 'TRY' | 'USD' | 'EUR'
+
+export interface Product {
+  id: number
+  sku: string
+  name: string
+  brand: string
+  category: string
+  type: string
+  seal: string
+  d_inner: number | null
+  d_outer: number | null
+  width: number | null
+  stock: number
+  unit: string
+  price: number
+  currency: Currency
+  list_price: number | null
+  min_order: number
+  shelf: string
+  barcode: string
+  image: string
+  description: string
+  equivalents: string
+  active: number
+  updated_at: string
+}
+
+export type ProductInput = Omit<Product, 'id' | 'updated_at'>
+
+export interface ProductFilter {
+  q?: string
+  brand?: string[]
+  category?: string[]
+  type?: string[]
+  seal?: string[]
+  inStock?: boolean
+  dInner?: [number | null, number | null]
+  dOuter?: [number | null, number | null]
+  width?: [number | null, number | null]
+  sort?: 'relevance' | 'sku' | 'name' | 'stock' | 'price' | 'updated'
+  sortDir?: 'asc' | 'desc'
+  offset?: number
+  limit?: number
+}
+
+export interface ProductPage {
+  items: Product[]
+  total: number
+}
+
+export interface FacetValue {
+  value: string
+  count: number
+}
+
+export interface Facets {
+  brand: FacetValue[]
+  category: FacetValue[]
+  type: FacetValue[]
+  seal: FacetValue[]
+}
+
+export interface Customer {
+  id: number
+  code: string
+  name: string
+  contact: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  tax_no: string
+  tax_office: string
+  discount_pct: number
+  currency: Currency
+  notes: string
+  active: number
+  created_at: string
+}
+export type CustomerInput = Omit<Customer, 'id' | 'created_at'>
+
+export type OrderStatus = 'taslak' | 'beklemede' | 'onaylandi' | 'hazirlaniyor' | 'teslim' | 'iptal'
+
+export interface OrderItem {
+  id: number
+  order_id: number
+  product_id: number | null
+  sku: string
+  name: string
+  qty: number
+  unit_price: number
+  discount_pct: number
+  line_total: number
+}
+
+export interface Order {
+  id: number
+  order_no: string
+  customer_id: number | null
+  customer_name: string
+  status: OrderStatus
+  note: string
+  currency: Currency
+  subtotal: number
+  discount: number
+  vat_pct: number
+  vat: number
+  total: number
+  created_by: string
+  created_at: string
+  updated_at: string
+  items?: OrderItem[]
+}
+
+export interface OrderInput {
+  customer_id: number | null
+  note: string
+  currency: Currency
+  vat_pct: number
+  items: { product_id: number | null; sku: string; name: string; qty: number; unit_price: number; discount_pct: number }[]
+}
+
+export type UserRole = 'admin' | 'satis' | 'bayi'
+
+export interface User {
+  id: number
+  username: string
+  display_name: string
+  role: UserRole
+  customer_id: number | null
+  active: number
+}
+
+export interface Session {
+  user: User
+  customer: Customer | null
+}
+
+export interface Settings {
+  company_name: string
+  company_phone: string
+  company_email: string
+  company_address: string
+  company_web: string
+  default_currency: Currency
+  rate_usd: number
+  rate_eur: number
+  vat_pct: number
+  low_stock_threshold: number
+  show_prices_to_dealers: boolean
+  theme: 'system' | 'light' | 'dark' | 'contrast'
+  font_scale: number
+  reduce_motion: boolean
+  density: 'comfortable' | 'compact'
+}
+
+export interface DashboardStats {
+  productCount: number
+  inStockCount: number
+  lowStockCount: number
+  outOfStockCount: number
+  customerCount: number
+  openOrders: number
+  ordersToday: number
+  brands: FacetValue[]
+  recentOrders: Order[]
+  lowStock: Product[]
+  lastImport: ImportLog | null
+}
+
+export interface ImportLog {
+  id: number
+  filename: string
+  created_at: string
+  inserted: number
+  updated: number
+  unchanged: number
+  deactivated: number
+  mode: string
+}
+
+export interface ImportPreview {
+  filename: string
+  headers: string[]
+  rows: string[][]
+  totalRows: number
+  suggestedMapping: Partial<Record<keyof ProductInput, string>>
+  token: string
+}
+
+export interface ImportOptions {
+  token: string
+  mapping: Partial<Record<keyof ProductInput, string>>
+  mode: 'upsert' | 'replace' | 'stock_only'
+  deactivateMissing: boolean
+  defaultCurrency: Currency
+  defaultBrand: string
+  defaultCategory: string
+}
+
+export interface ImportResult extends ImportLog {
+  errors: string[]
+}

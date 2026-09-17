@@ -1,0 +1,41 @@
+appId: com.yamansarulman.b2b
+productName: Yamansa Rulman B2B
+copyright: Copyright © 2026 Yamansa Rulman
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - resources/**
+  - package.json
+  - '!**/*.map'
+asarUnpack:
+  - resources/**
+  - '**/*.node'
+npmRebuild: true
+artifactName: ${productName}-Kurulum-${version}-${arch}.${ext}
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+  executableName: YamansaRulmanB2B
+  requestedExecutionLevel: asInvoker
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: Yamansa Rulman B2B
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+  language: '1055'
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  uninstallDisplayName: Yamansa Rulman B2B
+linux:
+  target: [AppImage]
+  icon: build/icon.png
+  category: Office
+publish: null
