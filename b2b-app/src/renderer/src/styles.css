@@ -534,6 +534,9 @@ textarea.input {
 .muted {
   color: var(--text-muted);
 }
+.danger-text {
+  color: var(--danger);
+}
 .faint {
   color: var(--text-faint);
 }

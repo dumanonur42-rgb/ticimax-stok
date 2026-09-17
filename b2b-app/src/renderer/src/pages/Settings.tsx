@@ -92,6 +92,9 @@ function Appearance({ s }: { s: S }): ReactNode {
       <div style={{ gridColumn: 'span 2' }} className="muted small">
         Kısayollar: <kbd>Ctrl</kbd>+<kbd>K</kbd> ürün ara · <kbd>F2</kbd> sepet · <kbd>F1</kbd> yardım · <kbd>Alt</kbd>+<kbd>1..8</kbd> sayfalar · listede <kbd>+</kbd> sepete ekle, <kbd>Enter</kbd> ayrıntı.
       </div>
+      <div style={{ gridColumn: 'span 2' }} className="row wrap" role="group" aria-label="Uygulama sürümü">
+        <UpdateStatus />
+      </div>
     </div>
   )
 }
@@ -343,7 +346,9 @@ function UpdateStatus(): ReactNode {
             : 'Güncel'
   return (
     <>
-      <span className="muted small">{label}</span>
+      <span className="small">
+        Sürüm <b>{u.current}</b> · <span className={u.status === 'error' ? 'danger-text' : 'muted'}>{label}</span>
+      </span>
       {u.status === 'downloaded' ? (
         <button className="btn primary sm" onClick={() => api('update:install', undefined).catch(() => undefined)}>
           Yeniden başlat ve güncelle
@@ -370,7 +375,6 @@ function Data(): ReactNode {
       <dl className="dl">
         <dt>Sürüm</dt>
         <dd className="row wrap" style={{ gap: 10 }}>
-          <span>{info?.version ?? '-'}</span>
           <UpdateStatus />
         </dd>
         <dt>Veritabanı</dt>

@@ -2,9 +2,11 @@ import { app, BrowserWindow } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import type { UpdateState } from '@shared/types'
 
-const CHECK_EVERY_MS = 4 * 60 * 60 * 1000
+const CHECK_EVERY_MS = 30 * 60 * 1000
+const FOCUS_CHECK_MIN_GAP_MS = 10 * 60 * 1000
 
 let state: UpdateState = { status: 'idle', current: app.getVersion() }
+let lastCheckAt = 0
 
 function set(next: Partial<UpdateState>): void {
   state = { ...state, ...next, current: app.getVersion() }
@@ -17,7 +19,13 @@ export function updateState(): UpdateState {
 
 export function checkForUpdates(): void {
   if (!app.isPackaged) return
+  if (state.status === 'downloading' || state.status === 'downloaded') return
+  lastCheckAt = Date.now()
   autoUpdater.checkForUpdates().catch((e: Error) => set({ status: 'error', message: e.message }))
+}
+
+function checkOnFocus(): void {
+  if (Date.now() - lastCheckAt >= FOCUS_CHECK_MIN_GAP_MS) checkForUpdates()
 }
 
 export function installUpdate(): void {
@@ -41,4 +49,5 @@ export function startUpdater(): void {
 
   setTimeout(checkForUpdates, 15_000)
   setInterval(checkForUpdates, CHECK_EVERY_MS)
+  app.on('browser-window-focus', checkOnFocus)
 }
