@@ -1080,8 +1080,14 @@ dialog.modal::backdrop {
   z-index: 2000;
   display: grid;
   place-items: center;
-  background: #06152e;
+  background: transparent;
   animation: splash-in 400ms ease-out both;
+}
+.splash-window,
+.splash-window body,
+.splash-window #root {
+  background: transparent !important;
+  overflow: hidden;
 }
 .splash.leaving {
   animation: splash-out 450ms ease-in both;

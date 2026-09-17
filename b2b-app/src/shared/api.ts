@@ -77,5 +77,7 @@ export type ApiResult<C extends ApiChannel> = ApiMap[C][1]
 
 export interface Api {
   invoke<C extends ApiChannel>(channel: C, args: ApiArgs<C>): Promise<ApiResult<C>>
-  on(channel: 'products:changed' | 'orders:changed' | 'session:changed', cb: () => void): () => void
+  on(channel: AppEvent, cb: () => void): () => void
 }
+
+export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave'

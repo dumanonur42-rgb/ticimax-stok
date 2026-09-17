@@ -5,8 +5,60 @@ import { registerIpc } from './ipc'
 import { runSelfCheck } from './selfcheck'
 
 const isDev = !app.isPackaged && !!process.env.ELECTRON_RENDERER_URL
+const SPLASH_MIN_MS = 3000
+const SPLASH_LEAVE_MS = 450
+let splashShownAt = 0
+
+function load(win: BrowserWindow, query?: Record<string, string>): void {
+  if (isDev) {
+    const url = new URL(process.env.ELECTRON_RENDERER_URL!)
+    for (const [k, v] of Object.entries(query ?? {})) url.searchParams.set(k, v)
+    win.loadURL(url.toString())
+  } else {
+    win.loadFile(join(__dirname, '../renderer/index.html'), { query })
+  }
+}
+
+/** Frameless transparent window showing only the spinning bearing + globe. */
+function createSplash(): BrowserWindow {
+  const splash = new BrowserWindow({
+    width: 420,
+    height: 420,
+    show: false,
+    frame: false,
+    transparent: true,
+    backgroundColor: '#00000000',
+    hasShadow: false,
+    resizable: false,
+    movable: false,
+    minimizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    skipTaskbar: true,
+    alwaysOnTop: true,
+    center: true,
+    focusable: false,
+    title: 'Yamansa Rulman B2B',
+    icon: join(__dirname, '../../resources/icon.png'),
+    webPreferences: {
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false,
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  })
+  splash.setIgnoreMouseEvents(true)
+  splash.on('ready-to-show', () => {
+    splashShownAt = Date.now()
+    splash.show()
+  })
+  load(splash, { splash: '1' })
+  return splash
+}
 
 function createWindow(): void {
+  const splash = createSplash()
+
   const win = new BrowserWindow({
     width: 1400,
     height: 900,
@@ -26,19 +78,25 @@ function createWindow(): void {
     }
   })
 
-  win.on('ready-to-show', () => win.show())
+  win.on('ready-to-show', () => {
+    const wait = Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now())))
+    setTimeout(() => {
+      if (!splash.isDestroyed()) splash.webContents.send('splash:leave')
+      setTimeout(() => {
+        win.show()
+        if (!splash.isDestroyed()) splash.close()
+      }, SPLASH_LEAVE_MS)
+    }, wait)
+  })
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https?:/.test(url)) shell.openExternal(url)
     return { action: 'deny' }
   })
 
-  if (isDev) {
-    win.loadURL(process.env.ELECTRON_RENDERER_URL!)
-  } else {
-    win.loadFile(join(__dirname, '../renderer/index.html'))
-  }
+  load(win)
 }
 
+if (process.platform === 'linux') app.commandLine.appendSwitch('enable-transparent-visuals')
 app.setName('Yamansa Rulman B2B')
 app.setAppUserModelId('com.yamansarulman.b2b')
 

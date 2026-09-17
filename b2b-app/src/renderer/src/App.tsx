@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { Splash } from '@/components/Brand'
 import { Shell } from '@/components/Shell'
 import { Toasts } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
@@ -69,7 +68,6 @@ const PAGES: Record<ReturnType<typeof useApp.getState>['page'], () => ReactNode>
 export function App(): ReactNode {
   const { session, setSession, loadSettings, page } = useApp()
   const [ready, setReady] = useState(false)
-  const [splash, setSplash] = useState(true)
   useApplySettings()
   useFontShortcuts()
 
@@ -82,16 +80,13 @@ export function App(): ReactNode {
     })
   }, [])
 
-  const overlay = splash ? <Splash ready={ready} onDone={() => setSplash(false)} /> : null
-
-  if (!ready) return overlay
+  if (!ready) return null
 
   if (!session)
     return (
       <>
         <Login />
         <Toasts />
-        {overlay}
       </>
     )
 
@@ -102,7 +97,6 @@ export function App(): ReactNode {
         <Page />
       </Shell>
       <Toasts />
-      {overlay}
     </>
   )
 }

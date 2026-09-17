@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
+import { onEvent } from '@/lib/api'
 
 const SEGMENTS = 32
 
@@ -39,32 +40,10 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
   )
 }
 
-const MIN_SHOW_MS = 2200
-const LEAVE_MS = 450
-
-/** Startup splash: shown until `ready` and at least MIN_SHOW_MS have elapsed. */
-export function Splash({ ready, onDone }: { ready: boolean; onDone: () => void }): ReactNode {
-  const [minElapsed, setMinElapsed] = useState(false)
+/** Content of the frameless transparent startup window; the main process tells it when to fade out. */
+export function SplashWindow(): ReactNode {
   const [leaving, setLeaving] = useState(false)
-  const reduce = document.documentElement.dataset.motion === 'reduce'
-
-  useEffect(() => {
-    const t = setTimeout(() => setMinElapsed(true), reduce ? 300 : MIN_SHOW_MS)
-    return () => clearTimeout(t)
-  }, [reduce])
-
-  useEffect(() => {
-    if (ready && minElapsed) setLeaving(true)
-  }, [ready, minElapsed])
-
-  const done = useRef(onDone)
-  done.current = onDone
-  useEffect(() => {
-    if (!leaving) return
-    const t = setTimeout(() => done.current(), reduce ? 0 : LEAVE_MS)
-    return () => clearTimeout(t)
-  }, [leaving, reduce])
-
+  useEffect(() => onEvent('splash:leave', () => setLeaving(true)), [])
   return (
     <div className={`splash${leaving ? ' leaving' : ''}`} role="status" aria-live="polite" aria-label="Yamansa Rulman B2B başlatılıyor">
       <GlobeScene size={320} />

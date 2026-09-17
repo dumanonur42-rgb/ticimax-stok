@@ -1,12 +1,12 @@
-import type { Api } from '@shared/api'
+import type { Api, AppEvent } from '@shared/api'
 import { contextBridge, ipcRenderer } from 'electron'
 
-const EVENTS = new Set(['products:changed', 'orders:changed', 'session:changed'])
+const EVENTS = new Set<AppEvent>(['products:changed', 'orders:changed', 'session:changed', 'splash:leave'])
 
 const api: Api = {
   invoke: (channel, args) => ipcRenderer.invoke(channel, args),
   on: (channel, cb) => {
-    if (!EVENTS.has(channel)) throw new Error(`Bilinmeyen olay: ${channel}`)
+    if (!EVENTS.has(channel as AppEvent)) throw new Error(`Bilinmeyen olay: ${channel}`)
     const listener = (): void => cb()
     ipcRenderer.on(channel, listener)
     return () => ipcRenderer.removeListener(channel, listener)
