@@ -1,15 +1,18 @@
 import type { DashboardStats } from '@shared/types'
-import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Users } from 'lucide-react'
+import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, Users } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Empty, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
-import { useApp } from '@/store/app'
+import { useApp, useCart } from '@/store/app'
 
 export function Dashboard(): ReactNode {
   const [stats, setStats] = useState<DashboardStats | null>(null)
-  const { go, session, toast } = useApp()
+  const { go, session, toast, settings } = useApp()
   const isAdmin = session?.user.role === 'admin'
+  const isDealer = session?.user.role === 'bayi'
+  const cartCount = useCart((s) => s.lines.length)
+  const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
 
   const load = (): void => {
     api('dashboard:stats', undefined).then(setStats).catch((e) => toast(e.message, 'error'))
@@ -34,6 +37,62 @@ export function Dashboard(): ReactNode {
       <span className="value">{value}</span>
     </button>
   )
+
+  if (isDealer)
+    return (
+      <div className="grid" style={{ gap: 18 }}>
+        <section className="hero card" aria-labelledby="welcome">
+          <div>
+            <h2 id="welcome">Hoş geldiniz{session?.customer ? `, ${session.customer.name}` : ''}</h2>
+            <p className="muted">Stok kodu, ölçü (örn. 25x52x15) veya marka ile arayın; ürünü sepete ekleyip sipariş oluşturun.</p>
+            <div className="row wrap">
+              <button className="btn primary lg" onClick={() => go('catalog')}>
+                <Search size={18} aria-hidden /> Ürün ara <kbd className="kbd">Ctrl+K</kbd>
+              </button>
+              <button className="btn lg" onClick={() => go('cart')}>
+                <ShoppingCart size={18} aria-hidden /> Sepet{cartCount > 0 ? ` (${cartCount})` : ''}
+              </button>
+            </div>
+          </div>
+          <div className="hero-art" aria-hidden />
+        </section>
+        <div className="grid g4">
+          <Stat icon={<Boxes size={18} aria-hidden />} label="Katalogdaki ürün" value={num(stats.productCount)} onClick={() => go('catalog')} />
+          <Stat icon={<PackageCheck size={18} aria-hidden />} label="Stokta" value={num(stats.inStockCount)} />
+          <Stat icon={<ClipboardList size={18} aria-hidden />} label="Açık siparişim" value={num(stats.openOrders)} onClick={() => go('orders')} />
+          <Stat icon={<ShoppingCart size={18} aria-hidden />} label="Sepetteki kalem" value={num(cartCount)} onClick={() => go('cart')} />
+        </div>
+        <section className="card" aria-labelledby="recent-orders">
+          <h2 id="recent-orders">Son siparişlerim</h2>
+          {stats.recentOrders.length === 0 ? (
+            <Empty title="Henüz sipariş yok" hint="Ürünler sayfasından sepete ekleyip ilk siparişinizi oluşturun." />
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Tarih</th>
+                  <th>Durum</th>
+                  {showPrices && <th className="right">Tutar</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {stats.recentOrders.map((o) => (
+                  <tr key={o.id} className="clickable" onClick={() => go('orders', o.id)} tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && go('orders', o.id)}>
+                    <td className="mono">{o.order_no}</td>
+                    <td className="nowrap">{date(o.created_at)}</td>
+                    <td>
+                      <span className={`badge ${STATUS_CLASS[o.status]}`}>{STATUS_LABEL[o.status]}</span>
+                    </td>
+                    {showPrices && <td className="right nowrap">{money(o.total, o.currency)}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </section>
+      </div>
+    )
 
   return (
     <div className="grid" style={{ gap: 18 }}>

@@ -132,7 +132,7 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
         <Field label="Min. sipariş">
           {(id) => <input id={id} className="input" inputMode="numeric" value={form.min_order} onChange={(e) => set('min_order', Number(e.target.value) || 1)} />}
         </Field>
-        {text('shelf', 'Raf')}
+        {session?.user.role === 'admin' && text('shelf', 'Raf')}
         {text('barcode', 'Barkod')}
         <div style={{ gridColumn: 'span 3' }}>{text('equivalents', 'Muadiller', 'Virgülle ayırın: 6205-2RS1, 6205 DDU')}</div>
         <div style={{ gridColumn: 'span 3' }}>

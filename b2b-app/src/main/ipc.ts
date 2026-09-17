@@ -46,6 +46,12 @@ function scopeCustomer(): number | undefined {
   return s.user.role === 'bayi' ? (s.user.customer_id ?? -1) : undefined
 }
 
+/** Shelf location is internal warehouse data; only admins see it. */
+function hideShelf<T extends { shelf: string }>(items: T[]): T[] {
+  const s = requireRole()
+  return s.user.role === 'admin' ? items : items.map((p) => ({ ...p, shelf: '' }))
+}
+
 export function registerIpc(): void {
   handle('auth:login', ({ username, password }) => {
     const s = login(username, password)
@@ -61,7 +67,8 @@ export function registerIpc(): void {
 
   handle('products:search', (f) => {
     requireRole()
-    return searchProducts(f)
+    const r = searchProducts(f)
+    return { ...r, items: hideShelf(r.items) }
   })
   handle('products:facets', (f) => {
     requireRole()
@@ -69,14 +76,16 @@ export function registerIpc(): void {
   })
   handle('products:get', (id) => {
     requireRole()
-    return getProduct(id)
+    const p = getProduct(id)
+    return p ? hideShelf([p])[0] : p
   })
   handle('products:bySkus', (skus) => {
     requireRole()
-    return productsBySkus(skus)
+    return hideShelf(productsBySkus(skus))
   })
   handle('products:save', (p) => {
-    requireRole('admin', 'satis')
+    const s = requireRole('admin', 'satis')
+    if (s.user.role !== 'admin' && p.id) p = { ...p, shelf: getProduct(p.id)?.shelf ?? '' }
     const r = saveProduct(p)
     broadcast('products:changed')
     return r
@@ -90,7 +99,7 @@ export function registerIpc(): void {
     requireRole()
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), 'urunler.xlsx', 'xlsx', 'Excel')
     if (!path) return null
-    productsToXlsx(allProductsForExport(f), path)
+    productsToXlsx(hideShelf(allProductsForExport(f)), path)
     return path
   })
 
@@ -179,8 +188,7 @@ export function registerIpc(): void {
   })
 
   handle('dashboard:stats', () => {
-    requireRole()
-    return dashboardStats()
+    return dashboardStats(scopeCustomer())
   })
 
   handle('import:pick', async (_a, e) => {

@@ -15,6 +15,8 @@ import { useEffect, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { ROLE_LABEL } from '@/lib/format'
 import { useApp, useCart, type Page } from '@/store/app'
+import logo from '@/assets/logo.png'
+import mark from '@/assets/mark.png'
 
 interface NavItem {
   page: Page
@@ -49,6 +51,7 @@ export const PAGE_TITLE: Record<Page, string> = {
 export function Shell({ children }: { children: ReactNode }): ReactNode {
   const { page, go, session, setSession, sidebarCollapsed, toggleSidebar, toast } = useApp()
   const cartCount = useCart((s) => s.lines.length)
+  const clearCart = useCart((s) => s.clear)
   const role = session?.user.role ?? 'bayi'
   const items = NAV.filter((n) => !n.roles || n.roles.includes(role))
 
@@ -92,6 +95,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
 
   const logout = async (): Promise<void> => {
     await api('auth:logout', undefined)
+    clearCart()
     setSession(null)
     toast('Oturum kapatıldı.')
   }
@@ -105,10 +109,10 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
       </a>
       <aside className="sidebar" aria-label="Ana menü">
         <div className="brand">
-          <span className="brand-logo" aria-hidden />
+          <img className="brand-mark" src={mark} alt="" />
+          <img className="brand-logo" src={logo} alt="Yamansa Rulman" />
           <div>
-            Yamansa Rulman
-            <small>B2B Bayi Portalı</small>
+            <small>{role === 'bayi' ? 'Bayi Portalı' : 'Yönetim Paneli'}</small>
           </div>
         </div>
         <nav className="nav" aria-label="Sayfalar">

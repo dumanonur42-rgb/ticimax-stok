@@ -1,5 +1,7 @@
-import { LogIn } from 'lucide-react'
+import { CheckCircle2, LogIn } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
+import logo from '@/assets/logo.png'
+import { GlobeScene } from '@/components/Brand'
 import { Field } from '@/components/ui'
 import { api } from '@/lib/api'
 import { useApp } from '@/store/app'
@@ -26,17 +28,34 @@ export function Login(): ReactNode {
 
   return (
     <div className="login">
-      <form className="card" onSubmit={submit} aria-labelledby="login-title" aria-describedby={error ? 'login-error' : undefined}>
-        <div className="brand" style={{ padding: 0, marginBottom: 18 }}>
-          <span className="brand-logo" aria-hidden />
-          <div>
-            Yamansa Rulman
-            <small>B2B Bayi Portalı</small>
-          </div>
+      <aside className="login-side" aria-hidden>
+        <img className="brand-logo" src={logo} alt="" />
+        <div>
+          <h2>Rulman stoklarına anında erişim</h2>
+          <p>Stok kodu, ölçü veya marka ile saniyeler içinde arayın; sepete ekleyin, siparişinizi oluşturun.</p>
+          <ul>
+            <li>
+              <CheckCircle2 size={18} /> 10.000+ üründe anında arama
+            </li>
+            <li>
+              <CheckCircle2 size={18} /> Muadil kodlar ve d × D × B ölçü filtresi
+            </li>
+            <li>
+              <CheckCircle2 size={18} /> Sipariş takibi ve Excel çıktısı
+            </li>
+          </ul>
         </div>
-        <h1 id="login-title" style={{ fontSize: '1.25rem' }}>
+        <small style={{ color: 'var(--navy-muted)' }}>yamansarulman.com</small>
+        <GlobeScene size={420} />
+      </aside>
+      <div className="login-form">
+      <form className="card" onSubmit={submit} aria-labelledby="login-title" aria-describedby={error ? 'login-error' : undefined}>
+        <h1 id="login-title" style={{ fontSize: '1.4rem', marginBottom: 4 }}>
           Oturum aç
         </h1>
+        <p className="muted" style={{ marginBottom: 18 }}>
+          Yamansa Rulman B2B hesabınızla giriş yapın.
+        </p>
         <div className="grid" style={{ gap: 14 }}>
           <Field label="Kullanıcı adı">
             {(id) => (
@@ -69,6 +88,7 @@ export function Login(): ReactNode {
           </p>
         </div>
       </form>
+      </div>
     </div>
   )
 }
