@@ -33,7 +33,7 @@ Windows makinede:
 
 ```bash
 npm install
-npm run dist:win     # dist/YamansaRulmanB2B-Kurulum-<sürüm>-x64.exe
+npm run dist:win     # dist/Yamansa-Rulman-B2B-Kurulum-<sürüm>.exe
 ```
 
 Ya da GitHub Actions: `b2b-app/` altındaki her değişiklikte **B2B App – Windows Installer** iş akışı çalışır ve

@@ -13,7 +13,7 @@ asarUnpack:
   - resources/**
   - '**/*.node'
 npmRebuild: true
-artifactName: YamansaRulmanB2B-Kurulum-${version}-${arch}.${ext}
+artifactName: Yamansa-Rulman-B2B-Kurulum-${version}.${ext}
 win:
   target:
     - target: nsis
