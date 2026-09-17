@@ -2,7 +2,7 @@ import Database from 'better-sqlite3'
 import { app } from 'electron'
 import { existsSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { hashPassword } from './auth'
+import { hashPassword, verifyPassword } from './auth'
 
 export type DB = Database.Database
 
@@ -164,13 +164,31 @@ CREATE TABLE IF NOT EXISTS import_logs (
 );
 `
 
+export const DEFAULT_ADMIN = { username: 'Yamansa', password: 'Ahmet4202', displayName: 'Ahmet' }
+
 function migrate(d: DB): void {
   d.exec(SCHEMA)
   const userCount = d.prepare('SELECT COUNT(*) c FROM users').get() as { c: number }
   if (userCount.c === 0) {
     d.prepare(
       `INSERT INTO users(username, password_hash, display_name, role) VALUES (?,?,?,?)`
-    ).run('admin', hashPassword('admin'), 'Yönetici', 'admin')
+    ).run(DEFAULT_ADMIN.username, hashPassword(DEFAULT_ADMIN.password), DEFAULT_ADMIN.displayName, 'admin')
+    return
+  }
+  // Databases created by earlier builds still carry the untouched admin/admin account: replace it.
+  const legacy = d
+    .prepare(`SELECT id, password_hash FROM users WHERE username = 'admin' COLLATE NOCASE`)
+    .get() as { id: number; password_hash: string } | undefined
+  const taken = d
+    .prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)
+    .get(DEFAULT_ADMIN.username)
+  if (legacy && !taken && verifyPassword('admin', legacy.password_hash)) {
+    d.prepare(`UPDATE users SET username = ?, password_hash = ?, display_name = ? WHERE id = ?`).run(
+      DEFAULT_ADMIN.username,
+      hashPassword(DEFAULT_ADMIN.password),
+      DEFAULT_ADMIN.displayName,
+      legacy.id
+    )
   }
 }
 

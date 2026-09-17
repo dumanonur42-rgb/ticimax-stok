@@ -1,4 +1,4 @@
-import { getDb } from './db'
+import { DEFAULT_ADMIN, getDb } from './db'
 import { searchProducts, productFacets } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { login } from './repo/users'
@@ -27,8 +27,8 @@ export function runSelfCheck(): number {
   console.log(`dimension 25x52: ${dim.total} hits in ${(performance.now() - t1).toFixed(1)} ms`)
   const facets = productFacets({ q: '' })
   console.log(`facets: ${facets.brand.length} brands, ${facets.category.length} categories`)
-  const session = login('admin', 'admin')
-  console.log(`login admin: ${session ? 'ok' : 'FAILED'}`)
+  const session = login(DEFAULT_ADMIN.username, DEFAULT_ADMIN.password)
+  console.log(`login ${DEFAULT_ADMIN.username}: ${session ? 'ok' : 'FAILED'}`)
   if (!session) ok = false
   console.log(ok ? 'SELFCHECK OK' : 'SELFCHECK FAILED')
   return ok ? 0 : 1

@@ -13,7 +13,7 @@ Veriler bilgisayarda yerel SQLite dosyasında tutulur; internet gerekmez.
   açık/koyu/yüksek kontrast tema, yazı boyutu, azaltılmış hareket, sıkışık görünüm.
 - **Yedekleme** – tek dosya yedek al / geri yükle.
 
-Varsayılan giriş: `admin` / `admin` (ilk girişten sonra Ayarlar → Şifre'den değiştirin).
+Varsayılan yönetici hesabı: kullanıcı adı `Yamansa` (şifre `src/main/db.ts` içindeki `DEFAULT_ADMIN`'de; ilk girişten sonra Ayarlar → Şifre'den değiştirin).
 
 ## Geliştirme
 

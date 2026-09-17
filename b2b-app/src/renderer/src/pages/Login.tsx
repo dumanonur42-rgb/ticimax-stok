@@ -84,7 +84,7 @@ export function Login(): ReactNode {
             <LogIn size={18} aria-hidden /> {busy ? 'Giriş yapılıyor…' : 'Giriş yap'}
           </button>
           <p className="faint small" style={{ margin: 0 }}>
-            İlk kurulumda kullanıcı adı <code>admin</code>, şifre <code>admin</code>. Girişten sonra Ayarlar bölümünden değiştirin.
+            Kullanıcı adı ve şifrenizi yöneticinizden alın. Şifrenizi Ayarlar bölümünden değiştirebilirsiniz.
           </p>
         </div>
       </form>
