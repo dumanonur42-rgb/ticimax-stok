@@ -4,7 +4,7 @@ import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { closeDb, dbPath, getDb, reopenDb } from './db'
-import { deleteCustomer, getCustomer, listCustomers, saveCustomer } from './repo/customers'
+import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateCustomerProfile } from './repo/customers'
 import { dashboardStats } from './repo/dashboard'
 import { orderHtml, orderToXlsx, productsToXlsx, templateXlsx } from './repo/exporter'
 import { importLogs, previewFile, runImport } from './repo/importer'
@@ -13,7 +13,7 @@ import { allProductsForExport, deleteProduct, getProduct, productFacets, product
 import { seedDemo } from './repo/seed'
 import { getSettings, setSettings } from './repo/settings'
 import { approveUser, changePassword, deleteUser, listUsers, login, registerUser, saveUser, sessionFor } from './repo/users'
-import { checkForUpdates, installUpdate, updateState } from './updater'
+import { checkForUpdates, downloadAndInstall, installUpdate, updateState } from './updater'
 
 let session: Session | null = null
 
@@ -143,8 +143,18 @@ export function registerIpc(): void {
     return scope === undefined ? list : list.filter((c) => c.id === scope)
   })
   handle('customers:get', (id) => {
-    requireRole()
-    return getCustomer(id)
+    const scope = scopeCustomer()
+    return scope === undefined || scope === id ? getCustomer(id) : null
+  })
+  handle('customers:profile', (p) => {
+    const s = requireRole()
+    const id = s.user.customer_id
+    if (id === null) throw new Error('Bu hesaba bağlı bir cari kart yok.')
+    updateCustomerProfile(id, p)
+    broadcast('customers:changed')
+    const fresh = sessionFor(s.user.id)
+    if (fresh) session = fresh
+    return fresh ?? s
   })
   handle('customers:save', (c) => {
     requireRole('admin')
@@ -228,7 +238,8 @@ export function registerIpc(): void {
   })
 
   handle('dashboard:stats', () => {
-    return dashboardStats(scopeCustomer())
+    const s = dashboardStats(scopeCustomer())
+    return { ...s, lowStock: hideShelf(s.lowStock) }
   })
 
   handle('import:pick', async (_a, e) => {
@@ -296,14 +307,9 @@ export function registerIpc(): void {
     return true
   })
   handle('update:state', () => updateState())
-  handle('update:check', () => {
-    requireRole()
-    checkForUpdates()
-  })
-  handle('update:install', () => {
-    requireRole()
-    installUpdate()
-  })
+  handle('update:check', () => checkForUpdates())
+  handle('update:download', () => downloadAndInstall())
+  handle('update:install', () => installUpdate())
   handle('app:seedDemo', (n) => {
     requireRole('admin')
     const r = seedDemo(n)

@@ -12,10 +12,11 @@ import {
   ShoppingCart,
   Users
 } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
-import type { UpdateState } from '@shared/types'
-import { api, onEvent } from '@/lib/api'
+import { useEffect, type ReactNode } from 'react'
+import { api } from '@/lib/api'
+import { useUpdateState } from '@/components/UpdateDialog'
 import { ROLE_LABEL } from '@/lib/format'
+import type { UserRole } from '@shared/types'
 import { useApp, useCart, type Page } from '@/store/app'
 import logo from '@/assets/logo.png'
 import mark from '@/assets/mark.png'
@@ -25,7 +26,7 @@ interface NavItem {
   label: string
   icon: ReactNode
   key: string
-  roles?: Array<'admin' | 'satis' | 'bayi'>
+  roles?: Array<UserRole>
 }
 
 const NAV: NavItem[] = [
@@ -50,37 +51,21 @@ export const PAGE_TITLE: Record<Page, string> = {
   help: 'Yardım ve Kısayollar'
 }
 
-/** Subscribes to the main-process updater; returns null until an update is actually downloading/ready. */
-export function useUpdateState(): UpdateState | null {
-  const [state, setState] = useState<UpdateState | null>(null)
-  useEffect(() => {
-    const load = (): void => {
-      api('update:state', undefined).then(setState).catch(() => undefined)
-    }
-    load()
-    return onEvent('update:changed', load)
-  }, [])
-  return state
-}
+export { useUpdateState }
 
+/** Topbar reminder for a postponed update (the dialog itself lives in App). */
 function UpdateBanner(): ReactNode {
   const u = useUpdateState()
-  if (!u || (u.status !== 'downloading' && u.status !== 'downloaded')) return null
+  if (!u || u.status !== 'available') return null
   return (
-    <div className="update-banner" role="status" aria-live="polite">
-      <RefreshCw size={16} aria-hidden className={u.status === 'downloading' ? 'spin' : undefined} />
-      {u.status === 'downloading' ? (
-        <span>
-          Yeni sürüm {u.version} indiriliyor… {u.percent ?? 0}%
-        </span>
-      ) : (
-        <>
-          <span>Sürüm {u.version} hazır.</span>
-          <button className="btn primary sm" onClick={() => api('update:install', undefined).catch(() => undefined)}>
-            Yeniden başlat ve güncelle
-          </button>
-        </>
-      )}
+    <div className="update-banner" role="status">
+      <RefreshCw size={16} aria-hidden />
+      <span>
+        Yeni sürüm <b>{u.version}</b> hazır
+      </span>
+      <button className="btn primary sm" onClick={() => api('update:download', undefined).catch(() => undefined)}>
+        Güncelle
+      </button>
     </div>
   )
 }
@@ -138,6 +123,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
   }
 
   const initials = (session?.user.display_name || session?.user.username || '?').slice(0, 1).toUpperCase()
+  const update = useUpdateState()
 
   return (
     <div className={`shell${sidebarCollapsed ? ' collapsed' : ''}`}>
@@ -191,7 +177,10 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
             <strong className="truncate" style={{ display: 'block' }}>
               {session?.user.display_name || session?.user.username}
             </strong>
-            <span className="muted small">{ROLE_LABEL[role]}</span>
+            <span className="muted small">
+              {ROLE_LABEL[role]}
+              {update && <span className="app-version"> · v{update.current}</span>}
+            </span>
           </div>
           <button className="btn ghost icon sm" onClick={logout} aria-label="Oturumu kapat" title="Oturumu kapat">
             <LogOut size={18} aria-hidden />

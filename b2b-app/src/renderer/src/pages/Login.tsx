@@ -39,7 +39,7 @@ export function Login(): ReactNode {
         if (password !== password2) throw new Error('Şifreler birbiriyle eşleşmiyor.')
         await api('auth:register', { username, display_name: displayName, password })
         switchMode('login')
-        setNotice('Kaydınız alındı. Bir yönetici hesabınızı onayladığında giriş yapabilirsiniz.')
+        setNotice('Kaydınız alındı. Bir yönetici bayi hesabınızı onayladığında giriş yapabilirsiniz.')
       }
     } catch (err) {
       setError((err as Error).message)
@@ -67,7 +67,7 @@ export function Login(): ReactNode {
             {isRegister ? 'Kayıt ol' : 'Oturum aç'}
           </h1>
           <p className="muted" style={{ marginBottom: 18 }}>
-            {isRegister ? 'Hesabınız yönetici onayından sonra kullanıma açılır.' : 'Yamansa Rulman B2B hesabınızla giriş yapın.'}
+            {isRegister ? 'Bayi hesabınız yönetici onayından sonra açılır; firma ve vergi bilgilerinizi giriş yaptıktan sonra Ayarlar › Firma bilgilerim bölümünden tamamlayabilirsiniz.' : 'Yamansa Rulman B2B hesabınızla giriş yapın.'}
           </p>
           <div className="grid" style={{ gap: 14 }}>
             <Field label="Kullanıcı adı">
@@ -76,7 +76,7 @@ export function Login(): ReactNode {
               )}
             </Field>
             {isRegister && (
-              <Field label="Ad Soyad">{(id) => <input id={id} className="input" autoComplete="name" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />}</Field>
+              <Field label="Ad Soyad / Firma">{(id) => <input id={id} className="input" autoComplete="name" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />}</Field>
             )}
             <Field label="Şifre">
               {(id) => (

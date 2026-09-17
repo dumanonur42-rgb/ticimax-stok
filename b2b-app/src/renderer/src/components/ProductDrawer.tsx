@@ -1,5 +1,5 @@
 import type { Product } from '@shared/types'
-import { Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
+import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
@@ -81,6 +81,16 @@ export function ProductDrawer({
             </div>
           </div>
 
+          {product.shelf && (
+            <div className="shelf-card" role="group" aria-label="Raf konumu">
+              <MapPin size={22} aria-hidden />
+              <div>
+                <span className="shelf-card-label">Raf</span>
+                <b className="shelf-card-value mono">{product.shelf}</b>
+              </div>
+            </div>
+          )}
+
           {(product.d_inner != null || product.d_outer != null || product.width != null) && (
             <div className="dims" role="group" aria-label="Ölçüler">
               <div className="dim">
@@ -123,12 +133,6 @@ export function ProductDrawer({
               <>
                 <dt>Min. sipariş</dt>
                 <dd>{num(product.min_order)}</dd>
-              </>
-            )}
-            {product.shelf && (
-              <>
-                <dt>Raf</dt>
-                <dd className="mono">{product.shelf}</dd>
               </>
             )}
             {product.barcode && (

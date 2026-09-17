@@ -1,13 +1,15 @@
 import { DEFAULT_ADMIN, DEFAULT_STAFF, getDb } from './db'
 import { searchProducts, productFacets } from './repo/products'
 import { refreshLegacyDemo, seedDemo } from './repo/seed'
-import { approveUser, deleteUser, listUsers, login, registerUser } from './repo/users'
+import { listOrders } from './repo/orders'
+import { approveUser, deleteUser, ensureDealerCustomers, listUsers, login, registerUser } from './repo/users'
 
 /** Headless sanity run: `electron . --selfcheck`. Seeds demo data, times searches, exits non-zero on failure. */
 export function runSelfCheck(): number {
   const t0 = performance.now()
   const db = getDb()
   const refreshed = refreshLegacyDemo()
+  ensureDealerCustomers()
   if (refreshed) console.log(`legacy demo catalogue regenerated: ${refreshed} products`)
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   const seeded = count < 10000 ? seedDemo(12000) : 0
@@ -33,8 +35,14 @@ export function runSelfCheck(): number {
   console.log(`login ${DEFAULT_ADMIN.username}: ${session ? 'ok' : 'FAILED'}`)
   if (!session) ok = false
   const staff = login(DEFAULT_STAFF.username, DEFAULT_STAFF.password)
-  console.log(`login ${DEFAULT_STAFF.username}: ${staff?.user.role === 'satis' ? 'ok' : 'FAILED'}`)
-  if (staff?.user.role !== 'satis') ok = false
+  const staffOk = staff?.user.role === 'bayi' && staff.customer !== null
+  console.log(`login ${DEFAULT_STAFF.username}: ${staffOk ? 'ok (bayi, cari #' + staff?.customer?.id + ')' : 'FAILED'}`)
+  if (!staffOk) ok = false
+  if (staff?.customer) {
+    const foreign = listOrders({ customer_id: staff.customer.id }).filter((o) => o.customer_id !== staff.customer!.id)
+    console.log(`dealer order scope: ${foreign.length === 0 ? 'ok' : 'LEAK ' + foreign.length}`)
+    if (foreign.length) ok = false
+  }
 
   const probe = `selfcheck_${Date.now()}`
   registerUser({ username: probe, display_name: 'Self Check', password: 'test1234' })
@@ -48,8 +56,9 @@ export function runSelfCheck(): number {
   approveUser(pendingUser!.id)
   const approved = login(probe, 'test1234')
   deleteUser(pendingUser!.id)
-  console.log(`register/approve flow: pending blocked=${pendingBlocked}, approved login=${approved?.user.role === 'satis' && !!approved.user.approved}`)
-  if (!pendingBlocked || approved?.user.role !== 'satis') ok = false
+  const approvedOk = approved?.user.role === 'bayi' && !!approved.user.approved && approved.customer !== null
+  console.log(`register/approve flow: pending blocked=${pendingBlocked}, approved dealer login=${approvedOk}`)
+  if (!pendingBlocked || !approvedOk) ok = false
   console.log(ok ? 'SELFCHECK OK' : 'SELFCHECK FAILED')
   return ok ? 0 : 1
 }

@@ -1,13 +1,13 @@
-import type { Currency, Customer, Settings as S, User, UserRole } from '@shared/types'
-import { Database, Pencil, Plus, Save, UserCheck } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
+import type { Currency, Customer, CustomerProfile, Settings as S, User, UserRole } from '@shared/types'
+import { Building2, Database, Pencil, Plus, Save, UserCheck } from 'lucide-react'
+import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { useUpdateState } from '@/components/Shell'
 import { api, onEvent } from '@/lib/api'
 import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
 
-type Tab = 'gorunum' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
+type Tab = 'gorunum' | 'profil' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
 
 /** `go('settings', SETTINGS_TAB_USERS)` opens the user management tab directly. */
 export const SETTINGS_TAB_USERS = 1
@@ -16,14 +16,15 @@ export function SettingsPage(): ReactNode {
   const { session, settings, pageParam } = useApp()
   const isAdmin = session?.user.role === 'admin'
   const [tab, setTab] = useState<Tab>(pageParam === SETTINGS_TAB_USERS && isAdmin ? 'kullanicilar' : 'gorunum')
-  const tabs: { id: Tab; label: string; admin?: boolean }[] = [
+  const tabs: { id: Tab; label: string; admin?: boolean; dealer?: boolean }[] = [
     { id: 'gorunum', label: 'Görünüm & Erişilebilirlik' },
+    { id: 'profil', label: 'Firma bilgilerim', dealer: true },
     { id: 'firma', label: 'Firma & Fiyat', admin: true },
     { id: 'kullanicilar', label: 'Kullanıcılar', admin: true },
     { id: 'veri', label: 'Yedekleme & Veri', admin: true },
     { id: 'sifre', label: 'Şifre' }
   ]
-  const visible = tabs.filter((t) => !t.admin || isAdmin)
+  const visible = tabs.filter((t) => (!t.admin || isAdmin) && (!t.dealer || !isAdmin))
 
   return (
     <div className="grid" style={{ gap: 16 }}>
@@ -49,6 +50,7 @@ export function SettingsPage(): ReactNode {
       </div>
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
         {tab === 'gorunum' && settings && <Appearance s={settings} />}
+        {tab === 'profil' && <MyCompany />}
         {tab === 'firma' && settings && <Company s={settings} />}
         {tab === 'kullanicilar' && <Users />}
         {tab === 'veri' && <Data />}
@@ -184,7 +186,6 @@ function Users(): ReactNode {
     if (!editing) return
     if (!editing.username.trim()) return toast('Kullanıcı adı zorunludur.', 'error')
     if (!editing.id && !editing.password) return toast('Yeni kullanıcı için şifre girin.', 'error')
-    if (editing.role === 'bayi' && !editing.customer_id) return toast('Bayi kullanıcısı için bir bayi seçin.', 'error')
     try {
       await api('users:save', editing)
       toast('Kullanıcı kaydedildi.', 'success')
@@ -213,7 +214,7 @@ function Users(): ReactNode {
           Kayıtlı herkes burada listelenir. Rol, kullanıcının yetkilerini belirler; "Kayıt ol" ile gelen hesaplar siz onaylayana kadar giriş yapamaz.
         </p>
         <span className="spacer" />
-        <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'satis', customer_id: null, password: '', active: 1 })}>
+        <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'bayi', customer_id: null, password: '', active: 1 })}>
           <Plus size={16} aria-hidden /> Yeni kullanıcı
         </button>
       </div>
@@ -297,7 +298,6 @@ function Users(): ReactNode {
               {(id) => (
                 <select id={id} className="select" value={editing.role} onChange={(e) => setEditing({ ...editing, role: e.target.value as UserRole })}>
                   <option value="admin">{ROLE_LABEL.admin}</option>
-                  <option value="satis">{ROLE_LABEL.satis}</option>
                   <option value="bayi">{ROLE_LABEL.bayi}</option>
                 </select>
               )}
@@ -305,10 +305,10 @@ function Users(): ReactNode {
             <p className="muted small" style={{ gridColumn: 'span 2', margin: 0 }}>
               {ROLE_HINT[editing.role]}
             </p>
-            <Field label="Bağlı bayi">
+            <Field label="Cari kart" hint={editing.role === 'bayi' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
               {(id) => (
                 <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role !== 'bayi'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>
-                  <option value="">—</option>
+                  <option value="">Yeni cari kart oluştur</option>
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
@@ -337,24 +337,26 @@ function UpdateStatus(): ReactNode {
   const label =
     u.status === 'checking'
       ? 'Güncelleme denetleniyor…'
-      : u.status === 'downloading'
-        ? `Sürüm ${u.version} indiriliyor… ${u.percent ?? 0}%`
-        : u.status === 'downloaded'
-          ? `Sürüm ${u.version} hazır — yeniden başlatınca kurulur.`
-          : u.status === 'error'
-            ? `Güncelleme denetlenemedi: ${u.message ?? ''}`
-            : 'Güncel'
+      : u.status === 'available'
+        ? `Yeni sürüm ${u.version} hazır`
+        : u.status === 'downloading'
+          ? `Sürüm ${u.version} indiriliyor… ${u.percent ?? 0}%`
+          : u.status === 'downloaded' || u.status === 'installing'
+            ? `Sürüm ${u.version} kuruluyor…`
+            : u.status === 'error'
+              ? `Güncelleme denetlenemedi: ${u.message ?? ''}`
+              : 'Güncel'
   return (
     <>
       <span className="small">
         Sürüm <b>{u.current}</b> · <span className={u.status === 'error' ? 'danger-text' : 'muted'}>{label}</span>
       </span>
-      {u.status === 'downloaded' ? (
-        <button className="btn primary sm" onClick={() => api('update:install', undefined).catch(() => undefined)}>
-          Yeniden başlat ve güncelle
+      {u.status === 'available' ? (
+        <button className="btn primary sm" onClick={() => api('update:download', undefined).catch(() => undefined)}>
+          Şimdi güncelle
         </button>
       ) : (
-        <button className="btn sm" disabled={u.status === 'checking' || u.status === 'downloading'} onClick={() => api('update:check', undefined).catch(() => undefined)}>
+        <button className="btn sm" disabled={u.status !== 'idle' && u.status !== 'error'} onClick={() => api('update:check', undefined).catch(() => undefined)}>
           Güncellemeleri denetle
         </button>
       )}
@@ -424,6 +426,80 @@ function Data(): ReactNode {
         }}
       />
     </div>
+  )
+}
+
+const EMPTY_PROFILE: CustomerProfile = { name: '', contact: '', phone: '', email: '', address: '', city: '', tax_no: '', tax_office: '' }
+
+/** Dealers complete their own company card (title, tax and contact details) after approval. */
+function MyCompany(): ReactNode {
+  const { session, setSession, toast } = useApp()
+  const c = session?.customer ?? null
+  const [p, setP] = useState<CustomerProfile>(EMPTY_PROFILE)
+  const [saving, setSaving] = useState(false)
+  useEffect(() => {
+    if (c) setP({ name: c.name, contact: c.contact, phone: c.phone, email: c.email, address: c.address, city: c.city, tax_no: c.tax_no, tax_office: c.tax_office })
+  }, [c])
+  const missing = c ? [c.name, c.tax_no, c.tax_office, c.phone, c.address].filter((v) => !v.trim()).length : 0
+  const set = (k: keyof CustomerProfile) => (e: ChangeEvent<HTMLInputElement>) => setP({ ...p, [k]: e.target.value })
+  const submit = async (): Promise<void> => {
+    if (!p.name.trim()) return toast('Firma / ünvan boş olamaz.', 'error')
+    setSaving(true)
+    try {
+      const s = await api('customers:profile', p)
+      setSession(s)
+      toast('Firma bilgileriniz kaydedildi.', 'success')
+    } catch (e) {
+      toast((e as Error).message, 'error')
+    } finally {
+      setSaving(false)
+    }
+  }
+  if (!c)
+    return (
+      <div className="card">
+        <p className="muted">Bu hesaba bağlı bir cari kart bulunamadı. Lütfen yöneticinizle iletişime geçin.</p>
+      </div>
+    )
+  return (
+    <form
+      className="card grid"
+      style={{ gap: 16, maxWidth: 760 }}
+      onSubmit={(e) => {
+        e.preventDefault()
+        submit()
+      }}
+    >
+      <div className="row" style={{ gap: 12, alignItems: 'flex-start' }}>
+        <Building2 size={28} aria-hidden style={{ color: 'var(--accent)', flexShrink: 0 }} />
+        <div>
+          <h3 style={{ margin: 0 }}>Firma bilgilerim</h3>
+          <p className="muted small" style={{ margin: '4px 0 0' }}>
+            Cari kodunuz: <b className="mono">{c.code}</b>. Fatura ve teslimat için ünvan, vergi ve iletişim bilgilerinizi buradan tamamlayın.
+          </p>
+        </div>
+      </div>
+      {missing > 0 && (
+        <div className="toolbar" style={{ background: 'var(--warning-bg)', color: 'var(--warning)', borderRadius: 'var(--radius-sm)' }} role="status">
+          Kaydınızı tamamlamak için {missing} alan eksik.
+        </div>
+      )}
+      <div className="grid g2">
+        <Field label="Firma / ünvan *">{(id) => <input id={id} className="input" value={p.name} onChange={set('name')} autoComplete="organization" />}</Field>
+        <Field label="Yetkili kişi">{(id) => <input id={id} className="input" value={p.contact} onChange={set('contact')} autoComplete="name" />}</Field>
+        <Field label="Telefon">{(id) => <input id={id} className="input" value={p.phone} onChange={set('phone')} autoComplete="tel" inputMode="tel" />}</Field>
+        <Field label="E-posta">{(id) => <input id={id} className="input" type="email" value={p.email} onChange={set('email')} autoComplete="email" />}</Field>
+        <Field label="Vergi no / TC kimlik no" hint="10 haneli VKN veya 11 haneli TCKN">{(id) => <input id={id} className="input mono" value={p.tax_no} onChange={set('tax_no')} inputMode="numeric" maxLength={11} />}</Field>
+        <Field label="Vergi dairesi">{(id) => <input id={id} className="input" value={p.tax_office} onChange={set('tax_office')} />}</Field>
+        <Field label="Şehir">{(id) => <input id={id} className="input" value={p.city} onChange={set('city')} autoComplete="address-level1" />}</Field>
+        <Field label="Adres">{(id) => <input id={id} className="input" value={p.address} onChange={set('address')} autoComplete="street-address" />}</Field>
+      </div>
+      <div className="row" style={{ justifyContent: 'flex-end' }}>
+        <button className="btn primary" type="submit" disabled={saving}>
+          <Save size={16} aria-hidden /> {saving ? 'Kaydediliyor…' : 'Kaydet'}
+        </button>
+      </div>
+    </form>
   )
 }
 

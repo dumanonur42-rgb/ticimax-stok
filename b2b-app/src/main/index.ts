@@ -5,6 +5,7 @@ import { registerIpc } from './ipc'
 import { dashboardStats } from './repo/dashboard'
 import { productFacets, searchProducts } from './repo/products'
 import { refreshLegacyDemo } from './repo/seed'
+import { ensureDealerCustomers } from './repo/users'
 import { runSelfCheck } from './selfcheck'
 import { startUpdater } from './updater'
 
@@ -143,6 +144,7 @@ if (process.argv.includes('--selfcheck')) {
     Menu.setApplicationMenu(null)
     getDb()
     refreshLegacyDemo()
+    ensureDealerCustomers()
     registerIpc()
     createWindow()
     setImmediate(warmUp)

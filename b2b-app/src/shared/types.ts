@@ -80,6 +80,8 @@ export interface Customer {
   created_at: string
 }
 export type CustomerInput = Omit<Customer, 'id' | 'created_at'>
+/** Fields a dealer may fill in for their own company card after approval. */
+export type CustomerProfile = Pick<Customer, 'name' | 'contact' | 'phone' | 'email' | 'address' | 'city' | 'tax_no' | 'tax_office'>
 
 export type PaymentType = 'pesin' | 'kart'
 
@@ -126,7 +128,7 @@ export interface OrderInput {
   items: { product_id: number | null; sku: string; name: string; qty: number; unit_price: number; discount_pct: number }[]
 }
 
-export type UserRole = 'admin' | 'satis' | 'bayi'
+export type UserRole = 'admin' | 'bayi'
 
 export interface User {
   id: number
@@ -145,9 +147,10 @@ export interface Session {
 }
 
 export interface UpdateState {
-  status: 'idle' | 'checking' | 'downloading' | 'downloaded' | 'error'
+  status: 'idle' | 'checking' | 'available' | 'downloading' | 'downloaded' | 'installing' | 'error'
   current: string
   version?: string
+  notes?: string
   percent?: number
   message?: string
 }

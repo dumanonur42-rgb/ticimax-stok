@@ -1,6 +1,8 @@
-import type { DashboardStats } from '@shared/types'
+import type { DashboardStats, Product } from '@shared/types'
 import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
+import { ProductDrawer } from '@/components/ProductDrawer'
+import { ProductEditor } from '@/components/ProductEditor'
 import { Empty, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
@@ -9,7 +11,10 @@ import { useApp, useCart } from '@/store/app'
 
 export function Dashboard(): ReactNode {
   const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [selected, setSelected] = useState<Product | null>(null)
+  const [editing, setEditing] = useState<Product | null>(null)
   const { go, session, toast, settings } = useApp()
+  const threshold = settings?.low_stock_threshold ?? 5
   const isAdmin = session?.user.role === 'admin'
   const isDealer = session?.user.role === 'bayi'
   const cartCount = useCart((s) => s.lines.length)
@@ -195,18 +200,33 @@ export function Dashboard(): ReactNode {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Stok Kodu</th>
-                  <th>Ürün</th>
+                  <th>Ürün Kodu</th>
+                  <th>Marka</th>
+                  {isAdmin && <th>Raf</th>}
                   <th className="right">Stok</th>
                 </tr>
               </thead>
               <tbody>
                 {stats.lowStock.map((p) => (
-                  <tr key={p.id}>
+                  <tr
+                    key={p.id}
+                    className="clickable"
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${p.sku} ürününü aç`}
+                    onClick={() => setSelected(p)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        setSelected(p)
+                      }
+                    }}
+                  >
                     <td className="mono">{p.sku}</td>
-                    <td className="truncate" style={{ maxWidth: 260 }}>
-                      {p.name}
+                    <td className="truncate" style={{ maxWidth: 160 }}>
+                      {p.brand}
                     </td>
+                    {isAdmin && <td>{p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}</td>}
                     <td className="right">
                       <span className="badge low">{num(p.stock)}</span>
                     </td>
@@ -229,6 +249,26 @@ export function Dashboard(): ReactNode {
             ))}
           </div>
         </section>
+      )}
+
+      {selected && (
+        <ProductDrawer
+          product={selected}
+          onClose={() => setSelected(null)}
+          onEdit={isAdmin ? () => setEditing(selected) : undefined}
+          showPrices={showPrices}
+          threshold={threshold}
+        />
+      )}
+      {editing && (
+        <ProductEditor
+          product={editing}
+          onClose={() => setEditing(null)}
+          onSaved={(p) => {
+            setEditing(null)
+            setSelected(p)
+          }}
+        />
       )}
     </div>
   )

@@ -1035,8 +1035,127 @@ dialog.modal::backdrop {
   color: var(--text);
   font-size: 0.92rem;
 }
-.update-banner .spin {
+.update-banner .spin,
+.update-dialog .spin {
   animation: update-spin 1.2s linear infinite;
+}
+dialog.update-dialog {
+  width: min(460px, 92vw);
+  overflow: hidden;
+}
+.update-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px 24px 20px;
+}
+.update-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.update-hero img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(11, 31, 68, 0.25));
+}
+.update-hero h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+}
+.update-versions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.95rem;
+}
+.update-versions .ver {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+.update-versions .ver.new {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+.update-notes {
+  border: 1px solid var(--border-soft, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  padding: 10px 12px;
+  max-height: 160px;
+  overflow: auto;
+  font-size: 0.9rem;
+}
+.update-notes pre {
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+.update-progress {
+  width: 100%;
+  height: 10px;
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--border);
+}
+.update-progress::-webkit-progress-bar {
+  background: var(--border);
+}
+.update-progress::-webkit-progress-value {
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+.app-version {
+  opacity: 0.8;
+}
+
+/* Shelf location: warehouse staff look products up by shelf, so it must stand out. */
+.shelf-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #1a1400;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+.shelf-tag.sm {
+  padding: 2px 8px;
+  font-size: 0.85rem;
+}
+.shelf-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent), #ffd54a);
+  color: #1a1400;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.shelf-card-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.shelf-card-value {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.1;
 }
 @keyframes update-spin {
   to {

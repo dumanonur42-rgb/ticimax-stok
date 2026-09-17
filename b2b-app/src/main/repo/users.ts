@@ -1,7 +1,7 @@
 import type { Session, User, UserRole } from '@shared/types'
 import { hashPassword, verifyPassword } from '../auth'
 import { getDb } from '../db'
-import { getCustomer } from './customers'
+import { createCustomerShell, getCustomer } from './customers'
 
 const USER_COLS = 'id, username, display_name, role, customer_id, active, approved, created_at'
 
@@ -50,12 +50,13 @@ export function saveUser(u: {
   const db = getDb()
   const username = u.username.trim()
   if (!username) throw new Error('Kullanıcı adı boş olamaz.')
+  const customer_id = u.role === 'bayi' ? (u.customer_id ?? createCustomerShell(u.display_name || username).id) : null
   if (u.id) {
     db.prepare('UPDATE users SET username=?, display_name=?, role=?, customer_id=?, active=? WHERE id=?').run(
       username,
       u.display_name,
       u.role,
-      u.customer_id,
+      customer_id,
       u.active,
       u.id
     )
@@ -65,11 +66,11 @@ export function saveUser(u: {
   if (!u.password || u.password.length < 4) throw new Error('Şifre en az 4 karakter olmalı.')
   const r = db
     .prepare("INSERT INTO users(username, password_hash, display_name, role, customer_id, active, created_at) VALUES (?,?,?,?,?,?,datetime('now','localtime'))")
-    .run(username, hashPassword(u.password), u.display_name, u.role, u.customer_id, u.active)
+    .run(username, hashPassword(u.password), u.display_name, u.role, customer_id, u.active)
   return getUser(Number(r.lastInsertRowid))!
 }
 
-/** Self-service sign-up: always a standard (non-admin) account that stays locked until an administrator approves it. */
+/** Self-service sign-up: a dealer account with its own company card, locked until an administrator approves it. */
 export function registerUser(input: { username: string; display_name: string; password: string }): void {
   const db = getDb()
   const username = input.username.trim()
@@ -77,16 +78,29 @@ export function registerUser(input: { username: string; display_name: string; pa
   if (!/^[\p{L}\p{N}._-]+$/u.test(username)) throw new Error('Kullanıcı adı yalnızca harf, rakam, nokta, alt çizgi ve tire içerebilir.')
   if (input.password.length < 4) throw new Error('Şifre en az 4 karakter olmalı.')
   if (db.prepare('SELECT 1 FROM users WHERE username = ? COLLATE NOCASE').get(username)) throw new Error('Bu kullanıcı adı zaten alınmış.')
+  const display = input.display_name.trim() || username
+  const customer = createCustomerShell(display)
   db.prepare(
     "INSERT INTO users(username, password_hash, display_name, role, customer_id, active, approved, created_at) VALUES (?,?,?,?,?,1,0,datetime('now','localtime'))"
-  ).run(username, hashPassword(input.password), input.display_name.trim() || username, 'satis', null)
+  ).run(username, hashPassword(input.password), display, 'bayi', customer.id)
 }
 
 export function approveUser(id: number): User {
   const db = getDb()
-  if (!getUser(id)) throw new Error('Kullanıcı bulunamadı.')
-  db.prepare('UPDATE users SET approved = 1, active = 1 WHERE id = ?').run(id)
+  const u = getUser(id)
+  if (!u) throw new Error('Kullanıcı bulunamadı.')
+  const customer_id = u.role === 'bayi' ? (u.customer_id ?? createCustomerShell(u.display_name || u.username).id) : u.customer_id
+  db.prepare('UPDATE users SET approved = 1, active = 1, customer_id = ? WHERE id = ?').run(customer_id, id)
   return getUser(id)!
+}
+
+/** Every non-admin is a dealer with a company card; older databases may still have 'satis' users or dealers without one. */
+export function ensureDealerCustomers(): void {
+  const db = getDb()
+  db.prepare("UPDATE users SET role = 'bayi' WHERE role <> 'admin'").run()
+  const orphans = db.prepare("SELECT id, username, display_name FROM users WHERE role = 'bayi' AND (customer_id IS NULL OR customer_id NOT IN (SELECT id FROM customers))").all() as Pick<User, 'id' | 'username' | 'display_name'>[]
+  const link = db.prepare('UPDATE users SET customer_id = ? WHERE id = ?')
+  for (const u of orphans) link.run(createCustomerShell(u.display_name || u.username).id, u.id)
 }
 
 export function pendingUserCount(): number {
@@ -99,4 +113,11 @@ export function deleteUser(id: number): void {
   const target = getUser(id)
   if (target?.role === 'admin' && admins === 0) throw new Error('Son yönetici silinemez.')
   db.prepare('DELETE FROM users WHERE id = ?').run(id)
+  if (target?.customer_id) {
+    db.prepare(
+      `DELETE FROM customers WHERE id = ? AND code = ''
+         AND NOT EXISTS (SELECT 1 FROM orders WHERE customer_id = customers.id)
+         AND NOT EXISTS (SELECT 1 FROM users WHERE customer_id = customers.id)`
+    ).run(target.customer_id)
+  }
 }

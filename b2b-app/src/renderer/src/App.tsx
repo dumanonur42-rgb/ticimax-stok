@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Shell } from '@/components/Shell'
 import { Toasts } from '@/components/ui'
+import { UpdateDialog } from '@/components/UpdateDialog'
 import { api, onEvent } from '@/lib/api'
 import { Cart } from '@/pages/Cart'
 import { Catalog } from '@/pages/Catalog'
@@ -86,6 +87,7 @@ export function App(): ReactNode {
     return (
       <>
         <Login />
+        <UpdateDialog />
         <Toasts />
       </>
     )
@@ -98,6 +100,7 @@ export function App(): ReactNode {
       <Shell>
         <Page />
       </Shell>
+      <UpdateDialog />
       <Toasts />
     </>
   )

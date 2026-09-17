@@ -40,11 +40,10 @@ export const STATUS_CLASS: Record<OrderStatus, string> = {
   iptal: 'out'
 }
 
-export const ROLE_LABEL = { admin: 'Yönetici', satis: 'Kullanıcı', bayi: 'Bayi' } as const
+export const ROLE_LABEL = { admin: 'Yönetici', bayi: 'Bayi' } as const
 export const ROLE_HINT = {
   admin: 'Tüm yetkiler: ürün ekleme/düzenleme, stok aktarma, Excel indirme, bayi ve kullanıcı yönetimi.',
-  satis: 'Katalogda arama, sipariş oluşturma ve takibi. Ürün/stok değiştiremez, Excel indiremez.',
-  bayi: 'Yalnızca bağlı olduğu bayinin siparişlerini görür ve oluşturur.'
+  bayi: 'Müşteri hesabı: katalogda arama, kendi cari kartıyla sipariş oluşturma ve yalnızca kendi siparişlerini takip.'
 } as const
 
 export function stockLevel(stock: number, threshold: number): { cls: 'ok' | 'low' | 'out'; label: string } {

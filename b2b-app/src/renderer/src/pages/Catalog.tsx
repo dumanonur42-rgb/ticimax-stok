@@ -25,6 +25,7 @@ const COLUMNS: Column[] = [
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '120px' },
   { key: 'dims', label: 'd × D × B', width: '140px' },
+  { key: 'shelf', label: 'Raf', width: '110px' },
   { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
   { key: 'price', label: 'Peşin Fiyat', width: '124px', sort: 'price', align: 'right' },
   { key: 'card_price', label: 'K. Kartı Fiyatı', width: '132px', align: 'right' },
@@ -123,7 +124,7 @@ export function Catalog(): ReactNode {
   }, [vItems, rows, loadPage])
 
   const cardPct = settings?.card_price_pct ?? 0
-  const cols = COLUMNS.filter((c) => showPrices || (c.key !== 'price' && c.key !== 'card_price'))
+  const cols = COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || c.key !== 'shelf'))
   const gridCols = cols.map((c) => c.width).join(' ')
 
   const toggleSort = (s: SortKey): void =>
@@ -407,6 +408,11 @@ export function Catalog(): ReactNode {
                     <div className="cell mono small muted" role="gridcell">
                       {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
                     </div>
+                    {isAdmin && (
+                      <div className="cell" role="gridcell">
+                        {p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}
+                      </div>
+                    )}
                     <div className="cell right" role="gridcell">
                       <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
                     </div>

@@ -1,6 +1,7 @@
 import type {
   Customer,
   CustomerInput,
+  CustomerProfile,
   DashboardStats,
   Facets,
   ImportLog,
@@ -41,6 +42,8 @@ export interface ApiMap {
   'customers:get': [number, Customer | null]
   'customers:save': [Partial<Customer> & CustomerInput, Customer]
   'customers:delete': [number, void]
+  /** A dealer completes their own company card (name, tax and contact details). */
+  'customers:profile': [CustomerProfile, Session]
 
   'orders:list': [{ q?: string; status?: OrderStatus; customer_id?: number; limit?: number }, Order[]]
   'orders:get': [number, Order | null]
@@ -75,6 +78,7 @@ export interface ApiMap {
 
   'update:state': [void, UpdateState]
   'update:check': [void, void]
+  'update:download': [void, void]
   'update:install': [void, void]
 }
 

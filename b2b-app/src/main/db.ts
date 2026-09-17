@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS import_logs (
 
 export const DEFAULT_ADMIN = { username: 'Yamansa', password: 'Ahmet4202', displayName: 'Ahmet' }
 /** Standard (non-admin) staff account created on first run alongside the administrator. */
-export const DEFAULT_STAFF = { username: 'Onur', password: 'Duman4202', displayName: 'Onur', role: 'satis' as const }
+export const DEFAULT_STAFF = { username: 'Onur', password: 'Duman4202', displayName: 'Onur', role: 'bayi' as const }
 
 function addColumnIfMissing(d: DB, table: string, column: string, ddl: string): void {
   const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[]
@@ -183,6 +183,7 @@ function migrate(d: DB): void {
   addColumnIfMissing(d, 'users', 'created_at', "TEXT NOT NULL DEFAULT ''")
   addColumnIfMissing(d, 'products', 'card_price', 'REAL')
   addColumnIfMissing(d, 'orders', 'payment', "TEXT NOT NULL DEFAULT 'pesin'")
+  d.prepare("DELETE FROM settings WHERE key = 'card_price_pct' AND value = '0'").run()
   const userCount = d.prepare('SELECT COUNT(*) c FROM users').get() as { c: number }
   const insertUser = d.prepare(`INSERT INTO users(username, password_hash, display_name, role, created_at) VALUES (?,?,?,?,datetime('now','localtime'))`)
   const exists = d.prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)
