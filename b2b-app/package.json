@@ -1,7 +1,7 @@
 {
   "name": "yamansa-rulman-b2b",
   "productName": "Yamansa Rulman B2B",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Yamansa Rulman bayi (B2B) stok ve sipariş uygulaması",
   "main": "./out/main/index.js",
   "author": "Yamansa Rulman",
@@ -14,12 +14,13 @@
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
     "postinstall": "electron-builder install-app-deps",
-    "dist:win": "electron-vite build && electron-builder --win --x64",
-    "dist:linux": "electron-vite build && electron-builder --linux AppImage --x64",
+    "dist:win": "electron-vite build && electron-builder --win --x64 --publish never",
+    "dist:linux": "electron-vite build && electron-builder --linux AppImage --x64 --publish never",
     "selfcheck": "electron-vite build && electron . --selfcheck"
   },
   "dependencies": {
     "better-sqlite3": "^12.2.0",
+    "electron-updater": "^6.8.9",
     "papaparse": "^5.5.3",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "zustand": "^5.0.8"

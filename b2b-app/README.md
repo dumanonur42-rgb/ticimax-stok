@@ -31,13 +31,27 @@ Windows makinede:
 
 ```bash
 npm install
-npm run dist:win     # dist/Yamansa Rulman B2B-Kurulum-<sürüm>-x64.exe
+npm run dist:win     # dist/YamansaRulmanB2B-Kurulum-<sürüm>-x64.exe
 ```
 
 Ya da GitHub Actions: `b2b-app/` altındaki her değişiklikte **B2B App – Windows Installer** iş akışı çalışır ve
 kurulum dosyasını "Artifacts" olarak yükler. `b2b-v1.0.0` gibi bir etiket atılırsa kurulum dosyası Release'e eklenir.
 
 > Linux üzerinden çapraz derleme desteklenmez (yerel `better-sqlite3` modülü Windows için derlenmez); Windows CI kullanın.
+
+## Otomatik güncelleme
+
+Kurulu uygulama, GitHub Releases'teki en son sürümü açılışta (ve 4 saatte bir) denetler; yeni sürüm varsa
+arka planda indirir ve kullanıcı "Yeniden başlat ve güncelle" dediğinde ya da uygulama kapanırken kurar.
+
+Yeni sürüm yayınlamak için:
+
+1. `b2b-app/package.json` içindeki `version` değerini artırın (örn. `1.0.3`).
+2. `b2b-v1.0.3` etiketi atıp gönderin: `git tag b2b-v1.0.3 && git push origin b2b-v1.0.3`
+3. İş akışı Release'e `.exe`, `.blockmap` ve `latest.yml` dosyalarını ekler; kurulu uygulamalar bunu görüp güncellenir.
+
+> Kod imzalama sertifikası olmadan Windows ilk kurulumda "bilinmeyen yayıncı" uyarısı gösterir; dosya bilgilerinde
+> şirket adı Yamansa Rulman olur, ancak uyarının kalkması için Yamansa adına alınmış bir kod imzalama sertifikası gerekir.
 
 ## Veri konumu
 

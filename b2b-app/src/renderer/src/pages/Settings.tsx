@@ -2,6 +2,7 @@ import type { Currency, Customer, Settings as S, User, UserRole } from '@shared/
 import { Database, Pencil, Plus, Save } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
+import { useUpdateState } from '@/components/Shell'
 import { api } from '@/lib/api'
 import { ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -292,6 +293,35 @@ function Users(): ReactNode {
   )
 }
 
+function UpdateStatus(): ReactNode {
+  const u = useUpdateState()
+  if (!u) return null
+  const label =
+    u.status === 'checking'
+      ? 'Güncelleme denetleniyor…'
+      : u.status === 'downloading'
+        ? `Sürüm ${u.version} indiriliyor… ${u.percent ?? 0}%`
+        : u.status === 'downloaded'
+          ? `Sürüm ${u.version} hazır — yeniden başlatınca kurulur.`
+          : u.status === 'error'
+            ? `Güncelleme denetlenemedi: ${u.message ?? ''}`
+            : 'Güncel'
+  return (
+    <>
+      <span className="muted small">{label}</span>
+      {u.status === 'downloaded' ? (
+        <button className="btn primary sm" onClick={() => api('update:install', undefined).catch(() => undefined)}>
+          Yeniden başlat ve güncelle
+        </button>
+      ) : (
+        <button className="btn sm" disabled={u.status === 'checking' || u.status === 'downloading'} onClick={() => api('update:check', undefined).catch(() => undefined)}>
+          Güncellemeleri denetle
+        </button>
+      )}
+    </>
+  )
+}
+
 function Data(): ReactNode {
   const { toast } = useApp()
   const [info, setInfo] = useState<{ version: string; dbPath: string; platform: string } | null>(null)
@@ -304,7 +334,10 @@ function Data(): ReactNode {
     <div className="card grid" style={{ gap: 14 }}>
       <dl className="dl">
         <dt>Sürüm</dt>
-        <dd>{info?.version ?? '-'}</dd>
+        <dd className="row wrap" style={{ gap: 10 }}>
+          <span>{info?.version ?? '-'}</span>
+          <UpdateStatus />
+        </dd>
         <dt>Veritabanı</dt>
         <dd className="mono small" style={{ wordBreak: 'break-all' }}>
           {info?.dbPath ?? '-'}

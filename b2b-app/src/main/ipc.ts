@@ -13,6 +13,7 @@ import { allProductsForExport, deleteProduct, getProduct, productFacets, product
 import { seedDemo } from './repo/seed'
 import { getSettings, setSettings } from './repo/settings'
 import { changePassword, deleteUser, listUsers, login, saveUser, sessionFor } from './repo/users'
+import { checkForUpdates, installUpdate, updateState } from './updater'
 
 let session: Session | null = null
 
@@ -253,6 +254,15 @@ export function registerIpc(): void {
     broadcast('products:changed')
     broadcast('orders:changed')
     return true
+  })
+  handle('update:state', () => updateState())
+  handle('update:check', () => {
+    requireRole()
+    checkForUpdates()
+  })
+  handle('update:install', () => {
+    requireRole()
+    installUpdate()
   })
   handle('app:seedDemo', (n) => {
     requireRole('admin')

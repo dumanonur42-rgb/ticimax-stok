@@ -954,6 +954,26 @@ dialog.modal::backdrop {
   gap: 10px;
 }
 
+.update-banner {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft, rgba(37, 99, 235, 0.12));
+  color: var(--text);
+  font-size: 0.92rem;
+}
+.update-banner .spin {
+  animation: update-spin 1.2s linear infinite;
+}
+@keyframes update-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* toasts */
 .toasts {
   position: fixed;

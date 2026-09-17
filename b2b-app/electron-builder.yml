@@ -13,7 +13,7 @@ asarUnpack:
   - resources/**
   - '**/*.node'
 npmRebuild: true
-artifactName: ${productName}-Kurulum-${version}-${arch}.${ext}
+artifactName: YamansaRulmanB2B-Kurulum-${version}-${arch}.${ext}
 win:
   target:
     - target: nsis
@@ -21,6 +21,7 @@ win:
   icon: build/icon.ico
   executableName: YamansaRulmanB2B
   requestedExecutionLevel: asInvoker
+  legalTrademarks: Yamansa Rulman
 nsis:
   oneClick: false
   perMachine: false
@@ -38,4 +39,8 @@ linux:
   target: [AppImage]
   icon: build/icon.png
   category: Office
-publish: null
+publish:
+  provider: github
+  owner: dumanonur42-rgb
+  repo: ticimax-stok
+  releaseType: release

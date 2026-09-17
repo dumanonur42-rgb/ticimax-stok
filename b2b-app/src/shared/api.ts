@@ -16,6 +16,7 @@ import type {
   ProductPage,
   Session,
   Settings,
+  UpdateState,
   User,
   UserRole
 } from './types'
@@ -69,6 +70,10 @@ export interface ApiMap {
   'app:backup': [void, string | null]
   'app:restore': [void, boolean]
   'app:seedDemo': [number, number]
+
+  'update:state': [void, UpdateState]
+  'update:check': [void, void]
+  'update:install': [void, void]
 }
 
 export type ApiChannel = keyof ApiMap
@@ -80,4 +85,4 @@ export interface Api {
   on(channel: AppEvent, cb: () => void): () => void
 }
 
-export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave'
+export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave' | 'update:changed'

@@ -51,9 +51,13 @@ jobs:
           path: |
             b2b-app/dist/*.exe
             b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml
           if-no-files-found: error
-      - name: Attach installer to release (tags only)
+      - name: Attach installer + update manifest to release (tags only)
         if: startsWith(github.ref, 'refs/tags/b2b-v')
         uses: softprops/action-gh-release@v2
         with:
-          files: b2b-app/dist/*.exe
+          files: |
+            b2b-app/dist/*.exe
+            b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml

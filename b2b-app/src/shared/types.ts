@@ -137,6 +137,14 @@ export interface Session {
   customer: Customer | null
 }
 
+export interface UpdateState {
+  status: 'idle' | 'checking' | 'downloading' | 'downloaded' | 'error'
+  current: string
+  version?: string
+  percent?: number
+  message?: string
+}
+
 export interface Settings {
   company_name: string
   company_phone: string

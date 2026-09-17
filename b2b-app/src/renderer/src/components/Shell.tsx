@@ -6,13 +6,15 @@ import {
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
+  RefreshCw,
   Search,
   Settings as SettingsIcon,
   ShoppingCart,
   Users
 } from 'lucide-react'
-import { useEffect, type ReactNode } from 'react'
-import { api } from '@/lib/api'
+import { useEffect, useState, type ReactNode } from 'react'
+import type { UpdateState } from '@shared/types'
+import { api, onEvent } from '@/lib/api'
 import { ROLE_LABEL } from '@/lib/format'
 import { useApp, useCart, type Page } from '@/store/app'
 import logo from '@/assets/logo.png'
@@ -46,6 +48,41 @@ export const PAGE_TITLE: Record<Page, string> = {
   import: 'Stok Aktarımı',
   settings: 'Ayarlar',
   help: 'Yardım ve Kısayollar'
+}
+
+/** Subscribes to the main-process updater; returns null until an update is actually downloading/ready. */
+export function useUpdateState(): UpdateState | null {
+  const [state, setState] = useState<UpdateState | null>(null)
+  useEffect(() => {
+    const load = (): void => {
+      api('update:state', undefined).then(setState).catch(() => undefined)
+    }
+    load()
+    return onEvent('update:changed', load)
+  }, [])
+  return state
+}
+
+function UpdateBanner(): ReactNode {
+  const u = useUpdateState()
+  if (!u || (u.status !== 'downloading' && u.status !== 'downloaded')) return null
+  return (
+    <div className="update-banner" role="status" aria-live="polite">
+      <RefreshCw size={16} aria-hidden className={u.status === 'downloading' ? 'spin' : undefined} />
+      {u.status === 'downloading' ? (
+        <span>
+          Yeni sürüm {u.version} indiriliyor… {u.percent ?? 0}%
+        </span>
+      ) : (
+        <>
+          <span>Sürüm {u.version} hazır.</span>
+          <button className="btn primary sm" onClick={() => api('update:install', undefined).catch(() => undefined)}>
+            Yeniden başlat ve güncelle
+          </button>
+        </>
+      )}
+    </div>
+  )
 }
 
 export function Shell({ children }: { children: ReactNode }): ReactNode {
@@ -171,6 +208,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
               {session.customer.name}
             </span>
           )}
+          <UpdateBanner />
         </header>
         <main id="main" className={`content${page === 'catalog' ? ' flush' : ''}`}>
           {children}

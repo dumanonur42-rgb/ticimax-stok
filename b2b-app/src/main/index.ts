@@ -5,6 +5,7 @@ import { registerIpc } from './ipc'
 import { dashboardStats } from './repo/dashboard'
 import { productFacets, searchProducts } from './repo/products'
 import { runSelfCheck } from './selfcheck'
+import { startUpdater } from './updater'
 
 const isDev = !app.isPackaged && !!process.env.ELECTRON_RENDERER_URL
 const SPLASH_MIN_MS = 3000
@@ -143,6 +144,7 @@ if (process.argv.includes('--selfcheck')) {
     registerIpc()
     createWindow()
     setImmediate(warmUp)
+    startUpdater()
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
