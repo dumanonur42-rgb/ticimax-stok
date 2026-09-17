@@ -1,0 +1,45 @@
+{
+  "name": "yamansa-rulman-b2b",
+  "productName": "Yamansa Rulman B2B",
+  "version": "1.0.5",
+  "description": "Yamansa Rulman bayi (B2B) stok ve sipariş uygulaması",
+  "main": "./out/main/index.js",
+  "author": "Yamansa Rulman",
+  "homepage": "https://yamansarulman.com",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "postinstall": "electron-builder install-app-deps",
+    "dist:win": "electron-vite build && electron-builder --win --x64 --publish never",
+    "dist:linux": "electron-vite build && electron-builder --linux AppImage --x64 --publish never",
+    "selfcheck": "electron-vite build && electron . --selfcheck"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "electron-updater": "^6.8.9",
+    "papaparse": "^5.5.3",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@tanstack/react-virtual": "^3.13.12",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.18.0",
+    "@types/papaparse": "^5.3.16",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "electron": "38.8.4",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^4.0.0",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  }
+}

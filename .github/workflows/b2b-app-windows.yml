@@ -1,0 +1,63 @@
+name: B2B App – Windows Installer
+
+on:
+  push:
+    branches: [main]
+    paths: ['b2b-app/**', '.github/workflows/b2b-app-windows.yml']
+    tags: ['b2b-v*']
+  pull_request:
+    paths: ['b2b-app/**', '.github/workflows/b2b-app-windows.yml']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: b2b-app
+
+jobs:
+  check:
+    name: Typecheck & self-check (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-app/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Headless self-check (12k products, search timings)
+        run: xvfb-run -a npx electron . --selfcheck --no-sandbox
+
+  windows:
+    name: Build Windows installer (.exe)
+    runs-on: windows-latest
+    needs: check
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-app/package-lock.json
+      - run: npm ci
+      - run: npm run dist:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YamansaRulmanB2B-Windows-Installer
+          path: |
+            b2b-app/dist/*.exe
+            b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml
+          if-no-files-found: error
+      - name: Attach installer + update manifest to release (tags only)
+        if: startsWith(github.ref, 'refs/tags/b2b-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            b2b-app/dist/*.exe
+            b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml
