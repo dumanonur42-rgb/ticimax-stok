@@ -8,12 +8,14 @@ Veriler bilgisayarda yerel SQLite dosyasında tutulur; internet gerekmez.
   Modlar: güncelle/ekle, sadece stok-fiyat, tümünü değiştir.
 - **Rulman odaklı arama** – stok kodu / muadil / barkod; boşluk, tire ve Türkçe karakter duyarsız; d × D × B ölçü filtreleri.
 - **Sepet & sipariş** – bayi iskontosu, KDV, stok düşümü, iptal ile geri alma, Excel ve yazdırma.
-- **Roller** – Yönetici, Satış, Bayi (bayi yalnızca kendi siparişlerini görür).
+- **Roller** – Yönetici, Kullanıcı, Bayi. Ürün ekleme/düzenleme, stok aktarma, Excel indirme, bayi ve kullanıcı yönetimi yalnızca yöneticide (arayüzde gizli + IPC tarafında yetki kontrolü). Bayi yalnızca kendi siparişlerini görür.
+- **Kayıt & onay** – Giriş ekranındaki "Kayıt ol" standart kullanıcı rolüyle *onay bekleyen* hesap açar; yönetici Ayarlar → Kullanıcılar'dan onaylar, rol/yetki değiştirir, yeni kullanıcı/yönetici ekler.
+- **Oturum hatırlama** – Başarılı giriş `userData/session.json` içinde saklanır; uygulama açılışta otomatik girer, yalnızca "Çıkış" ile silinir.
 - **Erişilebilirlik** – klavye ile tam kullanım (Ctrl+K, F2, Alt+1..8, ok tuşları, `+`), ARIA grid, ekran okuyucu bildirimleri,
   açık/koyu/yüksek kontrast tema, yazı boyutu, azaltılmış hareket, sıkışık görünüm.
 - **Yedekleme** – tek dosya yedek al / geri yükle.
 
-Varsayılan yönetici hesabı: kullanıcı adı `Yamansa` (şifre `src/main/db.ts` içindeki `DEFAULT_ADMIN`'de; ilk girişten sonra Ayarlar → Şifre'den değiştirin).
+Varsayılan hesaplar: yönetici `Yamansa` ve standart kullanıcı `Onur` (şifreler `src/main/db.ts` içindeki `DEFAULT_ADMIN` / `DEFAULT_STAFF`'ta; ilk girişten sonra Ayarlar → Şifre'den değiştirin).
 
 ## Geliştirme
 

@@ -1,9 +1,10 @@
 import type { DashboardStats } from '@shared/types'
-import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, Users } from 'lucide-react'
+import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Empty, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
+import { SETTINGS_TAB_USERS } from '@/pages/Settings'
 import { useApp, useCart } from '@/store/app'
 
 export function Dashboard(): ReactNode {
@@ -21,9 +22,11 @@ export function Dashboard(): ReactNode {
     load()
     const a = onEvent('products:changed', load)
     const b = onEvent('orders:changed', load)
+    const c = onEvent('users:changed', load)
     return () => {
       a()
       b()
+      c()
     }
   }, [])
 
@@ -104,6 +107,9 @@ export function Dashboard(): ReactNode {
         <Stat icon={<ClipboardList size={18} aria-hidden />} label="Açık sipariş" value={num(stats.openOrders)} onClick={() => go('orders')} />
         <Stat icon={<ClipboardList size={18} aria-hidden />} label="Bugünkü sipariş" value={num(stats.ordersToday)} onClick={() => go('orders')} />
         {isAdmin && <Stat icon={<Users size={18} aria-hidden />} label="Bayi" value={num(stats.customerCount)} onClick={() => go('customers')} />}
+        {isAdmin && stats.pendingUsers > 0 && (
+          <Stat icon={<UserCheck size={18} aria-hidden />} label="Onay bekleyen kayıt" value={num(stats.pendingUsers)} onClick={() => go('settings', SETTINGS_TAB_USERS)} />
+        )}
         <div className="card stat">
           <span className="muted label">Son stok aktarımı</span>
           {stats.lastImport ? (

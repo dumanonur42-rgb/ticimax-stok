@@ -16,7 +16,9 @@
   --bg-sunken: #e9edf3;
   --bg-hover: #eef2f8;
   --bg-selected: #dbe7ff;
+  --bg-stripe: #f7f9fc;
   --border: #d5dbe5;
+  --border-soft: #e6eaf1;
   --border-strong: #aab4c5;
   --text: #0f172a;
   --text-muted: #4b5670;
@@ -45,9 +47,11 @@
   --bg: #0f172a;
   --bg-elev: #172033;
   --bg-sunken: #0b1222;
-  --bg-hover: #1f2a44;
-  --bg-selected: #23406f;
+  --bg-hover: #1e2942;
+  --bg-selected: #253a63;
+  --bg-stripe: #1a2438;
   --border: #2b3856;
+  --border-soft: #202b42;
   --border-strong: #46557a;
   --text: #e6ebf5;
   --text-muted: #a5b1c8;
@@ -74,7 +78,9 @@
   --bg-sunken: #0a0a0a;
   --bg-hover: #1a1a1a;
   --bg-selected: #003366;
+  --bg-stripe: #0d0d0d;
   --border: #ffffff;
+  --border-soft: #ffffff;
   --border-strong: #ffffff;
   --text: #ffffff;
   --text-muted: #ffffff;
@@ -427,6 +433,10 @@ textarea {
   border-color: transparent;
   background: transparent;
 }
+.btn.active {
+  background: var(--bg-selected);
+  border-color: var(--primary);
+}
 .btn.sm {
   height: 30px;
   padding: 0 10px;
@@ -675,17 +685,46 @@ textarea.input {
 }
 .vrow {
   height: var(--row-h);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-soft);
   cursor: pointer;
   position: absolute;
   left: 0;
   right: 0;
+  color: var(--text);
+}
+.vrow.odd {
+  background: var(--bg-stripe);
 }
 .vrow:hover {
   background: var(--bg-hover);
 }
 .vrow[aria-selected='true'] {
   background: var(--bg-selected);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+.vrow .badge {
+  font-weight: 600;
+}
+.vrow .badge.ok {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+.vrow .cart-btn {
+  color: var(--text-muted);
+  border-color: var(--border);
+  background: transparent;
+}
+.vrow:hover .cart-btn,
+.vrow[aria-selected='true'] .cart-btn,
+.vrow .cart-btn:focus-visible {
+  color: var(--primary-text);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.vrow .cart-btn:disabled {
+  background: transparent;
+  color: var(--text-faint);
 }
 .vrow.inactive {
   opacity: 0.6;
@@ -699,6 +738,10 @@ textarea.input {
 .vrow .sku {
   font-family: var(--mono);
   font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.vrow .cell.muted {
+  color: var(--text-muted);
 }
 .qty-input {
   width: 64px;
@@ -713,7 +756,7 @@ textarea.input {
 /* catalog layout */
 .catalog {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 250px 1fr;
   flex: 1;
   min-height: 0;
 }

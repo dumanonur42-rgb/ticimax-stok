@@ -34,7 +34,7 @@ const NAV: NavItem[] = [
   { page: 'cart', label: 'Sepet', icon: <ShoppingCart size={20} aria-hidden />, key: '3' },
   { page: 'orders', label: 'Siparişler', icon: <ClipboardList size={20} aria-hidden />, key: '4' },
   { page: 'customers', label: 'Bayiler', icon: <Users size={20} aria-hidden />, key: '5', roles: ['admin', 'satis'] },
-  { page: 'import', label: 'Stok Aktar', icon: <FileUp size={20} aria-hidden />, key: '6', roles: ['admin', 'satis'] },
+  { page: 'import', label: 'Stok Aktar', icon: <FileUp size={20} aria-hidden />, key: '6', roles: ['admin'] },
   { page: 'settings', label: 'Ayarlar', icon: <SettingsIcon size={20} aria-hidden />, key: '7' },
   { page: 'help', label: 'Yardım', icon: <HelpCircle size={20} aria-hidden />, key: '8' }
 ]

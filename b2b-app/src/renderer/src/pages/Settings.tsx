@@ -1,18 +1,21 @@
 import type { Currency, Customer, Settings as S, User, UserRole } from '@shared/types'
-import { Database, Pencil, Plus, Save } from 'lucide-react'
+import { Database, Pencil, Plus, Save, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { useUpdateState } from '@/components/Shell'
-import { api } from '@/lib/api'
-import { ROLE_LABEL } from '@/lib/format'
+import { api, onEvent } from '@/lib/api'
+import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
 
 type Tab = 'gorunum' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
 
+/** `go('settings', SETTINGS_TAB_USERS)` opens the user management tab directly. */
+export const SETTINGS_TAB_USERS = 1
+
 export function SettingsPage(): ReactNode {
-  const { session, settings } = useApp()
+  const { session, settings, pageParam } = useApp()
   const isAdmin = session?.user.role === 'admin'
-  const [tab, setTab] = useState<Tab>('gorunum')
+  const [tab, setTab] = useState<Tab>(pageParam === SETTINGS_TAB_USERS && isAdmin ? 'kullanicilar' : 'gorunum')
   const tabs: { id: Tab; label: string; admin?: boolean }[] = [
     { id: 'gorunum', label: 'Görünüm & Erişilebilirlik' },
     { id: 'firma', label: 'Firma & Fiyat', admin: true },
@@ -159,7 +162,19 @@ function Users(): ReactNode {
   useEffect(() => {
     load()
     api('customers:list', {}).then(setCustomers).catch(() => undefined)
+    return onEvent('users:changed', load)
   }, [])
+
+  const approve = async (u: User): Promise<void> => {
+    try {
+      await api('users:approve', u.id)
+      toast(`${u.username} onaylandı; artık giriş yapabilir.`, 'success')
+      load()
+    } catch (e) {
+      toast((e as Error).message, 'error')
+    }
+  }
+  const pending = users.filter((u) => !u.approved)
 
   const save = async (): Promise<void> => {
     if (!editing) return
@@ -191,20 +206,26 @@ function Users(): ReactNode {
     <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
       <div className="toolbar">
         <p className="muted small" style={{ margin: 0 }}>
-          Bayi rolündeki kullanıcılar yalnızca kendi siparişlerini görür ve oluşturur.
+          Kayıtlı herkes burada listelenir. Rol, kullanıcının yetkilerini belirler; "Kayıt ol" ile gelen hesaplar siz onaylayana kadar giriş yapamaz.
         </p>
         <span className="spacer" />
         <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'satis', customer_id: null, password: '', active: 1 })}>
           <Plus size={16} aria-hidden /> Yeni kullanıcı
         </button>
       </div>
+      {pending.length > 0 && (
+        <div className="toolbar" style={{ background: 'var(--warning-bg)', color: 'var(--warning)' }} role="status">
+          <UserCheck size={16} aria-hidden /> <strong>{pending.length}</strong> yeni kayıt onayınızı bekliyor.
+        </div>
+      )}
       <table className="table">
         <thead>
           <tr>
             <th>Kullanıcı</th>
             <th>Ad</th>
-            <th>Rol</th>
+            <th>Rol / Yetki</th>
             <th>Bayi</th>
+            <th>Kayıt</th>
             <th>Durum</th>
             <th>
               <span className="sr-only">İşlem</span>
@@ -216,13 +237,23 @@ function Users(): ReactNode {
             <tr key={u.id}>
               <td className="mono">{u.username}</td>
               <td>{u.display_name}</td>
-              <td>{ROLE_LABEL[u.role]}</td>
+              <td title={ROLE_HINT[u.role]}>{ROLE_LABEL[u.role]}</td>
               <td>{customers.find((c) => c.id === u.customer_id)?.name ?? '-'}</td>
-              <td>{u.active ? <span className="badge ok">Aktif</span> : <span className="badge neutral">Pasif</span>}</td>
+              <td className="small muted nowrap">{u.created_at ? date(u.created_at) : '-'}</td>
               <td>
-                <button className="btn ghost icon sm" aria-label={`${u.username} düzenle`} onClick={() => setEditing({ ...u, password: '' })}>
-                  <Pencil size={16} aria-hidden />
-                </button>
+                {!u.approved ? <span className="badge low">Onay bekliyor</span> : u.active ? <span className="badge ok">Aktif</span> : <span className="badge neutral">Pasif</span>}
+              </td>
+              <td>
+                <div className="row" style={{ gap: 4, justifyContent: 'flex-end' }}>
+                  {!u.approved && (
+                    <button className="btn primary sm" onClick={() => approve(u)} aria-label={`${u.username} kaydını onayla`}>
+                      <UserCheck size={14} aria-hidden /> Onayla
+                    </button>
+                  )}
+                  <button className="btn ghost icon sm" aria-label={`${u.username} düzenle`} onClick={() => setEditing({ ...u, password: '' })}>
+                    <Pencil size={16} aria-hidden />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
@@ -261,12 +292,15 @@ function Users(): ReactNode {
             <Field label="Rol">
               {(id) => (
                 <select id={id} className="select" value={editing.role} onChange={(e) => setEditing({ ...editing, role: e.target.value as UserRole })}>
-                  <option value="admin">Yönetici</option>
-                  <option value="satis">Satış</option>
-                  <option value="bayi">Bayi</option>
+                  <option value="admin">{ROLE_LABEL.admin}</option>
+                  <option value="satis">{ROLE_LABEL.satis}</option>
+                  <option value="bayi">{ROLE_LABEL.bayi}</option>
                 </select>
               )}
             </Field>
+            <p className="muted small" style={{ gridColumn: 'span 2', margin: 0 }}>
+              {ROLE_HINT[editing.role]}
+            </p>
             <Field label="Bağlı bayi">
               {(id) => (
                 <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role !== 'bayi'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>

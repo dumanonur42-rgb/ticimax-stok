@@ -23,6 +23,7 @@ const empty: CustomerInput = {
 
 export function Customers(): ReactNode {
   const { toast, session } = useApp()
+  const isAdmin = session?.user.role === 'admin'
   const [list, setList] = useState<Customer[] | null>(null)
   const [q, setQ] = useState('')
   const [editing, setEditing] = useState<(CustomerInput & { id?: number }) | null>(null)
@@ -68,9 +69,11 @@ export function Customers(): ReactNode {
       <div className="toolbar">
         <input className="input" style={{ maxWidth: 320 }} type="search" placeholder="Bayi ara…" aria-label="Bayi ara" value={q} onChange={(e) => setQ(e.target.value)} />
         <span className="spacer" />
-        <button className="btn primary" onClick={() => setEditing({ ...empty })}>
-          <Plus size={16} aria-hidden /> Yeni bayi
-        </button>
+        {isAdmin && (
+          <button className="btn primary" onClick={() => setEditing({ ...empty })}>
+            <Plus size={16} aria-hidden /> Yeni bayi
+          </button>
+        )}
       </div>
       {!list ? (
         <Spinner />
@@ -106,9 +109,11 @@ export function Customers(): ReactNode {
                 <td className="right">%{c.discount_pct}</td>
                 <td>{c.active ? <span className="badge ok">Aktif</span> : <span className="badge neutral">Pasif</span>}</td>
                 <td>
-                  <button className="btn ghost icon sm" onClick={() => setEditing({ ...c })} aria-label={`${c.name} düzenle`}>
-                    <Pencil size={16} aria-hidden />
-                  </button>
+                  {isAdmin && (
+                    <button className="btn ghost icon sm" onClick={() => setEditing({ ...c })} aria-label={`${c.name} düzenle`}>
+                      <Pencil size={16} aria-hidden />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -123,7 +128,7 @@ export function Customers(): ReactNode {
           onClose={() => setEditing(null)}
           footer={
             <>
-              {editing.id && session?.user.role === 'admin' && (
+              {editing.id && isAdmin && (
                 <button className="btn danger" style={{ marginRight: 'auto' }} onClick={() => setConfirmDelete(editing as Customer)}>
                   Sil
                 </button>

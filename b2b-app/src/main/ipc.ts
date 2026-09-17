@@ -1,7 +1,7 @@
 import type { ApiArgs, ApiChannel, ApiResult } from '@shared/api'
-import type { Session } from '@shared/types'
+import type { Order, Session } from '@shared/types'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-import { copyFileSync, existsSync } from 'node:fs'
+import { copyFileSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { closeDb, dbPath, getDb, reopenDb } from './db'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer } from './repo/customers'
@@ -12,10 +12,37 @@ import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders
 import { allProductsForExport, deleteProduct, getProduct, productFacets, productsBySkus, saveProduct, searchProducts } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, setSettings } from './repo/settings'
-import { changePassword, deleteUser, listUsers, login, saveUser, sessionFor } from './repo/users'
+import { approveUser, changePassword, deleteUser, listUsers, login, registerUser, saveUser, sessionFor } from './repo/users'
 import { checkForUpdates, installUpdate, updateState } from './updater'
 
 let session: Session | null = null
+
+/** Remembered login: the last signed-in user stays signed in across restarts until they explicitly log out. */
+function rememberFile(): string {
+  return join(app.getPath('userData'), 'session.json')
+}
+
+function rememberUser(userId: number | null): void {
+  try {
+    if (userId === null) rmSync(rememberFile(), { force: true })
+    else writeFileSync(rememberFile(), JSON.stringify({ userId }), 'utf8')
+  } catch (e) {
+    console.error('session persist failed', e)
+  }
+}
+
+function restoreSession(): Session | null {
+  try {
+    if (!existsSync(rememberFile())) return null
+    const parsed = JSON.parse(readFileSync(rememberFile(), 'utf8')) as { userId?: unknown }
+    if (typeof parsed.userId !== 'number') return null
+    const s = sessionFor(parsed.userId)
+    if (!s) rememberUser(null)
+    return s
+  } catch {
+    return null
+  }
+}
 
 type Handler<C extends ApiChannel> = (args: ApiArgs<C>, event: Electron.IpcMainInvokeEvent) => ApiResult<C> | Promise<ApiResult<C>>
 
@@ -54,14 +81,21 @@ function hideShelf<T extends { shelf: string }>(items: T[]): T[] {
 }
 
 export function registerIpc(): void {
+  session = restoreSession()
   handle('auth:login', ({ username, password }) => {
     const s = login(username, password)
     if (!s) throw new Error('Kullanıcı adı veya şifre hatalı.')
     session = s
+    rememberUser(s.user.id)
     return s
   })
   handle('auth:logout', () => {
     session = null
+    rememberUser(null)
+  })
+  handle('auth:register', (input) => {
+    registerUser(input)
+    broadcast('users:changed')
   })
   handle('auth:session', () => (session ? sessionFor(session.user.id) : null))
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.id, current, next))
@@ -85,8 +119,7 @@ export function registerIpc(): void {
     return hideShelf(productsBySkus(skus))
   })
   handle('products:save', (p) => {
-    const s = requireRole('admin', 'satis')
-    if (s.user.role !== 'admin' && p.id) p = { ...p, shelf: getProduct(p.id)?.shelf ?? '' }
+    requireRole('admin')
     const r = saveProduct(p)
     broadcast('products:changed')
     return r
@@ -97,7 +130,7 @@ export function registerIpc(): void {
     broadcast('products:changed')
   })
   handle('products:exportExcel', async (f, e) => {
-    requireRole()
+    requireRole('admin')
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), 'urunler.xlsx', 'xlsx', 'Excel')
     if (!path) return null
     productsToXlsx(hideShelf(allProductsForExport(f)), path)
@@ -114,7 +147,7 @@ export function registerIpc(): void {
     return getCustomer(id)
   })
   handle('customers:save', (c) => {
-    requireRole('admin', 'satis')
+    requireRole('admin')
     return saveCustomer(c)
   })
   handle('customers:delete', (id) => {
@@ -126,12 +159,13 @@ export function registerIpc(): void {
     const scope = scopeCustomer()
     return listOrders(scope === undefined ? o : { ...o, customer_id: scope })
   })
-  handle('orders:get', (id) => {
+  const scopedOrder = (id: number): Order | null => {
     const scope = scopeCustomer()
     const o = getOrder(id)
     if (o && scope !== undefined && o.customer_id !== scope) throw new Error('Bu siparişe erişim yetkiniz yok.')
     return o
-  })
+  }
+  handle('orders:get', (id) => scopedOrder(id))
   handle('orders:create', (input) => {
     const s = requireRole()
     const customer_id = s.user.role === 'bayi' ? s.user.customer_id : input.customer_id
@@ -149,6 +183,7 @@ export function registerIpc(): void {
     return r
   })
   handle('orders:exportExcel', async (id, e) => {
+    requireRole('admin')
     const o = getOrder(id)
     if (!o) throw new Error('Sipariş bulunamadı.')
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), `${o.order_no}.xlsx`, 'xlsx', 'Excel')
@@ -157,7 +192,7 @@ export function registerIpc(): void {
     return path
   })
   handle('orders:print', async (id, e) => {
-    const o = getOrder(id)
+    const o = scopedOrder(id)
     if (!o) throw new Error('Sipariş bulunamadı.')
     const parent = BrowserWindow.fromWebContents(e.sender) ?? undefined
     const win = new BrowserWindow({ show: false, parent, webPreferences: { sandbox: true } })
@@ -177,6 +212,10 @@ export function registerIpc(): void {
     requireRole('admin')
     deleteUser(id)
   })
+  handle('users:approve', (id) => {
+    requireRole('admin')
+    return approveUser(id)
+  })
 
   handle('settings:get', () => getSettings())
   handle('settings:set', (patch) => {
@@ -193,7 +232,7 @@ export function registerIpc(): void {
   })
 
   handle('import:pick', async (_a, e) => {
-    requireRole('admin', 'satis')
+    requireRole('admin')
     const r = await dialog.showOpenDialog(BrowserWindow.fromWebContents(e.sender)!, {
       properties: ['openFile'],
       filters: [
@@ -205,13 +244,13 @@ export function registerIpc(): void {
     return previewFile(r.filePaths[0])
   })
   handle('import:run', (opts) => {
-    requireRole('admin', 'satis')
+    requireRole('admin')
     const r = runImport(opts)
     broadcast('products:changed')
     return r
   })
   handle('import:logs', () => {
-    requireRole()
+    requireRole('admin')
     return importLogs()
   })
   handle('import:template', async (_a, e) => {
@@ -250,6 +289,7 @@ export function registerIpc(): void {
     copyFileSync(r.filePaths[0], dbPath())
     reopenDb()
     session = null
+    rememberUser(null)
     broadcast('session:changed')
     broadcast('products:changed')
     broadcast('orders:changed')

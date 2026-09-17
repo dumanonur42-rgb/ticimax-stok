@@ -1,7 +1,7 @@
 import type { Api, AppEvent } from '@shared/api'
 import { contextBridge, ipcRenderer } from 'electron'
 
-const EVENTS = new Set<AppEvent>(['products:changed', 'orders:changed', 'session:changed', 'splash:leave', 'update:changed'])
+const EVENTS = new Set<AppEvent>(['products:changed', 'orders:changed', 'session:changed', 'splash:leave', 'update:changed', 'users:changed'])
 
 const api: Api = {
   invoke: (channel, args) => ipcRenderer.invoke(channel, args),

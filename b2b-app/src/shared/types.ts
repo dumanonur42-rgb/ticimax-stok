@@ -130,6 +130,8 @@ export interface User {
   role: UserRole
   customer_id: number | null
   active: number
+  approved: number
+  created_at: string
 }
 
 export interface Session {
@@ -169,6 +171,7 @@ export interface DashboardStats {
   lowStockCount: number
   outOfStockCount: number
   customerCount: number
+  pendingUsers: number
   openOrders: number
   ordersToday: number
   brands: FacetValue[]

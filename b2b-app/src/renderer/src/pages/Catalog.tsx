@@ -1,6 +1,6 @@
 import type { Facets, Product, ProductFilter } from '@shared/types'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, Download, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronLeft, Download, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -9,6 +9,7 @@ import { money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
+const FILTERS_KEY = 'catalog.filtersOpen'
 type SortKey = NonNullable<ProductFilter['sort']>
 
 interface Column {
@@ -20,10 +21,9 @@ interface Column {
 }
 
 const COLUMNS: Column[] = [
-  { key: 'sku', label: 'Stok Kodu', width: 'minmax(150px, 1.1fr)', sort: 'sku' },
-  { key: 'name', label: 'Ürün Adı', width: 'minmax(220px, 2.4fr)', sort: 'name' },
-  { key: 'brand', label: 'Marka', width: '96px' },
-  { key: 'dims', label: 'd × D × B', width: '128px' },
+  { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
+  { key: 'brand', label: 'Marka', width: '120px' },
+  { key: 'dims', label: 'd × D × B', width: '140px' },
   { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
   { key: 'price', label: 'Fiyat', width: '120px', sort: 'price', align: 'right' },
   { key: 'act', label: '', width: '112px' }
@@ -41,14 +41,15 @@ function useDebounced<T>(value: T, ms: number): T {
 export function Catalog(): ReactNode {
   const { settings, session, toast } = useApp()
   const addToCart = useCart((s) => s.add)
-  const canEdit = session?.user.role !== 'bayi'
+  const isAdmin = session?.user.role === 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || session?.user.role !== 'bayi'
   const threshold = settings?.low_stock_threshold ?? 5
 
   const [q, setQ] = useState('')
   const dq = useDebounced(q, 120)
   const [filter, setFilter] = useState<Omit<ProductFilter, 'q' | 'offset' | 'limit'>>({ sort: 'relevance', sortDir: 'asc' })
-  const [showFilters, setShowFilters] = useState(true)
+  const [showFilters, setShowFilters] = useState(() => localStorage.getItem(FILTERS_KEY) === '1')
+  useEffect(() => localStorage.setItem(FILTERS_KEY, showFilters ? '1' : '0'), [showFilters])
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
@@ -220,7 +221,7 @@ export function Catalog(): ReactNode {
   return (
     <div className={`catalog${showFilters ? '' : ' no-filters'}`}>
       {showFilters && (
-        <aside className="filters" aria-label="Filtreler">
+        <aside className="filters" aria-label="Filtreler" id="catalog-filters">
           <div className="row">
             <strong>Filtreler</strong>
             <span className="spacer" />
@@ -229,6 +230,9 @@ export function Catalog(): ReactNode {
                 Temizle
               </button>
             )}
+            <button className="btn ghost icon sm" onClick={() => setShowFilters(false)} aria-label="Filtre panelini kapat" title="Kapat">
+              <ChevronLeft size={16} aria-hidden />
+            </button>
           </div>
           <label className="check">
             <input type="checkbox" checked={!!filter.inStock} onChange={(e) => setFilter((f) => ({ ...f, inStock: e.target.checked }))} />
@@ -251,8 +255,15 @@ export function Catalog(): ReactNode {
 
       <section className="catalog-main" aria-label="Ürün listesi">
         <div className="toolbar">
-          <button className="btn icon" onClick={() => setShowFilters((s) => !s)} aria-pressed={showFilters} aria-label="Filtre panelini göster/gizle" title="Filtreler">
-            <Filter size={18} aria-hidden />
+          <button
+            className={`btn${showFilters ? ' active' : ''}`}
+            onClick={() => setShowFilters((s) => !s)}
+            aria-expanded={showFilters}
+            aria-controls="catalog-filters"
+            title={showFilters ? 'Filtre panelini gizle' : 'Filtre panelini göster'}
+          >
+            <Filter size={16} aria-hidden /> Filtreler
+            {activeChips.length > 0 && <span className="badge info">{activeChips.length}</span>}
           </button>
           <div className="search-box">
             <Search size={20} aria-hidden />
@@ -292,21 +303,22 @@ export function Catalog(): ReactNode {
               aria-label="Sıralama"
             >
               <option value="relevance">Uygunluk</option>
-              <option value="sku">Stok kodu</option>
-              <option value="name">Ürün adı</option>
+              <option value="sku">Ürün kodu</option>
               <option value="stock">Stok</option>
               {showPrices && <option value="price">Fiyat</option>}
               <option value="updated">Güncelleme</option>
             </select>
           </label>
-          {canEdit && (
+          {isAdmin && (
             <button className="btn" onClick={() => setEditing('new')}>
               <Plus size={16} aria-hidden /> Yeni ürün
             </button>
           )}
-          <button className="btn" onClick={exportExcel} title="Listeyi Excel olarak kaydet">
-            <Download size={16} aria-hidden /> Excel
-          </button>
+          {isAdmin && (
+            <button className="btn" onClick={exportExcel} title="Listeyi Excel olarak kaydet">
+              <Download size={16} aria-hidden /> Excel
+            </button>
+          )}
         </div>
         {(activeChips.length > 0 || q) && (
           <div className="toolbar" style={{ paddingTop: 6, paddingBottom: 6 }}>
@@ -364,7 +376,7 @@ export function Catalog(): ReactNode {
                 const isActive = v.index === activeIdx
                 if (!p)
                   return (
-                    <div key={v.key} className="vrow" role="row" aria-rowindex={v.index + 1} style={{ transform: `translateY(${v.start}px)`, height: v.size }}>
+                    <div key={v.key} className={`vrow${v.index % 2 ? ' odd' : ''}`} role="row" aria-rowindex={v.index + 1} style={{ transform: `translateY(${v.start}px)`, height: v.size }}>
                       <div className="cell faint">…</div>
                     </div>
                   )
@@ -373,7 +385,7 @@ export function Catalog(): ReactNode {
                   <div
                     key={v.key}
                     id={`prow-${v.index}`}
-                    className={`vrow${p.active ? '' : ' inactive'}`}
+                    className={`vrow${v.index % 2 ? ' odd' : ''}${p.active ? '' : ' inactive'}`}
                     role="row"
                     aria-rowindex={v.index + 1}
                     aria-selected={isActive}
@@ -383,16 +395,13 @@ export function Catalog(): ReactNode {
                       setSelected(p)
                     }}
                   >
-                    <div className="cell sku" role="gridcell">
+                    <div className="cell sku" role="gridcell" title={p.name}>
                       {p.sku}
                     </div>
-                    <div className="cell" role="gridcell" title={p.name}>
-                      {p.name}
-                    </div>
-                    <div className="cell" role="gridcell">
+                    <div className="cell muted" role="gridcell">
                       {p.brand}
                     </div>
-                    <div className="cell mono small" role="gridcell">
+                    <div className="cell mono small muted" role="gridcell">
                       {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
                     </div>
                     <div className="cell right" role="gridcell">
@@ -405,7 +414,7 @@ export function Catalog(): ReactNode {
                     )}
                     <div className="cell" role="gridcell" style={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
                       <button
-                        className="btn primary sm"
+                        className="btn sm cart-btn"
                         onClick={(e) => {
                           e.stopPropagation()
                           addToCart(p)
@@ -435,7 +444,7 @@ export function Catalog(): ReactNode {
         <ProductDrawer
           product={selected}
           onClose={() => setSelected(null)}
-          onEdit={canEdit ? () => setEditing(selected) : undefined}
+          onEdit={isAdmin ? () => setEditing(selected) : undefined}
           showPrices={showPrices}
           threshold={threshold}
         />

@@ -16,6 +16,7 @@ export function Orders(): ReactNode {
   const [selectedId, setSelectedId] = useState<number | null>(pageParam)
   const [detail, setDetail] = useState<Order | null>(null)
   const isDealer = session?.user.role === 'bayi'
+  const isAdmin = session?.user.role === 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
 
   const load = (): void => {
@@ -171,9 +172,11 @@ export function Orders(): ReactNode {
             <button className="btn sm" onClick={() => api('orders:print', detail.id).catch((e) => toast(e.message, 'error'))}>
               <Printer size={14} aria-hidden /> Yazdır
             </button>
-            <button className="btn sm" onClick={() => api('orders:exportExcel', detail.id).then((p) => p && toast(`Kaydedildi: ${p}`, 'success')).catch((e) => toast(e.message, 'error'))}>
-              <Download size={14} aria-hidden /> Excel
-            </button>
+            {isAdmin && (
+              <button className="btn sm" onClick={() => api('orders:exportExcel', detail.id).then((p) => p && toast(`Kaydedildi: ${p}`, 'success')).catch((e) => toast(e.message, 'error'))}>
+                <Download size={14} aria-hidden /> Excel
+              </button>
+            )}
           </div>
           {!isDealer && detail.status !== 'iptal' && detail.status !== 'teslim' && (
             <div className="row wrap" role="group" aria-label="Durum değiştir">

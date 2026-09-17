@@ -149,7 +149,9 @@ CREATE TABLE IF NOT EXISTS users (
   display_name TEXT NOT NULL DEFAULT '',
   role TEXT NOT NULL DEFAULT 'bayi',
   customer_id INTEGER REFERENCES customers(id) ON DELETE SET NULL,
-  active INTEGER NOT NULL DEFAULT 1
+  active INTEGER NOT NULL DEFAULT 1,
+  approved INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
 );
 
 CREATE TABLE IF NOT EXISTS import_logs (
@@ -165,23 +167,33 @@ CREATE TABLE IF NOT EXISTS import_logs (
 `
 
 export const DEFAULT_ADMIN = { username: 'Yamansa', password: 'Ahmet4202', displayName: 'Ahmet' }
+/** Standard (non-admin) staff account created on first run alongside the administrator. */
+export const DEFAULT_STAFF = { username: 'Onur', password: 'Duman4202', displayName: 'Onur', role: 'satis' as const }
+
+function addColumnIfMissing(d: DB, table: string, column: string, ddl: string): void {
+  const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[]
+  if (!cols.some((c) => c.name === column)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${ddl}`)
+}
 
 function migrate(d: DB): void {
   d.exec(SCHEMA)
+  addColumnIfMissing(d, 'users', 'approved', 'INTEGER NOT NULL DEFAULT 1')
+  addColumnIfMissing(d, 'users', 'created_at', "TEXT NOT NULL DEFAULT ''")
   const userCount = d.prepare('SELECT COUNT(*) c FROM users').get() as { c: number }
+  const insertUser = d.prepare(`INSERT INTO users(username, password_hash, display_name, role, created_at) VALUES (?,?,?,?,datetime('now','localtime'))`)
+  const exists = d.prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)
   if (userCount.c === 0) {
-    d.prepare(
-      `INSERT INTO users(username, password_hash, display_name, role) VALUES (?,?,?,?)`
-    ).run(DEFAULT_ADMIN.username, hashPassword(DEFAULT_ADMIN.password), DEFAULT_ADMIN.displayName, 'admin')
-    return
+    insertUser.run(DEFAULT_ADMIN.username, hashPassword(DEFAULT_ADMIN.password), DEFAULT_ADMIN.displayName, 'admin')
   }
+  if (!exists.get(DEFAULT_STAFF.username)) {
+    insertUser.run(DEFAULT_STAFF.username, hashPassword(DEFAULT_STAFF.password), DEFAULT_STAFF.displayName, DEFAULT_STAFF.role)
+  }
+  if (userCount.c === 0) return
   // Databases created by earlier builds still carry the untouched admin/admin account: replace it.
   const legacy = d
     .prepare(`SELECT id, password_hash FROM users WHERE username = 'admin' COLLATE NOCASE`)
     .get() as { id: number; password_hash: string } | undefined
-  const taken = d
-    .prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)
-    .get(DEFAULT_ADMIN.username)
+  const taken = exists.get(DEFAULT_ADMIN.username)
   if (legacy && !taken && verifyPassword('admin', legacy.password_hash)) {
     d.prepare(`UPDATE users SET username = ?, password_hash = ?, display_name = ? WHERE id = ?`).run(
       DEFAULT_ADMIN.username,

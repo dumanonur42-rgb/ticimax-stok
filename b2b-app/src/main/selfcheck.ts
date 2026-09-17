@@ -1,7 +1,7 @@
-import { DEFAULT_ADMIN, getDb } from './db'
+import { DEFAULT_ADMIN, DEFAULT_STAFF, getDb } from './db'
 import { searchProducts, productFacets } from './repo/products'
 import { seedDemo } from './repo/seed'
-import { login } from './repo/users'
+import { approveUser, deleteUser, listUsers, login, registerUser } from './repo/users'
 
 /** Headless sanity run: `electron . --selfcheck`. Seeds demo data, times searches, exits non-zero on failure. */
 export function runSelfCheck(): number {
@@ -30,6 +30,24 @@ export function runSelfCheck(): number {
   const session = login(DEFAULT_ADMIN.username, DEFAULT_ADMIN.password)
   console.log(`login ${DEFAULT_ADMIN.username}: ${session ? 'ok' : 'FAILED'}`)
   if (!session) ok = false
+  const staff = login(DEFAULT_STAFF.username, DEFAULT_STAFF.password)
+  console.log(`login ${DEFAULT_STAFF.username}: ${staff?.user.role === 'satis' ? 'ok' : 'FAILED'}`)
+  if (staff?.user.role !== 'satis') ok = false
+
+  const probe = `selfcheck_${Date.now()}`
+  registerUser({ username: probe, display_name: 'Self Check', password: 'test1234' })
+  let pendingBlocked = false
+  try {
+    login(probe, 'test1234')
+  } catch {
+    pendingBlocked = true
+  }
+  const pendingUser = listUsers().find((u) => u.username === probe)
+  approveUser(pendingUser!.id)
+  const approved = login(probe, 'test1234')
+  deleteUser(pendingUser!.id)
+  console.log(`register/approve flow: pending blocked=${pendingBlocked}, approved login=${approved?.user.role === 'satis' && !!approved.user.approved}`)
+  if (!pendingBlocked || approved?.user.role !== 'satis') ok = false
   console.log(ok ? 'SELFCHECK OK' : 'SELFCHECK FAILED')
   return ok ? 0 : 1
 }

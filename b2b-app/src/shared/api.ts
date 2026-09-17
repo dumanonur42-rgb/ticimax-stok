@@ -25,6 +25,7 @@ import type {
 export interface ApiMap {
   'auth:login': [{ username: string; password: string }, Session]
   'auth:logout': [void, void]
+  'auth:register': [{ username: string; display_name: string; password: string }, void]
   'auth:session': [void, Session | null]
   'auth:changePassword': [{ current: string; next: string }, void]
 
@@ -54,6 +55,7 @@ export interface ApiMap {
     User
   ]
   'users:delete': [number, void]
+  'users:approve': [number, User]
 
   'settings:get': [void, Settings]
   'settings:set': [Partial<Settings>, Settings]
@@ -85,4 +87,4 @@ export interface Api {
   on(channel: AppEvent, cb: () => void): () => void
 }
 
-export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave' | 'update:changed'
+export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave' | 'update:changed' | 'users:changed'

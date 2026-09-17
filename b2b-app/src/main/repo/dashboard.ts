@@ -1,6 +1,7 @@
 import type { DashboardStats, FacetValue, ImportLog, Order, Product } from '@shared/types'
 import { getDb } from '../db'
 import { getSettings } from './settings'
+import { pendingUserCount } from './users'
 
 /** `customerId` scopes order figures to one dealer (dealer role). */
 export function dashboardStats(customerId?: number): DashboardStats {
@@ -16,6 +17,7 @@ export function dashboardStats(customerId?: number): DashboardStats {
     lowStockCount: c('SELECT COUNT(*) c FROM products WHERE active=1 AND stock > 0 AND stock <= ?', s.low_stock_threshold),
     outOfStockCount: c('SELECT COUNT(*) c FROM products WHERE active=1 AND stock <= 0'),
     customerCount: c('SELECT COUNT(*) c FROM customers WHERE active=1'),
+    pendingUsers: customerId == null ? pendingUserCount() : 0,
     openOrders: c(`SELECT COUNT(*) c FROM orders WHERE status IN ('beklemede','onaylandi','hazirlaniyor') ${ow}`, ...op),
     ordersToday: c(`SELECT COUNT(*) c FROM orders WHERE date(created_at) = date('now','localtime') ${ow}`, ...op),
     brands: db
