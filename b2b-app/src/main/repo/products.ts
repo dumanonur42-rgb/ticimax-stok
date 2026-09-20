@@ -16,6 +16,7 @@ import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { submit, type PatchOpRow, type QuickEntryOpRow } from '../cloud/outbox'
 import { upsertLocal } from '../cloud/sync'
+import { canonBox } from '@shared/identity'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
 
@@ -204,7 +205,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     card_price: p.card_price ?? null,
     min_order: p.min_order,
     shelf: p.shelf,
-    box: p.box,
+    box: canonBox(p.box),
     barcode: p.barcode,
     image: p.image,
     description: p.description,
@@ -342,7 +343,7 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
     if (!sku) continue
     const key = productKey(sku, r.brand, r.box)
     const prev = folded.get(key)
-    if (!prev) folded.set(key, { ...r, sku, brand: r.brand.trim(), box: r.box.trim() })
+    if (!prev) folded.set(key, { ...r, sku, brand: r.brand.trim(), box: canonBox(r.box) })
     else {
       prev.stock += r.stock
       if (r.shelf.trim()) prev.shelf = r.shelf

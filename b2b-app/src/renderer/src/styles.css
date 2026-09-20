@@ -717,8 +717,14 @@ textarea.input {
 }
 .vgrid-body {
   flex: 1;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
   outline-offset: -3px;
+}
+.vgrid-head {
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
 }
 .vrow {
   height: var(--row-h);

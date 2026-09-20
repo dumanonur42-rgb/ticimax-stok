@@ -5,6 +5,11 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.12
+
+- Ürün listesi pencere genişliğine göre kendini sığdırır: dar pencerede sütunlar daralır, en az önemli sütunlar (ölçü, K. kartı fiyatı vb.) gizlenir; yatay kaydırma çubuğu çıkmaz.
+- [yönetici] Stok Aktar ve hızlı girişte kutu durumu her türlü ambalajı ayırt eder: "3 KUTULU 1 ORJ KAĞIT 1 KUTUSUZ" hücresi Kutulu (3), Orjinal Kağıt (1) ve Kutusuz (1) olarak üç ayrı ürüne bölünür; "Poşet", "10'lu Paket" gibi ifadeler de ayrı ürün olur. Farklı yazımlar tek yazıma çevrilir (orj kağıt / orijinal kağıt → Orjinal Kağıt). Kutu durumundaki adetlerin toplamı ADET sütunuyla uyuşmazsa içe aktarma sonucunda satır numarasıyla uyarı verilir.
+
 ## 1.0.11
 
 - Özet sayfasında "Bize ulaşın" kartı: Ahmet Yaman (+90 552 610 93 63) ve Arif Yaman (+90 533 474 87 40) için ayrı WhatsApp ve Ara düğmeleri; tıklayınca WhatsApp veya telefon uygulaması açılır.

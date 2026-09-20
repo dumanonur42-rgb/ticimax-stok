@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx'
 import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
+import { canonBox } from '@shared/identity'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 
 interface Parsed {
@@ -68,31 +69,38 @@ export function suggestMapping(headers: string[]): Partial<Record<Field, string>
   return map
 }
 
+/** A quantity inside a box cell — but not the "10" of "10'lu paket" / "5li", which belongs to the label. */
+const BOX_COUNT = /(?<![\d'’.,])(\d+(?:[.,]\d+)?)(?![\d'’]|\s*l[iıuü]\b)/gi
+
 /**
- * "Kutu durumu" cells are free text. "KUTULU" / "kutusuz" become the canonical labels; a mixed cell such as
- * "33 KUTULU – 1 KUTUSUZ" is split into one line per box state with its own quantity (box state is part of the
- * product identity, so they are different products).
+ * "Kutu durumu" cells are free text: "KUTULU", "3 KUTULU 1 ORJ KAĞIT 1 KUTUSUZ", "KUTUSUZ: 4 – 10'LU PAKET: 2"…
+ * Each "quantity + label" pair becomes its own line (box state is part of the product identity, so they are
+ * different products); labels are canonicalised with `canonBox`. Without quantities the whole cell is one label
+ * carrying the row's stock.
  */
 export function parseBox(raw: string | undefined, stock: number | null): { box: string; stock: number | null }[] {
-  const text = (raw ?? '').trim()
+  const text = (raw ?? '').replace(/\s+/g, ' ').trim()
   if (!text) return [{ box: '', stock }]
-  const lower = text.toLocaleLowerCase('tr-TR')
-  const parts: { box: string; stock: number | null }[] = []
-  const re = /(\d[\d.,]*)\s*(?:adet|ad\.?)?\s*(kutusuz|kutulu)|(kutusuz|kutulu)\s*[:=(]?\s*(\d[\d.,]*)/g
-  let m: RegExpExecArray | null
-  while ((m = re.exec(lower))) {
-    const word = m[2] ?? m[3]
-    const n = parseNumber(m[1] ?? m[4])
-    parts.push({ box: word === 'kutusuz' ? 'Kutusuz' : 'Kutulu', stock: n })
+  const counts = [...text.matchAll(BOX_COUNT)].map((m) => ({ n: parseNumber(m[1]), start: m.index!, end: m.index! + m[0].length }))
+  const split = (mode: 'after' | 'before'): { box: string; stock: number | null }[] | null => {
+    const parts: { box: string; stock: number | null }[] = []
+    for (let i = 0; i < counts.length; i++) {
+      const c = counts[i]
+      const label =
+        mode === 'after' ? text.slice(c.end, counts[i + 1]?.start ?? text.length) : text.slice(counts[i - 1]?.end ?? 0, c.start)
+      const box = canonBox(label)
+      if (!box) return null
+      parts.push({ box, stock: c.n })
+    }
+    return parts
   }
-  if (parts.length) {
+  const parts = counts.length ? (/^\d/.test(text) ? split('after') ?? split('before') : split('before') ?? split('after')) : null
+  if (parts) {
     const merged = new Map<string, number | null>()
     for (const p of parts) merged.set(p.box, (merged.get(p.box) ?? 0) + (p.stock ?? 0))
     return [...merged].map(([box, n]) => ({ box, stock: n }))
   }
-  if (/kutusuz/.test(lower)) return [{ box: 'Kutusuz', stock }]
-  if (/kutulu/.test(lower)) return [{ box: 'Kutulu', stock }]
-  return [{ box: text, stock }]
+  return [{ box: canonBox(text), stock }]
 }
 
 function parseFile(path: string): Parsed {
@@ -277,7 +285,15 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     if (!sku_norm) return
     const brand = (col(row, 'brand') ?? '').trim() || opts.defaultBrand
     const stockVal = parseNumber(col(row, 'stock'))
-    for (const part of parseBox(col(row, 'box'), stockVal)) {
+    const parts = parseBox(col(row, 'box'), stockVal)
+    if (stockVal != null && parts.some((p) => p.stock !== stockVal)) {
+      const sum = parts.reduce((s, p) => s + (p.stock ?? 0), 0)
+      if (sum !== stockVal)
+        errors.push(
+          `Satır ${i + 2}: ${skuRaw} — kutu durumu toplamı (${sum}) ADET (${stockVal}) ile uyuşmuyor; kutu durumundaki adetler kullanıldı.`
+        )
+    }
+    for (const part of parts) {
       lines.push({ i, skuRaw, sku_norm, brand, box: part.box, shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal: part.stock })
     }
   })

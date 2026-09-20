@@ -169,10 +169,24 @@ export async function runSelfCheck(): Promise<number> {
     console.error(`import mapping: name unexpectedly mapped to ${map.name}`)
     ok = false
   }
-  const split = parseBox('33 KUTULU – 1 KUTUSUZ', 34)
-  const plain = parseBox('kutusuz', 7)
-  if (split.length !== 2 || split[0].box !== 'Kutulu' || split[0].stock !== 33 || split[1].box !== 'Kutusuz' || split[1].stock !== 1 || plain[0].box !== 'Kutusuz' || plain[0].stock !== 7) {
-    console.error('import box parsing failed', split, plain)
+  const boxCases: [string, { box: string; stock: number | null }[]][] = [
+    ['33 KUTULU – 1 KUTUSUZ', [{ box: 'Kutulu', stock: 33 }, { box: 'Kutusuz', stock: 1 }]],
+    ['kutusuz', [{ box: 'Kutusuz', stock: 7 }]],
+    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', [{ box: 'Kutulu', stock: 3 }, { box: 'Orjinal Kağıt', stock: 1 }, { box: 'Kutusuz', stock: 1 }]],
+    ['2 10\'LU PAKET 1 POŞET', [{ box: "10'lu Paket", stock: 2 }, { box: 'Poşet', stock: 1 }]],
+    ['KUTULU: 4, ORİJİNAL KAĞIT: 2', [{ box: 'Kutulu', stock: 4 }, { box: 'Orjinal Kağıt', stock: 2 }]],
+    ['orj kağıt', [{ box: 'Orjinal Kağıt', stock: 7 }]],
+    ['5 adet kutulu', [{ box: 'Kutulu', stock: 5 }]]
+  ]
+  for (const [input, want] of boxCases) {
+    const got = parseBox(input, 7)
+    if (JSON.stringify(got) !== JSON.stringify(want)) {
+      console.error('import box parsing failed', JSON.stringify(input), got, want)
+      ok = false
+    }
+  }
+  if (productKey('51120', 'SKF', 'ORJ KAGIT') !== productKey('51120', 'SKF', 'Orjinal Kağıt')) {
+    console.error('box canonicalisation not part of productKey')
     ok = false
   }
   console.log('import mapping: ok')

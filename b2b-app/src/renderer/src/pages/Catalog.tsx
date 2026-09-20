@@ -17,24 +17,47 @@ type SortKey = NonNullable<ProductFilter['sort']>
 interface Column {
   key: string
   label: string
-  width: string
+  /** Minimum track width in px; tracks with `grow` share the remaining space. */
+  min: number
+  grow?: number
+  /** Columns with a lower `drop` value are hidden first when the grid is too narrow; undefined = always shown. */
+  drop?: number
   sort?: SortKey
   align?: 'right'
   adminOnly?: boolean
 }
 
 const COLUMNS: Column[] = [
-  { key: 'shelf', label: 'Raf', width: '150px', sort: 'shelf', adminOnly: true },
-  { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
-  { key: 'brand', label: 'Marka', width: '120px' },
-  { key: 'dims', label: 'd × D × B', width: '140px' },
-  { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
-  { key: 'box', label: 'Kutu durumu', width: '110px', adminOnly: true },
-  { key: 'description', label: 'Açıklama', width: 'minmax(160px, 1.2fr)', adminOnly: true },
-  { key: 'price', label: 'Peşin Fiyat', width: '124px', sort: 'price', align: 'right' },
-  { key: 'card_price', label: 'K. Kartı Fiyatı', width: '132px', align: 'right' },
-  { key: 'act', label: '', width: '112px' }
+  { key: 'shelf', label: 'Raf', min: 96, grow: 0.5, drop: 5, sort: 'shelf', adminOnly: true },
+  { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
+  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
+  { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
+  { key: 'stock', label: 'Stok', min: 92, sort: 'stock', align: 'right' },
+  { key: 'box', label: 'Kutu durumu', min: 96, grow: 0.5, drop: 3, adminOnly: true },
+  { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2, adminOnly: true },
+  { key: 'price', label: 'Peşin Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
+  { key: 'card_price', label: 'K. Kartı Fiyatı', min: 112, grow: 0.4, drop: 4, align: 'right' },
+  { key: 'act', label: '', min: 100 }
 ]
+
+/** Horizontal padding of `.vgrid-head` / `.vrow` (4px each side). */
+const GRID_PAD = 8
+
+/** Drops the lowest-priority columns until the minimum widths fit into `width`. */
+function fitColumns(all: Column[], width: number): Column[] {
+  const cols = [...all]
+  const need = (): number => cols.reduce((s, c) => s + c.min, 0) + GRID_PAD
+  while (need() > width) {
+    let victim = -1
+    for (let i = 0; i < cols.length; i++) {
+      const d = cols[i].drop
+      if (d !== undefined && (victim < 0 || d < cols[victim].drop!)) victim = i
+    }
+    if (victim < 0) break
+    cols.splice(victim, 1)
+  }
+  return cols
+}
 
 function useDebounced<T>(value: T, ms: number): T {
   const [v, setV] = useState(value)
@@ -129,8 +152,28 @@ export function Catalog(): ReactNode {
   }, [vItems, rows, loadPage])
 
   const cardPct = settings?.card_price_pct ?? 0
-  const cols = COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || !c.adminOnly))
-  const gridCols = cols.map((c) => c.width).join(' ')
+  const [gridW, setGridW] = useState(() => window.innerWidth)
+  useEffect(() => {
+    const el = bodyRef.current
+    if (!el) return
+    const measure = (): void => {
+      if (el.clientWidth) setGridW(el.clientWidth)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const cols = useMemo(
+    () =>
+      fitColumns(
+        COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || !c.adminOnly)),
+        gridW
+      ),
+    [showPrices, isAdmin, gridW]
+  )
+  const has = useMemo(() => new Set(cols.map((c) => c.key)), [cols])
+  const gridCols = cols.map((c) => (c.grow ? `minmax(${c.min}px, ${c.grow}fr)` : `${c.min}px`)).join(' ')
 
   const toggleSort = (s: SortKey): void =>
     setFilter((f) => ({ ...f, sort: s, sortDir: f.sort === s && f.sortDir === 'asc' ? 'desc' : 'asc' }))
@@ -401,7 +444,7 @@ export function Catalog(): ReactNode {
                       setSelected(p)
                     }}
                   >
-                    {isAdmin && (
+                    {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
                         {p.shelf ? (
                           <span className="shelf-tag" title={p.shelf}>
@@ -415,32 +458,36 @@ export function Catalog(): ReactNode {
                     <div className="cell sku" role="gridcell" title={p.name}>
                       {p.sku}
                     </div>
-                    <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
-                      {p.brand}
-                      {!isAdmin && p.box && <span className="faint small"> · {p.box}</span>}
-                    </div>
-                    <div className="cell mono small muted" role="gridcell">
-                      {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
-                    </div>
+                    {has.has('brand') && (
+                      <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
+                        {p.brand}
+                        {!isAdmin && p.box && <span className="faint small"> · {p.box}</span>}
+                      </div>
+                    )}
+                    {has.has('dims') && (
+                      <div className="cell mono small muted truncate" role="gridcell">
+                        {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
+                      </div>
+                    )}
                     <div className="cell right" role="gridcell">
                       <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
                     </div>
-                    {isAdmin && (
+                    {has.has('box') && (
                       <div className="cell small muted truncate" role="gridcell" title={p.box}>
                         {p.box || <span className="faint">—</span>}
                       </div>
                     )}
-                    {isAdmin && (
+                    {has.has('description') && (
                       <div className="cell small truncate" role="gridcell" title={p.description}>
                         {p.description || <span className="faint">—</span>}
                       </div>
                     )}
-                    {showPrices && (
+                    {has.has('price') && (
                       <div className="cell right nowrap" role="gridcell">
                         {money(p.price, p.currency)}
                       </div>
                     )}
-                    {showPrices && (
+                    {has.has('card_price') && (
                       <div className="cell right nowrap muted" role="gridcell">
                         {(() => {
                           const cp = cardPrice(p.price, p.card_price, cardPct)
