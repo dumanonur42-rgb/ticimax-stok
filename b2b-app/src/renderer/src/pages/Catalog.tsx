@@ -22,7 +22,7 @@ interface Column {
 }
 
 const COLUMNS: Column[] = [
-  { key: 'shelf', label: 'Raf', width: '132px', sort: 'shelf' },
+  { key: 'shelf', label: 'Raf', width: '150px', sort: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '120px' },
   { key: 'dims', label: 'd × D × B', width: '140px' },
@@ -392,7 +392,13 @@ export function Catalog(): ReactNode {
                   >
                     {isAdmin && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {p.shelf ? <span className="shelf-tag">{p.shelf}</span> : <span className="faint">—</span>}
+                        {p.shelf ? (
+                          <span className="shelf-tag" title={p.shelf}>
+                            {p.shelf}
+                          </span>
+                        ) : (
+                          <span className="faint">—</span>
+                        )}
                       </div>
                     )}
                     <div className="cell sku" role="gridcell" title={p.name}>

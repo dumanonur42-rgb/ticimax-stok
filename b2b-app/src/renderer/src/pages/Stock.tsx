@@ -310,6 +310,7 @@ export function Stock(): ReactNode {
           aria-label={`${p.sku} ${label}`}
           inputMode={k === 'shelf' ? 'text' : 'decimal'}
           value={value}
+          title={k === 'shelf' && value ? value : undefined}
           placeholder={k === 'card_price' ? (cardPct > 0 ? `%${cardPct}` : '—') : k === 'shelf' ? 'Raf' : ''}
           onChange={(ev) => setEdit(p, k, ev.target.value)}
           onKeyDown={(ev) => onCellKey(ev, idx, k)}

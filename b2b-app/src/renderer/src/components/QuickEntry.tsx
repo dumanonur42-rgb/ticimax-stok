@@ -346,7 +346,9 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                                 {hit.shelf && (
                                   <>
                                     {' · raf '}
-                                    <span className="shelf-tag sm">{hit.shelf}</span>
+                                    <span className="shelf-tag sm" title={hit.shelf}>
+                                      {hit.shelf}
+                                    </span>
                                   </>
                                 )}
                               </span>
