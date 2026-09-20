@@ -276,6 +276,12 @@ class Uygulama(ctk.CTk):
         e.pack(anchor="w", pady=(2, 0))
         return f, e
 
+    @staticmethod
+    def _alan_yaz(e, deger):
+        if e.get() != str(deger):
+            e.delete(0, "end")
+            e.insert(0, str(deger))
+
     def onay(self, parent, text, var, **kw):
         kw = {**dict(font=self.F(12), checkbox_width=20, checkbox_height=20, corner_radius=6, fg_color=MAVI,
                      hover_color=MAVI_H, border_color=METIN3, border_width=2), **kw}
@@ -474,6 +480,7 @@ class Uygulama(ctk.CTk):
         # KPI şeridi
         kpi = ctk.CTkFrame(f, fg_color="transparent", width=1, height=1)
         kpi.pack(fill="x", pady=(0, 14))
+        self._pano_kpi = kpi
         self._kpi = {}
         for i, (key, etiket, renk) in enumerate((("bugun", "Bugünkü paylaşımlar", TURUNCU), ("basari", "7 günlük başarı", YESIL),
                                                   ("toplam", "Toplam yayın", MAVI), ("grup", "Facebook grupları", MOR))):
@@ -550,7 +557,7 @@ class Uygulama(ctk.CTk):
         blok = d.get("blok")
         if blok:
             self._pano_blok.configure(text=f"⚠  Facebook engeli görüldü ({blok['zaman']}): {blok['neden']}  – grup turları kapatıldı. Engeli sıfırlamak için Gruplar sayfasına bakın.")
-            self._pano_blok.pack(fill="x", pady=(0, 12), before=self._kpi["bugun"][0].master)
+            self._pano_blok.pack(fill="x", pady=(0, 12), before=self._pano_kpi)
         else:
             self._pano_blok.pack_forget()
         # KPI
@@ -969,6 +976,10 @@ class Uygulama(ctk.CTk):
             pass
         g["varyant"] = self._g_var.get()
         self.kaydet()
+        for (_v, e), t in zip(self._g_tur_vars, turlar):  # normalize edilen değerler alanlara geri yazılır
+            self._alan_yaz(e, t["saat"])
+        self._alan_yaz(self._g_ara, g["ara_sn"])
+        self._alan_yaz(self._g_limit, g["gunluk_limit"])
         self._g_son_imza = None
         self._y_gruplar()
         if g["aktif"] and g["ara_sn"] < 120:
