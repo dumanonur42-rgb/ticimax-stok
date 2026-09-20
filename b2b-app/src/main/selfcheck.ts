@@ -1,6 +1,6 @@
 import type { ProductRow } from './cloud/database.types'
 import { pullProducts, upsertLocal } from './cloud/sync'
-import { getDb, normalize, normalizeText } from './db'
+import { getDb, normalize, normalizeText, productKey } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
 import { getProduct, productFacets, saveProduct, searchProducts } from './repo/products'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
@@ -106,6 +106,7 @@ export async function runSelfCheck(): Promise<number> {
       id: 1_000_000 + i,
       sku: r.sku,
       sku_norm: normalize(r.sku),
+      key_norm: productKey(r.sku, r.brand, ''),
       name: r.name,
       name_norm: normalizeText(r.name),
       brand: r.brand,
@@ -123,6 +124,7 @@ export async function runSelfCheck(): Promise<number> {
       card_price: null,
       min_order: 1,
       shelf: `A-${(i % 40) + 1}`,
+      box: '',
       barcode: '',
       image: '',
       description: '',

@@ -1,7 +1,7 @@
-import type { Session, User, UserRole } from '@shared/types'
+import type { Customer, CustomerInput, DealerLogin, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
 import { cloud, cloudError, ephemeralCloud, must, mustVoid } from '../cloud/client'
-import { toCustomer, toUser } from '../cloud/map'
+import { fromCustomer, toCustomer, toUser } from '../cloud/map'
 
 const LOGIN_DOMAIN = 'login.yamansab2b.app'
 
@@ -101,6 +101,32 @@ export async function registerUser(input: { username: string; display_name: stri
     options: { data: { username, display_name: display, company_name: company } }
   })
   if (r.error) throw cloudError(r.error)
+}
+
+/**
+ * Administrator opens a dealer together with its login: the sign-up trigger creates the profile and a company
+ * card (name = firm), the profile is approved on the spot and the card is completed with the form fields.
+ */
+export async function createDealerAccount(customer: CustomerInput, login: DealerLogin): Promise<Customer> {
+  const username = validateUsername(login.username)
+  validatePassword(login.password)
+  const name = customer.name.trim()
+  if (name.length < 2) throw new Error('Firma adı girilmelidir.')
+  const display = login.display_name.trim() || customer.contact.trim() || name
+  const created = await ephemeralCloud().auth.signUp({
+    email: loginEmail(username),
+    password: login.password,
+    options: { data: { username, display_name: display, company_name: name } }
+  })
+  if (created.error) throw cloudError(created.error)
+  const id = created.data.user?.id
+  if (!id) throw new Error('Kullanıcı oluşturulamadı.')
+  const sb = cloud()
+  const profile = toUser(must(await sb.from('profiles').update({ role: 'bayi', active: true, approved: true }).eq('id', id).select('*').single()))
+  if (profile.customer_id === null) throw new Error('Cari kart oluşturulamadı.')
+  const { code, ...rest } = fromCustomer({ ...customer, name, code: customer.code.trim() })
+  const patch = code ? { code, ...rest } : rest
+  return toCustomer(must(await sb.from('customers').update(patch).eq('id', profile.customer_id).select('*').single()))
 }
 
 export async function listUsers(): Promise<User[]> {

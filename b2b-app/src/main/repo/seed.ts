@@ -1,7 +1,7 @@
 import { cloud, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
-import { normalize, normalizeText } from '../db'
+import { normalize, normalizeText, productKey } from '../db'
 
 // Demo catalogue for performance testing. Every SKU is a plain bearing
 // designation (no brand suffix) and unique; the brand lives in its own column.
@@ -357,6 +357,7 @@ export async function seedDemo(target: number): Promise<number> {
     return {
       sku: r.sku,
       sku_norm: normalize(r.sku),
+      key_norm: productKey(r.sku, r.brand, ''),
       name: r.name,
       name_norm: normalizeText(r.name),
       brand: r.brand,
@@ -374,6 +375,7 @@ export async function seedDemo(target: number): Promise<number> {
       card_price: Math.round(price * 1.08 * 100) / 100,
       min_order: 1,
       shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`,
+      box: '',
       barcode: '',
       image: '',
       description: '',

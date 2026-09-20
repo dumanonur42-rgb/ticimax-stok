@@ -1,3 +1,4 @@
+import { productKey } from '@shared/identity'
 import type { Currency, Product, ProductInput } from '@shared/types'
 import { AlertTriangle, ArrowRight } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
@@ -24,6 +25,7 @@ const empty = (cur: Currency): ProductInput => ({
   card_price: null,
   min_order: 1,
   shelf: '',
+  box: '',
   barcode: '',
   image: '',
   description: '',
@@ -63,7 +65,7 @@ export function ProductEditor({
     }
     let cancelled = false
     const t = setTimeout(() => {
-      api('products:similar', { sku, brand: form.brand, excludeId: product?.id ?? null })
+      api('products:similar', { sku, brand: form.brand, box: form.box, excludeId: product?.id ?? null })
         .then((r) => !cancelled && setSimilar(r))
         .catch(() => undefined)
     }, 250)
@@ -71,12 +73,15 @@ export function ProductEditor({
       cancelled = true
       clearTimeout(t)
     }
-  }, [form.sku, form.brand, product?.id, isAdmin])
+  }, [form.sku, form.brand, form.box, product?.id, isAdmin])
+
+  const myKey = productKey(form.sku, form.brand, form.box)
+  const twin = similar.find((s) => productKey(s.sku, s.brand, s.box) === myKey)
 
   const save = async (force = false): Promise<void> => {
     if (!form.sku.trim()) return toast('Stok kodu zorunludur.', 'error')
     if (!form.name.trim()) return toast('Ürün adı zorunludur.', 'error')
-    if (!force && !product && similar.length) return setConfirmTwin(true)
+    if (!force && !product && twin) return setConfirmTwin(true)
     setConfirmTwin(false)
     setBusy(true)
     try {
@@ -144,19 +149,26 @@ export function ProductEditor({
         {text('sku', 'Stok kodu *')}
         <div style={{ gridColumn: 'span 2' }}>{text('name', 'Ürün adı *')}</div>
         {similar.length > 0 && (
-          <div className="dup-warning" role="alert" style={{ gridColumn: 'span 3' }}>
+          <div className={`dup-warning${twin ? '' : ' soft'}`} role={twin ? 'alert' : 'status'} style={{ gridColumn: 'span 3' }}>
             <div className="dup-warning-head">
               <AlertTriangle size={20} aria-hidden />
               <div>
-                <strong>{similar.length > 1 ? `${similar.length} benzer ürün bulunuyor` : 'Aynı ürün bulunuyor'}</strong>
-                <div className="small">Bu kod stokta kayıtlı görünüyor. Yeni kayıt yerine mevcut ürünü düzenlemek için tıklayın.</div>
+                <strong>{twin ? 'Aynı ürün bulunuyor' : similar.length > 1 ? `Bu kodun ${similar.length} farklı kaydı var` : 'Bu kod başka bir marka/kutu ile kayıtlı'}</strong>
+                <div className="small">
+                  {twin
+                    ? 'Aynı kod, marka ve kutu durumu stokta kayıtlı. Yeni kayıt yerine mevcut ürünü düzenlemek için tıklayın.'
+                    : 'Marka veya kutu durumu farklı olduğu için ayrı bir ürün olarak kaydedilir. Aynı ürünse mevcut kayda gidin.'}
+                </div>
               </div>
             </div>
             <ul className="dup-list">
               {similar.map((s) => (
                 <li key={s.id}>
                   <span className="sku">{s.sku}</span>
-                  <span className="muted">{s.brand || 'markasız'}</span>
+                  <span className="muted">
+                    {s.brand || 'markasız'}
+                    {s.box ? ` · ${s.box}` : ''}
+                  </span>
                   <span className="muted truncate" title={s.name}>
                     {s.name}
                   </span>
@@ -180,6 +192,7 @@ export function ProductEditor({
           </div>
         )}
         {text('brand', 'Marka')}
+        {text('box', 'Kutu durumu', 'Kutulu, Kutusuz… — kod + marka ile birlikte ürünü ayırt eder')}
         {text('category', 'Kategori')}
         {text('type', 'Tip', 'örn. Sabit Bilyalı, Konik Makaralı')}
         {text('seal', 'Keçe / Kapak', 'ZZ, 2RS, Açık…')}
@@ -220,7 +233,7 @@ export function ProductEditor({
       <Confirm
         open={confirmTwin}
         title="Benzer ürün var"
-        text={`"${similar[0]?.sku ?? ''}" zaten kayıtlı görünüyor. Yine de "${form.sku.trim()}" kodunu ayrı bir ürün olarak kaydetmek istiyor musunuz?`}
+        text={`"${twin?.sku ?? ''}" (${twin?.brand || 'markasız'}${twin?.box ? `, ${twin.box}` : ''}) zaten kayıtlı. Yine de "${form.sku.trim()}" kodunu ayrı bir ürün olarak kaydetmek istiyor musunuz?`}
         confirmLabel="Yine de kaydet"
         onCancel={() => setConfirmTwin(false)}
         onConfirm={() => save(true)}

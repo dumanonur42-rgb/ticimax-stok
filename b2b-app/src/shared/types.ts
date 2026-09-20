@@ -19,6 +19,8 @@ export interface Product {
   card_price: number | null
   min_order: number
   shelf: string
+  /** Packaging state ("Kutulu", "Kutusuz"…). Part of the product identity together with code and brand. */
+  box: string
   barcode: string
   image: string
   description: string
@@ -52,10 +54,11 @@ export interface QuickEntryRow {
   shelf: string
   sku: string
   brand: string
+  box: string
   stock: number
   price: number | null
   description: string
-  /** What to do when the code already exists: add the quantity to its stock (default) or overwrite the stock. */
+  /** What to do when the same code + brand + box already exists: add the quantity to its stock (default) or overwrite the stock. */
   existing: 'add' | 'set'
 }
 
@@ -101,6 +104,7 @@ export type MergePatch = Partial<
     | 'card_price'
     | 'list_price'
     | 'shelf'
+    | 'box'
     | 'barcode'
     | 'equivalents'
     | 'description'
@@ -148,6 +152,12 @@ export interface Customer {
   created_at: string
 }
 export type CustomerInput = Omit<Customer, 'id' | 'created_at'>
+/** Login handed to a dealer by an administrator together with their company card. */
+export interface DealerLogin {
+  username: string
+  password: string
+  display_name: string
+}
 /** Fields a dealer may fill in for their own company card after approval. */
 export type CustomerProfile = Pick<Customer, 'name' | 'contact' | 'phone' | 'email' | 'address' | 'city' | 'tax_no' | 'tax_office'>
 

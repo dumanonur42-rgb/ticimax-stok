@@ -74,6 +74,7 @@ export function ProductDrawer({
             <h3 style={{ marginBottom: 4 }}>{product.name}</h3>
             <div className="row wrap small">
               {product.brand && <span className="badge info">{product.brand}</span>}
+              {product.box && <span className="badge neutral">{product.box}</span>}
               {product.category && <span className="badge neutral">{product.category}</span>}
               {product.type && <span className="badge neutral">{product.type}</span>}
               {product.seal && <span className="badge neutral">{product.seal}</span>}

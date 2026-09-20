@@ -1,3 +1,4 @@
+import { normalize as norm, productKey } from '@shared/identity'
 import type { Product, QuickEntryResult, QuickEntryRow } from '@shared/types'
 import { AlertTriangle, ClipboardPaste, Eraser, Keyboard, Plus, RefreshCw, Save, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react'
@@ -38,16 +39,8 @@ let seq = 1
 const blank = (shelf = ''): Row => ({ id: seq++, shelf, sku: '', brand: '', stock: '', box: '', price: '', note: '', existing: 'add' })
 const isEmpty = (r: Row): boolean => !r.sku.trim() && !r.brand.trim() && !r.stock.trim() && !r.box.trim() && !r.price.trim() && !r.note.trim()
 
-const norm = (s: string): string =>
-  s
-    .toLocaleUpperCase('tr-TR')
-    .replace(/İ/g, 'I')
-    .replace(/Ş/g, 'S')
-    .replace(/Ğ/g, 'G')
-    .replace(/Ü/g, 'U')
-    .replace(/Ö/g, 'O')
-    .replace(/Ç/g, 'C')
-    .replace(/[^A-Z0-9]+/g, '')
+const rowKey = (r: Row): string => productKey(r.sku, r.brand, r.box)
+const variantLabel = (p: Product): string => `${p.sku} · ${p.brand || 'markasız'}${p.box ? ` · ${p.box}` : ''}`
 
 const parseNum = (s: string): number | null => {
   let t = s.replace(/[^\d.,-]/g, '')
@@ -72,7 +65,13 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
   const { toast } = useApp()
   const [confirmSet, setConfirmSet] = useState(false)
   const [rows, setRows] = useState<Row[]>(() => Array.from({ length: MIN_ROWS }, () => blank()))
-  const [known, setKnown] = useState<Map<string, Product>>(new Map())
+  const [found, setFound] = useState<Product[]>([])
+  const known = useMemo(() => new Map(found.map((p) => [productKey(p.sku, p.brand, p.box), p])), [found])
+  const variants = useMemo(() => {
+    const m = new Map<string, Product[]>()
+    found.forEach((p) => m.set(norm(p.sku), [...(m.get(norm(p.sku)) ?? []), p]))
+    return m
+  }, [found])
   const [busy, setBusy] = useState(false)
   const [result, setResult] = useState<QuickEntryResult | null>(null)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -82,7 +81,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
     if (!skuSig) return
     const t = setTimeout(() => {
       api('products:bySkus', skuSig.split('\n'))
-        .then((found) => setKnown(new Map(found.map((p) => [norm(p.sku), p]))))
+        .then(setFound)
         .catch(() => undefined)
     }, 250)
     return () => clearTimeout(t)
@@ -91,7 +90,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
   const filled = useMemo(() => rows.filter((r) => r.sku.trim()), [rows])
   const dupInBatch = useMemo(() => {
     const seen = new Map<string, number>()
-    filled.forEach((r) => seen.set(norm(r.sku), (seen.get(norm(r.sku)) ?? 0) + 1))
+    filled.forEach((r) => seen.set(rowKey(r), (seen.get(rowKey(r)) ?? 0) + 1))
     return seen
   }, [filled])
   const totalQty = useMemo(() => filled.reduce((s, r) => s + (parseNum(r.stock) ?? 0), 0), [filled])
@@ -193,10 +192,10 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
   const overwrites = useMemo(
     () =>
       filled
-        .filter((r) => r.existing === 'set' && known.has(norm(r.sku)))
+        .filter((r) => r.existing === 'set' && known.has(rowKey(r)))
         .map((r) => {
-          const hit = known.get(norm(r.sku))!
-          return { id: r.id, sku: hit.sku, from: Number(hit.stock), to: parseNum(r.stock) ?? 0 }
+          const hit = known.get(rowKey(r))!
+          return { id: r.id, sku: variantLabel(hit), from: Number(hit.stock), to: parseNum(r.stock) ?? 0 }
         }),
     [filled, known]
   )
@@ -218,9 +217,10 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
       shelf: r.shelf.trim(),
       sku: r.sku.trim(),
       brand: r.brand.trim(),
+      box: r.box.trim(),
       stock: parseNum(r.stock) ?? 0,
       price: parseNum(r.price),
-      description: [r.box.trim(), r.note.trim()].filter(Boolean).join(' | '),
+      description: r.note.trim(),
       existing: r.existing
     }))
     setBusy(true)
@@ -255,7 +255,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
   })
 
   const template = `44px ${COLS.map((c) => c.width).join(' ')} 44px`
-  const existingCount = filled.filter((r) => known.has(norm(r.sku))).length
+  const existingCount = filled.filter((r) => known.has(rowKey(r))).length
 
   return (
     <section className="quick-entry" aria-label="Hızlı stok girişi" role="tabpanel">
@@ -294,9 +294,10 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
             <div aria-hidden />
           </div>
           {rows.map((r, idx) => {
-            const key = norm(r.sku)
+            const key = rowKey(r)
             const hit = r.sku.trim() ? known.get(key) : undefined
             const twice = r.sku.trim() && (dupInBatch.get(key) ?? 0) > 1
+            const others = r.sku.trim() && !hit ? (variants.get(norm(r.sku)) ?? []) : []
             return (
               <div key={r.id} className={`qe-row${hit ? ' known' : ''}${r.error ? ' error' : ''}${isEmpty(r) ? ' blank' : ''}`} role="row" aria-rowindex={idx + 1}>
                 <div className="qe-num" aria-hidden>
@@ -326,8 +327,8 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                     </button>
                   )}
                 </div>
-                {(hit || twice || r.error) && (
-                  <div className="qe-note" role="note">
+                {(hit || twice || others.length > 0 || r.error) && (
+                  <div className={`qe-note${!hit && !r.error && others.length ? ' variant' : ''}`} role="note">
                     {r.error ? (
                       <>
                         <AlertTriangle size={14} aria-hidden /> <span className="danger-text">{r.error}</span>
@@ -342,7 +343,8 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                             <span className="qe-known">
                               <AlertTriangle size={14} aria-hidden />
                               <span>
-                                <b>{hit.sku}</b> zaten kayıtlı ({hit.brand || 'markasız'}) — mevcut stok <b>{num(cur)}</b>
+                                <b>{hit.sku}</b> zaten kayıtlı ({hit.brand || 'markasız'}
+                                {hit.box ? `, ${hit.box}` : ''}) — mevcut stok <b>{num(cur)}</b>
                                 {hit.shelf && (
                                   <>
                                     {' · raf '}
@@ -396,10 +398,24 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                           </>
                         )
                       })()
-                    ) : (
+                    ) : twice ? (
                       <>
-                        <ClipboardPaste size={14} aria-hidden /> Bu kod tabloda birden fazla kez var; adetler toplanarak tek ürün olur.
+                        <ClipboardPaste size={14} aria-hidden /> Bu ürün (aynı kod, marka ve kutu) tabloda birden fazla kez var; adetler toplanarak tek ürün olur.
                       </>
+                    ) : (
+                      <span className="qe-variant">
+                        <span>
+                          Bu kod farklı marka/kutu ile kayıtlı:{' '}
+                          {others.slice(0, 3).map((p, i) => (
+                            <span key={p.id}>
+                              {i > 0 && ', '}
+                              <b>{variantLabel(p)}</b> (stok {num(Number(p.stock))})
+                            </span>
+                          ))}
+                          {others.length > 3 && ` +${others.length - 3}`}
+                          {' — '}bu satır <b>yeni ürün</b> olarak açılır. Aynı ürünse marka ve kutu durumunu birebir yazın.
+                        </span>
+                      </span>
                     )}
                   </div>
                 )}

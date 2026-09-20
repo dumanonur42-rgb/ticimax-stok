@@ -15,11 +15,11 @@ import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { upsertLocal } from '../cloud/sync'
-import { getDb, normalize, normalizeText } from '../db'
+import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
 
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
-  list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active, updated_at`
+  list_price, card_price, min_order, shelf, box, barcode, image, description, equivalents, active, updated_at`
 
 interface Where {
   sql: string
@@ -159,12 +159,22 @@ export function getProduct(id: number): Product | null {
   return (getDb().prepare(`SELECT ${COLS} FROM products p WHERE id = ?`).get(id) as Product) ?? null
 }
 
+/** Every product carrying one of the codes, whatever the brand or packaging. */
 export function productsBySkus(skus: string[]): Product[] {
   if (!skus.length) return []
   const norms = skus.map(normalize)
   return getDb()
     .prepare(`SELECT ${COLS} FROM products p WHERE sku_norm IN (${norms.map(() => '?').join(',')})`)
     .all(...norms) as Product[]
+}
+
+/** Exact identity lookup (code + brand + box), keyed by `productKey`. */
+export function productsByKeys(keys: string[]): Map<string, Product> {
+  if (!keys.length) return new Map()
+  const rows = getDb()
+    .prepare(`SELECT ${COLS} FROM products p WHERE key_norm IN (${keys.map(() => '?').join(',')})`)
+    .all(...keys) as Product[]
+  return new Map(rows.map((p) => [productKey(p.sku, p.brand, p.box), p]))
 }
 
 /** Writes go to the cloud; the returned row is mirrored into the local cache right away. */
@@ -175,6 +185,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     ...(p.id ? { id: p.id } : {}),
     sku,
     sku_norm: normalize(sku),
+    key_norm: productKey(sku, p.brand, p.box),
     name: p.name,
     name_norm: normalizeText(p.name),
     brand: p.brand,
@@ -192,6 +203,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     card_price: p.card_price ?? null,
     min_order: p.min_order,
     shelf: p.shelf,
+    box: p.box,
     barcode: p.barcode,
     image: p.image,
     description: p.description,
@@ -199,14 +211,13 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     active: !!p.active,
     deleted: false
   }
-  if (!p.id) {
-    const clash = productsBySkus([sku])[0]
-    if (clash) throw new Error(`"${clash.sku}" kodu zaten kayıtlı (${clash.brand || 'markasız'}). Mevcut ürünü düzenleyin veya birleştirin.`)
-  }
+  const clash = productsByKeys([row.key_norm]).get(row.key_norm)
+  if (clash && clash.id !== p.id)
+    throw new Error(`"${clash.sku}" (${clash.brand || 'markasız'}${clash.box ? `, ${clash.box}` : ''}) zaten kayıtlı. Mevcut ürünü düzenleyin veya birleştirin.`)
   const sb = cloud()
   const saved = p.id
     ? must(await sb.from('products').update(row).eq('id', p.id).select('*').single())
-    : must(await sb.from('products').upsert(row, { onConflict: 'sku_norm' }).select('*').single())
+    : must(await sb.from('products').upsert(row, { onConflict: 'key_norm' }).select('*').single())
   upsertLocal([saved])
   return toProduct(saved)
 }
@@ -240,12 +251,29 @@ function effectiveBrand(sku: string, brand: string, brands: Set<string>): string
   return normalizeText(sku).split(' ').find((t) => brands.has(t)) ?? ''
 }
 
+const BOX_WORDS = new Map([
+  ['KUTULU', 'KUTULU'],
+  ['KUTULI', 'KUTULU'],
+  ['KUTUSUZ', 'KUTUSUZ']
+])
+
+/** Box column when filled, otherwise a packaging word found inside the code ("6002 FAG kutulu"). */
+function effectiveBox(sku: string, box: string): string {
+  const b = normalize(box)
+  if (b) return BOX_WORDS.get(b) ?? b
+  for (const t of normalizeText(sku).split(' ')) {
+    const w = BOX_WORDS.get(t)
+    if (w) return w
+  }
+  return ''
+}
+
 function knownBrands(): Set<string> {
   const rows = getDb().prepare(`SELECT DISTINCT brand FROM products WHERE brand <> ''`).all() as { brand: string }[]
   return new Set(rows.map((r) => normalize(r.brand)).filter((b) => b.length >= 2))
 }
 
-/** Groups of products that are certainly the same item (same designation key and same brand). */
+/** Groups of products that are certainly the same item (same designation key, brand and packaging). */
 export function duplicateGroups(limit = 400): DuplicateGroup[] {
   const brands = knownBrands()
   const rows = getDb().prepare(`SELECT ${COLS} FROM products p ORDER BY p.id`).all() as Product[]
@@ -253,7 +281,7 @@ export function duplicateGroups(limit = 400): DuplicateGroup[] {
   for (const p of rows) {
     const key = designationKey(p.sku, p.brand, brands)
     if (key.length < 3) continue
-    const k = `${key}|${effectiveBrand(p.sku, p.brand, brands)}`
+    const k = `${key}|${effectiveBrand(p.sku, p.brand, brands)}|${effectiveBox(p.sku, p.box)}`
     const list = buckets.get(k)
     if (list) list.push(p)
     else buckets.set(k, [p])
@@ -268,25 +296,27 @@ export function duplicateGroups(limit = 400): DuplicateGroup[] {
 }
 
 /**
- * Products that look like the one being typed in the editor: exact code match first, then same designation
- * (brand-agnostic so a missing/different brand still warns).
+ * Products that look like the one being typed in the editor: the identical item (code + brand + box) first,
+ * then other brands/packagings of the same code, then same designation (brand-agnostic so a missing brand still warns).
  */
-export function similarProducts(sku: string, brand: string, excludeId: number | null): Product[] {
+export function similarProducts(sku: string, brand: string, box: string, excludeId: number | null): Product[] {
   const s = sku.trim()
   if (normalize(s).length < 3) return []
   const brands = knownBrands()
   const tokens = designationTokens(s, brand, brands)
   const key = tokens.join('')
   const exact = productsBySkus([s]).filter((p) => p.id !== excludeId)
-  if (key.length < 3) return exact
   const anchor = tokens.reduce((a, t) => (t.length > a.length ? t : a), '')
-  const rows = getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.sku_norm LIKE ? LIMIT 500`).all(`%${anchor}%`) as Product[]
+  const rows =
+    key.length < 3 ? [] : (getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.sku_norm LIKE ? LIMIT 500`).all(`%${anchor}%`) as Product[])
   const same = rows.filter((p) => p.id !== excludeId && designationKey(p.sku, p.brand, brands) === key)
   const seen = new Set<number>()
+  const me = productKey(s, brand, box)
   const b = normalize(brand)
+  const rank = (p: Product): number => (productKey(p.sku, p.brand, p.box) === me ? 0 : normalize(p.brand) === b ? 1 : 2)
   return [...exact, ...same]
     .filter((p) => (seen.has(p.id) ? false : (seen.add(p.id), true)))
-    .sort((x, y) => Number(normalize(y.brand) === b) - Number(normalize(x.brand) === b) || x.id - y.id)
+    .sort((x, y) => rank(x) - rank(y) || x.id - y.id)
     .slice(0, 8)
 }
 
@@ -299,9 +329,9 @@ export async function bulkUpdateProducts(rows: BulkProductPatch[]): Promise<Prod
 }
 
 /**
- * Spreadsheet-style quick entry: unknown codes become new products, known codes get the quantity added to
- * (or their stock replaced by) the typed amount; shelf/price/description are updated only when typed.
- * Rows with the same code inside one batch are folded together first.
+ * Spreadsheet-style quick entry: unknown items become new products, known items (same code + brand + box) get
+ * the quantity added to (or their stock replaced by) the typed amount; shelf/price are updated only when typed.
+ * Rows with the same identity inside one batch are folded together first.
  */
 export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResult> {
   const result: QuickEntryResult = { created: 0, updated: 0, errors: [] }
@@ -309,19 +339,18 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
   for (const r of rows) {
     const sku = r.sku.trim()
     if (!sku) continue
-    const key = normalize(sku)
+    const key = productKey(sku, r.brand, r.box)
     const prev = folded.get(key)
-    if (!prev) folded.set(key, { ...r, sku })
+    if (!prev) folded.set(key, { ...r, sku, brand: r.brand.trim(), box: r.box.trim() })
     else {
       prev.stock += r.stock
       if (r.shelf.trim()) prev.shelf = r.shelf
-      if (r.brand.trim()) prev.brand = r.brand
       if (r.price != null) prev.price = r.price
       if (r.description.trim()) prev.description = [prev.description, r.description].filter((s) => s.trim()).join(' | ')
     }
   }
   if (!folded.size) return result
-  const existing = new Map(productsBySkus([...folded.values()].map((r) => r.sku)).map((p) => [normalize(p.sku), p]))
+  const existing = productsByKeys([...folded.keys()])
   const currency = getSettings().default_currency
   const inserts: ProductInsert[] = []
   const patches: { sku: string; patch: BulkProductPatch }[] = []
@@ -336,10 +365,11 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
     }
     inserts.push({
       sku: r.sku,
-      sku_norm: key,
+      sku_norm: normalize(r.sku),
+      key_norm: key,
       name: r.sku,
       name_norm: normalizeText(r.sku),
-      brand: r.brand.trim(),
+      brand: r.brand,
       category: '',
       type: '',
       seal: '',
@@ -354,6 +384,7 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
       card_price: null,
       min_order: 1,
       shelf: r.shelf.trim(),
+      box: r.box,
       barcode: '',
       image: '',
       description: r.description.trim(),
@@ -402,6 +433,13 @@ export async function mergeProducts(input: MergeInput): Promise<Product> {
     patch.sku_norm = normalize(sku)
   }
   if (typeof patch.name === 'string') patch.name_norm = normalizeText(patch.name)
+  const target = getProduct(input.targetId)
+  if (target) {
+    const sku = typeof patch.sku === 'string' ? patch.sku : target.sku
+    const brand = typeof patch.brand === 'string' ? patch.brand : target.brand
+    const box = typeof patch.box === 'string' ? patch.box : target.box
+    patch.key_norm = productKey(sku, brand, box)
+  }
   const saved = must(await cloud().rpc('merge_products', { p_target: input.targetId, p_sources: sources, p_patch: patch }))
   const db = getDb()
   const del = db.prepare('DELETE FROM products WHERE id = ?')

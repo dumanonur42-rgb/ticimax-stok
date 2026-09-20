@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx'
 import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
-import { getDb, normalize, normalizeText } from '../db'
+import { getDb, normalize, normalizeText, productKey } from '../db'
 
 interface Parsed {
   filename: string
@@ -37,9 +37,10 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['currency', /^(para ?birimi|döviz|doviz|currency|pb)$/i],
   ['min_order', /^(min(imum)? ?sipariş|min ?adet|koli ?içi|paket)$/i],
   ['shelf', /^(raf|raf ?no|raf ?kodu|lokasyon|konum|shelf)$/i],
+  ['box', /^(kutu ?durumu|kutu|ambalaj|paket ?durumu|packaging|box)$/i],
   ['barcode', /^(barkod|barcode|ean|gtin)$/i],
   ['image', /^(görsel|gorsel|resim|image|foto)$/i],
-  ['description', /^(detay|not|notlar|açıklama ?2|uzun ?açıklama|kutu ?durumu|kutu|ambalaj|durum)$/i],
+  ['description', /^(detay|not|notlar|açıklama ?2|uzun ?açıklama|durum)$/i],
   ['equivalents', /^(muadil|muadiller|eşdeğer|esdeger|karşılık|karsilik|equivalent|alternatif)$/i]
 ]
 
@@ -153,7 +154,19 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   await pullProducts()
   const db = getDb()
   const existing = new Map<string, LocalRow>()
-  for (const r of db.prepare('SELECT * FROM products').all() as LocalRow[]) existing.set(r.sku_norm, r)
+  const bySku = new Map<string, LocalRow[]>()
+  for (const r of db.prepare('SELECT * FROM products').all() as LocalRow[]) {
+    existing.set(r.key_norm, r)
+    bySku.set(r.sku_norm, [...(bySku.get(r.sku_norm) ?? []), r])
+  }
+  const has = (f: Field): boolean => idx(f) >= 0
+  // Without brand/box columns in the file a code that exists as exactly one item still refers to that item.
+  const lookup = (key: string, sku_norm: string): LocalRow | undefined => {
+    const hit = existing.get(key)
+    if (hit || has('brand') || has('box')) return hit
+    const variants = bySku.get(sku_norm)
+    return variants?.length === 1 ? variants[0] : undefined
+  }
 
   const errors: string[] = []
   let inserted = 0
@@ -166,6 +179,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   const fromLocal = (ex: LocalRow): ProductInsert => ({
     sku: ex.sku,
     sku_norm: ex.sku_norm,
+    key_norm: ex.key_norm,
     name: ex.name,
     name_norm: ex.name_norm,
     brand: ex.brand,
@@ -183,6 +197,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     card_price: ex.card_price,
     min_order: ex.min_order,
     shelf: ex.shelf,
+    box: ex.box,
     barcode: ex.barcode,
     image: ex.image,
     description: ex.description,
@@ -195,13 +210,17 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     const skuRaw = (col(row, 'sku') ?? '').trim()
     if (!skuRaw) return
     const sku_norm = normalize(skuRaw)
-    if (!sku_norm || seen.has(sku_norm)) return
-    seen.add(sku_norm)
+    if (!sku_norm) return
+    const brand = (col(row, 'brand') ?? '').trim() || opts.defaultBrand
+    const box = (col(row, 'box') ?? '').trim()
+    const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm)
+    const key_norm = ex ? ex.key_norm : productKey(skuRaw, brand, box)
+    if (seen.has(key_norm)) return
+    seen.add(key_norm)
 
     const stockVal = parseNumber(col(row, 'stock'))
     const priceVal = parseNumber(col(row, 'price'))
     const cardVal = parseNumber(col(row, 'card_price'))
-    const ex = opts.mode === 'replace' ? undefined : existing.get(sku_norm)
 
     if (opts.mode === 'stock_only') {
       if (!ex) {
@@ -222,9 +241,10 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     const record: ProductInsert = {
       sku: skuRaw,
       sku_norm,
+      key_norm,
       name,
       name_norm: normalizeText(name),
-      brand: (col(row, 'brand') ?? '').trim() || opts.defaultBrand,
+      brand,
       category: (col(row, 'category') ?? '').trim() || opts.defaultCategory,
       type: (col(row, 'type') ?? '').trim(),
       seal: (col(row, 'seal') ?? '').trim().toUpperCase(),
@@ -239,6 +259,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       card_price: cardVal,
       min_order: parseNumber(col(row, 'min_order')) ?? 1,
       shelf: (col(row, 'shelf') ?? '').trim(),
+      box,
       barcode: (col(row, 'barcode') ?? '').trim(),
       image: (col(row, 'image') ?? '').trim(),
       description: (col(row, 'description') ?? '').trim(),
@@ -249,7 +270,6 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
 
     if (ex) {
       // Columns that were not mapped in the file keep their current values.
-      const has = (f: Field): boolean => idx(f) >= 0
       const out: ProductInsert = {
         ...fromLocal(ex),
         sku: record.sku,
@@ -270,11 +290,14 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
         ...(has('card_price') ? { card_price: record.card_price } : {}),
         ...(has('min_order') ? { min_order: record.min_order } : {}),
         ...(has('shelf') ? { shelf: record.shelf } : {}),
+        ...(has('box') ? { box: record.box } : {}),
         ...(has('barcode') ? { barcode: record.barcode } : {}),
         ...(has('image') ? { image: record.image } : {}),
         ...(has('description') ? { description: record.description } : {}),
         ...(has('equivalents') ? { equivalents: record.equivalents } : {})
       }
+      out.key_norm = productKey(out.sku, out.brand, out.box)
+      seen.add(out.key_norm)
       batch.push(out)
       if (ex.stock === out.stock && ex.price === out.price && ex.name === out.name && ex.active) unchanged++
       else updated++
@@ -287,7 +310,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   const sb = cloud()
   if (opts.mode === 'replace') mustVoid(await sb.rpc('soft_delete_all_products'))
   for (let i = 0; i < batch.length; i += BATCH) {
-    mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'sku_norm' }))
+    mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
   }
   if (opts.deactivateMissing && opts.mode !== 'replace') {
     deactivated = must(await sb.rpc('deactivate_products_not_in', { p_norms: [...seen] }))
@@ -326,6 +349,7 @@ export const TEMPLATE_HEADERS = [
   'Liste Fiyatı',
   'Min Sipariş',
   'Raf',
+  'Kutu Durumu',
   'Barkod',
   'Muadil'
 ]

@@ -5,6 +5,8 @@ export type ProductRow = {
   id: number
   sku: string
   sku_norm: string
+  /** Identity: normalized code|brand|box; unique among live rows. */
+  key_norm: string
   name: string
   name_norm: string
   brand: string
@@ -22,6 +24,7 @@ export type ProductRow = {
   card_price: number | null
   min_order: number
   shelf: string
+  box: string
   barcode: string
   image: string
   description: string

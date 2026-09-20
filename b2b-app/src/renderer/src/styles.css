@@ -1970,6 +1970,13 @@ dialog.update-dialog {
   display: grid;
   gap: 10px;
 }
+.dup-warning.soft {
+  border-color: var(--border);
+  background: var(--bg-elev);
+}
+.dup-warning.soft .dup-warning-head {
+  color: var(--text-muted);
+}
 .dup-warning-head {
   display: flex;
   gap: 10px;
@@ -2316,6 +2323,16 @@ dialog.update-dialog {
   background: var(--warning-bg);
   color: var(--text);
 }
+.qe-note.variant {
+  color: var(--text-muted);
+  border-left: 3px solid var(--border-strong, var(--border));
+  margin-left: 12px;
+  padding-left: 10px;
+}
+.qe-note.variant b {
+  color: var(--text);
+  font-weight: 600;
+}
 .qe-known {
   display: inline-flex;
   align-items: center;
@@ -2450,4 +2467,20 @@ dialog.update-dialog {
   .toasts {
     display: none !important;
   }
+}
+
+/* admin "Yeni bayi": optional login block */
+.dealer-login {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px 14px;
+  margin: 4px 0 0;
+  background: var(--bg-stripe);
+}
+.dealer-login legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+  font-weight: 600;
 }

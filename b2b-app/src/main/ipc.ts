@@ -29,7 +29,7 @@ import {
 } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
-import { approveUser, changePassword, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
+import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
 import { checkForUpdates, downloadAndInstall, installUpdate, updateState } from './updater'
 
 let session: Session | null = null
@@ -202,9 +202,9 @@ export function registerIpc(): void {
     requireRole('admin')
     return duplicateGroups()
   })
-  handle('products:similar', ({ sku, brand, excludeId }) => {
+  handle('products:similar', ({ sku, brand, box, excludeId }) => {
     requireRole('admin')
-    return similarProducts(sku, brand, excludeId)
+    return similarProducts(sku, brand, box, excludeId)
   })
   handle('products:merge', async (input) => {
     requireRole('admin')
@@ -247,6 +247,13 @@ export function registerIpc(): void {
     requireRole('admin')
     const r = await saveCustomer(c)
     broadcast('customers:changed')
+    return r
+  })
+  handle('customers:createWithLogin', async ({ customer, login: dealerLogin }) => {
+    requireRole('admin')
+    const r = await createDealerAccount(customer, dealerLogin)
+    broadcast('customers:changed')
+    broadcast('users:changed')
     return r
   })
   handle('customers:delete', async (id) => {

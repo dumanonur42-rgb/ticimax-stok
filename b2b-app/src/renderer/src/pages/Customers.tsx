@@ -1,5 +1,5 @@
-import type { Currency, Customer, CustomerInput } from '@shared/types'
-import { Pencil, Plus } from 'lucide-react'
+import type { Currency, Customer, CustomerInput, DealerLogin } from '@shared/types'
+import { KeyRound, Pencil, Plus } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Confirm, Empty, Field, Modal, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
@@ -20,6 +20,7 @@ const empty: CustomerInput = {
   notes: '',
   active: 1
 }
+const emptyLogin: DealerLogin = { username: '', password: '', display_name: '' }
 
 export function Customers(): ReactNode {
   const { toast, session } = useApp()
@@ -27,6 +28,9 @@ export function Customers(): ReactNode {
   const [list, setList] = useState<Customer[] | null>(null)
   const [q, setQ] = useState('')
   const [editing, setEditing] = useState<(CustomerInput & { id?: number }) | null>(null)
+  const [login, setLogin] = useState<DealerLogin>(emptyLogin)
+  const [showPassword, setShowPassword] = useState(false)
+  const wantsLogin = !!(login.username.trim() || login.password || login.display_name.trim())
   const [confirmDelete, setConfirmDelete] = useState<Customer | null>(null)
 
   const load = (): void => {
@@ -41,9 +45,16 @@ export function Customers(): ReactNode {
     if (!editing) return
     if (!editing.name.trim()) return toast('Firma adı zorunludur.', 'error')
     try {
-      await api('customers:save', editing)
-      toast('Bayi kaydedildi.', 'success')
+      if (!editing.id && wantsLogin) {
+        if (!login.username.trim() || !login.password) return toast('Giriş bilgileri için kullanıcı adı ve şifre birlikte girilmelidir.', 'error')
+        await api('customers:createWithLogin', { customer: editing, login })
+        toast(`Bayi ve giriş hesabı oluşturuldu — kullanıcı adı: ${login.username.trim()}`, 'success')
+      } else {
+        await api('customers:save', editing)
+        toast('Bayi kaydedildi.', 'success')
+      }
       setEditing(null)
+      setLogin(emptyLogin)
       load()
     } catch (e) {
       toast((e as Error).message, 'error')
@@ -73,7 +84,7 @@ export function Customers(): ReactNode {
         <input className="input" style={{ maxWidth: 320 }} type="search" placeholder="Bayi ara…" aria-label="Bayi ara" value={q} onChange={(e) => setQ(e.target.value)} />
         <span className="spacer" />
         {isAdmin && (
-          <button className="btn primary" onClick={() => setEditing({ ...empty })}>
+          <button className="btn primary" onClick={() => (setLogin(emptyLogin), setShowPassword(false), setEditing({ ...empty }))}>
             <Plus size={16} aria-hidden /> Yeni bayi
           </button>
         )}
@@ -179,6 +190,34 @@ export function Customers(): ReactNode {
             <label className="check">
               <input type="checkbox" checked={!!editing.active} onChange={(e) => set('active', e.target.checked ? 1 : 0)} /> Aktif
             </label>
+            {!editing.id && (
+              <fieldset className="dealer-login" style={{ gridColumn: 'span 2' }}>
+                <legend>
+                  <KeyRound size={15} aria-hidden /> Giriş bilgileri <span className="muted">(isteğe bağlı)</span>
+                </legend>
+                <p className="small muted" style={{ margin: '0 0 10px' }}>
+                  Doldurursanız bayi kartıyla birlikte onaylı bir bayi hesabı açılır; kişi bu bilgilerle hemen giriş yapabilir. Boş bırakırsanız yalnızca cari kart oluşur.
+                </p>
+                <div className="grid g2">
+                  <Field label={wantsLogin ? 'Kullanıcı adı *' : 'Kullanıcı adı'} hint="En az 3 karakter; harf, rakam, nokta, alt çizgi, tire">
+                    {(id) => <input id={id} className="input" autoComplete="off" value={login.username} onChange={(e) => setLogin((l) => ({ ...l, username: e.target.value }))} />}
+                  </Field>
+                  <Field label={wantsLogin ? 'Şifre *' : 'Şifre'} hint="En az 6 karakter">
+                    {(id) => (
+                      <div className="row" style={{ gap: 6 }}>
+                        <input id={id} className="input" type={showPassword ? 'text' : 'password'} autoComplete="new-password" value={login.password} onChange={(e) => setLogin((l) => ({ ...l, password: e.target.value }))} />
+                        <button type="button" className="btn ghost sm" onClick={() => setShowPassword((v) => !v)} aria-pressed={showPassword}>
+                          {showPassword ? 'Gizle' : 'Göster'}
+                        </button>
+                      </div>
+                    )}
+                  </Field>
+                  <Field label="Ad soyad" hint="Boşsa yetkili adı ya da firma adı kullanılır">
+                    {(id) => <input id={id} className="input" value={login.display_name} onChange={(e) => setLogin((l) => ({ ...l, display_name: e.target.value }))} />}
+                  </Field>
+                </div>
+              </fieldset>
+            )}
           </form>
         </Modal>
       )}

@@ -1,5 +1,5 @@
 import type { Currency, OrderStatus, PaymentType } from '@shared/types'
-import { getDb, hasTable, LEGACY_TABLES } from '../db'
+import { getDb, hasTable, LEGACY_TABLES, productKey } from '../db'
 import { cloud, must, mustVoid } from './client'
 import type { CustomerInsert, ProductInsert } from './database.types'
 
@@ -127,6 +127,7 @@ export async function migrateLegacyData(): Promise<MigrationReport> {
       batch.push({
         sku: r.sku,
         sku_norm: r.sku_norm,
+        key_norm: productKey(r.sku, r.brand, ''),
         name: r.name,
         name_norm: r.name_norm,
         brand: r.brand,
@@ -144,6 +145,7 @@ export async function migrateLegacyData(): Promise<MigrationReport> {
         card_price: r.card_price,
         min_order: r.min_order,
         shelf: r.shelf,
+        box: '',
         barcode: r.barcode,
         image: r.image,
         description: r.description,
@@ -153,7 +155,7 @@ export async function migrateLegacyData(): Promise<MigrationReport> {
       })
     }
     for (let i = 0; i < batch.length; i += BATCH) {
-      mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'sku_norm' }))
+      mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
     }
     report.products = batch.length
   }

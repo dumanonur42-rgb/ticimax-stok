@@ -491,8 +491,9 @@ export function Stock(): ReactNode {
                           </span>
                         )}
                       </div>
-                      <div className="cell muted" role="gridcell">
+                      <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
                         {p.brand}
+                        {p.box && <span className="faint small"> · {p.box}</span>}
                       </div>
                       {cell(p, v.index, 'stock', 'stok', <span className={`stock-dot ${lvl.cls}`} title={lvl.label} aria-label={lvl.label} />)}
                       {cell(p, v.index, 'price', 'peşin fiyat')}

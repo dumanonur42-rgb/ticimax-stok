@@ -25,6 +25,7 @@ export function toProduct(r: ProductRow): Product {
     card_price: opt(r.card_price),
     min_order: num(r.min_order),
     shelf: r.shelf,
+    box: r.box,
     barcode: r.barcode,
     image: r.image,
     description: r.description,

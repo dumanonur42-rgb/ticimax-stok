@@ -7,12 +7,13 @@ import { money, num } from '@/lib/format'
 import { useApp } from '@/store/app'
 
 /** Fields a merge can pick per-product. `dims` bundles d/D/B so the three stay consistent. */
-type FieldKey = 'sku' | 'name' | 'brand' | 'category' | 'type' | 'seal' | 'dims' | 'price' | 'card_price' | 'list_price' | 'shelf' | 'barcode' | 'equivalents' | 'description'
+type FieldKey = 'sku' | 'name' | 'brand' | 'box' | 'category' | 'type' | 'seal' | 'dims' | 'price' | 'card_price' | 'list_price' | 'shelf' | 'barcode' | 'equivalents' | 'description'
 
 const FIELDS: { key: FieldKey; label: string }[] = [
   { key: 'sku', label: 'Stok kodu' },
   { key: 'name', label: 'Ürün adı' },
   { key: 'brand', label: 'Marka' },
+  { key: 'box', label: 'Kutu durumu' },
   { key: 'category', label: 'Kategori' },
   { key: 'type', label: 'Tip' },
   { key: 'seal', label: 'Keçe / Kapak' },

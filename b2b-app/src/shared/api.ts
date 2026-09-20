@@ -4,6 +4,7 @@ import type {
   CustomerInput,
   CustomerProfile,
   DashboardStats,
+  DealerLogin,
   DuplicateGroup,
   Facets,
   ImportLog,
@@ -47,13 +48,14 @@ export interface ApiMap {
   'products:bulkUpdate': [BulkProductPatch[], Product[]]
   'products:bulkDelete': [number[], void]
   'products:duplicates': [void, DuplicateGroup[]]
-  'products:similar': [{ sku: string; brand: string; excludeId: number | null }, Product[]]
+  'products:similar': [{ sku: string; brand: string; box: string; excludeId: number | null }, Product[]]
   'products:merge': [MergeInput, Product]
   'products:quickEntry': [QuickEntryRow[], QuickEntryResult]
 
   'customers:list': [{ q?: string }, Customer[]]
   'customers:get': [number, Customer | null]
   'customers:save': [Partial<Customer> & CustomerInput, Customer]
+  'customers:createWithLogin': [{ customer: CustomerInput; login: DealerLogin }, Customer]
   'customers:delete': [number, void]
   /** A dealer completes their own company card (name, tax and contact details). */
   'customers:profile': [CustomerProfile, Session]

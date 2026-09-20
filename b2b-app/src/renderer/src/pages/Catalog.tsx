@@ -412,8 +412,9 @@ export function Catalog(): ReactNode {
                     <div className="cell sku" role="gridcell" title={p.name}>
                       {p.sku}
                     </div>
-                    <div className="cell muted" role="gridcell">
+                    <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
                       {p.brand}
+                      {p.box && <span className="faint small"> · {p.box}</span>}
                     </div>
                     <div className="cell mono small muted" role="gridcell">
                       {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}

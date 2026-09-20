@@ -58,27 +58,28 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
-const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active, updated_at)
-  VALUES (@id,@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,@active,@updated_at)`
+const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
+  price, currency, list_price, card_price, min_order, shelf, box, barcode, image, description, equivalents, active, updated_at)
+  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
+  @currency,@list_price,@card_price,@min_order,@shelf,@box,@barcode,@image,@description,@equivalents,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 export function upsertLocal(rows: ProductRow[]): void {
   if (!rows.length) return
   const db = getDb()
   const delId = db.prepare('DELETE FROM products WHERE id = ?')
-  const delNorm = db.prepare('DELETE FROM products WHERE sku_norm = ?')
+  const delKey = db.prepare('DELETE FROM products WHERE key_norm = ?')
   const ins = db.prepare(INSERT_SQL)
   db.transaction((batch: ProductRow[]) => {
     for (const r of batch) {
       delId.run(r.id)
-      delNorm.run(r.sku_norm)
+      delKey.run(r.key_norm)
       if (r.deleted) continue
       ins.run({
         id: r.id,
         sku: r.sku,
         sku_norm: r.sku_norm,
+        key_norm: r.key_norm,
         name: r.name,
         name_norm: r.name_norm,
         brand: r.brand,
@@ -96,6 +97,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         card_price: r.card_price === null ? null : Number(r.card_price),
         min_order: Number(r.min_order),
         shelf: r.shelf,
+        box: r.box,
         barcode: r.barcode,
         image: r.image,
         description: r.description,
