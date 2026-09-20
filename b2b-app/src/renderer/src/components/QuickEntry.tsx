@@ -1,6 +1,7 @@
 import type { Product, QuickEntryResult, QuickEntryRow } from '@shared/types'
-import { AlertTriangle, ClipboardPaste, Eraser, Keyboard, Plus, Save, Trash2 } from 'lucide-react'
+import { AlertTriangle, ClipboardPaste, Eraser, Keyboard, Plus, RefreshCw, Save, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react'
+import { Modal } from '@/components/ui'
 import { api } from '@/lib/api'
 import { num } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -69,6 +70,7 @@ function parseClipboard(text: string): string[][] {
 
 export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
   const { toast } = useApp()
+  const [confirmSet, setConfirmSet] = useState(false)
   const [rows, setRows] = useState<Row[]>(() => Array.from({ length: MIN_ROWS }, () => blank()))
   const [known, setKnown] = useState<Map<string, Product>>(new Map())
   const [busy, setBusy] = useState(false)
@@ -188,10 +190,30 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
     focusCell(0, 'shelf')
   }
 
+  const overwrites = useMemo(
+    () =>
+      filled
+        .filter((r) => r.existing === 'set' && known.has(norm(r.sku)))
+        .map((r) => {
+          const hit = known.get(norm(r.sku))!
+          return { id: r.id, sku: hit.sku, from: Number(hit.stock), to: parseNum(r.stock) ?? 0 }
+        }),
+    [filled, known]
+  )
+
   const save = async (): Promise<void> => {
     if (!filled.length) return toast('Kaydedilecek satır yok.', 'info')
     const bad = filled.find((r) => r.stock.trim() && parseNum(r.stock) == null)
     if (bad) return toast(`"${bad.sku}" satırındaki adet sayı değil.`, 'error')
+    if (overwrites.length) {
+      setConfirmSet(true)
+      return
+    }
+    await commit()
+  }
+
+  const commit = async (): Promise<void> => {
+    setConfirmSet(false)
     const payload: QuickEntryRow[] = filled.map((r) => ({
       shelf: r.shelf.trim(),
       sku: r.sku.trim(),
@@ -311,27 +333,67 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                         <AlertTriangle size={14} aria-hidden /> <span className="danger-text">{r.error}</span>
                       </>
                     ) : hit ? (
-                      <>
-                        <AlertTriangle size={14} aria-hidden />
-                        <span>
-                          <b>{hit.sku}</b> zaten kayıtlı ({hit.brand || 'markasız'}) — stok <b>{num(hit.stock)}</b>
-                          {hit.shelf && (
-                            <>
-                              {' · '}
-                              <span className="shelf-tag sm">{hit.shelf}</span>
-                            </>
-                          )}
-                        </span>
-                        <span className="spacer" />
-                        <label className="qe-mode">
-                          <input type="radio" name={`m${r.id}`} checked={r.existing === 'add'} onChange={() => setMode(idx, 'add')} tabIndex={-1} />
-                          <Plus size={12} aria-hidden /> Stoğa ekle ({num(hit.stock)} + {num(parseNum(r.stock) ?? 0)} = <b>{num(Number(hit.stock) + (parseNum(r.stock) ?? 0))}</b>)
-                        </label>
-                        <label className="qe-mode">
-                          <input type="radio" name={`m${r.id}`} checked={r.existing === 'set'} onChange={() => setMode(idx, 'set')} tabIndex={-1} />
-                          Üzerine yaz ({num(parseNum(r.stock) ?? 0)})
-                        </label>
-                      </>
+                      (() => {
+                        const cur = Number(hit.stock)
+                        const qty = parseNum(r.stock) ?? 0
+                        const set = r.existing === 'set'
+                        return (
+                          <>
+                            <span className="qe-known">
+                              <AlertTriangle size={14} aria-hidden />
+                              <span>
+                                <b>{hit.sku}</b> zaten kayıtlı ({hit.brand || 'markasız'}) — mevcut stok <b>{num(cur)}</b>
+                                {hit.shelf && (
+                                  <>
+                                    {' · raf '}
+                                    <span className="shelf-tag sm">{hit.shelf}</span>
+                                  </>
+                                )}
+                              </span>
+                            </span>
+                            <div className="qe-modes" role="radiogroup" aria-label={`${hit.sku} için stok işlemi`}>
+                              <button
+                                type="button"
+                                role="radio"
+                                aria-checked={!set}
+                                className={`qe-mode-btn add${!set ? ' on' : ''}`}
+                                tabIndex={-1}
+                                onClick={() => setMode(idx, 'add')}
+                              >
+                                <span className="qe-mode-title">
+                                  <Plus size={14} aria-hidden /> Stoğa ekle
+                                </span>
+                                <span className="qe-mode-math">
+                                  {num(cur)} + {num(qty)} = <b>{num(cur + qty)}</b>
+                                </span>
+                              </button>
+                              <button
+                                type="button"
+                                role="radio"
+                                aria-checked={set}
+                                className={`qe-mode-btn set${set ? ' on' : ''}`}
+                                tabIndex={-1}
+                                onClick={() => setMode(idx, 'set')}
+                              >
+                                <span className="qe-mode-title">
+                                  <RefreshCw size={14} aria-hidden /> Üzerine yaz
+                                </span>
+                                <span className="qe-mode-math">
+                                  {num(cur)} → <b>{num(qty)}</b>
+                                </span>
+                              </button>
+                            </div>
+                            {set && (
+                              <span className="qe-set-warn" role="alert">
+                                <AlertTriangle size={14} aria-hidden />
+                                <span>
+                                  Dikkat: <b>{hit.sku}</b> ürününün önceki <b>{num(cur)}</b> adet stoğu <u>silinir</u>, yerine <b>{num(qty)}</b> yazılır. Kaydederken tekrar onay istenir.
+                                </span>
+                              </span>
+                            )}
+                          </>
+                        )
+                      })()
                     ) : (
                       <>
                         <ClipboardPaste size={14} aria-hidden /> Bu kod tabloda birden fazla kez var; adetler toplanarak tek ürün olur.
@@ -351,12 +413,51 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
         </span>
         {existingCount > 0 && (
           <span className="muted">
-            {num(existingCount)} satır kayıtlı ürüne gidiyor (stok eklenir), {num(filled.length - existingCount)} yeni ürün
+            {num(existingCount - overwrites.length)} satırda stoğa eklenir
+            {overwrites.length > 0 && (
+              <>
+                , <b className="danger-text">{num(overwrites.length)} satırda stok üzerine yazılır</b>
+              </>
+            )}
+            , {num(filled.length - existingCount)} yeni ürün
           </span>
         )}
         <span className="spacer" />
         <span className="muted small">Boş bırakılan fiyat 0 olarak kaydedilir; kayıtlı ürünlerde fiyat yalnızca yazıldıysa değişir.</span>
       </footer>
+
+      <Modal
+        open={confirmSet}
+        title="Emin misiniz? Önceki stok silinecek"
+        onClose={() => setConfirmSet(false)}
+        footer={
+          <>
+            <button className="btn" onClick={() => setConfirmSet(false)} autoFocus>
+              Vazgeç
+            </button>
+            <button className="btn danger" onClick={() => void commit()} disabled={busy}>
+              <RefreshCw size={16} aria-hidden /> Evet, üzerine yaz ve kaydet
+            </button>
+          </>
+        }
+      >
+        <p>
+          <b>{num(overwrites.length)}</b> üründe "Üzerine yaz" seçili. Bu ürünlerin <b>mevcut stokları silinip</b> yerine yazdığınız adet kaydedilecek; bu işlem geri
+          alınamaz.
+        </p>
+        <ul className="qe-confirm-list">
+          {overwrites.slice(0, 12).map((o) => (
+            <li key={o.id}>
+              <span className="sku">{o.sku}</span>
+              <span className="qe-mode-math">
+                {num(o.from)} → <b>{num(o.to)}</b>
+              </span>
+            </li>
+          ))}
+          {overwrites.length > 12 && <li className="muted">… ve {num(overwrites.length - 12)} ürün daha</li>}
+        </ul>
+        <p className="muted small">Stoğu silmek istemiyorsanız "Vazgeç" deyip ilgili satırda "Stoğa ekle"yi seçin.</p>
+      </Modal>
     </section>
   )
 }

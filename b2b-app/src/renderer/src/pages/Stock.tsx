@@ -1,7 +1,7 @@
 import type { BulkProductPatch, DuplicateGroup, Product, ProductFilter } from '@shared/types'
 import { cardPrice } from '@shared/price'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowDownToLine, ArrowUp, ArrowUpToLine, Copy, GitMerge, Pencil, Plus, RefreshCw, RotateCcw, Save, Search, SlidersHorizontal, TableProperties, Trash2 } from 'lucide-react'
+import { ArrowDown, ArrowDownToLine, ArrowUp, ArrowUpToLine, Copy, Download, GitMerge, Pencil, Plus, RefreshCw, RotateCcw, Save, Search, SlidersHorizontal, TableProperties, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { MergeDialog } from '@/components/MergeDialog'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -27,7 +27,7 @@ interface Column {
 
 const COLUMNS: Column[] = [
   { key: 'sel', label: '', width: '40px' },
-  { key: 'shelf', label: 'Raf', width: '120px', sort: 'shelf' },
+  { key: 'shelf', label: 'Raf', width: '150px', sort: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(200px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '110px' },
   { key: 'stock', label: 'Stok', width: '150px', sort: 'stock', align: 'right' },
@@ -42,10 +42,11 @@ const parseNum = (s: string): number | null => {
   const n = Number(t)
   return Number.isFinite(n) ? n : null
 }
+const round2 = (v: number | string): number => Math.round(Number(v) * 100) / 100
 const editText = (p: Product, k: EditKey): string => {
   if (k === 'shelf') return p.shelf
-  if (k === 'card_price') return p.card_price == null ? '' : String(Number(p.card_price))
-  return String(Number(p[k]))
+  if (k === 'card_price') return p.card_price == null ? '' : String(round2(p.card_price))
+  return String(round2(p[k]))
 }
 
 /** Turns one row's pending text edits into a cloud patch; null when nothing actually changed. */
@@ -65,14 +66,14 @@ function toPatch(p: Product, e: Edit): BulkProductPatch | null {
   }
   if (e.price != null) {
     const n = parseNum(e.price) ?? 0
-    if (n !== Number(p.price)) {
+    if (n !== round2(p.price)) {
       out.price = n
       changed = true
     }
   }
   if (e.card_price != null) {
     const n = parseNum(e.card_price)
-    if (n !== (p.card_price == null ? null : Number(p.card_price))) {
+    if (n !== (p.card_price == null ? null : round2(p.card_price))) {
       out.card_price = n
       changed = true
     }
@@ -345,13 +346,13 @@ export function Stock(): ReactNode {
       {tab === 'list' && (
         <section className="catalog-main" aria-label="Stok listesi" role="tabpanel">
           <div className="toolbar">
-            <div className="search-box" style={{ maxWidth: 420 }}>
+            <div className="search-box plain" style={{ maxWidth: 440, minWidth: 300 }}>
               <Search size={20} aria-hidden />
               <input
                 id="stock-search"
                 className="input"
                 type="search"
-                placeholder="Ürün kodu, ad, marka veya raf ara…"
+                placeholder="Kod, marka veya raf ara…"
                 aria-label="Stokta ara"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
@@ -379,6 +380,17 @@ export function Stock(): ReactNode {
               <input type="checkbox" checked={includeInactive} onChange={(e) => setIncludeInactive(e.target.checked)} /> Pasifleri göster
             </label>
             <span className="spacer" />
+            <button
+              className="btn"
+              title="Bu listeyi (arama ve sıralamayla) Excel olarak kaydet"
+              onClick={() => {
+                api('products:exportExcel', filter)
+                  .then((path) => path && toast(`Excel kaydedildi: ${path}`, 'success'))
+                  .catch((e: Error) => toast(e.message, 'error'))
+              }}
+            >
+              <Download size={16} aria-hidden /> Excel dışa aktar
+            </button>
             <button className="btn" onClick={() => setEditing('new')}>
               <Plus size={16} aria-hidden /> Yeni ürün
             </button>
@@ -552,7 +564,7 @@ export function Stock(): ReactNode {
       {tab === 'dups' && (
         <section className="catalog-main" aria-label="Mükerrer ürünler" role="tabpanel">
           <div className="toolbar">
-            <div className="search-box" style={{ maxWidth: 360 }}>
+            <div className="search-box plain" style={{ maxWidth: 360 }}>
               <Search size={20} aria-hidden />
               <input className="input" type="search" placeholder="Grup içinde ara…" aria-label="Mükerrer gruplarda ara" value={dupQ} onChange={(e) => setDupQ(e.target.value)} />
             </div>

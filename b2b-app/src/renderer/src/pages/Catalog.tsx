@@ -1,7 +1,7 @@
 import type { Facets, Product, ProductFilter } from '@shared/types'
 import { cardPrice } from '@shared/price'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, ChevronLeft, Download, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronLeft, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -185,11 +185,6 @@ export function Catalog(): ReactNode {
     }
   }
 
-  const exportExcel = async (): Promise<void> => {
-    const path = await api('products:exportExcel', fullFilter)
-    if (path) toast(`Excel kaydedildi: ${path}`, 'success')
-  }
-
   const facetBlock = (key: 'brand' | 'category' | 'type' | 'seal', title: string): ReactNode => {
     const list = facets?.[key] ?? []
     if (!list.length && !(filter[key]?.length ?? 0)) return null
@@ -317,11 +312,6 @@ export function Catalog(): ReactNode {
           {isAdmin && (
             <button className="btn" onClick={() => setEditing('new')}>
               <Plus size={16} aria-hidden /> Yeni ürün
-            </button>
-          )}
-          {isAdmin && (
-            <button className="btn" onClick={exportExcel} title="Listeyi Excel olarak kaydet">
-              <Download size={16} aria-hidden /> Excel
             </button>
           )}
         </div>
