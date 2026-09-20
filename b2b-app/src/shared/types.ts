@@ -249,8 +249,13 @@ export interface UpdateState {
   message?: string
 }
 
-/** Sales line shown on the dashboard when the shared settings have no phone. */
-export const SUPPORT_PHONE = '+90 552 610 93 63'
+/** Sales contacts shown on the dashboard (WhatsApp + direct call). */
+export const SUPPORT_CONTACTS: ReadonlyArray<{ name: string; phone: string }> = [
+  { name: 'Ahmet Yaman', phone: '+90 552 610 93 63' },
+  { name: 'Arif Yaman', phone: '+90 533 474 87 40' }
+]
+
+export const SUPPORT_PHONE = SUPPORT_CONTACTS[0].phone
 
 export interface Settings {
   company_name: string

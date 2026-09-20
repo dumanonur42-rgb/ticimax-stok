@@ -7,9 +7,10 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 
 ## 1.0.11
 
-- Özet sayfasında "WhatsApp'tan yaz" ve "Hemen ara" kartları: tıklayınca WhatsApp veya telefon uygulaması +90 552 610 93 63 numarasıyla açılır.
+- Özet sayfasında "Bize ulaşın" kartı: Ahmet Yaman (+90 552 610 93 63) ve Arif Yaman (+90 533 474 87 40) için ayrı WhatsApp ve Ara düğmeleri; tıklayınca WhatsApp veya telefon uygulaması açılır.
 - Kayıt ol formunda alanların ve hata mesajının kartın dışına taşması düzeltildi; kullanıcı adında boşluk kullanılabilir (örn. "Onur Teknik").
 - [yönetici] Stok Aktar, Excel dosyanızın düzenini doğrudan tanır: RAF | ÜRÜN ADI | MARKA | ADET | KUTU DURUMU | FİYAT | AÇIKLAMA. Boş hücreler sorun olmaz; boş raf hücresi bir üst satırdaki rafı alır; yalnızca raf adı yazan ara satırlar atlanır; aynı ürün birden fazla satırda geçiyorsa adetler toplanır; "33 KUTULU – 1 KUTUSUZ" gibi hücreler kutulu ve kutusuz olarak ayrı ürünlere bölünür; aynı başlığa sahip diğer sayfalar da okunur.
+- [yönetici] Hızlı giriş: Kutu durumu veya Açıklama hücresinde arka arkaya iki kez Enter, yeni satırın Ürün kodu hücresine geçer.
 - [yönetici] Ürün listesinde Stok'tan sonra "Kutu durumu" ve "Açıklama" sütunları eklendi (bayilerde görünmez).
 - [yönetici] Örnek (demo) veri yükleme düğmeleri kaldırıldı; şablon dosyası Excel düzeninizle aynı sütunlarla iner.
 

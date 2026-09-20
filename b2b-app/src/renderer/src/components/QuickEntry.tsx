@@ -131,14 +131,27 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
       })
   }, [])
 
+  /** Cell reached by the last Enter; a second Enter there (in Kutu durumu / Açıklama) jumps to that row's Ürün kodu. */
+  const enterLanding = useRef<string | null>(null)
+
   const onKey = (ev: KeyboardEvent<HTMLInputElement>, idx: number, key: Col): void => {
     const ci = ORDER.indexOf(key)
     if (ev.key === 'Enter') {
       ev.preventDefault()
+      const here = `${idx}:${key}`
+      if (!ev.shiftKey && enterLanding.current === here && ev.currentTarget.value === '' && (key === 'box' || key === 'note')) {
+        enterLanding.current = null
+        focusCell(idx, 'sku')
+        return
+      }
       const to = ev.shiftKey ? Math.max(0, idx - 1) : idx + 1
       if (to >= rows.length) setRows((list) => ensureTail([...list, blank(list[list.length - 1]?.shelf)]))
+      enterLanding.current = `${to}:${key}`
       focusCell(to, key)
-    } else if (ev.key === 'ArrowDown' && !ev.altKey) {
+      return
+    }
+    enterLanding.current = null
+    if (ev.key === 'ArrowDown' && !ev.altKey) {
       ev.preventDefault()
       focusCell(Math.min(rows.length - 1, idx + 1), key)
     } else if (ev.key === 'ArrowUp' && !ev.altKey) {
