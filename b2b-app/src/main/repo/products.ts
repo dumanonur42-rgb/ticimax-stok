@@ -1,9 +1,22 @@
-import type { Facets, FacetValue, Product, ProductFilter, ProductInput, ProductPage } from '@shared/types'
+import type {
+  BulkProductPatch,
+  DuplicateGroup,
+  Facets,
+  FacetValue,
+  MergeInput,
+  Product,
+  ProductFilter,
+  ProductInput,
+  ProductPage,
+  QuickEntryResult,
+  QuickEntryRow
+} from '@shared/types'
 import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { upsertLocal } from '../cloud/sync'
 import { getDb, normalize, normalizeText } from '../db'
+import { getSettings } from './settings'
 
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
   list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active, updated_at`
@@ -26,7 +39,7 @@ function ftsQuery(q: string): string | null {
 }
 
 function buildWhere(f: ProductFilter, exclude?: keyof ProductFilter): Where {
-  const clauses: string[] = ['p.active = 1']
+  const clauses: string[] = f.includeInactive ? ['1 = 1'] : ['p.active = 1']
   const params: unknown[] = []
   let rank = ''
   const rankParams: unknown[] = []
@@ -186,10 +199,213 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     active: !!p.active,
     deleted: false
   }
+  if (!p.id) {
+    const clash = productsBySkus([sku])[0]
+    if (clash) throw new Error(`"${clash.sku}" kodu zaten kayıtlı (${clash.brand || 'markasız'}). Mevcut ürünü düzenleyin veya birleştirin.`)
+  }
   const sb = cloud()
   const saved = p.id
     ? must(await sb.from('products').update(row).eq('id', p.id).select('*').single())
     : must(await sb.from('products').upsert(row, { onConflict: 'sku_norm' }).select('*').single())
+  upsertLocal([saved])
+  return toProduct(saved)
+}
+
+/** Words that describe packaging/condition rather than the bearing itself; ignored when matching duplicates. */
+const NOISE = new Set([
+  'KUTULU', 'KUTUSUZ', 'KUTU', 'KUTULI', 'ORJINAL', 'ORIJINAL', 'ORJ', 'ORG', 'ORIGINAL', 'YENI', 'ESKI', 'SIFIR',
+  'ADET', 'AD', 'ADT', 'PCS', 'PC', 'TAKIM', 'TK', 'SET', 'PAKET', 'PKT', 'RULMAN', 'BILYA', 'BILYALI', 'BEARING',
+  'MUADIL', 'MUADILI', 'ITHAL', 'YERLI', 'KALITELI', 'STOK', 'STOKTA', 'VAR', 'YOK', 'INDIRIMLI', 'KAMPANYA'
+])
+
+/**
+ * Designation key: the SKU with the brand word, packaging words and punctuation stripped.
+ * "6002 FAG kutulu" (FAG) and "6002" (FAG) collapse to the same key → certain duplicates.
+ */
+function designationTokens(sku: string, brand: string, brands: Set<string>): string[] {
+  const b = normalize(brand)
+  return normalizeText(sku)
+    .split(' ')
+    .filter((t) => t && t !== b && !brands.has(t) && !NOISE.has(t))
+}
+
+export function designationKey(sku: string, brand: string, brands: Set<string>): string {
+  return designationTokens(sku, brand, brands).join('')
+}
+
+/** Brand column when filled, otherwise a known brand word found inside the code ("6002 FAG" with empty brand). */
+function effectiveBrand(sku: string, brand: string, brands: Set<string>): string {
+  const b = normalize(brand)
+  if (b) return b
+  return normalizeText(sku).split(' ').find((t) => brands.has(t)) ?? ''
+}
+
+function knownBrands(): Set<string> {
+  const rows = getDb().prepare(`SELECT DISTINCT brand FROM products WHERE brand <> ''`).all() as { brand: string }[]
+  return new Set(rows.map((r) => normalize(r.brand)).filter((b) => b.length >= 2))
+}
+
+/** Groups of products that are certainly the same item (same designation key and same brand). */
+export function duplicateGroups(limit = 400): DuplicateGroup[] {
+  const brands = knownBrands()
+  const rows = getDb().prepare(`SELECT ${COLS} FROM products p ORDER BY p.id`).all() as Product[]
+  const buckets = new Map<string, Product[]>()
+  for (const p of rows) {
+    const key = designationKey(p.sku, p.brand, brands)
+    if (key.length < 3) continue
+    const k = `${key}|${effectiveBrand(p.sku, p.brand, brands)}`
+    const list = buckets.get(k)
+    if (list) list.push(p)
+    else buckets.set(k, [p])
+  }
+  const out: DuplicateGroup[] = []
+  for (const [k, items] of buckets) {
+    if (items.length < 2) continue
+    out.push({ key: k, designation: k.split('|')[0], brand: items.find((p) => p.brand)?.brand ?? '', items })
+    if (out.length >= limit) break
+  }
+  return out.sort((a, b) => b.items.length - a.items.length || a.designation.localeCompare(b.designation, 'tr'))
+}
+
+/**
+ * Products that look like the one being typed in the editor: exact code match first, then same designation
+ * (brand-agnostic so a missing/different brand still warns).
+ */
+export function similarProducts(sku: string, brand: string, excludeId: number | null): Product[] {
+  const s = sku.trim()
+  if (normalize(s).length < 3) return []
+  const brands = knownBrands()
+  const tokens = designationTokens(s, brand, brands)
+  const key = tokens.join('')
+  const exact = productsBySkus([s]).filter((p) => p.id !== excludeId)
+  if (key.length < 3) return exact
+  const anchor = tokens.reduce((a, t) => (t.length > a.length ? t : a), '')
+  const rows = getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.sku_norm LIKE ? LIMIT 500`).all(`%${anchor}%`) as Product[]
+  const same = rows.filter((p) => p.id !== excludeId && designationKey(p.sku, p.brand, brands) === key)
+  const seen = new Set<number>()
+  const b = normalize(brand)
+  return [...exact, ...same]
+    .filter((p) => (seen.has(p.id) ? false : (seen.add(p.id), true)))
+    .sort((x, y) => Number(normalize(y.brand) === b) - Number(normalize(x.brand) === b) || x.id - y.id)
+    .slice(0, 8)
+}
+
+/** Row-level edits from the stock screen (stock / shelf / prices / active) in a single round trip. */
+export async function bulkUpdateProducts(rows: BulkProductPatch[]): Promise<Product[]> {
+  if (!rows.length) return []
+  const saved = must(await cloud().rpc('bulk_update_products', { p_rows: rows }))
+  upsertLocal(saved)
+  return saved.map(toProduct)
+}
+
+/**
+ * Spreadsheet-style quick entry: unknown codes become new products, known codes get the quantity added to
+ * (or their stock replaced by) the typed amount; shelf/price/description are updated only when typed.
+ * Rows with the same code inside one batch are folded together first.
+ */
+export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResult> {
+  const result: QuickEntryResult = { created: 0, updated: 0, errors: [] }
+  const folded = new Map<string, QuickEntryRow>()
+  for (const r of rows) {
+    const sku = r.sku.trim()
+    if (!sku) continue
+    const key = normalize(sku)
+    const prev = folded.get(key)
+    if (!prev) folded.set(key, { ...r, sku })
+    else {
+      prev.stock += r.stock
+      if (r.shelf.trim()) prev.shelf = r.shelf
+      if (r.brand.trim()) prev.brand = r.brand
+      if (r.price != null) prev.price = r.price
+      if (r.description.trim()) prev.description = [prev.description, r.description].filter((s) => s.trim()).join(' | ')
+    }
+  }
+  if (!folded.size) return result
+  const existing = new Map(productsBySkus([...folded.values()].map((r) => r.sku)).map((p) => [normalize(p.sku), p]))
+  const currency = getSettings().default_currency
+  const inserts: ProductInsert[] = []
+  const patches: { sku: string; patch: BulkProductPatch }[] = []
+  for (const [key, r] of folded) {
+    const cur = existing.get(key)
+    if (cur) {
+      const patch: BulkProductPatch = { id: cur.id, stock: r.existing === 'set' ? r.stock : Number(cur.stock) + r.stock }
+      if (r.shelf.trim()) patch.shelf = r.shelf.trim()
+      if (r.price != null) patch.price = r.price
+      patches.push({ sku: cur.sku, patch })
+      continue
+    }
+    inserts.push({
+      sku: r.sku,
+      sku_norm: key,
+      name: r.sku,
+      name_norm: normalizeText(r.sku),
+      brand: r.brand.trim(),
+      category: '',
+      type: '',
+      seal: '',
+      d_inner: null,
+      d_outer: null,
+      width: null,
+      stock: r.stock,
+      unit: 'Adet',
+      price: r.price ?? 0,
+      currency,
+      list_price: null,
+      card_price: null,
+      min_order: 1,
+      shelf: r.shelf.trim(),
+      barcode: '',
+      image: '',
+      description: r.description.trim(),
+      equivalents: '',
+      active: true,
+      deleted: false
+    })
+  }
+  const sb = cloud()
+  if (inserts.length) {
+    try {
+      const saved = must(await sb.from('products').insert(inserts).select('*'))
+      upsertLocal(saved)
+      result.created = saved.length
+    } catch (e) {
+      inserts.forEach((i) => result.errors.push({ sku: i.sku, message: (e as Error).message }))
+    }
+  }
+  if (patches.length) {
+    try {
+      result.updated = (await bulkUpdateProducts(patches.map((p) => p.patch))).length
+    } catch (e) {
+      patches.forEach((p) => result.errors.push({ sku: p.sku, message: (e as Error).message }))
+    }
+  }
+  return result
+}
+
+export async function deleteProducts(ids: number[]): Promise<void> {
+  if (!ids.length) return
+  mustVoid(await cloud().from('products').update({ deleted: true, active: false }).in('id', ids))
+  const db = getDb()
+  const del = db.prepare('DELETE FROM products WHERE id = ?')
+  db.transaction(() => ids.forEach((id) => del.run(id)))()
+}
+
+/** Cloud-side merge (order lines re-pointed, stock summed, sources soft-deleted); mirror follows. */
+export async function mergeProducts(input: MergeInput): Promise<Product> {
+  const sources = input.sourceIds.filter((id) => id !== input.targetId)
+  if (!sources.length) throw new Error('Birleştirilecek en az bir kaynak ürün seçin.')
+  const patch: Record<string, unknown> = { ...input.patch }
+  if (typeof patch.sku === 'string') {
+    const sku = patch.sku.trim()
+    if (!sku) throw new Error('Ürün kodu boş olamaz.')
+    patch.sku = sku
+    patch.sku_norm = normalize(sku)
+  }
+  if (typeof patch.name === 'string') patch.name_norm = normalizeText(patch.name)
+  const saved = must(await cloud().rpc('merge_products', { p_target: input.targetId, p_sources: sources, p_patch: patch }))
+  const db = getDb()
+  const del = db.prepare('DELETE FROM products WHERE id = ?')
+  db.transaction(() => sources.forEach((id) => del.run(id)))()
   upsertLocal([saved])
   return toProduct(saved)
 }

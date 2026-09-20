@@ -10,7 +10,8 @@ import {
   Search,
   Settings as SettingsIcon,
   ShoppingCart,
-  Users
+  Users,
+  Warehouse
 } from 'lucide-react'
 import { useEffect, type ReactNode } from 'react'
 import { api } from '@/lib/api'
@@ -34,10 +35,11 @@ const NAV: NavItem[] = [
   { page: 'catalog', label: 'Ürünler', icon: <Search size={20} aria-hidden />, key: '2' },
   { page: 'cart', label: 'Sepet', icon: <ShoppingCart size={20} aria-hidden />, key: '3' },
   { page: 'orders', label: 'Siparişler', icon: <ClipboardList size={20} aria-hidden />, key: '4' },
-  { page: 'customers', label: 'Bayiler', icon: <Users size={20} aria-hidden />, key: '5', roles: ['admin'] },
-  { page: 'import', label: 'Stok Aktar', icon: <FileUp size={20} aria-hidden />, key: '6', roles: ['admin'] },
-  { page: 'settings', label: 'Ayarlar', icon: <SettingsIcon size={20} aria-hidden />, key: '7' },
-  { page: 'help', label: 'Yardım', icon: <HelpCircle size={20} aria-hidden />, key: '8' }
+  { page: 'stock', label: 'Stok Yönetimi', icon: <Warehouse size={20} aria-hidden />, key: '5', roles: ['admin'] },
+  { page: 'customers', label: 'Bayiler', icon: <Users size={20} aria-hidden />, key: '6', roles: ['admin'] },
+  { page: 'import', label: 'Stok Aktar', icon: <FileUp size={20} aria-hidden />, key: '7', roles: ['admin'] },
+  { page: 'settings', label: 'Ayarlar', icon: <SettingsIcon size={20} aria-hidden />, key: '8' },
+  { page: 'help', label: 'Yardım', icon: <HelpCircle size={20} aria-hidden />, key: '9' }
 ]
 
 export const PAGE_TITLE: Record<Page, string> = {
@@ -45,6 +47,7 @@ export const PAGE_TITLE: Record<Page, string> = {
   catalog: 'Ürün Kataloğu',
   cart: 'Sepet ve Sipariş',
   orders: 'Siparişler',
+  stock: 'Stok Yönetimi',
   customers: 'Bayiler',
   import: 'Stok Aktarımı',
   settings: 'Ayarlar',
@@ -199,7 +202,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
           )}
           <UpdateBanner />
         </header>
-        <main id="main" className={`content${page === 'catalog' ? ' flush' : ''}`}>
+        <main id="main" className={`content${page === 'catalog' || page === 'stock' ? ' flush' : ''}`}>
           {children}
         </main>
       </div>

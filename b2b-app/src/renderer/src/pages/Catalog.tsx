@@ -469,12 +469,14 @@ export function Catalog(): ReactNode {
       )}
       {editing && (
         <ProductEditor
+          key={editing === 'new' ? 'new' : editing.id}
           product={editing === 'new' ? null : editing}
           onClose={() => setEditing(null)}
           onSaved={(p) => {
             setEditing(null)
             setSelected(p)
           }}
+          onGoto={(p) => setEditing(p)}
         />
       )}
     </div>

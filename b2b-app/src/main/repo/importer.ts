@@ -39,7 +39,7 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['shelf', /^(raf|raf ?no|raf ?kodu|lokasyon|konum|shelf)$/i],
   ['barcode', /^(barkod|barcode|ean|gtin)$/i],
   ['image', /^(görsel|gorsel|resim|image|foto)$/i],
-  ['description', /^(detay|not|notlar|açıklama ?2|uzun ?açıklama)$/i],
+  ['description', /^(detay|not|notlar|açıklama ?2|uzun ?açıklama|kutu ?durumu|kutu|ambalaj|durum)$/i],
   ['equivalents', /^(muadil|muadiller|eşdeğer|esdeger|karşılık|karsilik|equivalent|alternatif)$/i]
 ]
 
@@ -51,6 +51,16 @@ export function suggestMapping(headers: string[]): Partial<Record<Field, string>
     const h = headers.find((x) => !used.has(x) && re.test(x.trim()))
     if (h) {
       map[field] = h
+      used.add(h)
+    }
+  }
+  // Shop lists often title the designation column "ÜRÜN ADI" with no separate code column: that column is the code.
+  if (!map.sku && map.name) {
+    map.sku = map.name
+    delete map.name
+    const h = headers.find((x) => !used.has(x) && /^(açıklama|aciklama|tanım|tanim|description)$/i.test(x.trim()))
+    if (h) {
+      map.name = h
       used.add(h)
     }
   }

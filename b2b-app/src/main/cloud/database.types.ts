@@ -149,6 +149,8 @@ export interface Database {
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
       soft_delete_all_products: { Args: Record<string, never>; Returns: undefined }
       purge_all_products: { Args: Record<string, never>; Returns: number }
+      merge_products: { Args: { p_target: number; p_sources: number[]; p_patch: Record<string, unknown> }; Returns: ProductRow }
+      bulk_update_products: { Args: { p_rows: unknown[] }; Returns: ProductRow[] }
       dashboard_orders: { Args: { p_customer: number | null }; Returns: DashboardOrdersJson }
     }
     Enums: Record<string, never>

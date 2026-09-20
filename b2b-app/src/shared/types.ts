@@ -43,6 +43,74 @@ export interface ProductFilter {
   sortDir?: 'asc' | 'desc'
   offset?: number
   limit?: number
+  /** Admin stock screen: list passive products too. */
+  includeInactive?: boolean
+}
+
+/** One line typed into the spreadsheet-style quick entry grid. */
+export interface QuickEntryRow {
+  shelf: string
+  sku: string
+  brand: string
+  stock: number
+  price: number | null
+  description: string
+  /** What to do when the code already exists: add the quantity to its stock (default) or overwrite the stock. */
+  existing: 'add' | 'set'
+}
+
+export interface QuickEntryResult {
+  created: number
+  updated: number
+  errors: { sku: string; message: string }[]
+}
+
+/** One row of an inline/bulk edit on the stock screen; omitted fields stay unchanged. */
+export interface BulkProductPatch {
+  id: number
+  stock?: number
+  shelf?: string
+  price?: number
+  card_price?: number | null
+  active?: boolean
+}
+
+/** Products that are certainly the same item (same designation and brand). */
+export interface DuplicateGroup {
+  key: string
+  designation: string
+  brand: string
+  items: Product[]
+}
+
+/** Fields the survivor of a merge may take over; anything omitted keeps the target's value. */
+export type MergePatch = Partial<
+  Pick<
+    Product,
+    | 'sku'
+    | 'name'
+    | 'brand'
+    | 'category'
+    | 'type'
+    | 'seal'
+    | 'd_inner'
+    | 'd_outer'
+    | 'width'
+    | 'stock'
+    | 'price'
+    | 'card_price'
+    | 'list_price'
+    | 'shelf'
+    | 'barcode'
+    | 'equivalents'
+    | 'description'
+  >
+>
+
+export interface MergeInput {
+  targetId: number
+  sourceIds: number[]
+  patch: MergePatch
 }
 
 export interface ProductPage {

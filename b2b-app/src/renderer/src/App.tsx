@@ -13,6 +13,7 @@ import { Import } from '@/pages/Import'
 import { Login } from '@/pages/Login'
 import { Orders } from '@/pages/Orders'
 import { SettingsPage } from '@/pages/Settings'
+import { Stock } from '@/pages/Stock'
 import { useApp } from '@/store/app'
 
 function useApplySettings(): void {
@@ -61,6 +62,7 @@ const PAGES: Record<ReturnType<typeof useApp.getState>['page'], () => ReactNode>
   catalog: Catalog,
   cart: Cart,
   orders: Orders,
+  stock: Stock,
   customers: Customers,
   import: Import,
   settings: SettingsPage,
@@ -102,7 +104,7 @@ export function App(): ReactNode {
     )
 
   const role = session.user.role
-  const allowed = role === 'admin' || (page !== 'import' && page !== 'customers')
+  const allowed = role === 'admin' || (page !== 'import' && page !== 'customers' && page !== 'stock')
   const Page = PAGES[allowed ? page : 'dashboard']
   return (
     <>

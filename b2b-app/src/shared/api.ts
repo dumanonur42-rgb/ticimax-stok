@@ -1,13 +1,16 @@
 import type {
+  BulkProductPatch,
   Customer,
   CustomerInput,
   CustomerProfile,
   DashboardStats,
+  DuplicateGroup,
   Facets,
   ImportLog,
   ImportOptions,
   ImportPreview,
   ImportResult,
+  MergeInput,
   Order,
   OrderInput,
   OrderStatus,
@@ -15,6 +18,8 @@ import type {
   ProductFilter,
   ProductInput,
   ProductPage,
+  QuickEntryResult,
+  QuickEntryRow,
   Session,
   Settings,
   SyncStatus,
@@ -38,6 +43,13 @@ export interface ApiMap {
   'products:save': [Partial<Product> & ProductInput, Product]
   'products:delete': [number, void]
   'products:exportExcel': [ProductFilter, string | null]
+  /** Admin stock management: row-level edits, bulk delete, duplicate detection and merging. */
+  'products:bulkUpdate': [BulkProductPatch[], Product[]]
+  'products:bulkDelete': [number[], void]
+  'products:duplicates': [void, DuplicateGroup[]]
+  'products:similar': [{ sku: string; brand: string; excludeId: number | null }, Product[]]
+  'products:merge': [MergeInput, Product]
+  'products:quickEntry': [QuickEntryRow[], QuickEntryResult]
 
   'customers:list': [{ q?: string }, Customer[]]
   'customers:get': [number, Customer | null]

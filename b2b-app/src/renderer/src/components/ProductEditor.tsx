@@ -1,7 +1,9 @@
 import type { Currency, Product, ProductInput } from '@shared/types'
-import { useState, type ReactNode } from 'react'
+import { AlertTriangle, ArrowRight } from 'lucide-react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { api } from '@/lib/api'
+import { num } from '@/lib/format'
 import { useApp } from '@/store/app'
 
 const empty = (cur: Currency): ProductInput => ({
@@ -31,16 +33,51 @@ const empty = (cur: Currency): ProductInput => ({
 
 const numOrNull = (v: string): number | null => (v.trim() === '' ? null : Number(v.replace(',', '.')))
 
-export function ProductEditor({ product, onClose, onSaved }: { product: Product | null; onClose: () => void; onSaved: (p: Product) => void }): ReactNode {
+export function ProductEditor({
+  product,
+  onClose,
+  onSaved,
+  onGoto
+}: {
+  product: Product | null
+  onClose: () => void
+  onSaved: (p: Product) => void
+  /** "Ürüne git" on the duplicate warning: open the existing product instead of creating a twin. */
+  onGoto?: (p: Product) => void
+}): ReactNode {
   const { settings, toast, session } = useApp()
+  const isAdmin = session?.user.role === 'admin'
   const [form, setForm] = useState<ProductInput & { id?: number }>(product ? { ...product } : empty(settings?.default_currency ?? 'TRY'))
   const [busy, setBusy] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [similar, setSimilar] = useState<Product[]>([])
+  const [confirmTwin, setConfirmTwin] = useState(false)
   const set = <K extends keyof ProductInput>(k: K, v: ProductInput[K]): void => setForm((f) => ({ ...f, [k]: v }))
 
-  const save = async (): Promise<void> => {
+  useEffect(() => {
+    if (!isAdmin) return
+    const sku = form.sku.trim()
+    if (sku.length < 3) {
+      setSimilar([])
+      return
+    }
+    let cancelled = false
+    const t = setTimeout(() => {
+      api('products:similar', { sku, brand: form.brand, excludeId: product?.id ?? null })
+        .then((r) => !cancelled && setSimilar(r))
+        .catch(() => undefined)
+    }, 250)
+    return () => {
+      cancelled = true
+      clearTimeout(t)
+    }
+  }, [form.sku, form.brand, product?.id, isAdmin])
+
+  const save = async (force = false): Promise<void> => {
     if (!form.sku.trim()) return toast('Stok kodu zorunludur.', 'error')
     if (!form.name.trim()) return toast('Ürün adı zorunludur.', 'error')
+    if (!force && !product && similar.length) return setConfirmTwin(true)
+    setConfirmTwin(false)
     setBusy(true)
     try {
       const p = await api('products:save', form)
@@ -91,7 +128,7 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
           <button className="btn" onClick={onClose}>
             Vazgeç
           </button>
-          <button className="btn primary" onClick={save} disabled={busy}>
+          <button className="btn primary" onClick={() => save()} disabled={busy}>
             Kaydet
           </button>
         </>
@@ -106,6 +143,42 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
       >
         {text('sku', 'Stok kodu *')}
         <div style={{ gridColumn: 'span 2' }}>{text('name', 'Ürün adı *')}</div>
+        {similar.length > 0 && (
+          <div className="dup-warning" role="alert" style={{ gridColumn: 'span 3' }}>
+            <div className="dup-warning-head">
+              <AlertTriangle size={20} aria-hidden />
+              <div>
+                <strong>{similar.length > 1 ? `${similar.length} benzer ürün bulunuyor` : 'Aynı ürün bulunuyor'}</strong>
+                <div className="small">Bu kod stokta kayıtlı görünüyor. Yeni kayıt yerine mevcut ürünü düzenlemek için tıklayın.</div>
+              </div>
+            </div>
+            <ul className="dup-list">
+              {similar.map((s) => (
+                <li key={s.id}>
+                  <span className="sku">{s.sku}</span>
+                  <span className="muted">{s.brand || 'markasız'}</span>
+                  <span className="muted truncate" title={s.name}>
+                    {s.name}
+                  </span>
+                  <span className="nowrap">
+                    Stok: <b>{num(s.stock)}</b>
+                    {s.shelf && (
+                      <>
+                        {' · '}
+                        <span className="shelf-tag sm">{s.shelf}</span>
+                      </>
+                    )}
+                  </span>
+                  {onGoto && (
+                    <button type="button" className="btn sm primary" onClick={() => onGoto(s)}>
+                      Ürüne git <ArrowRight size={14} aria-hidden />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {text('brand', 'Marka')}
         {text('category', 'Kategori')}
         {text('type', 'Tip', 'örn. Sabit Bilyalı, Konik Makaralı')}
@@ -144,6 +217,14 @@ export function ProductEditor({ product, onClose, onSaved }: { product: Product 
           <input type="checkbox" checked={!!form.active} onChange={(e) => set('active', e.target.checked ? 1 : 0)} /> Aktif (listede görünsün)
         </label>
       </form>
+      <Confirm
+        open={confirmTwin}
+        title="Benzer ürün var"
+        text={`"${similar[0]?.sku ?? ''}" zaten kayıtlı görünüyor. Yine de "${form.sku.trim()}" kodunu ayrı bir ürün olarak kaydetmek istiyor musunuz?`}
+        confirmLabel="Yine de kaydet"
+        onCancel={() => setConfirmTwin(false)}
+        onConfirm={() => save(true)}
+      />
       <Confirm open={confirmDelete} title="Ürünü sil" text={`${product?.sku} kalıcı olarak silinecek. Emin misiniz?`} danger confirmLabel="Sil" onCancel={() => setConfirmDelete(false)} onConfirm={del} />
     </Modal>
   )

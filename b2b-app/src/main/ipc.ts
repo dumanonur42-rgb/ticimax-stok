@@ -11,7 +11,22 @@ import { dashboardStats } from './repo/dashboard'
 import { orderHtml, orderToXlsx, productsToXlsx, templateXlsx } from './repo/exporter'
 import { importLogs, previewFile, runImport } from './repo/importer'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { allProductsForExport, deleteProduct, getProduct, productFacets, productsBySkus, purgeAllProducts, saveProduct, searchProducts } from './repo/products'
+import {
+  allProductsForExport,
+  bulkUpdateProducts,
+  deleteProduct,
+  deleteProducts,
+  duplicateGroups,
+  getProduct,
+  mergeProducts,
+  productFacets,
+  productsBySkus,
+  purgeAllProducts,
+  quickEntry,
+  saveProduct,
+  searchProducts,
+  similarProducts
+} from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, setLocalSettings, setSettings } from './repo/settings'
 import { approveUser, changePassword, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
@@ -135,8 +150,8 @@ export function registerIpc(): void {
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.username, current, next))
 
   handle('products:search', (f) => {
-    requireRole()
-    const r = searchProducts(f)
+    const s = requireRole()
+    const r = searchProducts(s.user.role === 'admin' ? f : { ...f, includeInactive: false })
     return { ...r, items: hideShelf(r.items) }
   })
   handle('products:facets', (f) => {
@@ -162,6 +177,37 @@ export function registerIpc(): void {
     requireRole('admin')
     await deleteProduct(id)
     broadcast('products:changed')
+  })
+  handle('products:bulkUpdate', async (rows) => {
+    requireRole('admin')
+    const r = await bulkUpdateProducts(rows)
+    broadcast('products:changed')
+    return r
+  })
+  handle('products:bulkDelete', async (ids) => {
+    requireRole('admin')
+    await deleteProducts(ids)
+    broadcast('products:changed')
+  })
+  handle('products:duplicates', () => {
+    requireRole('admin')
+    return duplicateGroups()
+  })
+  handle('products:similar', ({ sku, brand, excludeId }) => {
+    requireRole('admin')
+    return similarProducts(sku, brand, excludeId)
+  })
+  handle('products:merge', async (input) => {
+    requireRole('admin')
+    const r = await mergeProducts(input)
+    broadcast('products:changed')
+    return r
+  })
+  handle('products:quickEntry', async (rows) => {
+    requireRole('admin')
+    const r = await quickEntry(rows)
+    broadcast('products:changed')
+    return r
   })
   handle('products:exportExcel', async (f, e) => {
     requireRole('admin')

@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
 
-export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'customers' | 'import' | 'settings' | 'help'
+export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help'
 
 export interface Toast {
   id: number

@@ -318,6 +318,64 @@ begin
   return n;
 end $$;
 
+-- Merges duplicate products into one: order lines are re-pointed to the surviving row, stock is summed,
+-- the surviving row takes the chosen field values (p_patch) and the sources are soft-deleted.
+-- Source sku_norm values get a "~<id>" suffix so the survivor may adopt one of their codes.
+create or replace function public.merge_products(p_target bigint, p_sources bigint[], p_patch jsonb) returns products
+language plpgsql security definer set search_path = public as $$
+declare t products; extra numeric;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if p_target = any (p_sources) then raise exception 'Ana ürün kaynaklar arasında olamaz.'; end if;
+  select * into t from products where id = p_target and not deleted for update;
+  if t.id is null then raise exception 'Ana ürün bulunamadı.'; end if;
+  select coalesce(sum(stock), 0) into extra from products where id = any (p_sources) and not deleted;
+  update order_items set product_id = p_target where product_id = any (p_sources);
+  update products set deleted = true, active = false, sku_norm = sku_norm || '~' || id
+    where id = any (p_sources) and not deleted;
+  update products set
+    sku = coalesce(p_patch->>'sku', sku),
+    sku_norm = coalesce(p_patch->>'sku_norm', sku_norm),
+    name = coalesce(p_patch->>'name', name),
+    name_norm = coalesce(p_patch->>'name_norm', name_norm),
+    brand = coalesce(p_patch->>'brand', brand),
+    category = coalesce(p_patch->>'category', category),
+    type = coalesce(p_patch->>'type', type),
+    seal = coalesce(p_patch->>'seal', seal),
+    d_inner = case when p_patch ? 'd_inner' then (p_patch->>'d_inner')::numeric else d_inner end,
+    d_outer = case when p_patch ? 'd_outer' then (p_patch->>'d_outer')::numeric else d_outer end,
+    width = case when p_patch ? 'width' then (p_patch->>'width')::numeric else width end,
+    stock = coalesce((p_patch->>'stock')::numeric, stock + extra),
+    price = coalesce((p_patch->>'price')::numeric, price),
+    card_price = case when p_patch ? 'card_price' then (p_patch->>'card_price')::numeric else card_price end,
+    list_price = case when p_patch ? 'list_price' then (p_patch->>'list_price')::numeric else list_price end,
+    shelf = coalesce(p_patch->>'shelf', shelf),
+    barcode = coalesce(p_patch->>'barcode', barcode),
+    equivalents = coalesce(p_patch->>'equivalents', equivalents),
+    description = coalesce(p_patch->>'description', description),
+    active = true
+    where id = p_target
+    returning * into t;
+  return t;
+end $$;
+
+-- Row-level bulk edit from the stock management screen (each element: {"id":…, "stock":…, "shelf":…, "price":…, "card_price":…}).
+create or replace function public.bulk_update_products(p_rows jsonb) returns setof products
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  return query
+    update products p set
+      stock = coalesce((r->>'stock')::numeric, p.stock),
+      shelf = coalesce(r->>'shelf', p.shelf),
+      price = coalesce((r->>'price')::numeric, p.price),
+      card_price = case when r ? 'card_price' then (r->>'card_price')::numeric else p.card_price end,
+      active = coalesce((r->>'active')::boolean, p.active)
+    from jsonb_array_elements(p_rows) r
+    where p.id = (r->>'id')::bigint and not p.deleted
+    returning p.*;
+end $$;
+
 create or replace function public.dashboard_orders(p_customer bigint) returns jsonb
 language plpgsql stable security definer set search_path = public as $$
 declare cid bigint; res jsonb;
