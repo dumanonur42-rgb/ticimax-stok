@@ -20,14 +20,17 @@ interface Column {
   width: string
   sort?: SortKey
   align?: 'right'
+  adminOnly?: boolean
 }
 
 const COLUMNS: Column[] = [
-  { key: 'shelf', label: 'Raf', width: '150px', sort: 'shelf' },
+  { key: 'shelf', label: 'Raf', width: '150px', sort: 'shelf', adminOnly: true },
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '120px' },
   { key: 'dims', label: 'd × D × B', width: '140px' },
   { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
+  { key: 'box', label: 'Kutu durumu', width: '110px', adminOnly: true },
+  { key: 'description', label: 'Açıklama', width: 'minmax(160px, 1.2fr)', adminOnly: true },
   { key: 'price', label: 'Peşin Fiyat', width: '124px', sort: 'price', align: 'right' },
   { key: 'card_price', label: 'K. Kartı Fiyatı', width: '132px', align: 'right' },
   { key: 'act', label: '', width: '112px' }
@@ -126,7 +129,7 @@ export function Catalog(): ReactNode {
   }, [vItems, rows, loadPage])
 
   const cardPct = settings?.card_price_pct ?? 0
-  const cols = COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || c.key !== 'shelf'))
+  const cols = COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || !c.adminOnly))
   const gridCols = cols.map((c) => c.width).join(' ')
 
   const toggleSort = (s: SortKey): void =>
@@ -414,7 +417,7 @@ export function Catalog(): ReactNode {
                     </div>
                     <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
                       {p.brand}
-                      {p.box && <span className="faint small"> · {p.box}</span>}
+                      {!isAdmin && p.box && <span className="faint small"> · {p.box}</span>}
                     </div>
                     <div className="cell mono small muted" role="gridcell">
                       {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
@@ -422,6 +425,16 @@ export function Catalog(): ReactNode {
                     <div className="cell right" role="gridcell">
                       <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
                     </div>
+                    {isAdmin && (
+                      <div className="cell small muted truncate" role="gridcell" title={p.box}>
+                        {p.box || <span className="faint">—</span>}
+                      </div>
+                    )}
+                    {isAdmin && (
+                      <div className="cell small truncate" role="gridcell" title={p.description}>
+                        {p.description || <span className="faint">—</span>}
+                      </div>
+                    )}
                     {showPrices && (
                       <div className="cell right nowrap" role="gridcell">
                         {money(p.price, p.currency)}

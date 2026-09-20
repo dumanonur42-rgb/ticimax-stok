@@ -381,7 +381,6 @@ function Data(): ReactNode {
   const [info, setInfo] = useState<{ version: string; dbPath: string; platform: string } | null>(null)
   const [sync, setSync] = useState<SyncStatus | null>(null)
   const [busy, setBusy] = useState(false)
-  const [confirmSeed, setConfirmSeed] = useState(false)
   const [confirmPurge, setConfirmPurge] = useState(false)
   useEffect(() => {
     api('app:info', undefined).then(setInfo).catch(() => undefined)
@@ -435,9 +434,6 @@ function Data(): ReactNode {
           Veri klasörünü aç
         </button>
         <span className="spacer" />
-        <button className="btn ghost" disabled={busy} onClick={() => setConfirmSeed(true)}>
-          Örnek veri yükle (12.000 ürün)
-        </button>
         <button className="btn danger" disabled={busy} onClick={() => setConfirmPurge(true)}>
           <Trash2 size={16} aria-hidden /> Ürün listesini sil
         </button>
@@ -446,19 +442,6 @@ function Data(): ReactNode {
         Ürünler, stoklar, bayiler, kullanıcılar ve siparişler tek bir ortak bulut veritabanında tutulur; tüm bilgisayarlar aynı veriyi görür. Bu bilgisayarda yalnızca hızlı
         arama için ürünlerin bir kopyası saklanır ve otomatik eşitlenir.
       </p>
-      <Confirm
-        open={confirmSeed}
-        title="Örnek veri"
-        text="Test amaçlı 12.000 örnek rulman ürünü ortak veritabanına eklenir ve tüm bayiler görür. Gerçek stok listesini yüklerken 'Tümünü sil ve yeniden yükle' modunu kullanabilirsiniz."
-        confirmLabel="Yükle"
-        onCancel={() => setConfirmSeed(false)}
-        onConfirm={() => {
-          setConfirmSeed(false)
-          api('app:seedDemo', 12000)
-            .then((n) => toast(`${n} örnek ürün eklendi.`, 'success'))
-            .catch((e) => toast(e.message, 'error'))
-        }}
-      />
       <Confirm
         open={confirmPurge}
         title="Ürün listesini sil"

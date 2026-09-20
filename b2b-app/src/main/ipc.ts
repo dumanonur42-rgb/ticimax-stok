@@ -373,6 +373,10 @@ export function registerIpc(): void {
   handle('app:openPath', (p) => {
     shell.showItemInFolder(p)
   })
+  handle('app:openExternal', async (url) => {
+    if (!/^(https:|tel:|mailto:)/.test(url)) throw new Error('Bu bağlantı açılamaz.')
+    await shell.openExternal(url)
+  })
   handle('app:syncStatus', () => syncStatus())
   handle('app:flushOutbox', async () => {
     requireRole()

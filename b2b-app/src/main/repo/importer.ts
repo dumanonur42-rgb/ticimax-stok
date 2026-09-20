@@ -19,9 +19,14 @@ const pending = new Map<string, Parsed>()
 
 type Field = keyof ProductInput
 
+/** Excel headers come in every casing ("ÜRÜN ADI", "FİYAT"); fold them with Turkish rules so İ/I match the hints. */
+function headerKey(h: string): string {
+  return h.trim().toLocaleLowerCase('tr-TR').replace(/\s+/g, ' ')
+}
+
 const HEADER_HINTS: [Field, RegExp][] = [
   ['sku', /^(stok ?kodu?|ürün ?kodu?|urun ?kodu?|kod|sku|malzeme ?kodu?|parça ?no|code|no)$/i],
-  ['name', /^(ürün ?adı?|urun ?adi?|ad|isim|açıklama|aciklama|ürün|malzeme|name|description|tanım|tanim)$/i],
+  ['name', /^(ürün ?adı?|urun ?adi?|ad|isim|ürün|malzeme|name|tanım|tanim)$/i],
   ['brand', /^(marka|brand|üretici|uretici)$/i],
   ['category', /^(kategori|grup|ürün ?grubu|kategori ?yolu|category)$/i],
   ['type', /^(tip|tür|tur|rulman ?tipi|type|cins)$/i],
@@ -29,7 +34,7 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['d_inner', /^(iç ?çap|ic ?cap|d|d ?\(mm\)|inner|delik|mil ?çapı)$/i],
   ['d_outer', /^(dış ?çap|dis ?cap|D|D ?\(mm\)|outer)$/i],
   ['width', /^(genişlik|genislik|b|b ?\(mm\)|kalınlık|kalinlik|width|en)$/i],
-  ['stock', /^(stok|stok ?adedi?|stok ?miktarı?|miktar|adet|mevcut|qty|quantity|stock|bakiye)$/i],
+  ['stock', /^(stok|stok ?adedi?|stok ?miktarı?|miktar|adet|adedi|mevcut|qty|quantity|stock|bakiye)$/i],
   ['unit', /^(birim|unit)$/i],
   ['price', /^(fiyat|peşin ?fiyatı?|pesin ?fiyati?|peşin|nakit ?fiyatı?|satış ?fiyatı?|satis ?fiyati?|birim ?fiyat|price|cash ?price|bayi ?fiyatı?|fiyat ?\(tl\))$/i],
   ['card_price', /^(kredi ?kartı? ?fiyatı?|kredi ?karti? ?fiyati?|k\.? ?kartı? ?fiyatı?|kk ?fiyatı?|kart ?fiyatı?|kart ?fiyati?|kartlı ?fiyat|taksitli ?fiyat|card ?price|credit ?card)$/i],
@@ -40,7 +45,7 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['box', /^(kutu ?durumu|kutu|ambalaj|paket ?durumu|packaging|box)$/i],
   ['barcode', /^(barkod|barcode|ean|gtin)$/i],
   ['image', /^(görsel|gorsel|resim|image|foto)$/i],
-  ['description', /^(detay|not|notlar|açıklama ?2|uzun ?açıklama|durum)$/i],
+  ['description', /^(açıklama|aciklama|description|detay|not|notlar|açıklama ?2|uzun ?açıklama|durum)$/i],
   ['equivalents', /^(muadil|muadiller|eşdeğer|esdeger|karşılık|karsilik|equivalent|alternatif)$/i]
 ]
 
@@ -49,23 +54,45 @@ export function suggestMapping(headers: string[]): Partial<Record<Field, string>
   const used = new Set<string>()
   for (const [field, re] of HEADER_HINTS) {
     if (map[field]) continue
-    const h = headers.find((x) => !used.has(x) && re.test(x.trim()))
+    const h = headers.find((x) => !used.has(x) && re.test(headerKey(x)))
     if (h) {
       map[field] = h
       used.add(h)
     }
   }
-  // Shop lists often title the designation column "ÜRÜN ADI" with no separate code column: that column is the code.
+  // Shop lists title the designation column "ÜRÜN ADI" with no separate code column: that column is the code.
   if (!map.sku && map.name) {
     map.sku = map.name
     delete map.name
-    const h = headers.find((x) => !used.has(x) && /^(açıklama|aciklama|tanım|tanim|description)$/i.test(x.trim()))
-    if (h) {
-      map.name = h
-      used.add(h)
-    }
   }
   return map
+}
+
+/**
+ * "Kutu durumu" cells are free text. "KUTULU" / "kutusuz" become the canonical labels; a mixed cell such as
+ * "33 KUTULU – 1 KUTUSUZ" is split into one line per box state with its own quantity (box state is part of the
+ * product identity, so they are different products).
+ */
+export function parseBox(raw: string | undefined, stock: number | null): { box: string; stock: number | null }[] {
+  const text = (raw ?? '').trim()
+  if (!text) return [{ box: '', stock }]
+  const lower = text.toLocaleLowerCase('tr-TR')
+  const parts: { box: string; stock: number | null }[] = []
+  const re = /(\d[\d.,]*)\s*(?:adet|ad\.?)?\s*(kutusuz|kutulu)|(kutusuz|kutulu)\s*[:=(]?\s*(\d[\d.,]*)/g
+  let m: RegExpExecArray | null
+  while ((m = re.exec(lower))) {
+    const word = m[2] ?? m[3]
+    const n = parseNumber(m[1] ?? m[4])
+    parts.push({ box: word === 'kutusuz' ? 'Kutusuz' : 'Kutulu', stock: n })
+  }
+  if (parts.length) {
+    const merged = new Map<string, number | null>()
+    for (const p of parts) merged.set(p.box, (merged.get(p.box) ?? 0) + (p.stock ?? 0))
+    return [...merged].map(([box, n]) => ({ box, stock: n }))
+  }
+  if (/kutusuz/.test(lower)) return [{ box: 'Kutusuz', stock }]
+  if (/kutulu/.test(lower)) return [{ box: 'Kutulu', stock }]
+  return [{ box: text, stock }]
 }
 
 function parseFile(path: string): Parsed {
@@ -79,15 +106,22 @@ function parseFile(path: string): Parsed {
     matrix = res.data.map((r) => r.map((c) => String(c ?? '').trim()))
   } else {
     const wb = XLSX.read(readFileSync(path), { type: 'buffer', cellDates: false })
-    const ws = wb.Sheets[wb.SheetNames[0]]
-    matrix = (XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '' }) as unknown[][]).map((r) =>
-      r.map((c) => String(c ?? '').trim())
-    )
+    const sheets = wb.SheetNames.map((n) =>
+      (XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: false, defval: '' }) as unknown[][])
+        .map((r) => r.map((c) => String(c ?? '').trim()))
+        .filter((r) => r.some((c) => c !== ''))
+    ).filter((m) => m.length)
+    if (!sheets.length) throw new Error('Dosya boş görünüyor.')
+    // Further sheets with the same header row (one sheet per shelf/depot) are appended to the first one.
+    const headerOf = (m: string[][]): string => m[0].map(headerKey).join('|')
+    matrix = [...sheets[0]]
+    for (const m of sheets.slice(1)) if (headerOf(m) === headerOf(sheets[0])) matrix.push(...m.slice(1))
   }
   matrix = matrix.filter((r) => r.some((c) => c !== ''))
   if (!matrix.length) throw new Error('Dosya boş görünüyor.')
-  const headers = matrix[0].map((h, i) => h || `Sütun ${i + 1}`)
-  return { filename, headers, rows: matrix.slice(1) }
+  const width = Math.max(...matrix.map((r) => r.length))
+  const headers = Array.from({ length: width }, (_, i) => matrix[0][i] || `Sütun ${i + 1}`)
+  return { filename, headers, rows: matrix.slice(1).map((r) => Array.from({ length: width }, (_, i) => r[i] ?? '')) }
 }
 
 export function previewFile(path: string): ImportPreview {
@@ -175,6 +209,23 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   let deactivated = 0
   const seen = new Set<string>()
   const batch: ProductInsert[] = []
+  const inBatch = new Map<string, ProductInsert>()
+  // The same product listed twice in one file (two shelves, two lines) is one product: quantities add up.
+  const fold = (rec: ProductInsert): boolean => {
+    const prev = inBatch.get(rec.key_norm)
+    if (!prev) {
+      inBatch.set(rec.key_norm, rec)
+      batch.push(rec)
+      return false
+    }
+    prev.stock += rec.stock
+    if (rec.shelf && prev.shelf && normalize(rec.shelf) !== normalize(prev.shelf)) prev.shelf = `${prev.shelf} / ${rec.shelf}`
+    else if (rec.shelf && !prev.shelf) prev.shelf = rec.shelf
+    if (rec.description && !prev.description) prev.description = rec.description
+    if (rec.price && !prev.price) prev.price = rec.price
+    return true
+  }
+  let lastShelf = ''
 
   const fromLocal = (ex: LocalRow): ProductInsert => ({
     sku: ex.sku,
@@ -206,35 +257,64 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     deleted: false
   })
 
+  interface Line {
+    i: number
+    skuRaw: string
+    sku_norm: string
+    brand: string
+    box: string
+    shelf: string
+    stockVal: number | null
+  }
+  const lines: Line[] = []
   parsed.rows.forEach((row, i) => {
+    // A row carrying only a shelf name is a section header: the shelf applies to the rows below it.
+    const shelfCell = (col(row, 'shelf') ?? '').trim()
+    if (shelfCell) lastShelf = shelfCell
     const skuRaw = (col(row, 'sku') ?? '').trim()
     if (!skuRaw) return
     const sku_norm = normalize(skuRaw)
     if (!sku_norm) return
     const brand = (col(row, 'brand') ?? '').trim() || opts.defaultBrand
-    const box = (col(row, 'box') ?? '').trim()
+    const stockVal = parseNumber(col(row, 'stock'))
+    for (const part of parseBox(col(row, 'box'), stockVal)) {
+      lines.push({ i, skuRaw, sku_norm, brand, box: part.box, shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal: part.stock })
+    }
+  })
+
+  for (const line of lines) {
+    const { i, skuRaw, sku_norm, brand, box, stockVal } = line
+    const row = parsed.rows[i]
     const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm)
     const key_norm = ex ? ex.key_norm : productKey(skuRaw, brand, box)
-    if (seen.has(key_norm)) return
+    const repeat = seen.has(key_norm)
     seen.add(key_norm)
 
-    const stockVal = parseNumber(col(row, 'stock'))
     const priceVal = parseNumber(col(row, 'price'))
     const cardVal = parseNumber(col(row, 'card_price'))
 
     if (opts.mode === 'stock_only') {
       if (!ex) {
         errors.push(`Satır ${i + 2}: ${skuRaw} bulunamadı (yalnızca stok modu).`)
-        return
+        continue
+      }
+      if (repeat) {
+        const prev = inBatch.get(key_norm)
+        if (prev) prev.stock += stockVal ?? 0
+        else {
+          fold({ ...fromLocal(ex), stock: ex.stock + (stockVal ?? 0) })
+          updated++
+        }
+        continue
       }
       const newStock = stockVal ?? ex.stock
       if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null && ex.active) {
         unchanged++
-        return
+        continue
       }
-      batch.push({ ...fromLocal(ex), stock: newStock, price: priceVal ?? ex.price, card_price: cardVal ?? ex.card_price })
+      fold({ ...fromLocal(ex), stock: newStock, price: priceVal ?? ex.price, card_price: cardVal ?? ex.card_price })
       updated++
-      return
+      continue
     }
 
     const name = (col(row, 'name') ?? '').trim() || ex?.name || skuRaw
@@ -258,7 +338,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       list_price: parseNumber(col(row, 'list_price')),
       card_price: cardVal,
       min_order: parseNumber(col(row, 'min_order')) ?? 1,
-      shelf: (col(row, 'shelf') ?? '').trim(),
+      shelf: line.shelf,
       box,
       barcode: (col(row, 'barcode') ?? '').trim(),
       image: (col(row, 'image') ?? '').trim(),
@@ -298,14 +378,14 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       }
       out.key_norm = productKey(out.sku, out.brand, out.box)
       seen.add(out.key_norm)
-      batch.push(out)
+      if (fold(out)) continue
       if (ex.stock === out.stock && ex.price === out.price && ex.name === out.name && ex.active) unchanged++
       else updated++
     } else {
-      batch.push(record)
+      if (fold(record)) continue
       inserted++
     }
-  })
+  }
 
   const sb = cloud()
   if (opts.mode === 'replace') mustVoid(await sb.rpc('soft_delete_all_products'))
@@ -331,25 +411,5 @@ export async function importLogs(): Promise<ImportLog[]> {
   return must(await cloud().from('import_logs').select('*').order('id', { ascending: false }).limit(50))
 }
 
-export const TEMPLATE_HEADERS = [
-  'Stok Kodu',
-  'Ürün Adı',
-  'Marka',
-  'Kategori',
-  'Tip',
-  'Keçe',
-  'İç Çap',
-  'Dış Çap',
-  'Genişlik',
-  'Stok',
-  'Birim',
-  'Peşin Fiyat',
-  'Kredi Kartı Fiyatı',
-  'Para Birimi',
-  'Liste Fiyatı',
-  'Min Sipariş',
-  'Raf',
-  'Kutu Durumu',
-  'Barkod',
-  'Muadil'
-]
+/** Same column order as the shop's own stock sheets and the quick-entry grid. */
+export const TEMPLATE_HEADERS = ['RAF', 'ÜRÜN ADI', 'MARKA', 'ADET', 'KUTU DURUMU', 'FİYAT', 'AÇIKLAMA']

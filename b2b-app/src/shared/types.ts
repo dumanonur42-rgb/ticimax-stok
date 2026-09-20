@@ -249,6 +249,9 @@ export interface UpdateState {
   message?: string
 }
 
+/** Sales line shown on the dashboard when the shared settings have no phone. */
+export const SUPPORT_PHONE = '+90 552 610 93 63'
+
 export interface Settings {
   company_name: string
   company_phone: string

@@ -8,26 +8,27 @@ import { useApp } from '@/store/app'
 
 type MapKey = keyof ProductInput
 const FIELDS: { key: MapKey; label: string; required?: boolean }[] = [
-  { key: 'sku', label: 'Stok kodu', required: true },
-  { key: 'name', label: 'Ürün adı' },
+  { key: 'shelf', label: 'Raf' },
+  { key: 'sku', label: 'Ürün kodu / adı', required: true },
   { key: 'brand', label: 'Marka' },
+  { key: 'stock', label: 'Adet (stok)' },
+  { key: 'box', label: 'Kutu durumu' },
+  { key: 'price', label: 'Fiyat (peşin)' },
+  { key: 'description', label: 'Açıklama' },
+  { key: 'card_price', label: 'Kredi kartı fiyatı' },
+  { key: 'name', label: 'Uzun ürün adı' },
   { key: 'category', label: 'Kategori' },
   { key: 'type', label: 'Tip' },
   { key: 'seal', label: 'Keçe / Kapak' },
   { key: 'd_inner', label: 'İç çap (d)' },
   { key: 'd_outer', label: 'Dış çap (D)' },
   { key: 'width', label: 'Genişlik (B)' },
-  { key: 'stock', label: 'Stok' },
   { key: 'unit', label: 'Birim' },
-  { key: 'price', label: 'Peşin fiyat' },
-  { key: 'card_price', label: 'Kredi kartı fiyatı' },
   { key: 'currency', label: 'Para birimi' },
   { key: 'list_price', label: 'Liste fiyatı' },
   { key: 'min_order', label: 'Min. sipariş' },
-  { key: 'shelf', label: 'Raf' },
   { key: 'barcode', label: 'Barkod' },
-  { key: 'equivalents', label: 'Muadiller' },
-  { key: 'description', label: 'Açıklama' }
+  { key: 'equivalents', label: 'Muadiller' }
 ]
 
 export function Import(): ReactNode {
@@ -66,7 +67,7 @@ export function Import(): ReactNode {
 
   const run = async (): Promise<void> => {
     if (!preview) return
-    if (!mapping.sku) return toast('Stok kodu kolonu eşlenmeli.', 'error')
+    if (!mapping.sku) return toast('Ürün kodu kolonu eşlenmeli.', 'error')
     if (mode === 'replace' && !window.confirm('Mevcut tüm ürünler silinip dosyadaki ürünler yüklenecek. Devam edilsin mi?')) return
     setBusy(true)
     try {
@@ -89,7 +90,8 @@ export function Import(): ReactNode {
       <section className="card grid" style={{ gap: 12 }} aria-labelledby="imp-title">
         <h2 id="imp-title">Stok listesi yükle</h2>
         <p className="muted">
-          Excel (.xlsx, .xls) veya CSV dosyanızı seçin. Kolon başlıkları otomatik eşlenir; gerekirse aşağıdan düzeltin. Yalnızca <b>Stok kodu</b> zorunludur. 10.000+ satır birkaç saniyede yüklenir.
+          Excel (.xlsx, .xls) veya CSV dosyanızı seçin. Beklenen düzen: <b>RAF | ÜRÜN ADI | MARKA | ADET | KUTU DURUMU | FİYAT | AÇIKLAMA</b> (boş hücreler sorun olmaz; kolon başlıkları otomatik
+          eşlenir, gerekirse aşağıdan düzeltin). Yalnızca ürün kodu zorunludur; aynı kod + marka + kutu durumu tek üründür, dosyada iki kez geçerse adetler toplanır.
         </p>
         <div className="row wrap">
           <button className="btn primary" onClick={pick} disabled={busy}>

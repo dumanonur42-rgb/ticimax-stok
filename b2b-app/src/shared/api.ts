@@ -91,6 +91,7 @@ export interface ApiMap {
   'app:flushOutbox': [void, SyncStatus]
   'app:discardFailedOps': [void, number]
   'app:openPath': [string, void]
+  'app:openExternal': [string, void]
   'app:seedDemo': [number, number]
   'app:purgeProducts': [void, number]
 

@@ -35,8 +35,9 @@ export function productsToXlsx(products: Product[], path: string): void {
 export function templateXlsx(path: string): void {
   const ws = XLSX.utils.aoa_to_sheet([
     TEMPLATE_HEADERS,
-    ['6205-2RS', '6205 2RS Sabit Bilyalı Rulman', 'SKF', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', '2RS', 25, 52, 15, 120, 'Adet', 85.5, 92, 'TRY', 110, 1, 'A-12', 'Kutulu', '', '6205-2RS1, 6205 DDU'],
-    ['6205-ZZ', '6205 ZZ Sabit Bilyalı Rulman', 'FAG', 'Sabit Bilyalı Rulmanlar', 'Sabit Bilyalı', 'ZZ', 25, 52, 15, 40, 'Adet', 79, '', 'TRY', '', 1, 'A-12', 'Kutusuz', '', '6205-2Z']
+    ['RAF 1', '6205 2RS', 'SKF', 120, 'KUTULU', 85.5, ''],
+    ['RAF 1', '6205 ZZ', 'FAG', 40, 'KUTUSUZ', 79, 'ARKA ŞAFT BİLYESİ'],
+    ['RAF 2', '30206', 'ORS', 12, '', 210, '']
   ])
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws, 'Ürünler')

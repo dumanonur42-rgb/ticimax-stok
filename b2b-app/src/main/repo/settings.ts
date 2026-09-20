@@ -1,10 +1,10 @@
-import type { Settings } from '@shared/types'
+import { SUPPORT_PHONE, type Settings } from '@shared/types'
 import { cloud, must, mustVoid } from '../cloud/client'
 import { getDb } from '../db'
 
 export const DEFAULT_SETTINGS: Settings = {
   company_name: 'Yamansa Rulman',
-  company_phone: '',
+  company_phone: SUPPORT_PHONE,
   company_email: '',
   company_address: '',
   company_web: 'yamansarulman.com',

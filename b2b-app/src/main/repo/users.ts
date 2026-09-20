@@ -8,7 +8,7 @@ const LOGIN_DOMAIN = 'login.yamansab2b.app'
 
 /** Accounts are username-based; Supabase Auth needs an e-mail, so we derive a stable synthetic one. */
 export function loginEmail(username: string): string {
-  const lower = username.trim().toLocaleLowerCase('tr-TR')
+  const lower = username.trim().replace(/\s+/g, ' ').toLocaleLowerCase('tr-TR')
   const slug = lower
     .replace(/ı/g, 'i')
     .replace(/ş/g, 's')
@@ -22,9 +22,9 @@ export function loginEmail(username: string): string {
 }
 
 function validateUsername(username: string): string {
-  const u = username.trim()
+  const u = username.trim().replace(/\s+/g, ' ')
   if (u.length < 3) throw new Error('Kullanıcı adı en az 3 karakter olmalı.')
-  if (!/^[\p{L}\p{N}._-]+$/u.test(u)) throw new Error('Kullanıcı adı yalnızca harf, rakam, nokta, alt çizgi ve tire içerebilir.')
+  if (!/^[\p{L}\p{N} ._-]+$/u.test(u)) throw new Error('Kullanıcı adı yalnızca harf, rakam, boşluk, nokta, alt çizgi ve tire içerebilir.')
   return u
 }
 

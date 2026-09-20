@@ -2,6 +2,7 @@ import type { ProductRow } from './cloud/database.types'
 import { pullProducts, upsertLocal } from './cloud/sync'
 import { getDb, normalize, normalizeText, productKey } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
+import { parseBox, suggestMapping } from './repo/importer'
 import { getProduct, productFacets, saveProduct, searchProducts } from './repo/products'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
@@ -154,6 +155,27 @@ export async function runSelfCheck(): Promise<number> {
   console.log(`dimension 25x52: ${dim.total} hits in ${(performance.now() - t1).toFixed(1)} ms`)
   const facets = productFacets({ q: '' })
   console.log(`facets: ${facets.brand.length} brands, ${facets.category.length} categories`)
+
+  // Shop stock sheet layout: every column must land on the right field, including Turkish upper-case İ.
+  const map = suggestMapping(['RAF', 'ÜRÜN ADI', 'MARKA', 'ADET', 'KUTU DURUMU', 'FİYAT', 'AÇIKLAMA'])
+  const want: Record<string, string> = { shelf: 'RAF', sku: 'ÜRÜN ADI', brand: 'MARKA', stock: 'ADET', box: 'KUTU DURUMU', price: 'FİYAT', description: 'AÇIKLAMA' }
+  for (const [f, h] of Object.entries(want)) {
+    if (map[f as keyof typeof map] !== h) {
+      console.error(`import mapping: ${f} -> ${map[f as keyof typeof map] ?? '-'} (expected ${h})`)
+      ok = false
+    }
+  }
+  if (map.name) {
+    console.error(`import mapping: name unexpectedly mapped to ${map.name}`)
+    ok = false
+  }
+  const split = parseBox('33 KUTULU – 1 KUTUSUZ', 34)
+  const plain = parseBox('kutusuz', 7)
+  if (split.length !== 2 || split[0].box !== 'Kutulu' || split[0].stock !== 33 || split[1].box !== 'Kutusuz' || split[1].stock !== 1 || plain[0].box !== 'Kutusuz' || plain[0].stock !== 7) {
+    console.error('import box parsing failed', split, plain)
+    ok = false
+  }
+  console.log('import mapping: ok')
 
   const user = process.env.B2B_CHECK_USER
   const pass = process.env.B2B_CHECK_PASS

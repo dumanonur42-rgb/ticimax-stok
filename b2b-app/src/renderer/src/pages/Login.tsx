@@ -104,7 +104,7 @@ export function Login(): ReactNode {
               </Field>
             )}
             {error && (
-              <div id="login-error" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8 }}>
+              <div id="login-error" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal', lineHeight: 1.35 }}>
                 {error}
               </div>
             )}

@@ -1,5 +1,5 @@
-import type { DashboardStats, Product } from '@shared/types'
-import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
+import { SUPPORT_PHONE, type DashboardStats, type Product } from '@shared/types'
+import { AlertTriangle, Boxes, ClipboardList, MessageCircle, PackageCheck, PackageX, Phone, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -39,6 +39,36 @@ export function Dashboard(): ReactNode {
 
   if (!stats) return <Spinner />
 
+  const phone = settings?.company_phone?.trim() || SUPPORT_PHONE
+  const digits = phone.replace(/\D/g, '')
+  const open = (url: string): void => {
+    api('app:openExternal', url).catch((e) => toast(e.message, 'error'))
+  }
+  const contact = (
+    <div className="grid g2 contact-cards">
+      <button className="card contact whatsapp" onClick={() => open(`https://wa.me/${digits}`)} aria-label={`WhatsApp'tan yaz: ${phone}`}>
+        <span className="contact-icon" aria-hidden>
+          <MessageCircle size={26} />
+        </span>
+        <span className="contact-text">
+          <strong>WhatsApp'tan yaz</strong>
+          <span className="muted small">Sipariş ve stok sorularınız için anında mesaj gönderin</span>
+          <span className="contact-number mono">{phone}</span>
+        </span>
+      </button>
+      <button className="card contact call" onClick={() => open(`tel:+${digits}`)} aria-label={`Hemen ara: ${phone}`}>
+        <span className="contact-icon" aria-hidden>
+          <Phone size={26} />
+        </span>
+        <span className="contact-text">
+          <strong>Hemen ara</strong>
+          <span className="muted small">Satış hattımızı doğrudan arayın</span>
+          <span className="contact-number mono">{phone}</span>
+        </span>
+      </button>
+    </div>
+  )
+
   const Stat = ({ icon, label, value, onClick }: { icon: ReactNode; label: string; value: string | number; onClick?: () => void }): ReactNode => (
     <button className="card stat" onClick={onClick} disabled={!onClick} style={{ textAlign: 'left', cursor: onClick ? 'pointer' : 'default' }}>
       <span className="row muted">
@@ -66,6 +96,7 @@ export function Dashboard(): ReactNode {
           </div>
           <div className="hero-art" aria-hidden />
         </section>
+        {contact}
         <div className="grid g4">
           <Stat icon={<Boxes size={18} aria-hidden />} label="Katalogdaki ürün" value={num(stats.productCount)} onClick={() => go('catalog')} />
           <Stat icon={<PackageCheck size={18} aria-hidden />} label="Stokta" value={num(stats.inStockCount)} />
@@ -133,28 +164,18 @@ export function Dashboard(): ReactNode {
         )}
       </div>
 
+      {contact}
+
       {stats.productCount === 0 && (
         <div className="card">
           <Empty
             title="Henüz ürün yok"
-            hint={isAdmin ? 'Stok listenizi Excel/CSV olarak aktarın veya denemek için örnek rulman kataloğunu yükleyin.' : 'Ürünler yüklendiğinde burada görünecek.'}
+            hint={isAdmin ? 'Stok listenizi Excel/CSV olarak aktarın veya Stok Yönetimi › Hızlı giriş ile ürün ekleyin.' : 'Ürünler yüklendiğinde burada görünecek.'}
           >
             <div className="row" style={{ justifyContent: 'center' }}>
               {isAdmin && (
                 <button className="btn primary" onClick={() => go('import')}>
                   Stok listesi aktar
-                </button>
-              )}
-              {isAdmin && (
-                <button
-                  className="btn"
-                  onClick={async () => {
-                    toast('Örnek katalog oluşturuluyor…')
-                    const n = await api('app:seedDemo', 12000)
-                    toast(`${num(n)} örnek ürün eklendi.`, 'success')
-                  }}
-                >
-                  Örnek veri yükle (12.000 ürün)
                 </button>
               )}
             </div>
