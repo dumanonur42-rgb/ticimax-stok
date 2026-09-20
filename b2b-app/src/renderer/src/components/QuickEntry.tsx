@@ -1,6 +1,6 @@
 import { normalize as norm, productKey } from '@shared/identity'
 import type { Product, QuickEntryResult, QuickEntryRow } from '@shared/types'
-import { AlertTriangle, ClipboardPaste, Eraser, Keyboard, Plus, RefreshCw, Save, Trash2 } from 'lucide-react'
+import { AlertTriangle, ClipboardPaste, Eraser, Info, Keyboard, Plus, RefreshCw, Save, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react'
 import { Modal } from '@/components/ui'
 import { api } from '@/lib/api'
@@ -227,9 +227,9 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
     try {
       const res = await api('products:quickEntry', payload)
       setResult(res)
-      const failed = new Map(res.errors.map((e) => [norm(e.sku), e.message]))
+      const failed = new Map(res.errors.map((e) => [e.key, e.message]))
       setRows((list) => {
-        const keep = list.filter((r) => r.sku.trim() && failed.has(norm(r.sku))).map((r) => ({ ...r, error: failed.get(norm(r.sku)) }))
+        const keep = list.filter((r) => r.sku.trim() && failed.has(rowKey(r))).map((r) => ({ ...r, error: failed.get(rowKey(r)) }))
         return ensureTail(keep.length ? keep : [blank(list[list.length - 1]?.shelf)])
       })
       if (res.errors.length) toast(`${res.errors.length} satır kaydedilemedi; tabloda kaldı.`, 'error')
@@ -297,7 +297,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
             const key = rowKey(r)
             const hit = r.sku.trim() ? known.get(key) : undefined
             const twice = r.sku.trim() && (dupInBatch.get(key) ?? 0) > 1
-            const others = r.sku.trim() && !hit ? (variants.get(norm(r.sku)) ?? []) : []
+            const others = r.sku.trim() && !hit ? (variants.get(norm(r.sku)) ?? []).filter((p) => norm(p.brand) === norm(r.brand)) : []
             return (
               <div key={r.id} className={`qe-row${hit ? ' known' : ''}${r.error ? ' error' : ''}${isEmpty(r) ? ' blank' : ''}`} role="row" aria-rowindex={idx + 1}>
                 <div className="qe-num" aria-hidden>
@@ -404,16 +404,16 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                       </>
                     ) : (
                       <span className="qe-variant">
+                        <Info size={13} aria-hidden />
                         <span>
-                          Bu kod farklı marka/kutu ile kayıtlı:{' '}
+                          Bilgi: bu ürünün{' '}
                           {others.slice(0, 3).map((p, i) => (
                             <span key={p.id}>
                               {i > 0 && ', '}
-                              <b>{variantLabel(p)}</b> (stok {num(Number(p.stock))})
+                              <b>{p.box || 'kutu durumu boş'}</b> hali ({num(Number(p.stock))} adet)
                             </span>
                           ))}
-                          {others.length > 3 && ` +${others.length - 3}`}
-                          {' — '}bu satır <b>yeni ürün</b> olarak açılır. Aynı ürünse marka ve kutu durumunu birebir yazın.
+                          {others.length > 3 && ` +${others.length - 3}`} da kayıtlı — ayrı ürün olarak kalır.
                         </span>
                       </span>
                     )}

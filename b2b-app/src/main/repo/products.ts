@@ -353,14 +353,14 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
   const existing = productsByKeys([...folded.keys()])
   const currency = getSettings().default_currency
   const inserts: ProductInsert[] = []
-  const patches: { sku: string; patch: BulkProductPatch }[] = []
+  const patches: { key: string; patch: BulkProductPatch }[] = []
   for (const [key, r] of folded) {
     const cur = existing.get(key)
     if (cur) {
       const patch: BulkProductPatch = { id: cur.id, stock: r.existing === 'set' ? r.stock : Number(cur.stock) + r.stock }
       if (r.shelf.trim()) patch.shelf = r.shelf.trim()
       if (r.price != null) patch.price = r.price
-      patches.push({ sku: cur.sku, patch })
+      patches.push({ key, patch })
       continue
     }
     inserts.push({
@@ -396,18 +396,18 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
   const sb = cloud()
   if (inserts.length) {
     try {
-      const saved = must(await sb.from('products').insert(inserts).select('*'))
+      const saved = must(await sb.from('products').upsert(inserts, { onConflict: 'key_norm' }).select('*'))
       upsertLocal(saved)
       result.created = saved.length
     } catch (e) {
-      inserts.forEach((i) => result.errors.push({ sku: i.sku, message: (e as Error).message }))
+      inserts.forEach((i) => result.errors.push({ key: i.key_norm, message: (e as Error).message }))
     }
   }
   if (patches.length) {
     try {
       result.updated = (await bulkUpdateProducts(patches.map((p) => p.patch))).length
     } catch (e) {
-      patches.forEach((p) => result.errors.push({ sku: p.sku, message: (e as Error).message }))
+      patches.forEach((p) => result.errors.push({ key: p.key, message: (e as Error).message }))
     }
   }
   return result

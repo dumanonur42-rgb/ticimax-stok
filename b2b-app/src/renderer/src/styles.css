@@ -2325,13 +2325,19 @@ dialog.update-dialog {
 }
 .qe-note.variant {
   color: var(--text-muted);
-  border-left: 3px solid var(--border-strong, var(--border));
-  margin-left: 12px;
-  padding-left: 10px;
+  background: transparent;
+  border: 0;
+  padding: 2px 0 4px 12px;
+  font-size: 12px;
 }
 .qe-note.variant b {
   color: var(--text);
   font-weight: 600;
+}
+.qe-variant {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .qe-known {
   display: inline-flex;

@@ -65,7 +65,7 @@ export interface QuickEntryRow {
 export interface QuickEntryResult {
   created: number
   updated: number
-  errors: { sku: string; message: string }[]
+  errors: { key: string; message: string }[]
 }
 
 /** One row of an inline/bulk edit on the stock screen; omitted fields stay unchanged. */
