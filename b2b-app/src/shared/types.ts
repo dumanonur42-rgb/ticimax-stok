@@ -39,7 +39,7 @@ export interface ProductFilter {
   dInner?: [number | null, number | null]
   dOuter?: [number | null, number | null]
   width?: [number | null, number | null]
-  sort?: 'relevance' | 'sku' | 'name' | 'stock' | 'price' | 'updated'
+  sort?: 'relevance' | 'sku' | 'name' | 'stock' | 'price' | 'updated' | 'shelf'
   sortDir?: 'asc' | 'desc'
   offset?: number
   limit?: number

@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Shell } from '@/components/Shell'
+import { ThemePicker } from '@/components/ThemePicker'
 import { Toasts } from '@/components/ui'
 import { UpdateDialog } from '@/components/UpdateDialog'
 import { api, onEvent } from '@/lib/api'
@@ -108,6 +109,7 @@ export function App(): ReactNode {
       <Shell>
         <Page />
       </Shell>
+      <ThemePicker />
       <UpdateDialog />
       <Toasts />
     </>

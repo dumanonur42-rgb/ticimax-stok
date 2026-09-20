@@ -148,6 +148,7 @@ export interface Database {
       admin_delete_user: { Args: { p_user: string }; Returns: undefined }
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
       soft_delete_all_products: { Args: Record<string, never>; Returns: undefined }
+      purge_all_products: { Args: Record<string, never>; Returns: number }
       dashboard_orders: { Args: { p_customer: number | null }; Returns: DashboardOrdersJson }
     }
     Enums: Record<string, never>

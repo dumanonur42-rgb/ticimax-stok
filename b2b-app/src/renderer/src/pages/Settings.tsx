@@ -1,5 +1,5 @@
 import type { Currency, Customer, CustomerProfile, Settings as S, SyncStatus, User, UserRole } from '@shared/types'
-import { Building2, Database, Pencil, Plus, Save, UserCheck } from 'lucide-react'
+import { Building2, Database, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { useUpdateState } from '@/components/Shell'
@@ -382,6 +382,7 @@ function Data(): ReactNode {
   const [sync, setSync] = useState<SyncStatus | null>(null)
   const [busy, setBusy] = useState(false)
   const [confirmSeed, setConfirmSeed] = useState(false)
+  const [confirmPurge, setConfirmPurge] = useState(false)
   useEffect(() => {
     api('app:info', undefined).then(setInfo).catch(() => undefined)
     const load = (): void => {
@@ -394,6 +395,14 @@ function Data(): ReactNode {
     setBusy(true)
     api('app:resync', undefined)
       .then((n) => toast(`${n} ürün buluttan yeniden alındı.`, 'success'))
+      .catch((e) => toast(e.message, 'error'))
+      .finally(() => setBusy(false))
+  }
+  const purge = (): void => {
+    setConfirmPurge(false)
+    setBusy(true)
+    api('app:purgeProducts', undefined)
+      .then((n) => toast(`${n.toLocaleString('tr-TR')} ürün silindi; tüm bilgisayarlardaki listeler temizleniyor.`, 'success'))
       .catch((e) => toast(e.message, 'error'))
       .finally(() => setBusy(false))
   }
@@ -426,8 +435,11 @@ function Data(): ReactNode {
           Veri klasörünü aç
         </button>
         <span className="spacer" />
-        <button className="btn ghost" onClick={() => setConfirmSeed(true)}>
+        <button className="btn ghost" disabled={busy} onClick={() => setConfirmSeed(true)}>
           Örnek veri yükle (12.000 ürün)
+        </button>
+        <button className="btn danger" disabled={busy} onClick={() => setConfirmPurge(true)}>
+          <Trash2 size={16} aria-hidden /> Ürün listesini sil
         </button>
       </div>
       <p className="muted small">
@@ -446,6 +458,15 @@ function Data(): ReactNode {
             .then((n) => toast(`${n} örnek ürün eklendi.`, 'success'))
             .catch((e) => toast(e.message, 'error'))
         }}
+      />
+      <Confirm
+        open={confirmPurge}
+        title="Ürün listesini sil"
+        text={`Ortak veritabanındaki ${sync ? sync.productCount.toLocaleString('tr-TR') : 'tüm'} ürün kalıcı olarak silinir ve tüm bilgisayarlardaki ürün listeleri temizlenir. Geçmiş siparişler korunur. Ardından Stok Aktar ile yeni listeyi yükleyebilirsiniz. Bu işlem geri alınamaz.`}
+        danger
+        confirmLabel="Tümünü sil"
+        onCancel={() => setConfirmPurge(false)}
+        onConfirm={purge}
       />
     </div>
   )

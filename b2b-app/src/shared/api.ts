@@ -27,7 +27,7 @@ import type {
 export interface ApiMap {
   'auth:login': [{ username: string; password: string }, Session]
   'auth:logout': [void, void]
-  'auth:register': [{ username: string; display_name: string; password: string }, void]
+  'auth:register': [{ username: string; display_name: string; company_name: string; password: string }, void]
   'auth:session': [void, Session | null]
   'auth:changePassword': [{ current: string; next: string }, void]
 
@@ -76,6 +76,7 @@ export interface ApiMap {
   'app:resync': [void, number]
   'app:openPath': [string, void]
   'app:seedDemo': [number, number]
+  'app:purgeProducts': [void, number]
 
   'update:state': [void, UpdateState]
   'update:check': [void, void]

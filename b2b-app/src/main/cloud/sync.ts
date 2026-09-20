@@ -102,6 +102,12 @@ export function upsertLocal(rows: ProductRow[]): void {
   })()
 }
 
+/** `catalog_generation` is bumped by `purge_all_products()`; a mismatch forces a full refresh so hard deletes reach every cache. */
+async function cloudGeneration(): Promise<string> {
+  const rows = must(await cloud().from('settings').select('value').eq('key', 'catalog_generation'))
+  return rows.length ? String(rows[0].value) : '0'
+}
+
 /** Incremental pull: everything changed since the stored cursor (or all rows on first run / `full`). */
 export async function pullProducts(full = false): Promise<number> {
   if (pulling) {
@@ -112,6 +118,8 @@ export async function pullProducts(full = false): Promise<number> {
   pulling = (async () => {
     const sb = cloud()
     const db = getDb()
+    const generation = await cloudGeneration()
+    if (generation !== (getState('catalog_generation') ?? '0')) full = true
     const cursor = full ? null : getState('products_cursor')
     const seenIds: number[] = []
     let last = cursor
@@ -141,12 +149,13 @@ export async function pullProducts(full = false): Promise<number> {
       })()
     }
     setState('products_cursor', last ?? new Date(0).toISOString())
+    setState('catalog_generation', generation)
     db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
   })()
   try {
     await pulling
     setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined })
-    if (n > 0) listener('products')
+    if (n > 0 || full) listener('products')
   } catch (e) {
     setStatus({ online: false, message: e instanceof Error ? e.message : String(e) })
     throw e

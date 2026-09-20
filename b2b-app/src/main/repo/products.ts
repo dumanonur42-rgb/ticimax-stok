@@ -102,6 +102,8 @@ function orderBy(f: ProductFilter, w: Where): { sql: string; params: unknown[] }
       return { sql: `p.name COLLATE NOCASE ${dir}`, params: [] }
     case 'stock':
       return { sql: `p.stock ${dir}, p.sku`, params: [] }
+    case 'shelf':
+      return { sql: `(p.shelf = '') ASC, p.shelf ${dir}, p.sku`, params: [] }
     case 'price':
       return { sql: `p.price ${dir}, p.sku`, params: [] }
     case 'updated':
@@ -195,6 +197,13 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
 export async function deleteProduct(id: number): Promise<void> {
   mustVoid(await cloud().from('products').update({ deleted: true, active: false }).eq('id', id))
   getDb().prepare('DELETE FROM products WHERE id = ?').run(id)
+}
+
+/** Clean start: hard-deletes every product in the shared catalogue; every installation re-pulls an empty list. */
+export async function purgeAllProducts(): Promise<number> {
+  const n = must(await cloud().rpc('purge_all_products'))
+  getDb().exec('DELETE FROM products')
+  return n
 }
 
 export function allProductsForExport(f: ProductFilter): Product[] {

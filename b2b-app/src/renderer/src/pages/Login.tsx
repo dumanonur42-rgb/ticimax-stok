@@ -13,6 +13,7 @@ export function Login(): ReactNode {
   const [mode, setMode] = useState<Mode>('login')
   const [username, setUsername] = useState('')
   const [displayName, setDisplayName] = useState('')
+  const [companyName, setCompanyName] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
   const [error, setError] = useState('')
@@ -37,7 +38,7 @@ export function Login(): ReactNode {
         setSession(await api('auth:login', { username, password }))
       } else {
         if (password !== password2) throw new Error('Şifreler birbiriyle eşleşmiyor.')
-        await api('auth:register', { username, display_name: displayName, password })
+        await api('auth:register', { username, display_name: displayName, company_name: companyName, password })
         switchMode('login')
         setNotice('Kaydınız alındı. Bir yönetici bayi hesabınızı onayladığında giriş yapabilirsiniz.')
       }
@@ -76,7 +77,12 @@ export function Login(): ReactNode {
               )}
             </Field>
             {isRegister && (
-              <Field label="Ad Soyad / Firma">{(id) => <input id={id} className="input" autoComplete="name" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />}</Field>
+              <>
+                <Field label="İşletme adı">
+                  {(id) => <input id={id} className="input" autoComplete="organization" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required minLength={2} />}
+                </Field>
+                <Field label="Ad Soyad">{(id) => <input id={id} className="input" autoComplete="name" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />}</Field>
+              </>
             )}
             <Field label="Şifre">
               {(id) => (

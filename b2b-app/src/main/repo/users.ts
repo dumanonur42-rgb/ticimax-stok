@@ -89,14 +89,16 @@ export async function changePassword(username: string, current: string, next: st
 }
 
 /** Self-service sign-up: a dealer account with its own company card, locked until an administrator approves it. */
-export async function registerUser(input: { username: string; display_name: string; password: string }): Promise<void> {
+export async function registerUser(input: { username: string; display_name: string; company_name: string; password: string }): Promise<void> {
   const username = validateUsername(input.username)
   validatePassword(input.password)
-  const display = input.display_name.trim() || username
+  const company = input.company_name.trim()
+  if (company.length < 2) throw new Error('İşletme adı girilmelidir.')
+  const display = input.display_name.trim() || company
   const r = await ephemeralCloud().auth.signUp({
     email: loginEmail(username),
     password: input.password,
-    options: { data: { username, display_name: display } }
+    options: { data: { username, display_name: display, company_name: company } }
   })
   if (r.error) throw cloudError(r.error)
 }

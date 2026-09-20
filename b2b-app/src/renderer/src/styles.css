@@ -37,8 +37,8 @@
   --danger-bg: #fee2e2;
   --success: #15803d;
   --success-bg: #dcfce7;
-  --warning: #b45309;
-  --warning-bg: #fef3c7;
+  --warning: #a16207;
+  --warning-bg: #fef9c3;
   --info-bg: #dbeafe;
   --focus: #f59e0b;
 }
@@ -732,10 +732,22 @@ textarea.input {
 .vrow .badge {
   font-weight: 600;
 }
+.vrow .badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
 .vrow .badge.ok {
-  background: transparent;
-  color: var(--text-muted);
-  border-color: var(--border);
+  border-color: color-mix(in srgb, var(--success) 35%, transparent);
+}
+.vrow .badge.low {
+  border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+}
+.vrow .badge.out {
+  border-color: color-mix(in srgb, var(--danger) 35%, transparent);
 }
 .vrow .cart-btn {
   color: var(--text-muted);
@@ -1024,6 +1036,97 @@ dialog.modal::backdrop {
   gap: 10px;
 }
 
+/* First-run theme picker */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.theme-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.theme-option:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+.theme-option.selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+.theme-option-text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.theme-check {
+  color: var(--primary);
+  flex: none;
+}
+.theme-swatch {
+  --sw-bg: #f4f6fa;
+  --sw-bar: #0b2a5b;
+  --sw-line: #c6cfdd;
+  flex: none;
+  display: flex;
+  width: 72px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--sw-bg);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.theme-swatch-bar {
+  width: 18px;
+  background: var(--sw-bar);
+}
+.theme-swatch-body {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 9px 8px;
+}
+.theme-swatch-line {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--sw-line);
+}
+.theme-swatch-line.short {
+  width: 60%;
+}
+.theme-option[data-preview='system'] .theme-swatch {
+  background: linear-gradient(115deg, #f4f6fa 50%, #0f172a 50%);
+}
+.theme-option[data-preview='system'] .theme-swatch-line {
+  background: linear-gradient(90deg, #c6cfdd, #3b4a6b);
+}
+.theme-option[data-preview='dark'] .theme-swatch {
+  --sw-bg: #0f172a;
+  --sw-bar: #0a1730;
+  --sw-line: #3b4a6b;
+}
+.theme-option[data-preview='contrast'] .theme-swatch {
+  --sw-bg: #000;
+  --sw-bar: #ffff00;
+  --sw-line: #fff;
+  border-color: #fff;
+}
+[data-theme='contrast'] .theme-option.selected {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
 .update-banner {
   margin-left: auto;
   display: flex;
@@ -1133,6 +1236,20 @@ dialog.update-dialog {
 .shelf-tag.sm {
   padding: 2px 8px;
   font-size: 0.85rem;
+}
+.vrow .shelf-cell .shelf-tag {
+  width: 100%;
+  justify-content: center;
+  padding: 4px 8px;
+  font-size: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), #ffd54a);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+[data-theme='contrast'] .vrow .shelf-cell .shelf-tag {
+  background: var(--accent);
+  text-shadow: none;
 }
 .shelf-card {
   display: flex;

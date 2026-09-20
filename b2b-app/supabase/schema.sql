@@ -151,12 +151,13 @@ end $$;
 -- Every sign-up becomes a dealer with its own company card, locked until an administrator approves it.
 create or replace function public.handle_new_user() returns trigger
 language plpgsql security definer set search_path = public as $$
-declare uname text; dname text; cid bigint; is_first boolean;
+declare uname text; dname text; cname text; cid bigint; is_first boolean;
 begin
   uname := coalesce(nullif(trim(new.raw_user_meta_data->>'username'), ''), split_part(new.email, '@', 1));
   dname := coalesce(nullif(trim(new.raw_user_meta_data->>'display_name'), ''), uname);
+  cname := coalesce(nullif(trim(new.raw_user_meta_data->>'company_name'), ''), dname);
   is_first := not exists (select 1 from profiles);
-  insert into customers (code, name) values (next_customer_code(), dname) returning id into cid;
+  insert into customers (code, name, contact) values (next_customer_code(), cname, case when cname = dname then '' else dname end) returning id into cid;
   insert into profiles (id, username, display_name, role, customer_id, approved)
   values (new.id, uname, dname, case when is_first then 'admin' else 'bayi' end, cid, is_first);
   return new;
@@ -301,6 +302,20 @@ language plpgsql security definer set search_path = public as $$
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
   update products set deleted = true, active = false where not deleted;
+end $$;
+
+-- Clean start: removes every product from the shared catalogue (order history keeps sku/name, product_id becomes null)
+-- and bumps `catalog_generation` so every installation drops its local search cache and re-pulls.
+create or replace function public.purge_all_products() returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  delete from products;
+  get diagnostics n = row_count;
+  insert into settings (key, value) values ('catalog_generation', to_jsonb(1))
+    on conflict (key) do update set value = to_jsonb(coalesce((settings.value)::text::integer, 0) + 1);
+  return n;
 end $$;
 
 create or replace function public.dashboard_orders(p_customer bigint) returns jsonb

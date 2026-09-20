@@ -22,10 +22,10 @@ interface Column {
 }
 
 const COLUMNS: Column[] = [
+  { key: 'shelf', label: 'Raf', width: '132px', sort: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(220px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '120px' },
   { key: 'dims', label: 'd × D × B', width: '140px' },
-  { key: 'shelf', label: 'Raf', width: '110px' },
   { key: 'stock', label: 'Stok', width: '104px', sort: 'stock', align: 'right' },
   { key: 'price', label: 'Peşin Fiyat', width: '124px', sort: 'price', align: 'right' },
   { key: 'card_price', label: 'K. Kartı Fiyatı', width: '132px', align: 'right' },
@@ -309,6 +309,7 @@ export function Catalog(): ReactNode {
               <option value="relevance">Uygunluk</option>
               <option value="sku">Ürün kodu</option>
               <option value="stock">Stok</option>
+              {isAdmin && <option value="shelf">Raf</option>}
               {showPrices && <option value="price">Peşin fiyat</option>}
               <option value="updated">Güncelleme</option>
             </select>
@@ -399,6 +400,11 @@ export function Catalog(): ReactNode {
                       setSelected(p)
                     }}
                   >
+                    {isAdmin && (
+                      <div className="cell shelf-cell" role="gridcell">
+                        {p.shelf ? <span className="shelf-tag">{p.shelf}</span> : <span className="faint">—</span>}
+                      </div>
+                    )}
                     <div className="cell sku" role="gridcell" title={p.name}>
                       {p.sku}
                     </div>
@@ -408,11 +414,6 @@ export function Catalog(): ReactNode {
                     <div className="cell mono small muted" role="gridcell">
                       {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
                     </div>
-                    {isAdmin && (
-                      <div className="cell" role="gridcell">
-                        {p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}
-                      </div>
-                    )}
                     <div className="cell right" role="gridcell">
                       <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
                     </div>

@@ -11,7 +11,7 @@ import { dashboardStats } from './repo/dashboard'
 import { orderHtml, orderToXlsx, productsToXlsx, templateXlsx } from './repo/exporter'
 import { importLogs, previewFile, runImport } from './repo/importer'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { allProductsForExport, deleteProduct, getProduct, productFacets, productsBySkus, saveProduct, searchProducts } from './repo/products'
+import { allProductsForExport, deleteProduct, getProduct, productFacets, productsBySkus, purgeAllProducts, saveProduct, searchProducts } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, setLocalSettings, setSettings } from './repo/settings'
 import { approveUser, changePassword, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
@@ -331,5 +331,12 @@ export function registerIpc(): void {
     const r = await seedDemo(n)
     broadcast('products:changed')
     return r
+  })
+  handle('app:purgeProducts', async () => {
+    requireRole('admin')
+    const n = await purgeAllProducts()
+    await pullProducts(true).catch(() => undefined)
+    broadcast('products:changed')
+    return n
   })
 }
