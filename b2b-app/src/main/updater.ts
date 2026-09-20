@@ -17,7 +17,17 @@ export function updateState(): UpdateState {
   return state
 }
 
-const stripHtml = (s: string): string => s.replace(/<[^>]+>/g, '').trim()
+/** GitHub hands the release body over as HTML; keep one line per bullet/paragraph. */
+const stripHtml = (s: string): string =>
+  s
+    .replace(/<\/(li|p|h\d|div)>|<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .trim()
 
 function releaseNotes(notes: UpdateInfo['releaseNotes']): string | undefined {
   if (typeof notes === 'string') return stripHtml(notes) || undefined

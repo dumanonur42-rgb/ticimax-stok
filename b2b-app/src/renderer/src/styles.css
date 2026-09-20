@@ -1218,10 +1218,11 @@ dialog.update-dialog {
   overflow: auto;
   font-size: 0.9rem;
 }
-.update-notes pre {
+.update-notes ul {
   margin: 6px 0 0;
-  white-space: pre-wrap;
-  font-family: inherit;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
 }
 .update-progress {
   width: 100%;

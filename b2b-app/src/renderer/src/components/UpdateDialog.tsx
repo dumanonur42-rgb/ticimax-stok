@@ -2,7 +2,23 @@ import { Download, RefreshCw, Sparkles } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { UpdateState } from '@shared/types'
 import { api, onEvent } from '@/lib/api'
+import { useApp } from '@/store/app'
 import mark from '@/assets/mark.png'
+
+const ADMIN_TAG = /^\[y[öo]netici\]\s*/i
+
+/**
+ * Release notes are one bullet per line; lines tagged `[yönetici]` are meant for administrators only.
+ * Dealers (and the login screen) never see them; the tag itself is stripped for admins.
+ */
+export function visibleNotes(notes: string | undefined, isAdmin: boolean): string[] {
+  if (!notes) return []
+  return notes
+    .split(/\r?\n/)
+    .map((l) => l.replace(/^\s*[-*•]\s*/, '').trim())
+    .filter(Boolean)
+    .flatMap((l) => (ADMIN_TAG.test(l) ? (isAdmin ? [l.replace(ADMIN_TAG, '')] : []) : [l]))
+}
 
 /** Subscribes to the main-process updater state. */
 export function useUpdateState(): UpdateState | null {
@@ -26,6 +42,8 @@ const BUSY = new Set<UpdateState['status']>(['downloading', 'downloaded', 'insta
  */
 export function UpdateDialog(): ReactNode {
   const u = useUpdateState()
+  const isAdmin = useApp((s) => s.session?.user.role === 'admin')
+  const notes = visibleNotes(u?.notes, isAdmin)
   const ref = useRef<HTMLDialogElement>(null)
   const [dismissed, setDismissed] = useState<string | null>(null)
 
@@ -69,10 +87,14 @@ export function UpdateDialog(): ReactNode {
           {u.status === 'available' && (
             <>
               <p className="muted">Yamansa Rulman B2B için {u.version} sürümü yayınlandı. Güncelleme indirilip mevcut kurulumun üzerine kurulur ve uygulama yeniden açılır; verileriniz korunur.</p>
-              {u.notes && (
+              {notes.length > 0 && (
                 <div className="update-notes">
                   <b>Yenilikler</b>
-                  <pre>{u.notes}</pre>
+                  <ul>
+                    {notes.map((n, i) => (
+                      <li key={i}>{n}</li>
+                    ))}
+                  </ul>
                 </div>
               )}
               <div className="row" style={{ justifyContent: 'flex-end', gap: 10 }}>
