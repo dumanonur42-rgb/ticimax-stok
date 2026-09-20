@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -20,6 +21,8 @@ GOREV = "YamansaAjan"
 GOREV_UYANDIR = "YamansaUyandir"
 _ESKI = ("YamansaAjanKontrol",)
 _GIZLI = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
+_KURULU_ONBELLEK_SN = 30
+_kurulu_onbellek = (0.0, False)
 
 
 def ajan_komutu():
@@ -44,10 +47,16 @@ def _schtasks(*args):
     return r.returncode == 0, (r.stdout + r.stderr).strip()
 
 
-def kurulu():
+def kurulu(yenile=False):
+    """Ana görev kayıtlı mı? Panel sık sorduğu için sonuç kısa süre önbelleklenir (her sorgu bir schtasks süreci)."""
+    global _kurulu_onbellek
     if os.name != "nt":
         return False
+    zaman, deger = _kurulu_onbellek
+    if not yenile and time.time() - zaman < _KURULU_ONBELLEK_SN:
+        return deger
     ok, _ = _schtasks("/Query", "/TN", GOREV)
+    _kurulu_onbellek = (time.time(), ok)
     return ok
 
 
@@ -222,7 +231,7 @@ def _yukseltilmis_kur(gorevler):
         if r.returncode != 0:
             return False, ("Erişim engellendi: Windows yönetici onayı (UAC) verilmedi veya görev kaydı reddedildi. "
                            "Tekrar deneyip 'Evet' deyin ya da uygulamayı bir kez sağ tık > Yönetici olarak çalıştır ile açın.")
-        if not kurulu():
+        if not kurulu(yenile=True):
             return False, "Görev yönetici izniyle de kaydedilemedi."
         return True, "Görevler yönetici onayıyla kuruldu."
     except Exception as e:  # noqa: BLE001
@@ -252,6 +261,7 @@ def kur(ayar=None, calistir=True):
             gorevler[GOREV_UYANDIR] = _uyandir_xml(saatler)
         ok, m = _yukseltilmis_kur(gorevler)
         mesaj = [m]
+    kurulu(yenile=True)
     if ok:
         if calistir:
             _schtasks("/Run", "/TN", GOREV)
@@ -264,6 +274,7 @@ def kaldir():
     if os.name != "nt":
         return False, "Windows değil"
     sonuc = [_schtasks("/Delete", "/F", "/TN", ad) for ad in (GOREV, GOREV_UYANDIR, *_ESKI)]
+    kurulu(yenile=True)
     return any(ok for ok, _ in sonuc), "\n".join(m for _, m in sonuc).strip()
 
 
@@ -277,17 +288,28 @@ def simdi_baslat():
         subprocess.Popen(args, start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True)
 
 
-def durdur():
-    """Çalışan ajanı kapatır (durum.json'daki pid)."""
+def durdur(bekle_sn=20):
+    """Çalışan ajanı kapatır: önce nazik durdurma isteği (döngü kendini bitirir, tarayıcıyı kapatır); süre
+    dolarsa süreç ağacı (Chromium alt süreçleri dahil) zorla sonlandırılır. -> ajan var mıydı"""
+    import ajan
     from ayarlar import durum_oku
-    pid = durum_oku().get("ajan", {}).get("pid")
-    if not pid:
+    try:
+        pid = int(durum_oku().get("ajan", {}).get("pid") or 0)
+    except (TypeError, ValueError):
+        pid = 0
+    if not pid or not ajan.pid_calisiyor(pid):
         return False
+    ajan.ajani_durdur_iste()
+    son = time.time() + bekle_sn
+    while time.time() < son:
+        if not ajan.pid_calisiyor(pid):
+            return True
+        time.sleep(0.5)
     try:
         if os.name == "nt":
-            subprocess.run(["taskkill", "/PID", str(pid), "/F"], capture_output=True, creationflags=_GIZLI)
+            subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True, creationflags=_GIZLI)
         else:
             os.kill(pid, 15)
-        return True
-    except Exception:
+    except Exception:  # noqa: BLE001
         return False
+    return True

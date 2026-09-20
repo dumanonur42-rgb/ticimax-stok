@@ -2,6 +2,7 @@
 
 Tasarım sistemi: koyu kurumsal tema, Yamansa lacivert/turuncu paleti, kart + rozet + istatistik bileşenleri.
 """
+import copy
 import datetime as dt
 import os
 import subprocess
@@ -18,7 +19,7 @@ import ajan
 import gorev
 import icerik
 import tarayici
-from ayarlar import ayar_oku, ayar_yaz, durum_oku, durum_yaz, log_oku
+from ayarlar import ayar_oku, ayar_yaz, durum_guncelle, durum_oku, log_oku
 from yollar import KOK, SHOTS, VERI
 
 ctk.set_appearance_mode("dark")
@@ -37,8 +38,10 @@ MAVI, MAVI_H = "#3D7BFF", "#2F63D6"
 YESIL, SARI, KIRMIZI, MOR = "#22C55E", "#F5B301", "#EF4444", "#A78BFA"
 NAVY, MID, MIST, STEEL = "#011B54", BG, METIN, METIN2  # geriye dönük adlar
 
-DURUM_RENK = {"OK": YESIL, "PENDING": SARI, "FAIL": KIRMIZI, "BLOK": "#FF3B3B", "DRY": METIN2}
-DURUM_AD = {"OK": "Yayında", "PENDING": "Onay bekliyor", "FAIL": "Başarısız", "BLOK": "Engel", "DRY": "Deneme"}
+DURUM_RENK = {"OK": YESIL, "PENDING": SARI, "HATA": TURUNCU, "FAIL": KIRMIZI, "BLOK": "#FF3B3B", "DRY": METIN2}
+DURUM_AD = {"OK": "Yayında", "PENDING": "Onay bekliyor", "HATA": "Paylaşılamadı", "FAIL": "Başarısız", "BLOK": "Engel",
+            "DRY": "Deneme"}
+BASARISIZ = ("HATA", "FAIL")
 SLOT_AD = {"sabah": "Sabah kartı", "ana": "Ana gönderi", "story": "Story"}
 SLOT_RENK = {"sabah": SARI, "ana": MAVI, "story": MOR}
 SLOT_IKON = {"sabah": "☀", "ana": "◆", "story": "◑"}
@@ -367,6 +370,11 @@ class Uygulama(ctk.CTk):
             gun = icerik.gun_no(self.ayar)
             self._yan_gun.configure(text=f"İçerik günü {gun} / {icerik.SON_GUN}")
             self._yan_bar.set(min(1, max(0, gun / icerik.SON_GUN)))
+            if d.get("blok") and self.ayar["grup"]["aktif"] and not ayar_oku()["grup"]["aktif"]:
+                self.ayar["grup"]["aktif"] = False  # ajan engel görüp turları kapattı; paneldeki kopya ezmesin
+                if "gruplar" in self._sayfalar:
+                    self._g_aktif.set(False)
+                    self._g_switch.configure(text=self._g_switch_metin(False))
             s = ajan.sonraki_isler(self.ayar, d, adet=1)
             self._sb_sonraki.configure(text=f"Sıradaki: {s[0][0]:%d.%m %H:%M} · {s[0][1]}" if s else "Sıradaki iş yok")
             self._sb_saat.configure(text=dt.datetime.now().strftime("%d.%m.%Y  %H:%M"))
@@ -391,17 +399,17 @@ class Uygulama(ctk.CTk):
         """Uzun işi thread'de çalıştırır; panel tarayıcıyı kullanıyorsa ajana 'meşgul' bayrağı bırakır."""
         def run():
             if mesgul:
-                ajan.MESGUL_BAYRAK.write_text("1")
+                ajan.panel_mesgul_isaretle(True)
             try:
                 r = fn()
                 if bitince:
                     self.after(0, lambda: bitince(r))
             except Exception as e:
-                hata = str(e)
+                hata = str(e).strip() or type(e).__name__
                 self.after(0, lambda: messagebox.showerror("Hata", hata))
             finally:
                 if mesgul:
-                    ajan.MESGUL_BAYRAK.unlink(missing_ok=True)
+                    ajan.panel_mesgul_isaretle(False)
         threading.Thread(target=run, daemon=True).start()
 
     def paylas_simdi(self, gun, slot, platformlar, go=True):
@@ -426,7 +434,8 @@ class Uygulama(ctk.CTk):
     def kaydet(self):
         ayar_yaz(self.ayar)
         self.ayar = ayar_oku()
-        gorev.uyandirma_guncelle(self.ayar)  # slot/tur saatleri değişince uyandırma tetikleyicileri yenilenir
+        # slot/tur saatleri değişince uyandırma tetikleyicileri yenilenir (schtasks yavaş; arayüzü dondurmasın)
+        threading.Thread(target=gorev.uyandirma_guncelle, args=(copy.deepcopy(self.ayar),), daemon=True).start()
 
     def _log_tablosu(self, parent, yukseklik=None):
         """Ortak log tablosu (Pano + Loglar)."""
@@ -552,8 +561,8 @@ class Uygulama(ctk.CTk):
         hedef = sum(len(s["platformlar"]) for s in self.ayar["slotlar"].values() if s["aktif"])
         ok_bugun = sum(x["durum"] == "OK" for x in bugun_l)
         self._kpi["bugun"][0].configure(text=f"{ok_bugun} / {hedef}")
-        self._kpi["bugun"][1].configure(text=f"{sum(x['durum'] == 'FAIL' for x in bugun_l)} başarısız · {len(bugun_l)} deneme" if bugun_l else "Henüz paylaşım yok")
-        hafta = [x for x in slotlar if x["zaman"][:10] >= (bugun - dt.timedelta(days=7)).isoformat() and x["durum"] in ("OK", "FAIL")]
+        self._kpi["bugun"][1].configure(text=f"{sum(x['durum'] in BASARISIZ for x in bugun_l)} başarısız · {len(bugun_l)} deneme" if bugun_l else "Henüz paylaşım yok")
+        hafta = [x for x in slotlar if x["zaman"][:10] >= (bugun - dt.timedelta(days=7)).isoformat() and x["durum"] in ("OK",) + BASARISIZ]
         oran = round(100 * sum(x["durum"] == "OK" for x in hafta) / len(hafta)) if hafta else None
         self._kpi["basari"][0].configure(text=f"%{oran}" if oran is not None else "—",
                                          text_color=YESIL if (oran or 0) >= 80 else SARI if (oran or 0) >= 50 else METIN)
@@ -581,7 +590,7 @@ class Uygulama(ctk.CTk):
             if kayit:
                 self.rozet_ayarla(lbl, "  ".join(f"{x['platform'].upper()} {DURUM_AD.get(x['durum'], x['durum'])}" for x in kayit[-2:]),
                                   DURUM_RENK.get(kayit[-1]["durum"], METIN))
-            elif slot in yapildi:
+            elif ajan.slot_islendi(yapildi, slot):
                 self.rozet_ayarla(lbl, "İŞLENDİ", METIN2)
             else:
                 s = self.ayar["slotlar"][slot]
@@ -695,8 +704,8 @@ class Uygulama(ctk.CTk):
 
     def _ajan_durdur(self):
         if messagebox.askyesno("Durdur", "Ajan durdurulsun mu? (Otomatik başlatma kuruluysa 15 dk içinde yeniden başlar; kalıcı kapatma için Ayarlar > Otomatik başlatmayı kaldır)"):
-            gorev.durdur()
-            self.after(2000, self._y_pano)
+            self._sb_ajan.configure(text="○  Ajan durduruluyor…", text_color=SARI)
+            self.arka_planda(gorev.durdur, lambda _ok: self._y_pano() if "pano" in self._sayfalar else None)
 
     # ============================================================ TAKVİM
     def _s_takvim(self):
@@ -1063,9 +1072,7 @@ class Uygulama(ctk.CTk):
 
     def _blok_sifirla(self):
         if messagebox.askyesno("Engel", "Facebook engel kaydı silinsin mi? Yalnızca engelin gerçekten kalktığından eminseniz yapın."):
-            d = durum_oku()
-            d["blok"] = None
-            durum_yaz(d)
+            durum_guncelle(lambda d: d.__setitem__("blok", None))
             self._y_pano() if "pano" in self._sayfalar else None
 
     # ============================================================ ZAMANLAYICI
@@ -1337,8 +1344,8 @@ class Uygulama(ctk.CTk):
         if not tarayici.tarayici_kurulu():
             messagebox.showwarning("Tarayıcı", "Tarayıcı bulunamadı; bu sayfadaki 'Tarayıcıyı indir' düğmesine basın.")
             return False
-        if ajan.ajan_canli() and "bekliyor" not in durum_oku().get("ajan", {}).get("is_", "bekliyor"):
-            messagebox.showwarning("Ajan meşgul", "Ajan şu an paylaşım yapıyor; bitince tekrar deneyin.")
+        if not ajan.ajan_bosta():
+            messagebox.showwarning("Ajan meşgul", "Ajan şu an tarayıcıyı kullanıyor (paylaşım/grup turu); bitince tekrar deneyin.")
             return False
         return True
 
@@ -1368,12 +1375,11 @@ class Uygulama(ctk.CTk):
         return bildir
 
     def _giris_kaydet(self, g):
-        d = durum_oku()
-        eski = d.get("giris", {})
-        d["giris"] = {"fb": g.get("fb", eski.get("fb", False)), "ig": g.get("ig", eski.get("ig", False)),
-                      "zaman": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-        durum_yaz(d)
-        return d["giris"]
+        def _fn(d):
+            eski = d.get("giris", {})
+            d["giris"] = {"fb": g.get("fb", eski.get("fb", False)), "ig": g.get("ig", eski.get("ig", False)),
+                          "zaman": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        return durum_guncelle(_fn)["giris"]
 
     def _giris_akisi(self, siteler, bitti):
         """Giriş pencerelerini arka planda açar; süre boyunca KURULUMU BAŞLAT kilitli kalır."""
@@ -1465,9 +1471,7 @@ class Uygulama(ctk.CTk):
 
     def _yapildi_sifirla(self):
         if messagebox.askyesno("Sıfırla", "Bugünün 'yapıldı' işaretleri silinsin mi?"):
-            d = durum_oku()
-            d.get("yapildi", {}).pop(dt.date.today().isoformat(), None)
-            durum_yaz(d)
+            durum_guncelle(lambda d: d.get("yapildi", {}).pop(dt.date.today().isoformat(), None))
 
 
 def calistir():

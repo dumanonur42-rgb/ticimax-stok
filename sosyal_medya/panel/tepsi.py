@@ -47,12 +47,21 @@ def calistir(dongu):
         return f"{BASLIK} · {is_}"
 
     def dur(_icon=None, _item=None):
-        try:
-            KILIT.unlink(missing_ok=True)
-            ajan._nabiz(is_="durdu")
-        finally:
-            ikon.stop()
-            os._exit(0)
+        """Döngüye nazik durdurma isteği bırakır (tarayıcı düzgün kapanır, kilit temizlenir); döngü 60 sn içinde
+        bitmezse (uzun paylaşım) süreç zorla kapatılır."""
+        ajan.ajani_durdur_iste()
+        ikon.title = f"{BASLIK} · durduruluyor…"
+
+        def zorla():
+            try:
+                KILIT.unlink(missing_ok=True)
+                ajan._nabiz(is_="durdu")
+            finally:
+                ikon.stop()
+                os._exit(0)
+        sayac = threading.Timer(60, zorla)
+        sayac.daemon = True
+        sayac.start()
 
     ikon.menu = pystray.Menu(
         pystray.MenuItem(durum_metni, None, enabled=False),

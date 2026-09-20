@@ -9,7 +9,9 @@ GONDERILER = KOK / "gonderiler"
 GRUP = KOK / "grup_paylasim"
 GRUP_GORSEL = GRUP / "gorseller"
 
-if os.name == "nt":
+if os.environ.get("YAMANSA_VERI"):  # test / taşınabilir kurulum: veri klasörünü dışarıdan seç
+    VERI = Path(os.environ["YAMANSA_VERI"])
+elif os.name == "nt":
     VERI = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "YamansaPanel"
 else:
     VERI = Path.home() / ".yamansa_panel"

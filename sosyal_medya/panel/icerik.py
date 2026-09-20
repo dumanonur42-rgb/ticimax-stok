@@ -19,12 +19,29 @@ SEGMENT_AD = {
 }
 
 
-def gun_no(ayar, tarih=None):
+def _ham_gun(ayar, tarih=None):
     tarih = tarih or dt.date.today()
-    g = (tarih - dt.date.fromisoformat(ayar["baslangic"])).days + 1
-    if ayar.get("dongu") and g > SON_GUN:
-        g = (g - 1) % SON_GUN + 1
+    try:
+        bas = dt.date.fromisoformat(str(ayar["baslangic"]))
+    except ValueError:
+        bas = tarih
+    return (tarih - bas).days + 1
+
+
+def gun_no(ayar, tarih=None):
+    """Takvimdeki içerik günü (her zaman 1..SON_GUN; panelde gösterim için). Plan dışı tarihler için plan_aktif()."""
+    g = _ham_gun(ayar, tarih)
+    if g < 1:
+        return 1
+    if g > SON_GUN:
+        return (g - 1) % SON_GUN + 1 if ayar.get("dongu") else SON_GUN
     return g
+
+
+def plan_aktif(ayar, tarih=None):
+    """Bu tarihte paylaşılacak içerik var mı? (başlangıçtan önce ya da döngü kapalıyken 60. günden sonra yok)"""
+    g = _ham_gun(ayar, tarih)
+    return g >= 1 and (g <= SON_GUN or bool(ayar.get("dongu")))
 
 
 def slot_icerik(gun, slot):

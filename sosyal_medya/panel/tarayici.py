@@ -15,6 +15,16 @@ SITE_AD = {"fb": "Facebook", "ig": "Instagram"}
 # giriş yapılmış oturumun çerezi (dil/arayüzden bağımsız)
 GIRIS_CEREZ = {"fb": ("facebook.com", "c_user"), "ig": ("instagram.com", "ds_user_id")}
 GIRIS_PENCERE = (600, 820)  # app-mode giriş penceresi (adres çubuğu/sekme yok)
+GIRIS_ISARET = {  # oturum açıkken görünen öğeler / giriş formu alanları
+    "fb": ("[aria-label='Hesabın'], [aria-label='Your profile'], [aria-label='Profilin']",
+           "input[name='email'], input[name='pass']"),
+    "ig": ("a[href*='/direct/'], svg[aria-label='Home'], svg[aria-label='Ana Sayfa']", "input[name='username']"),
+}
+PROFIL_MESGUL = ("already in use", "ProcessSingleton", "SingletonLock", "profile appears to be in use")
+
+
+class ProfilMesgul(RuntimeError):
+    """Kalıcı profil başka bir Chromium (ajan ya da panel) tarafından kullanılıyor."""
 
 
 def _chromium_var(dizin):
@@ -78,7 +88,13 @@ def ac(gizli=False, uygulama_url=None, konum=None):
         args.append("--start-maximized")
         ortak.update(viewport={"width": 1366, "height": 850}, user_agent=UA_MASAUSTU if gizli else None)
     with sync_playwright() as p:
-        ctx = p.chromium.launch_persistent_context(str(PROFIL), args=args, **ortak)
+        try:
+            ctx = p.chromium.launch_persistent_context(str(PROFIL), args=args, **ortak)
+        except Exception as e:  # noqa: BLE001
+            if any(x.lower() in str(e).lower() for x in PROFIL_MESGUL):
+                raise ProfilMesgul("Tarayıcı profili şu an başka bir pencere tarafından kullanılıyor "
+                                   "(ajan paylaşım yapıyor olabilir); birkaç dakika sonra tekrar deneyin.") from e
+            raise RuntimeError(f"Tarayıcı açılamadı: {str(e).splitlines()[0][:200]}") from e
         try:
             yield ctx
         finally:
@@ -88,19 +104,38 @@ def ac(gizli=False, uygulama_url=None, konum=None):
                 pass
 
 
+def _oturum_acik(page, site, timeout=20000):
+    """Sayfa yüklenirken oturum işareti ya da giriş formu görününce karar verir (yavaş PC'de sabit bekleme
+    yetmeyip 'oturum yok' sanılmasın)."""
+    acik, form = GIRIS_ISARET[site]
+    son = time.time() + timeout / 1000
+    while True:
+        try:
+            if "login" in page.url or page.locator(form).count() > 0:
+                return False
+            if page.locator(acik).count() > 0:
+                return True
+        except Exception:  # noqa: BLE001  gezinme sırasında locator geçersiz olabilir
+            pass
+        if time.time() >= son:
+            return False
+        page.wait_for_timeout(500)
+
+
 def giris_kontrol(ctx):
     """-> {'fb': bool, 'ig': bool}"""
     out = {}
     page = ctx.new_page()
     try:
-        page.goto("https://www.facebook.com/", wait_until="domcontentloaded")
-        page.wait_for_timeout(4000)
-        out["fb"] = "login" not in page.url and page.locator("[aria-label='Hesabın'], [aria-label='Your profile'], "
-                                                              "[aria-label='Profilin']").count() > 0
-        page.goto("https://www.instagram.com/", wait_until="domcontentloaded")
-        page.wait_for_timeout(5000)
-        out["ig"] = "login" not in page.url and page.locator("a[href*='/direct/'], svg[aria-label='Home'], "
-                                                              "svg[aria-label='Ana Sayfa']").count() > 0
+        for site, url in (("fb", "https://www.facebook.com/"), ("ig", "https://www.instagram.com/")):
+            if not giris_cerezi_var(ctx, site):
+                out[site] = False
+                continue
+            try:
+                page.goto(url, wait_until="domcontentloaded")
+                out[site] = _oturum_acik(page, site)
+            except Exception:  # noqa: BLE001  ağ hatası: karar verilemedi, çerez var sayılır
+                out[site] = True
     finally:
         page.close()
     return out

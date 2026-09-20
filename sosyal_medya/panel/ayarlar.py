@@ -1,7 +1,13 @@
-"""Kullanıcı ayarları (ayarlar.json) ve çalışma durumu (durum.json)."""
+"""Kullanıcı ayarları (ayarlar.json), çalışma durumu (durum.json) ve paylaşım günlüğü (log.json).
+
+Panel ve ajan ayrı süreçler olarak aynı dosyaları günceller; oku-değiştir-yaz adımları dosya kilidiyle
+sıralanır (*_guncelle), yazımlar geçici dosya + os.replace ile atomiktir, önceki sürüm .bak olarak saklanır."""
 import copy
 import datetime as dt
 import json
+import os
+import time
+from contextlib import contextmanager
 
 from yollar import AYAR, DURUM, LOG
 
@@ -25,17 +31,82 @@ VARSAYILAN = {
     },
     "bildirim": {"blokta_dur": True},
 }
+BOS_DURUM = {"yapildi": {}, "ajan": {}, "blok": None, "grup_turu": {}, "tur_no": 0}
+LOG_SINIR = 5000
+KILIT_ESKI_SN = 15       # bu kadar eski kilit, çökmüş bir süreçten kalmıştır
+
+
+def _yedek(p):
+    return p.with_suffix(p.suffix + ".bak")
+
+
+@contextmanager
+def _kilitli(p, zaman_asimi=5.0):
+    """Süreçler arası dosya kilidi (O_EXCL ile oluşturulan .lock). Süre dolarsa donmamak için kilitsiz devam eder."""
+    kilit = p.with_suffix(p.suffix + ".lock")
+    son = time.time() + zaman_asimi
+    fd = None
+    while fd is None:
+        try:
+            fd = os.open(kilit, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            try:
+                if time.time() - kilit.stat().st_mtime > KILIT_ESKI_SN:
+                    kilit.unlink(missing_ok=True)
+                    continue
+            except OSError:
+                continue
+            if time.time() > son:
+                break
+            time.sleep(0.02)
+        except OSError:
+            break
+    try:
+        yield
+    finally:
+        if fd is not None:
+            os.close(fd)
+            kilit.unlink(missing_ok=True)
 
 
 def _oku(p, bos):
-    try:
-        return json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        return copy.deepcopy(bos)
+    """JSON dosyasını okur; bozuksa (yarım yazım, elle düzenleme) son sağlam yedeğe düşer."""
+    for yol in (p, _yedek(p)):
+        try:
+            return json.loads(yol.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+    return copy.deepcopy(bos)
 
 
 def _yaz(p, d):
-    p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+    """Atomik yazım: geçici dosyaya yaz, önceki sağlam sürümü .bak olarak sakla, sonra yerine koy.
+    Windows'ta başka süreç dosyayı o an okuyorsa PermissionError gelebilir; birkaç kez denenir."""
+    veri = json.dumps(d, ensure_ascii=False, indent=1)
+    gecici = p.with_suffix(p.suffix + f".{os.getpid()}.tmp")
+    gecici.write_text(veri, encoding="utf-8")
+    for deneme in range(8):
+        try:
+            if p.exists():
+                try:
+                    os.replace(p, _yedek(p))
+                except OSError:
+                    pass
+            os.replace(gecici, p)
+            return
+        except PermissionError:
+            time.sleep(0.05 * (deneme + 1))
+    gecici.unlink(missing_ok=True)
+    p.write_text(veri, encoding="utf-8")
+
+
+def _guncelle(p, bos, fn):
+    """Kilit altında oku -> fn(veri) -> yaz. fn yerinde değiştirir; güncel veri döner."""
+    with _kilitli(p):
+        d = _oku(p, bos)
+        fn(d)
+        _yaz(p, d)
+    return d
 
 
 def _birlestir(vars_, d):
@@ -50,23 +121,52 @@ def ayar_oku():
 
 
 def ayar_yaz(a):
-    _yaz(AYAR, a)
+    with _kilitli(AYAR):
+        _yaz(AYAR, a)
+
+
+def ayar_guncelle(fn):
+    """Ayarların bir kısmını değiştirmek için (ajan BLOK'ta grup turlarını kapatır); panelin diğer alanları ezilmez."""
+    def _fn(d):
+        tam = _birlestir(VARSAYILAN, d)
+        fn(tam)
+        d.clear()
+        d.update(tam)
+    return _guncelle(AYAR, {}, _fn)
 
 
 def durum_oku():
-    return _oku(DURUM, {"yapildi": {}, "ajan": {}, "blok": None, "grup_turu": {}, "tur_no": 0})
+    return _birlestir(BOS_DURUM, _oku(DURUM, {}))
 
 
 def durum_yaz(d):
-    _yaz(DURUM, d)
+    with _kilitli(DURUM):
+        _yaz(DURUM, d)
+
+
+def durum_guncelle(fn):
+    """Kilitli oku-değiştir-yaz: panel ve ajan aynı anda yazsa da işaretler kaybolmaz."""
+    def _fn(d):
+        tam = _birlestir(BOS_DURUM, d)
+        fn(tam)
+        d.clear()
+        d.update(tam)
+    return _guncelle(DURUM, {}, _fn)
 
 
 def log_oku():
-    return _oku(LOG, [])
+    d = _oku(LOG, [])
+    return d if isinstance(d, list) else []
 
 
 def log_ekle(**kw):
-    d = log_oku()
-    d.append(dict(zaman=dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), **kw))
-    _yaz(LOG, d[-5000:])
-    return d[-1]
+    kayit = dict(zaman=dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), **kw)
+
+    def _fn(d):
+        d.append(kayit)
+        del d[:-LOG_SINIR]
+    with _kilitli(LOG):
+        d = log_oku()
+        _fn(d)
+        _yaz(LOG, d)
+    return kayit

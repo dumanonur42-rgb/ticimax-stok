@@ -1,5 +1,7 @@
 """Paylaşım işlemleri: FB sayfa gönderisi/story, IG gönderi/story, FB grup gönderisi.
-Her fonksiyon (durum, not/url) döner. durum: OK | PENDING | FAIL | BLOK | DRY
+Her fonksiyon (durum, not/url) döner. durum: OK | PENDING | HATA | FAIL | BLOK | DRY
+  HATA: Paylaş'a hiç basılmadı (içerik yayınlanmadı; güvenle yeniden denenebilir)
+  FAIL: Paylaş'a basıldı ama sonuç doğrulanamadı (yeniden denenmez – çift gönderi riski)
 Türkçe ve İngilizce arayüz etiketleri birlikte denenir.
 
 Bekleme mantığı: sabit süre yerine öğe görünür olunca devam edilir (_bekle); yavaş PC'de
@@ -104,6 +106,7 @@ def _denemeli(fn):
     """fn(st) -> (durum, not). Paylaş'a basılmadan önce oluşan hatada bir kez daha dener;
     st['paylasildi'] True ise (düğmeye basıldı) tekrar denemez – çift gönderi riski."""
     son = None
+    st = {"paylasildi": False}
     for _ in range(DENEME):
         st = {"paylasildi": False}
         try:
@@ -114,7 +117,7 @@ def _denemeli(fn):
             son = str(e).splitlines()[0][:140]
         if st["paylasildi"]:
             break
-    return "FAIL", son or "bilinmeyen hata"
+    return ("FAIL" if st["paylasildi"] else "HATA"), son or "bilinmeyen hata"
 
 
 def _ss(page, shot):
@@ -129,9 +132,17 @@ def _foto_yukle(page, kok, img, timeout=15000):
     btn = _bekle(page, lambda p: kok.locator(FOTO_SEC), timeout=timeout)
     if btn is None:
         raise OnHata("Fotoğraf/video düğmesi bulunamadı")
-    with page.expect_file_chooser(timeout=10000) as fc:
-        btn.click()
-    fc.value.set_files(str(img))
+    try:
+        with page.expect_file_chooser(timeout=8000) as fc:
+            btn.click()
+        fc.value.set_files(str(img))
+    except Exception:
+        # düğme dosya seçiciyi açmadıysa (sürükle-bırak alanı açılır) formdaki gizli dosya girişine verilir
+        girdi = _bekle(page, lambda p: kok.locator("input[type='file'][accept*='image']"),
+                       lambda p: p.locator("div[role='dialog'] input[type='file']"), timeout=5000)
+        if girdi is None:
+            raise OnHata("dosya seçici açılmadı")
+        girdi.set_input_files(str(img))
 
 
 def _fb_sayfa_gecis(page):
@@ -177,12 +188,21 @@ def _fb_ileri_ve_paylas(page, form, shot, go):
         paylas = _bekle(page, lambda p: form.locator(PAYLAS_SEC), timeout=15000)
         if paylas is None:
             raise OnHata("Paylaş düğmesi görünmedi (İleri sonrası)")
-    for _ in range(40):  # yükleme bitmeden düğme pasif (aria-disabled) kalır
+    for _ in range(60):  # yükleme bitmeden düğme pasif (aria-disabled) kalır
         if paylas.get_attribute("aria-disabled") not in ("true", "1"):
             break
         page.wait_for_timeout(500)
+    else:
+        page.screenshot(path=str(shot))
+        raise OnHata("Paylaş düğmesi aktif olmadı (görsel yüklenemedi?)")
     page.screenshot(path=str(shot))
     return paylas
+
+
+def _fb_onizleme_bekle(page, form):
+    """Yüklenen görselin önizlemesi forma gelmeden paylaşılmaz (yoksa metin tek başına gider)."""
+    if _bekle(page, lambda p: form.locator("img[src^='blob:'], img[src*='scontent'], video"), timeout=30000) is None:
+        raise OnHata("görsel önizlemesi gelmedi (yükleme başarısız)")
 
 
 # ---------------------------------------------------------------- Facebook sayfa
@@ -207,17 +227,19 @@ def _fb_post(ctx, img, text, go, shot, st):
         form = _fb_form(page)
         _foto_yukle(page, form, img)
         _yaz(page, _fb_metin_kutusu(form), text)
-        # görsel önizlemesi form içine gelince yükleme tamam
-        _bekle(page, lambda p: form.locator("img[src^='blob:'], img[src*='scontent']"), timeout=20000)
+        _fb_onizleme_bekle(page, form)
         paylas = _fb_ileri_ve_paylas(page, form, shot, go)
         if not go:
             return "DRY", ""
         st["paylasildi"] = True
         paylas.click()
-        _bekle_yok(page, "div[role='dialog'] form", timeout=90000)
+        kapandi = _bekle_yok(page, "div[role='dialog'] form", timeout=90000)
         if b := _blok(page):
             page.screenshot(path=str(shot))
             return "BLOK", b
+        if not kapandi:
+            page.screenshot(path=str(shot))
+            return "FAIL", "Paylaş tıklandı ama pencere kapanmadı (Facebook hata verdi olabilir)"
         for _ in range(6):  # feed yeni gönderiyi birkaç sn içinde gösterir
             page.goto(FB_PAGE, wait_until="domcontentloaded")
             _bekle(page, "a[href*='/photo/?fbid=']", timeout=8000)
@@ -331,9 +353,21 @@ def ig_post(ctx, img, text, alt, go, shot):
     return _denemeli(lambda st: _ig_post(ctx, img, text, alt, go, shot, st))
 
 
+def _ig_son_gonderiler(page):
+    """Profildeki ilk gönderi bağlantıları (/p/...): paylaşım sonrası 'yeni gönderi var mı' kıyası için."""
+    try:
+        page.goto(f"https://www.instagram.com/{IG_USER}/", wait_until="domcontentloaded")
+        _bekle(page, "article a[href*='/p/'], main a[href*='/p/']", timeout=12000)
+        return page.locator("a[href*='/p/']").evaluate_all(
+            "els => [...new Set(els.map(e => e.getAttribute('href')))].slice(0, 12)")
+    except Exception:
+        return []
+
+
 def _ig_post(ctx, img, text, alt, go, shot, st):
     page = ctx.new_page()
     try:
+        onceki = _ig_son_gonderiler(page)
         page.goto("https://www.instagram.com/", wait_until="domcontentloaded")
         olustur_re = re.compile(r"New post|Create|Oluştur|Yeni gönderi", re.I)
         olustur = (lambda p: p.get_by_role("link", name=olustur_re),
@@ -412,13 +446,16 @@ def _ig_post(ctx, img, text, alt, go, shot, st):
                 re.compile(r"couldn't be shared|paylaşılamadı|Something went wrong|Bir hata oluştu", re.I))):
             page.screenshot(path=str(shot))
             return "FAIL", "Instagram: gönderi paylaşılamadı (tekrar deneyin)"
-        page.goto(f"https://www.instagram.com/{IG_USER}/", wait_until="domcontentloaded")
-        a = _bekle(page, "article a[href*='/p/'], main a[href*='/p/']", timeout=15000)
-        url = a.get_attribute("href") if a is not None else ""
-        if sonuc is None and not url:
+        yeni = ""
+        for _ in range(4 if onceki else 0):  # profil yeni gönderiyi birkaç sn içinde gösterir
+            yeni = next((u for u in _ig_son_gonderiler(page) if u not in onceki), "")
+            if yeni:
+                break
+            page.wait_for_timeout(2500)
+        if not yeni and sonuc is None:
             page.screenshot(path=str(shot))
-            return "FAIL", "paylaşım onayı görülmedi"
-        return "OK", ("https://www.instagram.com" + url if url else f"https://www.instagram.com/{IG_USER}/")
+            return "FAIL", "paylaşım onayı görülmedi, profilde yeni gönderi yok"
+        return "OK", ("https://www.instagram.com" + yeni if yeni else f"https://www.instagram.com/{IG_USER}/")
     except Exception:
         _ss(page, shot)
         raise
@@ -561,7 +598,7 @@ def _grup_post(ctx, url, img, text, go, shot, st):
         form = _fb_form(page)
         _foto_yukle(page, form, img)
         _yaz(page, _fb_metin_kutusu(form), text)
-        _bekle(page, lambda p: form.locator("img[src^='blob:'], img[src*='scontent']"), timeout=20000)
+        _fb_onizleme_bekle(page, form)
         paylas = _fb_ileri_ve_paylas(page, form, shot, go)
         if not go:
             page.keyboard.press("Escape")
