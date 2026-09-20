@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -133,6 +134,24 @@ def _telefon(t: str) -> str:
     return t
 
 
+def _buyuk(t: str) -> str:
+    """Türkçe büyük harf (i → İ, ı → I)."""
+    return t.replace("i", "İ").replace("ı", "I").upper()
+
+
+def _adres_parcala(adres: str) -> tuple[str, str, str]:
+    """Ticimax adresi → (açık adres, parantez içi not, 'İLÇE / İL')."""
+    adres = " ".join(adres.split())
+    m = re.search(r"\s*([^/()]+?)\s*/\s*([^/()]+?)\s*$", adres)
+    ilce_il = ""
+    if m:
+        ilce_il = _buyuk(f"{m.group(1).strip()} / {m.group(2).strip()}")
+        adres = adres[:m.start()].strip()
+    notlar = re.findall(r"\(([^)]*)\)", adres)
+    adres = re.sub(r"\s*\([^)]*\)", "", adres).strip(" ,")
+    return adres, " ".join(n.strip() for n in notlar if n.strip()), ilce_il
+
+
 _FONTS: dict[str, pymupdf.Font] = {}
 
 
@@ -243,6 +262,8 @@ class Layout:
     s: float
     name: list[str]
     addr: list[str]
+    note: list[str]
+    ilce_il: str
     firma: list[str]
     g_addr: list[str]
 
@@ -256,9 +277,11 @@ class Layout:
         s = self.s
         self.header_h = 7 * MM
         pad = 2 * MM
-        self.alici_h = (pad + len(self.name) * 14 * s * LEADING + 11 * s * LEADING + 1.2 * MM
-                        + len(self.addr) * 8.5 * s * LEADING + pad)
-        self.kargo_h = 8.5 * MM
+        self.alici_h = (pad + len(self.name) * 14 * s * LEADING + 10 * s * LEADING
+                        + 2.4 * MM + len(self.addr) * 8.5 * s * LEADING
+                        + (len(self.note) * 7 * s * LEADING + 0.6 * MM if self.note else 0)
+                        + (10 * s * LEADING + 1 * MM if self.ilce_il else 0) + pad)
+        self.kargo_h = 10 * MM
         self.gond_h = (1.5 * MM + len(self.firma) * 7 * s * LEADING
                        + len(self.g_addr) * 6.5 * s * LEADING + 0.5 * MM)
         self.barkod_text = 11 * s * LEADING
@@ -271,10 +294,13 @@ class Layout:
 def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
     pad = 2 * MM
     a, g = e.alici, e.gonderici
+    adres, note, ilce_il = _adres_parcala(a.get("Adres", ""))
     return Layout(
         s=s,
         name=_wrap(a.get("İsim", ""), 14 * s, "b", inner_w - 2 * pad, 2),
-        addr=_wrap(a.get("Adres", ""), 8.5 * s, "r", inner_w - 2 * pad, 5),
+        addr=_wrap(adres, 8.5 * s, "r", inner_w - 2 * pad, 4),
+        note=_wrap(f"({note})", 7 * s, "r", inner_w - 2 * pad, 2) if note else [],
+        ilce_il=ilce_il,
         firma=_wrap(g.get("Firma", ""), 7 * s, "b", inner_w, 2),
         g_addr=_wrap(" · ".join(filter(None, [_telefon(g.get("Telefon", "")),
                                                 g.get("Adres", "")])),
@@ -323,9 +349,16 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     pad = 2 * MM
     yy = y + pad
     yy = c.lines(x + pad, yy, lay.name, 14 * s, "b")
-    yy = c.lines(x + pad, yy, [_telefon(e.alici.get("Telefon", ""))], 11 * s, "r")
+    yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
     yy += 1.2 * MM
-    c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
+    c.page.draw_line((x + pad, yy), (box.x1 - pad, yy), color=BLACK, width=0.5)
+    yy += 1.2 * MM
+    yy = c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
+    if lay.note:
+        yy = c.lines(x + pad, yy + 0.6 * MM, lay.note, 7 * s, "r")
+    if lay.ilce_il:
+        c.text(x + pad, box.y1 - pad - 10 * s * (LEADING - 1), lay.ilce_il, 10 * s, "b",
+               align="right", box_w=inner_w - 2 * pad)
     y = box.y1 + gap
 
     # 3) Barkod (kalan alanı doldurur) + değeri
@@ -334,22 +367,31 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     y = c.lines(x, y, [e.barkod], 11 * s, "b", align="center", box_w=inner_w)
     y += gap
 
-    # 4) Kargo bilgisi: 3 hücreli çerçeve — ÖDEME | PAKET | DESİ
+    # 4) Ödeme şeridi (büyük, siyah zemin) + PAKET | DESİ hücreleri
     k = e.kargo
-    cells = [("ÖDEME", k.get("Ödeme Türü", "-")), ("PAKET", k.get("Paket Sayısı", "-")),
-             ("DESİ", k.get("Desi", "-"))]
-    widths = [inner_w * 0.56, inner_w * 0.22, inner_w * 0.22]
+    odeme = _buyuk(k.get("Ödeme Türü", "-"))
     tbl = pymupdf.Rect(x, y, x + inner_w, y + lay.kargo_h)
-    c.frame(tbl, width=0.9)
-    cx = x
-    for i, ((lab, val), cw) in enumerate(zip(cells, widths)):
+    pay_w = inner_w * 0.64
+    pay = pymupdf.Rect(x, y, x + pay_w, tbl.y1)
+    c.band(pay)
+    ps = 11.5 * s
+    while ps > 6 and _font("b").text_length(odeme, fontsize=ps) > pay_w - 3 * MM:
+        ps -= 0.25
+    c.text(x, pay.y0 + 1.1 * MM + 4.5 * s, "ÖDEME", 4.5 * s, "b", align="center",
+           white=True, box_w=pay_w)
+    c.text(x, pay.y1 - 1.6 * MM, odeme, ps, "b", align="center", white=True, box_w=pay_w)
+    cells = [("PAKET", k.get("Paket Sayısı", "-")), ("DESİ", k.get("Desi", "-"))]
+    cw = (inner_w - pay_w) / 2
+    c.frame(pymupdf.Rect(pay.x1, y, tbl.x1, tbl.y1), width=0.9)
+    cx = pay.x1
+    for i, (lab, val) in enumerate(cells):
         if i:
             c.vline(cx, tbl.y0, tbl.y1, 0.9)
-        c.text(cx, tbl.y0 + 1 * MM + 5.5 * s, lab, 5.5 * s, "r", align="center", box_w=cw)
-        vs = 8 * s
+        c.text(cx, tbl.y0 + 1.1 * MM + 4.5 * s, lab, 4.5 * s, "r", align="center", box_w=cw)
+        vs = 10 * s
         while vs > 5 and _font("b").text_length(val, fontsize=vs) > cw - 2 * MM:
-            vs -= 0.25  # hücreye sığacak en büyük punto
-        c.text(cx, tbl.y1 - 1.3 * MM, val, vs, "b", align="center", box_w=cw)
+            vs -= 0.25
+        c.text(cx, tbl.y1 - 1.6 * MM, val, vs, "b", align="center", box_w=cw)
         cx += cw
     y = tbl.y1 + gap
 
