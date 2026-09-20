@@ -1,7 +1,7 @@
 {
   "name": "yamansa-rulman-b2b",
   "productName": "Yamansa Rulman B2B",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Yamansa Rulman bayi (B2B) stok ve sipariş uygulaması",
   "main": "./out/main/index.js",
   "author": "Yamansa Rulman",
