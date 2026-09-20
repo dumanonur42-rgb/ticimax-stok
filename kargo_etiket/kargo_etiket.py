@@ -277,10 +277,10 @@ class Layout:
         s = self.s
         self.header_h = 7 * MM
         pad = 2 * MM
-        self.alici_h = (4.8 * MM + len(self.name) * 14 * s * LEADING + 10 * s * LEADING
-                        + 2.4 * MM + len(self.addr) * 8.5 * s * LEADING
-                        + (len(self.note) * 7 * s * LEADING + 0.6 * MM if self.note else 0)
-                        + (10 * s * LEADING + 1 * MM if self.ilce_il else 0) + pad)
+        self.alici_h = (5.5 * MM + len(self.name) * 14 * s * LEADING + 10 * s * LEADING + 1.2 * MM
+                        + len(self.addr) * 8.5 * s * LEADING
+                        + (len(self.note) * 7 * s * LEADING + 1 * MM if self.note else 0)
+                        + (6 * MM if self.ilce_il else pad))
         self.kargo_h = 10 * MM
         self.gond_h = (1.5 * MM + len(self.firma) * 7 * s * LEADING
                        + len(self.g_addr) * 6.5 * s * LEADING + 0.5 * MM)
@@ -336,33 +336,30 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
 
     # 1) Üst şerit: siyah zemin, beyaz yazı — Kargo Firması
     band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
-    c.band(band, radius=1.2 * MM)
+    c.band(band)
     base = y + lay.header_h / 2 + 9 * s * 0.36
     c.text(x, base, e.kargo.get("Kargo Firması", ""), 9 * s, "b",
            align="center", white=True, box_w=inner_w)
     y = band.y1 + gap
 
-    # 2) Alıcı kutusu: sol üstte siyah ALICI etiketi, altında isim/telefon/adres
+    # 2) Alıcı kutusu: kutu genişliğinde siyah ALICI satırı, altında isim/telefon/adres
     box = pymupdf.Rect(x, y, x + inner_w, y + lay.alici_h)
-    c.frame(box, width=0.9, radius=1.2 * MM)
+    c.frame(box, width=0.9)
     pad = 2 * MM
-    tag_h = 4 * MM
-    tag_w = _font("b").text_length("ALICI", fontsize=7 * s) + 4 * MM
-    c.band(pymupdf.Rect(x, y, x + tag_w, y + tag_h))
-    c.text(x, y + tag_h - 1.1 * MM, "ALICI", 7 * s, "b", align="center", white=True,
-           box_w=tag_w)
-    yy = y + tag_h + 0.8 * MM
+    tag_h = 4.5 * MM
+    c.band(pymupdf.Rect(x, y, box.x1, y + tag_h))
+    c.text(x + pad, y + tag_h - 1.3 * MM, "ALICI", 7 * s, "b", white=True)
+    yy = y + tag_h + 1 * MM
     yy = c.lines(x + pad, yy, lay.name, 14 * s, "b")
     yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
     yy += 1.2 * MM
-    c.page.draw_line((x + pad, yy), (box.x1 - pad, yy), color=BLACK, width=0.5)
-    yy += 1.2 * MM
     yy = c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
     if lay.note:
-        yy = c.lines(x + pad, yy + 0.6 * MM, lay.note, 7 * s, "r")
+        yy = c.lines(x + pad, yy + 1 * MM, lay.note, 7 * s, "r")
     if lay.ilce_il:
-        c.text(x + pad, box.y1 - pad - 10 * s * (LEADING - 1), lay.ilce_il, 10 * s, "b",
-               align="right", box_w=inner_w - 2 * pad)
+        ly = box.y1 - 5.2 * MM
+        c.page.draw_line((x, ly), (box.x1, ly), color=BLACK, width=0.6)
+        c.text(x + pad, box.y1 - 1.5 * MM, lay.ilce_il, 10 * s, "b")
     y = box.y1 + gap
 
     # 3) Barkod (kalan alanı doldurur) + değeri
