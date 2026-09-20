@@ -233,6 +233,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
         return ensureTail(keep.length ? keep : [blank(list[list.length - 1]?.shelf)])
       })
       if (res.errors.length) toast(`${res.errors.length} satır kaydedilemedi; tabloda kaldı.`, 'error')
+      else if (res.queued) toast('Çevrimdışı: kayıt bu bilgisayarda saklandı, bağlantı gelince sunucuya gönderilecek.', 'info')
       else toast(`${res.created} yeni ürün, ${res.updated} stok güncellemesi kaydedildi.`, 'success')
       onSaved()
       focusCell(0, 'sku')
@@ -279,6 +280,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
       {result && !result.errors.length && (
         <div className="qe-result" role="status">
           <b>{num(result.created)}</b> yeni ürün eklendi, <b>{num(result.updated)}</b> mevcut ürünün stoğu güncellendi.
+          {result.queued && ' Çevrimdışı kaydedildi; internet gelince sunucuya bir kez gönderilir.'}
         </div>
       )}
 

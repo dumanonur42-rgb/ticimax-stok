@@ -6,10 +6,10 @@ export function api<C extends ApiChannel>(channel: C, args: ApiArgs<C>): Promise
   })
 }
 
-/** Electron prefixes IPC errors with "Error invoking remote method 'x': Error: ..." — strip it. */
+/** Electron prefixes IPC errors with "Error invoking remote method 'x': SomeError: ..." — strip it. */
 export function cleanError(e: unknown): string {
   const msg = e instanceof Error ? e.message : String(e)
-  return msg.replace(/^Error invoking remote method '[^']+': (Error: )?/, '')
+  return msg.replace(/^Error invoking remote method '[^']+': (\w*Error: )?/, '')
 }
 
 export const onEvent = (channel: AppEvent, cb: () => void): (() => void) =>

@@ -5,6 +5,14 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.10
+
+- Üst çubukta bağlantı göstergesi: "Çevrimiçi", "Çevrimdışı" veya "Gönderiliyor"; bekleyen kayıt sayısı yanında yazar, tıklayınca bağlantı yeniden denenir.
+- Uygulama internet yokken de açılır (son oturum hatırlanır); ürün listesi bilgisayardaki kopyadan aranır.
+- [yönetici] Çevrimdışı kayıt: internet yokken yapılan hızlı giriş, ürün düzenleme ve silme işlemleri cihazda sırayla bekler; bağlantı gelince her biri sunucuya yalnızca bir kez gönderilir, aynı kayıt asla tekrar işlenmez (bağlantı ortada kopsa bile).
+- [yönetici] "Ürün listesini sil" hatası düzeltildi; silme tüm bilgisayarlardaki kopyaları da temizler, sipariş geçmişi korunur.
+- [yönetici] Eski (bulut öncesi) kurulumlardan kalan yerel ürün ve kayıtlar artık gösterilmez; liste yalnızca buluttaki ürünleri içerir.
+
 ## 1.0.9
 
 - [yönetici] Güncelleme penceresindeki "Yenilikler" artık sürüm notlarını gösterir; yalnızca yöneticiyi ilgilendiren maddeler bayilere gösterilmez.

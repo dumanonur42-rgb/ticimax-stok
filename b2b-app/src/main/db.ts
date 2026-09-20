@@ -98,47 +98,45 @@ CREATE TRIGGER IF NOT EXISTS products_au AFTER UPDATE ON products BEGIN
 END;
 
 CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+
+-- Catalogue writes waiting to reach the cloud (offline / connection dropped); sent in order, each exactly once.
+CREATE TABLE IF NOT EXISTS outbox (
+  seq INTEGER PRIMARY KEY AUTOINCREMENT,
+  id TEXT NOT NULL UNIQUE,
+  user_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  payload TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  attempts INTEGER NOT NULL DEFAULT 0,
+  failed INTEGER NOT NULL DEFAULT 0,
+  error TEXT
+);
 `
 
-/** Bumped when the product mirror layout changes; the cache is dropped and re-pulled from the cloud. */
-const MIRROR_SCHEMA = '2'
+/**
+ * Bumped when the product mirror layout changes; the cache is dropped and re-pulled from the cloud.
+ * The local file is only ever a copy of the cloud catalogue: whatever a pre-cloud install left
+ * behind (single-machine products, users, orders) is discarded, never shown or uploaded.
+ */
+const MIRROR_SCHEMA = '3'
 
 function migrate(d: DB): void {
   d.exec('CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
   const v = (d.prepare("SELECT value FROM sync_state WHERE key = 'mirror_schema'").get() as { value: string } | undefined)?.value
   if (v !== MIRROR_SCHEMA) {
-    const isMirror = !!d.prepare("SELECT 1 FROM sync_state WHERE key = 'products_cursor'").get()
-    if (isMirror || !hasTable(d, 'products')) {
-      d.exec(`
-        DROP TRIGGER IF EXISTS products_ai; DROP TRIGGER IF EXISTS products_ad; DROP TRIGGER IF EXISTS products_au;
-        DROP TABLE IF EXISTS products_fts; DROP TABLE IF EXISTS products;
-        DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation');
-      `)
-    } else {
-      // Pre-cloud (single-machine) data that cloud/migrate.ts still has to upload: widen in place instead of dropping.
-      const cols = new Set((d.prepare('PRAGMA table_info(products)').all() as { name: string }[]).map((c) => c.name))
-      if (!cols.has('box')) d.exec("ALTER TABLE products ADD COLUMN box TEXT NOT NULL DEFAULT ''")
-      if (!cols.has('key_norm')) d.exec("ALTER TABLE products ADD COLUMN key_norm TEXT NOT NULL DEFAULT ''")
-      d.function('product_key', (sku, brand, box) => productKey(String(sku ?? ''), String(brand ?? ''), String(box ?? '')))
-      d.exec(`
-        UPDATE products SET key_norm = product_key(sku, brand, box) WHERE key_norm = '';
-        DELETE FROM products WHERE id NOT IN (SELECT MIN(id) FROM products GROUP BY key_norm);
-        DROP TRIGGER IF EXISTS products_ai; DROP TRIGGER IF EXISTS products_ad; DROP TRIGGER IF EXISTS products_au;
-        DROP TABLE IF EXISTS products_fts;
-      `)
-    }
+    d.exec(`
+      DROP TRIGGER IF EXISTS products_ai; DROP TRIGGER IF EXISTS products_ad; DROP TRIGGER IF EXISTS products_au;
+      DROP TABLE IF EXISTS products_fts; DROP TABLE IF EXISTS products;
+      DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation');
+    `)
+    for (const t of LEGACY_TABLES) d.exec(`DROP TABLE IF EXISTS ${t}`)
     d.prepare("INSERT OR REPLACE INTO sync_state(key, value) VALUES ('mirror_schema', ?)").run(MIRROR_SCHEMA)
   }
   d.exec(SCHEMA)
-  if (v !== MIRROR_SCHEMA) d.exec("INSERT INTO products_fts(products_fts) VALUES ('rebuild')")
 }
 
-/** Tables left behind by single-machine builds (pre-cloud); `cloud/migrate.ts` uploads and then drops them. */
-export const LEGACY_TABLES = ['users', 'order_items', 'orders', 'customers', 'import_logs'] as const
-
-export function hasTable(d: DB, name: string): boolean {
-  return !!d.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name = ?").get(name)
-}
+/** Tables left behind by single-machine builds (pre-cloud); dropped on the first start of a cloud build. */
+const LEGACY_TABLES = ['users', 'order_items', 'orders', 'customers', 'import_logs'] as const
 
 /** Normalize for name search but keep word boundaries as single spaces. */
 export function normalizeText(s: string): string {

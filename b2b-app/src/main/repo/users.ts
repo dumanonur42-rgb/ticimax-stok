@@ -1,7 +1,8 @@
 import type { Customer, CustomerInput, DealerLogin, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
-import { cloud, cloudError, ephemeralCloud, must, mustVoid } from '../cloud/client'
+import { clearStoredSession, cloud, cloudError, ephemeralCloud, isConnectivityError, must, mustVoid } from '../cloud/client'
 import { fromCustomer, toCustomer, toUser } from '../cloud/map'
+import { getDb } from '../db'
 
 const LOGIN_DOMAIN = 'login.yamansab2b.app'
 
@@ -38,10 +39,36 @@ async function profileOf(userId: string): Promise<User | null> {
 }
 
 async function sessionOf(user: User): Promise<Session> {
-  if (user.customer_id === null) return { user, customer: null }
-  const r = await cloud().from('customers').select('*').eq('id', user.customer_id).maybeSingle()
-  if (r.error) throw cloudError(r.error)
-  return { user, customer: r.data ? toCustomer(r.data) : null }
+  let customer: Customer | null = null
+  if (user.customer_id !== null) {
+    const r = await cloud().from('customers').select('*').eq('id', user.customer_id).maybeSingle()
+    if (r.error) throw cloudError(r.error)
+    customer = r.data ? toCustomer(r.data) : null
+  }
+  const s: Session = { user, customer }
+  rememberSession(s)
+  return s
+}
+
+/**
+ * The last confirmed profile is kept in the local database so the app can open with the signed-in user while
+ * the cloud is unreachable (the refresh token on disk still proves who was signed in). Cleared on sign-out.
+ */
+const SESSION_KEY = 'session_cache'
+
+function rememberSession(s: Session): void {
+  getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(SESSION_KEY, JSON.stringify(s))
+}
+
+function rememberedSession(userId: string | null): Session | null {
+  const r = getDb().prepare('SELECT value FROM sync_state WHERE key = ?').get(SESSION_KEY) as { value: string } | undefined
+  if (!r) return null
+  const s = JSON.parse(r.value) as Session
+  return userId === null || s.user.id === userId ? s : null
+}
+
+function forgetSession(): void {
+  getDb().prepare('DELETE FROM sync_state WHERE key = ?').run(SESSION_KEY)
 }
 
 export async function login(username: string, password: string): Promise<Session> {
@@ -61,17 +88,41 @@ export async function login(username: string, password: string): Promise<Session
 }
 
 export async function logout(): Promise<void> {
+  forgetSession()
   const r = await cloud().auth.signOut()
-  if (r.error) console.error('signOut failed', r.error)
+  if (r.error) {
+    console.error('signOut failed', r.error)
+    clearStoredSession()
+  }
 }
 
-/** The remembered Supabase session (refresh token on disk), or null when nobody is signed in. */
+/**
+ * The remembered Supabase session (refresh token on disk), or null when nobody is signed in. When the cloud
+ * cannot be reached the last confirmed profile is used so queued work and the catalog mirror stay available.
+ */
 export async function currentSession(): Promise<Session | null> {
   const r = await cloud().auth.getSession()
-  if (r.error || !r.data.session) return null
-  const user = await profileOf(r.data.session.user.id)
-  if (!user || !user.active || !user.approved) return null
-  return sessionOf(user)
+  if (r.error) {
+    if (isConnectivityError(r.error)) return rememberedSession(null)
+    forgetSession()
+    return null
+  }
+  if (!r.data.session) {
+    forgetSession()
+    return null
+  }
+  const userId = r.data.session.user.id
+  try {
+    const user = await profileOf(userId)
+    if (!user || !user.active || !user.approved) {
+      forgetSession()
+      return null
+    }
+    return await sessionOf(user)
+  } catch (e) {
+    if (isConnectivityError(e)) return rememberedSession(userId)
+    throw e
+  }
 }
 
 export function currentUserId(): Promise<string | null> {

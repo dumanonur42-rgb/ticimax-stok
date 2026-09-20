@@ -1162,6 +1162,39 @@ dialog.modal::backdrop {
   height: 6px;
   accent-color: var(--accent);
 }
+.conn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--success);
+  background: var(--success-bg);
+}
+.conn-pill:disabled {
+  cursor: progress;
+}
+.conn-pill:not(:disabled):hover {
+  border-color: currentColor;
+}
+.conn-pill.offline {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+.conn-pill.pending,
+.conn-pill.failed {
+  color: var(--warning);
+  background: var(--warning-bg);
+}
+.conn-pill .spin {
+  animation: update-spin 1.2s linear infinite;
+}
 .update-banner .spin,
 .update-dialog .spin {
   animation: update-spin 1.2s linear infinite;

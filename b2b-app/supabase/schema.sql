@@ -338,7 +338,7 @@ language plpgsql security definer set search_path = public as $$
 declare n integer;
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
-  delete from products;
+  delete from products where true;
   get diagnostics n = row_count;
   insert into settings (key, value) values ('catalog_generation', to_jsonb(1))
     on conflict (key) do update set value = to_jsonb(coalesce((settings.value)::text::integer, 0) + 1);
@@ -403,6 +403,125 @@ begin
     from jsonb_array_elements(p_rows) r
     where p.id = (r->>'id')::bigint and not p.deleted
     returning p.*;
+end $$;
+
+-- ---------------------------------------------------------------- offline outbox (exactly-once writes)
+-- Every catalogue write from the app carries a client-generated uuid. The op and its receipt are committed
+-- in one transaction, so a replay after a dropped connection returns the stored receipt instead of
+-- applying the change twice.
+create table if not exists public.applied_ops (
+  id uuid primary key,
+  kind text not null,
+  user_id uuid,
+  result jsonb not null,
+  applied_at timestamptz not null default now()
+);
+alter table public.applied_ops enable row level security; -- no policies: reachable only through apply_op()
+revoke all on public.applied_ops from anon, authenticated;
+
+create or replace function public.apply_op(p_id uuid, p_kind text, p_payload jsonb) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  res jsonb;
+  ids bigint[] := '{}';
+  r jsonb;
+  cur products%rowtype;
+  n_created integer := 0;
+  n_updated integer := 0;
+  n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  perform pg_advisory_xact_lock(hashtext(p_id::text));
+  select result into res from applied_ops where id = p_id;
+  if found then return res; end if;
+
+  if p_kind = 'quick_entry' then
+    for r in select * from jsonb_array_elements(p_payload->'rows') loop
+      select * into cur from products where key_norm = r->>'key_norm' for update;
+      if found and not cur.deleted then
+        update products set
+          stock = case when r->>'mode' = 'set' then (r->>'stock')::numeric else stock + (r->>'stock')::numeric end,
+          shelf = case when coalesce(r->>'shelf', '') <> '' then r->>'shelf' else shelf end,
+          price = coalesce((r->>'price')::numeric, price),
+          active = true
+        where id = cur.id;
+        n_updated := n_updated + 1;
+      elsif found then
+        -- same identity was deleted earlier: revive it as a fresh product
+        update products set
+          sku = r->>'sku', sku_norm = r->>'sku_norm', name = r->>'sku', name_norm = coalesce(r->>'name_norm', r->>'sku_norm'),
+          brand = coalesce(r->>'brand', ''), box = coalesce(r->>'box', ''), stock = (r->>'stock')::numeric,
+          price = coalesce((r->>'price')::numeric, 0), currency = coalesce(r->>'currency', currency),
+          shelf = coalesce(r->>'shelf', ''), description = coalesce(r->>'description', ''),
+          category = '', type = '', seal = '', d_inner = null, d_outer = null, width = null, unit = 'Adet',
+          list_price = null, card_price = null, min_order = 1, barcode = '', image = '', equivalents = '',
+          active = true, deleted = false
+        where id = cur.id;
+        n_created := n_created + 1;
+      else
+        insert into products (sku, sku_norm, key_norm, name, name_norm, brand, box, stock, price, currency, shelf, description)
+        values (r->>'sku', r->>'sku_norm', r->>'key_norm', r->>'sku', coalesce(r->>'name_norm', r->>'sku_norm'),
+                coalesce(r->>'brand', ''), coalesce(r->>'box', ''), (r->>'stock')::numeric, coalesce((r->>'price')::numeric, 0),
+                coalesce(r->>'currency', 'TRY'), coalesce(r->>'shelf', ''), coalesce(r->>'description', ''))
+        returning id into cur.id;
+        n_created := n_created + 1;
+      end if;
+      ids := ids || cur.id;
+    end loop;
+    res := jsonb_build_object('created', n_created, 'updated', n_updated);
+
+  elsif p_kind = 'bulk_update' then
+    select coalesce(array_agg(p.id), '{}') into ids from bulk_update_products(p_payload->'rows') p;
+    res := jsonb_build_object('updated', coalesce(array_length(ids, 1), 0));
+
+  elsif p_kind = 'delete' then
+    with d as (
+      update products set deleted = true, active = false
+      where id in (select (x)::bigint from jsonb_array_elements_text(p_payload->'ids') x) and not deleted
+      returning id
+    ) select coalesce(array_agg(id), '{}') into ids from d;
+    res := jsonb_build_object('deleted', coalesce(array_length(ids, 1), 0));
+
+  elsif p_kind = 'save' then
+    cur := jsonb_populate_record(null::products, (p_payload->'row') - 'updated_at' - 'deleted');
+    if cur.id is not null and cur.id > 0 then
+      update products set
+        sku = cur.sku, sku_norm = cur.sku_norm, key_norm = cur.key_norm, name = cur.name, name_norm = cur.name_norm,
+        brand = cur.brand, category = cur.category, type = cur.type, seal = cur.seal,
+        d_inner = cur.d_inner, d_outer = cur.d_outer, width = cur.width, stock = cur.stock, unit = cur.unit,
+        price = cur.price, currency = cur.currency, list_price = cur.list_price, card_price = cur.card_price,
+        min_order = cur.min_order, shelf = cur.shelf, box = cur.box, barcode = cur.barcode, image = cur.image,
+        description = cur.description, equivalents = cur.equivalents, active = cur.active, deleted = false
+      where id = cur.id;
+      get diagnostics n = row_count;
+      if n = 0 then raise exception 'Kayıt bulunamadı.'; end if;
+    else
+      insert into products (sku, sku_norm, key_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width,
+                            stock, unit, price, currency, list_price, card_price, min_order, shelf, box, barcode, image,
+                            description, equivalents, active, deleted)
+      values (cur.sku, cur.sku_norm, cur.key_norm, cur.name, cur.name_norm, cur.brand, cur.category, cur.type, cur.seal,
+              cur.d_inner, cur.d_outer, cur.width, cur.stock, cur.unit, cur.price, cur.currency, cur.list_price, cur.card_price,
+              cur.min_order, cur.shelf, cur.box, cur.barcode, cur.image, cur.description, cur.equivalents, cur.active, false)
+      on conflict (key_norm) do update set
+        sku = excluded.sku, sku_norm = excluded.sku_norm, name = excluded.name, name_norm = excluded.name_norm,
+        brand = excluded.brand, category = excluded.category, type = excluded.type, seal = excluded.seal,
+        d_inner = excluded.d_inner, d_outer = excluded.d_outer, width = excluded.width, stock = excluded.stock,
+        unit = excluded.unit, price = excluded.price, currency = excluded.currency, list_price = excluded.list_price,
+        card_price = excluded.card_price, min_order = excluded.min_order, shelf = excluded.shelf, box = excluded.box,
+        barcode = excluded.barcode, image = excluded.image, description = excluded.description,
+        equivalents = excluded.equivalents, active = excluded.active, deleted = false
+      returning id into cur.id;
+    end if;
+    ids := array[cur.id];
+    res := jsonb_build_object('saved', 1);
+
+  else
+    raise exception 'Bilinmeyen işlem: %', p_kind;
+  end if;
+
+  res := res || jsonb_build_object('rows', coalesce((select jsonb_agg(to_jsonb(p)) from products p where p.id = any(ids)), '[]'::jsonb));
+  insert into applied_ops (id, kind, user_id, result) values (p_id, p_kind, auth.uid(), res);
+  return res;
 end $$;
 
 create or replace function public.dashboard_orders(p_customer bigint) returns jsonb

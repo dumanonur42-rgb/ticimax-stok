@@ -154,11 +154,21 @@ export interface Database {
       purge_all_products: { Args: Record<string, never>; Returns: number }
       merge_products: { Args: { p_target: number; p_sources: number[]; p_patch: Record<string, unknown> }; Returns: ProductRow }
       bulk_update_products: { Args: { p_rows: unknown[] }; Returns: ProductRow[] }
+      apply_op: { Args: { p_id: string; p_kind: string; p_payload: Record<string, unknown> }; Returns: OpReceipt }
       dashboard_orders: { Args: { p_customer: number | null }; Returns: DashboardOrdersJson }
     }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>
   }
+}
+
+/** Receipt stored by `apply_op()`; `rows` are the products the op touched, for refreshing the local mirror. */
+export interface OpReceipt {
+  created?: number
+  updated?: number
+  deleted?: number
+  saved?: number
+  rows: ProductRow[]
 }
 
 export interface DashboardOrdersJson {

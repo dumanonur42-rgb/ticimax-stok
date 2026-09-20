@@ -88,6 +88,8 @@ export interface ApiMap {
   'app:info': [void, { version: string; dbPath: string; platform: string }]
   'app:syncStatus': [void, SyncStatus]
   'app:resync': [void, number]
+  'app:flushOutbox': [void, SyncStatus]
+  'app:discardFailedOps': [void, number]
   'app:openPath': [string, void]
   'app:seedDemo': [number, number]
   'app:purgeProducts': [void, number]

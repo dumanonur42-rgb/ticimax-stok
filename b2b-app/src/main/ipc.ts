@@ -2,7 +2,7 @@ import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import type { Order, Session } from '@shared/types'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
-import { discardLegacyData, hasLegacyData, migrateLegacyData } from './cloud/migrate'
+import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
 import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
 import { dbPath } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
@@ -69,11 +69,12 @@ export function currentRole(): Session['user']['role'] | null {
 }
 
 /**
- * Runs after sign-in / session restore: one-time upload of pre-cloud local data (admin),
- * shared settings + product mirror pull, realtime listeners, tray notifications (admin).
+ * Runs after sign-in / session restore: shared settings + product mirror pull,
+ * realtime listeners, tray notifications (admin).
  */
 async function activate(s: Session): Promise<void> {
   session = s
+  setOutboxUser(s.user.id)
   try {
     await pullSettings()
   } catch (e) {
@@ -83,13 +84,7 @@ async function activate(s: Session): Promise<void> {
   // and follows progress through sync:changed, then refreshes on products:changed.
   void (async () => {
     try {
-      if (hasLegacyData()) {
-        if (s.user.role === 'admin') {
-          const r = await migrateLegacyData()
-          console.log('legacy data migrated', r)
-        } else discardLegacyData()
-        await pullProducts(true)
-      } else await pullProducts()
+      await pullProducts()
     } catch (e) {
       console.error('initial sync failed', e)
     }
@@ -103,6 +98,7 @@ async function activate(s: Session): Promise<void> {
 
 function deactivate(): void {
   session = null
+  setOutboxUser(null)
   stopRealtime()
   stopAdminNotifications()
 }
@@ -378,6 +374,16 @@ export function registerIpc(): void {
     shell.showItemInFolder(p)
   })
   handle('app:syncStatus', () => syncStatus())
+  handle('app:flushOutbox', async () => {
+    requireRole()
+    await flush()
+    if (!syncStatus().pending) await pullProducts().catch(() => undefined)
+    return syncStatus()
+  })
+  handle('app:discardFailedOps', () => {
+    requireRole('admin')
+    return discardFailedOps()
+  })
   handle('app:resync', async () => {
     requireRole()
     const n = await pullProducts(true)

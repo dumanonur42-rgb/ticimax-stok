@@ -11,9 +11,10 @@ import type {
   QuickEntryResult,
   QuickEntryRow
 } from '@shared/types'
-import { cloud, must, mustVoid } from '../cloud/client'
+import { cloud, must } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
+import { submit, type PatchOpRow, type QuickEntryOpRow } from '../cloud/outbox'
 import { upsertLocal } from '../cloud/sync'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
@@ -177,7 +178,7 @@ export function productsByKeys(keys: string[]): Map<string, Product> {
   return new Map(rows.map((p) => [productKey(p.sku, p.brand, p.box), p]))
 }
 
-/** Writes go to the cloud; the returned row is mirrored into the local cache right away. */
+/** Writes go through the outbox: applied in the cloud when online, otherwise kept locally and sent later. */
 export async function saveProduct(p: Partial<Product> & ProductInput): Promise<Product> {
   const sku = p.sku.trim()
   if (!sku) throw new Error('Ürün kodu boş olamaz.')
@@ -214,12 +215,11 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
   const clash = productsByKeys([row.key_norm]).get(row.key_norm)
   if (clash && clash.id !== p.id)
     throw new Error(`"${clash.sku}" (${clash.brand || 'markasız'}${clash.box ? `, ${clash.box}` : ''}) zaten kayıtlı. Mevcut ürünü düzenleyin veya birleştirin.`)
-  const sb = cloud()
-  const saved = p.id
-    ? must(await sb.from('products').update(row).eq('id', p.id).select('*').single())
-    : must(await sb.from('products').upsert(row, { onConflict: 'key_norm' }).select('*').single())
-  upsertLocal([saved])
-  return toProduct(saved)
+  const res = await submit({ kind: 'save', row })
+  if (res.status === 'applied' && res.receipt.rows[0]) return toProduct(res.receipt.rows[0])
+  const local = productsByKeys([row.key_norm]).get(row.key_norm)
+  if (!local) throw new Error('Kayıt bulunamadı.')
+  return local
 }
 
 /** Words that describe packaging/condition rather than the bearing itself; ignored when matching duplicates. */
@@ -323,9 +323,10 @@ export function similarProducts(sku: string, brand: string, box: string, exclude
 /** Row-level edits from the stock screen (stock / shelf / prices / active) in a single round trip. */
 export async function bulkUpdateProducts(rows: BulkProductPatch[]): Promise<Product[]> {
   if (!rows.length) return []
-  const saved = must(await cloud().rpc('bulk_update_products', { p_rows: rows }))
-  upsertLocal(saved)
-  return saved.map(toProduct)
+  const patches: PatchOpRow[] = rows
+  const res = await submit({ kind: 'bulk_update', rows: patches })
+  if (res.status === 'applied') return res.receipt.rows.map(toProduct)
+  return rows.map((r) => getProduct(r.id)).filter((p): p is Product => p !== null)
 }
 
 /**
@@ -334,7 +335,7 @@ export async function bulkUpdateProducts(rows: BulkProductPatch[]): Promise<Prod
  * Rows with the same identity inside one batch are folded together first.
  */
 export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResult> {
-  const result: QuickEntryResult = { created: 0, updated: 0, errors: [] }
+  const result: QuickEntryResult = { created: 0, updated: 0, errors: [], queued: false }
   const folded = new Map<string, QuickEntryRow>()
   for (const r of rows) {
     const sku = r.sku.trim()
@@ -350,75 +351,41 @@ export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResul
     }
   }
   if (!folded.size) return result
-  const existing = productsByKeys([...folded.keys()])
   const currency = getSettings().default_currency
-  const inserts: ProductInsert[] = []
-  const patches: { key: string; patch: BulkProductPatch }[] = []
-  for (const [key, r] of folded) {
-    const cur = existing.get(key)
-    if (cur) {
-      const patch: BulkProductPatch = { id: cur.id, stock: r.existing === 'set' ? r.stock : Number(cur.stock) + r.stock }
-      if (r.shelf.trim()) patch.shelf = r.shelf.trim()
-      if (r.price != null) patch.price = r.price
-      patches.push({ key, patch })
-      continue
+  const existing = productsByKeys([...folded.keys()])
+  const ops: QuickEntryOpRow[] = [...folded].map(([key, r]) => ({
+    sku: r.sku,
+    sku_norm: normalize(r.sku),
+    key_norm: key,
+    name_norm: normalizeText(r.sku),
+    brand: r.brand,
+    box: r.box,
+    stock: r.stock,
+    mode: r.existing,
+    shelf: r.shelf.trim(),
+    price: r.price ?? null,
+    description: r.description.trim(),
+    currency
+  }))
+  try {
+    const res = await submit({ kind: 'quick_entry', rows: ops })
+    if (res.status === 'applied') {
+      result.created = res.receipt.created ?? 0
+      result.updated = res.receipt.updated ?? 0
+    } else {
+      result.queued = true
+      for (const key of folded.keys()) if (existing.has(key)) result.updated++
+      else result.created++
     }
-    inserts.push({
-      sku: r.sku,
-      sku_norm: normalize(r.sku),
-      key_norm: key,
-      name: r.sku,
-      name_norm: normalizeText(r.sku),
-      brand: r.brand,
-      category: '',
-      type: '',
-      seal: '',
-      d_inner: null,
-      d_outer: null,
-      width: null,
-      stock: r.stock,
-      unit: 'Adet',
-      price: r.price ?? 0,
-      currency,
-      list_price: null,
-      card_price: null,
-      min_order: 1,
-      shelf: r.shelf.trim(),
-      box: r.box,
-      barcode: '',
-      image: '',
-      description: r.description.trim(),
-      equivalents: '',
-      active: true,
-      deleted: false
-    })
-  }
-  const sb = cloud()
-  if (inserts.length) {
-    try {
-      const saved = must(await sb.from('products').upsert(inserts, { onConflict: 'key_norm' }).select('*'))
-      upsertLocal(saved)
-      result.created = saved.length
-    } catch (e) {
-      inserts.forEach((i) => result.errors.push({ key: i.key_norm, message: (e as Error).message }))
-    }
-  }
-  if (patches.length) {
-    try {
-      result.updated = (await bulkUpdateProducts(patches.map((p) => p.patch))).length
-    } catch (e) {
-      patches.forEach((p) => result.errors.push({ key: p.key, message: (e as Error).message }))
-    }
+  } catch (e) {
+    ops.forEach((o) => result.errors.push({ key: o.key_norm, message: (e as Error).message }))
   }
   return result
 }
 
 export async function deleteProducts(ids: number[]): Promise<void> {
   if (!ids.length) return
-  mustVoid(await cloud().from('products').update({ deleted: true, active: false }).in('id', ids))
-  const db = getDb()
-  const del = db.prepare('DELETE FROM products WHERE id = ?')
-  db.transaction(() => ids.forEach((id) => del.run(id)))()
+  await submit({ kind: 'delete', ids })
 }
 
 /** Cloud-side merge (order lines re-pointed, stock summed, sources soft-deleted); mirror follows. */
@@ -449,8 +416,7 @@ export async function mergeProducts(input: MergeInput): Promise<Product> {
 }
 
 export async function deleteProduct(id: number): Promise<void> {
-  mustVoid(await cloud().from('products').update({ deleted: true, active: false }).eq('id', id))
-  getDb().prepare('DELETE FROM products WHERE id = ?').run(id)
+  await deleteProducts([id])
 }
 
 /** Clean start: hard-deletes every product in the shared catalogue; every installation re-pulls an empty list. */

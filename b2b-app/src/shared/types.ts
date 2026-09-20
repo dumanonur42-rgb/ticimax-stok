@@ -66,6 +66,8 @@ export interface QuickEntryResult {
   created: number
   updated: number
   errors: { key: string; message: string }[]
+  /** No connection: the batch is saved on this computer and will be sent when the cloud is reachable again. */
+  queued: boolean
 }
 
 /** One row of an inline/bulk edit on the stock screen; omitted fields stay unchanged. */
@@ -229,6 +231,10 @@ export interface SyncStatus {
   online: boolean
   lastSync: string | null
   productCount: number
+  /** Catalogue writes saved on this computer that still have to reach the cloud. */
+  pending: number
+  /** Writes the cloud rejected (kept so the user can see and discard them). */
+  failed: number
   message?: string
   /** Set while the product mirror is being (re)built from the cloud. */
   progress?: { done: number; total: number } | null

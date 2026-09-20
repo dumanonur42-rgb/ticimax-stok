@@ -1,8 +1,10 @@
+import type { SyncStatus } from '@shared/types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 import { getDb } from '../db'
 import { pullSettings } from '../repo/settings'
 import { cloud, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
+import { flush, outboxCounts, reapplyPending } from './outbox'
 
 const PAGE = 1000
 /** Rows per SQLite transaction; the event loop gets a turn between chunks so IPC stays responsive during big pulls. */
@@ -13,19 +15,11 @@ const yieldToLoop = (): Promise<void> => new Promise((r) => setImmediate(r))
 
 type Listener = (event: 'products' | 'orders' | 'users' | 'customers' | 'settings' | 'status', payload?: unknown) => void
 
-export interface SyncStatus {
-  online: boolean
-  lastSync: string | null
-  productCount: number
-  message?: string
-  progress?: { done: number; total: number } | null
-}
-
 let listener: Listener = () => undefined
 let channel: RealtimeChannel | null = null
 let timer: NodeJS.Timeout | null = null
 let pulling: Promise<void> | null = null
-let status: SyncStatus = { online: false, lastSync: null, productCount: 0 }
+let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pending: 0, failed: 0 }
 let onNewOrder: ((o: OrderRow) => void) | null = null
 
 export function onSyncEvent(l: Listener): void {
@@ -37,12 +31,28 @@ export function onNewOrderRow(cb: ((o: OrderRow) => void) | null): void {
 }
 
 export function syncStatus(): SyncStatus {
-  return { ...status, productCount: countLocal() }
+  return { ...status, ...outboxCounts(), productCount: countLocal() }
 }
 
 function setStatus(patch: Partial<SyncStatus>): void {
   status = { ...status, ...patch }
   listener('status', syncStatus())
+}
+
+/** A write reached the cloud (or a probe succeeded): connection is back, tell the UI and refresh lists. */
+export function markOnline(): void {
+  setStatus({ online: true, message: undefined })
+  listener('products')
+}
+
+export function markOffline(message: string): void {
+  setStatus({ online: false, message })
+}
+
+/** Outbox contents changed (queued / sent / discarded): counts in the status bar need a refresh. */
+export function notifyOutbox(): void {
+  listener('status', syncStatus())
+  listener('products')
 }
 
 function countLocal(): number {
@@ -177,6 +187,7 @@ export async function pullProducts(full = false): Promise<number> {
         for (const id of seenIds) ins.run(id)
         db.exec('DELETE FROM products WHERE id NOT IN (SELECT id FROM seen_ids)')
         db.exec('DELETE FROM seen_ids')
+        reapplyPending()
       })()
     }
     setState('products_cursor', last ?? new Date(0).toISOString())
@@ -188,6 +199,7 @@ export async function pullProducts(full = false): Promise<number> {
     await pulling
     setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined, progress: null })
     if (n > 0 || full) listener('products')
+    flush().catch(() => undefined)
   } catch (e) {
     setStatus({ online: false, message: e instanceof Error ? e.message : String(e), progress: null })
     throw e
@@ -216,11 +228,16 @@ export function startRealtime(): void {
         .catch(() => undefined)
     })
     .subscribe((state) => {
-      if (state === 'SUBSCRIBED') setStatus({ online: true })
-      else if (state === 'CHANNEL_ERROR' || state === 'TIMED_OUT') setStatus({ online: false })
+      if (state === 'SUBSCRIBED') {
+        setStatus({ online: true })
+        flush().catch(() => undefined)
+      } else if (state === 'CHANNEL_ERROR' || state === 'TIMED_OUT') setStatus({ online: false })
     })
   timer = setInterval(() => {
-    pullProducts().catch(() => undefined)
+    flush()
+      .catch(() => undefined)
+      .then(() => pullProducts())
+      .catch(() => undefined)
     pollOrders().catch(() => undefined)
   }, POLL_MS)
 }

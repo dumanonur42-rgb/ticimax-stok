@@ -51,14 +51,45 @@ const fileStorage = {
   }
 }
 
+/** A request that gets no answer (captive Wi-Fi, half-open link) must fail like a lost connection instead of hanging. */
+const REQUEST_TIMEOUT_MS = 30_000
+
+function timedFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+  const signal = init?.signal ? AbortSignal.any([init.signal, timeout]) : timeout
+  return fetch(input, { ...init, signal })
+}
+
+/** Forget the remembered login even when the server could not be told (offline sign-out). */
+export function clearStoredSession(): void {
+  rmSync(tokenFile(), { force: true })
+}
+
 export function cloud(): Cloud {
   if (client) return client
   client = createClient<Database, 'public'>(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: { storage: fileStorage, persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
     realtime: { params: { eventsPerSecond: 5 } },
-    global: { headers: { 'x-client-info': `yamansa-b2b/${app.getVersion()}` } }
+    global: { headers: { 'x-client-info': `yamansa-b2b/${app.getVersion()}` }, fetch: timedFetch }
   })
   return client
+}
+
+const CONNECTIVITY_RE = /fetch failed|ENOTFOUND|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|network|Failed to fetch|aborted|cancelled|timeout|socket hang up/i
+
+/** True when the failure says nothing about the request itself, only that the server could not be reached. */
+export function isConnectivityError(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
+  const name = e instanceof Error ? e.name : typeof e === 'object' && e && 'name' in e ? String((e as { name: unknown }).name) : ''
+  return CONNECTIVITY_RE.test(msg) || /AuthRetryableFetchError|TimeoutError|AbortError|ConnectivityError/.test(name)
+}
+
+/** The user-facing "no connection" error; keeps its identity so callers up the stack can still tell it apart. */
+export class ConnectivityError extends Error {
+  constructor() {
+    super('Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.')
+    this.name = 'ConnectivityError'
+  }
 }
 
 /** A throw-away client (no persisted session) used when an administrator creates another account. */
@@ -71,9 +102,7 @@ export function ephemeralCloud(): Cloud {
 /** Translate PostgREST/GoTrue failures into the Turkish messages the UI shows. */
 export function cloudError(e: unknown): Error {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
-  if (/fetch failed|ENOTFOUND|ECONNREFUSED|ETIMEDOUT|network|Failed to fetch/i.test(msg)) {
-    return new Error('Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.')
-  }
+  if (isConnectivityError(e)) return new ConnectivityError()
   if (/Invalid login credentials/i.test(msg)) return new Error('Kullanıcı adı veya şifre hatalı.')
   if (/already registered|already been registered|duplicate key value.*profiles_username/i.test(msg)) {
     return new Error('Bu kullanıcı adı zaten alınmış.')
