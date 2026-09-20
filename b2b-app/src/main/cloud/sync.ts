@@ -5,7 +5,11 @@ import { cloud, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
 
 const PAGE = 1000
+/** Rows per SQLite transaction; the event loop gets a turn between chunks so IPC stays responsive during big pulls. */
+const CHUNK = 250
 const POLL_MS = 60_000
+
+const yieldToLoop = (): Promise<void> => new Promise((r) => setImmediate(r))
 
 type Listener = (event: 'products' | 'orders' | 'users' | 'customers' | 'settings' | 'status', payload?: unknown) => void
 
@@ -14,6 +18,7 @@ export interface SyncStatus {
   lastSync: string | null
   productCount: number
   message?: string
+  progress?: { done: number; total: number } | null
 }
 
 let listener: Listener = () => undefined
@@ -65,8 +70,8 @@ export function upsertLocal(rows: ProductRow[]): void {
   const delId = db.prepare('DELETE FROM products WHERE id = ?')
   const delNorm = db.prepare('DELETE FROM products WHERE sku_norm = ?')
   const ins = db.prepare(INSERT_SQL)
-  db.transaction(() => {
-    for (const r of rows) {
+  db.transaction((batch: ProductRow[]) => {
+    for (const r of batch) {
       delId.run(r.id)
       delNorm.run(r.sku_norm)
       if (r.deleted) continue
@@ -99,7 +104,20 @@ export function upsertLocal(rows: ProductRow[]): void {
         updated_at: r.updated_at
       })
     }
-  })()
+  })(rows)
+}
+
+async function upsertLocalChunked(rows: ProductRow[]): Promise<void> {
+  for (let i = 0; i < rows.length; i += CHUNK) {
+    upsertLocal(rows.slice(i, i + CHUNK))
+    await yieldToLoop()
+  }
+}
+
+async function cloudCount(): Promise<number> {
+  const r = await cloud().from('products').select('id', { count: 'exact', head: true })
+  if (r.error) throw new Error(r.error.message)
+  return r.count ?? 0
 }
 
 /** `catalog_generation` is bumped by `purge_all_products()`; a mismatch forces a full refresh so hard deletes reach every cache. */
@@ -121,21 +139,32 @@ export async function pullProducts(full = false): Promise<number> {
     const generation = await cloudGeneration()
     if (generation !== (getState('catalog_generation') ?? '0')) full = true
     const cursor = full ? null : getState('products_cursor')
+    // First run / full refresh: report page-by-page progress so the UI can show "3.000 / 12.000".
+    const total = cursor ? 0 : await cloudCount()
+    if (total) setStatus({ progress: { done: 0, total } })
     const seenIds: number[] = []
     let last = cursor
-    let lastId = 0
-    for (;;) {
+    const fetchPage = async (after: string | null, afterId: number): Promise<ProductRow[]> => {
       let q = sb.from('products').select('*').order('updated_at').order('id').limit(PAGE)
-      if (last) q = q.or(`updated_at.gt.${last},and(updated_at.eq.${last},id.gt.${lastId})`)
-      const rows = must(await q)
-      upsertLocal(rows)
-      n += rows.length
+      if (after) q = q.or(`updated_at.gt.${after},and(updated_at.eq.${after},id.gt.${afterId})`)
+      return must(await q)
+    }
+    // The next page downloads while the current one is written, so network and SQLite work overlap.
+    let next: Promise<ProductRow[]> | null = fetchPage(last, 0)
+    while (next) {
+      const rows = await next
+      next = null
       if (!rows.length) break
-      for (const r of rows) seenIds.push(r.id)
       const tail = rows[rows.length - 1]
       last = tail.updated_at
-      lastId = tail.id
-      if (rows.length < PAGE) break
+      if (rows.length === PAGE) {
+        next = fetchPage(tail.updated_at, tail.id)
+        next.catch(() => undefined) // surfaces via the await above, not as an unhandled rejection
+      }
+      await upsertLocalChunked(rows)
+      n += rows.length
+      for (const r of rows) seenIds.push(r.id)
+      if (total) setStatus({ progress: { done: Math.min(n, total), total } })
     }
     if (full) {
       // Full refresh: anything the cloud no longer returned (hard-deleted) leaves the mirror too.
@@ -150,25 +179,20 @@ export async function pullProducts(full = false): Promise<number> {
     }
     setState('products_cursor', last ?? new Date(0).toISOString())
     setState('catalog_generation', generation)
-    db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
+    // FTS5 auto-merges small incremental writes; a full merge is only worth its cost after a bulk pull.
+    if (full || n >= 500) db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
   })()
   try {
     await pulling
-    setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined })
+    setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined, progress: null })
     if (n > 0 || full) listener('products')
   } catch (e) {
-    setStatus({ online: false, message: e instanceof Error ? e.message : String(e) })
+    setStatus({ online: false, message: e instanceof Error ? e.message : String(e), progress: null })
     throw e
   } finally {
     pulling = null
   }
   return n
-}
-
-/** Initial pull after sign-in: shared settings + product mirror. Errors leave the previous cache in place. */
-export async function initialSync(): Promise<void> {
-  await pullSettings()
-  await pullProducts()
 }
 
 export function startRealtime(): void {

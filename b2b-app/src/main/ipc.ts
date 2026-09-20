@@ -3,7 +3,7 @@ import type { Order, Session } from '@shared/types'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardLegacyData, hasLegacyData, migrateLegacyData } from './cloud/migrate'
-import { initialSync, onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
+import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
 import { dbPath } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateMyCompany } from './repo/customers'
@@ -28,7 +28,7 @@ import {
   similarProducts
 } from './repo/products'
 import { seedDemo } from './repo/seed'
-import { getSettings, isLocalSetting, setLocalSettings, setSettings } from './repo/settings'
+import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
 import { approveUser, changePassword, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
 import { checkForUpdates, downloadAndInstall, installUpdate, updateState } from './updater'
 
@@ -75,21 +75,30 @@ export function currentRole(): Session['user']['role'] | null {
 async function activate(s: Session): Promise<void> {
   session = s
   try {
-    if (hasLegacyData()) {
-      if (s.user.role === 'admin') {
-        const r = await migrateLegacyData()
-        console.log('legacy data migrated', r)
-      } else discardLegacyData()
-      await pullProducts(true)
-    }
-    await initialSync()
+    await pullSettings()
   } catch (e) {
-    console.error('initial sync failed', e)
+    console.error('settings pull failed', e)
   }
-  startRealtime()
-  if (s.user.role === 'admin') await startAdminNotifications(s.user.id, getSettings().background_notifications)
-  broadcast('products:changed')
-  broadcast('sync:changed')
+  // The product mirror can take a while on a fresh install (12k rows); the UI opens right away
+  // and follows progress through sync:changed, then refreshes on products:changed.
+  void (async () => {
+    try {
+      if (hasLegacyData()) {
+        if (s.user.role === 'admin') {
+          const r = await migrateLegacyData()
+          console.log('legacy data migrated', r)
+        } else discardLegacyData()
+        await pullProducts(true)
+      } else await pullProducts()
+    } catch (e) {
+      console.error('initial sync failed', e)
+    }
+    if (session !== s) return
+    startRealtime()
+    if (s.user.role === 'admin') await startAdminNotifications(s.user.id, getSettings().background_notifications)
+    broadcast('products:changed')
+    broadcast('sync:changed')
+  })()
 }
 
 function deactivate(): void {

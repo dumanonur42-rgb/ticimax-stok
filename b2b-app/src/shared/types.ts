@@ -220,6 +220,8 @@ export interface SyncStatus {
   lastSync: string | null
   productCount: number
   message?: string
+  /** Set while the product mirror is being (re)built from the cloud. */
+  progress?: { done: number; total: number } | null
 }
 
 export interface UpdateState {

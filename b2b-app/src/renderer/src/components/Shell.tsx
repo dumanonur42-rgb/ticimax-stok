@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useEffect, type ReactNode } from 'react'
 import { api } from '@/lib/api'
+import { SyncBanner } from '@/components/SyncBanner'
 import { useUpdateState } from '@/components/UpdateDialog'
 import { ROLE_LABEL } from '@/lib/format'
 import type { UserRole } from '@shared/types'
@@ -200,6 +201,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
               {session.customer.name}
             </span>
           )}
+          <SyncBanner />
           <UpdateBanner />
         </header>
         <main id="main" className={`content${page === 'catalog' || page === 'stock' ? ' flush' : ''}`}>

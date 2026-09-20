@@ -1151,6 +1151,17 @@ dialog.modal::backdrop {
   color: var(--text);
   font-size: 0.92rem;
 }
+.sync-banner {
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev));
+}
+.sync-banner + .update-banner {
+  margin-left: 8px;
+}
+.sync-progress {
+  width: 120px;
+  height: 6px;
+  accent-color: var(--accent);
+}
 .update-banner .spin,
 .update-dialog .spin {
   animation: update-spin 1.2s linear infinite;
@@ -1509,6 +1520,7 @@ dialog.update-dialog {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+  will-change: transform;
   animation: ring-spin var(--spin) linear infinite;
 }
 .globe-scene .ring > div,
@@ -1589,6 +1601,7 @@ dialog.update-dialog {
   background: radial-gradient(circle at 36% 30%, #ffffff 0%, #f1f3f5 12%, #bcc4cc 38%, #737d88 64%, #3f474f 84%, #6f7882 100%);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   transform: rotateX(calc(var(--tilt) * -1));
+  will-change: transform;
   animation: ball-face var(--spin) linear infinite;
 }
 @keyframes ring-spin {

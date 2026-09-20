@@ -110,7 +110,7 @@ function createWindow(showSplash = true): void {
   win.on('ready-to-show', () => {
     const hidden = process.argv.includes('--hidden')
     const wait = splash ? Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now()))) : 0
-    // The splash stays until both the minimum time has passed and the cloud session/product mirror are ready.
+    // The splash stays until the minimum time has passed and the cloud session is known; the product mirror syncs in the background.
     Promise.all([new Promise((r) => setTimeout(r, wait)), restoreSession()]).then(() => {
       if (splash && !splash.isDestroyed()) splash.webContents.send('splash:leave')
       setTimeout(
