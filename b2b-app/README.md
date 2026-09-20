@@ -1,21 +1,24 @@
 # Yamansa Rulman B2B – Masaüstü Uygulaması
 
 Bayilerin stok görüp sipariş verdiği, kurulumlu (Windows `.exe`) rulman B2B uygulaması.
-Veriler bilgisayarda yerel SQLite dosyasında tutulur; internet gerekmez.
+Ürünler, stoklar, bayiler, kullanıcılar, siparişler ve iş ayarları **tek bir ortak bulut veritabanında** (Supabase Postgres,
+Frankfurt) tutulur; yöneticiler yönetir, her kurulum aynı veriyi görür. Bilgisayarda yalnızca hızlı arama için ürünlerin
+bir kopyası (SQLite + FTS5) saklanır ve bulutla otomatik eşitlenir (Realtime + periyodik).
 
 - **10.000+ ürün** – SQLite + FTS5 trigram arama, sanal liste (virtualized). Aramalar 12.000 üründe ~3–6 ms.
 - **Stok listesi içe aktarma** – Excel/CSV, Türkçe başlıklar otomatik eşlenir (Stok Kodu, Ürün Adı, Marka, İç Çap, Dış Çap, Genişlik, Stok, Peşin Fiyat, Kredi Kartı Fiyatı…).
   Modlar: güncelle/ekle, sadece stok-fiyat, tümünü değiştir.
 - **Rulman odaklı arama** – stok kodu / muadil / barkod; boşluk, tire ve Türkçe karakter duyarsız; d × D × B ölçü filtreleri.
 - **Sepet & sipariş** – bayi iskontosu, KDV, stok düşümü, iptal ile geri alma, Excel ve yazdırma.
-- **Roller** – Yönetici, Kullanıcı, Bayi. Ürün ekleme/düzenleme, stok aktarma, Excel indirme, bayi ve kullanıcı yönetimi yalnızca yöneticide (arayüzde gizli + IPC tarafında yetki kontrolü). Bayi yalnızca kendi siparişlerini görür.
-- **Kayıt & onay** – Giriş ekranındaki "Kayıt ol" standart kullanıcı rolüyle *onay bekleyen* hesap açar; yönetici Ayarlar → Kullanıcılar'dan onaylar, rol/yetki değiştirir, yeni kullanıcı/yönetici ekler.
-- **Oturum hatırlama** – Başarılı giriş `userData/session.json` içinde saklanır; uygulama açılışta otomatik girer, yalnızca "Çıkış" ile silinir.
+- **Roller** – Yönetici ve Bayi. Ürün ekleme/düzenleme, stok aktarma, Excel indirme, bayi ve kullanıcı yönetimi yalnızca yöneticide (arayüzde gizli + IPC + sunucu tarafında RLS/RPC yetki kontrolü). Bayi yalnızca kendi cari kartını ve kendi siparişlerini görür; raf bilgisi bayiye gitmez.
+- **Kayıt & onay** – Giriş ekranındaki "Kayıt ol" bayi rolüyle *onay bekleyen* hesap ve cari kart açar; yönetici Ayarlar → Kullanıcılar'dan onaylar, rol değiştirir, yeni kullanıcı/yönetici ekler. Onaylanan bayi Ayarlar → Firma bilgilerim'den ünvan/vergi/adres bilgilerini tamamlar.
+- **Oturum hatırlama** – Supabase oturumu (refresh token) `userData` içinde saklanır; uygulama açılışta otomatik girer, yalnızca "Çıkış" ile silinir.
+- **Yönetici bildirimleri** – Ayarlar → Görünüm'deki seçenek açıkken pencere kapatılsa da uygulama tepside çalışır, Windows açılışında başlar ve yeni sipariş gelince Windows bildirimi gösterir (Realtime + 60 sn yoklama, tekrar bildirim yok).
 - **Erişilebilirlik** – klavye ile tam kullanım (Ctrl+K, F2, Alt+1..8, ok tuşları, `+`), ARIA grid, ekran okuyucu bildirimleri,
   açık/koyu/yüksek kontrast tema, yazı boyutu, azaltılmış hareket, sıkışık görünüm.
-- **Yedekleme** – tek dosya yedek al / geri yükle.
+- **Bulut & Veri** – Ayarlar'da bağlantı durumu, son eşitleme, "Ürünleri yeniden eşitle"; Örnek veri (12.000 ürün) ortak veritabanına yüklenir.
 
-Varsayılan hesaplar: yönetici `Yamansa` ve standart kullanıcı `Onur` (şifreler `src/main/db.ts` içindeki `DEFAULT_ADMIN` / `DEFAULT_STAFF`'ta; ilk girişten sonra Ayarlar → Şifre'den değiştirin).
+Hesaplar Supabase Auth'ta tutulur (kullanıcı adı → sabit sentetik e-posta). Bulutta ilk açılan hesap yönetici olur; yönetici `Yamansa`, bayi `Onur` tanımlıdır.
 
 ## Geliştirme
 
@@ -24,8 +27,20 @@ cd b2b-app
 npm install
 npm run dev          # canlı geliştirme
 npm run typecheck
-npm run selfcheck    # başsız: 12.000 örnek ürün yükler, arama sürelerini ölçer
+npm run selfcheck    # başsız: yerel önbelleğe 12.000 örnek ürün yükler, arama sürelerini ölçer
+# Bulut denetimi: B2B_CHECK_USER/B2B_CHECK_PASS (giriş, ürün çekme, sipariş/kullanıcı listesi);
+# B2B_CHECK_WRITE=1 (+ B2B_CHECK_DEALER_USER/PASS): boşsa örnek katalog yükler, stok değişikliğini artımlı çekişle
+# doğrular, bayinin sipariş verebildiğini ama ürün/başka sipariş göremediğini, iptalde stokun geri geldiğini kontrol eder.
 ```
+
+## Bulut şeması
+
+`supabase/schema.sql` tabloları (customers, profiles, products, orders, order_items, settings, import_logs), RLS
+politikalarını, RPC'leri (`create_order`, `set_order_status`, `update_my_company`, `admin_*`, `dashboard_orders`…) ve
+Realtime yayınını tanımlar; tekrar çalıştırılabilir (idempotent). Yeni kullanıcı `auth.users` tetikleyicisiyle profil ve
+cari kart alır. Uygulama yalnızca *publishable (anon)* anahtarı taşır; tüm yetki sunucuda RLS/RPC ile uygulanır.
+Eski tek-bilgisayar sürümlerinden kalan yerel tablolar (ürün, cari, sipariş) yönetici ilk kez giriş yapınca buluta
+yüklenir, sonra yerelden kaldırılır (`src/main/cloud/migrate.ts`).
 
 ## Windows kurulum dosyası (.exe)
 
@@ -57,4 +72,5 @@ Yeni sürüm yayınlamak için:
 
 ## Veri konumu
 
-`%APPDATA%\yamansa-rulman-b2b\data\yamansa-b2b.sqlite` (Windows). Yedek/geri yükleme Ayarlar → Yedekleme'den yapılır.
+Arama önbelleği: `%APPDATA%\yamansa-rulman-b2b\data\yamansa-b2b.sqlite` (Windows) — silinirse bir sonraki açılışta
+buluttan yeniden dolar. Asıl veri buluttadır; yedekleme Supabase projesi üzerinden yapılır.

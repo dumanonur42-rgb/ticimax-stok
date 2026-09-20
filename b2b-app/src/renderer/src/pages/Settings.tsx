@@ -1,4 +1,4 @@
-import type { Currency, Customer, CustomerProfile, Settings as S, User, UserRole } from '@shared/types'
+import type { Currency, Customer, CustomerProfile, Settings as S, SyncStatus, User, UserRole } from '@shared/types'
 import { Building2, Database, Pencil, Plus, Save, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
@@ -21,7 +21,7 @@ export function SettingsPage(): ReactNode {
     { id: 'profil', label: 'Firma bilgilerim', dealer: true },
     { id: 'firma', label: 'Firma & Fiyat', admin: true },
     { id: 'kullanicilar', label: 'Kullanıcılar', admin: true },
-    { id: 'veri', label: 'Yedekleme & Veri', admin: true },
+    { id: 'veri', label: 'Bulut & Veri', admin: true },
     { id: 'sifre', label: 'Şifre' }
   ]
   const visible = tabs.filter((t) => (!t.admin || isAdmin) && (!t.dealer || !isAdmin))
@@ -61,7 +61,8 @@ export function SettingsPage(): ReactNode {
 }
 
 function Appearance({ s }: { s: S }): ReactNode {
-  const { updateSettings, toast } = useApp()
+  const { session, updateSettings, toast } = useApp()
+  const isAdmin = session?.user.role === 'admin'
   const set = (patch: Partial<S>): void => {
     updateSettings(patch).catch((e) => toast(e.message, 'error'))
   }
@@ -91,6 +92,12 @@ function Appearance({ s }: { s: S }): ReactNode {
       <label className="check" style={{ alignSelf: 'end' }}>
         <input type="checkbox" checked={s.reduce_motion} onChange={(e) => set({ reduce_motion: e.target.checked })} /> Animasyonları azalt
       </label>
+      {isAdmin && (
+        <label className="check" style={{ gridColumn: 'span 2' }}>
+          <input type="checkbox" checked={s.background_notifications} onChange={(e) => set({ background_notifications: e.target.checked })} /> Pencere kapatılsa da
+          arka planda çalış ve yeni sipariş gelince Windows bildirimi göster (Windows açılışında otomatik başlar)
+        </label>
+      )}
       <div style={{ gridColumn: 'span 2' }} className="muted small">
         Kısayollar: <kbd>Ctrl</kbd>+<kbd>K</kbd> ürün ara · <kbd>F2</kbd> sepet · <kbd>F1</kbd> yardım · <kbd>Alt</kbd>+<kbd>1..8</kbd> sayfalar · listede <kbd>+</kbd> sepete ekle, <kbd>Enter</kbd> ayrıntı.
       </div>
@@ -154,7 +161,7 @@ function Company({ s }: { s: S }): ReactNode {
   )
 }
 
-type UserForm = { id?: number; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number }
+type UserForm = { id?: string; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number }
 
 function Users(): ReactNode {
   const { toast, session } = useApp()
@@ -364,14 +371,32 @@ function UpdateStatus(): ReactNode {
   )
 }
 
+function fmtTime(iso: string | null): string {
+  return iso ? new Date(iso).toLocaleString('tr-TR') : '—'
+}
+
+/** Cloud status: every installation reads the same shared database; the local copy is only a search cache. */
 function Data(): ReactNode {
   const { toast } = useApp()
   const [info, setInfo] = useState<{ version: string; dbPath: string; platform: string } | null>(null)
-  const [confirmRestore, setConfirmRestore] = useState(false)
+  const [sync, setSync] = useState<SyncStatus | null>(null)
+  const [busy, setBusy] = useState(false)
   const [confirmSeed, setConfirmSeed] = useState(false)
   useEffect(() => {
     api('app:info', undefined).then(setInfo).catch(() => undefined)
+    const load = (): void => {
+      api('app:syncStatus', undefined).then(setSync).catch(() => undefined)
+    }
+    load()
+    return onEvent('sync:changed', load)
   }, [])
+  const resync = (): void => {
+    setBusy(true)
+    api('app:resync', undefined)
+      .then((n) => toast(`${n} ürün buluttan yeniden alındı.`, 'success'))
+      .catch((e) => toast(e.message, 'error'))
+      .finally(() => setBusy(false))
+  }
   return (
     <div className="card grid" style={{ gap: 14 }}>
       <dl className="dl">
@@ -379,17 +404,23 @@ function Data(): ReactNode {
         <dd className="row wrap" style={{ gap: 10 }}>
           <UpdateStatus />
         </dd>
-        <dt>Veritabanı</dt>
+        <dt>Bulut bağlantısı</dt>
+        <dd>
+          <span className={`badge ${sync?.online ? 'ok' : 'out'}`}>{sync?.online ? 'Bağlı' : 'Bağlantı yok'}</span>
+          {sync?.message && <span className="muted small"> — {sync.message}</span>}
+        </dd>
+        <dt>Son eşitleme</dt>
+        <dd>{fmtTime(sync?.lastSync ?? null)}</dd>
+        <dt>Yerel ürün kopyası</dt>
+        <dd>{sync ? `${sync.productCount.toLocaleString('tr-TR')} ürün` : '—'}</dd>
+        <dt>Arama önbelleği</dt>
         <dd className="mono small" style={{ wordBreak: 'break-all' }}>
           {info?.dbPath ?? '-'}
         </dd>
       </dl>
       <div className="row wrap">
-        <button className="btn" onClick={() => api('app:backup', undefined).then((p) => p && toast(`Yedek alındı: ${p}`, 'success')).catch((e) => toast(e.message, 'error'))}>
-          <Database size={16} aria-hidden /> Yedek al…
-        </button>
-        <button className="btn" onClick={() => setConfirmRestore(true)}>
-          Yedekten geri yükle…
+        <button className="btn" disabled={busy} onClick={resync}>
+          <Database size={16} aria-hidden /> {busy ? 'Eşitleniyor…' : 'Ürünleri yeniden eşitle'}
         </button>
         <button className="btn" onClick={() => info && api('app:openPath', info.dbPath.replace(/[\\/][^\\/]+$/, '')).catch(() => undefined)}>
           Veri klasörünü aç
@@ -399,23 +430,14 @@ function Data(): ReactNode {
           Örnek veri yükle (12.000 ürün)
         </button>
       </div>
-      <p className="muted small">Yedek dosyasını başka bir bilgisayara taşıyarak aynı veriyle çalışabilirsiniz. Geri yükleme sonrası uygulama yeniden başlar.</p>
-      <Confirm
-        open={confirmRestore}
-        title="Yedekten geri yükle"
-        text="Mevcut veriler seçeceğiniz yedekle değiştirilecek. Devam edilsin mi?"
-        danger
-        confirmLabel="Dosya seç"
-        onCancel={() => setConfirmRestore(false)}
-        onConfirm={() => {
-          setConfirmRestore(false)
-          api('app:restore', undefined).catch((e) => toast(e.message, 'error'))
-        }}
-      />
+      <p className="muted small">
+        Ürünler, stoklar, bayiler, kullanıcılar ve siparişler tek bir ortak bulut veritabanında tutulur; tüm bilgisayarlar aynı veriyi görür. Bu bilgisayarda yalnızca hızlı
+        arama için ürünlerin bir kopyası saklanır ve otomatik eşitlenir.
+      </p>
       <Confirm
         open={confirmSeed}
         title="Örnek veri"
-        text="Test amaçlı 12.000 örnek rulman ürünü eklenir. Gerçek stok listesini yüklemeden önce 'Tümünü sil ve yeniden yükle' modunu kullanabilirsiniz."
+        text="Test amaçlı 12.000 örnek rulman ürünü ortak veritabanına eklenir ve tüm bayiler görür. Gerçek stok listesini yüklerken 'Tümünü sil ve yeniden yükle' modunu kullanabilirsiniz."
         confirmLabel="Yükle"
         onCancel={() => setConfirmSeed(false)}
         onConfirm={() => {

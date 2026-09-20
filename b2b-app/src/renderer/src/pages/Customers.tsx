@@ -2,7 +2,7 @@ import type { Currency, Customer, CustomerInput } from '@shared/types'
 import { Pencil, Plus } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Confirm, Empty, Field, Modal, Spinner } from '@/components/ui'
-import { api } from '@/lib/api'
+import { api, onEvent } from '@/lib/api'
 import { useApp } from '@/store/app'
 
 const empty: CustomerInput = {
@@ -32,7 +32,10 @@ export function Customers(): ReactNode {
   const load = (): void => {
     api('customers:list', { q }).then(setList).catch((e) => toast(e.message, 'error'))
   }
-  useEffect(load, [q])
+  useEffect(() => {
+    load()
+    return onEvent('customers:changed', load)
+  }, [q])
 
   const save = async (): Promise<void> => {
     if (!editing) return

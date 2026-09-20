@@ -1,4 +1,7 @@
-import { getDb, normalize, normalizeText } from '../db'
+import { cloud, mustVoid } from '../cloud/client'
+import type { ProductInsert } from '../cloud/database.types'
+import { pullProducts } from '../cloud/sync'
+import { normalize, normalizeText } from '../db'
 
 // Demo catalogue for performance testing. Every SKU is a plain bearing
 // designation (no brand suffix) and unique; the brand lives in its own column.
@@ -341,61 +344,48 @@ export function generateDemoCatalog(target: number): Row[] {
   return rows.slice(0, target)
 }
 
-export function seedDemo(target: number): number {
-  const db = getDb()
+/** Demo catalogue for trying the app before the real stock list arrives; written to the shared cloud like an import. */
+export async function seedDemo(target: number): Promise<number> {
   const rand = mulberry32(42)
   const rows = generateDemoCatalog(target)
-  const ins = db.prepare(
-    `INSERT OR IGNORE INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-     price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
-     VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,'Adet',@price,'TRY',
-     @list_price,@card_price,@min_order,@shelf,'','','',@equivalents,1)`
-  )
-  const tx = db.transaction(() => {
-    let n = 0
-    for (const r of rows) {
-      const size = (r.d_outer ?? 60) * (r.width ?? 12)
-      const premium = ['SKF', 'FAG', 'TIMKEN', 'NSK', 'INA'].includes(r.brand) ? 2.2 : 1
-      const price = Math.round(size * 0.12 * premium * (0.8 + rand() * 0.6) * 100) / 100 + 15
-      const stockRoll = rand()
-      const stock = stockRoll < 0.15 ? 0 : stockRoll < 0.3 ? Math.floor(rand() * 5) + 1 : Math.floor(rand() * 400) + 5
-      const res = ins.run({
-        ...r,
-        sku_norm: normalize(r.sku),
-        name_norm: normalizeText(r.name),
-        stock,
-        price,
-        list_price: Math.round(price * 1.35 * 100) / 100,
-        card_price: Math.round(price * 1.08 * 100) / 100,
-        min_order: 1,
-        shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`
-      })
-      n += res.changes
+  const batch: ProductInsert[] = rows.map((r) => {
+    const size = (r.d_outer ?? 60) * (r.width ?? 12)
+    const premium = ['SKF', 'FAG', 'TIMKEN', 'NSK', 'INA'].includes(r.brand) ? 2.2 : 1
+    const price = Math.round(size * 0.12 * premium * (0.8 + rand() * 0.6) * 100) / 100 + 15
+    const stockRoll = rand()
+    const stock = stockRoll < 0.15 ? 0 : stockRoll < 0.3 ? Math.floor(rand() * 5) + 1 : Math.floor(rand() * 400) + 5
+    return {
+      sku: r.sku,
+      sku_norm: normalize(r.sku),
+      name: r.name,
+      name_norm: normalizeText(r.name),
+      brand: r.brand,
+      category: r.category,
+      type: r.type,
+      seal: r.seal,
+      d_inner: r.d_inner,
+      d_outer: r.d_outer,
+      width: r.width,
+      stock,
+      unit: 'Adet',
+      price,
+      currency: 'TRY',
+      list_price: Math.round(price * 1.35 * 100) / 100,
+      card_price: Math.round(price * 1.08 * 100) / 100,
+      min_order: 1,
+      shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`,
+      barcode: '',
+      image: '',
+      description: '',
+      equivalents: r.equivalents,
+      active: true,
+      deleted: false
     }
-    return n
   })
-  const n = tx()
-  db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
-  if ((db.prepare('SELECT COUNT(*) c FROM customers').get() as { c: number }).c === 0) {
-    const cIns = db.prepare(`INSERT INTO customers(code, name, contact, phone, city, discount_pct, currency) VALUES (?,?,?,?,?,?,?)`)
-    cIns.run('B0001', 'Demir Makina San. Tic. Ltd. Şti.', 'Ahmet Demir', '0532 000 00 01', 'İstanbul', 10, 'TRY')
-    cIns.run('B0002', 'Anadolu Hırdavat', 'Mehmet Kaya', '0533 000 00 02', 'Ankara', 5, 'TRY')
-    cIns.run('B0003', 'Ege Endüstri Malzemeleri', 'Ayşe Yılmaz', '0534 000 00 03', 'İzmir', 15, 'TRY')
+  const sb = cloud()
+  for (let i = 0; i < batch.length; i += 500) {
+    mustVoid(await sb.from('products').upsert(batch.slice(i, i + 500), { onConflict: 'sku_norm', ignoreDuplicates: true }))
   }
-  return n
-}
-
-/**
- * Earlier demo builds stored the brand inside the SKU ("6205-2RS SKF"). When a database holds
- * nothing but such rows and no real import has ever happened, regenerate the demo catalogue.
- */
-export function refreshLegacyDemo(): number {
-  const db = getDb()
-  const c = (sql: string): number => (db.prepare(sql).get() as { c: number }).c
-  const total = c('SELECT COUNT(*) c FROM products')
-  if (total === 0 || c('SELECT COUNT(*) c FROM import_logs') > 0) return 0
-  const legacy = c("SELECT COUNT(*) c FROM products WHERE brand <> '' AND substr(sku, -length(brand) - 1) = ' ' || brand")
-  if (legacy !== total) return 0
-  db.exec('DELETE FROM products')
-  return seedDemo(12000)
+  await pullProducts()
+  return batch.length
 }

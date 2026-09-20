@@ -2,7 +2,6 @@ import Database from 'better-sqlite3'
 import { app } from 'electron'
 import { existsSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { hashPassword, verifyPassword } from './auth'
 
 export type DB = Database.Database
 
@@ -92,121 +91,24 @@ CREATE TRIGGER IF NOT EXISTS products_au AFTER UPDATE ON products BEGIN
   VALUES (new.id, new.sku_norm, new.name_norm, new.brand, new.equivalents, new.barcode);
 END;
 
-CREATE TABLE IF NOT EXISTS customers (
-  id INTEGER PRIMARY KEY,
-  code TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  contact TEXT NOT NULL DEFAULT '',
-  phone TEXT NOT NULL DEFAULT '',
-  email TEXT NOT NULL DEFAULT '',
-  address TEXT NOT NULL DEFAULT '',
-  city TEXT NOT NULL DEFAULT '',
-  tax_no TEXT NOT NULL DEFAULT '',
-  tax_office TEXT NOT NULL DEFAULT '',
-  discount_pct REAL NOT NULL DEFAULT 0,
-  currency TEXT NOT NULL DEFAULT 'TRY',
-  notes TEXT NOT NULL DEFAULT '',
-  active INTEGER NOT NULL DEFAULT 1,
-  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
-);
-
-CREATE TABLE IF NOT EXISTS orders (
-  id INTEGER PRIMARY KEY,
-  order_no TEXT NOT NULL UNIQUE,
-  customer_id INTEGER REFERENCES customers(id) ON DELETE SET NULL,
-  customer_name TEXT NOT NULL DEFAULT '',
-  status TEXT NOT NULL DEFAULT 'beklemede',
-  note TEXT NOT NULL DEFAULT '',
-  payment TEXT NOT NULL DEFAULT 'pesin',
-  currency TEXT NOT NULL DEFAULT 'TRY',
-  subtotal REAL NOT NULL DEFAULT 0,
-  discount REAL NOT NULL DEFAULT 0,
-  vat_pct REAL NOT NULL DEFAULT 20,
-  vat REAL NOT NULL DEFAULT 0,
-  total REAL NOT NULL DEFAULT 0,
-  created_by TEXT NOT NULL DEFAULT '',
-  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),
-  updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
-);
-CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders(customer_id);
-CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
-
-CREATE TABLE IF NOT EXISTS order_items (
-  id INTEGER PRIMARY KEY,
-  order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-  product_id INTEGER REFERENCES products(id) ON DELETE SET NULL,
-  sku TEXT NOT NULL,
-  name TEXT NOT NULL,
-  qty REAL NOT NULL,
-  unit_price REAL NOT NULL,
-  discount_pct REAL NOT NULL DEFAULT 0,
-  line_total REAL NOT NULL
-);
-CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
-
-CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY,
-  username TEXT NOT NULL UNIQUE,
-  password_hash TEXT NOT NULL,
-  display_name TEXT NOT NULL DEFAULT '',
-  role TEXT NOT NULL DEFAULT 'bayi',
-  customer_id INTEGER REFERENCES customers(id) ON DELETE SET NULL,
-  active INTEGER NOT NULL DEFAULT 1,
-  approved INTEGER NOT NULL DEFAULT 1,
-  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
-);
-
-CREATE TABLE IF NOT EXISTS import_logs (
-  id INTEGER PRIMARY KEY,
-  filename TEXT NOT NULL,
-  created_at TEXT NOT NULL DEFAULT (datetime('now','localtime')),
-  inserted INTEGER NOT NULL DEFAULT 0,
-  updated INTEGER NOT NULL DEFAULT 0,
-  unchanged INTEGER NOT NULL DEFAULT 0,
-  deactivated INTEGER NOT NULL DEFAULT 0,
-  mode TEXT NOT NULL DEFAULT 'upsert'
-);
+CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 `
 
-export const DEFAULT_ADMIN = { username: 'Yamansa', password: 'Ahmet4202', displayName: 'Ahmet' }
-/** Standard (non-admin) staff account created on first run alongside the administrator. */
-export const DEFAULT_STAFF = { username: 'Onur', password: 'Duman4202', displayName: 'Onur', role: 'bayi' as const }
+function migrate(d: DB): void {
+  d.exec(SCHEMA)
+  addColumnIfMissing(d, 'products', 'card_price', 'REAL')
+}
+
+/** Tables left behind by single-machine builds (pre-cloud); `cloud/migrate.ts` uploads and then drops them. */
+export const LEGACY_TABLES = ['users', 'order_items', 'orders', 'customers', 'import_logs'] as const
+
+export function hasTable(d: DB, name: string): boolean {
+  return !!d.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name = ?").get(name)
+}
 
 function addColumnIfMissing(d: DB, table: string, column: string, ddl: string): void {
   const cols = d.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[]
   if (!cols.some((c) => c.name === column)) d.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${ddl}`)
-}
-
-function migrate(d: DB): void {
-  d.exec(SCHEMA)
-  addColumnIfMissing(d, 'users', 'approved', 'INTEGER NOT NULL DEFAULT 1')
-  addColumnIfMissing(d, 'users', 'created_at', "TEXT NOT NULL DEFAULT ''")
-  addColumnIfMissing(d, 'products', 'card_price', 'REAL')
-  addColumnIfMissing(d, 'orders', 'payment', "TEXT NOT NULL DEFAULT 'pesin'")
-  d.prepare("DELETE FROM settings WHERE key = 'card_price_pct' AND value = '0'").run()
-  const userCount = d.prepare('SELECT COUNT(*) c FROM users').get() as { c: number }
-  const insertUser = d.prepare(`INSERT INTO users(username, password_hash, display_name, role, created_at) VALUES (?,?,?,?,datetime('now','localtime'))`)
-  const exists = d.prepare(`SELECT 1 FROM users WHERE username = ? COLLATE NOCASE`)
-  if (userCount.c === 0) {
-    insertUser.run(DEFAULT_ADMIN.username, hashPassword(DEFAULT_ADMIN.password), DEFAULT_ADMIN.displayName, 'admin')
-  }
-  if (!exists.get(DEFAULT_STAFF.username)) {
-    insertUser.run(DEFAULT_STAFF.username, hashPassword(DEFAULT_STAFF.password), DEFAULT_STAFF.displayName, DEFAULT_STAFF.role)
-  }
-  if (userCount.c === 0) return
-  // Databases created by earlier builds still carry the untouched admin/admin account: replace it.
-  const legacy = d
-    .prepare(`SELECT id, password_hash FROM users WHERE username = 'admin' COLLATE NOCASE`)
-    .get() as { id: number; password_hash: string } | undefined
-  const taken = exists.get(DEFAULT_ADMIN.username)
-  if (legacy && !taken && verifyPassword('admin', legacy.password_hash)) {
-    d.prepare(`UPDATE users SET username = ?, password_hash = ?, display_name = ? WHERE id = ?`).run(
-      DEFAULT_ADMIN.username,
-      hashPassword(DEFAULT_ADMIN.password),
-      DEFAULT_ADMIN.displayName,
-      legacy.id
-    )
-  }
 }
 
 /** Uppercase, Turkish-aware, strip everything except letters/digits. Used for SKU/name matching. */

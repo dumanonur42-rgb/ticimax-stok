@@ -89,7 +89,8 @@ export function Help(): ReactNode {
               <b>Stok güncelleyin:</b> Yeni stok listesini "Sadece stok ve fiyat güncelle" moduyla yükleyin; siparişler stoktan otomatik düşer.
             </li>
             <li>
-              <b>Yedek alın:</b> Ayarlar → Yedekleme'den tek dosya olarak yedekleyin, başka bilgisayara taşıyın.
+              <b>Her yerden aynı veri:</b> Ürün, stok, bayi ve siparişler ortak bulut veritabanındadır; bayilerin siparişleri anında burada görünür. Ayarlar →
+              Bulut & Veri'den bağlantı durumunu görebilir, "arka planda çalış" seçeneğiyle pencere kapalıyken de yeni sipariş bildirimi alabilirsiniz.
             </li>
           </ol>
         ) : (

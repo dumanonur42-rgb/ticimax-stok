@@ -1,4 +1,8 @@
 import type { Facets, FacetValue, Product, ProductFilter, ProductInput, ProductPage } from '@shared/types'
+import { cloud, must, mustVoid } from '../cloud/client'
+import type { ProductInsert } from '../cloud/database.types'
+import { toProduct } from '../cloud/map'
+import { upsertLocal } from '../cloud/sync'
 import { getDb, normalize, normalizeText } from '../db'
 
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
@@ -148,40 +152,48 @@ export function productsBySkus(skus: string[]): Product[] {
     .all(...norms) as Product[]
 }
 
-export function saveProduct(p: Partial<Product> & ProductInput): Product {
-  const db = getDb()
-  const row = {
-    ...p,
-    sku: p.sku.trim(),
-    sku_norm: normalize(p.sku),
+/** Writes go to the cloud; the returned row is mirrored into the local cache right away. */
+export async function saveProduct(p: Partial<Product> & ProductInput): Promise<Product> {
+  const sku = p.sku.trim()
+  if (!sku) throw new Error('Ürün kodu boş olamaz.')
+  const row: ProductInsert = {
+    ...(p.id ? { id: p.id } : {}),
+    sku,
+    sku_norm: normalize(sku),
+    name: p.name,
     name_norm: normalizeText(p.name),
+    brand: p.brand,
+    category: p.category,
+    type: p.type,
+    seal: p.seal,
     d_inner: p.d_inner ?? null,
     d_outer: p.d_outer ?? null,
     width: p.width ?? null,
+    stock: p.stock,
+    unit: p.unit,
+    price: p.price,
+    currency: p.currency,
     list_price: p.list_price ?? null,
-    card_price: p.card_price ?? null
+    card_price: p.card_price ?? null,
+    min_order: p.min_order,
+    shelf: p.shelf,
+    barcode: p.barcode,
+    image: p.image,
+    description: p.description,
+    equivalents: p.equivalents,
+    active: !!p.active,
+    deleted: false
   }
-  if (p.id) {
-    db.prepare(
-      `UPDATE products SET sku=@sku, sku_norm=@sku_norm, name=@name, name_norm=@name_norm, brand=@brand, category=@category,
-       type=@type, seal=@seal, d_inner=@d_inner, d_outer=@d_outer, width=@width, stock=@stock, unit=@unit, price=@price,
-       currency=@currency, list_price=@list_price, card_price=@card_price, min_order=@min_order, shelf=@shelf, barcode=@barcode, image=@image,
-       description=@description, equivalents=@equivalents, active=@active, updated_at=datetime('now','localtime') WHERE id=@id`
-    ).run(row)
-    return getProduct(p.id)!
-  }
-  const r = db
-    .prepare(
-      `INSERT INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-       price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
-       VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-       @currency,@list_price,@card_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,@active)`
-    )
-    .run(row)
-  return getProduct(Number(r.lastInsertRowid))!
+  const sb = cloud()
+  const saved = p.id
+    ? must(await sb.from('products').update(row).eq('id', p.id).select('*').single())
+    : must(await sb.from('products').upsert(row, { onConflict: 'sku_norm' }).select('*').single())
+  upsertLocal([saved])
+  return toProduct(saved)
 }
 
-export function deleteProduct(id: number): void {
+export async function deleteProduct(id: number): Promise<void> {
+  mustVoid(await cloud().from('products').update({ deleted: true, active: false }).eq('id', id))
   getDb().prepare('DELETE FROM products WHERE id = ?').run(id)
 }
 
@@ -191,10 +203,4 @@ export function allProductsForExport(f: ProductFilter): Product[] {
   return getDb()
     .prepare(`SELECT ${COLS} FROM products p WHERE ${w.sql} ORDER BY ${o.sql}`)
     .all(...w.params, ...o.params) as Product[]
-}
-
-export function adjustStock(productId: number, delta: number): void {
-  getDb()
-    .prepare(`UPDATE products SET stock = MAX(0, stock + ?), updated_at=datetime('now','localtime') WHERE id = ?`)
-    .run(delta, productId)
 }

@@ -131,7 +131,8 @@ export interface OrderInput {
 export type UserRole = 'admin' | 'bayi'
 
 export interface User {
-  id: number
+  /** Supabase Auth user id (uuid). */
+  id: string
   username: string
   display_name: string
   role: UserRole
@@ -144,6 +145,13 @@ export interface User {
 export interface Session {
   user: User
   customer: Customer | null
+}
+
+export interface SyncStatus {
+  online: boolean
+  lastSync: string | null
+  productCount: number
+  message?: string
 }
 
 export interface UpdateState {
@@ -172,6 +180,8 @@ export interface Settings {
   font_scale: number
   reduce_motion: boolean
   density: 'comfortable' | 'compact'
+  /** Admin devices: keep running in the tray after the window closes and show a Windows notification on new orders. */
+  background_notifications: boolean
 }
 
 export interface DashboardStats {

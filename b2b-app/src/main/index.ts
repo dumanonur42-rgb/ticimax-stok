@@ -1,11 +1,9 @@
 import { app, BrowserWindow, Menu, shell } from 'electron'
 import { join } from 'node:path'
 import { getDb } from './db'
-import { registerIpc } from './ipc'
-import { dashboardStats } from './repo/dashboard'
+import { registerIpc, restoreSession } from './ipc'
+import { isBackgroundMode, isQuitting, registerMainWindow } from './notify'
 import { productFacets, searchProducts } from './repo/products'
-import { refreshLegacyDemo } from './repo/seed'
-import { ensureDealerCustomers } from './repo/users'
 import { runSelfCheck } from './selfcheck'
 import { startUpdater } from './updater'
 
@@ -13,6 +11,7 @@ const isDev = !app.isPackaged && !!process.env.ELECTRON_RENDERER_URL
 const SPLASH_MIN_MS = 3000
 const SPLASH_LEAVE_MS = 450
 let splashShownAt = 0
+let mainWin: BrowserWindow | null = null
 
 function load(win: BrowserWindow, query?: Record<string, string>): void {
   if (isDev) {
@@ -24,14 +23,13 @@ function load(win: BrowserWindow, query?: Record<string, string>): void {
   }
 }
 
-/** Runs the first catalog/dashboard queries while the splash is on screen so SQLite's page cache and FTS index are hot. */
+/** Runs the first catalog queries while the splash is on screen so SQLite's page cache and FTS index are hot. */
 function warmUp(): void {
   try {
     const db = getDb()
     searchProducts({ limit: 200 })
     productFacets({})
     searchProducts({ q: '6205 2rs', limit: 50 })
-    dashboardStats()
     db.pragma('optimize')
   } catch (e) {
     console.error('warm-up failed', e)
@@ -75,8 +73,8 @@ function createSplash(): BrowserWindow {
   return splash
 }
 
-function createWindow(): void {
-  const splash = createSplash()
+function createWindow(showSplash = true): void {
+  const splash = showSplash ? createSplash() : null
 
   const win = new BrowserWindow({
     width: 1400,
@@ -97,15 +95,32 @@ function createWindow(): void {
     }
   })
 
+  mainWin = win
+  win.on('closed', () => {
+    if (mainWin === win) mainWin = null
+  })
+  // Admin background mode: closing the window only hides it; the tray keeps the order watcher alive.
+  win.on('close', (e) => {
+    if (isBackgroundMode() && !isQuitting()) {
+      e.preventDefault()
+      win.hide()
+    }
+  })
+
   win.on('ready-to-show', () => {
-    const wait = Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now())))
-    setTimeout(() => {
-      if (!splash.isDestroyed()) splash.webContents.send('splash:leave')
-      setTimeout(() => {
-        win.show()
-        if (!splash.isDestroyed()) splash.close()
-      }, SPLASH_LEAVE_MS)
-    }, wait)
+    const hidden = process.argv.includes('--hidden')
+    const wait = splash ? Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now()))) : 0
+    // The splash stays until both the minimum time has passed and the cloud session/product mirror are ready.
+    Promise.all([new Promise((r) => setTimeout(r, wait)), restoreSession()]).then(() => {
+      if (splash && !splash.isDestroyed()) splash.webContents.send('splash:leave')
+      setTimeout(
+        () => {
+          if (!(hidden && isBackgroundMode())) win.show()
+          if (splash && !splash.isDestroyed()) splash.close()
+        },
+        splash ? SPLASH_LEAVE_MS : 0
+      )
+    })
   })
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (/^https?:/.test(url)) shell.openExternal(url)
@@ -120,10 +135,10 @@ app.setName('Yamansa Rulman B2B')
 app.setAppUserModelId('com.yamansarulman.b2b')
 
 if (process.argv.includes('--selfcheck')) {
-  app.whenReady().then(() => {
+  app.whenReady().then(async () => {
     let code = 1
     try {
-      code = runSelfCheck()
+      code = await runSelfCheck()
     } catch (e) {
       console.error(e)
     }
@@ -133,28 +148,30 @@ if (process.argv.includes('--selfcheck')) {
   app.quit()
 } else {
   app.on('second-instance', () => {
-    const w = BrowserWindow.getAllWindows()[0]
-    if (w) {
-      if (w.isMinimized()) w.restore()
-      w.focus()
-    }
+    if (mainWin && !mainWin.isDestroyed()) {
+      if (mainWin.isMinimized()) mainWin.restore()
+      mainWin.show()
+      mainWin.focus()
+    } else createWindow(false)
   })
 
   app.whenReady().then(() => {
     Menu.setApplicationMenu(null)
     getDb()
-    refreshLegacyDemo()
-    ensureDealerCustomers()
     registerIpc()
-    createWindow()
+    registerMainWindow(
+      () => mainWin,
+      () => createWindow(false)
+    )
+    createWindow(!process.argv.includes('--hidden'))
     setImmediate(warmUp)
     startUpdater()
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+      if (BrowserWindow.getAllWindows().length === 0) createWindow(false)
     })
   })
 
   app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin' && !isBackgroundMode()) app.quit()
   })
 }

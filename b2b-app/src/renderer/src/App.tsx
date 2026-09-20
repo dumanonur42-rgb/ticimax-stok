@@ -76,9 +76,17 @@ export function App(): ReactNode {
     Promise.all([api('auth:session', undefined).then(setSession), loadSettings()])
       .catch(() => undefined)
       .finally(() => setReady(true))
-    return onEvent('session:changed', () => {
+    const offSession = onEvent('session:changed', () => {
       api('auth:session', undefined).then(setSession).catch(() => setSession(null))
     })
+    // Shared settings changed by an admin on another computer.
+    const offSettings = onEvent('settings:changed', () => {
+      loadSettings().catch(() => undefined)
+    })
+    return () => {
+      offSession()
+      offSettings()
+    }
   }, [])
 
   if (!ready) return null

@@ -4,6 +4,9 @@ import { basename, extname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import Papa from 'papaparse'
 import * as XLSX from 'xlsx'
+import { cloud, must, mustVoid } from '../cloud/client'
+import type { ProductInsert } from '../cloud/database.types'
+import { pullProducts } from '../cloud/sync'
 import { getDb, normalize, normalizeText } from '../db'
 
 interface Parsed {
@@ -120,10 +123,13 @@ function parseCurrency(v: string | undefined, fallback: Currency): Currency {
   return fallback
 }
 
-export function runImport(opts: ImportOptions): ImportResult {
+type LocalRow = Omit<ProductInsert, 'active' | 'deleted'> & { id: number; active: number }
+
+const BATCH = 500
+
+export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   const parsed = pending.get(opts.token)
   if (!parsed) throw new Error('İçe aktarma oturumu bulunamadı, dosyayı yeniden seçin.')
-  const db = getDb()
   const idx = (f: Field): number => {
     const h = opts.mapping[f]
     return h ? parsed.headers.indexOf(h) : -1
@@ -134,147 +140,162 @@ export function runImport(opts: ImportOptions): ImportResult {
   }
   if (idx('sku') < 0) throw new Error('"Stok Kodu" sütunu eşlenmeli.')
 
+  await pullProducts()
+  const db = getDb()
+  const existing = new Map<string, LocalRow>()
+  for (const r of db.prepare('SELECT * FROM products').all() as LocalRow[]) existing.set(r.sku_norm, r)
+
   const errors: string[] = []
   let inserted = 0
   let updated = 0
   let unchanged = 0
   let deactivated = 0
-
-  const existing = new Map<string, { id: number; stock: number; price: number; name: string }>()
-  for (const r of db.prepare('SELECT id, sku_norm, stock, price, name FROM products').all() as {
-    id: number
-    sku_norm: string
-    stock: number
-    price: number
-    name: string
-  }[]) {
-    existing.set(r.sku_norm, r)
-  }
-
-  const insertStmt = db.prepare(
-    `INSERT INTO products(sku, sku_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-     price, currency, list_price, card_price, min_order, shelf, barcode, image, description, equivalents, active)
-     VALUES (@sku,@sku_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-     @currency,@list_price,@card_price,@min_order,@shelf,@barcode,@image,@description,@equivalents,1)`
-  )
-  const stockOnlyStmt = db.prepare(
-    `UPDATE products SET stock=@stock, price=COALESCE(@price, price), card_price=COALESCE(@card_price, card_price), active=1, updated_at=datetime('now','localtime') WHERE id=@id`
-  )
-
   const seen = new Set<string>()
+  const batch: ProductInsert[] = []
 
-  const tx = db.transaction(() => {
-    if (opts.mode === 'replace') {
-      db.exec('DELETE FROM products')
-      existing.clear()
-    }
-    parsed.rows.forEach((row, i) => {
-      const skuRaw = (col(row, 'sku') ?? '').trim()
-      if (!skuRaw) return
-      const sku_norm = normalize(skuRaw)
-      if (!sku_norm || seen.has(sku_norm)) return
-      seen.add(sku_norm)
+  const fromLocal = (ex: LocalRow): ProductInsert => ({
+    sku: ex.sku,
+    sku_norm: ex.sku_norm,
+    name: ex.name,
+    name_norm: ex.name_norm,
+    brand: ex.brand,
+    category: ex.category,
+    type: ex.type,
+    seal: ex.seal,
+    d_inner: ex.d_inner,
+    d_outer: ex.d_outer,
+    width: ex.width,
+    stock: ex.stock,
+    unit: ex.unit,
+    price: ex.price,
+    currency: ex.currency,
+    list_price: ex.list_price,
+    card_price: ex.card_price,
+    min_order: ex.min_order,
+    shelf: ex.shelf,
+    barcode: ex.barcode,
+    image: ex.image,
+    description: ex.description,
+    equivalents: ex.equivalents,
+    active: true,
+    deleted: false
+  })
 
-      const stockVal = parseNumber(col(row, 'stock'))
-      const priceVal = parseNumber(col(row, 'price'))
-      const cardVal = parseNumber(col(row, 'card_price'))
-      const ex = existing.get(sku_norm)
+  parsed.rows.forEach((row, i) => {
+    const skuRaw = (col(row, 'sku') ?? '').trim()
+    if (!skuRaw) return
+    const sku_norm = normalize(skuRaw)
+    if (!sku_norm || seen.has(sku_norm)) return
+    seen.add(sku_norm)
 
-      if (opts.mode === 'stock_only') {
-        if (!ex) {
-          errors.push(`Satır ${i + 2}: ${skuRaw} bulunamadı (yalnızca stok modu).`)
-          return
-        }
-        const newStock = stockVal ?? ex.stock
-        if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null) {
-          unchanged++
-          return
-        }
-        stockOnlyStmt.run({ id: ex.id, stock: newStock, price: priceVal, card_price: cardVal })
-        updated++
+    const stockVal = parseNumber(col(row, 'stock'))
+    const priceVal = parseNumber(col(row, 'price'))
+    const cardVal = parseNumber(col(row, 'card_price'))
+    const ex = opts.mode === 'replace' ? undefined : existing.get(sku_norm)
+
+    if (opts.mode === 'stock_only') {
+      if (!ex) {
+        errors.push(`Satır ${i + 2}: ${skuRaw} bulunamadı (yalnızca stok modu).`)
         return
       }
-
-      const name = (col(row, 'name') ?? '').trim() || ex?.name || skuRaw
-      const record = {
-        sku: skuRaw,
-        sku_norm,
-        name,
-        name_norm: normalizeText(name),
-        brand: (col(row, 'brand') ?? '').trim() || opts.defaultBrand,
-        category: (col(row, 'category') ?? '').trim() || opts.defaultCategory,
-        type: (col(row, 'type') ?? '').trim(),
-        seal: (col(row, 'seal') ?? '').trim().toUpperCase(),
-        d_inner: parseNumber(col(row, 'd_inner')),
-        d_outer: parseNumber(col(row, 'd_outer')),
-        width: parseNumber(col(row, 'width')),
-        stock: stockVal ?? 0,
-        unit: (col(row, 'unit') ?? '').trim() || 'Adet',
-        price: priceVal ?? 0,
-        currency: parseCurrency(col(row, 'currency'), opts.defaultCurrency),
-        list_price: parseNumber(col(row, 'list_price')),
-        card_price: cardVal,
-        min_order: parseNumber(col(row, 'min_order')) ?? 1,
-        shelf: (col(row, 'shelf') ?? '').trim(),
-        barcode: (col(row, 'barcode') ?? '').trim(),
-        image: (col(row, 'image') ?? '').trim(),
-        description: (col(row, 'description') ?? '').trim(),
-        equivalents: (col(row, 'equivalents') ?? '').trim()
+      const newStock = stockVal ?? ex.stock
+      if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null && ex.active) {
+        unchanged++
+        return
       }
-
-      if (ex) {
-        const sets: string[] = ['sku=@sku', 'name=@name', 'name_norm=@name_norm', 'stock=@stock', 'price=@price', 'currency=@currency', 'active=1']
-        const optional: [Field, string][] = [
-          ['brand', 'brand=@brand'],
-          ['category', 'category=@category'],
-          ['type', 'type=@type'],
-          ['seal', 'seal=@seal'],
-          ['d_inner', 'd_inner=@d_inner'],
-          ['d_outer', 'd_outer=@d_outer'],
-          ['width', 'width=@width'],
-          ['unit', 'unit=@unit'],
-          ['list_price', 'list_price=@list_price'],
-          ['card_price', 'card_price=@card_price'],
-          ['min_order', 'min_order=@min_order'],
-          ['shelf', 'shelf=@shelf'],
-          ['barcode', 'barcode=@barcode'],
-          ['image', 'image=@image'],
-          ['description', 'description=@description'],
-          ['equivalents', 'equivalents=@equivalents']
-        ]
-        for (const [f, set] of optional) if (idx(f) >= 0) sets.push(set)
-        db.prepare(`UPDATE products SET ${sets.join(', ')}, updated_at=datetime('now','localtime') WHERE id=@id`).run({
-          ...record,
-          id: ex.id
-        })
-        if (ex.stock === record.stock && ex.price === record.price && ex.name === record.name) unchanged++
-        else updated++
-      } else {
-        insertStmt.run(record)
-        inserted++
-      }
-    })
-
-    if (opts.deactivateMissing && opts.mode !== 'replace') {
-      const missing = [...existing.keys()].filter((k) => !seen.has(k))
-      const st = db.prepare(`UPDATE products SET active=0, updated_at=datetime('now','localtime') WHERE sku_norm=? AND active=1`)
-      for (const k of missing) deactivated += st.run(k).changes
+      batch.push({ ...fromLocal(ex), stock: newStock, price: priceVal ?? ex.price, card_price: cardVal ?? ex.card_price })
+      updated++
+      return
     }
 
-    const r = db
-      .prepare('INSERT INTO import_logs(filename, inserted, updated, unchanged, deactivated, mode) VALUES (?,?,?,?,?,?)')
-      .run(parsed.filename, inserted, updated, unchanged, deactivated, opts.mode)
-    return Number(r.lastInsertRowid)
+    const name = (col(row, 'name') ?? '').trim() || ex?.name || skuRaw
+    const record: ProductInsert = {
+      sku: skuRaw,
+      sku_norm,
+      name,
+      name_norm: normalizeText(name),
+      brand: (col(row, 'brand') ?? '').trim() || opts.defaultBrand,
+      category: (col(row, 'category') ?? '').trim() || opts.defaultCategory,
+      type: (col(row, 'type') ?? '').trim(),
+      seal: (col(row, 'seal') ?? '').trim().toUpperCase(),
+      d_inner: parseNumber(col(row, 'd_inner')),
+      d_outer: parseNumber(col(row, 'd_outer')),
+      width: parseNumber(col(row, 'width')),
+      stock: stockVal ?? 0,
+      unit: (col(row, 'unit') ?? '').trim() || 'Adet',
+      price: priceVal ?? 0,
+      currency: parseCurrency(col(row, 'currency'), opts.defaultCurrency),
+      list_price: parseNumber(col(row, 'list_price')),
+      card_price: cardVal,
+      min_order: parseNumber(col(row, 'min_order')) ?? 1,
+      shelf: (col(row, 'shelf') ?? '').trim(),
+      barcode: (col(row, 'barcode') ?? '').trim(),
+      image: (col(row, 'image') ?? '').trim(),
+      description: (col(row, 'description') ?? '').trim(),
+      equivalents: (col(row, 'equivalents') ?? '').trim(),
+      active: true,
+      deleted: false
+    }
+
+    if (ex) {
+      // Columns that were not mapped in the file keep their current values.
+      const has = (f: Field): boolean => idx(f) >= 0
+      const out: ProductInsert = {
+        ...fromLocal(ex),
+        sku: record.sku,
+        name: record.name,
+        name_norm: record.name_norm,
+        stock: record.stock,
+        price: record.price,
+        currency: record.currency,
+        ...(has('brand') ? { brand: record.brand } : {}),
+        ...(has('category') ? { category: record.category } : {}),
+        ...(has('type') ? { type: record.type } : {}),
+        ...(has('seal') ? { seal: record.seal } : {}),
+        ...(has('d_inner') ? { d_inner: record.d_inner } : {}),
+        ...(has('d_outer') ? { d_outer: record.d_outer } : {}),
+        ...(has('width') ? { width: record.width } : {}),
+        ...(has('unit') ? { unit: record.unit } : {}),
+        ...(has('list_price') ? { list_price: record.list_price } : {}),
+        ...(has('card_price') ? { card_price: record.card_price } : {}),
+        ...(has('min_order') ? { min_order: record.min_order } : {}),
+        ...(has('shelf') ? { shelf: record.shelf } : {}),
+        ...(has('barcode') ? { barcode: record.barcode } : {}),
+        ...(has('image') ? { image: record.image } : {}),
+        ...(has('description') ? { description: record.description } : {}),
+        ...(has('equivalents') ? { equivalents: record.equivalents } : {})
+      }
+      batch.push(out)
+      if (ex.stock === out.stock && ex.price === out.price && ex.name === out.name && ex.active) unchanged++
+      else updated++
+    } else {
+      batch.push(record)
+      inserted++
+    }
   })
-  const logId = tx()
+
+  const sb = cloud()
+  if (opts.mode === 'replace') mustVoid(await sb.rpc('soft_delete_all_products'))
+  for (let i = 0; i < batch.length; i += BATCH) {
+    mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'sku_norm' }))
+  }
+  if (opts.deactivateMissing && opts.mode !== 'replace') {
+    deactivated = must(await sb.rpc('deactivate_products_not_in', { p_norms: [...seen] }))
+  }
+  const log = must(
+    await sb
+      .from('import_logs')
+      .insert({ filename: parsed.filename, inserted, updated, unchanged, deactivated, mode: opts.mode })
+      .select('*')
+      .single()
+  )
   pending.delete(opts.token)
-  db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
-  const log = db.prepare('SELECT * FROM import_logs WHERE id = ?').get(logId) as ImportLog
+  await pullProducts(opts.mode === 'replace')
   return { ...log, errors: errors.slice(0, 200) }
 }
 
-export function importLogs(): ImportLog[] {
-  return getDb().prepare('SELECT * FROM import_logs ORDER BY id DESC LIMIT 50').all() as ImportLog[]
+export async function importLogs(): Promise<ImportLog[]> {
+  return must(await cloud().from('import_logs').select('*').order('id', { ascending: false }).limit(50))
 }
 
 export const TEMPLATE_HEADERS = [

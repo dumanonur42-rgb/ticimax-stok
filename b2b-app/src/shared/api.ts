@@ -17,6 +17,7 @@ import type {
   ProductPage,
   Session,
   Settings,
+  SyncStatus,
   UpdateState,
   User,
   UserRole
@@ -54,11 +55,11 @@ export interface ApiMap {
 
   'users:list': [void, User[]]
   'users:save': [
-    { id?: number; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number },
+    { id?: string; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number },
     User
   ]
-  'users:delete': [number, void]
-  'users:approve': [number, User]
+  'users:delete': [string, void]
+  'users:approve': [string, User]
 
   'settings:get': [void, Settings]
   'settings:set': [Partial<Settings>, Settings]
@@ -71,9 +72,9 @@ export interface ApiMap {
   'import:template': [void, string | null]
 
   'app:info': [void, { version: string; dbPath: string; platform: string }]
+  'app:syncStatus': [void, SyncStatus]
+  'app:resync': [void, number]
   'app:openPath': [string, void]
-  'app:backup': [void, string | null]
-  'app:restore': [void, boolean]
   'app:seedDemo': [number, number]
 
   'update:state': [void, UpdateState]
@@ -91,4 +92,13 @@ export interface Api {
   on(channel: AppEvent, cb: () => void): () => void
 }
 
-export type AppEvent = 'products:changed' | 'orders:changed' | 'session:changed' | 'splash:leave' | 'update:changed' | 'users:changed'
+export type AppEvent =
+  | 'products:changed'
+  | 'orders:changed'
+  | 'customers:changed'
+  | 'session:changed'
+  | 'settings:changed'
+  | 'splash:leave'
+  | 'sync:changed'
+  | 'update:changed'
+  | 'users:changed'

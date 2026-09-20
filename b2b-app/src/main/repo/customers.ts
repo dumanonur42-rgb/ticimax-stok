@@ -1,97 +1,47 @@
 import type { Customer, CustomerInput, CustomerProfile } from '@shared/types'
-import { getDb } from '../db'
+import { cloud, cloudError, must, mustVoid } from '../cloud/client'
+import { fromCustomer, toCustomer } from '../cloud/map'
 
-export function listCustomers(q?: string): Customer[] {
-  const db = getDb()
+export async function listCustomers(q?: string): Promise<Customer[]> {
+  let query = cloud().from('customers').select('*').order('name')
   if (q && q.trim()) {
-    const like = `%${q.trim()}%`
-    return db
-      .prepare(
-        `SELECT * FROM customers WHERE name LIKE ? OR code LIKE ? OR city LIKE ? OR contact LIKE ? OR phone LIKE ?
-         ORDER BY name COLLATE NOCASE`
-      )
-      .all(like, like, like, like, like) as Customer[]
+    const like = `%${q.trim().replace(/[%_,()]/g, ' ')}%`
+    query = query.or(`name.ilike.${like},code.ilike.${like},city.ilike.${like},contact.ilike.${like},phone.ilike.${like}`)
   }
-  return db.prepare('SELECT * FROM customers ORDER BY name COLLATE NOCASE').all() as Customer[]
+  return must(await query).map(toCustomer)
 }
 
-export function getCustomer(id: number): Customer | null {
-  return (getDb().prepare('SELECT * FROM customers WHERE id = ?').get(id) as Customer) ?? null
+export async function getCustomer(id: number): Promise<Customer | null> {
+  const r = await cloud().from('customers').select('*').eq('id', id).maybeSingle()
+  if (r.error) throw cloudError(r.error)
+  return r.data ? toCustomer(r.data) : null
 }
 
-export function saveCustomer(c: Partial<Customer> & CustomerInput): Customer {
-  const db = getDb()
-  const row = { ...c, code: c.code.trim() || nextCustomerCode() }
+export async function saveCustomer(c: Partial<Customer> & CustomerInput): Promise<Customer> {
+  const sb = cloud()
+  const row = fromCustomer({ ...c, code: c.code.trim() })
   if (c.id) {
-    db.prepare(
-      `UPDATE customers SET code=@code, name=@name, contact=@contact, phone=@phone, email=@email, address=@address,
-       city=@city, tax_no=@tax_no, tax_office=@tax_office, discount_pct=@discount_pct, currency=@currency, notes=@notes,
-       active=@active WHERE id=@id`
-    ).run(row)
-    return getCustomer(c.id)!
+    if (!row.code) throw new Error('Cari kodu boş olamaz.')
+    return toCustomer(must(await sb.from('customers').update(row).eq('id', c.id).select('*').single()))
   }
-  const r = db
-    .prepare(
-      `INSERT INTO customers(code, name, contact, phone, email, address, city, tax_no, tax_office, discount_pct, currency, notes, active)
-       VALUES (@code,@name,@contact,@phone,@email,@address,@city,@tax_no,@tax_office,@discount_pct,@currency,@notes,@active)`
-    )
-    .run(row)
-  return getCustomer(Number(r.lastInsertRowid))!
+  if (!row.code) row.code = await nextCustomerCode()
+  return toCustomer(must(await sb.from('customers').insert(row).select('*').single()))
 }
 
-export function deleteCustomer(id: number): void {
-  getDb().prepare('DELETE FROM customers WHERE id = ?').run(id)
+export async function deleteCustomer(id: number): Promise<void> {
+  mustVoid(await cloud().from('customers').delete().eq('id', id))
 }
 
-/** Minimal company card for a self-registered dealer; they complete the details after approval. */
-export function createCustomerShell(name: string): Customer {
-  return saveCustomer({
-    code: '',
-    name: name.trim() || 'Yeni bayi',
-    contact: '',
-    phone: '',
-    email: '',
-    address: '',
-    city: '',
-    tax_no: '',
-    tax_office: '',
-    discount_pct: 0,
-    currency: 'TRY',
-    notes: '',
-    active: 1
-  })
+/** A dealer completes their own company card (RPC enforces ownership and validation server-side). */
+export async function updateMyCompany(p: CustomerProfile): Promise<Customer> {
+  return toCustomer(must(await cloud().rpc('update_my_company', { p: { ...p } })))
 }
 
-export function updateCustomerProfile(id: number, p: CustomerProfile): Customer {
-  const name = p.name.trim()
-  if (!name) throw new Error('Firma / ünvan boş olamaz.')
-  if (p.tax_no && !/^\d{10,11}$/.test(p.tax_no.trim())) throw new Error('Vergi no 10 haneli (VKN) veya TC kimlik no 11 haneli olmalı.')
-  getDb()
-    .prepare(
-      `UPDATE customers SET name=@name, contact=@contact, phone=@phone, email=@email, address=@address,
-       city=@city, tax_no=@tax_no, tax_office=@tax_office WHERE id=@id`
-    )
-    .run({
-      id,
-      name,
-      contact: p.contact.trim(),
-      phone: p.phone.trim(),
-      email: p.email.trim(),
-      address: p.address.trim(),
-      city: p.city.trim(),
-      tax_no: p.tax_no.trim(),
-      tax_office: p.tax_office.trim()
-    })
-  const c = getCustomer(id)
-  if (!c) throw new Error('Bayi kaydı bulunamadı.')
-  return c
-}
-
-function nextCustomerCode(): string {
-  const db = getDb()
-  const exists = db.prepare('SELECT 1 FROM customers WHERE code = ?')
-  let n = (db.prepare('SELECT COUNT(*) c FROM customers').get() as { c: number }).c + 1
+async function nextCustomerCode(): Promise<string> {
+  const r = await cloud().from('customers').select('code')
+  const taken = new Set(must(r).map((c) => c.code))
+  let n = taken.size + 1
   let code = `B${String(n).padStart(4, '0')}`
-  while (exists.get(code)) code = `B${String(++n).padStart(4, '0')}`
+  while (taken.has(code)) code = `B${String(++n).padStart(4, '0')}`
   return code
 }
