@@ -18,7 +18,7 @@ VARSAYILAN = {
     "grup": {
         "aktif": False,                  # grup turları (kullanıcı açmadan çalışmaz)
         "turlar": [{"saat": "09:30", "aktif": True}, {"saat": "20:00", "aktif": False}],
-        "ara_sn": 180,                   # gruplar arası bekleme
+        "ara_sn": 90,                   # gruplar arası bekleme
         "gunluk_limit": 55,              # bir turda en fazla grup
         "kapali": [],                    # paylaşım yapılmayacak grup URL'leri
         "varyant": "auto",               # auto: tur no'ya göre v1/v2/v3 döner
