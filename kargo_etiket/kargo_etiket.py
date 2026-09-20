@@ -277,7 +277,7 @@ class Layout:
         s = self.s
         self.header_h = 7 * MM
         pad = 2 * MM
-        self.alici_h = (pad + len(self.name) * 14 * s * LEADING + 10 * s * LEADING
+        self.alici_h = (4.8 * MM + len(self.name) * 14 * s * LEADING + 10 * s * LEADING
                         + 2.4 * MM + len(self.addr) * 8.5 * s * LEADING
                         + (len(self.note) * 7 * s * LEADING + 0.6 * MM if self.note else 0)
                         + (10 * s * LEADING + 1 * MM if self.ilce_il else 0) + pad)
@@ -334,20 +334,24 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     x = MARGIN_X
     y = MARGIN_Y
 
-    # 1) Üst şerit: siyah zemin, beyaz yazı — ALICI | Kargo Firması
+    # 1) Üst şerit: siyah zemin, beyaz yazı — Kargo Firması
     band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
     c.band(band, radius=1.2 * MM)
     base = y + lay.header_h / 2 + 9 * s * 0.36
-    c.text(x + 2 * MM, base, "ALICI", 9 * s, "b", white=True)
     c.text(x, base, e.kargo.get("Kargo Firması", ""), 9 * s, "b",
-           align="right", white=True, box_w=inner_w - 2 * MM)
+           align="center", white=True, box_w=inner_w)
     y = band.y1 + gap
 
-    # 2) Alıcı kutusu
+    # 2) Alıcı kutusu: sol üstte siyah ALICI etiketi, altında isim/telefon/adres
     box = pymupdf.Rect(x, y, x + inner_w, y + lay.alici_h)
     c.frame(box, width=0.9, radius=1.2 * MM)
     pad = 2 * MM
-    yy = y + pad
+    tag_h = 4 * MM
+    tag_w = _font("b").text_length("ALICI", fontsize=7 * s) + 4 * MM
+    c.band(pymupdf.Rect(x, y, x + tag_w, y + tag_h))
+    c.text(x, y + tag_h - 1.1 * MM, "ALICI", 7 * s, "b", align="center", white=True,
+           box_w=tag_w)
+    yy = y + tag_h + 0.8 * MM
     yy = c.lines(x + pad, yy, lay.name, 14 * s, "b")
     yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
     yy += 1.2 * MM
