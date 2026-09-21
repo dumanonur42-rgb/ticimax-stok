@@ -69,6 +69,45 @@ Yeni sürüm yayınlamak için:
 
 > Kod imzalama sertifikası olmadan Windows ilk kurulumda "bilinmeyen yayıncı" uyarısı gösterir; dosya bilgilerinde
 > şirket adı Yamansa Rulman olur, ancak uyarının kalkması için Yamansa adına alınmış bir kod imzalama sertifikası gerekir.
+> Kullanıcıya verilecek adımlar ve doğrulama için [KURULUM.md](KURULUM.md).
+
+## Kod imzalama (isteğe bağlı)
+
+İş akışı, aşağıdaki GitHub Secrets tanımlıysa kurulum dosyasını otomatik imzalar; tanımlı değilse imzasız üretir.
+
+| Yöntem | Secrets |
+| --- | --- |
+| Azure Trusted Signing (aylık ücret, SmartScreen güveni hemen) | `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `TRUSTED_SIGNING_ENDPOINT` (örn. `https://weu.codesigning.azure.net`), `TRUSTED_SIGNING_ACCOUNT`, `TRUSTED_SIGNING_PROFILE` |
+| OV/EV sertifika (.pfx) | `WIN_CSC_LINK` (pfx dosyasının base64'ü), `WIN_CSC_KEY_PASSWORD` |
+
+Sertifikanın konu adı (CN) **Yamansa Rulman** olmalıdır; `electron-updater` sonraki güncellemeleri bu ada göre doğrular.
+Ücretsiz seçenek: kod açık kaynak olduğu için [SignPath Foundation](https://signpath.org/apply) OSS programına
+başvurulabilir; kabul edilirse imzalama GitHub Actions'tan SignPath'e devredilir.
+
+Her sürümle birlikte `SHA256SUMS.txt` yayımlanır; Release açıklamasında da özet yazar.
+
+## Microsoft Store (imzasız exe'ye ücretsiz alternatif)
+
+Store'dan yüklenen paketi Microsoft imzalar; SmartScreen / Akıllı Uygulama Denetimi engeli kalkar ve güncellemeler Store
+üzerinden gelir (uygulama `process.windowsStore` altında kendi güncelleyicisini kapatır). `.github/workflows/b2b-app-windows.yml`
+içindeki `store` işi her `b2b-v*` etiketinde AppX paketini derleyip Partner Center'a gönderir; aşağıdaki GitHub Secrets
+tanımlı değilse iş atlanır.
+
+1. [Partner Center](https://partner.center.microsoft.com/tr-tr/dashboard/registration) → **Bireysel** hesap açın,
+   **Yeni uygulama** ile adı rezerve edin.
+2. Ürün yönetimi → **Ürün kimliği** sayfasındaki değerleri secret olarak girin:
+
+   | Secret | Partner Center alanı |
+   | --- | --- |
+   | `STORE_PRODUCT_ID` | Store ID (örn. `9NBLGGH4R315`) |
+   | `STORE_IDENTITY_NAME` | Package/Identity/Name |
+   | `STORE_PUBLISHER` | Package/Identity/Publisher (`CN=...`) |
+
+3. Hesap ayarları → **Kullanıcı yönetimi → Azure AD uygulamaları** ile bir uygulama ekleyip anahtar oluşturun:
+   `STORE_TENANT_ID`, `STORE_SELLER_ID`, `STORE_CLIENT_ID`, `STORE_CLIENT_SECRET`
+   ([msstore reconfigure](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/reconfigure-command)).
+4. Bir sonraki `b2b-v*` etiketinde paket otomatik gönderilir; Microsoft incelemesi (genellikle 1–3 gün) bitince Store
+sürümü güncellenir. Store logoları `build/appx/` altındadır.
 
 ## Veri konumu
 

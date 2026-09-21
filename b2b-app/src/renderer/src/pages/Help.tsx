@@ -115,6 +115,38 @@ export function Help(): ReactNode {
           <li>Türkçe karakter duyarsızdır (Keçe / KECE).</li>
         </ul>
       </section>
+
+      <section className="card grid" style={{ gap: 10 }} aria-labelledby="h-secure">
+        <h2 id="h-secure">Güvenlik ve kurulum</h2>
+        <ul style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>
+          <li>
+            <b>Windows "Bilgisayarınız korundu" uyarısı:</b> kurulum dosyası dijital imzalı olmadığı için ilk çalıştırmada çıkabilir. <b>Daha fazla bilgi → Yine
+            de çalıştır</b> ile devam edin; dosya bilgilerinde (sağ tık → Özellikler → Ayrıntılar) şirket adı <b>Yamansa Rulman</b> yazmalıdır.
+          </li>
+          <li>
+            <b>"Uygulama denetim ilkesi tarafından engellendi":</b> kurulumda <b>"Bu bilgisayarı kullanan herkes için"</b> seçeneğini (varsayılan) bırakıp
+            Program Files'a kurun; şirket bilgisayarlarındaki ilkeler çoğunlukla yalnızca Program Files'a izin verir. Kişisel Windows 11'de hata sürüyorsa
+            neden <b>Akıllı Uygulama Denetimi</b>'dir (Windows Güvenliği → Uygulama ve tarayıcı denetimi); kapatma kararı bilgisayar sahibine aittir.
+          </li>
+          <li>
+            <b>Doğrulama:</b> her sürümün GitHub Releases sayfasında kurulum dosyasının SHA-256 özeti yazar; PowerShell'de <code>Get-FileHash</code> ile
+            karşılaştırabilirsiniz.
+          </li>
+          <li>
+            <b>Verileriniz:</b> giriş, ürün ve siparişler yalnızca Yamansa'nın bulut veritabanıyla şifreli (HTTPS) konuşur; kimin neyi görebileceği sunucuda
+            uygulanır, bayi yalnızca kendi verisini görür. Uygulama içinde dış web sayfası gösterilmez (bağlantılar tarayıcınızda açılır), kamera/mikrofon gibi izin istenmez.
+          </li>
+          <li>
+            <b>Güncellemeler</b> yalnızca resmî GitHub Releases sayfasından alınır ve siz onaylamadan kurulmaz.
+          </li>
+          {isAdmin ? (
+            <li>
+              <b>[Yönetici]</b> Ayrıntılı kurulum rehberi ve güvenlik duvarı adresleri için depodaki <code>b2b-app/KURULUM.md</code> dosyasına bakın; Defender yanlış
+              alarm verirse dosyayı Microsoft'a "yanlışlıkla algılandı" olarak bildirebilirsiniz.
+            </li>
+          ) : null}
+        </ul>
+      </section>
     </div>
   )
 }

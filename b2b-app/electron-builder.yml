@@ -14,6 +14,10 @@ asarUnpack:
   - '**/*.node'
 npmRebuild: true
 artifactName: Yamansa-Rulman-B2B-Kurulum-${version}.${ext}
+# Code signing is optional and driven by CI secrets (see .github/workflows/b2b-app-windows.yml):
+#   WIN_CSC_LINK + WIN_CSC_KEY_PASSWORD  -> signtool with a .pfx certificate
+#   AZURE_* + TRUSTED_SIGNING_*           -> Azure Trusted Signing (win.azureSignOptions passed on the CLI)
+# Without them the installer is built unsigned and SmartScreen shows the "unknown publisher" prompt.
 win:
   target:
     - target: nsis
@@ -24,7 +28,11 @@ win:
   legalTrademarks: Yamansa Rulman
 nsis:
   oneClick: false
+  # "Bu bilgisayarı kullanan herkes" (Program Files) is preselected: AppLocker's default rules only allow
+  # executables under Program Files/Windows, so a per-user %LOCALAPPDATA% install is blocked on managed PCs.
   perMachine: false
+  selectPerMachineByDefault: true
+  allowElevation: true
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: always
   createStartMenuShortcut: true
@@ -35,6 +43,15 @@ nsis:
   installerIcon: build/icon.ico
   uninstallerIcon: build/icon.ico
   uninstallDisplayName: Yamansa Rulman B2B
+# Microsoft Store package (MSIX/AppX). Built only with `--win appx`; the Store signs it itself, so no certificate is needed.
+# identityName/publisher come from Partner Center (Product identity page) and are passed on the CLI by CI.
+appx:
+  displayName: Yamansa Rulman B2B
+  publisherDisplayName: Yamansa Rulman
+  backgroundColor: '#0f172a'
+  languages: [tr-TR]
+  showNameOnTiles: true
+  artifactName: Yamansa-Rulman-B2B-Store-${version}.${ext}
 linux:
   target: [AppImage]
   icon: build/icon.png

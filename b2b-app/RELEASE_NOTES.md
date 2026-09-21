@@ -5,6 +5,14 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.13
+
+- Kurulum sihirbazında "Bu bilgisayarı kullanan herkes için" (Program Files) seçeneği varsayılan geldi; şirket bilgisayarlarındaki uygulama denetim ilkelerinin (AppLocker) engeline takılmamak için bu seçeneği bırakın. Windows uyarısı çıkarsa: Daha fazla bilgi → Yine de çalıştır.
+- Güvenlik sıkılaştırması: uygulama penceresi tam yalıtımlı (sandbox) çalışır, dış web sayfası açmaz, kamera/mikrofon/konum gibi izin istemez; yalnızca WhatsApp, telefon ve resmî GitHub bağlantıları tarayıcıda açılır.
+- Yardım sayfasına "Güvenlik ve kurulum" bölümü eklendi: Windows uyarıları, "uygulama denetim ilkesi" hatası ve dosya doğrulama adımları.
+- [yönetici] Her sürümle SHA-256 doğrulama dosyası (SHA256SUMS.txt) yayımlanır; ayrıntılı kurulum rehberi b2b-app/KURULUM.md.
+- [yönetici] Microsoft Store dağıtımı için paketleme hazır (hesap açılınca devreye alınır); Store sürümü güncellemelerini Store'dan alır.
+
 ## 1.0.12
 
 - Ürün listesi pencere genişliğine göre kendini sığdırır: dar pencerede sütunlar daralır, en az önemli sütunlar (ölçü, K. kartı fiyatı vb.) gizlenir; yatay kaydırma çubuğu çıkmaz.

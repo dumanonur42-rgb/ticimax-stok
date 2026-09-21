@@ -34,6 +34,20 @@ import { checkForUpdates, downloadAndInstall, installUpdate, updateState } from 
 
 let session: Session | null = null
 
+const EXTERNAL_HOSTS = new Set(['wa.me', 'api.whatsapp.com', 'github.com', 'www.microsoft.com'])
+
+/** Only phone/mail links and a handful of https hosts may leave the app; everything else is rejected before reaching the OS. */
+export function isAllowedExternal(raw: string): boolean {
+  let url: URL
+  try {
+    url = new URL(raw)
+  } catch {
+    return false
+  }
+  if (url.protocol === 'tel:' || url.protocol === 'mailto:') return true
+  return url.protocol === 'https:' && EXTERNAL_HOSTS.has(url.hostname)
+}
+
 type Handler<C extends ApiChannel> = (args: ApiArgs<C>, event: Electron.IpcMainInvokeEvent) => ApiResult<C> | Promise<ApiResult<C>>
 
 function handle<C extends ApiChannel>(channel: C, fn: Handler<C>): void {
@@ -374,7 +388,7 @@ export function registerIpc(): void {
     shell.showItemInFolder(p)
   })
   handle('app:openExternal', async (url) => {
-    if (!/^(https:|tel:|mailto:)/.test(url)) throw new Error('Bu bağlantı açılamaz.')
+    if (!isAllowedExternal(url)) throw new Error('Bu bağlantı açılamaz.')
     await shell.openExternal(url)
   })
   handle('app:syncStatus', () => syncStatus())

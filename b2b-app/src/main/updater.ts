@@ -17,9 +17,10 @@ export function updateState(): UpdateState {
   return state
 }
 
-/** GitHub hands the release body over as HTML; keep one line per bullet/paragraph. */
+/** GitHub hands the release body over as HTML; keep one line per bullet/paragraph. Everything after the first `<hr>` (install help, checksums) is not part of the notes. */
 const stripHtml = (s: string): string =>
   s
+    .replace(/<hr\s*\/?>[\s\S]*$/i, '')
     .replace(/<\/(li|p|h\d|div)>|<br\s*\/?>/gi, '\n')
     .replace(/<[^>]+>/g, '')
     .replace(/&quot;/g, '"')
@@ -41,8 +42,11 @@ function releaseNotes(notes: UpdateInfo['releaseNotes']): string | undefined {
   return undefined
 }
 
+/** Store (AppX) installs are updated by the Microsoft Store itself; the GitHub updater must stay off there. */
+const selfUpdating = (): boolean => app.isPackaged && !process.windowsStore
+
 export function checkForUpdates(): void {
-  if (!app.isPackaged) return
+  if (!selfUpdating()) return
   if (state.status === 'available' || state.status === 'downloading' || state.status === 'downloaded' || state.status === 'installing') return
   lastCheckAt = Date.now()
   autoUpdater.checkForUpdates().catch((e: Error) => set({ status: 'error', message: e.message }))
@@ -54,7 +58,7 @@ function checkOnFocus(): void {
 
 /** User accepted the update: download it, then install over the current version and relaunch. */
 export function downloadAndInstall(): void {
-  if (!app.isPackaged || state.status !== 'available') return
+  if (!selfUpdating() || state.status !== 'available') return
   set({ status: 'downloading', percent: 0, message: undefined })
   autoUpdater.downloadUpdate().catch((e: Error) => set({ status: 'error', message: e.message }))
 }
@@ -67,7 +71,7 @@ export function installUpdate(): void {
 
 /** GitHub Releases based auto-update: asks the user first, then downloads and installs in place. */
 export function startUpdater(): void {
-  if (!app.isPackaged) return
+  if (!selfUpdating()) return
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.allowDowngrade = false

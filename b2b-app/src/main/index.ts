@@ -1,7 +1,7 @@
-import { app, BrowserWindow, Menu, shell } from 'electron'
+import { app, BrowserWindow, Menu, session, shell } from 'electron'
 import { join } from 'node:path'
 import { getDb } from './db'
-import { registerIpc, restoreSession } from './ipc'
+import { isAllowedExternal, registerIpc, restoreSession } from './ipc'
 import { isBackgroundMode, isQuitting, registerMainWindow } from './notify'
 import { productFacets, searchProducts } from './repo/products'
 import { runSelfCheck } from './selfcheck'
@@ -12,6 +12,35 @@ const SPLASH_MIN_MS = 3000
 const SPLASH_LEAVE_MS = 450
 let splashShownAt = 0
 let mainWin: BrowserWindow | null = null
+
+const WEB_PREFERENCES = {
+  preload: join(__dirname, '../preload/index.js'),
+  sandbox: true,
+  contextIsolation: true,
+  nodeIntegration: false,
+  webviewTag: false,
+  spellcheck: false
+} as const
+
+/** Renderer pages are local files; anything that tries to navigate elsewhere, open a popup, embed a webview or ask for device permissions is refused. */
+function hardenWebContents(win: BrowserWindow): void {
+  const wc = win.webContents
+  wc.on('will-navigate', (e, url) => {
+    if (!(isDev && url.startsWith(process.env.ELECTRON_RENDERER_URL!)) && !url.startsWith('file:')) e.preventDefault()
+  })
+  wc.on('will-attach-webview', (e) => e.preventDefault())
+  wc.setWindowOpenHandler(({ url }) => {
+    if (isAllowedExternal(url)) void shell.openExternal(url)
+    return { action: 'deny' }
+  })
+}
+
+function hardenSession(): void {
+  const s = session.defaultSession
+  s.setPermissionRequestHandler((_wc, _permission, cb) => cb(false))
+  s.setPermissionCheckHandler(() => false)
+  s.setDevicePermissionHandler(() => false)
+}
 
 function load(win: BrowserWindow, query?: Record<string, string>): void {
   if (isDev) {
@@ -57,13 +86,9 @@ function createSplash(): BrowserWindow {
     focusable: false,
     title: 'Yamansa Rulman B2B',
     icon: join(__dirname, '../../resources/icon.png'),
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      contextIsolation: true,
-      nodeIntegration: false
-    }
+    webPreferences: WEB_PREFERENCES
   })
+  hardenWebContents(splash)
   splash.setIgnoreMouseEvents(true)
   splash.on('ready-to-show', () => {
     splashShownAt = Date.now()
@@ -86,14 +111,9 @@ function createWindow(showSplash = true): void {
     backgroundColor: '#0f172a',
     autoHideMenuBar: true,
     icon: join(__dirname, '../../resources/icon.png'),
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
-      contextIsolation: true,
-      nodeIntegration: false,
-      spellcheck: false
-    }
+    webPreferences: WEB_PREFERENCES
   })
+  hardenWebContents(win)
 
   mainWin = win
   win.on('closed', () => {
@@ -122,11 +142,6 @@ function createWindow(showSplash = true): void {
       )
     })
   })
-  win.webContents.setWindowOpenHandler(({ url }) => {
-    if (/^https?:/.test(url)) shell.openExternal(url)
-    return { action: 'deny' }
-  })
-
   load(win)
 }
 
@@ -157,6 +172,7 @@ if (process.argv.includes('--selfcheck')) {
 
   app.whenReady().then(() => {
     Menu.setApplicationMenu(null)
+    hardenSession()
     getDb()
     registerIpc()
     registerMainWindow(
