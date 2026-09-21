@@ -80,11 +80,17 @@ export interface BulkProductPatch {
   active?: boolean
 }
 
-/** Products that are certainly the same item (same designation and brand). */
+/**
+ * Products with the same designation and brand. `exact` groups also share the packaging state (certain duplicates);
+ * `box` groups differ only in packaging (Kutulu / Kutusuz …) and are offered for merging as an option.
+ */
 export interface DuplicateGroup {
   key: string
+  kind: 'exact' | 'box'
   designation: string
   brand: string
+  /** Distinct packaging labels in the group (display order). */
+  boxes: string[]
   items: Product[]
 }
 

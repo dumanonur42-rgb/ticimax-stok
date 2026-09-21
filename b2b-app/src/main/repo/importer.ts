@@ -9,6 +9,7 @@ import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
 import { canonBox } from '@shared/identity'
 import { getDb, normalize, normalizeText, productKey } from '../db'
+import { brandSpellings, resolveBrand } from './products'
 
 interface Parsed {
   filename: string
@@ -69,38 +70,12 @@ export function suggestMapping(headers: string[]): Partial<Record<Field, string>
   return map
 }
 
-/** A quantity inside a box cell — but not the "10" of "10'lu paket" / "5li", which belongs to the label. */
-const BOX_COUNT = /(?<![\d'’.,])(\d+(?:[.,]\d+)?)(?![\d'’]|\s*l[iıuü]\b)/gi
-
 /**
- * "Kutu durumu" cells are free text: "KUTULU", "3 KUTULU 1 ORJ KAĞIT 1 KUTUSUZ", "KUTUSUZ: 4 – 10'LU PAKET: 2"…
- * Each "quantity + label" pair becomes its own line (box state is part of the product identity, so they are
- * different products); labels are canonicalised with `canonBox`. Without quantities the whole cell is one label
- * carrying the row's stock.
+ * "Kutu durumu" cells are free text ("KUTULU", "3 KUTULU 1 ORJ KAĞIT 1 KUTUSUZ"); the whole cell is kept as the
+ * product's single packaging label, tidied with `canonBox` (line breaks collapsed, known spellings unified).
  */
-export function parseBox(raw: string | undefined, stock: number | null): { box: string; stock: number | null }[] {
-  const text = (raw ?? '').replace(/\s+/g, ' ').trim()
-  if (!text) return [{ box: '', stock }]
-  const counts = [...text.matchAll(BOX_COUNT)].map((m) => ({ n: parseNumber(m[1]), start: m.index!, end: m.index! + m[0].length }))
-  const split = (mode: 'after' | 'before'): { box: string; stock: number | null }[] | null => {
-    const parts: { box: string; stock: number | null }[] = []
-    for (let i = 0; i < counts.length; i++) {
-      const c = counts[i]
-      const label =
-        mode === 'after' ? text.slice(c.end, counts[i + 1]?.start ?? text.length) : text.slice(counts[i - 1]?.end ?? 0, c.start)
-      const box = canonBox(label)
-      if (!box) return null
-      parts.push({ box, stock: c.n })
-    }
-    return parts
-  }
-  const parts = counts.length ? (/^\d/.test(text) ? split('after') ?? split('before') : split('before') ?? split('after')) : null
-  if (parts) {
-    const merged = new Map<string, number | null>()
-    for (const p of parts) merged.set(p.box, (merged.get(p.box) ?? 0) + (p.stock ?? 0))
-    return [...merged].map(([box, n]) => ({ box, stock: n }))
-  }
-  return [{ box: canonBox(text), stock }]
+export function parseBox(raw: string | undefined): string {
+  return canonBox((raw ?? '').replace(/\s+/g, ' ').trim())
 }
 
 function parseFile(path: string): Parsed {
@@ -234,6 +209,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     return true
   }
   let lastShelf = ''
+  const spellings = brandSpellings()
 
   const fromLocal = (ex: LocalRow): ProductInsert => ({
     sku: ex.sku,
@@ -283,19 +259,9 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     if (!skuRaw) return
     const sku_norm = normalize(skuRaw)
     if (!sku_norm) return
-    const brand = (col(row, 'brand') ?? '').trim() || opts.defaultBrand
+    const brand = resolveBrand((col(row, 'brand') ?? '') || opts.defaultBrand, spellings)
     const stockVal = parseNumber(col(row, 'stock'))
-    const parts = parseBox(col(row, 'box'), stockVal)
-    if (stockVal != null && parts.some((p) => p.stock !== stockVal)) {
-      const sum = parts.reduce((s, p) => s + (p.stock ?? 0), 0)
-      if (sum !== stockVal)
-        errors.push(
-          `Satır ${i + 2}: ${skuRaw} — kutu durumu toplamı (${sum}) ADET (${stockVal}) ile uyuşmuyor; kutu durumundaki adetler kullanıldı.`
-        )
-    }
-    for (const part of parts) {
-      lines.push({ i, skuRaw, sku_norm, brand, box: part.box, shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal: part.stock })
-    }
+    lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(col(row, 'box')), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
   })
 
   for (const line of lines) {

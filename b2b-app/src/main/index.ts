@@ -135,8 +135,13 @@ function createWindow(showSplash = true): void {
       if (splash && !splash.isDestroyed()) splash.webContents.send('splash:leave')
       setTimeout(
         () => {
-          if (!(hidden && isBackgroundMode())) win.show()
           if (splash && !splash.isDestroyed()) splash.close()
+          if (!(hidden && isBackgroundMode())) {
+            win.show()
+            win.focus()
+            win.webContents.focus()
+            win.webContents.send('window:shown')
+          }
         },
         splash ? SPLASH_LEAVE_MS : 0
       )

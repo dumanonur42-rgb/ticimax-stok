@@ -609,6 +609,146 @@ textarea.input {
   border-color: currentColor;
 }
 
+/* Stock quantity pill: aligned numbers, level colour, small unit. */
+.stock-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 84px;
+  height: 28px;
+  padding: 0 10px 0 9px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 26px;
+  font-variant-numeric: tabular-nums;
+}
+.stock-pill-dot {
+  align-self: center;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.stock-pill-num {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+}
+.stock-pill-unit {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+.stock-pill-flag {
+  align-self: center;
+  margin-left: 2px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  line-height: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--warning);
+  color: #fff;
+}
+.stock-pill-text {
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+.stock-pill.ok {
+  color: var(--success);
+  background: var(--success-bg);
+  border-color: color-mix(in srgb, var(--success) 25%, transparent);
+}
+.stock-pill.low {
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-color: color-mix(in srgb, var(--warning) 30%, transparent);
+}
+.stock-pill.out {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: color-mix(in srgb, var(--danger) 25%, transparent);
+}
+.stock-pill.ok .stock-pill-num,
+.stock-pill.low .stock-pill-num {
+  color: var(--text);
+}
+[data-theme='contrast'] .stock-pill {
+  border-color: currentColor;
+}
+
+/* Packaging state ("Kutulu", "Kutusuz", "3 Kutulu 1 Kutusuz"): readable chip in the admin catalog. */
+.box-tag {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 0 10px;
+  height: 28px;
+  line-height: 26px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-sunken);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.box-tag.kutulu {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  background: color-mix(in srgb, var(--primary) 9%, var(--bg-elev));
+}
+.box-tag.kutusuz {
+  border-style: dashed;
+}
+[data-theme='contrast'] .box-tag {
+  background: transparent;
+  border-color: var(--text);
+}
+
+/* Segmented radio group (e.g. duplicate kind filter). */
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+}
+.seg-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.seg-btn:hover {
+  color: var(--text);
+}
+.seg-btn.on {
+  background: var(--bg-elev);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+.seg-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+[data-theme='contrast'] .seg-btn.on {
+  outline: 2px solid var(--text);
+}
+
 .stat {
   display: flex;
   flex-direction: column;

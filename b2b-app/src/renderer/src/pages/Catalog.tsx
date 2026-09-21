@@ -7,7 +7,9 @@ import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
 import { useSyncStatus } from '@/components/SyncBanner'
 import { api, onEvent } from '@/lib/api'
-import { money, num, stockLevel } from '@/lib/format'
+import { money, num } from '@/lib/format'
+import { StockPill } from '@/components/StockPill'
+import { canonBox } from '@shared/identity'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
@@ -32,13 +34,19 @@ const COLUMNS: Column[] = [
   { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
-  { key: 'stock', label: 'Stok', min: 92, sort: 'stock', align: 'right' },
-  { key: 'box', label: 'Kutu durumu', min: 96, grow: 0.5, drop: 3, adminOnly: true },
+  { key: 'stock', label: 'Stok', min: 118, sort: 'stock', align: 'right' },
+  { key: 'box', label: 'Kutu durumu', min: 112, grow: 0.6, drop: 3, adminOnly: true },
   { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2, adminOnly: true },
   { key: 'price', label: 'Peşin Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
   { key: 'card_price', label: 'K. Kartı Fiyatı', min: 112, grow: 0.4, drop: 4, align: 'right' },
   { key: 'act', label: '', min: 100 }
 ]
+
+/** Chip style for the packaging label: the two common states get their own look, anything else is neutral. */
+function boxClass(box: string): string {
+  const c = canonBox(box)
+  return c === 'Kutulu' ? 'kutulu' : c === 'Kutusuz' ? 'kutusuz' : ''
+}
 
 /** Horizontal padding of `.vgrid-head` / `.vrow` (4px each side). */
 const GRID_PAD = 8
@@ -429,7 +437,6 @@ export function Catalog(): ReactNode {
                       <div className="cell faint">…</div>
                     </div>
                   )
-                const lvl = stockLevel(p.stock, threshold)
                 return (
                   <div
                     key={v.key}
@@ -470,11 +477,11 @@ export function Catalog(): ReactNode {
                       </div>
                     )}
                     <div className="cell right" role="gridcell">
-                      <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
+                      <StockPill stock={p.stock} threshold={threshold} unit={p.unit} />
                     </div>
                     {has.has('box') && (
-                      <div className="cell small muted truncate" role="gridcell" title={p.box}>
-                        {p.box || <span className="faint">—</span>}
+                      <div className="cell box-cell" role="gridcell" title={p.box}>
+                        {p.box ? <span className={`box-tag ${boxClass(p.box)}`}>{p.box}</span> : <span className="faint">—</span>}
                       </div>
                     )}
                     {has.has('description') && (

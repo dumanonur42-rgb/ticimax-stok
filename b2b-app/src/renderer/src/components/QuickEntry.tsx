@@ -1,4 +1,4 @@
-import { normalize as norm, productKey } from '@shared/identity'
+import { boxMentions, normalize as norm, productKey } from '@shared/identity'
 import type { Product, QuickEntryResult, QuickEntryRow } from '@shared/types'
 import { AlertTriangle, ClipboardPaste, Eraser, Info, Keyboard, Plus, RefreshCw, Save, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react'
@@ -313,6 +313,8 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
             const hit = r.sku.trim() ? known.get(key) : undefined
             const twice = r.sku.trim() && (dupInBatch.get(key) ?? 0) > 1
             const others = r.sku.trim() && !hit ? (variants.get(norm(r.sku)) ?? []).filter((p) => norm(p.brand) === norm(r.brand)) : []
+            // "Kutulu" typed while the record carries a merged label such as "4 Kutulu 2 Kutusuz": offer that record instead of a new product.
+            const combined = r.box.trim() ? others.filter((p) => boxMentions(p.box, r.box)) : []
             return (
               <div key={r.id} className={`qe-row${hit ? ' known' : ''}${r.error ? ' error' : ''}${isEmpty(r) ? ' blank' : ''}`} role="row" aria-rowindex={idx + 1}>
                 <div className="qe-num" aria-hidden>
@@ -343,7 +345,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                   )}
                 </div>
                 {(hit || twice || others.length > 0 || r.error) && (
-                  <div className={`qe-note${!hit && !r.error && others.length ? ' variant' : ''}`} role="note">
+                  <div className={`qe-note${!hit && !r.error && others.length && !combined.length ? ' variant' : ''}`} role="note">
                     {r.error ? (
                       <>
                         <AlertTriangle size={14} aria-hidden /> <span className="danger-text">{r.error}</span>
@@ -416,6 +418,34 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
                     ) : twice ? (
                       <>
                         <ClipboardPaste size={14} aria-hidden /> Bu ürün (aynı kod, marka ve kutu) tabloda birden fazla kez var; adetler toplanarak tek ürün olur.
+                      </>
+                    ) : combined.length ? (
+                      <>
+                        <span className="qe-known">
+                          <AlertTriangle size={14} aria-hidden />
+                          <span>
+                            <b>{r.box.trim()}</b> bu ürünün birleşik kaydında yer alıyor:{' '}
+                            {combined.slice(0, 2).map((p, i) => (
+                              <span key={p.id}>
+                                {i > 0 && ' / '}
+                                <b>{p.box}</b> ({num(Number(p.stock))} adet)
+                              </span>
+                            ))}
+                            . Böyle kaydedilirse <u>ayrı bir ürün</u> açılır.
+                          </span>
+                        </span>
+                        <div className="qe-modes" role="group" aria-label={`${r.sku} için kayıt seçimi`}>
+                          {combined.slice(0, 2).map((p) => (
+                            <button key={p.id} type="button" className="qe-mode-btn add" tabIndex={-1} onClick={() => update(idx, 'box', p.box)}>
+                              <span className="qe-mode-title">
+                                <Plus size={14} aria-hidden /> Bu kayda ekle
+                              </span>
+                              <span className="qe-mode-math">
+                                {p.box} · {num(Number(p.stock))} + {num(parseNum(r.stock) ?? 0)} = <b>{num(Number(p.stock) + (parseNum(r.stock) ?? 0))}</b>
+                              </span>
+                            </button>
+                          ))}
+                        </div>
                       </>
                     ) : (
                       <span className="qe-variant">

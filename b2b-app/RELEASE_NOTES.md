@@ -5,6 +5,16 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.14
+
+- Uygulama açılır açılmaz klavye çalışır; yazmaya başlamak için önce boşluğa tıklamak gerekmez.
+- Stok göstergesi yenilendi: sayı belirgin, "adet" küçük; renk stok seviyesine göre (yok / kritik / az / var).
+- Marka yazım farkları tek marka sayılır: INA / İNA / ina, İKO / IKO, NACHİ / NACHI gibi ayrımlar birleştirildi; marka filtresi ve listeler tek adı gösterir. Yeni girişlerde yazım nasıl olsa (küçük harf, ı/İ, fazla boşluk) kayıtlı marka adı kullanılır.
+- [yönetici] Stok Aktar'da kutu durumu hücresi artık ürünlere bölünmez: "3 KUTULU 1 ORJ KAĞIT 1 KUTUSUZ" olduğu gibi tek ürünün kutu durumu olur; ADET sütunu ürünün stoğudur.
+- [yönetici] Ürün listesinde Kutu durumu sütunu okunaklı etiket olarak gösterilir (Kutulu dolgulu, Kutusuz kesikli çerçeve).
+- [yönetici] Mükerrerler: aynı kod ve marka olup yalnızca kutu durumu farklı olan ürünler (Kutulu / Kutusuz / birleşik) de gruplanır; "Tümü / Aynı kutu / Kutulu-Kutusuz" filtresi ile ayrılır ve istenirse tek ürüne birleştirilir. Not: hızlı girişte aynı kod+marka+kutu ikinci kez girildiğinde yeni kayıt açılmaz, mevcut ürüne stok eklenir; bu yüzden mükerrer listesinde görünmez.
+- [yönetici] Hızlı giriş: kutu durumu "Kutulu" yazıldığında aynı kod+markanın kayıtlı kutu durumu "4 Kutulu 2 Kutusuz" gibi birleşik bir ifadeyse satırda uyarı çıkar ve tek tıkla o kayda stok eklenir; ayrı ürün açılmaz.
+
 ## 1.0.13
 
 - Kurulum sihirbazında "Bu bilgisayarı kullanan herkes için" (Program Files) seçeneği varsayılan geldi; şirket bilgisayarlarındaki uygulama denetim ilkelerinin (AppLocker) engeline takılmamak için bu seçeneği bırakın. Windows uyarısı çıkarsa: Daha fazla bilgi → Yine de çalıştır.

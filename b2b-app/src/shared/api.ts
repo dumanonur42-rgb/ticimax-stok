@@ -120,3 +120,4 @@ export type AppEvent =
   | 'sync:changed'
   | 'update:changed'
   | 'users:changed'
+  | 'window:shown'

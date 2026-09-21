@@ -86,9 +86,23 @@ export function App(): ReactNode {
     const offSettings = onEvent('settings:changed', () => {
       loadSettings().catch(() => undefined)
     })
+    // Focus given while the window was still hidden behind the splash does not reach the keyboard; redo it once visible.
+    const offShown = onEvent('window:shown', () => {
+      const active = document.activeElement
+      const target =
+        active instanceof HTMLElement && active !== document.body
+          ? active
+          : ['[autofocus]', 'input[type="search"]', 'input', 'main [tabindex="0"]']
+              .map((sel) => document.querySelector<HTMLElement>(sel))
+              .find((el) => el != null)
+      if (!target) return
+      target.blur()
+      target.focus({ preventScroll: true })
+    })
     return () => {
       offSession()
       offSettings()
+      offShown()
     }
   }, [])
 

@@ -10,7 +10,8 @@ const EVENTS = new Set<AppEvent>([
   'splash:leave',
   'sync:changed',
   'update:changed',
-  'users:changed'
+  'users:changed',
+  'window:shown'
 ])
 
 const api: Api = {

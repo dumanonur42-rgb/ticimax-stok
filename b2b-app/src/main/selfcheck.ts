@@ -3,7 +3,8 @@ import { pullProducts, upsertLocal } from './cloud/sync'
 import { getDb, normalize, normalizeText, productKey } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
 import { parseBox, suggestMapping } from './repo/importer'
-import { getProduct, productFacets, saveProduct, searchProducts } from './repo/products'
+import { duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
+import { boxMentions, canonBrand } from '@shared/identity'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 
@@ -169,18 +170,18 @@ export async function runSelfCheck(): Promise<number> {
     console.error(`import mapping: name unexpectedly mapped to ${map.name}`)
     ok = false
   }
-  const boxCases: [string, { box: string; stock: number | null }[]][] = [
-    ['33 KUTULU – 1 KUTUSUZ', [{ box: 'Kutulu', stock: 33 }, { box: 'Kutusuz', stock: 1 }]],
-    ['kutusuz', [{ box: 'Kutusuz', stock: 7 }]],
-    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', [{ box: 'Kutulu', stock: 3 }, { box: 'Orjinal Kağıt', stock: 1 }, { box: 'Kutusuz', stock: 1 }]],
-    ['2 10\'LU PAKET 1 POŞET', [{ box: "10'lu Paket", stock: 2 }, { box: 'Poşet', stock: 1 }]],
-    ['KUTULU: 4, ORİJİNAL KAĞIT: 2', [{ box: 'Kutulu', stock: 4 }, { box: 'Orjinal Kağıt', stock: 2 }]],
-    ['orj kağıt', [{ box: 'Orjinal Kağıt', stock: 7 }]],
-    ['5 adet kutulu', [{ box: 'Kutulu', stock: 5 }]]
+  // The cell is one label; it is never split into several products.
+  const boxCases: [string, string][] = [
+    ['kutusuz', 'Kutusuz'],
+    ['KUTULU', 'Kutulu'],
+    ['orj kağıt', 'Orjinal Kağıt'],
+    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Orj Kağıt 1 Kutusuz'],
+    ['33 KUTULU – 1 KUTUSUZ', '33 Kutulu 1 Kutusuz'],
+    ['', '']
   ]
   for (const [input, want] of boxCases) {
-    const got = parseBox(input, 7)
-    if (JSON.stringify(got) !== JSON.stringify(want)) {
+    const got = parseBox(input)
+    if (got !== want) {
       console.error('import box parsing failed', JSON.stringify(input), got, want)
       ok = false
     }
@@ -190,6 +191,102 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log('import mapping: ok')
+
+  // Brand spelling variants (Turkish dotted/dotless i, case, spacing) are one brand.
+  for (const v of ['INA', 'İNA', 'ina', 'ına', ' Ina ', 'I N A']) {
+    if (normalize(canonBrand(v)) !== 'INA' || productKey('6205', v, '') !== productKey('6205', 'INA', '')) {
+      console.error('brand identity differs for', JSON.stringify(v), canonBrand(v))
+      ok = false
+    }
+  }
+  if (normalize(canonBrand('ÇİN')) === normalize(canonBrand('INA')) || normalize('SKF') === normalize('SNR')) {
+    console.error('distinct brands collapsed')
+    ok = false
+  }
+  const mentionCases: [string, string, boolean][] = [
+    ['4 Kutulu 2 Kutusuz', 'Kutulu', true],
+    ['4 Kutulu 2 Kutusuz', 'kutusuz', true],
+    ['3 KUTULU 1 ORJ KAĞIT', 'Orjinal Kağıt', true],
+    ['3 Kutulu 1 Orj Kağıt', 'Poşet', false],
+    ['Kutulu', 'Kutulu', false],
+    ['Kutusuz', 'Kutulu', false],
+    ['', 'Kutulu', false],
+    ['4 Kutulu 2 Kutusuz', '', false]
+  ]
+  for (const [label, word, want] of mentionCases) {
+    if (boxMentions(label, word) !== want) {
+      console.error('boxMentions', JSON.stringify(label), JSON.stringify(word), 'expected', want)
+      ok = false
+    }
+  }
+
+  // Duplicate scan: exact twins, packaging variants, blank-brand rows and distinct brands, on temporary local rows.
+  const fx = (id: number, sku: string, brand: string, box: string): ProductRow => ({
+    id,
+    sku,
+    sku_norm: normalize(sku),
+    key_norm: `${productKey(sku, brand, box)}#${id}`,
+    name: '',
+    name_norm: '',
+    brand,
+    category: '',
+    type: '',
+    seal: '',
+    d_inner: null,
+    d_outer: null,
+    width: null,
+    stock: 1,
+    unit: 'Adet',
+    price: 0,
+    currency: 'TRY',
+    list_price: null,
+    card_price: null,
+    min_order: 1,
+    shelf: '',
+    box,
+    barcode: '',
+    image: '',
+    description: '',
+    equivalents: '',
+    active: true,
+    deleted: false,
+    updated_at: new Date().toISOString()
+  })
+  const fixtures = [
+    fx(9_000_001, 'ZZ-DUP-1', 'INA', 'Kutulu'),
+    fx(9_000_002, 'ZZ DUP 1', 'İNA', 'KUTULU'),
+    fx(9_000_003, 'ZZ-DUP-2', 'INA', 'Kutulu'),
+    fx(9_000_004, 'ZZ-DUP-2', 'INA', 'Kutusuz'),
+    fx(9_000_005, 'ZZ-DUP-2', '', '4 Kutulu 2 Kutusuz'),
+    fx(9_000_006, 'ZZ-DUP-3', 'SKF', 'Kutulu'),
+    fx(9_000_007, 'ZZ-DUP-3', 'FAG', 'Kutulu')
+  ]
+  try {
+    upsertLocal(fixtures)
+    if (resolveBrand('ına') !== 'INA') {
+      console.error('resolveBrand', resolveBrand('ına'))
+      ok = false
+    }
+    const groups = duplicateGroups(10_000).filter((g) => g.items.some((p) => p.id >= 9_000_000))
+    const g1 = groups.find((g) => g.items.some((p) => p.id === 9_000_001))
+    const g2 = groups.find((g) => g.items.some((p) => p.id === 9_000_003))
+    const g3 = groups.find((g) => g.items.some((p) => p.id === 9_000_006))
+    if (!g1 || g1.kind !== 'exact' || g1.items.length !== 2) {
+      console.error('exact duplicate group missing', g1)
+      ok = false
+    }
+    if (!g2 || g2.kind !== 'box' || g2.items.length !== 3 || g2.boxes.length !== 3) {
+      console.error('box duplicate group missing', g2)
+      ok = false
+    }
+    if (g3) {
+      console.error('distinct brands grouped', g3)
+      ok = false
+    }
+    console.log(`duplicate scan: ok (${groups.length} fixture groups)`)
+  } finally {
+    db.prepare('DELETE FROM products WHERE id >= 9000000').run()
+  }
 
   const user = process.env.B2B_CHECK_USER
   const pass = process.env.B2B_CHECK_PASS

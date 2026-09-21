@@ -16,7 +16,7 @@ import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { submit, type PatchOpRow, type QuickEntryOpRow } from '../cloud/outbox'
 import { upsertLocal } from '../cloud/sync'
-import { canonBox } from '@shared/identity'
+import { canonBox, canonBrand } from '@shared/identity'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
 
@@ -179,18 +179,54 @@ export function productsByKeys(keys: string[]): Map<string, Product> {
   return new Map(rows.map((p) => [productKey(p.sku, p.brand, p.box), p]))
 }
 
+/**
+ * Brand spelling to store: the catalogue's existing spelling when the same brand is already known under another
+ * casing / dotted-i variant ("ına", "İNA" → "INA"), otherwise the tidied input. The most frequent spelling wins.
+ */
+export function resolveBrand(raw: string, spellings = brandSpellings()): string {
+  const c = canonBrand(raw)
+  if (!c) return ''
+  return spellings.get(normalize(c)) ?? c
+}
+
+/** normalized brand → its preferred spelling in the catalogue: most frequent, then least punctuation, shortest. */
+export function brandSpellings(): Map<string, string> {
+  const rows = getDb().prepare(`SELECT brand, COUNT(*) c FROM products WHERE brand <> '' AND active = 1 GROUP BY brand`).all() as {
+    brand: string
+    c: number
+  }[]
+  const punct = (s: string): number => s.replace(/[A-Z0-9ÇĞİÖŞÜ]/g, '').length
+  const turkish = (s: string): number => s.replace(/[^ÇĞİÖŞÜ]/g, '').length
+  rows.sort(
+    (a, b) =>
+      b.c - a.c ||
+      punct(a.brand) - punct(b.brand) ||
+      a.brand.length - b.brand.length ||
+      turkish(b.brand) - turkish(a.brand) ||
+      a.brand.localeCompare(b.brand, 'tr')
+  )
+  const out = new Map<string, string>()
+  for (const r of rows) {
+    const k = normalize(r.brand)
+    if (k && !out.has(k)) out.set(k, r.brand)
+  }
+  return out
+}
+
 /** Writes go through the outbox: applied in the cloud when online, otherwise kept locally and sent later. */
 export async function saveProduct(p: Partial<Product> & ProductInput): Promise<Product> {
   const sku = p.sku.trim()
   if (!sku) throw new Error('Ürün kodu boş olamaz.')
+  const brand = resolveBrand(p.brand)
+  const box = canonBox(p.box)
   const row: ProductInsert = {
     ...(p.id ? { id: p.id } : {}),
     sku,
     sku_norm: normalize(sku),
-    key_norm: productKey(sku, p.brand, p.box),
+    key_norm: productKey(sku, brand, box),
     name: p.name,
     name_norm: normalizeText(p.name),
-    brand: p.brand,
+    brand,
     category: p.category,
     type: p.type,
     seal: p.seal,
@@ -205,7 +241,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     card_price: p.card_price ?? null,
     min_order: p.min_order,
     shelf: p.shelf,
-    box: canonBox(p.box),
+    box,
     barcode: p.barcode,
     image: p.image,
     description: p.description,
@@ -274,26 +310,59 @@ function knownBrands(): Set<string> {
   return new Set(rows.map((r) => normalize(r.brand)).filter((b) => b.length >= 2))
 }
 
-/** Groups of products that are certainly the same item (same designation key, brand and packaging). */
+/**
+ * Groups of products with the same designation key and brand. A group whose members also share the packaging state
+ * is an `exact` duplicate; one whose members differ only in packaging (Kutulu / Kutusuz …) is a `box` group the
+ * admin may choose to merge. Exact groups are listed first.
+ */
 export function duplicateGroups(limit = 400): DuplicateGroup[] {
   const brands = knownBrands()
-  const rows = getDb().prepare(`SELECT ${COLS} FROM products p ORDER BY p.id`).all() as Product[]
-  const buckets = new Map<string, Product[]>()
+  const rows = getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.active = 1 ORDER BY p.id`).all() as Product[]
+  const byDesignation = new Map<string, Product[]>()
   for (const p of rows) {
     const key = designationKey(p.sku, p.brand, brands)
-    if (key.length < 3) continue
-    const k = `${key}|${effectiveBrand(p.sku, p.brand, brands)}|${effectiveBox(p.sku, p.box)}`
-    const list = buckets.get(k)
+    if (key.length < 2) continue
+    const list = byDesignation.get(key)
     if (list) list.push(p)
-    else buckets.set(k, [p])
+    else byDesignation.set(key, [p])
   }
   const out: DuplicateGroup[] = []
-  for (const [k, items] of buckets) {
-    if (items.length < 2) continue
-    out.push({ key: k, designation: k.split('|')[0], brand: items.find((p) => p.brand)?.brand ?? '', items })
+  for (const [designation, all] of byDesignation) {
+    if (all.length < 2) continue
+    // A record without a brand is not a *different* brand: when the designation is known under a single brand,
+    // the brandless copy is treated as that brand's duplicate; otherwise brandless records form their own group.
+    const branded = new Map<string, Product[]>()
+    const blank: Product[] = []
+    for (const p of all) {
+      const b = effectiveBrand(p.sku, p.brand, brands)
+      if (!b) blank.push(p)
+      else {
+        const list = branded.get(b)
+        if (list) list.push(p)
+        else branded.set(b, [p])
+      }
+    }
+    const groups: [string, Product[]][] = [...branded]
+    if (branded.size === 1 && blank.length) groups[0][1].push(...blank)
+    else if (blank.length) groups.push(['', blank])
+    for (const [b, items] of groups) {
+      if (items.length < 2) continue
+      const boxKeys = new Set(items.map((p) => effectiveBox(p.sku, p.box)))
+      const boxes = [...new Set(items.map((p) => canonBox(p.box) || canonBox(effectiveBox(p.sku, p.box))))]
+      items.sort((x, y) => x.id - y.id)
+      out.push({
+        key: `${designation}|${b}`,
+        kind: boxKeys.size > 1 ? 'box' : 'exact',
+        designation,
+        brand: items.find((p) => p.brand)?.brand ?? '',
+        boxes,
+        items
+      })
+    }
     if (out.length >= limit) break
   }
-  return out.sort((a, b) => b.items.length - a.items.length || a.designation.localeCompare(b.designation, 'tr'))
+  const rank = (g: DuplicateGroup): number => (g.kind === 'exact' ? 0 : 1)
+  return out.sort((a, b) => rank(a) - rank(b) || b.items.length - a.items.length || a.designation.localeCompare(b.designation, 'tr'))
 }
 
 /**
@@ -338,12 +407,13 @@ export async function bulkUpdateProducts(rows: BulkProductPatch[]): Promise<Prod
 export async function quickEntry(rows: QuickEntryRow[]): Promise<QuickEntryResult> {
   const result: QuickEntryResult = { created: 0, updated: 0, errors: [], queued: false }
   const folded = new Map<string, QuickEntryRow>()
+  const spellings = brandSpellings()
   for (const r of rows) {
     const sku = r.sku.trim()
     if (!sku) continue
     const key = productKey(sku, r.brand, r.box)
     const prev = folded.get(key)
-    if (!prev) folded.set(key, { ...r, sku, brand: r.brand.trim(), box: canonBox(r.box) })
+    if (!prev) folded.set(key, { ...r, sku, brand: resolveBrand(r.brand, spellings), box: canonBox(r.box) })
     else {
       prev.stock += r.stock
       if (r.shelf.trim()) prev.shelf = r.shelf
@@ -404,6 +474,8 @@ export async function mergeProducts(input: MergeInput): Promise<Product> {
   const target = getProduct(input.targetId)
   if (target) {
     const sku = typeof patch.sku === 'string' ? patch.sku : target.sku
+    if (typeof patch.brand === 'string') patch.brand = resolveBrand(patch.brand)
+    if (typeof patch.box === 'string') patch.box = canonBox(patch.box)
     const brand = typeof patch.brand === 'string' ? patch.brand : target.brand
     const box = typeof patch.box === 'string' ? patch.box : target.box
     patch.key_norm = productKey(sku, brand, box)

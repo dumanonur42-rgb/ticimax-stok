@@ -8,6 +8,7 @@ import { ProductEditor } from '@/components/ProductEditor'
 import { QuickEntry } from '@/components/QuickEntry'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
+import { StockPill } from '@/components/StockPill'
 import { money, num, stockLevel } from '@/lib/format'
 import { useApp } from '@/store/app'
 
@@ -115,6 +116,7 @@ export function Stock(): ReactNode {
   const [dups, setDups] = useState<DuplicateGroup[] | null>(null)
   const [dupsLoading, setDupsLoading] = useState(false)
   const [dupQ, setDupQ] = useState('')
+  const [dupKind, setDupKind] = useState<'all' | 'exact' | 'box'>('all')
   const [merging, setMerging] = useState<Product[] | null>(null)
   const pendingPages = useRef(new Set<number>())
   const bodyRef = useRef<HTMLDivElement>(null)
@@ -324,8 +326,10 @@ export function Stock(): ReactNode {
   const visibleDups = useMemo(() => {
     if (!dups) return []
     const s = dupQ.trim().toLocaleUpperCase('tr-TR')
-    return s ? dups.filter((g) => g.designation.includes(s) || g.brand.toLocaleUpperCase('tr-TR').includes(s) || g.items.some((i) => i.sku.toLocaleUpperCase('tr-TR').includes(s))) : dups
-  }, [dups, dupQ])
+    const byKind = dupKind === 'all' ? dups : dups.filter((g) => g.kind === dupKind)
+    return s ? byKind.filter((g) => g.designation.includes(s) || g.brand.toLocaleUpperCase('tr-TR').includes(s) || g.items.some((i) => i.sku.toLocaleUpperCase('tr-TR').includes(s))) : byKind
+  }, [dups, dupQ, dupKind])
+  const dupCounts = useMemo(() => ({ exact: dups?.filter((g) => g.kind === 'exact').length ?? 0, box: dups?.filter((g) => g.kind === 'box').length ?? 0 }), [dups])
 
   return (
     <div className="stock-page">
@@ -570,7 +574,20 @@ export function Stock(): ReactNode {
               <Search size={20} aria-hidden />
               <input className="input" type="search" placeholder="Grup içinde ara…" aria-label="Mükerrer gruplarda ara" value={dupQ} onChange={(e) => setDupQ(e.target.value)} />
             </div>
-            <span className="small muted">Kod normalize edilip (kutulu/orijinal gibi ekler atılır) marka aynıysa aynı ürün sayılır.</span>
+            <div className="seg" role="radiogroup" aria-label="Mükerrer türü">
+              {(
+                [
+                  ['all', `Tümü (${num(dupCounts.exact + dupCounts.box)})`],
+                  ['exact', `Aynı kutu (${num(dupCounts.exact)})`],
+                  ['box', `Kutulu / Kutusuz (${num(dupCounts.box)})`]
+                ] as const
+              ).map(([k, label]) => (
+                <button key={k} type="button" role="radio" aria-checked={dupKind === k} className={`seg-btn${dupKind === k ? ' on' : ''}`} onClick={() => setDupKind(k)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <span className="small muted">Aynı kod ve marka; “Kutulu / Kutusuz” grupları yalnızca kutu durumuyla ayrılır, isterseniz birleştirin.</span>
             <span className="spacer" />
             <button className="btn" onClick={() => setMerging([])}>
               <GitMerge size={16} aria-hidden /> Elle birleştir
@@ -591,6 +608,13 @@ export function Stock(): ReactNode {
                 <header>
                   <span className="sku">{g.designation}</span>
                   <span className="badge neutral">{g.brand || 'markasız'}</span>
+                  {g.kind === 'box' ? (
+                    <span className="badge info" title="Kayıtlar yalnızca kutu durumuyla ayrılıyor">
+                      {g.boxes.map((b) => b || 'kutu boş').join(' / ')}
+                    </span>
+                  ) : (
+                    <span className="badge low">Aynı ürün</span>
+                  )}
                   <span className="muted small">{g.items.length} kayıt</span>
                   <span className="spacer" />
                   <button className="btn sm primary" onClick={() => setMerging(g.items)}>
@@ -599,14 +623,13 @@ export function Stock(): ReactNode {
                 </header>
                 <ul>
                   {g.items.map((p) => {
-                    const lvl = stockLevel(p.stock, threshold)
                     return (
                       <li key={p.id}>
                         <span className="sku">{p.sku}</span>
-                        <span className="muted truncate" title={p.name}>
-                          {p.name}
+                        <span className="truncate" title={p.box || p.name}>
+                          {p.box ? <span className="box-tag">{p.box}</span> : <span className="faint">kutu boş</span>}
                         </span>
-                        <span className={`badge ${lvl.cls}`}>{lvl.label}</span>
+                        <StockPill stock={p.stock} threshold={threshold} unit={p.unit} />
                         <span className="nowrap">{money(p.price, p.currency)}</span>
                         {p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}
                         <button className="btn ghost icon sm" onClick={() => setEditing(p)} aria-label={`${p.sku} düzenle`} title="Düzenle">

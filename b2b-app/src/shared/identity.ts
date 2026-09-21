@@ -11,6 +11,15 @@ export function normalize(s: string): string {
     .replace(/[^A-Z0-9]+/g, '')
 }
 
+/**
+ * Display spelling of a brand: trimmed, single-spaced, Turkish uppercase ("skf" → "SKF", "çin" → "ÇİN").
+ * Dotted/dotless i are the same brand for identity (`normalize`); the stored spelling is unified against the
+ * catalogue by `resolveBrand` in the main process so "INA" and "İNA" never appear as two brands.
+ */
+export function canonBrand(raw: string): string {
+  return raw.replace(/\s+/g, ' ').trim().toLocaleUpperCase('tr-TR')
+}
+
 /** Spellings of the same packaging state map to one display label. */
 const BOX_ALIASES: ReadonlyArray<[RegExp, string]> = [
   [/^KUTUL[UI]$|^KUTU$/, 'Kutulu'],
@@ -39,6 +48,23 @@ export function canonBox(raw: string): string {
       return lower.charAt(0).toLocaleUpperCase('tr-TR') + lower.slice(1)
     })
     .join(' ')
+}
+
+/**
+ * True when a combined packaging label ("4 Kutulu 2 Kutusuz", "3 Kutulu 1 Orj Kağıt") mentions the packaging state
+ * `word` ("kutulu", "orjinal kağıt"); a bare match of the whole label is not a mention.
+ */
+export function boxMentions(label: string, word: string): boolean {
+  const want = normalize(canonBox(word))
+  if (!want) return false
+  const tokens = canonBox(label).split(' ').filter(Boolean)
+  if (tokens.length < 2) return false
+  for (let i = 0; i < tokens.length; i++) {
+    for (let n = 1; n <= 3 && i + n <= tokens.length; n++) {
+      if (normalize(canonBox(tokens.slice(i, i + n).join(' '))) === want) return true
+    }
+  }
+  return false
 }
 
 /** Product identity: the same code with a different brand or packaging ("Kutulu" / "Kutusuz") is a different product. */
