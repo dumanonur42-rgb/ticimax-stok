@@ -312,8 +312,17 @@ def main():
                 else:
                     r = gonderi_planla(page, gun, slot, tarih, a.dry)
             except Exception as e:  # noqa: BLE001
-                page.screenshot(path=f"/home/ubuntu/bs_hata_{slot}_{gun:02d}.png")
+                try:
+                    page.screenshot(path=f"/home/ubuntu/bs_hata_{slot}_{gun:02d}.png", timeout=5000)
+                except Exception:  # noqa: BLE001
+                    pass
                 r = dict(slot=slot, gun=gun, tarih=str(tarih), hata=repr(e)[:500], dry=a.dry)
+                try:
+                    page.close()
+                except Exception:  # noqa: BLE001
+                    pass
+                page = ctx.new_page()
+                page.set_viewport_size({"width": 1400, "height": 1000})
             r["tarih"] = str(tarih)
             sonuclar.append(r)
             print(json.dumps(r, ensure_ascii=False), flush=True)
