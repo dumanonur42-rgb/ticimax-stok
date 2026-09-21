@@ -1,0 +1,187 @@
+name: B2B App – Windows Installer
+
+on:
+  push:
+    branches: [main]
+    paths: ['b2b-app/**', '.github/workflows/b2b-app-windows.yml']
+    tags: ['b2b-v*']
+  pull_request:
+    paths: ['b2b-app/**', '.github/workflows/b2b-app-windows.yml']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: b2b-app
+
+jobs:
+  check:
+    name: Typecheck & self-check (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-app/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Headless self-check (12k products, search timings)
+        run: xvfb-run -a npx electron . --selfcheck --no-sandbox
+
+  windows:
+    name: Build Windows installer (.exe)
+    runs-on: windows-latest
+    needs: check
+    permissions:
+      contents: write
+    outputs:
+      store_enabled: ${{ steps.store-gate.outputs.enabled }}
+    steps:
+      - name: Store submission configured?
+        id: store-gate
+        shell: bash
+        working-directory: .
+        env:
+          STORE_PRODUCT_ID: ${{ secrets.STORE_PRODUCT_ID }}
+          STORE_IDENTITY_NAME: ${{ secrets.STORE_IDENTITY_NAME }}
+          STORE_PUBLISHER: ${{ secrets.STORE_PUBLISHER }}
+        run: |
+          if [ -n "$STORE_PRODUCT_ID" ] && [ -n "$STORE_IDENTITY_NAME" ] && [ -n "$STORE_PUBLISHER" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Store secrets (STORE_PRODUCT_ID / STORE_IDENTITY_NAME / STORE_PUBLISHER) not set — Store submission will be skipped."
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-app/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      # Signing is optional: with a .pfx (WIN_CSC_LINK/WIN_CSC_KEY_PASSWORD) electron-builder signs on its own;
+      # with Azure Trusted Signing secrets the azureSignOptions are passed on the CLI. Without either the build is unsigned.
+      - name: Build installer
+        shell: bash
+        env:
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TRUSTED_SIGNING_ENDPOINT: ${{ secrets.TRUSTED_SIGNING_ENDPOINT }}
+          TRUSTED_SIGNING_ACCOUNT: ${{ secrets.TRUSTED_SIGNING_ACCOUNT }}
+          TRUSTED_SIGNING_PROFILE: ${{ secrets.TRUSTED_SIGNING_PROFILE }}
+        run: |
+          args=(--win --x64 --publish never)
+          if [ -n "$TRUSTED_SIGNING_ENDPOINT" ]; then
+            echo "Signing with Azure Trusted Signing"
+            args+=("-c.win.azureSignOptions.publisherName=Yamansa Rulman"
+                   "-c.win.azureSignOptions.endpoint=$TRUSTED_SIGNING_ENDPOINT"
+                   "-c.win.azureSignOptions.codeSigningAccountName=$TRUSTED_SIGNING_ACCOUNT"
+                   "-c.win.azureSignOptions.certificateProfileName=$TRUSTED_SIGNING_PROFILE")
+          elif [ -n "$WIN_CSC_LINK" ]; then
+            echo "Signing with certificate from WIN_CSC_LINK"
+          else
+            echo "No signing secrets configured — building unsigned installer"
+          fi
+          npx electron-builder "${args[@]}"
+      - name: Checksums (SHA-256)
+        shell: bash
+        run: |
+          cd dist
+          sha256sum *.exe > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YamansaRulmanB2B-Windows-Installer
+          path: |
+            b2b-app/dist/*.exe
+            b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml
+            b2b-app/dist/SHA256SUMS.txt
+          if-no-files-found: error
+      - name: Extract release notes for this version (tags only)
+        if: startsWith(github.ref, 'refs/tags/b2b-v')
+        shell: bash
+        run: |
+          ver="${GITHUB_REF_NAME#b2b-v}"
+          awk -v v="$ver" '/^## /{p=($2==v)} p && !/^## /' RELEASE_NOTES.md | sed '/./,$!d' > dist/release-notes.md
+          if [ ! -s dist/release-notes.md ]; then echo "Sürüm notu yok." > dist/release-notes.md; fi
+          {
+            echo
+            echo '---'
+            echo
+            echo '**Kurulum:** Windows "Bilgisayarınız korundu" uyarısı gösterirse **Daha fazla bilgi → Yine de çalıştır** deyin; ayrıntılar için [KURULUM.md](https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/b2b-app/KURULUM.md).'
+            echo
+            echo '**SHA-256:**'
+            echo '```'
+            cat dist/SHA256SUMS.txt
+            echo '```'
+          } >> dist/release-notes.md
+          cat dist/release-notes.md
+      - name: Attach installer + update manifest to release (tags only)
+        if: startsWith(github.ref, 'refs/tags/b2b-v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Yamansa Rulman B2B ${{ github.ref_name }}
+          body_path: b2b-app/dist/release-notes.md
+          files: |
+            b2b-app/dist/*.exe
+            b2b-app/dist/*.blockmap
+            b2b-app/dist/latest.yml
+            b2b-app/dist/SHA256SUMS.txt
+
+  # Microsoft Store: every b2b-v* tag is also packaged as AppX and submitted to Partner Center, so the Store
+  # listing follows GitHub releases automatically. Microsoft signs the package during certification — no certificate needed.
+  # Skipped entirely until the Partner Center secrets below exist (see b2b-app/README.md → "Microsoft Store").
+  store:
+    name: Microsoft Store submission (AppX)
+    needs: windows
+    if: startsWith(github.ref, 'refs/tags/b2b-v') && needs.windows.outputs.store_enabled == 'true'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-app/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Build Store package (AppX)
+        shell: bash
+        env:
+          STORE_IDENTITY_NAME: ${{ secrets.STORE_IDENTITY_NAME }}
+          STORE_PUBLISHER: ${{ secrets.STORE_PUBLISHER }}
+        run: |
+          npx electron-builder --win appx --x64 --publish never \
+            "-c.appx.identityName=$STORE_IDENTITY_NAME" \
+            "-c.appx.publisher=$STORE_PUBLISHER"
+          ls -la dist/*.appx
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YamansaRulmanB2B-Store-Package
+          path: b2b-app/dist/*.appx
+          if-no-files-found: error
+      - name: Setup Microsoft Store Developer CLI
+        uses: microsoft/microsoft-store-apppublisher@v1.1
+      - name: Configure Store credentials
+        shell: bash
+        env:
+          STORE_TENANT_ID: ${{ secrets.STORE_TENANT_ID }}
+          STORE_SELLER_ID: ${{ secrets.STORE_SELLER_ID }}
+          STORE_CLIENT_ID: ${{ secrets.STORE_CLIENT_ID }}
+          STORE_CLIENT_SECRET: ${{ secrets.STORE_CLIENT_SECRET }}
+        run: |
+          msstore reconfigure --tenantId "$STORE_TENANT_ID" --sellerId "$STORE_SELLER_ID" \
+            --clientId "$STORE_CLIENT_ID" --clientSecret "$STORE_CLIENT_SECRET"
+      # msstore detects the electron-builder project and picks up dist/*.appx itself.
+      - name: Submit to Microsoft Store
+        shell: bash
+        env:
+          STORE_PRODUCT_ID: ${{ secrets.STORE_PRODUCT_ID }}
+        run: msstore publish . -id "$STORE_PRODUCT_ID"
