@@ -81,7 +81,7 @@ def ana(gun):
 def story(gun):
     a = next(x for x in V.AKSAM if x["gun"] == gun)
     p = V.POST_BY_GUN[gun]
-    alt = f"Yamansa Rulman story: {p['baslik'].replace('<br>', ' ')}. Anket: {a['soru']} ({a['a']} / {a['b']}). yamansarulman.com, {V.TEL}"
+    alt = f"Yamansa Rulman story: {p['baslik'].replace('<br>', ' ')}. Soru: {a['soru']} ({a['a']} / {a['b']}). yamansarulman.com, {V.TEL}"
     return dict(
         link=f"{SITE}/?utm_source=facebook&utm_medium=story&utm_campaign=story",
         alt=alt,

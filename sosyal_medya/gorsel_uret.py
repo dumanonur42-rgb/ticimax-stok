@@ -474,25 +474,31 @@ def t_sabah(s):
 # ------------------------------------------------------------------ 18:30 story (1080×1920)
 
 def t_story(a):
-    """Günün ana gönderisine bağlı dikey story: foto + başlık + anket kartı + link alanı.
-    Üst 250px / alt 250px Instagram arayüzü için boş bırakılır."""
+    """Günün ana gönderisine bağlı dikey story: foto + başlık + soru (mesajla cevap) + WhatsApp/arama kartı.
+    Üst 250px / alt 250px Instagram arayüzü için boş; 1555-1650px arası Meta bağlantı çıkartması için ayrılır."""
     p = POST_BY_GUN[a["gun"]]
     n = p["baslik"].count("<br>") + 1
     h1 = 92 if n <= 2 else 80 if n == 3 else 68
     if a["soru"]:
         card = f"""
-        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);border-radius:24px;padding:44px 44px 40px">
-          <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:16px">ANKET</div>
-          <div style="font-family:Montserrat;font-weight:800;font-size:40px;line-height:1.2;letter-spacing:-.01em">{a['soru']}</div>
-          <div style="display:flex;gap:16px;margin-top:34px">
-            <div style="flex:1;background:#fff;color:var(--navy);border-radius:999px;padding:24px 20px;text-align:center;font-family:Montserrat;font-weight:800;font-size:28px">{a['a']}</div>
-            <div style="flex:1;background:var(--orange);color:#fff;border-radius:999px;padding:24px 20px;text-align:center;font-family:Montserrat;font-weight:800;font-size:28px">{a['b']}</div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);border-radius:24px;padding:36px 44px 34px">
+          <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--orange);margin-bottom:14px">SORU</div>
+          <div style="font-family:Montserrat;font-weight:800;font-size:38px;line-height:1.2;letter-spacing:-.01em">{a['soru']}</div>
+          <div style="display:flex;gap:14px;margin-top:22px;font-family:Montserrat;font-weight:700;font-size:24px">
+            <div style="border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:12px 26px">{a['a']}</div>
+            <div style="border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:12px 26px">{a['b']}</div>
           </div>
+          <div style="margin-top:22px;font-size:24px;opacity:.9">Cevabını mesaj olarak gönder ✉</div>
         </div>"""
     else:
         card = f"""
         <div style="border-left:10px solid var(--orange);padding:10px 0 10px 40px">
           <div style="font-family:Montserrat;font-weight:500;font-style:italic;font-size:56px;line-height:1.16">{a['a']}</div>
+        </div>"""
+    card += f"""
+        <div style="display:flex;gap:16px;margin-top:22px">
+          <div style="flex:1.3;background:#25D366;color:#062b12;border-radius:20px;padding:22px 26px;font-family:Montserrat;font-weight:800;font-size:26px;line-height:1.15">WhatsApp<br><span style="font-size:32px">0552 610 93 63</span></div>
+          <div style="flex:1;background:var(--orange);color:#fff;border-radius:20px;padding:22px 26px;font-family:Montserrat;font-weight:800;font-size:26px;line-height:1.15">Stok & fiyat<br><span style="font-size:22px;font-weight:600">Hemen ara →</span></div>
         </div>"""
     return f"""
     <div class="canvas" style="background:var(--navy)">
@@ -503,16 +509,13 @@ def t_story(a):
         <div class="brand"><img src="{LOGO_ICON}"><div class="sep"></div><span>YAMANSA</span></div>
         <div class="tag fill">{p['etiket']}</div>
       </div>
-      <div style="position:absolute;left:var(--pad);right:var(--pad);top:880px;z-index:4">
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:760px;z-index:4">
         <div style="font-family:Montserrat;font-weight:700;letter-spacing:.2em;font-size:17px;color:var(--steel);margin-bottom:18px">YENİ PAYLAŞIM</div>
         <h1 style="font-size:{h1}px;line-height:1.06">{p['baslik']}</h1>
         <div class="bar"></div>
       </div>
-      <div style="position:absolute;left:var(--pad);right:var(--pad);top:1280px;z-index:4">{card}</div>
-      <div style="position:absolute;left:var(--pad);right:var(--pad);bottom:250px;z-index:4;display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:24px;opacity:.85">Detaylar profilde ↑</div>
-        <div style="border:2px solid #fff;border-radius:999px;padding:14px 28px;font-family:Montserrat;font-weight:800;font-size:22px;letter-spacing:.04em">yamansarulman.com</div>
-      </div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:1080px;z-index:4">{card}</div>
+      <div style="position:absolute;left:var(--pad);right:var(--pad);top:1515px;z-index:4;text-align:center;font-family:Montserrat;font-weight:700;font-size:22px;letter-spacing:.08em;opacity:.8">SİTEYE GİTMEK İÇİN BAĞLANTIYA DOKUN ↓</div>
       <div class="foot" style="bottom:120px;opacity:.45"><span>{SITE.replace('https://www.', '')}</span><div class="line"></div><span>{TEL}</span></div>
     </div>"""
 

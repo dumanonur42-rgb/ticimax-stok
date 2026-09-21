@@ -928,6 +928,14 @@ SABAH = [
 ]
 
 
+def tr_bas_harf(t):
+    """Türkçe uyumlu 'Cümle düzeni': İ→i, I→ı; ilk harf ve kodlar (C3, 6205) büyük kalır."""
+    def kucuk(k):
+        return k if any(c.isdigit() for c in k) else k.replace("İ", "i").replace("I", "ı").lower()
+    kelimeler = t.split(" ")
+    return " ".join([kelimeler[0][:1] + kucuk(kelimeler[0][1:])] + [kucuk(k) for k in kelimeler[1:]])
+
+
 def sabah_ig(s):
     """Sabah kartının IG/FB metni – alanlardan üretilir."""
     if s["tip"] == "kod":
@@ -938,7 +946,7 @@ def sabah_ig(s):
     if s["tip"] == "terim":
         return f"Günün terimi: {s['baslik']}\n\n{s['metin']}\n\nSorunuz varsa yorumlara yazın, cevaplıyoruz."
     if s["tip"] == "ipucu":
-        return f"Bakım ipucu: {s['baslik'].capitalize()}\n\n{s['metin']}\n\nKaydet; bakım günü lazım olur."
+        return f"Bakım ipucu: {tr_bas_harf(s['baslik'])}\n\n{s['metin']}\n\nKaydet; bakım günü lazım olur."
     return f"Doğru mu, yanlış mı?\n\n\"{s['baslik']}\"\n\nCevap: {s['metin']}"
 
 
