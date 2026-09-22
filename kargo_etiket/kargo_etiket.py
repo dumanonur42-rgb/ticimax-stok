@@ -139,17 +139,40 @@ def _buyuk(t: str) -> str:
     return t.replace("i", "İ").replace("ı", "I").upper()
 
 
+_BASLIK_KELIME = re.compile(r"[A-ZÇĞİÖŞÜ][a-zçğıöşü]+")
+
+
 def _adres_parcala(adres: str) -> tuple[str, str, str]:
-    """Ticimax adresi → (açık adres, parantez içi not, 'İLÇE / İL')."""
+    """Ticimax adresi → (açık adres, parantez içi not, 'İLÇE / İL').
+
+    Ticimax adresin sonuna ' İlçe / İl' ekler; ilçe olarak son '/' önündeki
+    başlık-harfli 1–2 kelime alınır (il adıyla aynı olan kelime alınmaz)."""
     adres = " ".join(adres.split())
-    m = re.search(r"\s*([^/()]+?)\s*/\s*([^/()]+?)\s*$", adres)
     ilce_il = ""
+    m = re.search(r"\s*/\s*([^/()]+?)\s*$", adres)
     if m:
-        ilce_il = _buyuk(f"{m.group(1).strip()} / {m.group(2).strip()}")
-        adres = adres[:m.start()].strip()
+        il = m.group(1).strip()
+        kelimeler = adres[:m.start()].split()
+        ilce: list[str] = []
+        while (kelimeler and len(ilce) < 2 and _BASLIK_KELIME.fullmatch(kelimeler[-1])
+               and kelimeler[-1].lower() != il.lower()):
+            ilce.insert(0, kelimeler.pop())
+        if not ilce and kelimeler and kelimeler[-1].isalpha():
+            ilce.append(kelimeler.pop())
+        if ilce:
+            ilce_il = _buyuk(f"{' '.join(ilce)} / {il}")
+            adres = " ".join(kelimeler)
     notlar = re.findall(r"\(([^)]*)\)", adres)
-    adres = re.sub(r"\s*\([^)]*\)", "", adres).strip(" ,")
+    adres = re.sub(r"\s*\([^)]*\)", "", adres).strip(" ,/")
     return adres, " ".join(n.strip() for n in notlar if n.strip()), ilce_il
+
+
+def _sigdir(text: str, size: float, font: str, max_w: float, min_size: float) -> float:
+    """Metin `max_w`'ye sığacak en büyük puntoyu döndürür (en az `min_size`)."""
+    f = _font(font)
+    while size > min_size and f.text_length(text, fontsize=size) > max_w:
+        size -= 0.25
+    return size
 
 
 _FONTS: dict[str, pymupdf.Font] = {}
@@ -359,7 +382,8 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     if lay.ilce_il:
         ly = box.y1 - 5.2 * MM
         c.page.draw_line((x, ly), (box.x1, ly), color=BLACK, width=0.6)
-        c.text(x + pad, box.y1 - 1.5 * MM, lay.ilce_il, 10 * s, "b")
+        fs = _sigdir(lay.ilce_il, 10 * s, "b", inner_w - 2 * pad, 6)
+        c.text(x + pad, box.y1 - 1.5 * MM - (10 * s - fs) * 0.35, lay.ilce_il, fs, "b")
     y = box.y1 + gap
 
     # 3) Barkod (kalan alanı doldurur) + değeri
@@ -375,9 +399,7 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     pay_w = inner_w * 0.64
     pay = pymupdf.Rect(x, y, x + pay_w, tbl.y1)
     c.band(pay)
-    ps = 11.5 * s
-    while ps > 6 and _font("b").text_length(odeme, fontsize=ps) > pay_w - 3 * MM:
-        ps -= 0.25
+    ps = _sigdir(odeme, 11.5 * s, "b", pay_w - 3 * MM, 6)
     c.text(x, pay.y0 + 1.1 * MM + 4.5 * s, "ÖDEME", 4.5 * s, "b", align="center",
            white=True, box_w=pay_w)
     c.text(x, pay.y1 - 1.6 * MM, odeme, ps, "b", align="center", white=True, box_w=pay_w)
@@ -389,9 +411,7 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
         if i:
             c.vline(cx, tbl.y0, tbl.y1, 0.9)
         c.text(cx, tbl.y0 + 1.1 * MM + 4.5 * s, lab, 4.5 * s, "r", align="center", box_w=cw)
-        vs = 10 * s
-        while vs > 5 and _font("b").text_length(val, fontsize=vs) > cw - 2 * MM:
-            vs -= 0.25
+        vs = _sigdir(val, 10 * s, "b", cw - 2 * MM, 5)
         c.text(cx, tbl.y1 - 1.6 * MM, val, vs, "b", align="center", box_w=cw)
         cx += cw
     y = tbl.y1 + gap
