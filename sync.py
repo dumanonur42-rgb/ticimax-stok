@@ -75,6 +75,9 @@ MENGENE_ROOT = "MENGENELER"
 HELIKOIL_ROOT = "HELİKOİL YAYLAR"
 KILAVUZ_ROOT = "KILAVUZLAR"
 
+# Ciktilara (XML/Excel/CSV) dahil edilmeyen ana kategoriler
+XML_DISI_ROOTS = {MENGENE_ROOT, HELIKOIL_ROOT, KILAVUZ_ROOT}
+
 # Cekilecek kaynak kategoriler: (kaynak kategori id, Ticimax kategori yolu)
 # Sadelestirilmis, son kullanici odakli kategori yapisi.
 # Kategori yolu ">" ile ayrilir; Ticimax içe aktarımda alt kategoriler
@@ -475,6 +478,8 @@ def main():
     rows = []
     seen = set()
     for cat_id, cat_path in CATEGORIES:
+        if cat_path.split(">")[0] in XML_DISI_ROOTS:
+            continue
         prods = fetch_category(s, cat_id)
         new = 0
         for p in prods:
