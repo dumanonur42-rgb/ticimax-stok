@@ -9,6 +9,7 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 
 - Yan menü üst çubuğa taşındı; sayfalar artık ekranın üstündeki sekmelerden açılır, içerik tam genişlikte.
 - Ürünler sayfasında Filtreler paneli her açılışta açık gelir.
+- Filtreler paneli yenilendi: açılır/kapanır bölümler, "Sadece stoktakiler" anahtarı, ölçü aralıkları (mm), marka arama kutusu, seçili markalar üstte, "Tümünü göster", etkin filtre sayacı ve Temizle, altta sonuç sayısı.
 - Dar pencerede üst menü simgelere dönüşür; yatay kaydırma çıkmaz.
 
 ## 1.0.15

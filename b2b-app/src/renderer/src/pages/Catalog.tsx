@@ -14,6 +14,10 @@ import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
 type SortKey = NonNullable<ProductFilter['sort']>
+type FacetKey = 'brand' | 'category' | 'type' | 'seal'
+type RangeKey = 'dInner' | 'dOuter' | 'width'
+const FACET_SHORT = 10
+const FACET_SEARCH_MIN = 8
 
 interface Column {
   key: string
@@ -87,6 +91,8 @@ export function Catalog(): ReactNode {
   const dq = useDebounced(q, 120)
   const [filter, setFilter] = useState<Omit<ProductFilter, 'q' | 'offset' | 'limit'>>({ sort: 'relevance', sortDir: 'asc' })
   const [showFilters, setShowFilters] = useState(true)
+  const [facetQ, setFacetQ] = useState<Partial<Record<FacetKey, string>>>({})
+  const [facetMore, setFacetMore] = useState<Partial<Record<FacetKey, boolean>>>({})
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
@@ -184,13 +190,13 @@ export function Catalog(): ReactNode {
   const toggleSort = (s: SortKey): void =>
     setFilter((f) => ({ ...f, sort: s, sortDir: f.sort === s && f.sortDir === 'asc' ? 'desc' : 'asc' }))
 
-  const toggleFacet = (key: 'brand' | 'category' | 'type' | 'seal', value: string): void =>
+  const toggleFacet = (key: FacetKey, value: string): void =>
     setFilter((f) => {
       const cur = f[key] ?? []
       return { ...f, [key]: cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value] }
     })
 
-  const setRange = (key: 'dInner' | 'dOuter' | 'width', idx: 0 | 1, raw: string): void =>
+  const setRange = (key: RangeKey, idx: 0 | 1, raw: string): void =>
     setFilter((f) => {
       const r: [number | null, number | null] = [...(f[key] ?? [null, null])] as [number | null, number | null]
       r[idx] = raw.trim() === '' ? null : Number(raw.replace(',', '.'))
@@ -239,34 +245,78 @@ export function Catalog(): ReactNode {
     }
   }
 
-  const facetBlock = (key: 'brand' | 'category' | 'type' | 'seal', title: string): ReactNode => {
-    const list = facets?.[key] ?? []
-    if (!list.length && !(filter[key]?.length ?? 0)) return null
+  const facetBlock = (key: FacetKey, title: string): ReactNode => {
+    const all = facets?.[key] ?? []
+    const picked = filter[key] ?? []
+    if (!all.length && !picked.length) return null
+    const query = (facetQ[key] ?? '').trim().toLocaleLowerCase('tr')
+    const missing = picked.filter((v) => !all.some((f) => f.value === v)).map((v) => ({ value: v, count: 0 }))
+    const list = [...all, ...missing].filter((f) => !query || f.value.toLocaleLowerCase('tr').includes(query))
+    const ordered = [...list].sort((a, b) => Number(picked.includes(b.value)) - Number(picked.includes(a.value)))
+    const more = !!facetMore[key] || !!query
+    const shown = more ? ordered : ordered.slice(0, FACET_SHORT)
+    const hidden = ordered.length - shown.length
     return (
-      <fieldset>
-        <legend>{title}</legend>
-        {list.slice(0, 14).map((f) => (
-          <label key={f.value} className="check">
-            <input type="checkbox" checked={filter[key]?.includes(f.value) ?? false} onChange={() => toggleFacet(key, f.value)} />
-            <span className="truncate">{f.value}</span>
-            <span className="count" aria-label={`${f.count} ürün`}>
-              {num(f.count)}
+      <details className="fsec" open>
+        <summary>
+          <span className="fsec-title">{title}</span>
+          {picked.length > 0 && (
+            <span className="fsec-count" aria-label={`${picked.length} seçili`}>
+              {picked.length}
             </span>
-          </label>
-        ))}
-      </fieldset>
+          )}
+        </summary>
+        <div className="fsec-body" role="group" aria-label={title}>
+          {all.length > FACET_SEARCH_MIN && (
+            <div className="fsearch">
+              <Search size={14} aria-hidden />
+              <input
+                className="input sm"
+                type="search"
+                placeholder={`${title} ara…`}
+                aria-label={`${title} içinde ara`}
+                value={facetQ[key] ?? ''}
+                onChange={(e) => setFacetQ((s) => ({ ...s, [key]: e.target.value }))}
+              />
+            </div>
+          )}
+          {shown.length === 0 && <p className="fempty">Eşleşen seçenek yok.</p>}
+          {shown.map((f) => {
+            const on = picked.includes(f.value)
+            return (
+              <label key={f.value} className={`fcheck${on ? ' on' : ''}`}>
+                <input type="checkbox" checked={on} onChange={() => toggleFacet(key, f.value)} />
+                <span className="truncate">{f.value}</span>
+                <span className="count" aria-label={`${f.count} ürün`}>
+                  {num(f.count)}
+                </span>
+              </label>
+            )
+          })}
+          {!query && (hidden > 0 || (facetMore[key] && ordered.length > FACET_SHORT)) && (
+            <button className="fmore" onClick={() => setFacetMore((s) => ({ ...s, [key]: !s[key] }))}>
+              {hidden > 0 ? `Tümünü göster (+${num(hidden)})` : 'Daha az göster'}
+            </button>
+          )}
+        </div>
+      </details>
     )
   }
 
-  const rangeBlock = (key: 'dInner' | 'dOuter' | 'width', label: string, id: string): ReactNode => (
-    <div className="field">
-      <span className="label" id={`${id}-label`}>
-        {label} (mm)
+  const rangeBlock = (key: RangeKey, label: string, id: string): ReactNode => (
+    <div className={`frange${filter[key] ? ' on' : ''}`}>
+      <span className="frange-label" id={`${id}-label`}>
+        {label}
       </span>
-      <div className="range" role="group" aria-labelledby={`${id}-label`}>
-        <input className="input sm" inputMode="decimal" placeholder="min" aria-label={`${label} en az`} value={filter[key]?.[0] ?? ''} onChange={(e) => setRange(key, 0, e.target.value)} />
-        <span aria-hidden>–</span>
-        <input className="input sm" inputMode="decimal" placeholder="maks" aria-label={`${label} en çok`} value={filter[key]?.[1] ?? ''} onChange={(e) => setRange(key, 1, e.target.value)} />
+      <div className="frange-inputs" role="group" aria-labelledby={`${id}-label`}>
+        <input className="input sm" inputMode="decimal" placeholder="min" aria-label={`${label} en az (mm)`} value={filter[key]?.[0] ?? ''} onChange={(e) => setRange(key, 0, e.target.value)} />
+        <span className="frange-sep" aria-hidden>
+          –
+        </span>
+        <input className="input sm" inputMode="decimal" placeholder="maks" aria-label={`${label} en çok (mm)`} value={filter[key]?.[1] ?? ''} onChange={(e) => setRange(key, 1, e.target.value)} />
+        <span className="frange-unit" aria-hidden>
+          mm
+        </span>
       </div>
     </div>
   )
@@ -275,11 +325,17 @@ export function Catalog(): ReactNode {
     <div className={`catalog${showFilters ? '' : ' no-filters'}`}>
       {showFilters && (
         <aside className="filters" aria-label="Filtreler" id="catalog-filters">
-          <div className="row">
+          <div className="filters-head">
+            <Filter size={16} aria-hidden />
             <strong>Filtreler</strong>
+            {activeChips.length > 0 && (
+              <span className="badge info" aria-label={`${activeChips.length} etkin filtre`}>
+                {activeChips.length}
+              </span>
+            )}
             <span className="spacer" />
             {activeChips.length > 0 && (
-              <button className="btn ghost sm" onClick={clearAll}>
+              <button className="btn ghost sm" onClick={clearAll} title="Tüm filtreleri ve aramayı temizle">
                 Temizle
               </button>
             )}
@@ -287,22 +343,31 @@ export function Catalog(): ReactNode {
               <ChevronLeft size={16} aria-hidden />
             </button>
           </div>
-          <label className="check">
-            <input type="checkbox" checked={!!filter.inStock} onChange={(e) => setFilter((f) => ({ ...f, inStock: e.target.checked }))} />
-            Sadece stokta olanlar
-          </label>
-          <fieldset>
-            <legend>Ölçüler</legend>
-            <div className="grid" style={{ gap: 8 }}>
-              {rangeBlock('dInner', 'İç çap (d)', 'f-d')}
-              {rangeBlock('dOuter', 'Dış çap (D)', 'f-D')}
-              {rangeBlock('width', 'Genişlik (B)', 'f-B')}
-            </div>
-          </fieldset>
-          {facetBlock('category', 'Kategori')}
-          {facetBlock('brand', 'Marka')}
-          {facetBlock('type', 'Tip')}
-          {facetBlock('seal', 'Keçe / Kapak')}
+          <div className="filters-body">
+            <label className={`fswitch${filter.inStock ? ' on' : ''}`}>
+              <span>Sadece stoktakiler</span>
+              <input type="checkbox" role="switch" checked={!!filter.inStock} onChange={(e) => setFilter((f) => ({ ...f, inStock: e.target.checked }))} />
+              <span className="fswitch-track" aria-hidden />
+            </label>
+            <details className="fsec" open>
+              <summary>
+                <span className="fsec-title">Ölçüler</span>
+                <span className="fsec-hint">mm</span>
+              </summary>
+              <div className="fsec-body">
+                {rangeBlock('dInner', 'İç çap (d)', 'f-d')}
+                {rangeBlock('dOuter', 'Dış çap (D)', 'f-D')}
+                {rangeBlock('width', 'Genişlik (B)', 'f-B')}
+              </div>
+            </details>
+            {facetBlock('category', 'Kategori')}
+            {facetBlock('brand', 'Marka')}
+            {facetBlock('type', 'Tip')}
+            {facetBlock('seal', 'Keçe / Kapak')}
+          </div>
+          <div className="filters-foot" role="status">
+            <strong>{num(total)}</strong> ürün listeleniyor
+          </div>
         </aside>
       )}
 
