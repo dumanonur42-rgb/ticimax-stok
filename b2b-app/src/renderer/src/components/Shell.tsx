@@ -4,8 +4,6 @@ import {
   HelpCircle,
   LayoutDashboard,
   LogOut,
-  PanelLeftClose,
-  PanelLeftOpen,
   RefreshCw,
   Search,
   Settings as SettingsIcon,
@@ -75,7 +73,7 @@ function UpdateBanner(): ReactNode {
 }
 
 export function Shell({ children }: { children: ReactNode }): ReactNode {
-  const { page, go, session, setSession, sidebarCollapsed, toggleSidebar, toast } = useApp()
+  const { page, go, session, setSession, toast } = useApp()
   const cartCount = useCart((s) => s.lines.length)
   const clearCart = useCart((s) => s.clear)
   const role = session?.user.role ?? 'bayi'
@@ -130,17 +128,15 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
   const update = useUpdateState()
 
   return (
-    <div className={`shell${sidebarCollapsed ? ' collapsed' : ''}`}>
+    <div className="shell">
       <a href="#main" className="skip-link">
         İçeriğe geç
       </a>
-      <aside className="sidebar" aria-label="Ana menü">
+      <header className="topnav" aria-label="Ana menü">
         <div className="brand">
           <img className="brand-mark" src={mark} alt="" />
           <img className="brand-logo" src={logo} alt="Yamansa Rulman" />
-          <div>
-            <small>{role === 'admin' ? 'Yönetim Paneli' : role === 'bayi' ? 'Bayi Portalı' : 'Kullanıcı Paneli'}</small>
-          </div>
+          <small>{role === 'admin' ? 'Yönetim Paneli' : role === 'bayi' ? 'Bayi Portalı' : 'Kullanıcı Paneli'}</small>
         </div>
         <nav className="nav" aria-label="Sayfalar">
           {items.map((n) => (
@@ -159,20 +155,13 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
                   </span>
                 )}
               </span>
-              <span>
+              <span className="nav-label">
                 {n.label}
                 {n.page === 'cart' && cartCount > 0 && <span className="sr-only"> ({cartCount} kalem)</span>}
               </span>
-              <kbd className="kbd" aria-hidden>
-                Alt+{n.key}
-              </kbd>
             </button>
           ))}
         </nav>
-        <button className="nav-item" onClick={toggleSidebar} aria-pressed={sidebarCollapsed} aria-label={sidebarCollapsed ? 'Menüyü genişlet' : 'Menüyü daralt'}>
-          {sidebarCollapsed ? <PanelLeftOpen size={20} aria-hidden /> : <PanelLeftClose size={20} aria-hidden />}
-          <span>Menüyü daralt</span>
-        </button>
         <div className="user-box">
           <span className="avatar" aria-hidden>
             {initials}
@@ -190,7 +179,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
             <LogOut size={18} aria-hidden />
           </button>
         </div>
-      </aside>
+      </header>
       <div className="main">
         <header className="topbar">
           <h1 id="page-title" tabIndex={-1}>

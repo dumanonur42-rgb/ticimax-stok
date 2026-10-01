@@ -13,7 +13,6 @@ import { canonBox } from '@shared/identity'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
-const FILTERS_KEY = 'catalog.filtersOpen'
 type SortKey = NonNullable<ProductFilter['sort']>
 
 interface Column {
@@ -87,8 +86,7 @@ export function Catalog(): ReactNode {
   const [q, setQ] = useState('')
   const dq = useDebounced(q, 120)
   const [filter, setFilter] = useState<Omit<ProductFilter, 'q' | 'offset' | 'limit'>>({ sort: 'relevance', sortDir: 'asc' })
-  const [showFilters, setShowFilters] = useState(() => localStorage.getItem(FILTERS_KEY) === '1')
-  useEffect(() => localStorage.setItem(FILTERS_KEY, showFilters ? '1' : '0'), [showFilters])
+  const [showFilters, setShowFilters] = useState(true)
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
