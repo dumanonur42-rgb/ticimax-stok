@@ -32,7 +32,7 @@ const COLUMNS: Column[] = [
   { key: 'sku', label: 'Ürün Kodu', width: 'minmax(200px, 1fr)', sort: 'sku' },
   { key: 'brand', label: 'Marka', width: '110px' },
   { key: 'stock', label: 'Stok', width: '150px', sort: 'stock', align: 'right' },
-  { key: 'price', label: 'Peşin Fiyat', width: '130px', sort: 'price', align: 'right' },
+  { key: 'price', label: 'Fiyat', width: '130px', sort: 'price', align: 'right' },
   { key: 'card_price', label: 'K. Kartı Fiyatı', width: '130px', align: 'right' },
   { key: 'act', label: '', width: '84px' }
 ]
@@ -377,7 +377,7 @@ export function Stock(): ReactNode {
                 <option value="sku">Ürün kodu</option>
                 <option value="shelf">Raf</option>
                 <option value="stock">Stok</option>
-                <option value="price">Peşin fiyat</option>
+                <option value="price">Fiyat</option>
                 <option value="updated">Güncelleme</option>
               </select>
             </label>
@@ -784,7 +784,7 @@ function BulkEdit({ items, cardPct, onClose, onDone }: { items: Product[]; cardP
             </div>
           )}
         </Field>
-        <Field label="Peşin fiyat">
+        <Field label="Fiyat">
           {(id) => (
             <div className="row" style={{ gap: 8 }}>
               <select id={id} className="select" style={{ width: 200 }} value={priceMode} onChange={(e) => setPriceMode(e.target.value as PriceMode)}>

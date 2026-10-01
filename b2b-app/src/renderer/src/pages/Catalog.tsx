@@ -36,7 +36,7 @@ const COLUMNS: Column[] = [
   { key: 'stock', label: 'Stok', min: 118, sort: 'stock', align: 'right' },
   { key: 'box', label: 'Kutu durumu', min: 112, grow: 0.6, drop: 3 },
   { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
-  { key: 'price', label: 'Peşin Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
+  { key: 'price', label: 'Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
   { key: 'act', label: '', min: 100 }
 ]
 
@@ -358,7 +358,7 @@ export function Catalog(): ReactNode {
               <option value="sku">Ürün kodu</option>
               <option value="stock">Stok</option>
               {isAdmin && <option value="shelf">Raf</option>}
-              {showPrices && <option value="price">Peşin fiyat</option>}
+              {showPrices && <option value="price">Fiyat</option>}
               <option value="updated">Güncelleme</option>
             </select>
           </label>

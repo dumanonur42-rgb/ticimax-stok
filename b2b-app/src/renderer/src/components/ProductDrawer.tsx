@@ -116,7 +116,7 @@ export function ProductDrawer({
             </dd>
             {showPrices && (
               <>
-                <dt>Peşin Fiyat</dt>
+                <dt>Fiyat</dt>
                 <dd>
                   <strong>{money(product.price, product.currency)}</strong>
                   {product.list_price != null && product.list_price > product.price && (

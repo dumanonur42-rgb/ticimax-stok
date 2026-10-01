@@ -29,7 +29,7 @@ const COLS: { key: Col; label: string; width: string; hint?: string; numeric?: b
   { key: 'brand', label: 'Marka', width: 'minmax(100px, 0.7fr)' },
   { key: 'stock', label: 'Adet', width: '84px', numeric: true },
   { key: 'box', label: 'Kutu durumu', width: 'minmax(130px, 0.9fr)' },
-  { key: 'price', label: 'Peşin fiyat', width: '104px', numeric: true },
+  { key: 'price', label: 'Fiyat', width: '104px', numeric: true },
   { key: 'note', label: 'Açıklama', width: 'minmax(140px, 1.1fr)' }
 ]
 const ORDER = COLS.map((c) => c.key)

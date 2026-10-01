@@ -18,7 +18,7 @@ const FIELDS: { key: FieldKey; label: string }[] = [
   { key: 'type', label: 'Tip' },
   { key: 'seal', label: 'Keçe / Kapak' },
   { key: 'dims', label: 'd × D × B' },
-  { key: 'price', label: 'Peşin fiyat' },
+  { key: 'price', label: 'Fiyat' },
   { key: 'card_price', label: 'K. kartı fiyatı' },
   { key: 'list_price', label: 'Liste fiyatı' },
   { key: 'shelf', label: 'Raf' },

@@ -10,6 +10,7 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 - Ürün listesinde Kutu durumu ve Açıklama sütunları artık herkese gösterilir.
 - Stok göstergesindeki "az" etiketi kaldırıldı; seviye yalnızca renkle belirtilir.
 - Ürün listesinden Kredi Kartı Fiyatı sütunu kaldırıldı.
+- "Peşin Fiyat" başlığı her yerde "Fiyat" oldu.
 
 ## 1.0.14
 

@@ -203,7 +203,7 @@ export function ProductEditor({
           {(id) => <input id={id} className="input" inputMode="decimal" value={form.stock} onChange={(e) => set('stock', Number(e.target.value.replace(',', '.')) || 0)} />}
         </Field>
         {text('unit', 'Birim')}
-        <Field label="Peşin fiyat">
+        <Field label="Fiyat">
           {(id) => <input id={id} className="input" inputMode="decimal" value={form.price} onChange={(e) => set('price', Number(e.target.value.replace(',', '.')) || 0)} />}
         </Field>
         <Field label="Para birimi">

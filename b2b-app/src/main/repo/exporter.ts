@@ -16,7 +16,7 @@ export function productsToXlsx(products: Product[], path: string): void {
     Genişlik: p.width ?? '',
     Stok: p.stock,
     Birim: p.unit,
-    'Peşin Fiyat': p.price,
+    'Fiyat': p.price,
     'Kredi Kartı Fiyatı': p.card_price ?? '',
     'Para Birimi': p.currency,
     'Liste Fiyatı': p.list_price ?? '',
