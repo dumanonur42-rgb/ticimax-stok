@@ -175,7 +175,8 @@ export async function runSelfCheck(): Promise<number> {
     ['kutusuz', 'Kutusuz'],
     ['KUTULU', 'Kutulu'],
     ['orj kağıt', 'Orjinal Kağıt'],
-    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Orj Kağıt 1 Kutusuz'],
+    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Orjinal Kağıt 1 Kutusuz'],
+    ['2KUTULU 1KUTUSZ', '2 Kutulu 1 Kutusuz'],
     ['33 KUTULU – 1 KUTUSUZ', '33 Kutulu 1 Kutusuz'],
     ['', '']
   ]
