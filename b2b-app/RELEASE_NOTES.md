@@ -5,6 +5,12 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.15
+
+- Ürün listesinde Kutu durumu ve Açıklama sütunları artık herkese gösterilir.
+- Stok göstergesindeki "az" etiketi kaldırıldı; seviye yalnızca renkle belirtilir.
+- Ürün listesinden Kredi Kartı Fiyatı sütunu kaldırıldı.
+
 ## 1.0.14
 
 - Uygulama açılır açılmaz klavye çalışır; yazmaya başlamak için önce boşluğa tıklamak gerekmez.

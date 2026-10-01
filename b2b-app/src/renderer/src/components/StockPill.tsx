@@ -20,7 +20,6 @@ export function StockPill({ stock, threshold, unit }: Props): ReactNode {
         <>
           <span className="stock-pill-num">{num(stock)}</span>
           <span className="stock-pill-unit">{unit || 'adet'}</span>
-          {lvl.cls === 'low' && <span className="stock-pill-flag">az</span>}
         </>
       )}
     </span>

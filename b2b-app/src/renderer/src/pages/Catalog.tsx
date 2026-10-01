@@ -1,5 +1,4 @@
 import type { Facets, Product, ProductFilter } from '@shared/types'
-import { cardPrice } from '@shared/price'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { ArrowDown, ArrowUp, ChevronLeft, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
@@ -35,10 +34,9 @@ const COLUMNS: Column[] = [
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
   { key: 'stock', label: 'Stok', min: 118, sort: 'stock', align: 'right' },
-  { key: 'box', label: 'Kutu durumu', min: 112, grow: 0.6, drop: 3, adminOnly: true },
-  { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2, adminOnly: true },
+  { key: 'box', label: 'Kutu durumu', min: 112, grow: 0.6, drop: 3 },
+  { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
   { key: 'price', label: 'Peşin Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
-  { key: 'card_price', label: 'K. Kartı Fiyatı', min: 112, grow: 0.4, drop: 4, align: 'right' },
   { key: 'act', label: '', min: 100 }
 ]
 
@@ -159,7 +157,6 @@ export function Catalog(): ReactNode {
     needed.forEach(loadPage)
   }, [vItems, rows, loadPage])
 
-  const cardPct = settings?.card_price_pct ?? 0
   const [gridW, setGridW] = useState(() => window.innerWidth)
   useEffect(() => {
     const el = bodyRef.current
@@ -175,7 +172,7 @@ export function Catalog(): ReactNode {
   const cols = useMemo(
     () =>
       fitColumns(
-        COLUMNS.filter((c) => (showPrices || (c.key !== 'price' && c.key !== 'card_price')) && (isAdmin || !c.adminOnly)),
+        COLUMNS.filter((c) => (showPrices || c.key !== 'price') && (isAdmin || !c.adminOnly)),
         gridW
       ),
     [showPrices, isAdmin, gridW]
@@ -466,9 +463,8 @@ export function Catalog(): ReactNode {
                       {p.sku}
                     </div>
                     {has.has('brand') && (
-                      <div className="cell muted truncate" role="gridcell" title={[p.brand, p.box].filter(Boolean).join(' · ')}>
+                      <div className="cell muted truncate" role="gridcell" title={p.brand}>
                         {p.brand}
-                        {!isAdmin && p.box && <span className="faint small"> · {p.box}</span>}
                       </div>
                     )}
                     {has.has('dims') && (
@@ -492,14 +488,6 @@ export function Catalog(): ReactNode {
                     {has.has('price') && (
                       <div className="cell right nowrap" role="gridcell">
                         {money(p.price, p.currency)}
-                      </div>
-                    )}
-                    {has.has('card_price') && (
-                      <div className="cell right nowrap muted" role="gridcell">
-                        {(() => {
-                          const cp = cardPrice(p.price, p.card_price, cardPct)
-                          return cp == null ? <span className="faint">—</span> : money(cp, p.currency)
-                        })()}
                       </div>
                     )}
                     <div className="cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>

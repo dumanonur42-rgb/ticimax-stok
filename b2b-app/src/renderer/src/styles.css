@@ -642,19 +642,6 @@ textarea.input {
   font-weight: 600;
   opacity: 0.75;
 }
-.stock-pill-flag {
-  align-self: center;
-  margin-left: 2px;
-  padding: 0 5px;
-  border-radius: 999px;
-  font-size: 0.64rem;
-  font-weight: 800;
-  line-height: 15px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  background: var(--warning);
-  color: #fff;
-}
 .stock-pill-text {
   font-weight: 700;
   font-size: 0.86rem;
