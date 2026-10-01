@@ -1,3 +1,4 @@
+import { isPerm } from '@shared/perms'
 import type { Customer, CustomerInput, ImportLog, Order, OrderItem, Product, User } from '@shared/types'
 import type { CustomerInsert, CustomerRow, ImportLogRow, OrderItemRow, OrderRow, ProductRow, ProfileRow } from './database.types'
 
@@ -64,6 +65,7 @@ export function toUser(r: ProfileRow): User {
     username: r.username,
     display_name: r.display_name,
     role: r.role,
+    perms: (r.perms ?? []).filter(isPerm),
     customer_id: r.customer_id,
     active: r.active ? 1 : 0,
     approved: r.approved ? 1 : 0,

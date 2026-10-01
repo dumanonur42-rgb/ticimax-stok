@@ -511,6 +511,29 @@ textarea.input {
   height: 18px;
   accent-color: var(--primary);
 }
+.perm-set {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.perm-set legend {
+  padding: 0 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.perm-check {
+  align-items: flex-start;
+}
+.perm-check input {
+  margin-top: 2px;
+}
+.perm-check small {
+  display: block;
+  font-weight: 400;
+}
 .card {
   background: var(--bg-elev);
   border: 1px solid var(--border);

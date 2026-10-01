@@ -11,6 +11,8 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 - Stok göstergesindeki "az" etiketi kaldırıldı; seviye yalnızca renkle belirtilir.
 - Ürün listesinden Kredi Kartı Fiyatı sütunu kaldırıldı.
 - "Peşin Fiyat" başlığı her yerde "Fiyat" oldu.
+- Uzun kutu durumu yazıları kesilmek yerine iki satıra sığdırılıyor.
+- [yönetici] Yeni "Ara kullanıcı" rolü: bayi ile aynı, ek olarak raf konumunu görür. Kullanıcılar sayfasından kişiye özel ek özellikler (fiyatları görme, tüm siparişler, Excel aktarımı) verilebilir.
 
 ## 1.0.14
 

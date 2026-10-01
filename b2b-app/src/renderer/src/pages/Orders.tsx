@@ -1,4 +1,5 @@
 import type { Order, OrderStatus } from '@shared/types'
+import { hasPerm } from '@shared/perms'
 import { Download, Printer, X } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Empty, Spinner } from '@/components/ui'
@@ -16,9 +17,9 @@ export function Orders(): ReactNode {
   const [status, setStatus] = useState<OrderStatus | ''>('')
   const [selectedId, setSelectedId] = useState<number | null>(pageParam)
   const [detail, setDetail] = useState<Order | null>(null)
-  const isDealer = session?.user.role === 'bayi'
+  const isDealer = session?.user.role !== 'admin'
   const isAdmin = session?.user.role === 'admin'
-  const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
+  const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
   const load = (): void => {
     api('orders:list', { q, status: status || undefined }).then(setOrders).catch((e) => toast(e.message, 'error'))

@@ -1,4 +1,5 @@
 import type { Customer, PaymentType } from '@shared/types'
+import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { Minus, Plus, Send, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
@@ -13,8 +14,8 @@ export function Cart(): ReactNode {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [busy, setBusy] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
-  const isDealer = session?.user.role === 'bayi'
-  const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
+  const isDealer = session?.user.role !== 'admin'
+  const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
   useEffect(() => {
     api('customers:list', {}).then(setCustomers).catch(() => setCustomers([]))

@@ -1,5 +1,6 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
-import type { Order, Session } from '@shared/types'
+import { hasPerm } from '@shared/perms'
+import type { Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
@@ -72,10 +73,16 @@ async function saveDialog(win: BrowserWindow | null, defaultName: string, ext: s
   return r.canceled || !r.filePath ? null : r.filePath
 }
 
-/** Shelf location is internal warehouse data; only admins see it. */
+function requirePerm(perm: Perm): Session {
+  const s = requireRole()
+  if (!hasPerm(s.user, perm)) throw new Error('Bu işlem için yetkiniz yok.')
+  return s
+}
+
+/** Shelf location is internal warehouse data; only accounts with the shelf ability see it. */
 function hideShelf<T extends { shelf: string }>(items: T[]): T[] {
   const s = requireRole()
-  return s.user.role === 'admin' ? items : items.map((p) => ({ ...p, shelf: '' }))
+  return hasPerm(s.user, 'shelf') ? items : items.map((p) => ({ ...p, shelf: '' }))
 }
 
 export function currentRole(): Session['user']['role'] | null {
@@ -229,7 +236,7 @@ export function registerIpc(): void {
     return r
   })
   handle('products:exportExcel', async (f, e) => {
-    requireRole('admin')
+    requirePerm('export')
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), 'urunler.xlsx', 'xlsx', 'Excel')
     if (!path) return null
     productsToXlsx(hideShelf(allProductsForExport(f)), path)
@@ -283,7 +290,7 @@ export function registerIpc(): void {
   handle('orders:get', (id) => scopedOrder(id))
   handle('orders:create', async (input) => {
     const s = requireRole()
-    const customer_id = s.user.role === 'bayi' ? s.user.customer_id : input.customer_id
+    const customer_id = s.user.role === 'admin' ? input.customer_id : s.user.customer_id
     const r = await createOrder({ ...input, customer_id })
     pullProducts().catch(() => undefined)
     broadcast('orders:changed')

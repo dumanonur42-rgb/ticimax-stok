@@ -1,4 +1,4 @@
-import type { Customer, CustomerInput, DealerLogin, Session, User, UserRole } from '@shared/types'
+import type { Customer, CustomerInput, DealerLogin, Perm, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
 import { clearStoredSession, cloud, cloudError, ephemeralCloud, isConnectivityError, must, mustVoid } from '../cloud/client'
 import { fromCustomer, toCustomer, toUser } from '../cloud/map'
@@ -64,6 +64,7 @@ function rememberedSession(userId: string | null): Session | null {
   const r = getDb().prepare('SELECT value FROM sync_state WHERE key = ?').get(SESSION_KEY) as { value: string } | undefined
   if (!r) return null
   const s = JSON.parse(r.value) as Session
+  s.user.perms ??= []
   return userId === null || s.user.id === userId ? s : null
 }
 
@@ -190,16 +191,18 @@ export async function saveUser(u: {
   username: string
   display_name: string
   role: UserRole
+  perms: Perm[]
   customer_id: number | null
   password?: string
   active: number
 }): Promise<User> {
   const sb = cloud()
   const username = validateUsername(u.username)
+  const perms = u.role === 'admin' ? [] : u.perms
   if (u.id) {
     const r = await sb
       .from('profiles')
-      .update({ username, display_name: u.display_name.trim(), role: u.role, customer_id: u.customer_id, active: !!u.active })
+      .update({ username, display_name: u.display_name.trim(), role: u.role, perms, customer_id: u.customer_id, active: !!u.active })
       .eq('id', u.id)
       .select('*')
       .single()
@@ -219,7 +222,7 @@ export async function saveUser(u: {
   if (!id) throw new Error('Kullanıcı oluşturulamadı.')
   const r = await sb
     .from('profiles')
-    .update({ role: u.role, customer_id: u.customer_id ?? undefined, active: !!u.active, approved: true })
+    .update({ role: u.role, perms, customer_id: u.customer_id ?? undefined, active: !!u.active, approved: true })
     .eq('id', id)
     .select('*')
     .single()

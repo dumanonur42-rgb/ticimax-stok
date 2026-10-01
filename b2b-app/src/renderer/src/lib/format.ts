@@ -40,9 +40,10 @@ export const STATUS_CLASS: Record<OrderStatus, string> = {
   iptal: 'out'
 }
 
-export const ROLE_LABEL = { admin: 'Yönetici', bayi: 'Bayi' } as const
+export const ROLE_LABEL = { admin: 'Yönetici', ara: 'Ara kullanıcı', bayi: 'Bayi' } as const
 export const ROLE_HINT = {
   admin: 'Tüm yetkiler: ürün ekleme/düzenleme, stok aktarma, Excel indirme, bayi ve kullanıcı yönetimi.',
+  ara: 'Bayi ile aynı; ek olarak ürünlerin raf konumunu görür. Aşağıdan başka özellikler de verilebilir.',
   bayi: 'Müşteri hesabı: katalogda arama, kendi cari kartıyla sipariş oluşturma ve yalnızca kendi siparişlerini takip.'
 } as const
 

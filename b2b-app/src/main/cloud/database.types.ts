@@ -59,6 +59,7 @@ export type ProfileRow = {
   username: string
   display_name: string
   role: UserRole
+  perms: string[]
   customer_id: number | null
   active: boolean
   approved: boolean

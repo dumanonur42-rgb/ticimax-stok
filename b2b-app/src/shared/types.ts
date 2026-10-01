@@ -214,7 +214,11 @@ export interface OrderInput {
   items: { product_id: number | null; sku: string; name: string; qty: number; unit_price: number; discount_pct: number }[]
 }
 
-export type UserRole = 'admin' | 'bayi'
+export type UserRole = 'admin' | 'ara' | 'bayi'
+
+/** Extra abilities an administrator can grant to a non-admin account. */
+export const PERMS = ['shelf', 'prices', 'all_orders', 'export'] as const
+export type Perm = (typeof PERMS)[number]
 
 export interface User {
   /** Supabase Auth user id (uuid). */
@@ -222,6 +226,7 @@ export interface User {
   username: string
   display_name: string
   role: UserRole
+  perms: Perm[]
   customer_id: number | null
   active: number
   approved: number

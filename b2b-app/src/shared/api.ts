@@ -26,6 +26,7 @@ import type {
   SyncStatus,
   UpdateState,
   User,
+  Perm,
   UserRole
 } from './types'
 
@@ -69,7 +70,7 @@ export interface ApiMap {
 
   'users:list': [void, User[]]
   'users:save': [
-    { id?: string; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number },
+    { id?: string; username: string; display_name: string; role: UserRole; perms: Perm[]; customer_id: number | null; password?: string; active: number },
     User
   ]
   'users:delete': [string, void]

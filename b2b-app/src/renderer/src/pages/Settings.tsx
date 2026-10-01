@@ -1,4 +1,5 @@
-import type { Currency, Customer, CustomerProfile, Settings as S, SyncStatus, User, UserRole } from '@shared/types'
+import { PERMS, type Currency, type Customer, type CustomerProfile, type Perm, type Settings as S, type SyncStatus, type User, type UserRole } from '@shared/types'
+import { PERM_INFO, ROLE_PERMS } from '@shared/perms'
 import { Building2, Database, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
@@ -161,7 +162,7 @@ function Company({ s }: { s: S }): ReactNode {
   )
 }
 
-type UserForm = { id?: string; username: string; display_name: string; role: UserRole; customer_id: number | null; password?: string; active: number }
+type UserForm = { id?: string; username: string; display_name: string; role: UserRole; perms: Perm[]; customer_id: number | null; password?: string; active: number }
 
 function Users(): ReactNode {
   const { toast, session } = useApp()
@@ -221,7 +222,7 @@ function Users(): ReactNode {
           Kayıtlı herkes burada listelenir. Rol, kullanıcının yetkilerini belirler; "Kayıt ol" ile gelen hesaplar siz onaylayana kadar giriş yapamaz.
         </p>
         <span className="spacer" />
-        <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'bayi', customer_id: null, password: '', active: 1 })}>
+        <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'bayi', perms: [], customer_id: null, password: '', active: 1 })}>
           <Plus size={16} aria-hidden /> Yeni kullanıcı
         </button>
       </div>
@@ -305,6 +306,7 @@ function Users(): ReactNode {
               {(id) => (
                 <select id={id} className="select" value={editing.role} onChange={(e) => setEditing({ ...editing, role: e.target.value as UserRole })}>
                   <option value="admin">{ROLE_LABEL.admin}</option>
+                  <option value="ara">{ROLE_LABEL.ara}</option>
                   <option value="bayi">{ROLE_LABEL.bayi}</option>
                 </select>
               )}
@@ -312,9 +314,35 @@ function Users(): ReactNode {
             <p className="muted small" style={{ gridColumn: 'span 2', margin: 0 }}>
               {ROLE_HINT[editing.role]}
             </p>
-            <Field label="Cari kart" hint={editing.role === 'bayi' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
+            {editing.role !== 'admin' && (
+              <fieldset className="perm-set" style={{ gridColumn: 'span 2' }}>
+                <legend>Ek özellikler</legend>
+                {PERMS.map((perm) => {
+                  const inherent = ROLE_PERMS[editing.role].includes(perm)
+                  const checked = inherent || editing.perms.includes(perm)
+                  return (
+                    <label key={perm} className="check perm-check" title={PERM_INFO[perm].hint}>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        disabled={inherent}
+                        onChange={(e) =>
+                          setEditing({ ...editing, perms: e.target.checked ? [...editing.perms, perm] : editing.perms.filter((p) => p !== perm) })
+                        }
+                      />
+                      <span>
+                        {PERM_INFO[perm].label}
+                        {inherent && <span className="muted small"> · rolle gelir</span>}
+                        <small className="muted">{PERM_INFO[perm].hint}</small>
+                      </span>
+                    </label>
+                  )
+                })}
+              </fieldset>
+            )}
+            <Field label="Cari kart" hint={editing.role !== 'admin' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
               {(id) => (
-                <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role !== 'bayi'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>
+                <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role === 'admin'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>
                   <option value="">Yeni cari kart oluştur</option>
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>

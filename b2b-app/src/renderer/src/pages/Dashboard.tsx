@@ -1,4 +1,5 @@
 import { SUPPORT_CONTACTS, type DashboardStats, type Product } from '@shared/types'
+import { hasPerm } from '@shared/perms'
 import { AlertTriangle, Boxes, ClipboardList, Headset, PackageCheck, PackageX, Phone, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
@@ -16,9 +17,10 @@ export function Dashboard(): ReactNode {
   const { go, session, toast, settings } = useApp()
   const threshold = settings?.low_stock_threshold ?? 5
   const isAdmin = session?.user.role === 'admin'
-  const isDealer = session?.user.role === 'bayi'
+  const isDealer = session?.user.role !== 'admin'
+  const canShelf = hasPerm(session?.user, 'shelf')
   const cartCount = useCart((s) => s.lines.length)
-  const showPrices = settings?.show_prices_to_dealers !== false || !isDealer
+  const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
   const load = (): void => {
     api('dashboard:stats', undefined)
@@ -239,7 +241,7 @@ export function Dashboard(): ReactNode {
                 <tr>
                   <th>Ürün Kodu</th>
                   <th>Marka</th>
-                  {isAdmin && <th>Raf</th>}
+                  {canShelf && <th>Raf</th>}
                   <th className="right">Stok</th>
                 </tr>
               </thead>
@@ -263,7 +265,7 @@ export function Dashboard(): ReactNode {
                     <td className="truncate" style={{ maxWidth: 160 }}>
                       {p.brand}
                     </td>
-                    {isAdmin && <td>{p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}</td>}
+                    {canShelf && <td>{p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}</td>}
                     <td className="right">
                       <span className="badge low">{num(p.stock)}</span>
                     </td>

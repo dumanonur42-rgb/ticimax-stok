@@ -1,6 +1,7 @@
-import type { Facets, Product, ProductFilter } from '@shared/types'
+import type { Facets, Perm, Product, ProductFilter } from '@shared/types'
+import { hasPerm } from '@shared/perms'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, ChevronLeft, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronLeft, Download, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -25,11 +26,12 @@ interface Column {
   drop?: number
   sort?: SortKey
   align?: 'right'
-  adminOnly?: boolean
+  /** Shown only to accounts holding this ability. */
+  perm?: Perm
 }
 
 const COLUMNS: Column[] = [
-  { key: 'shelf', label: 'Raf', min: 96, grow: 0.5, drop: 5, sort: 'shelf', adminOnly: true },
+  { key: 'shelf', label: 'Raf', min: 96, grow: 0.5, drop: 5, sort: 'shelf', perm: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
@@ -78,7 +80,8 @@ export function Catalog(): ReactNode {
   const { settings, session, toast } = useApp()
   const addToCart = useCart((s) => s.add)
   const isAdmin = session?.user.role === 'admin'
-  const showPrices = settings?.show_prices_to_dealers !== false || session?.user.role !== 'bayi'
+  const canShelf = hasPerm(session?.user, 'shelf')
+  const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
   const threshold = settings?.low_stock_threshold ?? 5
 
   const [q, setQ] = useState('')
@@ -172,10 +175,10 @@ export function Catalog(): ReactNode {
   const cols = useMemo(
     () =>
       fitColumns(
-        COLUMNS.filter((c) => (showPrices || c.key !== 'price') && (isAdmin || !c.adminOnly)),
+        COLUMNS.filter((c) => (showPrices || c.key !== 'price') && (!c.perm || hasPerm(session?.user, c.perm))),
         gridW
       ),
-    [showPrices, isAdmin, gridW]
+    [showPrices, session?.user, gridW]
   )
   const has = useMemo(() => new Set(cols.map((c) => c.key)), [cols])
   const gridCols = cols.map((c) => (c.grow ? `minmax(${c.min}px, ${c.grow}fr)` : `${c.min}px`)).join(' ')
@@ -357,11 +360,24 @@ export function Catalog(): ReactNode {
               <option value="relevance">Uygunluk</option>
               <option value="sku">Ürün kodu</option>
               <option value="stock">Stok</option>
-              {isAdmin && <option value="shelf">Raf</option>}
+              {canShelf && <option value="shelf">Raf</option>}
               {showPrices && <option value="price">Fiyat</option>}
               <option value="updated">Güncelleme</option>
             </select>
           </label>
+          {!isAdmin && hasPerm(session?.user, 'export') && (
+            <button
+              className="btn"
+              title="Bu listeyi (arama ve sıralamayla) Excel olarak kaydet"
+              onClick={() => {
+                api('products:exportExcel', fullFilter)
+                  .then((path) => path && toast(`Excel kaydedildi: ${path}`, 'success'))
+                  .catch((e: Error) => toast(e.message, 'error'))
+              }}
+            >
+              <Download size={16} aria-hidden /> Excel
+            </button>
+          )}
           {isAdmin && (
             <button className="btn" onClick={() => setEditing('new')}>
               <Plus size={16} aria-hidden /> Yeni ürün
@@ -499,7 +515,7 @@ export function Catalog(): ReactNode {
                           toast(`${p.sku} sepete eklendi.`, 'success')
                         }}
                         aria-label={`${p.sku} sepete ekle`}
-                        disabled={p.stock <= 0 && session?.user.role === 'bayi'}
+                        disabled={p.stock <= 0 && !isAdmin}
                       >
                         <Plus size={16} aria-hidden /> Sepet
                       </button>
