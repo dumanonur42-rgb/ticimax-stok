@@ -34,7 +34,7 @@ const COLUMNS: Column[] = [
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
   { key: 'stock', label: 'Stok', min: 118, sort: 'stock', align: 'right' },
-  { key: 'box', label: 'Kutu durumu', min: 150, grow: 0.9, drop: 3 },
+  { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 3 },
   { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
   { key: 'price', label: 'Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
   { key: 'act', label: '', min: 100 }
