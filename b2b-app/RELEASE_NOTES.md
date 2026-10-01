@@ -5,6 +5,12 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.16
+
+- Yan menü üst çubuğa taşındı; sayfalar artık ekranın üstündeki sekmelerden açılır, içerik tam genişlikte.
+- Ürünler sayfasında Filtreler paneli her açılışta açık gelir.
+- Dar pencerede üst menü simgelere dönüşür; yatay kaydırma çıkmaz.
+
 ## 1.0.15
 
 - Ürün listesinde Kutu durumu ve Açıklama sütunları artık herkese gösterilir.
