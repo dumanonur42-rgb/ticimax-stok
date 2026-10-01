@@ -1,4 +1,5 @@
 import { app, BrowserWindow, Menu, session, shell } from 'electron'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { getDb } from './db'
 import { isAllowedExternal, registerIpc, restoreSession } from './ipc'
@@ -155,6 +156,8 @@ app.setName('Yamansa Rulman B2B')
 app.setAppUserModelId('com.yamansarulman.b2b')
 
 if (process.argv.includes('--selfcheck')) {
+  // Keeps the demo catalogue the self-check seeds out of the real local mirror.
+  app.setPath('userData', join(tmpdir(), 'yamansa-b2b-selfcheck'))
   app.whenReady().then(async () => {
     let code = 1
     try {
