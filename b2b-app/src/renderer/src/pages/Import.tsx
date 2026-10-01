@@ -71,7 +71,14 @@ export function Import(): ReactNode {
   const run = async (dryRun = false): Promise<void> => {
     if (!preview) return
     if (!mapping.sku) return toast('Ürün kodu kolonu eşlenmeli.', 'error')
-    if (!dryRun && mode === 'replace' && !window.confirm('Mevcut tüm ürünler silinip dosyadaki ürünler yüklenecek. Devam edilsin mi?')) return
+    if (
+      !dryRun &&
+      mode === 'replace' &&
+      !window.confirm(
+        'Buluttaki mevcut ürün listesinin tamamı kalıcı olarak silinecek ve yerine dosyadaki ürünler yüklenecek. Tüm bilgisayarlardaki listeler otomatik yenilenir; sipariş geçmişi korunur. Devam edilsin mi?'
+      )
+    )
+      return
     setBusy(true)
     try {
       const r = await api('import:run', { token: preview.token, mapping, mode, deactivateMissing, defaultCurrency, defaultBrand, defaultCategory, dryRun })
@@ -101,7 +108,8 @@ export function Import(): ReactNode {
         <p className="muted">
           Excel (.xlsx, .xls) veya CSV dosyanızı seçin. Beklenen düzen: <b>RAF | KOD | MARKA | ADET | AMBALAJ (kutu durumu) | FİYAT (€) | AÇIKLAMA</b> (boş hücreler sorun olmaz; kolon başlıkları
           otomatik eşlenir, gerekirse aşağıdan düzeltin; birden fazla sayfa varsa ürün tablosu olan sayfa seçilir). Yalnızca ürün kodu zorunludur; aynı kod + marka + kutu durumu tek üründür, dosyada iki
-          kez geçerse adetler toplanır. Fiyat hücresi boşsa mevcut fiyat korunur; "16,00 €" gibi yazımlar ve başlıktaki para birimi tanınır.
+          kez geçerse adetler toplanır. Fiyat hücresi boşsa mevcut fiyat korunur; "16,00 €" gibi yazımlar ve başlıktaki para birimi tanınır. Eski listeyi tamamen değiştirmek için
+          Yükleme modunda <b>Eski listeyi sil, dosyadakileri yükle</b> seçin.
         </p>
         <div className="row wrap">
           <button className="btn primary" onClick={pick} disabled={busy}>
@@ -130,7 +138,7 @@ export function Import(): ReactNode {
                 <select id={id} className="select" value={mode} onChange={(e) => setMode(e.target.value as typeof mode)}>
                   <option value="upsert">Güncelle / ekle (önerilen)</option>
                   <option value="stock_only">Sadece stok ve fiyat güncelle</option>
-                  <option value="replace">Tümünü sil ve yeniden yükle</option>
+                  <option value="replace">Eski listeyi sil, dosyadakileri yükle</option>
                 </select>
               )}
             </Field>
@@ -146,6 +154,12 @@ export function Import(): ReactNode {
             <label className="check" style={{ alignSelf: 'end' }}>
               <input type="checkbox" checked={deactivateMissing} onChange={(e) => setDeactivateMissing(e.target.checked)} disabled={mode === 'replace'} /> Dosyada olmayan ürünleri pasife al
             </label>
+            {mode === 'replace' && (
+              <p className="muted small" role="note" style={{ gridColumn: '1 / -1', margin: 0 }}>
+                <b>Temiz başlangıç:</b> buluttaki tüm ürünler kalıcı olarak silinir, dosyadaki {num(preview.totalRows)} satır yeni liste olur. Değişiklik tüm bilgisayarlara
+                otomatik yansır (açık uygulamalar birkaç saniye içinde yeni listeyi çeker); sipariş geçmişi korunur.
+              </p>
+            )}
             <Field label="Varsayılan marka">{(id) => <input id={id} className="input" value={defaultBrand} onChange={(e) => setDefaultBrand(e.target.value)} />}</Field>
             <Field label="Varsayılan kategori">{(id) => <input id={id} className="input" value={defaultCategory} onChange={(e) => setDefaultCategory(e.target.value)} />}</Field>
           </div>

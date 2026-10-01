@@ -5,6 +5,10 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.17
+
+- [yönetici] Stok Aktar'da "Eski listeyi sil, dosyadakileri yükle" modu: buluttaki eski ürün listesi kalıcı olarak silinir, dosyadaki ürünler yeni liste olur ve tüm bilgisayarlardaki listeler otomatik yenilenir (sipariş geçmişi korunur). Seçildiğinde ne olacağı ekranda açıkça yazılır.
+
 ## 1.0.16
 
 - Yan menü üst çubuğa taşındı; sayfalar artık ekranın üstündeki sekmelerden açılır, içerik tam genişlikte.

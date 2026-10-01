@@ -441,7 +441,11 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       errors: errors.slice(0, 200)
     }
   }
-  if (opts.mode === 'replace') mustVoid(await sb.rpc('soft_delete_all_products'))
+  if (opts.mode === 'replace') {
+    // Hard delete + catalog_generation bump, so every installation drops its cache and re-pulls the new list.
+    must(await sb.rpc('purge_all_products'))
+    getDb().exec('DELETE FROM products')
+  }
   for (let i = 0; i < rekeyed.length; i += BATCH) {
     mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
   }
