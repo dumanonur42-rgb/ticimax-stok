@@ -47,16 +47,28 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['box', /^(kutu ?durumu|kutu|ambalaj|paket ?durumu|packaging|box)$/i],
   ['barcode', /^(barkod|barcode|ean|gtin)$/i],
   ['image', /^(görsel|gorsel|resim|image|foto)$/i],
-  ['description', /^(açıklama|aciklama|description|detay|not|notlar|açıklama ?2|uzun ?açıklama|durum)$/i],
+  ['description', /^(açıklama|aciklama|description|detay|not|notlar|açıklama ?2|uzun ?açıklama|durum|ek ?bilgi)$/i],
   ['equivalents', /^(muadil|muadiller|eşdeğer|esdeger|karşılık|karsilik|equivalent|alternatif)$/i]
 ]
+
+/** Secondary note columns that are folded into the description when a primary one is already mapped. */
+const EXTRA_DESCRIPTION = /^(ek ?bilgi|not|notlar|açıklama ?2|ek ?açıklama|detay)$/i
+
+/** Currency named in a price header ("FİYAT (€)", "USD FİYAT"). */
+export function headerCurrency(h: string | undefined): Currency | null {
+  const s = (h ?? '').toUpperCase()
+  if (/€|EUR/.test(s)) return 'EUR'
+  if (/\$|USD|DOLAR/.test(s)) return 'USD'
+  if (/₺|\bTL\b|TRY/.test(s)) return 'TRY'
+  return null
+}
 
 export function suggestMapping(headers: string[]): Partial<Record<Field, string>> {
   const map: Partial<Record<Field, string>> = {}
   const used = new Set<string>()
   for (const [field, re] of HEADER_HINTS) {
     if (map[field]) continue
-    const h = headers.find((x) => !used.has(x) && re.test(headerKey(x)))
+    const h = headers.find((x) => !used.has(x) && re.test(headerKey(x).replace(/\s*\((tl|₺|€|eur|euro|usd|\$)\)$/, '')))
     if (h) {
       map[field] = h
       used.add(h)
@@ -95,10 +107,21 @@ function parseFile(path: string): Parsed {
         .filter((r) => r.some((c) => c !== ''))
     ).filter((m) => m.length)
     if (!sheets.length) throw new Error('Dosya boş görünüyor.')
-    // Further sheets with the same header row (one sheet per shelf/depot) are appended to the first one.
+    // The product table is the sheet whose header row names a code column (a summary sheet may come first);
+    // further sheets with the same header row (one sheet per shelf/depot) are appended to it.
+    const score = (m: string[][]): number => {
+      const map = suggestMapping(m[0])
+      return (map.sku ? 100 : 0) + Object.keys(map).length + Math.min(m.length, 50) / 100
+    }
+    let main = 0
+    sheets.forEach((m, i) => {
+      if (score(m) > score(sheets[main])) main = i
+    })
     const headerOf = (m: string[][]): string => m[0].map(headerKey).join('|')
-    matrix = [...sheets[0]]
-    for (const m of sheets.slice(1)) if (headerOf(m) === headerOf(sheets[0])) matrix.push(...m.slice(1))
+    matrix = [...sheets[main]]
+    sheets.forEach((m, i) => {
+      if (i !== main && headerOf(m) === headerOf(sheets[main])) matrix.push(...m.slice(1))
+    })
   }
   matrix = matrix.filter((r) => r.some((c) => c !== ''))
   if (!matrix.length) throw new Error('Dosya boş görünüyor.')
@@ -111,12 +134,14 @@ export function previewFile(path: string): ImportPreview {
   const parsed = parseFile(path)
   const token = randomUUID()
   pending.set(token, parsed)
+  const suggestedMapping = suggestMapping(parsed.headers)
   return {
     filename: parsed.filename,
     headers: parsed.headers,
     rows: parsed.rows.slice(0, 15),
     totalRows: parsed.rows.length,
-    suggestedMapping: suggestMapping(parsed.headers),
+    suggestedMapping,
+    suggestedCurrency: suggestedMapping.currency ? null : headerCurrency(suggestedMapping.price),
     token
   }
 }
@@ -177,12 +202,27 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     bySku.set(r.sku_norm, [...(bySku.get(r.sku_norm) ?? []), r])
   }
   const has = (f: Field): boolean => idx(f) >= 0
-  // Without brand/box columns in the file a code that exists as exactly one item still refers to that item.
-  const lookup = (key: string, sku_norm: string): LocalRow | undefined => {
+  const mappedHeaders = new Set(Object.values(opts.mapping).filter((h): h is string => !!h))
+  const extraDescIdx = parsed.headers
+    .map((h, i) => (!mappedHeaders.has(h) && EXTRA_DESCRIPTION.test(headerKey(h)) ? i : -1))
+    .filter((i) => i >= 0)
+  const descriptionOf = (row: string[]): string =>
+    [col(row, 'description') ?? '', ...extraDescIdx.map((i) => row[i] ?? '')].map((s) => s.trim()).filter(Boolean).join(' · ')
+
+  // Products matched by a looser rule than the full key take the file's brand/box: their row is re-keyed in place.
+  const claimed = new Set<number>()
+  // Without brand/box columns in the file a code that exists as exactly one item still refers to that item; a
+  // catalogue item with no packaging yet is the same product as the file's single "Kutulu"/"Kutusuz" line for it.
+  const lookup = (key: string, sku_norm: string, brand: string): LocalRow | undefined => {
     const hit = existing.get(key)
-    if (hit || has('brand') || has('box')) return hit
+    if (hit) return hit
     const variants = bySku.get(sku_norm)
-    return variants?.length === 1 ? variants[0] : undefined
+    if (!variants?.length) return undefined
+    if (!has('brand') && !has('box')) return variants.length === 1 ? variants[0] : undefined
+    const free = variants.filter((v) => !claimed.has(v.id) && !v.box && (!has('brand') || normalize(v.brand) === normalize(brand)))
+    if (free.length !== 1) return undefined
+    claimed.add(free[0].id)
+    return free[0]
   }
 
   const errors: string[] = []
@@ -192,6 +232,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   let deactivated = 0
   const seen = new Set<string>()
   const batch: ProductInsert[] = []
+  const rekeyed: ProductInsert[] = []
   const inBatch = new Map<string, ProductInsert>()
   // The same product listed twice in one file (two shelves, two lines) is one product: quantities add up.
   const fold = (rec: ProductInsert): boolean => {
@@ -260,14 +301,18 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     const sku_norm = normalize(skuRaw)
     if (!sku_norm) return
     const brand = resolveBrand((col(row, 'brand') ?? '') || opts.defaultBrand, spellings)
-    const stockVal = parseNumber(col(row, 'stock'))
+    const stockRaw = (col(row, 'stock') ?? '').trim()
+    const stockVal = parseNumber(stockRaw)
+    if (stockRaw && /[A-Za-zÇĞİÖŞÜçğıöşü]/.test(stockRaw)) {
+      errors.push(`Satır ${i + 2}: ${skuRaw} adet hücresi "${stockRaw}" sayı değil, ${stockVal ?? 'mevcut/0'} alındı.`)
+    }
     lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(col(row, 'box')), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
   })
 
   for (const line of lines) {
     const { i, skuRaw, sku_norm, brand, box, stockVal } = line
     const row = parsed.rows[i]
-    const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm)
+    const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm, brand)
     const key_norm = ex ? ex.key_norm : productKey(skuRaw, brand, box)
     const repeat = seen.has(key_norm)
     seen.add(key_norm)
@@ -313,10 +358,10 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       d_inner: parseNumber(col(row, 'd_inner')),
       d_outer: parseNumber(col(row, 'd_outer')),
       width: parseNumber(col(row, 'width')),
-      stock: stockVal ?? 0,
+      stock: stockVal ?? ex?.stock ?? 0,
       unit: (col(row, 'unit') ?? '').trim() || 'Adet',
-      price: priceVal ?? 0,
-      currency: parseCurrency(col(row, 'currency'), opts.defaultCurrency),
+      price: priceVal ?? ex?.price ?? 0,
+      currency: priceVal == null && ex && !has('currency') ? ex.currency : parseCurrency(col(row, 'currency'), opts.defaultCurrency),
       list_price: parseNumber(col(row, 'list_price')),
       card_price: cardVal,
       min_order: parseNumber(col(row, 'min_order')) ?? 1,
@@ -324,7 +369,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       box,
       barcode: (col(row, 'barcode') ?? '').trim(),
       image: (col(row, 'image') ?? '').trim(),
-      description: (col(row, 'description') ?? '').trim(),
+      description: descriptionOf(row),
       equivalents: (col(row, 'equivalents') ?? '').trim(),
       active: true,
       deleted: false
@@ -360,6 +405,19 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       }
       out.key_norm = productKey(out.sku, out.brand, out.box)
       seen.add(out.key_norm)
+      if (out.key_norm !== ex.key_norm) {
+        // Brand/box changed: update the same cloud row instead of inserting a sibling under the new key.
+        if (existing.has(out.key_norm)) {
+          errors.push(`Satır ${i + 2}: ${skuRaw} (${out.brand} / ${out.box}) zaten ayrı bir ürün olarak kayıtlı, satır atlandı.`)
+          continue
+        }
+        const rec: ProductInsert = { ...out, id: ex.id }
+        rekeyed.push(rec)
+        inBatch.set(rec.key_norm, rec)
+        existing.set(rec.key_norm, { ...ex, key_norm: rec.key_norm, brand: rec.brand, box: rec.box })
+        updated++
+        continue
+      }
       if (fold(out)) continue
       if (ex.stock === out.stock && ex.price === out.price && ex.name === out.name && ex.active) unchanged++
       else updated++
@@ -370,7 +428,23 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   }
 
   const sb = cloud()
+  if (opts.dryRun) {
+    return {
+      id: 0,
+      filename: parsed.filename,
+      inserted,
+      updated,
+      unchanged,
+      deactivated: 0,
+      mode: opts.mode,
+      created_at: new Date().toISOString(),
+      errors: errors.slice(0, 200)
+    }
+  }
   if (opts.mode === 'replace') mustVoid(await sb.rpc('soft_delete_all_products'))
+  for (let i = 0; i < rekeyed.length; i += BATCH) {
+    mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
+  }
   for (let i = 0; i < batch.length; i += BATCH) {
     mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
   }

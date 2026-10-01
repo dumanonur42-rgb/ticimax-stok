@@ -11,6 +11,10 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 - Ürünler sayfasında Filtreler paneli her açılışta açık gelir.
 - Filtreler paneli yenilendi: açılır/kapanır bölümler, "Sadece stoktakiler" anahtarı, ölçü aralıkları (mm), marka arama kutusu, seçili markalar üstte, "Tümünü göster", etkin filtre sayacı ve Temizle, altta sonuç sayısı.
 - Dar pencerede üst menü simgelere dönüşür; yatay kaydırma çıkmaz.
+- [yönetici] Stok Aktar, mağazanın "STOK VE FİYAT" listesini doğrudan okur: çok sayfalı dosyada ürün tablosu olan sayfa seçilir, "KOD / AMBALAJ / FİYAT (€)" başlıkları ve "16,00 €" yazımı tanınır, başlıktaki para birimi otomatik seçilir, "EK BİLGİ" sütunu açıklamaya eklenir.
+- [yönetici] Stok Aktar'da boş fiyat hücresi mevcut fiyatı korur (artık sıfırlanmaz); kutu durumu olmayan kayıtlı ürün, dosyadaki tek Kutulu/Kutusuz satırıyla eşleşir ve kopya oluşmaz; adet hücresinde yazı varsa uyarı listelenir.
+- [yönetici] Stok Aktar'da "Önce dene" düğmesi: hiçbir şey yazmadan kaç ürünün ekleneceğini/güncelleneceğini ve uyarıları gösterir.
+- Kutu durumu yazımları birleştirildi: "1KUTULU 1KUTUSUZ" → "1 Kutulu 1 Kutusuz", "KUTUSZ/KUTUUSZ" → Kutusuz, "ORJ POŞET" → "Orjinal Poşet".
 
 ## 1.0.15
 

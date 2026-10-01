@@ -23,8 +23,17 @@ export function canonBrand(raw: string): string {
 /** Spellings of the same packaging state map to one display label. */
 const BOX_ALIASES: ReadonlyArray<[RegExp, string]> = [
   [/^KUTUL[UI]$|^KUTU$/, 'Kutulu'],
-  [/^KUTUSUZ$/, 'Kutusuz'],
+  [/^KUTU?S?U?S?Z$|^KUTUSUZ$|^KUTUUSZ$|^KUTSUZ$/, 'Kutusuz'],
   [/^OR[IJ]{1,2}(INAL)?KAGIT$/, 'Orjinal Kağıt'],
+  [/^POSET(LI)?$/, 'Poşet'],
+  [/^KAGIT(LI)?$/, 'Kağıt']
+]
+
+/** Word-level spellings inside combined labels ("2 Kutulu 1 Kutusz", "Orj Poşet"). */
+const BOX_WORDS: ReadonlyArray<[RegExp, string]> = [
+  [/^KUTUL[UI]$/, 'Kutulu'],
+  [/^KUTU?S?U?S?Z$|^KUTUUSZ$|^KUTSUZ$/, 'Kutusuz'],
+  [/^OR[IJ]{1,2}(INAL)?$/, 'Orjinal'],
   [/^POSET(LI)?$/, 'Poşet'],
   [/^KAGIT(LI)?$/, 'Kağıt']
 ]
@@ -36,6 +45,7 @@ const BOX_NOISE = /\b(adet|ad\.?|tane|tn\.?)\b/gi
 export function canonBox(raw: string): string {
   const text = raw
     .replace(BOX_NOISE, ' ')
+    .replace(/(\d)([A-Za-zÇĞİÖŞÜçğıöşü])/g, '$1 $2')
     .replace(/[\s\-–—,;/|:=()[\]]+/g, ' ')
     .trim()
   if (!text) return ''
@@ -44,6 +54,8 @@ export function canonBox(raw: string): string {
   return text
     .split(' ')
     .map((w) => {
+      const wk = normalize(w)
+      for (const [re, label] of BOX_WORDS) if (re.test(wk)) return label
       const lower = w.toLocaleLowerCase('tr-TR')
       return lower.charAt(0).toLocaleUpperCase('tr-TR') + lower.slice(1)
     })

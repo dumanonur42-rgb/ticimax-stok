@@ -321,6 +321,7 @@ export interface ImportPreview {
   rows: string[][]
   totalRows: number
   suggestedMapping: Partial<Record<keyof ProductInput, string>>
+  suggestedCurrency: Currency | null
   token: string
 }
 
@@ -332,6 +333,8 @@ export interface ImportOptions {
   defaultCurrency: Currency
   defaultBrand: string
   defaultCategory: string
+  /** Compute the outcome and warnings without writing anything. */
+  dryRun?: boolean
 }
 
 export interface ImportResult extends ImportLog {

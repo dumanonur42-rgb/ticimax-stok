@@ -1,4 +1,4 @@
-import type { Currency, ImportLog, ImportPreview, ProductInput } from '@shared/types'
+import type { Currency, ImportLog, ImportPreview, ImportResult, ProductInput } from '@shared/types'
 import { FileSpreadsheet, FileDown, Upload } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Field, Spinner } from '@/components/ui'
@@ -43,6 +43,7 @@ export function Import(): ReactNode {
   const [busy, setBusy] = useState(false)
   const [logs, setLogs] = useState<ImportLog[]>([])
   const [errors, setErrors] = useState<string[]>([])
+  const [trial, setTrial] = useState<ImportResult | null>(null)
 
   const loadLogs = (): void => {
     api('import:logs', undefined).then(setLogs).catch(() => setLogs([]))
@@ -56,7 +57,9 @@ export function Import(): ReactNode {
       if (p) {
         setPreview(p)
         setMapping(p.suggestedMapping)
+        if (p.suggestedCurrency) setDefaultCurrency(p.suggestedCurrency)
         setErrors([])
+        setTrial(null)
       }
     } catch (e) {
       toast((e as Error).message, 'error')
@@ -65,16 +68,22 @@ export function Import(): ReactNode {
     }
   }
 
-  const run = async (): Promise<void> => {
+  const run = async (dryRun = false): Promise<void> => {
     if (!preview) return
     if (!mapping.sku) return toast('Ürün kodu kolonu eşlenmeli.', 'error')
-    if (mode === 'replace' && !window.confirm('Mevcut tüm ürünler silinip dosyadaki ürünler yüklenecek. Devam edilsin mi?')) return
+    if (!dryRun && mode === 'replace' && !window.confirm('Mevcut tüm ürünler silinip dosyadaki ürünler yüklenecek. Devam edilsin mi?')) return
     setBusy(true)
     try {
-      const r = await api('import:run', { token: preview.token, mapping, mode, deactivateMissing, defaultCurrency, defaultBrand, defaultCategory })
+      const r = await api('import:run', { token: preview.token, mapping, mode, deactivateMissing, defaultCurrency, defaultBrand, defaultCategory, dryRun })
+      if (dryRun) {
+        setTrial(r)
+        setErrors(r.errors)
+        return
+      }
       toast(`İçe aktarım tamam: ${num(r.inserted)} yeni, ${num(r.updated)} güncel, ${num(r.unchanged)} değişmedi.`, 'success')
       setErrors(r.errors)
       setPreview(null)
+      setTrial(null)
       loadLogs()
     } catch (e) {
       toast((e as Error).message, 'error')
@@ -90,8 +99,9 @@ export function Import(): ReactNode {
       <section className="card grid" style={{ gap: 12 }} aria-labelledby="imp-title">
         <h2 id="imp-title">Stok listesi yükle</h2>
         <p className="muted">
-          Excel (.xlsx, .xls) veya CSV dosyanızı seçin. Beklenen düzen: <b>RAF | ÜRÜN ADI | MARKA | ADET | KUTU DURUMU | FİYAT | AÇIKLAMA</b> (boş hücreler sorun olmaz; kolon başlıkları otomatik
-          eşlenir, gerekirse aşağıdan düzeltin). Yalnızca ürün kodu zorunludur; aynı kod + marka + kutu durumu tek üründür, dosyada iki kez geçerse adetler toplanır.
+          Excel (.xlsx, .xls) veya CSV dosyanızı seçin. Beklenen düzen: <b>RAF | KOD | MARKA | ADET | AMBALAJ (kutu durumu) | FİYAT (€) | AÇIKLAMA</b> (boş hücreler sorun olmaz; kolon başlıkları
+          otomatik eşlenir, gerekirse aşağıdan düzeltin; birden fazla sayfa varsa ürün tablosu olan sayfa seçilir). Yalnızca ürün kodu zorunludur; aynı kod + marka + kutu durumu tek üründür, dosyada iki
+          kez geçerse adetler toplanır. Fiyat hücresi boşsa mevcut fiyat korunur; "16,00 €" gibi yazımlar ve başlıktaki para birimi tanınır.
         </p>
         <div className="row wrap">
           <button className="btn primary" onClick={pick} disabled={busy}>
@@ -199,16 +209,29 @@ export function Import(): ReactNode {
               Vazgeç
             </button>
             <span className="spacer" />
-            <button className="btn primary" onClick={run} disabled={busy || !mapping.sku}>
+            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku} title="Hiçbir şey yazmadan sonucu hesaplar">
+              Önce dene
+            </button>
+            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku}>
               <Upload size={16} aria-hidden /> {num(preview.totalRows)} satırı içe aktar
             </button>
           </div>
+          {trial && (
+            <div className="row wrap" role="status" aria-live="polite">
+              <span className="badge info">Deneme sonucu</span>
+              <span className="badge ok">{num(trial.inserted)} yeni</span>
+              <span className="badge neutral">{num(trial.updated)} güncellenecek</span>
+              <span className="badge neutral">{num(trial.unchanged)} değişmeyecek</span>
+              <span className="badge low">{num(trial.errors.length)} uyarı</span>
+              <span className="muted small">Henüz hiçbir şey yazılmadı.</span>
+            </div>
+          )}
         </section>
       )}
 
       {errors.length > 0 && (
         <section className="card" role="alert">
-          <h3>Atlanan satırlar ({errors.length})</h3>
+          <h3>Uyarılar ({errors.length})</h3>
           <ul className="small" style={{ maxHeight: 200, overflow: 'auto' }}>
             {errors.slice(0, 200).map((e, i) => (
               <li key={i}>{e}</li>
