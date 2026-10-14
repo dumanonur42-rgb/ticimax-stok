@@ -67,6 +67,7 @@ class Etiket:
     alici: dict[str, str] = field(default_factory=dict)
     kargo: dict[str, str] = field(default_factory=dict)
     barkod: str = ""
+    otogar: bool = False  # otogar/otobüs: sadece alıcı adı, telefon, adres
 
 
 SECTION_MAP = {
@@ -376,7 +377,78 @@ def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
     )
 
 
+def _draw_otogar(doc: pymupdf.Document, e: Etiket, size_key: str) -> None:
+    """Otogar/otobüs etiketi: başlık, ödeme, gönderici ve barkod yok."""
+    w, h = LABEL_SIZES[size_key]
+    inner_w = w - 2 * MARGIN_X
+    pad = 2 * MM
+    tw = inner_w - 2 * pad
+    a = e.alici
+    adres, note = _adres_notlu(a.get("Adres", ""))
+    ilce_il = _buyuk(a.get("İlçe/İl", ""))
+    tel = _telefon(a.get("Telefon", ""))
+
+    def sigan(text: str, size: float, font: str, lines: int) -> tuple[float, list[str]]:
+        """Uzun kelime taşmasın, '…' ile kesilmesin: gerekirse yazıyı küçült."""
+        en_uzun = max(text.split(), key=lambda k: _font(font).text_length(k, fontsize=1),
+                      default="")
+        size = _sigdir(en_uzun, size, font, tw, 6) if en_uzun else size
+        sat = _wrap(text, size, font, tw, lines)
+        while sat and sat[-1].endswith("…") and size > 6:
+            size -= 0.5
+            sat = _wrap(text, size, font, tw, lines)
+        return size, sat
+
+    def olc(s: float):
+        nfs, name = sigan(a.get("İsim", ""), 17 * s, "b", 4)
+        tfs = _sigdir(f"Tel: {tel}", 12 * s, "b", tw, 6) if tel else 0
+        afs, addr = sigan(adres, min(11 * s, nfs * 0.8), "r", 6)
+        nt = _wrap(f"({note})", 9 * s, "r", tw, 2) if note else []
+        il_fs = _sigdir(ilce_il, 15 * s, "b", tw, 7) if ilce_il else 0
+        il_h = il_fs * 0.73 + 5 * MM if ilce_il else 0
+        icerik = (pad + len(name) * nfs * LEADING
+                  + (tfs * LEADING + 1.5 * MM if tel else 0)
+                  + len(addr) * afs * LEADING
+                  + (len(nt) * 9 * s * LEADING + 1 * MM if nt else 0) + pad)
+        return (nfs, name, tfs, afs, addr, nt), il_fs, il_h, icerik
+
+    if h is None:
+        s = 1.35
+        m, il_fs, il_h, icerik = olc(s)
+        h_page = icerik + il_h + 2 * MARGIN_Y
+    else:
+        s = 1.8
+        while True:
+            m, il_fs, il_h, icerik = olc(s)
+            if icerik + il_h <= h - 2 * MARGIN_Y or s <= 0.7:
+                break
+            s -= 0.05
+        h_page = h
+    page = doc.new_page(width=w, height=h_page)
+    c = Canvas(page)
+    x, y = MARGIN_X, MARGIN_Y
+    box = pymupdf.Rect(x, y, x + inner_w, h_page - MARGIN_Y)
+    c.frame(box, width=1.2)
+    nfs, name, tfs, afs, addr, nt = m
+    yy = y + pad
+    yy = c.lines(x + pad, yy, name, nfs, "b")
+    if tel:
+        yy = c.lines(x + pad, yy, [f"Tel: {tel}"], tfs, "b")
+        yy += 1.5 * MM
+    yy = c.lines(x + pad, yy, addr, afs, "r")
+    if nt:
+        c.lines(x + pad, yy + 1 * MM, nt, 9 * s, "r")
+    if ilce_il:
+        band = pymupdf.Rect(x, box.y1 - il_h, box.x1, box.y1)
+        c.band(band)
+        c.text(x, box.y1 - (il_h - il_fs * 0.73) / 2, ilce_il, il_fs, "b",
+               align="center", white=True, box_w=inner_w)
+    c.finish()
+
+
 def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
+    if e.otogar:
+        return _draw_otogar(doc, e, size_key)
     w, h = LABEL_SIZES[size_key]
     inner_w = w - 2 * MARGIN_X
     gap = 2.2 * MM
@@ -563,9 +635,12 @@ def ayar_kaydet(**degerler) -> None:
 
 def elle_etiket(isim: str, telefon: str, adres: str, ilce: str, il: str, kargo_firmasi: str,
                 odeme: str, paket: str, desi: str,
-                gonderici: dict[str, str] | None = None) -> Etiket:
+                gonderici: dict[str, str] | None = None, otogar: bool = False) -> Etiket:
     """Ticimax dışı sipariş için barkodsuz etiket verisi."""
     ilce_il = " / ".join(p for p in (ilce.strip(), il.strip()) if p)
+    if otogar:
+        return Etiket(alici={"İsim": isim.strip(), "Telefon": telefon.strip(),
+                             "Adres": adres.strip(), "İlçe/İl": ilce_il}, otogar=True)
     return Etiket(
         gonderici=dict(gonderici or GONDERICI),
         alici={"İsim": isim.strip(), "Telefon": telefon.strip(), "Adres": adres.strip(),
@@ -1129,18 +1204,22 @@ class ElleForm(tk.Frame if tk else object):
         top.columnconfigure(0, weight=1)
         tk.Label(top, text="ALICI BİLGİLERİ", font=_f(8, True), fg=UI_MUTED,
                  bg=UI_CARD).grid(row=0, column=0, sticky="w")
-        tk.Label(top, text="Gönderici: YAMANSA RULMAN (sabit)", font=_f(8), fg=UI_MUTED,
-                 bg=UI_CARD).grid(row=0, column=1, sticky="e", padx=(0, 10))
+        self.gond_lbl = tk.Label(top, text="Gönderici: YAMANSA RULMAN (sabit)", font=_f(8),
+                                 fg=UI_MUTED, bg=UI_CARD)
+        self.gond_lbl.grid(row=0, column=1, sticky="e", padx=(0, 10))
+        self.otogar = False
         pill(top, "Temizle", self.clear, size=8).grid(row=0, column=2, sticky="e")
 
         self.isim = _entry(self)
         _field(self, 1, 0, "Ad Soyad / Firma *", self.isim, colspan=2)
         self.tel = _entry(self)
         _field(self, 2, 0, "Telefon", self.tel)
+        once = set(self.winfo_children())
         self.kargo_var = tk.StringVar(value=ayar.get("kargo_firmasi") or KARGO_YOK)
         self.kargo = ttk.Combobox(self, textvariable=self.kargo_var,
                                   values=[KARGO_YOK, *KARGO_FIRMALARI], font=_f(10), width=10)
         _field(self, 2, 1, "Kargo firması (isteğe bağlı)", self.kargo)
+        self._kargo_w = [w for w in self.winfo_children() if w not in once]
         self.adres = tk.Text(self, height=2, font=_f(10), relief="flat", bg=UI_CARD,
                              fg=UI_TEXT, wrap="word", highlightthickness=1,
                              highlightbackground=UI_BORDER, highlightcolor=UI_DARK,
@@ -1153,6 +1232,7 @@ class ElleForm(tk.Frame if tk else object):
         self.il = _entry(self)
         _field(self, 4, 1, "İl *", self.il)
 
+        once = set(self.winfo_children())
         self.odeme_var = tk.StringVar(value=ayar.get("odeme", ODEME_TURLERI[0]))
         tk.Label(self, text="Ödemeyi kim yapar", font=_f(8), fg=UI_MUTED, bg=UI_CARD).grid(
             row=5, column=0, sticky="w")
@@ -1168,6 +1248,13 @@ class ElleForm(tk.Frame if tk else object):
         _field(pd, 0, 0, "Paket", self.paket, pady=0)
         self.desi = _entry(pd, 4)
         _field(pd, 0, 1, "Desi", self.desi, pady=0)
+        self._kargo_w += [w for w in self.winfo_children() if w not in once]
+
+    def set_otogar(self, on: bool):
+        """Otogar etiketinde kargo/ödeme/paket alanları ve gönderici gizlenir."""
+        self.otogar = on
+        for w in (*self._kargo_w, self.gond_lbl):
+            w.grid_remove() if on else w.grid()
 
     def clear(self):
         for e in (self.isim, self.tel, self.ilce, self.il, self.desi):
@@ -1192,7 +1279,7 @@ class ElleForm(tk.Frame if tk else object):
                 "kargo_firmasi": "" if self.kargo_var.get().strip() == KARGO_YOK
                 else self.kargo_var.get(),
                 "odeme": self.odeme_var.get(), "paket": self.paket.get(),
-                "desi": self.desi.get()}
+                "desi": self.desi.get(), "otogar": self.otogar}
 
     def eksikler(self) -> list[str]:
         v = self.values()
@@ -1271,10 +1358,11 @@ class App(_TkBase):
 
         self.mode_var = tk.StringVar(value="pdf")
         Segmented(body, self.mode_var, [
-            ("pdf", "Ticimax PDF", "Barkodlu kargo etiketi"),
-            ("fatura", "Fatura PDF", "Faturadan bilgileri al"),
-            ("elle", "Elle Gir", "Bilgileri kendin yaz"),
-        ], cell_padding=10).grid(row=0, column=0, sticky="ew", pady=(0, 12))
+            ("pdf", "Ticimax PDF", "Barkodlu etiket"),
+            ("fatura", "Fatura PDF", "Faturadan al"),
+            ("elle", "Elle Gir", "Kendin yaz"),
+            ("otogar", "Otogar", "Sadece alıcı"),
+        ], cell_padding=8).grid(row=0, column=0, sticky="ew", pady=(0, 12))
         self.drop = DropZone(body, self.on_files)
         self.drop.grid(row=1, column=0, pady=(0, 16))
         self.drop_fatura = DropZone(
@@ -1369,7 +1457,8 @@ class App(_TkBase):
 
     def _mode_changed(self):
         mode = self.mode_var.get()
-        if mode == "elle":
+        if mode in ("elle", "otogar"):
+            self.form.set_otogar(mode == "otogar")
             self.drop.grid_remove()
             self.drop_fatura.grid_remove()
             self.form.grid()
@@ -1388,12 +1477,12 @@ class App(_TkBase):
                 self.drop.grid()
             self.card.grid()
         button_text = {"pdf": "PDF Seç ve Dönüştür", "fatura": "Fatura Seç",
-                       "elle": "Etiket Oluştur"}
+                       "elle": "Etiket Oluştur", "otogar": "Otogar Etiketi Oluştur"}
         self.btn.config(text=button_text[mode])
 
     def main_action(self):
         mode = self.mode_var.get()
-        if mode == "elle":
+        if mode in ("elle", "otogar"):
             self.create_manual()
         elif mode == "fatura":
             self.on_fatura(None)
@@ -1512,7 +1601,8 @@ class App(_TkBase):
                    kind="warning")
             return
         v = self.form.values()
-        ayar_kaydet(kargo_firmasi=v["kargo_firmasi"], odeme=v["odeme"])
+        if not v["otogar"]:
+            ayar_kaydet(kargo_firmasi=v["kargo_firmasi"], odeme=v["odeme"])
         self.bar.set("busy", "Etiket oluşturuluyor…", v["isim"])
         self.update_idletasks()
         try:

@@ -33,6 +33,8 @@ Her sayfa/sipariş ayrı bir etiket sayfası olur.
   ilçe/il forma dolar (Teslimat Adresi varsa o kullanılır). Kontrol edip
   *Etiket Oluştur*'a basın. Bulunamayan alanlar uyarıyla bildirilir.
 - **Elle Gir:** Ticimax dışı siparişler için bilgileri kendiniz yazın.
+- **Otogar:** otobüsle gönderilen paketler için. Etikette yalnızca alıcının adı,
+  telefonu, adresi ve ilçe/il yazar; gönderici, ödeme ve barkod yoktur.
 
 Fatura ve elle etiketlerde barkod yoktur; gönderici her zaman sabit Yamansa
 bilgisidir. Çıktı `Belgeler\Kargo Etiket` klasörüne kaydedilir.
