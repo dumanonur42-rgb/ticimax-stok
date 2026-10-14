@@ -319,29 +319,29 @@ class Layout:
     gond_h: float = 0
     barkod_text: float = 0
     name_fs: float = 0
+    baslik: bool = True  # en üstte kargo firması şeridi
     ilce_h: float = 0
 
     def __post_init__(self):
         s = self.s
         self.name_fs = self.name_fs or 14 * s
         self.ilce_h = 3.4 * MM + 10 * s * 0.75
-        self.header_h = 11 * MM
+        self.header_h = 11 * MM if self.baslik else 0
         pad = 2 * MM
         self.alici_h = (5.5 * MM + len(self.name) * self.name_fs * LEADING + 10 * s * LEADING + 1.2 * MM
                         + len(self.addr) * 8.5 * s * LEADING
                         + (len(self.note) * 7 * s * LEADING + 1 * MM if self.note else 0)
                         + (self.ilce_h + 1.2 * MM if self.ilce_il else pad))
-        self.kargo_h = 19 * MM
+        self.kargo_h = 19 * MM if self.baslik else 24 * MM
         gs = min(s, 1.1)  # gönderici bölümü büyük yazıda da küçük kalır
         self.gond_h = (1.5 * MM + len(self.firma) * 7 * gs * LEADING
                        + len(self.g_addr) * 6.5 * gs * LEADING + 0.5 * MM)
         self.barkod_text = 11 * s * LEADING
 
     def fixed_total(self, gap: float, barkodlu: bool = True) -> float:
-        if not barkodlu:
-            return self.header_h + self.alici_h + self.kargo_h + self.gond_h + 3 * gap
+        n = (1 if self.baslik else 0) + (4 if barkodlu else 2)
         return (self.header_h + self.alici_h + self.kargo_h + self.gond_h
-                + self.barkod_text + 5 * gap)
+                + (self.barkod_text if barkodlu else 0) + n * gap)
 
 
 def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
@@ -363,6 +363,7 @@ def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
         name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 3)
     return Layout(
         s=s,
+        baslik=bool(e.kargo.get("Kargo Firması", "").strip()),
         name_fs=nfs,
         name=name,
         addr=_wrap(adres, 8.5 * s, "r", inner_w - 2 * pad, 4),
@@ -417,14 +418,15 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     x = MARGIN_X
     y = MARGIN_Y
 
-    # 1) Üst şerit: siyah zemin, beyaz yazı — Kargo Firması
-    band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
-    c.band(band)
-    firma = e.kargo.get("Kargo Firması", "")
-    hs = _sigdir(firma, 20, "b", inner_w - 4 * MM, 8)
-    c.text(x, y + lay.header_h / 2 + hs * 0.36, firma, hs, "b",
-           align="center", white=True, box_w=inner_w)
-    y = band.y1 + gap
+    # 1) Üst şerit (isteğe bağlı): siyah zemin, beyaz yazı — Kargo Firması
+    if lay.baslik:
+        band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
+        c.band(band)
+        firma = e.kargo.get("Kargo Firması", "")
+        hs = _sigdir(firma, 20, "b", inner_w - 4 * MM, 8)
+        c.text(x, y + lay.header_h / 2 + hs * 0.36, firma, hs, "b",
+               align="center", white=True, box_w=inner_w)
+        y = band.y1 + gap
 
     # 2) Ödeme şeridi (çok büyük, siyah zemin, 2 satır) + alt alta PAKET / DESİ
     k = e.kargo
@@ -435,7 +437,7 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     c.band(pay)
     kel = odeme.split()
     satir = [" ".join(kel[:-1]), kel[-1]] if len(kel) > 1 else [odeme]
-    ps = min(_sigdir(t, 26, "b", pay_w - 2.4 * MM, 6) for t in satir)
+    ps = min(_sigdir(t, 30, "b", pay_w - 2.4 * MM, 6) for t in satir)
     ara = ps * 0.34  # satır arası (Ö, İ noktaları üst satıra değmesin)
     ps = min(ps, (lay.kargo_h - 3 * MM - ara * (len(satir) - 1)) / (len(satir) * 0.73))
     cap = ps * 0.73  # büyük harf yüksekliği
@@ -510,8 +512,12 @@ def write_labels(etiketler: list[Etiket], dst: Path, size_key: str = DEFAULT_SIZ
     return dst
 
 
-def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) -> Path:
+def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE,
+            kargo_yaz: bool = False) -> Path:
     etiketler = parse_pdf(src)
+    if not kargo_yaz:
+        for e in etiketler:
+            e.kargo["Kargo Firması"] = ""
     if not etiketler:
         raise ValueError("PDF içinde Ticimax kargo etiketi bulunamadı.")
     return write_labels(etiketler, dst or src.with_name(src.stem + "_QL550.pdf"), size_key)
@@ -519,6 +525,7 @@ def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) ->
 
 # ---------------------------------------------------------------- Elle etiket
 
+KARGO_YOK = "Yazılmasın"
 KARGO_FIRMALARI = ["Yurtiçi Kargo", "Aras Kargo", "MNG Kargo", "Sürat Kargo", "PTT Kargo",
                    "UPS Kargo", "DHL eCommerce", "Kolay Gelsin", "HepsiJet"]
 ODEME_TURLERI = ["Gönderici Ödemeli", "Alıcı Ödemeli"]
@@ -820,7 +827,7 @@ def _f(size: int, bold: bool = False) -> tuple:
 class DropZone(tk.Canvas if tk else object):
     """Kesikli çerçeveli, tıklanabilir ve (tkinterdnd2 varsa) dosya bırakılabilir alan."""
 
-    W, H = 500, 150
+    W, H = 500, 124
 
     def __init__(self, master, on_files, title: str = "Ticimax PDF'ini buraya sürükleyip bırakın",
                  note: str = "Çıktı aynı klasöre  <ad>_QL550.pdf  olarak kaydedilir"):
@@ -860,7 +867,7 @@ class DropZone(tk.Canvas if tk else object):
         self.create_polygon(pts, smooth=True, fill=fill, outline=color, width=2,
                             dash=(6, 4))
         # belge simgesi
-        cx, top = self.W / 2, 26
+        cx, top = self.W / 2, 14
         self.create_rectangle(cx - 16, top, cx + 16, top + 40, outline=UI_DARK, width=2,
                               fill=UI_CARD)
         self.create_polygon(cx + 6, top, cx + 16, top + 10, cx + 6, top + 10,
@@ -868,11 +875,11 @@ class DropZone(tk.Canvas if tk else object):
         for i, w in enumerate((18, 14, 10)):
             y = top + 18 + i * 7
             self.create_line(cx - 10, y, cx - 10 + w, y, fill=UI_DARK, width=2)
-        self.create_text(cx, top + 62, text=self.title,
+        self.create_text(cx, top + 56, text=self.title,
                          font=_f(12, True), fill=UI_TEXT)
         tip = "veya seçmek için tıklayın" if DND_FILES else "Seçmek için tıklayın"
-        self.create_text(cx, top + 84, text=tip, font=_f(10), fill=UI_MUTED)
-        self.create_text(cx, top + 106, text=self.note, font=_f(9), fill=UI_MUTED)
+        self.create_text(cx, top + 77, text=tip, font=_f(10), fill=UI_MUTED)
+        self.create_text(cx, top + 96, text=self.note, font=_f(9), fill=UI_MUTED)
 
 
 class Preview(tk.Frame if tk else object):
@@ -1130,10 +1137,10 @@ class ElleForm(tk.Frame if tk else object):
         _field(self, 1, 0, "Ad Soyad / Firma *", self.isim, colspan=2)
         self.tel = _entry(self)
         _field(self, 2, 0, "Telefon", self.tel)
-        self.kargo_var = tk.StringVar(value=ayar.get("kargo_firmasi", KARGO_FIRMALARI[0]))
-        self.kargo = ttk.Combobox(self, textvariable=self.kargo_var, values=KARGO_FIRMALARI,
-                                  font=_f(10), width=10)
-        _field(self, 2, 1, "Kargo firması *", self.kargo)
+        self.kargo_var = tk.StringVar(value=ayar.get("kargo_firmasi") or KARGO_YOK)
+        self.kargo = ttk.Combobox(self, textvariable=self.kargo_var,
+                                  values=[KARGO_YOK, *KARGO_FIRMALARI], font=_f(10), width=10)
+        _field(self, 2, 1, "Kargo firması (isteğe bağlı)", self.kargo)
         self.adres = tk.Text(self, height=2, font=_f(10), relief="flat", bg=UI_CARD,
                              fg=UI_TEXT, wrap="word", highlightthickness=1,
                              highlightbackground=UI_BORDER, highlightcolor=UI_DARK,
@@ -1181,14 +1188,15 @@ class ElleForm(tk.Frame if tk else object):
     def values(self) -> dict[str, str]:
         return {"isim": self.isim.get(), "telefon": self.tel.get(),
                 "adres": self.adres.get("1.0", "end"), "ilce": self.ilce.get(),
-                "il": self.il.get(), "kargo_firmasi": self.kargo_var.get(),
+                "il": self.il.get(),
+                "kargo_firmasi": "" if self.kargo_var.get().strip() == KARGO_YOK
+                else self.kargo_var.get(),
                 "odeme": self.odeme_var.get(), "paket": self.paket.get(),
                 "desi": self.desi.get()}
 
     def eksikler(self) -> list[str]:
         v = self.values()
-        adlar = {"isim": "Ad Soyad / Firma", "adres": "Açık adres", "il": "İl",
-                 "kargo_firmasi": "Kargo firması"}
+        adlar = {"isim": "Ad Soyad / Firma", "adres": "Açık adres", "il": "İl"}
         return [ad for k, ad in adlar.items() if not v[k].strip()]
 
 
@@ -1315,15 +1323,18 @@ class App(_TkBase):
                                                                  padx=(8, 0))
 
         tk.Frame(card, bg=UI_BORDER, height=1).grid(row=5, column=0, columnspan=2,
-                                                    sticky="ew", pady=14)
+                                                    sticky="ew", pady=10)
         self.print_var = tk.BooleanVar(value=False)
         self.open_var = tk.BooleanVar(value=False)
-        Toggle(card, self.print_var, "Dönüştürünce yazıcıya gönder",
-               "Seçili yazıcıya, gerçek boyutta (ölçeklemesiz)").grid(
+        Toggle(card, self.print_var, "Oluşturunca yazıcıya gönder (gerçek boyut)").grid(
             row=6, column=0, columnspan=2, sticky="w")
-        Toggle(card, self.open_var, "Ayrıca PDF görüntüleyicide aç",
-               "Gömülü görüntüleyici ayrı pencerede açılır").grid(
+        Toggle(card, self.open_var, "Ayrıca PDF görüntüleyicide aç").grid(
             row=7, column=0, columnspan=2, sticky="w", pady=(10, 0))
+        self.kargo_yaz_var = tk.BooleanVar(value=bool(ayar_oku().get("kargo_yaz", False)))
+        self.kargo_yaz_var.trace_add(
+            "write", lambda *_: ayar_kaydet(kargo_yaz=self.kargo_yaz_var.get()))
+        Toggle(card, self.kargo_yaz_var, "Ticimax etiketinde kargo firmasını yaz").grid(
+            row=8, column=0, columnspan=2, sticky="w", pady=(10, 0))
         self.refresh_printers()
 
         # Ana buton
@@ -1517,7 +1528,8 @@ class App(_TkBase):
         self.bar.set("busy", "Dönüştürülüyor…", src.name)
         self.update_idletasks()
         try:
-            dst = convert(src, size_key=self.size_var.get())
+            dst = convert(src, size_key=self.size_var.get(),
+                          kargo_yaz=self.kargo_yaz_var.get())
         except Exception as ex:  # noqa: BLE001
             self.bar.set("error", "Dönüştürülemedi", f"{src.name}  ·  {ex}")
             Dialog(self, "Etiket oluşturulamadı", f"{src.name}\n\n{ex}")
@@ -1562,6 +1574,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--yazdir", action="store_true", help="varsayılan yazıcıya gönder")
     ap.add_argument("--yazici", help="yazıcı adı (örn. \"Brother QL-550\")")
     ap.add_argument("--acma", action="store_true", help="çıktıyı açma")
+    ap.add_argument("--kargo-yaz", action="store_true", help="kargo firmasını etikete yaz")
     ap.add_argument("--kontrol", action="store_true",
                     help="gömülü PDF yazdırıcının bulunduğunu doğrula ve çık")
     args = ap.parse_args(argv)
@@ -1581,7 +1594,7 @@ def main(argv: list[str] | None = None) -> int:
     for p in args.pdf:
         src = Path(p)
         try:
-            dst = convert(src, size_key=args.boyut)
+            dst = convert(src, size_key=args.boyut, kargo_yaz=args.kargo_yaz)
         except Exception as ex:  # noqa: BLE001
             rc = 1
             print(f"HATA {src}: {ex}", file=sys.stderr)

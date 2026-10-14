@@ -21,6 +21,7 @@ bu yüzden küçük boyutta da net okunur.
   ```
   "Kargo Etiket.exe" KargoGonderimTopluBarkod.pdf --yazici "Brother QL-550"
   "Kargo Etiket.exe" dosya.pdf --boyut 62surekli     (DK-22205 sürekli rulo)
+  "Kargo Etiket.exe" dosya.pdf --kargo-yaz           (kargo firmasını da yaz)
   ```
 
 Her sayfa/sipariş ayrı bir etiket sayfası olur.

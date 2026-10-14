@@ -13,7 +13,7 @@ ORNEKLER = [
                    "Merkez", "Nevşehir", "Yurtiçi Kargo", "Gönderici Ödemeli", "1", "2"),
     ke.elle_etiket("Mehmet Uzunisimli Denemeoğlu Sanayi Ticaret", "5000000002",
                    "Organize Sanayi Bölgesi 3. Cadde Çiçek Sokak No:12 Kat:2 Daire:5 Blok B",
-                   "Kızılcahamam", "Ankara", "Aras Kargo", "Alıcı Ödemeli", "2", "5"),
+                   "Kızılcahamam", "Ankara", "", "Alıcı Ödemeli", "2", "5"),
 ]
 
 if __name__ == "__main__":
