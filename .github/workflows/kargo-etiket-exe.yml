@@ -71,3 +71,14 @@ jobs:
           body: "Ticimax kargo barkod PDF -> Brother QL-550 etiket donusturucu. Kargo Etiket.exe dosyasini indirip PDF'i uzerine surukleyin."
           prerelease: false
           files: "kargo_etiket/dist/Kargo Etiket.exe"
+
+      - name: Test surumu (dal)
+        if: github.ref != 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: kargo-etiket-test
+          target_commitish: ${{ github.sha }}
+          name: Kargo Etiket QL-550 (test surumu)
+          body: "Henuz yayinlanmamis test surumu."
+          prerelease: true
+          files: "kargo_etiket/dist/Kargo Etiket.exe"
