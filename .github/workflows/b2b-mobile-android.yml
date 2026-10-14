@@ -1,0 +1,99 @@
+name: B2B Mobile Android
+
+on:
+  pull_request:
+    paths:
+      - b2b-mobile/**
+      - b2b-app/src/shared/**
+      - .github/workflows/b2b-mobile-android.yml
+  push:
+    tags:
+      - b2b-android-v*
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: b2b-mobile
+    env:
+      ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+          cache-dependency-path: b2b-mobile/android/**/*.gradle*
+      - name: Install packages
+        run: npm ci
+      - name: Check TypeScript
+        run: npm run typecheck
+      - name: Check username sign-in compatibility
+        run: npm run check:login-email
+      - name: Build web app
+        run: npm run build
+      - name: Prepare Android project
+        run: npx cap sync android
+      - name: Require and decode release signing key
+        if: startsWith(github.ref, 'refs/tags/b2b-android-v')
+        shell: bash
+        run: |
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing required repository secret: $name"
+              exit 1
+            fi
+          done
+          key_path="$RUNNER_TEMP/yamansa-android.jks"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$key_path"
+          echo "ANDROID_KEYSTORE_PATH=$key_path" >> "$GITHUB_ENV"
+      - name: Build signed release APK
+        run: ./gradlew assembleRelease
+        working-directory: b2b-mobile/android
+      - name: Name APK
+        id: apk
+        shell: bash
+        run: |
+          version="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
+          apk="Yamansa-Rulman-B2B-Android-${version}.apk"
+          mkdir -p dist-android
+          cp android/app/build/outputs/apk/release/app-release.apk "dist-android/$apk"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "path=dist-android/$apk" >> "$GITHUB_OUTPUT"
+        working-directory: b2b-mobile
+      - name: Create SHA-256 checksum
+        if: startsWith(github.ref, 'refs/tags/b2b-android-v')
+        run: sha256sum "${{ steps.apk.outputs.path }}" > dist-android/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Yamansa-Rulman-B2B-Android-${{ steps.apk.outputs.version }}
+          path: b2b-mobile/${{ steps.apk.outputs.path }}
+          if-no-files-found: error
+          retention-days: 30
+      - name: Create or update GitHub Release
+        if: startsWith(github.ref, 'refs/tags/b2b-android-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          apk="${{ steps.apk.outputs.path }}"
+          checksum="dist-android/SHA256SUMS.txt"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$apk" "$checksum" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$apk" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes
+          fi
