@@ -79,6 +79,6 @@ jobs:
           tag_name: kargo-etiket-test
           target_commitish: ${{ github.sha }}
           name: Kargo Etiket QL-550 (test surumu)
-          body: "Henuz yayinlanmamis test surumu."
+          body: "Henuz yayinlanmamis test surumu. Commit: ${{ github.sha }}"
           prerelease: true
           files: "kargo_etiket/dist/Kargo Etiket.exe"

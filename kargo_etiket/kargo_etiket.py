@@ -387,6 +387,9 @@ def _draw_otogar(doc: pymupdf.Document, e: Etiket, size_key: str) -> None:
     adres, note = _adres_notlu(a.get("Adres", ""))
     ilce_il = _buyuk(a.get("İlçe/İl", ""))
     tel = _telefon(a.get("Telefon", ""))
+    parca = [p.strip() for p in ilce_il.split("/") if p.strip()]
+    il = parca[-1] if parca else ""
+    ilce = " / ".join(parca[:-1])
 
     def sigan(text: str, size: float, font: str, lines: int) -> tuple[float, list[str]]:
         """Uzun kelime taşmasın, '…' ile kesilmesin: gerekirse yazıyı küçült."""
@@ -404,8 +407,11 @@ def _draw_otogar(doc: pymupdf.Document, e: Etiket, size_key: str) -> None:
         tfs = _sigdir(f"Tel: {tel}", 12 * s, "b", tw, 6) if tel else 0
         afs, addr = sigan(adres, min(11 * s, nfs * 0.8), "r", 6)
         nt = _wrap(f"({note})", 9 * s, "r", tw, 2) if note else []
-        il_fs = _sigdir(ilce_il, 15 * s, "b", tw, 7) if ilce_il else 0
-        il_h = il_fs * 0.73 + 5 * MM if ilce_il else 0
+        il_fs = min(40, _sigdir(il, 32 * s, "b", tw, 10)) if il else 0
+        ilce_fs = _sigdir(ilce, min(18 * s, il_fs * 0.6), "b", tw, 7) if ilce else 0
+        il_h = (5 * MM + il_fs * 0.73 + (ilce_fs * 0.73 + 2 * MM if ilce else 0)
+                if il or ilce else 0)
+        il_fs = (il_fs, ilce_fs)
         icerik = (pad + len(name) * nfs * LEADING
                   + (tfs * LEADING + 1.5 * MM if tel else 0)
                   + len(addr) * afs * LEADING
@@ -438,11 +444,17 @@ def _draw_otogar(doc: pymupdf.Document, e: Etiket, size_key: str) -> None:
     yy = c.lines(x + pad, yy, addr, afs, "r")
     if nt:
         c.lines(x + pad, yy + 1 * MM, nt, 9 * s, "r")
-    if ilce_il:
+    if il_h:  # otobüste uzaktan okunsun: ilçe üstte, il kocaman altta
         band = pymupdf.Rect(x, box.y1 - il_h, box.x1, box.y1)
         c.band(band)
-        c.text(x, box.y1 - (il_h - il_fs * 0.73) / 2, ilce_il, il_fs, "b",
-               align="center", white=True, box_w=inner_w)
+        il_fs, ilce_fs = il_fs
+        yy = band.y0 + 2.5 * MM
+        if ilce:
+            yy += ilce_fs * 0.73
+            c.text(x, yy, ilce, ilce_fs, "b", align="center", white=True, box_w=inner_w)
+            yy += 2 * MM
+        yy += il_fs * 0.73
+        c.text(x, yy, il, il_fs, "b", align="center", white=True, box_w=inner_w)
     c.finish()
 
 
