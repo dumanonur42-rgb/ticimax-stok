@@ -73,7 +73,7 @@ export function UpdateDialog(): ReactNode {
       {show && (
         <div className="update-card">
           <div className="update-hero">
-            <img src={mark} alt="" width={64} height={64} />
+            <img src={mark} alt="" height={64} />
             <div>
               <h2 id="update-title">{u.status === 'error' ? 'Güncelleme yapılamadı' : 'Yeni sürüm hazır'}</h2>
               <div className="update-versions" aria-label="Sürüm">

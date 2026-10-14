@@ -144,6 +144,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
               key={n.page}
               className="nav-item"
               aria-current={page === n.page ? 'page' : undefined}
+              aria-label={n.label}
               onClick={() => go(n.page)}
               title={`${n.label} (Alt+${n.key})`}
             >

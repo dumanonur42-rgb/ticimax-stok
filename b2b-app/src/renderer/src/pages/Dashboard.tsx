@@ -201,7 +201,7 @@ export function Dashboard(): ReactNode {
         </div>
       )}
 
-      <div className="grid g2">
+      <div className="grid g2 dashboard-bottom">
         <section className="card" aria-labelledby="recent-orders">
           <h2 id="recent-orders">Son siparişler</h2>
           {stats.recentOrders.length === 0 ? (

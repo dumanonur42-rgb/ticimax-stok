@@ -517,15 +517,19 @@ textarea.input {
 .grid {
   display: grid;
   gap: var(--gap);
+  min-width: 0;
+}
+.grid > * {
+  min-width: 0;
 }
 .g2 {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .g3 {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .g4 {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .row {
   display: flex;
@@ -747,6 +751,10 @@ textarea.input {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+}
+.stat .small {
+  overflow-wrap: anywhere;
 }
 .stat .value {
   font-size: 1.7rem;
@@ -1654,7 +1662,7 @@ dialog.update-dialog {
   gap: 16px;
 }
 .update-hero img {
-  width: 64px;
+  width: auto;
   height: 64px;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(11, 31, 68, 0.25));
@@ -3109,10 +3117,15 @@ dialog.update-dialog {
     display: block;
   }
   .g4 {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .catalog {
     grid-template-columns: 244px 1fr;
+  }
+}
+@media (max-width: 800px) {
+  .dashboard-bottom {
+    grid-template-columns: 1fr;
   }
 }
 @media print {

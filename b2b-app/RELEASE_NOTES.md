@@ -10,6 +10,10 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 - "Özet" sekmesinin adı "Ana Sayfa" oldu.
 - Ürünler listesinde birden fazla ürün seçilip Excel ve WhatsApp'a uygun tablo olarak kopyalanabilir; seçim arama ve filtre değiştirince korunur.
 - Ürün, stok, sepet ve sipariş tablolarında dar pencerelerde taşma ve üst üste binmeler düzeltildi.
+- Uygulama simgesi ve logolardaki görüntü hatası düzeltildi.
+- Ana sayfadaki uzun aktarım dosya adlarının dar ekranda taşması önlendi.
+- Ana sayfadaki tablolar dar pencerede alt alta gösteriliyor.
+- Dar pencerede simgeye dönüşen menü düğmelerine erişilebilir adlar eklendi.
 
 ## 1.0.17
 
