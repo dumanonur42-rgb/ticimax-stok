@@ -1,4 +1,4 @@
-name: B2B Mobile Android
+name: B2B Mobile
 
 on:
   pull_request:
@@ -15,6 +15,30 @@ permissions:
   contents: write
 
 jobs:
+  ios:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: b2b-mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-mobile/package-lock.json
+      - name: Install packages
+        run: npm ci
+      - name: Check TypeScript
+        run: npm run typecheck
+      - name: Check username sign-in compatibility
+        run: npm run check:login-email
+      - name: Build web app
+        run: npm run build
+      - name: Prepare iOS project
+        run: npx cap sync ios
+      - name: Build iOS simulator app
+        run: xcodebuild -workspace ios/App/App.xcworkspace -scheme App -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO -derivedDataPath "$RUNNER_TEMP/ios-derived-data" build
   android:
     runs-on: ubuntu-latest
     defaults:

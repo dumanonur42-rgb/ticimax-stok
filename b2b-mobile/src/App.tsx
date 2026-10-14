@@ -1,5 +1,5 @@
 import { App as CapacitorApp } from '@capacitor/app'
-import { Browser } from '@capacitor/browser'
+import { AppLauncher } from '@capacitor/app-launcher'
 import { Capacitor } from '@capacitor/core'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
@@ -65,11 +65,15 @@ function timeLabel(value: string | null): string {
 }
 
 function external(url: string): void {
-  if (Capacitor.isNativePlatform()) void Browser.open({ url })
-  else window.open(url, '_blank', 'noopener,noreferrer')
+  if (Capacitor.isNativePlatform()) {
+    void AppLauncher.openUrl({ url }).catch(() => { window.open(url, '_system') })
+    return
+  }
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 export default function App(): ReactNode {
+  const platform = Capacitor.getPlatform()
   const state = useApp()
   const refreshCart = useCart((cartState) => cartState.refresh)
   const clearCart = useCart((cartState) => cartState.clear)
@@ -135,12 +139,14 @@ export default function App(): ReactNode {
         if (active) setBooting(false)
       }
     })()
-    void checkAndroidUpdate().then((available) => {
-      if (active && available) {
-        setUpdate(available)
-        setSheet('update')
-      }
-    }).catch(() => undefined)
+    if (platform === 'android') {
+      void checkAndroidUpdate().then((available) => {
+        if (active && available) {
+          setUpdate(available)
+          setSheet('update')
+        }
+      }).catch(() => undefined)
+    }
     const onOnline = (): void => { setOnline(true); void syncNow() }
     const onOffline = (): void => setOnline(false)
     window.addEventListener('online', onOnline)
@@ -150,7 +156,7 @@ export default function App(): ReactNode {
       window.removeEventListener('online', onOnline)
       window.removeEventListener('offline', onOffline)
     }
-  }, [setProducts, setSession, setOnline, showToast, setSheet, syncNow])
+  }, [platform, setProducts, setSession, setOnline, showToast, setSheet, syncNow])
 
   useEffect(() => {
     if (!session) return
@@ -195,7 +201,7 @@ export default function App(): ReactNode {
       if (current.sheet) current.setSheet(null)
       else if (current.tab !== 'home') current.setTab('home')
     }
-    if (Capacitor.isNativePlatform()) {
+    if (platform === 'android') {
       void CapacitorApp.addListener('backButton', goBack).then((listener) => { handle = listener })
       return () => { void handle?.remove() }
     }
@@ -204,7 +210,7 @@ export default function App(): ReactNode {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+  }, [platform])
 
   useEffect(() => {
     if (!toast) return
@@ -268,7 +274,7 @@ export default function App(): ReactNode {
               {loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap'}
             </button>
           </form>
-          <p className="login-foot">Yardım için <a href={`tel:${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`}>bizi arayın</a>.</p>
+          <p className="login-foot">Yardım için <a href={`tel:${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`} onClick={(event) => { event.preventDefault(); external(`tel:${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`) }}>bizi arayın</a>.</p>
         </section>
       </main>
     )
@@ -296,7 +302,7 @@ export default function App(): ReactNode {
       {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} onToast={showToast} />}
         {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
         {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
-        {tab === 'account' && <AccountPage session={session} lastSync={lastSync} syncBusy={syncBusy} onSync={() => void syncNow()} onCheckUpdate={() => void checkAndroidUpdate().then((available) => { if (available) { setUpdate(available); setSheet('update') } else showToast('Uygulamanız güncel.') }).catch((error) => showToast(userFacingError(error)))} onLogout={() => void onLogout()} />}
+        {tab === 'account' && <AccountPage session={session} lastSync={lastSync} syncBusy={syncBusy} platform={platform} onSync={() => void syncNow()} onCheckUpdate={() => void checkAndroidUpdate().then((available) => { if (available) { setUpdate(available); setSheet('update') } else showToast('Uygulamanız güncel.') }).catch((error) => showToast(userFacingError(error)))} onLogout={() => void onLogout()} />}
       </main>
       <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
       {sheet === 'filters' && <FilterSheet
@@ -771,8 +777,8 @@ function OrderDetail({ id, settings, onClose }: { id: number; settings: Settings
   )
 }
 
-function AccountPage({ session, lastSync, syncBusy, onSync, onCheckUpdate, onLogout }: {
-  session: Session; lastSync: string | null; syncBusy: boolean; onSync: () => void; onCheckUpdate: () => void; onLogout: () => void
+function AccountPage({ session, lastSync, syncBusy, platform, onSync, onCheckUpdate, onLogout }: {
+  session: Session; lastSync: string | null; syncBusy: boolean; platform: string; onSync: () => void; onCheckUpdate: () => void; onLogout: () => void
 }): ReactNode {
   return (
     <div className="page account-page">
@@ -790,7 +796,8 @@ function AccountPage({ session, lastSync, syncBusy, onSync, onCheckUpdate, onLog
       </section>
       <div className="account-actions">
         <button className="button secondary wide" onClick={onSync} disabled={syncBusy}><RefreshCw size={18} className={syncBusy ? 'spin' : ''} />{syncBusy ? 'Eşitleniyor…' : 'Şimdi eşitle'}</button>
-        <button className="button secondary wide" onClick={onCheckUpdate}><Download size={18} /> Güncellemeleri kontrol et</button>
+        {platform === 'android' && <button className="button secondary wide" onClick={onCheckUpdate}><Download size={18} /> Güncellemeleri kontrol et</button>}
+        {platform === 'ios' && <p className="update-platform-note">App Store'dan güncellenir</p>}
         <button className="button danger wide" onClick={onLogout}>Çıkış yap</button>
       </div>
       <p className="version-note">Yamansa Rulman B2B · {APP_VERSION}</p>
