@@ -14,7 +14,7 @@ import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { dashboardOrders, createOrder, getOrder, listCustomers, listOrders, loadSettings, restoreSession, signIn, signOut } from './lib/cloud'
-import { money, num, productsToTsv, STATUS_LABEL } from './lib/format'
+import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
@@ -468,7 +468,7 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
         <div className="product-flags"><span className={`box-badge ${boxClass}`} title={box || undefined}>{box || 'Kutu bilgisi yok'}</span>{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>
         {product.description && <p className="product-description">{product.description}</p>}
-        {showPrices && <strong className="product-price">{money(product.price, product.currency)}</strong>}
+        {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
       <div className="product-actions">
         <div className="quantity-stepper" role="group" aria-label={`${product.sku} miktarı`}>
@@ -583,8 +583,8 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
         <DetailRow label="Stok" value={`${num(product.stock)} ${product.unit || 'Adet'}`} />
         <DetailRow label="Kutu durumu" value={product.box} />
         {canShelf && <DetailRow label="Raf" value={product.shelf} />}
-        {showPrices && <DetailRow label="Fiyat" value={money(product.price, product.currency)} />}
-        {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={money(product.list_price, product.currency)} />}
+        {showPrices && <DetailRow label="Fiyat" value={displayPrice(product.price, product.currency)} />}
+        {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={displayPrice(product.list_price, product.currency)} />}
         <DetailRow label="Kategori" value={product.category} />
         <DetailRow label="Tip" value={product.type} />
         <DetailRow label="Keçe" value={product.seal} />
@@ -683,9 +683,9 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
       <div className="cart-lines">{cart.lines.map((line) => (
         <article className="cart-line card" key={line.product_id}>
           <div className="cart-line-head"><div><strong className="product-sku">{line.sku}</strong><span className="cart-brand">{line.brand}</span></div><button className="icon-button danger-icon" onClick={() => cart.remove(line.product_id)} aria-label={`${line.sku} sepetten çıkar`}><Trash2 size={19} /></button></div>
-          <div className="cart-line-name">{line.name}</div>
+          {line.name.trim() && normalize(line.name) !== normalize(line.sku) && <div className="cart-line-name">{line.name}</div>}
           {line.qty > line.stock && <span className="stock-warning">Stokta {num(line.stock)} {line.stock === 1 ? 'adet' : 'adet'} var</span>}
-          <div className="cart-line-bottom"><QuantityStepper qty={line.qty} setQty={(qty) => cart.setQty(line.product_id, qty)} min={line.min_order} sku={line.sku} />{showPrices && <strong>{money(lineUnit(line) * line.qty, line.currency)}</strong>}</div>
+          <div className="cart-line-bottom"><QuantityStepper qty={line.qty} setQty={(qty) => cart.setQty(line.product_id, qty)} min={line.min_order} sku={line.sku} />{showPrices && <strong>{displayPrice(lineUnit(line) * line.qty, line.currency)}</strong>}</div>
         </article>
       ))}</div>
       <section className="card checkout-card">

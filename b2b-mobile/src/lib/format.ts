@@ -10,6 +10,10 @@ export function money(value: number, currency: Currency = 'TRY'): string {
   return formatter.format(value)
 }
 
+export function displayPrice(value: number, currency: Currency = 'TRY'): string {
+  return value === 0 ? 'Fiyat sorunuz' : money(value, currency)
+}
+
 const numberFormatter = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 2 })
 export const num = (value: number | null | undefined): string => value == null ? '-' : numberFormatter.format(value)
 
