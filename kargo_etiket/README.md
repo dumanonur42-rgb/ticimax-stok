@@ -25,6 +25,17 @@ bu yüzden küçük boyutta da net okunur.
 
 Her sayfa/sipariş ayrı bir etiket sayfası olur.
 
+### Pencerede 3 seçenek
+
+- **Ticimax PDF:** Ticimax kargo barkod PDF'i → barkodlu etiket (yukarıdaki gibi).
+- **Fatura PDF:** e-Arşiv / e-Fatura PDF'ini bırakın; alıcı adı, telefon, adres,
+  ilçe/il forma dolar (Teslimat Adresi varsa o kullanılır). Kontrol edip
+  *Etiket Oluştur*'a basın. Bulunamayan alanlar uyarıyla bildirilir.
+- **Elle Gir:** Ticimax dışı siparişler için bilgileri kendiniz yazın.
+
+Fatura ve elle etiketlerde barkod yoktur; gönderici her zaman sabit Yamansa
+bilgisidir. Çıktı `Belgeler\Kargo Etiket` klasörüne kaydedilir.
+
 ## Brother'da yazdırma
 
 Çıktı PDF'inin sayfa boyutu **tam 62 × 100 mm**'dir; bu yüzden ek ölçekleme gerekmez.

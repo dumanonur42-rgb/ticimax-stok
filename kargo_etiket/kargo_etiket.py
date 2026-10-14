@@ -13,12 +13,14 @@ PDF'i .exe simgesinin üzerine sürükleyip bırakmak da yeterlidir.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shutil
 import subprocess
 import sys
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 from typing import ClassVar
 
@@ -129,6 +131,8 @@ def _telefon(t: str) -> str:
     d = "".join(ch for ch in t if ch.isdigit())
     if d.startswith("90") and len(d) == 12:
         d = d[2:]
+    elif d.startswith("0") and len(d) == 11:
+        d = d[1:]
     if len(d) == 10:
         return f"0{d[:3]} {d[3:6]} {d[6:8]} {d[8:]}"
     return t
@@ -165,6 +169,25 @@ def _adres_parcala(adres: str) -> tuple[str, str, str]:
     notlar = re.findall(r"\(([^)]*)\)", adres)
     adres = re.sub(r"\s*\([^)]*\)", "", adres).strip(" ,/")
     return adres, " ".join(n.strip() for n in notlar if n.strip()), ilce_il
+
+
+def _tekrarsiz(adres: str) -> str:
+    """Adres sonunda tekrar eden 'İlçe / İl' ekini atar."""
+    adres = " ".join(adres.split())
+    m = re.search(r"\s+([^\s/]+)\s*/\s*([^\s/]+)\s*$", adres)
+    if m:
+        on = re.sub(r"\s*/\s*", "/", _buyuk(adres[:m.start()]))
+        if f"{_buyuk(m.group(1))}/{_buyuk(m.group(2))}" in on:
+            return adres[:m.start()].rstrip()
+    return adres
+
+
+def _adres_notlu(adres: str) -> tuple[str, str]:
+    """Açık adres → (adres, parantez içi notlar)."""
+    adres = " ".join(adres.split())
+    notlar = re.findall(r"\(([^)]*)\)", adres)
+    adres = re.sub(r"\s*\([^)]*\)", "", adres).strip(" ,/")
+    return adres, " ".join(n.strip() for n in notlar if n.strip())
 
 
 def _sigdir(text: str, size: float, font: str, max_w: float, min_size: float) -> float:
@@ -295,21 +318,28 @@ class Layout:
     kargo_h: float = 0
     gond_h: float = 0
     barkod_text: float = 0
+    name_fs: float = 0
+    ilce_h: float = 0
 
     def __post_init__(self):
         s = self.s
-        self.header_h = 7 * MM
+        self.name_fs = self.name_fs or 14 * s
+        self.ilce_h = 3.4 * MM + 10 * s * 0.75
+        self.header_h = 11 * MM
         pad = 2 * MM
-        self.alici_h = (5.5 * MM + len(self.name) * 14 * s * LEADING + 10 * s * LEADING + 1.2 * MM
+        self.alici_h = (5.5 * MM + len(self.name) * self.name_fs * LEADING + 10 * s * LEADING + 1.2 * MM
                         + len(self.addr) * 8.5 * s * LEADING
                         + (len(self.note) * 7 * s * LEADING + 1 * MM if self.note else 0)
-                        + (6 * MM if self.ilce_il else pad))
-        self.kargo_h = 10 * MM
-        self.gond_h = (1.5 * MM + len(self.firma) * 7 * s * LEADING
-                       + len(self.g_addr) * 6.5 * s * LEADING + 0.5 * MM)
+                        + (self.ilce_h + 1.2 * MM if self.ilce_il else pad))
+        self.kargo_h = 19 * MM
+        gs = min(s, 1.1)  # gönderici bölümü büyük yazıda da küçük kalır
+        self.gond_h = (1.5 * MM + len(self.firma) * 7 * gs * LEADING
+                       + len(self.g_addr) * 6.5 * gs * LEADING + 0.5 * MM)
         self.barkod_text = 11 * s * LEADING
 
-    def fixed_total(self, gap: float) -> float:
+    def fixed_total(self, gap: float, barkodlu: bool = True) -> float:
+        if not barkodlu:
+            return self.header_h + self.alici_h + self.kargo_h + self.gond_h + 3 * gap
         return (self.header_h + self.alici_h + self.kargo_h + self.gond_h
                 + self.barkod_text + 5 * gap)
 
@@ -317,17 +347,31 @@ class Layout:
 def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
     pad = 2 * MM
     a, g = e.alici, e.gonderici
+    gs = min(s, 1.1)
     adres, note, ilce_il = _adres_parcala(a.get("Adres", ""))
+    if a.get("İlçe/İl"):  # elle girilen etiket: ilçe/il ayrı alan
+        adres, note = _adres_notlu(a.get("Adres", ""))
+        ilce_il = _buyuk(a["İlçe/İl"])
+    if ilce_il:  # adres sonunda ilçe/il tekrar ediyorsa at (alt satırda zaten var)
+        m = re.search(r"\s*([^\s/]+)\s*/\s*([^\s/]+)\s*$", adres)
+        if m and f"{_buyuk(m.group(1))} / {_buyuk(m.group(2))}" == ilce_il:
+            adres = adres[:m.start()].rstrip(" ,")
+    nfs = 14 * s
+    name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 3)
+    while name and name[-1].endswith("…") and nfs > 9 * s:  # uzun isim: kesme, küçült
+        nfs -= 0.5
+        name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 3)
     return Layout(
         s=s,
-        name=_wrap(a.get("İsim", ""), 14 * s, "b", inner_w - 2 * pad, 2),
+        name_fs=nfs,
+        name=name,
         addr=_wrap(adres, 8.5 * s, "r", inner_w - 2 * pad, 4),
         note=_wrap(f"({note})", 7 * s, "r", inner_w - 2 * pad, 2) if note else [],
         ilce_il=ilce_il,
-        firma=_wrap(g.get("Firma", ""), 7 * s, "b", inner_w, 2),
+        firma=_wrap(g.get("Firma", ""), 7 * gs, "b", inner_w, 2),
         g_addr=_wrap(" · ".join(filter(None, [_telefon(g.get("Telefon", "")),
-                                                g.get("Adres", "")])),
-                     6.5 * s, "r", inner_w, 3),
+                                                _tekrarsiz(g.get("Adres", ""))])),
+                     6.5 * gs, "r", inner_w, 4),
     )
 
 
@@ -337,7 +381,23 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     gap = 2.2 * MM
     min_bar, max_bar = 14 * MM, 26 * MM
 
-    if h is None:  # sürekli rulo: içerik kadar uzunluk
+    barkodlu = bool(e.barkod)
+    if not barkodlu:  # elle girilen etiket: barkod yok, yazılar büyür
+        if h is None:
+            lay = _layout(e, inner_w, 1.25)
+            h_page = lay.fixed_total(gap, False) + 2 * MARGIN_Y
+        else:
+            s = 1.45
+            while True:
+                lay = _layout(e, inner_w, s)
+                extra = h - 2 * MARGIN_Y - lay.fixed_total(gap, False)
+                if extra >= 0 or s <= 0.7:
+                    break
+                s -= 0.05
+            lay.alici_h += max(0, extra)
+            h_page = h
+        bar_h = 0
+    elif h is None:  # sürekli rulo: içerik kadar uzunluk
         lay = _layout(e, inner_w, 1.0)
         bar_h = 20 * MM
         h_page = lay.fixed_total(gap) + bar_h + 2 * MARGIN_Y
@@ -360,12 +420,44 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     # 1) Üst şerit: siyah zemin, beyaz yazı — Kargo Firması
     band = pymupdf.Rect(x, y, x + inner_w, y + lay.header_h)
     c.band(band)
-    base = y + lay.header_h / 2 + 9 * s * 0.36
-    c.text(x, base, e.kargo.get("Kargo Firması", ""), 9 * s, "b",
+    firma = e.kargo.get("Kargo Firması", "")
+    hs = _sigdir(firma, 20, "b", inner_w - 4 * MM, 8)
+    c.text(x, y + lay.header_h / 2 + hs * 0.36, firma, hs, "b",
            align="center", white=True, box_w=inner_w)
     y = band.y1 + gap
 
-    # 2) Alıcı kutusu: kutu genişliğinde siyah ALICI satırı, altında isim/telefon/adres
+    # 2) Ödeme şeridi (çok büyük, siyah zemin, 2 satır) + alt alta PAKET / DESİ
+    k = e.kargo
+    odeme = _buyuk(k.get("Ödeme Türü", "-"))
+    tbl = pymupdf.Rect(x, y, x + inner_w, y + lay.kargo_h)
+    pay_w = inner_w * 0.74
+    pay = pymupdf.Rect(x, y, x + pay_w, tbl.y1)
+    c.band(pay)
+    kel = odeme.split()
+    satir = [" ".join(kel[:-1]), kel[-1]] if len(kel) > 1 else [odeme]
+    ps = min(_sigdir(t, 26, "b", pay_w - 2.4 * MM, 6) for t in satir)
+    ara = ps * 0.34  # satır arası (Ö, İ noktaları üst satıra değmesin)
+    ps = min(ps, (lay.kargo_h - 3 * MM - ara * (len(satir) - 1)) / (len(satir) * 0.73))
+    cap = ps * 0.73  # büyük harf yüksekliği
+    yy = pay.y0 + (lay.kargo_h - cap * len(satir) - ara * (len(satir) - 1)) / 2
+    for t in satir:
+        yy += cap
+        c.text(x, yy, t, ps, "b", align="center", white=True, box_w=pay_w)
+        yy += ara
+    cells = [("PAKET", k.get("Paket Sayısı", "-")), ("DESİ", k.get("Desi", "-"))]
+    cw = inner_w - pay_w
+    ch = lay.kargo_h / 2
+    c.frame(pymupdf.Rect(pay.x1, y, tbl.x1, tbl.y1), width=0.9)
+    for i, (lab, val) in enumerate(cells):
+        cy = y + i * ch
+        if i:
+            c.page.draw_line((pay.x1, cy), (tbl.x1, cy), color=BLACK, width=0.9)
+        c.text(pay.x1 + 1.2 * MM, cy + 1 * MM + 4.5, lab, 4.5, "b")
+        vs = _sigdir(val, 12, "b", cw - 2 * MM, 5)
+        c.text(pay.x1, cy + ch - 1 * MM, val, vs, "b", align="right", box_w=cw - 1.2 * MM)
+    y = tbl.y1 + gap
+
+    # 3) Alıcı kutusu: kutu genişliğinde siyah ALICI satırı, altında isim/telefon/adres
     box = pymupdf.Rect(x, y, x + inner_w, y + lay.alici_h)
     c.frame(box, width=0.9)
     pad = 2 * MM
@@ -373,51 +465,30 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     c.band(pymupdf.Rect(x, y, box.x1, y + tag_h))
     c.text(x + pad, y + tag_h - 1.3 * MM, "ALICI", 7 * s, "b", white=True)
     yy = y + tag_h + 1 * MM
-    yy = c.lines(x + pad, yy, lay.name, 14 * s, "b")
+    yy = c.lines(x + pad, yy, lay.name, lay.name_fs, "b")
     yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
     yy += 1.2 * MM
     yy = c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
     if lay.note:
         yy = c.lines(x + pad, yy + 1 * MM, lay.note, 7 * s, "r")
     if lay.ilce_il:
-        ly = box.y1 - 5.2 * MM
+        ly = box.y1 - lay.ilce_h
         c.page.draw_line((x, ly), (box.x1, ly), color=BLACK, width=0.6)
         fs = _sigdir(lay.ilce_il, 10 * s, "b", inner_w - 2 * pad, 6)
-        c.text(x + pad, box.y1 - 1.5 * MM - (10 * s - fs) * 0.35, lay.ilce_il, fs, "b")
+        c.text(x + pad, box.y1 - (lay.ilce_h - fs * 0.73) / 2, lay.ilce_il, fs, "b")
     y = box.y1 + gap
 
-    # 3) Barkod (kalan alanı doldurur) + değeri
-    c.barcode(e.barkod, x, y, inner_w, bar_h)
-    y += bar_h
-    y = c.lines(x, y, [e.barkod], 11 * s, "b", align="center", box_w=inner_w)
-    y += gap
+    # 4) Barkod (kalan alanı doldurur) + değeri
+    if barkodlu:
+        c.barcode(e.barkod, x, y, inner_w, bar_h)
+        y += bar_h
+        y = c.lines(x, y, [e.barkod], 11 * s, "b", align="center", box_w=inner_w)
+        y += gap
 
-    # 4) Ödeme şeridi (büyük, siyah zemin) + PAKET | DESİ hücreleri
-    k = e.kargo
-    odeme = _buyuk(k.get("Ödeme Türü", "-"))
-    tbl = pymupdf.Rect(x, y, x + inner_w, y + lay.kargo_h)
-    pay_w = inner_w * 0.64
-    pay = pymupdf.Rect(x, y, x + pay_w, tbl.y1)
-    c.band(pay)
-    ps = _sigdir(odeme, 11.5 * s, "b", pay_w - 3 * MM, 6)
-    c.text(x, pay.y0 + 1.1 * MM + 4.5 * s, "ÖDEME", 4.5 * s, "b", align="center",
-           white=True, box_w=pay_w)
-    c.text(x, pay.y1 - 1.6 * MM, odeme, ps, "b", align="center", white=True, box_w=pay_w)
-    cells = [("PAKET", k.get("Paket Sayısı", "-")), ("DESİ", k.get("Desi", "-"))]
-    cw = (inner_w - pay_w) / 2
-    c.frame(pymupdf.Rect(pay.x1, y, tbl.x1, tbl.y1), width=0.9)
-    cx = pay.x1
-    for i, (lab, val) in enumerate(cells):
-        if i:
-            c.vline(cx, tbl.y0, tbl.y1, 0.9)
-        c.text(cx, tbl.y0 + 1.1 * MM + 4.5 * s, lab, 4.5 * s, "r", align="center", box_w=cw)
-        vs = _sigdir(val, 10 * s, "b", cw - 2 * MM, 5)
-        c.text(cx, tbl.y1 - 1.6 * MM, val, vs, "b", align="center", box_w=cw)
-        cx += cw
-    y = tbl.y1 + gap
 
     # 5) Gönderici: üstte ince çizgi + küçük siyah etiket
     c.page.draw_line((x, y), (x + inner_w, y), color=BLACK, width=0.6)
+    s = min(s, 1.1)
     tag_w = _font("b").text_length("GÖNDERİCİ", fontsize=5.5 * s) + 3 * MM
     tag = pymupdf.Rect(x, y, x + tag_w, y + 3.2 * MM)
     c.band(tag)
@@ -430,17 +501,195 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     c.finish()
 
 
-def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) -> Path:
-    etiketler = parse_pdf(src)
-    if not etiketler:
-        raise ValueError("PDF içinde Ticimax kargo etiketi bulunamadı.")
-    dst = dst or src.with_name(src.stem + "_QL550.pdf")
+def write_labels(etiketler: list[Etiket], dst: Path, size_key: str = DEFAULT_SIZE) -> Path:
     out = pymupdf.open()
     for e in etiketler:
         draw_label(out, e, size_key)
     out.save(dst, garbage=3, deflate=True)
     out.close()
     return dst
+
+
+def convert(src: Path, dst: Path | None = None, size_key: str = DEFAULT_SIZE) -> Path:
+    etiketler = parse_pdf(src)
+    if not etiketler:
+        raise ValueError("PDF içinde Ticimax kargo etiketi bulunamadı.")
+    return write_labels(etiketler, dst or src.with_name(src.stem + "_QL550.pdf"), size_key)
+
+
+# ---------------------------------------------------------------- Elle etiket
+
+KARGO_FIRMALARI = ["Yurtiçi Kargo", "Aras Kargo", "MNG Kargo", "Sürat Kargo", "PTT Kargo",
+                   "UPS Kargo", "DHL eCommerce", "Kolay Gelsin", "HepsiJet"]
+ODEME_TURLERI = ["Gönderici Ödemeli", "Alıcı Ödemeli"]
+# Elle etiketlerde gönderici her zaman Yamansa (Ticimax etiketindekiyle aynı).
+GONDERICI = {
+    "Firma": "YAMANSA RULMAN İTHALAT SANAYİ VE DIŞ TİC LTD ŞTİ",
+    "Telefon": "+905526109363",
+    "Adres": "İKİTELLİ OSB MAH. HESKOOP M4 BLOK SK. HESKOOP M4BLOK NO: 47 "
+             "BAŞAKŞEHİR/ İSTANBUL",
+}
+
+
+def _ayar_dosyasi() -> Path:
+    base = os.environ.get("APPDATA") or str(Path.home() / ".config")
+    return Path(base) / "Kargo Etiket" / "ayarlar.json"
+
+
+def ayar_oku() -> dict:
+    try:
+        return json.loads(_ayar_dosyasi().read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def ayar_kaydet(**degerler) -> None:
+    d = ayar_oku()
+    d.update(degerler)
+    f = _ayar_dosyasi()
+    try:
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
+    except OSError:
+        pass
+
+
+def elle_etiket(isim: str, telefon: str, adres: str, ilce: str, il: str, kargo_firmasi: str,
+                odeme: str, paket: str, desi: str,
+                gonderici: dict[str, str] | None = None) -> Etiket:
+    """Ticimax dışı sipariş için barkodsuz etiket verisi."""
+    ilce_il = " / ".join(p for p in (ilce.strip(), il.strip()) if p)
+    return Etiket(
+        gonderici=dict(gonderici or GONDERICI),
+        alici={"İsim": isim.strip(), "Telefon": telefon.strip(), "Adres": adres.strip(),
+               "İlçe/İl": ilce_il},
+        kargo={"Kargo Firması": kargo_firmasi.strip(), "Ödeme Türü": odeme.strip() or "-",
+               "Paket Sayısı": paket.strip() or "1", "Desi": desi.strip() or "-"},
+    )
+
+
+def _turkce_kucuk(text: str) -> str:
+    return text.replace("İ", "i").replace("I", "ı").lower()
+
+
+def _turkce_baslik(text: str) -> str:
+    lower = _turkce_kucuk(text)
+    return re.sub(
+        r"(^|[\s-])([^\W\d_])",
+        lambda match: match.group(1) + {"i": "İ", "ı": "I"}.get(
+            match.group(2), match.group(2).upper()),
+        lower,
+    )
+
+
+def fatura_oku(path: Path) -> dict[str, str]:
+    """GİB e-Arşiv/e-Fatura PDF'inin ilk sayfasından alıcı bilgilerini okur."""
+    doc = pymupdf.open(path)
+    try:
+        if not doc.page_count:
+            raise ValueError("Bu PDF'te okunabilir yazı yok (taranmış resim olabilir).")
+        page = doc[0]
+        lines = []
+        for block in page.get_text("dict")["blocks"]:
+            for line in block.get("lines", []):
+                text = " ".join(span["text"].strip() for span in line["spans"]).strip()
+                if text:
+                    x0, y0 = line["bbox"][:2]
+                    lines.append((text, x0, y0))
+        if not lines:
+            raise ValueError("Bu PDF'te okunabilir yazı yok (taranmış resim olabilir).")
+
+        lines.sort(key=lambda item: (item[2], item[1]))
+        teslimat_etiketleri = ("teslimat adresi", "sevk adresi", "kargo adresi")
+        anchor_index = next(
+            (i for i, (text, _, _) in enumerate(lines)
+             if _turkce_kucuk(text).startswith(teslimat_etiketleri)),
+            None,
+        )
+        anchor_prefix = ""
+        if anchor_index is not None:
+            norm_anchor = _turkce_kucuk(lines[anchor_index][0])
+            anchor_prefix = next(label for label in teslimat_etiketleri
+                                 if norm_anchor.startswith(label))
+        else:
+            anchor_index = next(
+                (i for i, (text, _, _) in enumerate(lines)
+                 if _turkce_kucuk(text).startswith("sayın")),
+                None,
+            )
+            if anchor_index is not None:
+                anchor_prefix = "sayın"
+        if anchor_index is None:
+            raise ValueError("Faturada alıcı bölümü (SAYIN ...) bulunamadı.")
+
+        anchor_text, anchor_x0, anchor_y0 = lines[anchor_index]
+        following = [
+            text for i, (text, x0, y0) in enumerate(lines)
+            if i != anchor_index and y0 >= anchor_y0 and
+            x0 >= anchor_x0 - 5 and x0 < page.rect.width * 0.55
+        ][:12]
+        same_line_name = anchor_text[len(anchor_prefix):].strip(" :\t")
+        consumed = 0
+        if same_line_name:
+            isim = same_line_name
+        elif following:
+            isim = following[0].strip(" :\t")
+            consumed = 1
+        else:
+            isim = ""
+
+        stop_prefixes = (
+            "tel", "telefon", "gsm", "cep", "faks", "fax", "e-posta", "eposta",
+            "web", "vergi", "v.d", "vd", "vkn", "tckn", "t.c", "ettn", "fatura",
+            "senaryo", "özelleştirme", "irsaliye", "sipariş", "müşteri no",
+        )
+        address_lines = []
+        phone_lines = []
+        for i, text in enumerate(following[consumed:]):
+            if _turkce_kucuk(text).startswith(stop_prefixes):
+                phone_lines = following[consumed + i:]
+                break
+            if len(address_lines) == 4:
+                phone_lines = following[consumed + i:]
+                break
+            address_lines.append(text)
+
+        tel_re = re.compile(r"(?:tel|telefon|gsm|cep)\w*\s*[:.]?\s*([+\d][\d\s()\-]{8,})",
+                            re.IGNORECASE)
+        telefon = ""
+        for text in phone_lines:
+            match = tel_re.search(text)
+            if match:
+                telefon = match.group(1).strip()
+                break
+
+        location_re = re.compile(
+            r"(?:\d{5}\s+)?([^\s/]+(?:\s[^\s/]+)?)\s*/\s*([^\s/]+)\s*$")
+        ilce = il = ""
+        if address_lines:
+            match = location_re.search(address_lines[-1])
+            if match:
+                ilce, il = (_turkce_baslik(match.group(1)), _turkce_baslik(match.group(2)))
+                address_lines[-1] = address_lines[-1][:match.start()].strip(" ,/")
+            else:
+                joined = " ".join(address_lines)
+                match = location_re.search(joined)
+                if match:
+                    ilce, il = (_turkce_baslik(match.group(1)), _turkce_baslik(match.group(2)))
+                    joined = (joined[:match.start()] + joined[match.end():]).strip(" ,/")
+                    address_lines = [joined] if joined else []
+
+        return {"isim": isim, "telefon": telefon, "adres": " ".join(address_lines).strip(),
+                "ilce": ilce, "il": il}
+    finally:
+        doc.close()
+
+
+def elle_cikti_yolu(isim: str) -> Path:
+    klasor = Path.home() / "Documents" / "Kargo Etiket"
+    klasor.mkdir(parents=True, exist_ok=True)
+    ad = re.sub(r"[^\w-]+", "_", isim.strip(), flags=re.UNICODE).strip("_")[:40] or "etiket"
+    return klasor / f"{datetime.now():%Y%m%d_%H%M%S}_{ad}.pdf"
 
 
 # ---------------------------------------------------------------- Yazdırma
@@ -573,10 +822,13 @@ class DropZone(tk.Canvas if tk else object):
 
     W, H = 500, 150
 
-    def __init__(self, master, on_files):
+    def __init__(self, master, on_files, title: str = "Ticimax PDF'ini buraya sürükleyip bırakın",
+                 note: str = "Çıktı aynı klasöre  <ad>_QL550.pdf  olarak kaydedilir"):
         super().__init__(master, width=self.W, height=self.H, bg=UI_BG,
                          highlightthickness=0, cursor="hand2")
         self.on_files = on_files
+        self.title = title
+        self.note = note
         self.active = False
         self._draw()
         self.bind("<Button-1>", lambda _e: self.on_files(None))
@@ -616,13 +868,11 @@ class DropZone(tk.Canvas if tk else object):
         for i, w in enumerate((18, 14, 10)):
             y = top + 18 + i * 7
             self.create_line(cx - 10, y, cx - 10 + w, y, fill=UI_DARK, width=2)
-        self.create_text(cx, top + 62, text="Ticimax PDF'ini buraya sürükleyip bırakın",
+        self.create_text(cx, top + 62, text=self.title,
                          font=_f(12, True), fill=UI_TEXT)
         tip = "veya seçmek için tıklayın" if DND_FILES else "Seçmek için tıklayın"
         self.create_text(cx, top + 84, text=tip, font=_f(10), fill=UI_MUTED)
-        self.create_text(cx, top + 106,
-                         text="Çıktı aynı klasöre  <ad>_QL550.pdf  olarak kaydedilir",
-                         font=_f(9), fill=UI_MUTED)
+        self.create_text(cx, top + 106, text=self.note, font=_f(9), fill=UI_MUTED)
 
 
 class Preview(tk.Frame if tk else object):
@@ -678,7 +928,7 @@ class Preview(tk.Frame if tk else object):
                            dash=(5, 4), width=1.5)
         c.create_text(cx, cy - 6, text="Etiket önizlemesi", font=_f(10, True),
                       fill="#9CA3AF")
-        c.create_text(cx, cy + 16, text="PDF eklendiğinde\nburada görünür", font=_f(8),
+        c.create_text(cx, cy + 16, text="Etiket oluşturulunca\nburada görünür", font=_f(8),
                       fill="#B0B5BD", justify="center")
         self.counter.config(text="")
         for b in (self.prev_btn, self.next_btn, self.print_btn):
@@ -734,18 +984,20 @@ def pill(master, text, cmd, primary: bool = False, size: int = 9):
 class Segmented(tk.Frame if tk else object):
     """Tek seçimli bölmeli düğme grubu (segmented control)."""
 
-    def __init__(self, master, variable, options: list[tuple[str, str, str]]):
+    def __init__(self, master, variable, options: list[tuple[str, str, str]],
+                 cell_padding: int = 12):
         super().__init__(master, bg=UI_DARK, padx=1, pady=1)
         self.var = variable
         self.items: dict[str, tk.Frame] = {}
         for i, (key, title, sub) in enumerate(options):
-            cell = tk.Frame(self, bg=UI_CARD, cursor="hand2", padx=12, pady=6)
+            cell = tk.Frame(self, bg=UI_CARD, cursor="hand2", padx=cell_padding, pady=6)
             cell.grid(row=0, column=i, sticky="nsew", padx=(0 if i == 0 else 1, 0))
             self.columnconfigure(i, weight=1, uniform="seg")
             t = tk.Label(cell, text=title, font=_f(10, True), bg=UI_CARD)
             t.pack(anchor="w")
             d = tk.Label(cell, text=sub, font=_f(8), bg=UI_CARD)
-            d.pack(anchor="w")
+            if sub:
+                d.pack(anchor="w")
             for w in (cell, t, d):
                 w.bind("<Button-1>", lambda _e, k=key: self.var.set(k))
             self.items[key] = cell
@@ -809,16 +1061,18 @@ class StatusBar(tk.Frame if tk else object):
         self.columnconfigure(1, weight=1)
         self.badge = tk.Canvas(self, width=26, height=26, bg=UI_CARD, highlightthickness=0)
         self.badge.grid(row=0, column=0, rowspan=2, padx=(0, 12))
+        # width=1: uzun dosya yolu pencereyi genişletmesin, sığmayan kısım kesilir
         self.title = tk.Label(self, text="", font=_f(10, True), fg=UI_TEXT, bg=UI_CARD,
-                              anchor="w")
-        self.title.grid(row=0, column=1, sticky="w")
+                              anchor="w", width=1)
+        self.title.grid(row=0, column=1, sticky="ew")
         self.detail = tk.Label(self, text="", font=_f(8), fg=UI_MUTED, bg=UI_CARD,
-                               anchor="w")
-        self.detail.grid(row=1, column=1, sticky="w")
+                               anchor="w", width=1)
+        self.detail.grid(row=1, column=1, sticky="ew")
         self.buttons = tk.Frame(self, bg=UI_CARD)
         for i, (text, cmd, primary) in enumerate(actions):
             pill(self.buttons, text, cmd, primary).grid(row=0, column=i, padx=(8, 0))
-        self.set("idle", "Hazır", "Bir Ticimax PDF'i ekleyin; etiket burada raporlanır.")
+        self.set("idle", "Hazır",
+                 "Ticimax barkod PDF'i dönüştürün, faturadan bilgi alın veya Elle Gir ile yazın.")
 
     def set(self, state: str, title: str, detail: str = "", show_actions: bool = False):
         c = self.badge
@@ -832,6 +1086,110 @@ class StatusBar(tk.Frame if tk else object):
             self.buttons.grid(row=0, column=2, rowspan=2, sticky="e")
         else:
             self.buttons.grid_forget()
+
+
+def _entry(master, width: int = 10) -> tk.Entry:
+    e = tk.Entry(master, font=_f(10), relief="flat", bg=UI_CARD, fg=UI_TEXT, width=width,
+                 highlightthickness=1, highlightbackground=UI_BORDER,
+                 highlightcolor=UI_DARK, insertbackground=UI_DARK)
+    return e
+
+
+def _field(master, row: int, col: int, label: str, widget, colspan: int = 1,
+           pady=(0, 8)) -> None:
+    f = tk.Frame(master, bg=UI_CARD)
+    f.grid(row=row, column=col, columnspan=colspan, sticky="ew",
+           padx=(0 if col == 0 else 10, 0), pady=pady)
+    f.columnconfigure(0, weight=1)
+    tk.Label(f, text=label, font=_f(8), fg=UI_MUTED, bg=UI_CARD).grid(row=0, column=0,
+                                                                      sticky="w")
+    widget.grid(in_=f, row=1, column=0, sticky="ew", ipady=4)
+    widget.lift(f)
+
+
+class ElleForm(tk.Frame if tk else object):
+    """Ticimax dışı siparişler için alıcı bilgilerinin elle girildiği kart (barkodsuz)."""
+
+    def __init__(self, master):
+        super().__init__(master, bg=UI_CARD, highlightbackground=UI_BORDER,
+                         highlightthickness=1, padx=18, pady=12, width=500)
+        self.columnconfigure(0, weight=1, uniform="c")
+        self.columnconfigure(1, weight=1, uniform="c")
+        ayar = ayar_oku()
+
+        top = tk.Frame(self, bg=UI_CARD)
+        top.grid(row=0, column=0, columnspan=2, sticky="ew", pady=(0, 8))
+        top.columnconfigure(0, weight=1)
+        tk.Label(top, text="ALICI BİLGİLERİ", font=_f(8, True), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=0, column=0, sticky="w")
+        tk.Label(top, text="Gönderici: YAMANSA RULMAN (sabit)", font=_f(8), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=0, column=1, sticky="e", padx=(0, 10))
+        pill(top, "Temizle", self.clear, size=8).grid(row=0, column=2, sticky="e")
+
+        self.isim = _entry(self)
+        _field(self, 1, 0, "Ad Soyad / Firma *", self.isim, colspan=2)
+        self.tel = _entry(self)
+        _field(self, 2, 0, "Telefon", self.tel)
+        self.kargo_var = tk.StringVar(value=ayar.get("kargo_firmasi", KARGO_FIRMALARI[0]))
+        self.kargo = ttk.Combobox(self, textvariable=self.kargo_var, values=KARGO_FIRMALARI,
+                                  font=_f(10), width=10)
+        _field(self, 2, 1, "Kargo firması *", self.kargo)
+        self.adres = tk.Text(self, height=2, font=_f(10), relief="flat", bg=UI_CARD,
+                             fg=UI_TEXT, wrap="word", highlightthickness=1,
+                             highlightbackground=UI_BORDER, highlightcolor=UI_DARK,
+                             insertbackground=UI_DARK, width=10, padx=4, pady=2)
+        self.adres.bind("<Tab>", lambda _e: (self.ilce.focus_set(), "break")[1])
+        _field(self, 3, 0, "Açık adres *   (not için parantez: \"(okul karşısı)\")",
+               self.adres, colspan=2)
+        self.ilce = _entry(self)
+        _field(self, 4, 0, "İlçe", self.ilce)
+        self.il = _entry(self)
+        _field(self, 4, 1, "İl *", self.il)
+
+        self.odeme_var = tk.StringVar(value=ayar.get("odeme", ODEME_TURLERI[0]))
+        tk.Label(self, text="Ödemeyi kim yapar", font=_f(8), fg=UI_MUTED, bg=UI_CARD).grid(
+            row=5, column=0, sticky="w")
+        Segmented(self, self.odeme_var,
+                  [(o, o.replace(" Ödemeli", ""), "") for o in ODEME_TURLERI]).grid(
+            row=6, column=0, sticky="ew")
+        pd = tk.Frame(self, bg=UI_CARD)
+        pd.grid(row=5, column=1, rowspan=2, sticky="ew")
+        pd.columnconfigure(0, weight=1, uniform="pd")
+        pd.columnconfigure(1, weight=1, uniform="pd")
+        self.paket = _entry(pd, 4)
+        self.paket.insert(0, "1")
+        _field(pd, 0, 0, "Paket", self.paket, pady=0)
+        self.desi = _entry(pd, 4)
+        _field(pd, 0, 1, "Desi", self.desi, pady=0)
+
+    def clear(self):
+        for e in (self.isim, self.tel, self.ilce, self.il, self.desi):
+            e.delete(0, "end")
+        self.adres.delete("1.0", "end")
+        self.paket.delete(0, "end")
+        self.paket.insert(0, "1")
+        self.isim.focus_set()
+
+    def doldur(self, bilgi: dict[str, str]):
+        for entry, key in ((self.isim, "isim"), (self.tel, "telefon"),
+                           (self.ilce, "ilce"), (self.il, "il")):
+            entry.delete(0, "end")
+            entry.insert(0, bilgi.get(key, ""))
+        self.adres.delete("1.0", "end")
+        self.adres.insert("1.0", bilgi.get("adres", ""))
+
+    def values(self) -> dict[str, str]:
+        return {"isim": self.isim.get(), "telefon": self.tel.get(),
+                "adres": self.adres.get("1.0", "end"), "ilce": self.ilce.get(),
+                "il": self.il.get(), "kargo_firmasi": self.kargo_var.get(),
+                "odeme": self.odeme_var.get(), "paket": self.paket.get(),
+                "desi": self.desi.get()}
+
+    def eksikler(self) -> list[str]:
+        v = self.values()
+        adlar = {"isim": "Ad Soyad / Firma", "adres": "Açık adres", "il": "İl",
+                 "kargo_firmasi": "Kargo firması"}
+        return [ad for k, ad in adlar.items() if not v[k].strip()]
 
 
 class Dialog(tk.Toplevel if tk else object):
@@ -890,7 +1248,7 @@ class App(_TkBase):
                                                             padx=(0, 14))
         tk.Label(head, text="Kargo Etiket", font=_f(18, True), fg="white",
                  bg=UI_DARK).grid(row=0, column=1, sticky="w")
-        tk.Label(head, text="Ticimax barkod PDF  →  Brother QL-550 etiketi",
+        tk.Label(head, text="Ticimax PDF, fatura veya elle giriş  →  Brother QL-550 etiketi",
                  font=_f(10), fg="#C9CDD3", bg=UI_DARK).grid(row=1, column=1, sticky="w")
         tk.Frame(self, bg=UI_ACCENT, height=3).grid(row=1, column=0, sticky="ew")
 
@@ -898,18 +1256,45 @@ class App(_TkBase):
         outer.grid(row=2, column=0)
         body = tk.Frame(outer, bg=UI_BG)
         body.grid(row=0, column=0, sticky="ns")
-        body.rowconfigure(2, weight=1)
+        body.columnconfigure(0, minsize=DropZone.W)
+        body.rowconfigure(3, weight=1)
         self.preview = Preview(outer, self.print_current)
         self.preview.grid(row=0, column=1, sticky="ns", padx=(18, 0))
 
+        self.mode_var = tk.StringVar(value="pdf")
+        Segmented(body, self.mode_var, [
+            ("pdf", "Ticimax PDF", "Barkodlu kargo etiketi"),
+            ("fatura", "Fatura PDF", "Faturadan bilgileri al"),
+            ("elle", "Elle Gir", "Bilgileri kendin yaz"),
+        ], cell_padding=10).grid(row=0, column=0, sticky="ew", pady=(0, 12))
         self.drop = DropZone(body, self.on_files)
-        self.drop.grid(row=0, column=0, pady=(0, 16))
+        self.drop.grid(row=1, column=0, pady=(0, 16))
+        self.drop_fatura = DropZone(
+            body, self.on_fatura, title="Faturayı buraya sürükleyip bırakın",
+            note="Alıcı bilgileri forma dolar, kontrol edip etiketi oluşturursunuz")
+        self.drop_fatura.grid(row=1, column=0, pady=(0, 16))
+        self.drop_fatura.grid_remove()
+        self.form = ElleForm(body)
+        self.form.grid(row=1, column=0, sticky="ew", pady=(0, 16))
+        self.form.grid_remove()
 
         # Ayarlar kartı
         card = tk.Frame(body, bg=UI_CARD, highlightbackground=UI_BORDER,
                         highlightthickness=1, padx=18, pady=14)
-        card.grid(row=1, column=0, sticky="ew")
+        card.grid(row=2, column=0, sticky="ew")
         card.columnconfigure(0, weight=1)
+        self.card = card
+        self.ozet = tk.Frame(body, bg=UI_CARD, highlightbackground=UI_BORDER,
+                             highlightthickness=1, padx=18, pady=10)
+        self.ozet.columnconfigure(1, weight=1)
+        tk.Label(self.ozet, text="AYARLAR", font=_f(8, True), fg=UI_MUTED,
+                 bg=UI_CARD).grid(row=0, column=0, sticky="w", padx=(0, 12))
+        self.ozet_lbl = tk.Label(self.ozet, text="", font=_f(8), fg=UI_TEXT, bg=UI_CARD,
+                                 anchor="w", width=1)
+        self.ozet_lbl.grid(row=0, column=1, sticky="ew")
+        pill(self.ozet, "Değiştir", self._show_settings, size=8).grid(row=0, column=2)
+        self.ozet.grid(row=2, column=0, sticky="ew")
+        self.ozet.grid_remove()
         tk.Label(card, text="AYARLAR", font=_f(8, True), fg=UI_MUTED,
                  bg=UI_CARD).grid(row=0, column=0, columnspan=2, sticky="w")
 
@@ -919,7 +1304,7 @@ class App(_TkBase):
         Segmented(card, self.size_var, [
             ("62x100", "62 × 100 mm", "Sabit uzunluk · her etiket 100 mm"),
             ("62surekli", "62 mm sürekli", "İçeriğe göre uzunluk · daha az kâğıt"),
-        ]).grid(row=2, column=0, columnspan=2, sticky="ew")
+        ], cell_padding=10).grid(row=2, column=0, columnspan=2, sticky="ew")
 
         tk.Label(card, text="Yazıcı", font=_f(9), fg=UI_MUTED,
                  bg=UI_CARD).grid(row=3, column=0, columnspan=2, sticky="w", pady=(12, 4))
@@ -942,11 +1327,11 @@ class App(_TkBase):
         self.refresh_printers()
 
         # Ana buton
-        self.btn = tk.Button(body, text="PDF Seç ve Dönüştür", command=self.on_files,
+        self.btn = tk.Button(body, text="PDF Seç ve Dönüştür", command=self.main_action,
                              font=_f(11, True), bg=UI_DARK, fg="white", bd=0,
                              activebackground=UI_DARK_HOVER, activeforeground="white",
                              cursor="hand2", pady=11)
-        self.btn.grid(row=2, column=0, sticky="sew", pady=(16, 0))
+        self.btn.grid(row=3, column=0, sticky="ew", pady=(16, 0))
         self.btn.bind("<Enter>", lambda _e: self.btn.config(bg=UI_DARK_HOVER))
         self.btn.bind("<Leave>", lambda _e: self.btn.config(bg=UI_DARK))
 
@@ -956,10 +1341,55 @@ class App(_TkBase):
                                     ("Tekrar yazdır", self.print_current, True)])
         self.bar.grid(row=3, column=0, sticky="ew")
 
+        self.mode_var.trace_add("write", lambda *_: self._mode_changed())
         self.update_idletasks()
         self._center()
 
     # -- yardımcılar
+    def _ozet_text(self) -> str:
+        boyut = "62 × 100 mm" if self.size_var.get() == "62x100" else "62 mm sürekli"
+        yazici = self.printer_var.get() or "yazıcı seçilmedi"
+        oto = "otomatik yazdır" if self.print_var.get() else "yazdırma elle"
+        return f"{boyut}  ·  {yazici}  ·  {oto}"
+
+    def _show_settings(self):
+        self.ozet.grid_remove()
+        self.card.grid()
+
+    def _mode_changed(self):
+        mode = self.mode_var.get()
+        if mode == "elle":
+            self.drop.grid_remove()
+            self.drop_fatura.grid_remove()
+            self.form.grid()
+            self.card.grid_remove()
+            self.ozet_lbl.config(text=self._ozet_text())
+            self.ozet.grid()
+            self.form.isim.focus_set()
+        else:
+            self.form.grid_remove()
+            self.ozet.grid_remove()
+            if mode == "fatura":
+                self.drop.grid_remove()
+                self.drop_fatura.grid()
+            else:
+                self.drop_fatura.grid_remove()
+                self.drop.grid()
+            self.card.grid()
+        button_text = {"pdf": "PDF Seç ve Dönüştür", "fatura": "Fatura Seç",
+                       "elle": "Etiket Oluştur"}
+        self.btn.config(text=button_text[mode])
+
+    def main_action(self):
+        mode = self.mode_var.get()
+        if mode == "elle":
+            self.create_manual()
+        elif mode == "fatura":
+            self.on_fatura(None)
+        else:
+            self.on_files()
+
+
     def _icons(self):
         self.logo = None
         try:
@@ -1040,6 +1470,49 @@ class App(_TkBase):
         for p in paths:
             self.process(p)
 
+    def on_fatura(self, paths: list[Path] | None = None):
+        if paths is None:
+            selected = filedialog.askopenfilename(
+                title="Fatura PDF", filetypes=[("PDF", "*.pdf")])
+            paths = [Path(selected)] if selected else []
+        if not paths:
+            return
+        path = Path(paths[0])
+        try:
+            bilgi = fatura_oku(path)
+        except Exception as ex:  # noqa: BLE001
+            self.bar.set("error", "Fatura okunamadı", f"{path.name}  ·  {ex}")
+            Dialog(self, "Fatura okunamadı", f"{path.name}\n\n{ex}")
+            return
+        self.form.doldur(bilgi)
+        self.mode_var.set("elle")
+        self.bar.set("ok", "Faturadan bilgiler alındı",
+                     f"{path.name}  ·  kontrol edip Etiket Oluştur'a basın")
+        missing = [label for key, label in (("isim", "İsim"), ("adres", "Adres"), ("il", "İl"))
+                   if not bilgi.get(key, "").strip()]
+        if missing:
+            Dialog(self, "Faturada bulunamayanlar",
+                   "Faturada bulunamayanlar:\n• " + "\n• ".join(missing), kind="warning")
+
+    def create_manual(self):
+        eksik = self.form.eksikler()
+        if eksik:
+            Dialog(self, "Eksik bilgi", "Şu alanları doldurun:\n• " + "\n• ".join(eksik),
+                   kind="warning")
+            return
+        v = self.form.values()
+        ayar_kaydet(kargo_firmasi=v["kargo_firmasi"], odeme=v["odeme"])
+        self.bar.set("busy", "Etiket oluşturuluyor…", v["isim"])
+        self.update_idletasks()
+        try:
+            dst = write_labels([elle_etiket(**v)],
+                               elle_cikti_yolu(v["isim"]), self.size_var.get())
+        except Exception as ex:  # noqa: BLE001
+            self.bar.set("error", "Etiket oluşturulamadı", str(ex))
+            Dialog(self, "Etiket oluşturulamadı", str(ex))
+            return
+        self._done(dst)
+
     def process(self, src: Path):
         self.bar.set("busy", "Dönüştürülüyor…", src.name)
         self.update_idletasks()
@@ -1049,6 +1522,9 @@ class App(_TkBase):
             self.bar.set("error", "Dönüştürülemedi", f"{src.name}  ·  {ex}")
             Dialog(self, "Etiket oluşturulamadı", f"{src.name}\n\n{ex}")
             return
+        self._done(dst)
+
+    def _done(self, dst: Path):
         self.last_dst = dst
         self.preview.load(dst)
         self._report("ok", "Etiket oluşturuldu")
