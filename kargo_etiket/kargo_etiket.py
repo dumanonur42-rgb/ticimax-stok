@@ -210,8 +210,17 @@ def _font(key: str) -> pymupdf.Font:
 
 def _wrap(text: str, size: float, font: str, max_w: float, max_lines: int) -> list[str]:
     f = _font(font)
+    kelimeler = []
+    for w in text.split():  # satıra sığmayan tek kelimeyi böl
+        while len(w) > 1 and f.text_length(w, fontsize=size) > max_w:
+            k = len(w) - 1
+            while k > 1 and f.text_length(w[:k], fontsize=size) > max_w:
+                k -= 1
+            kelimeler.append(w[:k])
+            w = w[k:]
+        kelimeler.append(w)
     lines, cur = [], ""
-    for w in text.split():
+    for w in kelimeler:
         cand = (cur + " " + w).strip()
         if f.text_length(cand, fontsize=size) <= max_w or not cur:
             cur = cand
@@ -321,6 +330,7 @@ class Layout:
     barkod_text: float = 0
     name_fs: float = 0
     baslik: bool = True  # en üstte kargo firması şeridi
+    tel: bool = True
     ilce_h: float = 0
 
     def __post_init__(self):
@@ -329,7 +339,8 @@ class Layout:
         self.ilce_h = 3.4 * MM + 10 * s * 0.75
         self.header_h = 11 * MM if self.baslik else 0
         pad = 2 * MM
-        self.alici_h = (5.5 * MM + len(self.name) * self.name_fs * LEADING + 10 * s * LEADING + 1.2 * MM
+        self.alici_h = (5.5 * MM + len(self.name) * self.name_fs * LEADING
+                        + (10 * s * LEADING if self.tel else 0) + 1.2 * MM
                         + len(self.addr) * 8.5 * s * LEADING
                         + (len(self.note) * 7 * s * LEADING + 1 * MM if self.note else 0)
                         + (self.ilce_h + 1.2 * MM if self.ilce_il else pad))
@@ -358,16 +369,17 @@ def _layout(e: Etiket, inner_w: float, s: float) -> Layout:
         if m and f"{_buyuk(m.group(1))} / {_buyuk(m.group(2))}" == ilce_il:
             adres = adres[:m.start()].rstrip(" ,")
     nfs = 14 * s
-    name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 3)
+    name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 4)
     while name and name[-1].endswith("…") and nfs > 9 * s:  # uzun isim: kesme, küçült
         nfs -= 0.5
-        name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 3)
+        name = _wrap(a.get("İsim", ""), nfs, "b", inner_w - 2 * pad, 4)
     return Layout(
         s=s,
         baslik=bool(e.kargo.get("Kargo Firması", "").strip()),
+        tel=bool(a.get("Telefon", "").strip()),
         name_fs=nfs,
         name=name,
-        addr=_wrap(adres, 8.5 * s, "r", inner_w - 2 * pad, 4),
+        addr=_wrap(adres, 8.5 * s, "r", inner_w - 2 * pad, 7),
         note=_wrap(f"({note})", 7 * s, "r", inner_w - 2 * pad, 2) if note else [],
         ilce_il=ilce_il,
         firma=_wrap(g.get("Firma", ""), 7 * gs, "b", inner_w, 2),
@@ -395,7 +407,7 @@ def _draw_otogar(doc: pymupdf.Document, e: Etiket, size_key: str) -> None:
         """Uzun kelime taşmasın, '…' ile kesilmesin: gerekirse yazıyı küçült."""
         en_uzun = max(text.split(), key=lambda k: _font(font).text_length(k, fontsize=1),
                       default="")
-        size = _sigdir(en_uzun, size, font, tw, 6) if en_uzun else size
+        size = _sigdir(en_uzun, size, font, tw, 10) if en_uzun else size
         sat = _wrap(text, size, font, tw, lines)
         while sat and sat[-1].endswith("…") and size > 6:
             size -= 0.5
@@ -538,7 +550,7 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
         cy = y + i * ch
         if i:
             c.page.draw_line((pay.x1, cy), (tbl.x1, cy), color=BLACK, width=0.9)
-        c.text(pay.x1 + 1.2 * MM, cy + 1 * MM + 4.5, lab, 4.5, "b")
+        c.text(pay.x1 + 1.2 * MM, cy + 1 * MM + 5.5, lab, 5.5, "b")
         vs = _sigdir(val, 12, "b", cw - 2 * MM, 5)
         c.text(pay.x1, cy + ch - 1 * MM, val, vs, "b", align="right", box_w=cw - 1.2 * MM)
     y = tbl.y1 + gap
@@ -549,10 +561,11 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     pad = 2 * MM
     tag_h = 4.5 * MM
     c.band(pymupdf.Rect(x, y, box.x1, y + tag_h))
-    c.text(x + pad, y + tag_h - 1.3 * MM, "ALICI", 7 * s, "b", white=True)
+    c.text(x + pad, y + tag_h - 1.3 * MM, "ALICI", max(7 * s, 6), "b", white=True)
     yy = y + tag_h + 1 * MM
     yy = c.lines(x + pad, yy, lay.name, lay.name_fs, "b")
-    yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
+    if lay.tel:
+        yy = c.lines(x + pad, yy, [f"Tel: {_telefon(e.alici.get('Telefon', ''))}"], 10 * s, "r")
     yy += 1.2 * MM
     yy = c.lines(x + pad, yy, lay.addr, 8.5 * s, "r")
     if lay.note:
@@ -575,10 +588,11 @@ def draw_label(doc: pymupdf.Document, e: Etiket, size_key: str):
     # 5) Gönderici: üstte ince çizgi + küçük siyah etiket
     c.page.draw_line((x, y), (x + inner_w, y), color=BLACK, width=0.6)
     s = min(s, 1.1)
-    tag_w = _font("b").text_length("GÖNDERİCİ", fontsize=5.5 * s) + 3 * MM
+    gt = max(5.5 * s, 5)
+    tag_w = _font("b").text_length("GÖNDERİCİ", fontsize=gt) + 3 * MM
     tag = pymupdf.Rect(x, y, x + tag_w, y + 3.2 * MM)
     c.band(tag)
-    c.text(x, y + 3.2 * MM - 0.9 * MM, "GÖNDERİCİ", 5.5 * s, "b", align="center",
+    c.text(x, y + 3.2 * MM - 0.9 * MM, "GÖNDERİCİ", gt, "b", align="center",
            white=True, box_w=tag_w)
     yy = y + 3.2 * MM + 0.8 * MM
     yy = c.lines(x, yy, lay.firma, 7 * s, "b")
@@ -649,7 +663,10 @@ def elle_etiket(isim: str, telefon: str, adres: str, ilce: str, il: str, kargo_f
                 odeme: str, paket: str, desi: str,
                 gonderici: dict[str, str] | None = None, otogar: bool = False) -> Etiket:
     """Ticimax dışı sipariş için barkodsuz etiket verisi."""
-    ilce_il = " / ".join(p for p in (ilce.strip(), il.strip()) if p)
+    parca = [p.strip() for p in (ilce, il) if p.strip()]
+    if len(parca) == 2 and _buyuk(parca[0]) == _buyuk(parca[1]):  # "Merkez" yerine il yazılmış
+        parca = parca[1:]
+    ilce_il = " / ".join(parca)
     if otogar:
         return Etiket(alici={"İsim": isim.strip(), "Telefon": telefon.strip(),
                              "Adres": adres.strip(), "İlçe/İl": ilce_il}, otogar=True)
