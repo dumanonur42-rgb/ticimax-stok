@@ -224,7 +224,7 @@ img { max-width: 100%; }
 .summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
 .summary-card { min-width: 0; min-height: 132px; padding: 14px; display: flex; align-items: flex-start; flex-direction: column; gap: 5px; text-align: left; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
 .summary-icon { color: var(--blue); }
-.summary-value { font-size: 1.5rem; font-weight: 800; letter-spacing: -.04em; }
+.summary-value { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(.95rem, 4.8vw, 1.5rem); font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 .summary-label { color: var(--muted); font-size: .82rem; }
 .sync-card { padding: 15px; margin-bottom: 24px; }
 .card-title-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
@@ -279,7 +279,10 @@ img { max-width: 100%; }
 .product-dims { margin-top: 5px; color: var(--ink); font-size: .84rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .product-dims small { color: var(--muted); font-size: .68rem; font-weight: 500; }
 .product-flags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
-.box-badge, .shelf-badge { max-width: 100%; padding: 3px 7px; overflow-wrap: anywhere; border-radius: 6px; background: var(--surface-2); color: var(--muted); font-size: .68rem; }
+.box-badge, .shelf-badge { max-width: 100%; padding: 4px 8px; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-2); color: var(--muted); font-size: .72rem; line-height: 1.2; font-weight: 750; white-space: normal; }
+.box-badge.kutulu { color: var(--green); border-color: var(--green); background: var(--green-bg); }
+.box-badge.kutusuz { color: var(--yellow); border-color: var(--yellow); border-style: dashed; background: var(--yellow-bg); }
+.box-badge.mixed { color: var(--ink); border-color: var(--navy); background: var(--surface-2); }
 .shelf-badge { color: var(--navy); background: #ebf1fa; }
 .dark .shelf-badge { background: #203854; }
 .product-description { display: -webkit-box; margin: 6px 0 0; overflow: hidden; color: var(--muted); font-size: .75rem; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
@@ -308,15 +311,17 @@ img { max-width: 100%; }
 .filter-section h3 small { color: var(--muted); font-weight: 500; }
 .sheet-search { display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); }
 .sheet-search input { width: 100%; min-width: 0; height: 100%; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: .85rem; }
-.brand-options { max-height: 220px; margin-top: 8px; overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; }
+.brand-options { margin-top: 8px; border: 1px solid var(--line); border-radius: 10px; }
 .brand-option { min-height: 44px; display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: .83rem; }
 .brand-option:last-child { border-bottom: 0; }
 .brand-option input { width: 18px; height: 18px; accent-color: var(--navy); }
 .brand-option span { min-width: 0; flex: 1; overflow-wrap: anywhere; }
 .brand-option small { color: var(--muted); }
-.measure-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.range-field { display: flex; flex-direction: column; gap: 5px; color: var(--muted); font-size: .76rem; font-weight: 650; }
-.range-field input { min-height: 42px; padding: 8px 10px; font-size: .9rem; }
+.measure-grid { display: grid; gap: 10px; }
+.range-group { display: grid; grid-template-columns: minmax(86px, .8fr) minmax(0, 1.6fr); align-items: center; gap: 8px; color: var(--muted); font-size: .78rem; font-weight: 650; }
+.range-inputs { min-width: 0; display: flex; gap: 8px; }
+.range-inputs input { min-width: 0; width: 50%; min-height: 42px; padding: 8px 10px; font-size: .9rem; }
+.show-more-brands { width: 100%; min-height: 44px; margin-top: 6px; border: 0; border-radius: 9px; color: var(--navy); background: var(--surface-2); font-size: .82rem; font-weight: 700; }
 .sheet-actions { position: sticky; bottom: -16px; display: flex; gap: 9px; margin: 15px -16px -16px; padding: 12px 16px calc(12px + var(--safe-bottom)); border-top: 1px solid var(--line); background: var(--surface); }
 .sheet-actions .button { flex: 1; }
 .detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }

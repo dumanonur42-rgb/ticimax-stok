@@ -9,6 +9,7 @@ import {
   Package
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { normalize } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
@@ -291,7 +292,7 @@ export default function App(): ReactNode {
         </div>
       )}
       <main className="main-content" key={tab}>
-        {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} lastSync={lastSync} onNavigate={setTab} onToast={showToast} />}
+        {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} lastSync={lastSync} syncBusy={syncBusy} syncProgress={syncProgress} onNavigate={setTab} onToast={showToast} />}
       {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} onToast={showToast} />}
         {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
         {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
@@ -333,13 +334,16 @@ function BottomTabs({ tab, setTab, cartCount }: { tab: Tab; setTab: (tab: Tab) =
   )
 }
 
-function HomePage({ session, settings, openOrders, products, lastSync, onNavigate, onToast }: {
-  session: Session; settings: Settings; openOrders: number | null; products: Product[]; lastSync: string | null; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
+function HomePage({ session, settings, openOrders, products, lastSync, syncBusy, syncProgress, onNavigate, onToast }: {
+  session: Session; settings: Settings; openOrders: number | null; products: Product[]; lastSync: string | null; syncBusy: boolean; syncProgress: { done: number; total: number | null } | null; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
 }): ReactNode {
   const openContact = (url: string): void => {
     try { external(url) } catch { onToast('Bağlantı açılamadı.') }
   }
   const openCount = openOrders ?? 0
+  const productCount = syncProgress
+    ? `${num(syncProgress.done)}${syncProgress.total === null ? '' : ` / ${num(syncProgress.total)}`}`
+    : num(products.length)
   return (
     <div className="page home-page">
       <div className="welcome-block">
@@ -355,12 +359,12 @@ function HomePage({ session, settings, openOrders, products, lastSync, onNavigat
         </button>
         <button className="summary-card" onClick={() => onNavigate('products')}>
           <span className="summary-icon"><Package size={20} /></span>
-          <span className="summary-value">{num(products.length)}</span>
-          <span className="summary-label">Ürün</span>
+          <span className="summary-value">{syncBusy && !syncProgress && products.length === 0 ? '…' : productCount}</span>
+          <span className="summary-label">{syncProgress ? 'Eşitlenen ürün' : 'Ürün'}</span>
         </button>
       </div>
       <section className="card sync-card">
-        <div className="card-title-row"><div><h2>Son eşitleme</h2><p className="muted">{timeLabel(lastSync)}</p></div><RefreshCw size={20} className="muted-icon" /></div>
+        <div className="card-title-row"><div><h2>Son eşitleme</h2><p className="muted">{syncBusy ? 'Eşitleniyor…' : timeLabel(lastSync)}</p></div><RefreshCw size={20} className="muted-icon" /></div>
       </section>
       <section className="contacts-section">
         <h2>Size yardımcı olalım</h2>
@@ -399,7 +403,13 @@ function ProductsPage({ entries, settings, session, onToast }: {
   }, [entries, query, inStock, selectedBrands, dims])
   const results = searchResult.matches
   const searchMs = searchResult.elapsed
-  const virtualizer = useVirtualizer({ count: results.length, getScrollElement: () => scrollRef.current, estimateSize: () => 250, overscan: 5 })
+  const virtualizer = useVirtualizer({
+    count: results.length,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => 210,
+    getItemKey: (index) => results[index].id,
+    overscan: 5
+  })
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const activeFilters = selectedBrands.length + (inStock ? 1 : 0) + Object.values(dims).filter((value) => value !== null).length
@@ -407,7 +417,7 @@ function ProductsPage({ entries, settings, session, onToast }: {
     <div className="page products-page">
       <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><span className="count-pill">{num(results.length)} ürün</span></div>
       <div className="search-row">
-        <div className="search-box"><Search size={19} aria-hidden /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Ürün kodu, marka veya açıklama" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
+        <div className="search-box"><Search size={19} aria-hidden /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
         <button className={`filter-button${activeFilters ? ' selected' : ''}`} onClick={() => setSheet('filters')} aria-label={`Filtreler${activeFilters ? `, ${activeFilters} seçili` : ''}`}><SlidersHorizontal size={19} />{activeFilters > 0 && <span>{activeFilters}</span>}</button>
       </div>
       <label className="stock-toggle"><input type="checkbox" checked={inStock} onChange={(event) => setInStock(event.target.checked)} /><span className="switch" /><span>Sadece stoktakiler</span></label>
@@ -418,7 +428,7 @@ function ProductsPage({ entries, settings, session, onToast }: {
             {virtualizer.getVirtualItems().map((item) => {
               const product = results[item.index]
               return (
-                <div key={product.id} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}>
+                <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}>
                   <ProductCard product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => { setSelectedProduct(product); setSheet('detail') }} onToast={onToast} />
                 </div>
               )
@@ -437,6 +447,15 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
   const [qty, setQty] = useState(Math.max(1, product.min_order))
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
+  const box = product.box.trim()
+  const normalizedBox = normalize(box).toLowerCase()
+  const boxClass = normalizedBox.includes('kutulu') && normalizedBox.includes('kutusuz')
+    ? 'mixed'
+    : normalizedBox.includes('kutusuz')
+      ? 'kutusuz'
+      : normalizedBox.includes('kutulu')
+        ? 'kutulu'
+        : 'unknown'
   const add = (): void => {
     cart.add({ ...product, min_order: Math.max(1, product.min_order) }, qty)
     onToast(`${product.sku} sepete eklendi.`)
@@ -447,7 +466,7 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
         <div className="product-brand">{product.brand || 'Marka belirtilmemiş'}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        <div className="product-flags"><span className="box-badge">{product.box || 'Kutu bilgisi yok'}</span>{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>
+        <div className="product-flags"><span className={`box-badge ${boxClass}`} title={box || undefined}>{box || 'Kutu bilgisi yok'}</span>{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{money(product.price, product.currency)}</strong>}
       </button>
@@ -472,6 +491,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
 }): ReactNode {
   const [brandQuery, setBrandQuery] = useState('')
   const [selected, setSelected] = useState<Set<string>>(new Set(initialBrands))
+  const [showAllBrands, setShowAllBrands] = useState(false)
   const [ranges, setRanges] = useState({
     dMin: String(initialDimensions.dMin ?? ''),
     dMax: String(initialDimensions.dMax ?? ''),
@@ -488,9 +508,15 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
       if (brand) brand.count++
       else counts.set(entry.brand, { label: entry.product.brand, count: 1 })
     }
-    return [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label, 'tr'))
+    return [...counts.entries()].sort((a, b) => b[1].count - a[1].count || a[1].label.localeCompare(b[1].label, 'tr'))
   }, [entries])
-  const filteredBrands = brandCounts.filter(([, value]) => value.label.toLocaleLowerCase('tr-TR').includes(brandQuery.toLocaleLowerCase('tr-TR')))
+  const filteredBrands = brandCounts.filter(([key, value]) => selected.has(key) || value.label.toLocaleLowerCase('tr-TR').includes(brandQuery.toLocaleLowerCase('tr-TR')))
+  const pinnedBrands = filteredBrands.filter(([key]) => selected.has(key))
+  const unselectedBrands = filteredBrands.filter(([key]) => !selected.has(key))
+  const visibleBrands = showAllBrands
+    ? filteredBrands
+    : [...pinnedBrands, ...unselectedBrands.slice(0, Math.max(0, 12 - pinnedBrands.length))]
+  const hiddenBrandCount = unselectedBrands.length - (visibleBrands.length - pinnedBrands.length)
   const setProductsFilter = (): void => {
     const numValue = (value: string): number | null => {
       if (!value.trim()) return null
@@ -510,11 +536,12 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
   return (
     <Sheet title="Filtreler" onClose={onClose}>
       <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
-        <div className="brand-options">{filteredBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
+        <div className="brand-options">{visibleBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
+        {(hiddenBrandCount > 0 || showAllBrands) && <button type="button" className="show-more-brands" onClick={() => setShowAllBrands((value) => !value)}>{showAllBrands ? 'Daha az göster' : `Tümünü göster (+${num(hiddenBrandCount)})`}</button>}
       </section>
       <section className="filter-section"><h3>Ölçü aralığı <small>mm</small></h3><div className="measure-grid">{([
-        ['dMin', 'd min'], ['dMax', 'd max'], ['DMin', 'D min'], ['DMax', 'D max'], ['bMin', 'B min'], ['bMax', 'B max']
-      ] as const).map(([key, label]) => <label className="range-field" key={key}><span>{label}</span><input type="number" inputMode="decimal" value={ranges[key]} onChange={(event) => setRanges((prev) => ({ ...prev, [key]: event.target.value }))} /></label>)}</div></section>
+        ['İç çap (d)', 'dMin', 'dMax'], ['Dış çap (D)', 'DMin', 'DMax'], ['Genişlik (B)', 'bMin', 'bMax']
+      ] as const).map(([label, minKey, maxKey]) => <div className="range-group" key={minKey}><span>{label}</span><div className="range-inputs"><input aria-label={`${label} en az`} type="number" inputMode="decimal" placeholder="Min" value={ranges[minKey]} onChange={(event) => setRanges((prev) => ({ ...prev, [minKey]: event.target.value }))} /><input aria-label={`${label} en çok`} type="number" inputMode="decimal" placeholder="Maks" value={ranges[maxKey]} onChange={(event) => setRanges((prev) => ({ ...prev, [maxKey]: event.target.value }))} /></div></div>)}</div></section>
       <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
     </Sheet>
   )
@@ -527,6 +554,9 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const [qty, setQty] = useState(Math.max(1, product.min_order))
+  const dimensionValues = [product.d_inner, product.d_outer, product.width]
+  const hasDimensions = dimensionValues.some((value) => value !== null)
+  const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
   const copy = async (): Promise<void> => {
     const value = productsToTsv([product], { canShelf, showPrices })
     try {
@@ -547,20 +577,20 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
     <Sheet title="Ürün bilgisi" onClose={onClose}>
       <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
       <dl className="detail-list">
-        <DetailRow label="Ürün adı" value={product.name || 'Belirtilmemiş'} />
+        {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
         <DetailRow label="Marka" value={product.brand} />
-        <DetailRow label="Ölçü d × D × B" value={`${num(product.d_inner)} × ${num(product.d_outer)} × ${num(product.width)} mm`} />
+        {hasDimensions && <DetailRow label="Ölçü d × D × B" value={`${dimensionText} mm`} />}
         <DetailRow label="Stok" value={`${num(product.stock)} ${product.unit || 'Adet'}`} />
-        <DetailRow label="Kutu durumu" value={product.box || 'Belirtilmemiş'} />
-        {canShelf && <DetailRow label="Raf" value={product.shelf || 'Belirtilmemiş'} />}
+        <DetailRow label="Kutu durumu" value={product.box} />
+        {canShelf && <DetailRow label="Raf" value={product.shelf} />}
         {showPrices && <DetailRow label="Fiyat" value={money(product.price, product.currency)} />}
-          {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={money(product.list_price, product.currency)} />}
-        <DetailRow label="Kategori" value={product.category || 'Belirtilmemiş'} />
-        <DetailRow label="Tip" value={product.type || 'Belirtilmemiş'} />
-        <DetailRow label="Keçe" value={product.seal || 'Belirtilmemiş'} />
-        <DetailRow label="Barkod" value={product.barcode || 'Belirtilmemiş'} />
-        <DetailRow label="Eşdeğerler" value={product.equivalents || 'Yok'} />
-        <DetailRow label="Açıklama" value={product.description || 'Açıklama yok'} />
+        {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={money(product.list_price, product.currency)} />}
+        <DetailRow label="Kategori" value={product.category} />
+        <DetailRow label="Tip" value={product.type} />
+        <DetailRow label="Keçe" value={product.seal} />
+        <DetailRow label="Barkod" value={product.barcode} />
+        <DetailRow label="Eşdeğerler" value={product.equivalents} />
+        <DetailRow label="Açıklama" value={product.description} />
       </dl>
       <div className="product-actions detail-actions">
         <QuantityStepper qty={qty} setQty={setQty} min={Math.max(1, product.min_order)} sku={product.sku} />
@@ -571,6 +601,8 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
 }
 
 function DetailRow({ label, value }: { label: string; value: string }): ReactNode {
+  const normalized = value.trim().toLocaleLowerCase('tr-TR')
+  if (!normalized || ['belirtilmemiş', 'yok', 'açıklama yok'].includes(normalized)) return null
   return <div className="detail-row"><dt>{label}</dt><dd>{value}</dd></div>
 }
 
