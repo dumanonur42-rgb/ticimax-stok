@@ -263,7 +263,7 @@ export function Import(): ReactNode {
             Henüz yükleme yapılmadı.
           </p>
         ) : (
-          <table className="table small">
+          <table className="table small import-log-table">
             <thead>
               <tr>
                 <th>Tarih</th>
@@ -279,7 +279,7 @@ export function Import(): ReactNode {
               {logs.map((l) => (
                 <tr key={l.id}>
                   <td className="nowrap">{date(l.created_at)}</td>
-                  <td>{l.filename}</td>
+                  <td className="import-log-file" title={l.filename}>{l.filename}</td>
                   <td>{l.mode}</td>
                   <td className="right">{num(l.inserted)}</td>
                   <td className="right">{num(l.updated)}</td>

@@ -13,6 +13,7 @@ penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren
 - Uygulama simgesi ve logolardaki görüntü hatası düzeltildi.
 - Ana sayfadaki uzun aktarım dosya adlarının dar ekranda taşması önlendi.
 - Ana sayfadaki tablolar dar pencerede alt alta gösteriliyor.
+- Excel aktarımında aynı markanın farklı yazımları (ör. INA / İNA) tek marka olarak kaydediliyor.
 - Dar pencerede simgeye dönüşen menü düğmelerine erişilebilir adlar eklendi.
 
 ## 1.0.17

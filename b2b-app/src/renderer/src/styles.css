@@ -769,6 +769,16 @@ textarea.input {
   width: 100%;
   border-collapse: collapse;
 }
+.import-log-table {
+  table-layout: fixed;
+}
+.import-log-table th,
+.import-log-table td {
+  min-width: 0;
+}
+.import-log-file {
+  overflow-wrap: anywhere;
+}
 .cart-items-table,
 .orders-list-table {
   table-layout: fixed;

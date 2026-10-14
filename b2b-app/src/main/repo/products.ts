@@ -189,12 +189,17 @@ export function resolveBrand(raw: string, spellings = brandSpellings()): string 
   return spellings.get(normalize(c)) ?? c
 }
 
-/** normalized brand → its preferred spelling in the catalogue: most frequent, then least punctuation, shortest. */
-export function brandSpellings(): Map<string, string> {
-  const rows = getDb().prepare(`SELECT brand, COUNT(*) c FROM products WHERE brand <> '' AND active = 1 GROUP BY brand`).all() as {
-    brand: string
-    c: number
-  }[]
+/** normalized brand → its preferred spelling in the catalogue and import file: most frequent, then least punctuation, shortest. */
+export function brandSpellings(extra?: Map<string, number>, includeCatalogue = true): Map<string, string> {
+  const counts = new Map<string, number>()
+  if (includeCatalogue) {
+    const rows = getDb()
+      .prepare(`SELECT brand, COUNT(*) c FROM products WHERE brand <> '' AND active = 1 GROUP BY brand`)
+      .all() as { brand: string; c: number }[]
+    for (const r of rows) counts.set(r.brand, r.c)
+  }
+  extra?.forEach((count, brand) => counts.set(brand, (counts.get(brand) ?? 0) + count))
+  const rows = [...counts].map(([brand, c]) => ({ brand, c }))
   const punct = (s: string): number => s.replace(/[A-Z0-9ÇĞİÖŞÜ]/g, '').length
   const turkish = (s: string): number => s.replace(/[^ÇĞİÖŞÜ]/g, '').length
   rows.sort(

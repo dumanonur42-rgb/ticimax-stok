@@ -88,7 +88,7 @@ function Appearance({ s }: { s: S }): ReactNode {
         )}
       </Field>
       <Field label={`Yazı boyutu: %${Math.round(s.font_scale * 100)}`} hint="Ctrl + / Ctrl − ile de değiştirebilirsiniz">
-        {(id) => <input id={id} type="range" min={0.85} max={1.5} step={0.05} value={s.font_scale} onChange={(e) => set({ font_scale: Number(e.target.value) })} style={{ width: '100%' }} />}
+        {(id) => <input id={id} type="range" min={0.85} max={1.5} step={0.05} value={s.font_scale} onChange={(e) => set({ font_scale: Number(e.target.value) })} style={{ width: '100%', margin: 0 }} />}
       </Field>
       <label className="check" style={{ alignSelf: 'end' }}>
         <input type="checkbox" checked={s.reduce_motion} onChange={(e) => set({ reduce_motion: e.target.checked })} /> Animasyonları azalt

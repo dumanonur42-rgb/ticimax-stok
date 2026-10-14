@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx'
 import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
-import { canonBox } from '@shared/identity'
+import { canonBox, canonBrand } from '@shared/identity'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { brandSpellings, resolveBrand } from './products'
 
@@ -20,6 +20,17 @@ interface Parsed {
 const pending = new Map<string, Parsed>()
 
 type Field = keyof ProductInput
+
+export function brandCountsFromRows(rows: string[][], skuIndex: number, brandIndex: number, defaultBrand: string): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const row of rows) {
+    const sku = (row[skuIndex] ?? '').trim()
+    if (!sku || !normalize(sku)) continue
+    const brand = canonBrand((row[brandIndex] ?? '') || defaultBrand)
+    if (brand) counts.set(brand, (counts.get(brand) ?? 0) + 1)
+  }
+  return counts
+}
 
 /** Excel headers come in every casing ("ÜRÜN ADI", "FİYAT"); fold them with Turkish rules so İ/I match the hints. */
 function headerKey(h: string): string {
@@ -193,6 +204,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   }
   if (idx('sku') < 0) throw new Error('"Stok Kodu" sütunu eşlenmeli.')
 
+  const fileBrandCounts = brandCountsFromRows(parsed.rows, idx('sku'), idx('brand'), opts.defaultBrand)
   await pullProducts()
   const db = getDb()
   const existing = new Map<string, LocalRow>()
@@ -250,7 +262,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     return true
   }
   let lastShelf = ''
-  const spellings = brandSpellings()
+  const spellings = brandSpellings(fileBrandCounts, opts.mode !== 'replace')
 
   const fromLocal = (ex: LocalRow): ProductInsert => ({
     sku: ex.sku,

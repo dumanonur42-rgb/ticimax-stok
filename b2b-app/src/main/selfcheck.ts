@@ -2,8 +2,8 @@ import type { ProductRow } from './cloud/database.types'
 import { pullProducts, upsertLocal } from './cloud/sync'
 import { getDb, normalize, normalizeText, productKey } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { parseBox, suggestMapping } from './repo/importer'
-import { duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
+import { brandCountsFromRows, parseBox, suggestMapping } from './repo/importer'
+import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { boxMentions, canonBrand } from '@shared/identity'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
@@ -200,6 +200,29 @@ export async function runSelfCheck(): Promise<number> {
       ok = false
     }
   }
+  const importBrandCases: [string[][], string][] = [
+    [
+      [['6205-1', 'INA'], ['6205-2', 'INA'], ['6205-3', 'İNA'], ['6205-4', 'ına'], ['', 'İNA']],
+      'INA'
+    ],
+    [
+      [['6205-1', 'TİMKEN'], ['6205-2', 'TIMKEN'], ['6205-3', 'TIMKEN']],
+      'TIMKEN'
+    ]
+  ]
+  for (const [rows, want] of importBrandCases) {
+    const spellings = brandSpellings(brandCountsFromRows(rows, 0, 1, ''), false)
+    const resolved = new Set(
+      rows
+        .filter(([sku]) => !!sku?.trim() && !!normalize(sku))
+        .map(([, brand]) => resolveBrand(brand ?? '', spellings))
+    )
+    if (resolved.size !== 1 || !resolved.has(want)) {
+      console.error('import brand spelling mismatch', [...resolved], want)
+      ok = false
+    }
+  }
+  console.log('import brand spellings: ok')
   if (normalize(canonBrand('ÇİN')) === normalize(canonBrand('INA')) || normalize('SKF') === normalize('SNR')) {
     console.error('distinct brands collapsed')
     ok = false
