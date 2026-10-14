@@ -37,6 +37,7 @@ export interface ApiMap {
   'auth:register': [{ username: string; display_name: string; company_name: string; password: string }, void]
   'auth:session': [void, Session | null]
   'auth:changePassword': [{ current: string; next: string }, void]
+  'clipboard:writeText': [string, void]
 
   'products:search': [ProductFilter, ProductPage]
   'products:facets': [ProductFilter, Facets]

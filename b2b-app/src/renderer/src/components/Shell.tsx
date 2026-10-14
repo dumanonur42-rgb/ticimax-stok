@@ -30,7 +30,7 @@ interface NavItem {
 }
 
 const NAV: NavItem[] = [
-  { page: 'dashboard', label: 'Özet', icon: <LayoutDashboard size={20} aria-hidden />, key: '1' },
+  { page: 'dashboard', label: 'Ana Sayfa', icon: <LayoutDashboard size={20} aria-hidden />, key: '1' },
   { page: 'catalog', label: 'Ürünler', icon: <Search size={20} aria-hidden />, key: '2' },
   { page: 'cart', label: 'Sepet', icon: <ShoppingCart size={20} aria-hidden />, key: '3' },
   { page: 'orders', label: 'Siparişler', icon: <ClipboardList size={20} aria-hidden />, key: '4' },
@@ -42,7 +42,7 @@ const NAV: NavItem[] = [
 ]
 
 export const PAGE_TITLE: Record<Page, string> = {
-  dashboard: 'Özet',
+  dashboard: 'Ana Sayfa',
   catalog: 'Ürün Kataloğu',
   cart: 'Sepet ve Sipariş',
   orders: 'Siparişler',

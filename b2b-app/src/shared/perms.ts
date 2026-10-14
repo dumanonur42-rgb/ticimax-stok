@@ -1,7 +1,7 @@
 import { PERMS, type Perm, type User, type UserRole } from './types'
 
 export const PERM_INFO: Record<Perm, { label: string; hint: string }> = {
-  shelf: { label: 'Raf konumunu görür', hint: 'Ürün listesinde, detayda ve Özet\'te raf sütunu gösterilir.' },
+  shelf: { label: 'Raf konumunu görür', hint: 'Ürün listesinde, detayda ve Ana Sayfa\'da raf sütunu gösterilir.' },
   prices: { label: 'Fiyatları görür', hint: 'Bayilere fiyat gizlense bile bu kullanıcı fiyatları görür.' },
   all_orders: { label: 'Tüm siparişleri görür', hint: 'Yalnızca kendi siparişleri yerine tüm bayilerin siparişlerini listeler.' },
   export: { label: 'Ürün listesini Excel\'e aktarır', hint: 'Ürünler sayfasından Excel indirme düğmesi açılır.' }

@@ -75,17 +75,17 @@ export function Cart(): ReactNode {
     )
 
   return (
-    <div className="grid" style={{ gridTemplateColumns: '1fr 340px', alignItems: 'start', gap: 18 }}>
+    <div className="grid cart-layout" style={{ gridTemplateColumns: '1fr 340px', alignItems: 'start', gap: 18 }}>
       <section className="card" aria-labelledby="cart-items" style={{ padding: 0, overflow: 'hidden' }}>
         <h2 id="cart-items" className="sr-only">
           Sepet kalemleri
         </h2>
-        <table className="table">
+        <table className="table cart-items-table">
           <thead>
             <tr>
               <th className="nowrap">Stok Kodu</th>
               <th>Ürün</th>
-              <th style={{ width: 150 }}>Miktar</th>
+              <th style={{ width: 160 }}>Miktar</th>
               {showPrices && <th className="right">Birim</th>}
               {showPrices && <th className="right">Tutar</th>}
               <th style={{ width: 44 }}>

@@ -1,13 +1,13 @@
 import type { Facets, Perm, Product, ProductFilter } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, ChevronLeft, Download, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronLeft, Copy, Download, Filter, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
 import { useSyncStatus } from '@/components/SyncBanner'
 import { api, onEvent } from '@/lib/api'
-import { money, num } from '@/lib/format'
+import { money, num, productsToTsv } from '@/lib/format'
 import { StockPill } from '@/components/StockPill'
 import { canonBox } from '@shared/identity'
 import { useApp, useCart } from '@/store/app'
@@ -34,14 +34,15 @@ interface Column {
 }
 
 const COLUMNS: Column[] = [
+  { key: 'pick', label: '', min: 40 },
   { key: 'shelf', label: 'Raf', min: 96, grow: 0.5, drop: 5, sort: 'shelf', perm: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
-  { key: 'stock', label: 'Stok', min: 118, sort: 'stock', align: 'right' },
+  { key: 'stock', label: 'Stok', min: 150, sort: 'stock', align: 'right' },
   { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 3 },
   { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
-  { key: 'price', label: 'Fiyat', min: 100, grow: 0.4, sort: 'price', align: 'right' },
+  { key: 'price', label: 'Fiyat', min: 100, grow: 0.4, drop: 4, sort: 'price', align: 'right' },
   { key: 'act', label: '', min: 100 }
 ]
 
@@ -96,6 +97,7 @@ export function Catalog(): ReactNode {
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
+  const [picked, setPicked] = useState<Map<number, Product>>(new Map())
   const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState<Product | null>(null)
   const [editing, setEditing] = useState<Product | 'new' | null>(null)
@@ -105,6 +107,7 @@ export function Catalog(): ReactNode {
   const pendingPages = useRef(new Set<number>())
   const bodyRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
+  const selectAllRef = useRef<HTMLInputElement>(null)
 
   const fullFilter = useMemo<ProductFilter>(() => ({ ...filter, q: dq }), [filter, dq])
 
@@ -186,6 +189,43 @@ export function Catalog(): ReactNode {
   )
   const has = useMemo(() => new Set(cols.map((c) => c.key)), [cols])
   const gridCols = cols.map((c) => (c.grow ? `minmax(${c.min}px, ${c.grow}fr)` : `${c.min}px`)).join(' ')
+  const loadedProducts = useMemo(
+    () => Array.from(rows.entries()).sort(([a], [b]) => a - b).map(([, product]) => product),
+    [rows]
+  )
+  const loadedPickedCount = loadedProducts.reduce((count, product) => count + Number(picked.has(product.id)), 0)
+  const allLoadedPicked = loadedProducts.length > 0 && loadedPickedCount === loadedProducts.length
+
+  useEffect(() => {
+    if (selectAllRef.current) selectAllRef.current.indeterminate = loadedPickedCount > 0 && !allLoadedPicked
+  }, [allLoadedPicked, loadedPickedCount])
+
+  const togglePicked = (product: Product): void =>
+    setPicked((prev) => {
+      const next = new Map(prev)
+      if (next.has(product.id)) next.delete(product.id)
+      else next.set(product.id, product)
+      return next
+    })
+
+  const toggleLoadedPicked = (): void =>
+    setPicked((prev) => {
+      const next = new Map(prev)
+      if (loadedProducts.length > 0 && loadedProducts.every((product) => prev.has(product.id)))
+        loadedProducts.forEach((product) => next.delete(product.id))
+      else loadedProducts.forEach((product) => next.set(product.id, product))
+      return next
+    })
+
+  const copyProducts = async (products: Product[]): Promise<void> => {
+    if (!products.length) return
+    try {
+      await api('clipboard:writeText', productsToTsv(products, { canShelf, showPrices }))
+      toast(`${products.length} ürün kopyalandı`, 'success')
+    } catch (e) {
+      toast((e as Error).message, 'error')
+    }
+  }
 
   const toggleSort = (s: SortKey): void =>
     setFilter((f) => ({ ...f, sort: s, sortDir: f.sort === s && f.sortDir === 'asc' ? 'desc' : 'asc' }))
@@ -219,6 +259,22 @@ export function Catalog(): ReactNode {
   }
 
   const onGridKey = (e: React.KeyboardEvent): void => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+      if (window.getSelection()?.toString()) return
+      e.preventDefault()
+      void copyProducts(picked.size > 0 ? Array.from(picked.values()) : [rows.get(activeIdx)].filter((p): p is Product => !!p))
+      return
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
+      e.preventDefault()
+      toggleLoadedPicked()
+      return
+    }
+    if (e.key === 'Escape' && picked.size > 0) {
+      e.preventDefault()
+      setPicked(new Map())
+      return
+    }
     if (!total) return
     const move = (n: number): void => {
       e.preventDefault()
@@ -232,7 +288,11 @@ export function Catalog(): ReactNode {
     else if (e.key === 'PageUp') move(-20)
     else if (e.key === 'Home') move(-total)
     else if (e.key === 'End') move(total)
-    else if (e.key === 'Enter') {
+    else if ((e.key === ' ' || e.code === 'Space') && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement)) {
+      e.preventDefault()
+      const p = rows.get(activeIdx)
+      if (p) togglePicked(p)
+    } else if (e.key === 'Enter') {
       const p = rows.get(activeIdx)
       if (p) setSelected(p)
     } else if (e.key === '+' || (e.key === 'Insert' && !e.ctrlKey)) {
@@ -447,6 +507,18 @@ export function Catalog(): ReactNode {
             </button>
           )}
         </div>
+        {picked.size > 0 && (
+          <div className="toolbar selection-toolbar" role="status" aria-live="polite">
+            <strong>{num(picked.size)} ürün seçildi</strong>
+            <span className="spacer" />
+            <button className="btn sm" onClick={() => void copyProducts(Array.from(picked.values()))}>
+              <Copy size={14} aria-hidden /> Kopyala
+            </button>
+            <button className="btn sm ghost" onClick={() => setPicked(new Map())}>
+              Seçimi temizle
+            </button>
+          </div>
+        )}
         {(activeChips.length > 0 || q) && (
           <div className="toolbar" style={{ paddingTop: 6, paddingBottom: 6 }}>
             <div className="chips" aria-label="Etkin filtreler">
@@ -466,7 +538,15 @@ export function Catalog(): ReactNode {
           <div className="vgrid-head" role="row">
             {cols.map((c) => (
               <div key={c.key} role="columnheader" aria-sort={filter.sort === c.sort ? (filter.sortDir === 'desc' ? 'descending' : 'ascending') : undefined} className={c.align === 'right' ? 'right' : ''}>
-                {c.sort ? (
+                {c.key === 'pick' ? (
+                  <input
+                    ref={selectAllRef}
+                    type="checkbox"
+                    checked={allLoadedPicked}
+                    onChange={toggleLoadedPicked}
+                    aria-label="Görünen ürünlerin tümünü seç"
+                  />
+                ) : c.sort ? (
                   <button onClick={() => toggleSort(c.sort!)} title={`${c.label} sütununa göre sırala`}>
                     {c.label}
                     {filter.sort === c.sort && (filter.sortDir === 'desc' ? <ArrowDown size={14} aria-hidden /> : <ArrowUp size={14} aria-hidden />)}
@@ -517,16 +597,29 @@ export function Catalog(): ReactNode {
                   <div
                     key={v.key}
                     id={`prow-${v.index}`}
-                    className={`vrow${v.index % 2 ? ' odd' : ''}${p.active ? '' : ' inactive'}`}
+                    className={`vrow${v.index % 2 ? ' odd' : ''}${p.active ? '' : ' inactive'}${picked.has(p.id) ? ' picked' : ''}`}
                     role="row"
                     aria-rowindex={v.index + 1}
                     aria-selected={isActive}
                     style={{ transform: `translateY(${v.start}px)`, height: v.size }}
                     onClick={() => {
                       setActiveIdx(v.index)
+                      if (window.getSelection()?.toString()) return
                       setSelected(p)
                     }}
                   >
+                    <div className="cell pick-cell" role="gridcell">
+                      <input
+                        type="checkbox"
+                        checked={picked.has(p.id)}
+                        onChange={() => togglePicked(p)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setActiveIdx(v.index)
+                        }}
+                        aria-label={`${p.sku} seç`}
+                      />
+                    </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
                         {p.shelf ? (
@@ -592,7 +685,7 @@ export function Catalog(): ReactNode {
             {loading ? 'Aranıyor…' : `${num(total)} ürün`}
             {activeIdx < total && total > 0 && <span className="faint"> · {num(activeIdx + 1)}. satır</span>}
             <span className="spacer" />
-            <span className="faint">↑↓ gezin · Enter ayrıntı · + sepete ekle</span>
+            <span className="faint">↑↓ gezin · Boşluk seç · Ctrl+C kopyala · Enter ayrıntı · + sepete ekle</span>
           </div>
         </div>
       </section>

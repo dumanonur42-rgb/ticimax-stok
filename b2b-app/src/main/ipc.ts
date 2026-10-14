@@ -1,7 +1,7 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
 import type { Order, Perm, Session } from '@shared/types'
-import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
 import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
@@ -174,6 +174,11 @@ export function registerIpc(): void {
     return session
   })
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.username, current, next))
+  handle('clipboard:writeText', (text) => {
+    requireRole()
+    if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > 2 * 1024 * 1024) throw new Error('Kopyalanacak metin çok büyük.')
+    clipboard.writeText(text)
+  })
 
   handle('products:search', (f) => {
     const s = requireRole()

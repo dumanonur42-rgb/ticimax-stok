@@ -5,6 +5,12 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulama
 penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.18
+
+- "Özet" sekmesinin adı "Ana Sayfa" oldu.
+- Ürünler listesinde birden fazla ürün seçilip Excel ve WhatsApp'a uygun tablo olarak kopyalanabilir; seçim arama ve filtre değiştirince korunur.
+- Ürün, stok, sepet ve sipariş tablolarında dar pencerelerde taşma ve üst üste binmeler düzeltildi.
+
 ## 1.0.17
 
 - [yönetici] Stok Aktar'da "Eski listeyi sil, dosyadakileri yükle" modu: buluttaki eski ürün listesi kalıcı olarak silinir, dosyadaki ürünler yeni liste olur ve tüm bilgisayarlardaki listeler otomatik yenilenir (sipariş geçmişi korunur). Seçildiğinde ne olacağı ekranda açıkça yazılır.

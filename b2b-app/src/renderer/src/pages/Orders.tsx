@@ -43,7 +43,7 @@ export function Orders(): ReactNode {
   }
 
   return (
-    <div className="grid" style={{ gridTemplateColumns: detail ? '1fr 460px' : '1fr', alignItems: 'start', gap: 18 }}>
+    <div className="grid orders-layout" style={{ gridTemplateColumns: detail ? '1fr 460px' : '1fr', alignItems: 'start', gap: 18 }}>
       <section className="card" style={{ padding: 0, overflow: 'hidden' }} aria-labelledby="orders-title">
         <div className="toolbar">
           <h2 id="orders-title" className="sr-only">
@@ -68,7 +68,7 @@ export function Orders(): ReactNode {
         ) : orders.length === 0 ? (
           <Empty title="Sipariş bulunamadı" />
         ) : (
-          <table className="table">
+          <table className="table orders-list-table">
             <thead>
               <tr>
                 <th>Sipariş No</th>

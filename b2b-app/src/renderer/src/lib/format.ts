@@ -1,4 +1,4 @@
-import type { Currency, OrderStatus } from '@shared/types'
+import type { Currency, OrderStatus, Product } from '@shared/types'
 
 const fmtCache = new Map<string, Intl.NumberFormat>()
 
@@ -46,6 +46,25 @@ export const ROLE_HINT = {
   ara: 'Bayi ile aynı; ek olarak ürünlerin raf konumunu görür. Aşağıdan başka özellikler de verilebilir.',
   bayi: 'Müşteri hesabı: katalogda arama, kendi cari kartıyla sipariş oluşturma ve yalnızca kendi siparişlerini takip.'
 } as const
+
+export function productsToTsv(products: Product[], opts: { canShelf: boolean; showPrices: boolean }): string {
+  const clean = (value: string): string => value.replace(/[\t\r\n]+/g, ' ').trim()
+  const columns: { label: string; value: (product: Product) => string }[] = []
+  if (opts.canShelf) columns.push({ label: 'Raf', value: (p) => p.shelf })
+  columns.push(
+    { label: 'Ürün Kodu', value: (p) => p.sku },
+    { label: 'Marka', value: (p) => p.brand }
+  )
+  if (products.some((p) => p.d_inner != null || p.d_outer != null || p.width != null))
+    columns.push({ label: 'd×D×B', value: (p) => `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` })
+  columns.push(
+    { label: 'Stok', value: (p) => num(p.stock) },
+    { label: 'Kutu durumu', value: (p) => p.box },
+    { label: 'Açıklama', value: (p) => p.description }
+  )
+  if (opts.showPrices) columns.push({ label: 'Fiyat', value: (p) => money(p.price, p.currency) })
+  return [columns.map((c) => c.label), ...products.map((p) => columns.map((c) => clean(c.value(p))))].map((row) => row.join('\t')).join('\r\n')
+}
 
 export function stockLevel(stock: number, threshold: number): { cls: 'ok' | 'low' | 'out'; label: string } {
   if (stock <= 0) return { cls: 'out', label: 'Stok yok' }

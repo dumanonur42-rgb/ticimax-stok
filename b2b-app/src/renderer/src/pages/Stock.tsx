@@ -432,7 +432,7 @@ export function Stock(): ReactNode {
             )}
           </div>
 
-          <div className="vgrid" style={{ ['--cols' as string]: gridCols }}>
+          <div className="vgrid stock-vgrid" style={{ ['--cols' as string]: gridCols }}>
             <div className="vgrid-head" role="row">
               {COLUMNS.map((c) =>
                 c.key === 'sel' ? (
