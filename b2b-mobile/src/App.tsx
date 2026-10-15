@@ -358,7 +358,7 @@ export default function App(): ReactNode {
         {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
         {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
         {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
-        {tab === 'account' && <AccountPage session={session} lastSync={lastSync} syncBusy={syncBusy} platform={platform} onSync={() => void syncNow()} onCheckUpdate={() => void checkAndroidUpdate().then((available) => { if (available) { setUpdate(available); setSheet('update') } else showToast('Uygulamanız güncel.') }).catch((error) => showToast(userFacingError(error)))} onLogout={() => void onLogout()} />}
+        {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} />}
       </main>
       <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
       {sheet === 'filters' && <FilterSheet
@@ -925,8 +925,8 @@ function OrderDetail({ id, settings, onClose }: { id: number; settings: Settings
   )
 }
 
-function AccountPage({ session, lastSync, syncBusy, platform, onSync, onCheckUpdate, onLogout }: {
-  session: Session; lastSync: string | null; syncBusy: boolean; platform: string; onSync: () => void; onCheckUpdate: () => void; onLogout: () => void
+function AccountPage({ session, onLogout }: {
+  session: Session; onLogout: () => void
 }): ReactNode {
   return (
     <div className="page account-page">
@@ -939,13 +939,9 @@ function AccountPage({ session, lastSync, syncBusy, platform, onSync, onCheckUpd
         {session.customer?.code && <InfoRow label="Cari kodu" value={session.customer.code} />}
         {session.customer?.phone && <InfoRow label="Telefon" value={session.customer.phone} />}
         <InfoRow label="Kullanıcı adı" value={session.user.username} />
-        <InfoRow label="Son eşitleme" value={timeLabel(lastSync)} />
         <InfoRow label="Uygulama sürümü" value={APP_VERSION} />
       </section>
       <div className="account-actions">
-        <button className="button secondary wide" onClick={onSync} disabled={syncBusy}><RefreshCw size={18} className={syncBusy ? 'spin' : ''} />{syncBusy ? 'Eşitleniyor…' : 'Şimdi eşitle'}</button>
-        {platform === 'android' && <button className="button secondary wide" onClick={onCheckUpdate}><Download size={18} /> Güncellemeleri kontrol et</button>}
-        {platform === 'ios' && <p className="update-platform-note">App Store'dan güncellenir</p>}
         <button className="button danger wide" onClick={onLogout}>Çıkış yap</button>
       </div>
       <p className="version-note">Yamansa Rulman B2B · {APP_VERSION}</p>
