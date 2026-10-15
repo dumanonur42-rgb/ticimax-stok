@@ -1,6 +1,8 @@
 import { App as CapacitorApp } from '@capacitor/app'
 import { AppLauncher } from '@capacitor/app-launcher'
+import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
+import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   Check, ClipboardList, Copy, Home, Minus,
@@ -13,46 +15,17 @@ import { normalize } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
+import { compareVersions } from '@shared/version'
 import { dashboardOrders, createOrder, getOrder, listCustomers, listOrders, loadSettings, restoreSession, signIn, signOut } from './lib/cloud'
 import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
+import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab } from './store/app'
 import mark from './assets/mark.png'
 
-const APP_VERSION = '1.0.1'
-const ANDROID_RELEASES_API = 'https://api.github.com/repos/dumanonur42-rgb/ticimax-stok/releases?per_page=100'
-interface AndroidUpdate {
-  version: string
-  url: string
-  notes: string
-}
-
-function newerVersion(candidate: string, current: string): boolean {
-  const a = candidate.split('.').map(Number)
-  const b = current.split('.').map(Number)
-  for (let i = 0; i < Math.max(a.length, b.length); i++) {
-    const left = a[i] ?? 0
-    const right = b[i] ?? 0
-    if (left !== right) return left > right
-  }
-  return false
-}
-
-async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
-  const response = await fetch(ANDROID_RELEASES_API, { headers: { Accept: 'application/vnd.github+json' } })
-  if (!response.ok) throw new Error('Güncelleme bilgisi alınamadı.')
-  const releases = await response.json() as { tag_name?: string; body?: string; assets?: { name: string; browser_download_url: string }[]; draft?: boolean }[]
-  const candidates = releases
-    .filter((release) => !release.draft && /^b2b-android-v\d+\.\d+\.\d+$/.test(release.tag_name ?? ''))
-    .map((release) => ({ release, version: (release.tag_name ?? '').replace(/^b2b-android-v/, '') }))
-    .sort((a, b) => newerVersion(b.version, a.version) ? 1 : newerVersion(a.version, b.version) ? -1 : 0)
-  const latest = candidates[0]
-  if (!latest || !newerVersion(latest.version, APP_VERSION)) return null
-  const apk = latest.release.assets?.find((asset) => asset.name.endsWith('.apk'))
-  return apk ? { version: latest.version, url: apk.browser_download_url, notes: latest.release.body ?? '' } : null
-}
+const APP_VERSION = __APP_VERSION__
 
 function userFacingError(error: unknown): string {
   return error instanceof Error ? error.message : 'Bir sorun oluştu. Yeniden deneyin.'
@@ -92,6 +65,7 @@ export default function App(): ReactNode {
   const [loginBusy, setLoginBusy] = useState(false)
   const [homeOpenOrders, setHomeOpenOrders] = useState<number | null>(null)
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
+  const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
   const [dark, setDark] = useState(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
@@ -139,14 +113,6 @@ export default function App(): ReactNode {
         if (active) setBooting(false)
       }
     })()
-    if (platform === 'android') {
-      void checkAndroidUpdate().then((available) => {
-        if (active && available) {
-          setUpdate(available)
-          setSheet('update')
-        }
-      }).catch(() => undefined)
-    }
     const onOnline = (): void => { setOnline(true); void syncNow() }
     const onOffline = (): void => setOnline(false)
     window.addEventListener('online', onOnline)
@@ -157,6 +123,72 @@ export default function App(): ReactNode {
       window.removeEventListener('offline', onOffline)
     }
   }, [platform, setProducts, setSession, setOnline, showToast, setSheet, syncNow])
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform() || (platform !== 'android' && platform !== 'ios')) return
+    let active = true
+    let resumeHandle: { remove: () => Promise<void> } | undefined
+    let pauseHandle: { remove: () => Promise<void> } | undefined
+    let flexibleHandle: { remove: () => Promise<void> } | undefined
+    const checkUpdates = async (): Promise<void> => {
+      if (document.visibilityState !== 'visible') return
+      void checkLiveUpdate()
+      await completePendingFlexibleUpdate()
+      let currentVersion = APP_VERSION
+      try {
+        currentVersion = (await CapacitorApp.getInfo()).version || APP_VERSION
+      } catch (error) {
+        console.warn(`${platform} version lookup failed`, error)
+      }
+      const minimum = minimumVersionFor(platform, settings)
+      const forced = !!minimum && compareVersions(currentVersion, minimum) < 0
+      if (forced && active) setRequiredUpdate({ platform, version: minimum, ...(platform === 'android' ? { url: androidReleasesPage() } : {}) })
+      if (navigator.onLine === false) return
+      if (platform === 'ios') {
+        try { await AppUpdate.getAppUpdateInfo({ country: 'TR' }) } catch { /* Store lookup is unavailable until release. */ }
+        return
+      }
+      try {
+        const info = await AppUpdate.getAppUpdateInfo()
+        const storeCurrentVersion = info.currentVersionName || currentVersion
+        const storeForced = !!minimum && compareVersions(storeCurrentVersion, minimum) < 0
+        if (storeForced && active) setRequiredUpdate({ platform, version: minimum, url: androidReleasesPage() })
+        if (info.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE) {
+          if (storeForced) await AppUpdate.performImmediateUpdate()
+          else await AppUpdate.startFlexibleUpdate()
+          return
+        }
+      } catch (error) {
+        console.warn('Play update lookup failed; checking GitHub APK releases', error)
+        try {
+          const available = await checkAndroidUpdate()
+          if (!active) return
+          if (forced) setRequiredUpdate({ platform, version: minimum, url: available?.url ?? androidReleasesPage() })
+          else if (available) {
+            setUpdate(available)
+            setSheet('update')
+          }
+        } catch (fallbackError) {
+          console.warn('GitHub APK update lookup failed', fallbackError)
+        }
+      }
+    }
+    const runLiveCheck = (): void => { if (document.visibilityState === 'visible') void checkLiveUpdate() }
+    void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+    void checkLiveUpdate()
+    void checkUpdates()
+    void startFlexibleUpdateListener().then((handle) => { flexibleHandle = handle }).catch((error) => console.warn('Flexible update listener failed', error))
+    void CapacitorApp.addListener('resume', checkUpdates).then((handle) => { resumeHandle = handle })
+    void CapacitorApp.addListener('pause', () => { void completePendingFlexibleUpdate() }).then((handle) => { pauseHandle = handle })
+    const interval = window.setInterval(runLiveCheck, 30 * 60_000)
+    return () => {
+      active = false
+      window.clearInterval(interval)
+      void resumeHandle?.remove()
+      void pauseHandle?.remove()
+      void flexibleHandle?.remove()
+    }
+  }, [platform, settings.min_version_android, settings.min_version_ios, setSheet])
 
   useEffect(() => {
     if (!session) return
@@ -249,6 +281,19 @@ export default function App(): ReactNode {
     }
   }
 
+  if (requiredUpdate) return (
+    <main className={`required-update${dark ? ' dark' : ''}`}>
+      <img className="login-mark" src={mark} alt="Yamansa Rulman" />
+      <h1>Güncelleme gerekli</h1>
+      <p>Uygulamayı kullanmaya devam etmek için {requiredUpdate.version} sürümünü yükleyin.</p>
+      <button className="button primary wide" onClick={() => {
+        if (requiredUpdate.platform === 'ios') void AppUpdate.openAppStore().catch((error) => console.warn('App Store could not be opened', error))
+        else external(requiredUpdate.url ?? androidReleasesPage())
+      }}>
+        {requiredUpdate.platform === 'ios' ? 'App Store’u aç' : 'APK güncellemesini indir'}
+      </button>
+    </main>
+  )
   if (booting) return <div className="boot-screen"><img src={mark} alt="" /><span>Yamansa Rulman</span></div>
   if (!session) {
     return (

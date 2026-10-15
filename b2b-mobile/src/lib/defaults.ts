@@ -32,5 +32,8 @@ export const SHARED_SETTING_KEYS = new Set<keyof Settings>([
   'vat_pct',
   'low_stock_threshold',
   'show_prices_to_dealers',
-  'card_price_pct'
+  'card_price_pct',
+  'min_version_android',
+  'min_version_ios',
+  'min_version_windows'
 ])

@@ -5,6 +5,11 @@ const config: CapacitorConfig = {
   appName: 'Yamansa Rulman B2B',
   webDir: 'dist',
   backgroundColor: '#0b2a5b',
+  plugins: {
+    CapacitorUpdater: {
+      autoUpdate: false
+    }
+  },
   android: {
     allowMixedContent: false
   }

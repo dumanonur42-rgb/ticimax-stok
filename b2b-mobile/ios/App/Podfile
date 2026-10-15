@@ -13,6 +13,8 @@ def capacitor_pods
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
   pod 'CapacitorAppLauncher', :path => '../../node_modules/@capacitor/app-launcher'
+  pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/@capawesome/capacitor-app-update'
+  pod 'CapgoCapacitorUpdater', :path => '../../node_modules/@capgo/capacitor-updater'
 end
 
 target 'App' do

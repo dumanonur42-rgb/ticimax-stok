@@ -15,6 +15,18 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, 
 })
 
 const SESSION_CACHE = 'yamansa-b2b-session'
+const MIN_VERSION_CACHE = 'yb2b.minimumVersions'
+const MIN_VERSION_KEYS = ['min_version_android', 'min_version_ios', 'min_version_windows'] as const
+
+export function cachedMinimumVersion(key: typeof MIN_VERSION_KEYS[number]): string | undefined {
+  try {
+    const values = JSON.parse(localStorage.getItem(MIN_VERSION_CACHE) ?? '{}') as Partial<Record<typeof MIN_VERSION_KEYS[number], unknown>>
+    const value = values[key]
+    return typeof value === 'string' && /^\d+\.\d+\.\d+$/.test(value) ? value : undefined
+  } catch {
+    return undefined
+  }
+}
 
 function errorMessage(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error)
@@ -126,10 +138,22 @@ export async function loadSettings(): Promise<Settings> {
   const { data, error } = await supabase.from('settings').select('key,value')
   if (error) throw new Error(errorMessage(error))
   const settings: Settings = { ...DEFAULT_SETTINGS }
+  const remoteKeys = new Set((data ?? []).map((row) => row.key))
   for (const row of data ?? []) {
     if (SHARED_SETTING_KEYS.has(row.key as keyof Settings)) {
       ;(settings as unknown as Record<string, unknown>)[row.key] = row.value
     }
+  }
+  try {
+    const cached = JSON.parse(localStorage.getItem(MIN_VERSION_CACHE) ?? '{}') as Record<string, unknown>
+    for (const key of MIN_VERSION_KEYS) {
+      const value = settings[key]
+      if (remoteKeys.has(key) && typeof value === 'string' && /^\d+\.\d+\.\d+$/.test(value)) cached[key] = value
+      else delete cached[key]
+    }
+    localStorage.setItem(MIN_VERSION_CACHE, JSON.stringify(cached))
+  } catch {
+    // Local caching is best-effort; settings remain available in memory.
   }
   return settings
 }

@@ -1,0 +1,46 @@
+name: B2B Mobile Web Release
+
+on:
+  push:
+    tags:
+      - b2b-mobile-web-v*
+
+permissions:
+  contents: write
+
+jobs:
+  web-release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: b2b-mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: b2b-mobile/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Package web assets
+        id: bundle
+        run: |
+          version="${GITHUB_REF_NAME#b2b-mobile-web-v}"
+          archive="b2b-mobile-web-${version}.zip"
+          (cd dist && zip -qr "../$archive" .)
+          sha256sum "$archive" | tee "$archive.sha256"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "archive=$archive" >> "$GITHUB_OUTPUT"
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          archive="${{ steps.bundle.outputs.archive }}"
+          checksum="$archive.sha256"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$archive" "$checksum" --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$tag" "$archive" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes
+          fi

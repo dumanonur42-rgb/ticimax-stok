@@ -1,13 +1,14 @@
 {
   "name": "yamansa-rulman-b2b-android",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
+    "version:set": "node scripts/version-set.mjs",
     "check:login-email": "node scripts/check-login-email.mjs",
     "cap:sync": "cap sync android",
     "android:release": "cd android && ./gradlew assembleRelease"
@@ -18,6 +19,8 @@
     "@capacitor/app-launcher": "^7.0.4",
     "@capacitor/core": "^7.6.9",
     "@capacitor/ios": "^7.6.9",
+    "@capawesome/capacitor-app-update": "7.2.0",
+    "@capgo/capacitor-updater": "7.51.23",
     "@supabase/supabase-js": "^2.116.0",
     "@tanstack/react-virtual": "^3.13.12",
     "lucide-react": "^0.544.0",

@@ -1,11 +1,16 @@
 import react from '@vitejs/plugin-react'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 
 const mobileDir = fileURLToPath(new URL('.', import.meta.url))
+const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string }
 
 export default defineConfig({
   base: './',
+  define: {
+    __APP_VERSION__: JSON.stringify(packageJson.version)
+  },
   plugins: [react()],
   resolve: {
     alias: {
