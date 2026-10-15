@@ -5,6 +5,7 @@ import { Toasts } from '@/components/ui'
 import { UpdateDialog } from '@/components/UpdateDialog'
 import { api, onEvent } from '@/lib/api'
 import { Cart } from '@/pages/Cart'
+import { ActivityLogs } from '@/pages/ActivityLogs'
 import { Catalog } from '@/pages/Catalog'
 import { Customers } from '@/pages/Customers'
 import { Dashboard } from '@/pages/Dashboard'
@@ -66,7 +67,8 @@ const PAGES: Record<ReturnType<typeof useApp.getState>['page'], () => ReactNode>
   customers: Customers,
   import: Import,
   settings: SettingsPage,
-  help: Help
+  help: Help,
+  activity: ActivityLogs
 }
 
 export function App(): ReactNode {
@@ -118,7 +120,7 @@ export function App(): ReactNode {
     )
 
   const role = session.user.role
-  const allowed = role === 'admin' || (page !== 'import' && page !== 'customers' && page !== 'stock')
+  const allowed = role === 'admin' || (page !== 'import' && page !== 'customers' && page !== 'stock' && page !== 'activity')
   const Page = PAGES[allowed ? page : 'dashboard']
   return (
     <>

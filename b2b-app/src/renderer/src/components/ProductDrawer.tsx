@@ -29,6 +29,12 @@ export function ProductDrawer({
   const lvl = stockLevel(product.stock, threshold)
 
   useEffect(() => {
+    void api('activity:log', {
+      kind: 'product_view',
+      product_id: product.id,
+      sku: product.sku,
+      brand: product.brand
+    }).catch(() => undefined)
     setQty(Math.max(1, product.min_order || 1))
     const skus = product.equivalents
       .split(/[,;\n]/)

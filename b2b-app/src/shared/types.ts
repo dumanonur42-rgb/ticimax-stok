@@ -238,6 +238,85 @@ export interface Session {
   customer: Customer | null
 }
 
+export type ActivityKind = 'login' | 'search' | 'product_view' | 'cart_add' | 'order'
+export type ActivityPlatform = 'windows' | 'android' | 'ios' | 'web'
+
+export interface ActivityEvent {
+  kind: ActivityKind
+  product_id?: number | null
+  sku?: string
+  brand?: string
+  query?: string
+  qty?: number | null
+  order_id?: number | null
+  detail?: Record<string, unknown>
+}
+
+export interface ActivityPerson {
+  display_name: string
+  username: string
+  company: string
+}
+
+export interface ActivityRow extends ActivityEvent {
+  id: number
+  at: string
+  user_id: string
+  platform: ActivityPlatform
+  person: ActivityPerson
+}
+
+export interface ActivityListQuery {
+  userId?: string
+  kind?: ActivityKind
+  platform?: ActivityPlatform
+  from?: string
+  to?: string
+  offset: number
+  limit: number
+}
+
+export interface ActivityPage {
+  rows: ActivityRow[]
+  hasMore: boolean
+}
+
+export interface ActivitySummary {
+  lastLogin: string | null
+  topViewedProducts: { product_id: number | null; sku: string; brand: string; views: number }[]
+  topSearchTerms: { query: string; searches: number }[]
+}
+
+export interface StockLogRow {
+  id: number
+  at: string
+  product_id: number | null
+  sku: string
+  brand: string
+  box: string
+  old_stock: number | null
+  new_stock: number
+  delta: number
+  user_id: string | null
+  source: string
+  person: ActivityPerson
+}
+
+export interface StockLogQuery {
+  sku?: string
+  userId?: string
+  source?: string
+  from?: string
+  to?: string
+  offset: number
+  limit: number
+}
+
+export interface StockLogPage {
+  rows: StockLogRow[]
+  hasMore: boolean
+}
+
 export interface SyncStatus {
   online: boolean
   lastSync: string | null

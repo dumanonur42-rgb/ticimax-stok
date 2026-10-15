@@ -1,9 +1,20 @@
 # Sürüm notları
 
 Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe maddeler halinde yazılır.
-Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır ve uygulamadaki güncelleme
-penceresinde "Yenilikler" olarak gösterilir. Yalnızca yöneticiyi ilgilendiren maddeler
+Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
+
+## 1.0.20
+
+- [yönetici] Hareketler sayfasında kullanıcı girişleri, aramaları, ürün görüntülemeleri, sepete eklemeleri ve stok değişiklikleri filtrelenip incelenebilir.
+- [yönetici] Seçilen kullanıcı için son giriş, sık baktığı ürünler ve arama terimleri görüntülenebilir.
+
+## 1.0.19
+
+- Uygulama artık kendini sessizce günceller: yeni sürüm arka planda iner, kapanışta veya bilgisayar boştayken kurulur; güncelleme penceresi çıkmaz.
+- Ürün listesi arka planda sessizce eşitlenir; "indiriliyor / eşitleniyor" göstergeleri kaldırıldı.
+- Ayarlar'daki "Güncellemeleri denetle" düğmesi kaldırıldı.
+- Giriş ekranındaki logonun basık görünmesi düzeltildi; dar pencerelerde de görünür.
 
 ## 1.0.18
 

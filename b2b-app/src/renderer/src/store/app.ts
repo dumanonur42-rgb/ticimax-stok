@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
 
-export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help'
+export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help' | 'activity'
 
 export interface Toast {
   id: number
@@ -88,9 +88,9 @@ export const useCart = create<CartState>()(
       customerId: null,
       note: '',
       payment: 'pesin',
-      add: (p, qty) =>
+      add: (p, qty) => {
+        const step = qty ?? Math.max(1, p.min_order || 1)
         set((s) => {
-          const step = qty ?? Math.max(1, p.min_order || 1)
           const ex = s.lines.find((l) => l.product_id === p.id)
           if (ex) return { lines: s.lines.map((l) => (l.product_id === p.id ? { ...l, qty: l.qty + step } : l)) }
           return {
@@ -110,7 +110,9 @@ export const useCart = create<CartState>()(
               }
             ]
           }
-        }),
+        })
+        void api('activity:log', { kind: 'cart_add', product_id: p.id, sku: p.sku, brand: p.brand, qty: step }).catch(() => undefined)
+      },
       setQty: (product_id, qty) =>
         set((s) => ({
           lines: qty <= 0 ? s.lines.filter((l) => l.product_id !== product_id) : s.lines.map((l) => (l.product_id === product_id ? { ...l, qty } : l))

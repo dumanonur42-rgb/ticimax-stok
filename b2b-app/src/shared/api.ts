@@ -3,6 +3,12 @@ import type {
   Customer,
   CustomerInput,
   CustomerProfile,
+  ActivityEvent,
+  ActivityListQuery,
+  ActivityPage,
+  ActivitySummary,
+  StockLogQuery,
+  StockLogPage,
   DashboardStats,
   DealerLogin,
   DuplicateGroup,
@@ -37,6 +43,11 @@ export interface ApiMap {
   'auth:register': [{ username: string; display_name: string; company_name: string; password: string }, void]
   'auth:session': [void, Session | null]
   'auth:changePassword': [{ current: string; next: string }, void]
+  'activity:log': [ActivityEvent, void]
+  'activity:open': [void, void]
+  'activity:list': [ActivityListQuery, ActivityPage]
+  'activity:summary': [string, ActivitySummary]
+  'stock:log': [StockLogQuery, StockLogPage]
   'clipboard:writeText': [string, void]
 
   'products:search': [ProductFilter, ProductPage]

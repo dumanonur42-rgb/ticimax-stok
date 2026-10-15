@@ -1,5 +1,5 @@
 /** Hand-maintained mirror of supabase/schema.sql for typed supabase-js queries. */
-import type { Currency, OrderStatus, PaymentType, UserRole } from '@shared/types'
+import type { ActivityKind, ActivityPlatform, Currency, OrderStatus, PaymentType, UserRole } from '@shared/types'
 
 export type ProductRow = {
   id: number
@@ -114,6 +114,38 @@ export type ImportLogRow = {
   mode: string
 }
 
+export type ActivityLogRow = {
+  id: number
+  at: string
+  user_id: string
+  platform: ActivityPlatform
+  kind: ActivityKind
+  product_id: number | null
+  sku: string
+  brand: string
+  query: string
+  qty: number | null
+  order_id: number | null
+  detail: Record<string, unknown>
+}
+
+export type ActivityLogInsert = Pick<ActivityLogRow, 'platform' | 'kind'> &
+  Partial<Pick<ActivityLogRow, 'product_id' | 'sku' | 'brand' | 'query' | 'qty' | 'order_id' | 'detail'>>
+
+export type StockLogRow = {
+  id: number
+  at: string
+  product_id: number | null
+  sku: string
+  brand: string
+  box: string
+  old_stock: number | null
+  new_stock: number
+  delta: number
+  user_id: string | null
+  source: string
+}
+
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
   Row: Row
   Insert: Insert
@@ -131,6 +163,8 @@ export interface Database {
       order_items: Table<OrderItemRow>
       settings: Table<SettingRow, SettingRow>
       import_logs: Table<ImportLogRow, Omit<ImportLogRow, 'id' | 'created_at'>>
+      activity_log: Table<ActivityLogRow, ActivityLogInsert>
+      stock_log: Table<StockLogRow>
     }
     Views: Record<string, never>
     Functions: {
@@ -149,6 +183,7 @@ export interface Database {
       }
       set_order_status: { Args: { p_id: number; p_status: string }; Returns: undefined }
       admin_set_password: { Args: { p_user: string; p_password: string }; Returns: undefined }
+      prune_logs: { Args: Record<string, never>; Returns: undefined }
       admin_delete_user: { Args: { p_user: string }; Returns: undefined }
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
       soft_delete_all_products: { Args: Record<string, never>; Returns: undefined }

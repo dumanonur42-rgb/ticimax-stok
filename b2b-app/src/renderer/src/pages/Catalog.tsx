@@ -88,6 +88,16 @@ export function Catalog(): ReactNode {
   const threshold = settings?.low_stock_threshold ?? 5
 
   const [q, setQ] = useState('')
+  const lastLoggedSearch = useRef('')
+  useEffect(() => {
+    const query = q.trim()
+    if (query.length < 2 || query === lastLoggedSearch.current) return
+    const timer = window.setTimeout(() => {
+      lastLoggedSearch.current = query
+      void api('activity:log', { kind: 'search', query }).catch(() => undefined)
+    }, 1500)
+    return () => window.clearTimeout(timer)
+  }, [q])
   const dq = useDebounced(q, 120)
   const [filter, setFilter] = useState<Omit<ProductFilter, 'q' | 'offset' | 'limit'>>({ sort: 'relevance', sortDir: 'asc' })
   const [showFilters, setShowFilters] = useState(true)
