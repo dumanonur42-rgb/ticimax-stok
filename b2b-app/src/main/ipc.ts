@@ -32,7 +32,7 @@ import {
 } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
-import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
+import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, revealPassword, saveUser } from './repo/users'
 import { updateState } from './updater'
 
 let session: Session | null = null
@@ -476,6 +476,10 @@ export function registerIpc(): void {
     requireRole('admin')
     await deleteUser(id)
     broadcast('users:changed')
+  })
+  handle('users:revealPassword', (id) => {
+    requireAdmin()
+    return revealPassword(id)
   })
   handle('users:approve', async (id) => {
     requireRole('admin')

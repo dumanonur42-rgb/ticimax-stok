@@ -183,6 +183,7 @@ export interface Database {
       }
       set_order_status: { Args: { p_id: number; p_status: string }; Returns: undefined }
       admin_set_password: { Args: { p_user: string; p_password: string }; Returns: undefined }
+      admin_get_password: { Args: { p_user: string }; Returns: string | null }
       prune_logs: { Args: Record<string, never>; Returns: undefined }
       admin_delete_user: { Args: { p_user: string }; Returns: undefined }
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }

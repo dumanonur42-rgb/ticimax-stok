@@ -305,13 +305,6 @@ begin
   update orders set status = p_status, updated_at = now() where id = p_id;
 end $$;
 
-create or replace function public.admin_set_password(p_user uuid, p_password text) returns void
-language plpgsql security definer set search_path = public, extensions as $$
-begin
-  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
-  if length(p_password) < 6 then raise exception 'Şifre en az 6 karakter olmalı.'; end if;
-  update auth.users set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now() where id = p_user;
-end $$;
 
 create or replace function public.admin_delete_user(p_user uuid) returns void
 language plpgsql security definer set search_path = public as $$
@@ -696,3 +689,58 @@ begin
   delete from activity_log where at < now() - interval '90 days';
   delete from stock_log where at < now() - interval '90 days';
 end $$;
+
+-- Admin-set passwords, readable only by admins (encrypted with a Vault key; wiped when the user changes it).
+create table if not exists public.user_passwords (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  secret bytea not null,
+  set_at timestamptz not null default now(),
+  set_by uuid
+);
+alter table public.user_passwords enable row level security;
+revoke all on public.user_passwords from anon, authenticated;
+
+do $$ begin
+  if not exists (select 1 from vault.secrets where name = 'yamansa_password_key') then
+    perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'), 'yamansa_password_key');
+  end if;
+end $$;
+
+create or replace function public.password_key() returns text
+language sql stable security definer set search_path = public as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'yamansa_password_key'
+$$;
+revoke execute on function public.password_key() from public, anon, authenticated;
+
+create or replace function public.admin_set_password(p_user uuid, p_password text) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if length(p_password) < 6 then raise exception 'Şifre en az 6 karakter olmalı.'; end if;
+  update auth.users set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now() where id = p_user;
+  insert into user_passwords (user_id, secret, set_at, set_by)
+  values (p_user, pgp_sym_encrypt(p_password, password_key()), now(), auth.uid())
+  on conflict (user_id) do update set secret = excluded.secret, set_at = excluded.set_at, set_by = excluded.set_by;
+end $$;
+
+create or replace function public.admin_get_password(p_user uuid) returns text
+language plpgsql security definer set search_path = public, extensions as $$
+declare s bytea;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  select secret into s from user_passwords where user_id = p_user;
+  if s is null then return null; end if;
+  return pgp_sym_decrypt(s, password_key());
+end $$;
+
+create or replace function public.forget_password_on_change() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.encrypted_password is distinct from old.encrypted_password then
+    delete from user_passwords where user_id = new.id;
+  end if;
+  return new;
+end $$;
+drop trigger if exists on_auth_password_change on auth.users;
+create trigger on_auth_password_change after update of encrypted_password on auth.users
+  for each row execute function public.forget_password_on_change();

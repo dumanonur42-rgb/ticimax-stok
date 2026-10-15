@@ -1,6 +1,6 @@
 import { PERMS, type Currency, type Customer, type CustomerProfile, type Perm, type Settings as S, type SyncStatus, type User, type UserRole } from '@shared/types'
 import { PERM_INFO, ROLE_PERMS } from '@shared/perms'
-import { Building2, Database, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
+import { Building2, Copy, Database, Eye, EyeOff, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
@@ -178,6 +178,18 @@ function Users(): ReactNode {
   const [users, setUsers] = useState<User[]>([])
   const [customers, setCustomers] = useState<Customer[]>([])
   const [editing, setEditing] = useState<UserForm | null>(null)
+  const [revealed, setRevealed] = useState<Record<string, string | null>>({})
+  const hidePassword = (id: string): void => setRevealed(({ [id]: _, ...rest }) => rest)
+  const reveal = async (u: User): Promise<void> => {
+    if (u.id in revealed) return hidePassword(u.id)
+    try {
+      const password = await api('users:revealPassword', u.id)
+      setRevealed((current) => ({ ...current, [u.id]: password }))
+      window.setTimeout(() => hidePassword(u.id), 30_000)
+    } catch (e) {
+      toast((e as Error).message, 'error')
+    }
+  }
   const [del, setDel] = useState<User | null>(null)
   const load = (): void => {
     api('users:list', undefined).then(setUsers).catch((e) => toast(e.message, 'error'))
@@ -257,7 +269,27 @@ function Users(): ReactNode {
         <tbody>
           {users.map((u) => (
             <tr key={u.id}>
-              <td className="mono">{u.username}</td>
+              <td className="mono">
+                {u.username}
+                {u.id in revealed && (
+                  <div className="row small" style={{ gap: 4, marginTop: 4 }}>
+                    {revealed[u.id] ? (
+                      <>
+                        <code>{revealed[u.id]}</code>
+                        <button
+                          className="btn ghost icon sm"
+                          aria-label={`${u.username} şifresini kopyala`}
+                          onClick={() => void navigator.clipboard.writeText(revealed[u.id] ?? '').then(() => toast('Şifre kopyalandı.', 'success'))}
+                        >
+                          <Copy size={14} aria-hidden />
+                        </button>
+                      </>
+                    ) : (
+                      <span className="muted">Kayıtlı değil — şifreyi yeniden belirleyin.</span>
+                    )}
+                  </div>
+                )}
+              </td>
               <td>{u.display_name}</td>
               <td title={ROLE_HINT[u.role]}>{ROLE_LABEL[u.role]}</td>
               <td>{customers.find((c) => c.id === u.customer_id)?.name ?? '-'}</td>
@@ -272,6 +304,14 @@ function Users(): ReactNode {
                       <UserCheck size={14} aria-hidden /> Onayla
                     </button>
                   )}
+                  <button
+                    className="btn ghost icon sm"
+                    aria-label={u.id in revealed ? `${u.username} şifresini gizle` : `${u.username} şifresini göster`}
+                    title={u.id in revealed ? 'Şifreyi gizle' : 'Şifreyi göster'}
+                    onClick={() => void reveal(u)}
+                  >
+                    {u.id in revealed ? <EyeOff size={16} aria-hidden /> : <Eye size={16} aria-hidden />}
+                  </button>
                   <button className="btn ghost icon sm" aria-label={`${u.username} düzenle`} onClick={() => setEditing({ ...u, password: '' })}>
                     <Pencil size={16} aria-hidden />
                   </button>

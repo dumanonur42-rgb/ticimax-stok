@@ -87,6 +87,7 @@ export interface ApiMap {
   ]
   'users:delete': [string, void]
   'users:approve': [string, User]
+  'users:revealPassword': [string, string | null]
 
   'settings:get': [void, Settings]
   'settings:set': [Partial<Settings>, Settings]

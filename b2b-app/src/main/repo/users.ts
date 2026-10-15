@@ -226,7 +226,13 @@ export async function saveUser(u: {
     .eq('id', id)
     .select('*')
     .single()
-  return toUser(must(r))
+  const user = toUser(must(r))
+  mustVoid(await sb.rpc('admin_set_password', { p_user: id, p_password: u.password }))
+  return user
+}
+
+export async function revealPassword(id: string): Promise<string | null> {
+  return must(await cloud().rpc('admin_get_password', { p_user: id })) ?? null
 }
 
 export async function approveUser(id: string): Promise<User> {
