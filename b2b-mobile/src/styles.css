@@ -516,7 +516,7 @@ img { max-width: 100%; }
 .catalog-table-row .sku-col { overflow: hidden; }
 .table-sku { display: block; overflow-wrap: break-word; word-break: normal; color: var(--navy); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .82rem; line-height: 1.2; font-weight: 800; }
 .sku-subline { width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 3px; }
-.sku-subline .box-badge { display: -webkit-box; width: fit-content; max-width: 100%; padding: 1px 4px; overflow: hidden; color: var(--muted); font-size: max(.68rem, 10.8px); line-height: 1.2; font-weight: 800; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.sku-subline .box-badge { display: -webkit-box; box-sizing: border-box; width: 100%; max-width: 100%; padding: 1px; overflow: hidden; color: var(--muted); font-size: max(.68rem, 10.8px); line-height: 1.2; font-weight: 800; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .sku-subline small { display: block; max-width: 100%; overflow: hidden; color: var(--muted); font-size: .68rem; line-height: 1.2; overflow-wrap: break-word; word-break: normal; white-space: normal; }
 .catalog-table-row .brand-col { display: -webkit-box; overflow: hidden; color: var(--ink); font-size: .74rem; line-height: 1.2; font-weight: 650; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .catalog-table-row .stock-col { display: flex; justify-content: center; }
@@ -536,7 +536,7 @@ img { max-width: 100%; }
 .dark .catalog-table-row .add-col button { color: #bdd6fc; background: transparent; }
 .dark .catalog-table-row .cart-plus-icon { background: #203854; }
 .dark .cart-plus-icon svg:last-child { background: #203854; }
-.catalog-table-row .box-col .box-badge { display: -webkit-box; max-width: 100%; padding: 3px 4px; overflow: hidden; font-size: .68rem; line-height: 1.2; text-align: center; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.catalog-table-row .box-col .box-badge { display: block; width: 100%; max-width: 100%; height: auto; max-height: none; padding: 3px 4px; overflow: visible; font-size: .68rem; line-height: 1.2; text-align: center; white-space: normal; overflow-wrap: break-word; word-break: normal; }
 .catalog-table-row .shelf-col { display: -webkit-box; overflow: hidden; color: var(--muted); font-size: .68rem; line-height: 1.2; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .catalog-table-row .desc-col { display: -webkit-box; overflow: hidden; color: var(--muted); font-size: .68rem; line-height: 1.2; overflow-wrap: break-word; word-break: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .catalog-table-header .box-col, .catalog-table-header .shelf-col, .catalog-table-header .desc-col,
@@ -571,9 +571,12 @@ img { max-width: 100%; }
 .order-skeleton i:last-child { width: 55%; }
 
 @media (max-width: 359px) {
-  .catalog-table-header, .catalog-table-row { --catalog-table-columns: minmax(0, 1.35fr) minmax(0, .9fr) 40px 60px 44px; column-gap: 4px; }
-  .catalog-table-header.no-price, .catalog-table-row.no-price { --catalog-table-columns: minmax(0, 1.6fr) minmax(0, .9fr) 40px 44px; }
-  .catalog-table-header .stock-col button svg { display: none; }
+  .catalog-table-header, .catalog-table-row { --catalog-table-columns: minmax(0, 1.3fr) minmax(0, .85fr) 46px 60px 44px; column-gap: 4px; }
+  .catalog-table-header.no-price, .catalog-table-row.no-price { --catalog-table-columns: minmax(0, 1.6fr) minmax(0, .85fr) 46px 44px; }
+  .catalog-table-header { letter-spacing: 0; }
+  .catalog-table-header button { gap: 0; overflow: hidden; white-space: nowrap; }
+  .catalog-table-header button svg { flex: 0 0 10px; width: 10px; height: 10px; }
+  .catalog-table-header .brand-col button { flex-direction: column; align-items: flex-start; justify-content: center; }
   .table-sku { font-size: .7rem; }
   .catalog-table-row .brand-col, .catalog-table-row .price-col { font-size: .68rem; }
   .catalog-heading-actions { gap: 3px; }
@@ -582,11 +585,14 @@ img { max-width: 100%; }
   .cart-sticky-summary { gap: 6px; padding-inline: 10px; }
   .cart-sticky-summary .button { gap: 5px; padding-inline: 8px; font-size: .7rem; }
 }
+@media (max-width: 430px) {
+  .catalog-table-header button svg { flex: 0 0 10px; width: 10px; height: 10px; }
+}
 @media (min-width: 560px) {
-  .catalog-table-header, .catalog-table-row { --catalog-table-columns: minmax(0, 1.35fr) minmax(0, .95fr) 44px 58px minmax(0, 1fr) 58px 44px minmax(0, 1.2fr); }
-  .catalog-table-header:not(.has-shelf):not(.no-price), .catalog-table-row:not(.has-shelf):not(.no-price) { --catalog-table-columns: minmax(0, 1.45fr) minmax(0, 1fr) 44px 58px minmax(0, 1fr) 44px minmax(0, 1.2fr); }
-  .catalog-table-header.no-price.has-shelf, .catalog-table-row.no-price.has-shelf { --catalog-table-columns: minmax(0, 1.45fr) minmax(0, 1fr) 44px 58px 58px 44px minmax(0, 1.2fr); }
-  .catalog-table-header.no-price:not(.has-shelf), .catalog-table-row.no-price:not(.has-shelf) { --catalog-table-columns: minmax(0, 1.5fr) minmax(0, 1fr) 44px 58px 44px minmax(0, 1.2fr); }
+  .catalog-table-header, .catalog-table-row { --catalog-table-columns: minmax(96px, 1.1fr) minmax(0, .95fr) 44px minmax(118px, 1fr) minmax(0, 1fr) 58px 44px minmax(0, 1.2fr); }
+  .catalog-table-header:not(.has-shelf):not(.no-price), .catalog-table-row:not(.has-shelf):not(.no-price) { --catalog-table-columns: minmax(96px, 1.1fr) minmax(0, 1fr) 44px minmax(118px, 1fr) minmax(0, 1fr) 44px minmax(0, 1.2fr); }
+  .catalog-table-header.no-price.has-shelf, .catalog-table-row.no-price.has-shelf { --catalog-table-columns: minmax(96px, 1.1fr) minmax(0, 1fr) 44px minmax(118px, 1fr) 58px 44px minmax(0, 1.2fr); }
+  .catalog-table-header.no-price:not(.has-shelf), .catalog-table-row.no-price:not(.has-shelf) { --catalog-table-columns: minmax(96px, 1.1fr) minmax(0, 1fr) 44px minmax(118px, 1fr) 44px minmax(0, 1.2fr); }
   .catalog-table-header.has-shelf .box-col, .catalog-table-header .box-col, .catalog-table-header .desc-col,
   .catalog-table-row.has-shelf .box-col, .catalog-table-row .box-col, .catalog-table-row .desc-col { display: block; }
   .catalog-table-header.has-shelf .shelf-col, .catalog-table-row.has-shelf .shelf-col { display: block; }
