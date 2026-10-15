@@ -4,7 +4,6 @@ import {
   HelpCircle,
   LayoutDashboard,
   LogOut,
-  RefreshCw,
   Search,
   Settings as SettingsIcon,
   ShoppingCart,
@@ -13,7 +12,7 @@ import {
 } from 'lucide-react'
 import { useEffect, type ReactNode } from 'react'
 import { api } from '@/lib/api'
-import { ConnectionPill, SyncBanner } from '@/components/SyncBanner'
+import { ConnectionPill } from '@/components/SyncBanner'
 import { useUpdateState } from '@/components/UpdateDialog'
 import { ROLE_LABEL } from '@/lib/format'
 import type { UserRole } from '@shared/types'
@@ -54,23 +53,6 @@ export const PAGE_TITLE: Record<Page, string> = {
 }
 
 export { useUpdateState }
-
-/** Topbar reminder for a postponed update (the dialog itself lives in App). */
-function UpdateBanner(): ReactNode {
-  const u = useUpdateState()
-  if (!u || u.status !== 'available') return null
-  return (
-    <div className="update-banner" role="status">
-      <RefreshCw size={16} aria-hidden />
-      <span>
-        Yeni sürüm <b>{u.version}</b> hazır
-      </span>
-      <button className="btn primary sm" onClick={() => api('update:download', undefined).catch(() => undefined)}>
-        Güncelle
-      </button>
-    </div>
-  )
-}
 
 export function Shell({ children }: { children: ReactNode }): ReactNode {
   const { page, go, session, setSession, toast } = useApp()
@@ -191,8 +173,6 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
               {session.customer.name}
             </span>
           )}
-          <SyncBanner />
-          <UpdateBanner />
           <ConnectionPill />
         </header>
         <main id="main" className={`content${page === 'catalog' || page === 'stock' ? ' flush' : ''}`}>

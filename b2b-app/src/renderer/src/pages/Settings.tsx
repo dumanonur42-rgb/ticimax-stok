@@ -3,7 +3,6 @@ import { PERM_INFO, ROLE_PERMS } from '@shared/perms'
 import { Building2, Database, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
 import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
-import { useUpdateState } from '@/components/Shell'
 import { api, onEvent } from '@/lib/api'
 import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -64,6 +63,16 @@ export function SettingsPage(): ReactNode {
 function Appearance({ s }: { s: S }): ReactNode {
   const { session, updateSettings, toast } = useApp()
   const isAdmin = session?.user.role === 'admin'
+  const [version, setVersion] = useState('—')
+  useEffect(() => {
+    let active = true
+    api('app:info', undefined)
+      .then((info) => active && setVersion(info.version))
+      .catch(() => undefined)
+    return () => {
+      active = false
+    }
+  }, [])
   const set = (patch: Partial<S>): void => {
     updateSettings(patch).catch((e) => toast(e.message, 'error'))
   }
@@ -102,8 +111,8 @@ function Appearance({ s }: { s: S }): ReactNode {
       <div style={{ gridColumn: 'span 2' }} className="muted small">
         Kısayollar: <kbd>Ctrl</kbd>+<kbd>K</kbd> ürün ara · <kbd>F2</kbd> sepet · <kbd>F1</kbd> yardım · <kbd>Alt</kbd>+<kbd>1..8</kbd> sayfalar · listede <kbd>+</kbd> sepete ekle, <kbd>Enter</kbd> ayrıntı.
       </div>
-      <div style={{ gridColumn: 'span 2' }} className="row wrap" role="group" aria-label="Uygulama sürümü">
-        <UpdateStatus />
+      <div style={{ gridColumn: 'span 2' }} className="muted small">
+        Sürüm <b>{version}</b>
       </div>
     </div>
   )
@@ -366,39 +375,6 @@ function Users(): ReactNode {
   )
 }
 
-function UpdateStatus(): ReactNode {
-  const u = useUpdateState()
-  if (!u) return null
-  const label =
-    u.status === 'checking'
-      ? 'Güncelleme denetleniyor…'
-      : u.status === 'available'
-        ? `Yeni sürüm ${u.version} hazır`
-        : u.status === 'downloading'
-          ? `Sürüm ${u.version} indiriliyor… ${u.percent ?? 0}%`
-          : u.status === 'downloaded' || u.status === 'installing'
-            ? `Sürüm ${u.version} kuruluyor…`
-            : u.status === 'error'
-              ? `Güncelleme denetlenemedi: ${u.message ?? ''}`
-              : 'Güncel'
-  return (
-    <>
-      <span className="small">
-        Sürüm <b>{u.current}</b> · <span className={u.status === 'error' ? 'danger-text' : 'muted'}>{label}</span>
-      </span>
-      {u.status === 'available' ? (
-        <button className="btn primary sm" onClick={() => api('update:download', undefined).catch(() => undefined)}>
-          Şimdi güncelle
-        </button>
-      ) : (
-        <button className="btn sm" disabled={u.status !== 'idle' && u.status !== 'error'} onClick={() => api('update:check', undefined).catch(() => undefined)}>
-          Güncellemeleri denetle
-        </button>
-      )}
-    </>
-  )
-}
-
 function fmtTime(iso: string | null): string {
   return iso ? new Date(iso).toLocaleString('tr-TR') : '—'
 }
@@ -413,7 +389,9 @@ function Data(): ReactNode {
   useEffect(() => {
     api('app:info', undefined).then(setInfo).catch(() => undefined)
     const load = (): void => {
-      api('app:syncStatus', undefined).then(setSync).catch(() => undefined)
+      api('app:syncStatus', undefined)
+        .then(setSync)
+        .catch((error) => console.warn('Eşitleme durumu alınamadı.', error))
     }
     load()
     return onEvent('sync:changed', load)
@@ -422,7 +400,7 @@ function Data(): ReactNode {
     setBusy(true)
     api('app:resync', undefined)
       .then((n) => toast(`${n} ürün buluttan yeniden alındı.`, 'success'))
-      .catch((e) => toast(e.message, 'error'))
+      .catch((error) => console.warn('Ürün eşitleme başarısız.', error))
       .finally(() => setBusy(false))
   }
   const purge = (): void => {
@@ -438,12 +416,11 @@ function Data(): ReactNode {
       <dl className="dl">
         <dt>Sürüm</dt>
         <dd className="row wrap" style={{ gap: 10 }}>
-          <UpdateStatus />
+          <span>Sürüm <b>{info?.version ?? '—'}</b></span>
         </dd>
         <dt>Bulut bağlantısı</dt>
         <dd>
           <span className={`badge ${sync?.online ? 'ok' : 'out'}`}>{sync?.online ? 'Bağlı' : 'Bağlantı yok'}</span>
-          {sync?.message && <span className="muted small"> — {sync.message}</span>}
         </dd>
         <dt>Son eşitleme</dt>
         <dd>{fmtTime(sync?.lastSync ?? null)}</dd>
