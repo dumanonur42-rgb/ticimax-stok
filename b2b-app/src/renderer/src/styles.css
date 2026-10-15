@@ -1884,7 +1884,10 @@ dialog.update-dialog {
   position: relative;
 }
 .login-side .brand-logo {
-  max-width: 260px;
+  align-self: flex-start;
+  width: min(240px, 100%);
+  height: auto;
+  object-fit: contain;
 }
 .login-side h2 {
   font-size: 2rem;
@@ -3120,10 +3123,10 @@ dialog.update-dialog {
   .brand small {
     display: none;
   }
-  .brand-logo {
+  .brand .brand-logo {
     display: none;
   }
-  .brand-mark {
+  .brand .brand-mark {
     display: block;
   }
   .g4 {
