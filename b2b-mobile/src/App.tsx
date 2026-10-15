@@ -23,6 +23,7 @@ import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry 
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab } from './store/app'
+import { BoxBadge } from './components/BoxBadge'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -605,8 +606,6 @@ function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onTo
   const cart = useCart()
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const boxNormalized = normalize(box).toLowerCase()
-  const boxClass = boxNormalized.includes('kutulu') && boxNormalized.includes('kutusuz') ? 'mixed' : boxNormalized.includes('kutusuz') ? 'kutusuz' : boxNormalized.includes('kutulu') ? 'kutulu' : 'unknown'
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -614,11 +613,11 @@ function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onTo
     cart.add({ ...product, min_order: Math.max(1, product.min_order) }, Math.max(1, product.min_order))
     onToast(`${product.sku} sepete eklendi.`)
   }
-  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
-    <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><span className={`box-badge ${boxClass}`}>{box || 'Kutu bilgisi yok'}</span>{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
+  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
+    <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
     <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
-    <div role="cell" className="box-col"><span className={`box-badge ${boxClass}`}>{box || '—'}</span></div>
+    <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
     {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
     <div role="cell" className="add-col"><button type="button" aria-label={`${product.sku} sepete ekle`} onClick={add}><span className="cart-plus-icon"><ShoppingCart size={17} /><Plus size={10} /></span></button></div>
@@ -634,25 +633,17 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const normalizedBox = normalize(box).toLowerCase()
-  const boxClass = normalizedBox.includes('kutulu') && normalizedBox.includes('kutusuz')
-    ? 'mixed'
-    : normalizedBox.includes('kutusuz')
-      ? 'kutusuz'
-      : normalizedBox.includes('kutulu')
-        ? 'kutulu'
-        : 'unknown'
   const add = (): void => {
     cart.add({ ...product, min_order: Math.max(1, product.min_order) }, qty)
     onToast(`${product.sku} sepete eklendi.`)
   }
   return (
     <article className="product-card">
-      <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand} ürün ayrıntıları`}>
+      <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
         <div className="product-brand">{product.brand || 'Marka belirtilmemiş'}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        <div className="product-flags"><span className={`box-badge ${boxClass}`} title={box || undefined}>{box || 'Kutu bilgisi yok'}</span>{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>
+        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>}
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
@@ -740,14 +731,6 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const [qty, setQty] = useState(Math.max(1, product.min_order))
-  const normalizedBox = normalize(product.box).toLowerCase()
-  const boxClass = normalizedBox.includes('kutulu') && normalizedBox.includes('kutusuz')
-    ? 'mixed'
-    : normalizedBox.includes('kutusuz')
-      ? 'kutusuz'
-      : normalizedBox.includes('kutulu')
-        ? 'kutulu'
-        : 'unknown'
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
@@ -772,7 +755,7 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
       <div className="detail-product-header">
         <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
         {product.brand.trim() && <strong className="detail-product-brand">{product.brand}</strong>}
-        <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span>{product.box.trim() && <span className={`box-badge ${boxClass}`}>{product.box}</span>}</div>
+        <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
