@@ -6,11 +6,11 @@ const BALLS = 18
 
 export function GlobeScene({ size = 220, className = '' }: { size?: number; className?: string }): ReactNode {
   const r = size * 0.5
-  const h = size * 0.075
-  const d = size * 0.078
+  const h = size * 0.1
+  const d = size * 0.07
   const tro = size * 0.032
   const tri = size * 0.046
-  const gap = d * 1.12
+  const gap = d * 1.75
   const ri = r - tro - gap - tri
   const rm = r - tro - gap / 2
   const width = (radius: number): number => (2 * Math.PI * radius) / SEGMENTS + 1.2
@@ -52,9 +52,8 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
   )
   return (
     <div className={`globe-scene ${className}`} style={vars} aria-hidden>
-      <div className="layer back">{bearing}</div>
       <div className="globe" style={{ backgroundImage: `url("${globeImage}")` }} />
-      <div className="layer front">{bearing}</div>
+      {bearing}
     </div>
   )
 }
