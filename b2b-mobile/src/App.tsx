@@ -608,17 +608,18 @@ function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onTo
   const boxNormalized = normalize(box).toLowerCase()
   const boxClass = boxNormalized.includes('kutulu') && boxNormalized.includes('kutusuz') ? 'mixed' : boxNormalized.includes('kutusuz') ? 'kutusuz' : boxNormalized.includes('kutulu') ? 'kutulu' : 'unknown'
   const dimensions = [product.d_inner, product.d_outer, product.width]
+  const price = displayPrice(product.price, product.currency)
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
     cart.add({ ...product, min_order: Math.max(1, product.min_order) }, Math.max(1, product.min_order))
     onToast(`${product.sku} sepete eklendi.`)
   }
-  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''}`} style={{ transform: `translateY(${start}px)` }}>
+  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><span className={`box-badge ${boxClass}`}>{box || 'Kutu bilgisi yok'}</span>{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
     <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col"><span className={`box-badge ${boxClass}`}>{box || '—'}</span></div>
-    {showPrices && <div role="cell" className="price-col">{displayPrice(product.price, product.currency)}</div>}
+    {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
     {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
     <div role="cell" className="add-col"><button type="button" aria-label={`${product.sku} sepete ekle`} onClick={add}><span className="cart-plus-icon"><ShoppingCart size={17} /><Plus size={10} /></span></button></div>
     <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
