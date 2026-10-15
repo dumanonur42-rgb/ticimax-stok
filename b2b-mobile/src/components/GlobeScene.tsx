@@ -71,7 +71,7 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const context = canvas?.getContext('2d', { alpha: true })
+    const context = canvas?.getContext('2d', { alpha: true, willReadFrequently: true })
     if (!canvas || !context) return
 
     const pixelRatio = Math.min(Math.max(window.devicePixelRatio || 1, 1), 3)
