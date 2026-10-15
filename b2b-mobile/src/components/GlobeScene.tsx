@@ -2,42 +2,16 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import globeImageUrl from '../assets/globe.png'
 
 const BALLS = 18
-const RING_SEGMENTS = 360
 const TAU = Math.PI * 2
 const TILT = (36 * Math.PI) / 180
 const ROLL = (-18 * Math.PI) / 180
 const SPIN_DURATION = 9000
 const GLOBE_IN_DURATION = 900
 
-type RingSegment = {
-  index: number
-  startAngle: number
-  endAngle: number
-  depth: number
-  farSide: boolean
-  paths: {
-    bottomGroove: Path2D
-    bottomOuter: Path2D
-    bottomInner: Path2D
-    outerWall: Path2D
-    outerGrooveWall: Path2D
-    innerGrooveWall: Path2D
-    innerWall: Path2D
-    topGroove: Path2D
-    topInner: Path2D
-    topOuter: Path2D
-    outerArc: Path2D
-    outerGrooveArc: Path2D
-    innerGrooveArc: Path2D
-    innerArc: Path2D
-  }
-}
-
 type BallPosition = {
   x: number
   y: number
   depth: number
-  segmentIndex: number
 }
 
 type RingMaterials = {
@@ -96,8 +70,7 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
     const tiltCos = Math.cos(TILT)
     const topZ = height / 2
     const bottomZ = -height / 2
-    const segmentStep = TAU / RING_SEGMENTS
-    const segmentOverlap = Math.min(segmentStep * 0.3, 0.75 / radius)
+    const halfOverlap = 0.75 / radius
     const spritePadding = size * 0.02
     const spriteSize = ballRadius * 2 + spritePadding * 2
     const sprite = document.createElement('canvas')
@@ -146,7 +119,7 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
       endAngle: number
     ): Path2D => {
       const path = new Path2D()
-      const centerY = z * tiltCos
+      const centerY = -z * tiltCos
       path.ellipse(0, centerY, outerRadius, outerRadius * tiltSin, 0, startAngle, endAngle)
       path.lineTo(innerRadius * Math.cos(endAngle), centerY + innerRadius * Math.sin(endAngle) * tiltSin)
       path.ellipse(0, centerY, innerRadius, innerRadius * tiltSin, 0, endAngle, startAngle, true)
@@ -154,26 +127,10 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
       return path
     }
 
-    const createWallSection = (
-      ringRadius: number,
-      startAngle: number,
-      endAngle: number,
-      zTop: number,
-      zBottom: number
-    ): Path2D => {
-      const pointAt = (angle: number, z: number): [number, number] => [
-        ringRadius * Math.cos(angle),
-        ringRadius * Math.sin(angle) * tiltSin + z * tiltCos
-      ]
-      const topStart = pointAt(startAngle, zTop)
-      const topEnd = pointAt(endAngle, zTop)
-      const bottomEnd = pointAt(endAngle, zBottom)
-      const bottomStart = pointAt(startAngle, zBottom)
+    const createBand = (ringRadius: number, startAngle: number, endAngle: number): Path2D => {
       const path = new Path2D()
-      path.moveTo(...topStart)
-      path.lineTo(...topEnd)
-      path.lineTo(...bottomEnd)
-      path.lineTo(...bottomStart)
+      path.ellipse(0, -topZ * tiltCos, ringRadius, ringRadius * tiltSin, 0, startAngle, endAngle)
+      path.ellipse(0, -bottomZ * tiltCos, ringRadius, ringRadius * tiltSin, 0, endAngle, startAngle, true)
       path.closePath()
       return path
     }
@@ -185,51 +142,13 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
       endAngle: number
     ): Path2D => {
       const path = new Path2D()
-      path.ellipse(0, z * tiltCos, ringRadius, ringRadius * tiltSin, 0, startAngle, endAngle)
+      path.ellipse(0, -z * tiltCos, ringRadius, ringRadius * tiltSin, 0, startAngle, endAngle)
       return path
     }
 
-    const segmentAngles = (index: number): [number, number] => {
-      const startAngle = segmentStep * index
-      const endAngle = startAngle + segmentStep
-      return [startAngle - segmentOverlap, endAngle + segmentOverlap]
-    }
-
-    const ringSegments: RingSegment[] = Array.from({ length: RING_SEGMENTS }, (_, index) => {
-      const startAngle = segmentStep * index
-      const endAngle = startAngle + segmentStep
-      const [drawStart, drawEnd] = segmentAngles(index)
-      const depth = Math.sin((startAngle + endAngle) / 2)
-      return {
-        index,
-        startAngle,
-        endAngle,
-        depth,
-        farSide: depth < 0,
-        paths: {
-          bottomGroove: createAnnularSector(outerGrooveRadius, innerGrooveRadius, bottomZ, drawStart, drawEnd),
-          bottomOuter: createAnnularSector(radius, outerGrooveRadius, bottomZ, drawStart, drawEnd),
-          bottomInner: createAnnularSector(innerGrooveRadius, innerRadius, bottomZ, drawStart, drawEnd),
-          outerWall: createWallSection(radius, drawStart, drawEnd, topZ, bottomZ),
-          outerGrooveWall: createWallSection(outerGrooveRadius, drawStart, drawEnd, topZ, bottomZ),
-          innerGrooveWall: createWallSection(innerGrooveRadius, drawStart, drawEnd, topZ, bottomZ),
-          innerWall: createWallSection(innerRadius, drawStart, drawEnd, topZ, bottomZ),
-          topGroove: createAnnularSector(outerGrooveRadius, innerGrooveRadius, topZ, drawStart, drawEnd),
-          topInner: createAnnularSector(innerGrooveRadius, innerRadius, topZ, drawStart, drawEnd),
-          topOuter: createAnnularSector(radius, outerGrooveRadius, topZ, drawStart, drawEnd),
-          outerArc: createArcPath(radius, topZ, startAngle, endAngle),
-          outerGrooveArc: createArcPath(outerGrooveRadius, topZ, startAngle, endAngle),
-          innerGrooveArc: createArcPath(innerGrooveRadius, topZ, startAngle, endAngle),
-          innerArc: createArcPath(innerRadius, topZ, startAngle, endAngle)
-        }
-      }
-    })
-    const backSegments = ringSegments.filter((segment) => segment.farSide).sort((left, right) => left.depth - right.depth)
-    const frontSegments = ringSegments.filter((segment) => !segment.farSide).sort((left, right) => left.depth - right.depth)
-
     const createRingMaterials = (target: CanvasRenderingContext2D): RingMaterials => {
-      const topY = topZ * tiltCos - radius * tiltSin
-      const bottomY = bottomZ * tiltCos + radius * tiltSin
+      const topY = -topZ * tiltCos - radius * tiltSin
+      const bottomY = -bottomZ * tiltCos + radius * tiltSin
       const metal = target.createLinearGradient(0, topY, 0, bottomY)
       metal.addColorStop(0, '#f4f6f8')
       metal.addColorStop(0.14, '#b8c0c9')
@@ -242,101 +161,63 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
       darkMetal.addColorStop(0, '#59616b')
       darkMetal.addColorStop(0.5, '#252b32')
       darkMetal.addColorStop(1, '#737c86')
-      const wall = target.createLinearGradient(0, bottomZ * tiltCos, 0, topZ * tiltCos)
+      const wall = target.createLinearGradient(0, -bottomZ * tiltCos, 0, -topZ * tiltCos)
       wall.addColorStop(0, '#444c55')
       wall.addColorStop(1, '#8a939d')
-      const groove = target.createLinearGradient(0, topZ * tiltCos - grooveWidth, 0, topZ * tiltCos + grooveWidth)
+      const groove = target.createLinearGradient(0, -topZ * tiltCos - grooveWidth, 0, -topZ * tiltCos + grooveWidth)
       groove.addColorStop(0, '#2a3037')
       groove.addColorStop(0.5, '#1b2026')
       groove.addColorStop(1, '#30363d')
       return { metal, darkMetal, wall, groove }
     }
 
-    const drawOuterLipSegment = (
-      target: CanvasRenderingContext2D,
-      segment: RingSegment,
-      materials: RingMaterials
-    ): void => {
-      target.fillStyle = materials.metal
-      target.fill(segment.paths.topOuter)
-      target.lineCap = 'round'
-      target.lineWidth = size * 0.003
-      target.strokeStyle = 'rgba(255,255,255,.65)'
-      target.stroke(segment.paths.outerArc)
-      target.lineWidth = size * 0.0025
-      target.strokeStyle = 'rgba(20,25,31,.65)'
-      target.stroke(segment.paths.outerGrooveArc)
+    const drawHalf = (target: CanvasRenderingContext2D, back: boolean, materials: RingMaterials): void => {
+      const start = (back ? Math.PI : 0) - halfOverlap
+      const end = (back ? TAU : Math.PI) + halfOverlap
+      const face = (outer: number, inner: number, z: number, fill: string | CanvasGradient): void => {
+        target.fillStyle = fill
+        target.fill(createAnnularSector(outer, inner, z, start, end))
+      }
+      const edge = (ringRadius: number, width: number, color: string): void => {
+        target.lineWidth = width
+        target.strokeStyle = color
+        target.stroke(createArcPath(ringRadius, topZ, start, end))
+      }
+      face(outerGrooveRadius, innerGrooveRadius, bottomZ, '#161b20')
+      face(radius, outerGrooveRadius, bottomZ, '#424a53')
+      face(innerGrooveRadius, innerRadius, bottomZ, '#343b43')
+      const walls = back
+        ? [innerGrooveRadius, radius, outerGrooveRadius, innerRadius]
+        : [outerGrooveRadius, innerRadius, innerGrooveRadius, radius]
+      for (const wallRadius of walls) {
+        target.fillStyle = wallRadius === radius || wallRadius === innerRadius ? materials.wall : materials.darkMetal
+        target.fill(createBand(wallRadius, start, end))
+      }
+      face(outerGrooveRadius, innerGrooveRadius, topZ, materials.groove)
+      face(innerGrooveRadius, innerRadius, topZ, materials.darkMetal)
+      face(radius, outerGrooveRadius, topZ, materials.metal)
+      target.lineCap = 'butt'
+      edge(radius, size * 0.003, 'rgba(255,255,255,.65)')
+      edge(outerGrooveRadius, size * 0.0025, 'rgba(20,25,31,.65)')
+      edge(innerGrooveRadius, size * 0.002, 'rgba(236,240,244,.45)')
+      edge(innerRadius, size * 0.0025, 'rgba(20,25,31,.6)')
     }
 
-    const drawRingSegment = (
-      target: CanvasRenderingContext2D,
-      segment: RingSegment,
-      includeOuterLip: boolean,
-      materials: RingMaterials
-    ): void => {
-      const drawBottomFaces = (): void => {
-      target.fillStyle = '#161b20'
-      target.fill(segment.paths.bottomGroove)
-      target.fillStyle = '#424a53'
-      target.fill(segment.paths.bottomOuter)
-      target.fillStyle = '#343b43'
-      target.fill(segment.paths.bottomInner)
-      }
-
-      const drawWalls = (): void => {
-      target.fillStyle = materials.wall
-      target.fill(segment.paths.outerWall)
-      target.fill(segment.paths.innerWall)
-      target.fillStyle = materials.darkMetal
-      target.fill(segment.paths.outerGrooveWall)
-      target.fill(segment.paths.innerGrooveWall)
-      }
-
-      const drawTopFaces = (): void => {
-      target.fillStyle = materials.groove
-      target.fill(segment.paths.topGroove)
-      target.fillStyle = materials.darkMetal
-      target.fill(segment.paths.topInner)
-      if (includeOuterLip) drawOuterLipSegment(target, segment, materials)
-      target.lineCap = 'round'
-      target.lineWidth = size * 0.002
-      target.strokeStyle = 'rgba(236,240,244,.45)'
-      target.stroke(segment.paths.innerGrooveArc)
-      target.lineWidth = size * 0.0025
-      target.strokeStyle = 'rgba(20,25,31,.6)'
-      target.stroke(segment.paths.innerArc)
-      }
-
-      drawBottomFaces()
-      drawWalls()
-      drawTopFaces()
-    }
-
-    const renderRingLayer = (
-      segments: RingSegment[],
-      includeOuterLip: boolean,
-      outerLipOnly = false
-    ): HTMLCanvasElement | null => {
+    const renderRingLayer = (back: boolean): HTMLCanvasElement | null => {
       const layer = document.createElement('canvas')
       layer.width = canvas.width
       layer.height = canvas.height
       const target = layer.getContext('2d')
       if (!target) return null
-
       target.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
       target.translate(size / 2, size / 2)
       target.rotate(ROLL)
-      const materials = createRingMaterials(target)
-      for (const segment of segments) {
-        if (outerLipOnly) drawOuterLipSegment(target, segment, materials)
-        else drawRingSegment(target, segment, includeOuterLip, materials)
-      }
+      drawHalf(target, back, createRingMaterials(target))
       return layer
     }
 
-    const backRingLayer = renderRingLayer(backSegments, true)
-    const frontRingLayer = renderRingLayer(frontSegments, false)
-    const frontLipLayer = renderRingLayer(frontSegments, false, true)
+    const backRingLayer = renderRingLayer(true)
+    const frontRingLayer = renderRingLayer(false)
 
     const drawBall = (target: CanvasRenderingContext2D, ball: BallPosition): void => {
       const scale = 0.9 + ((ball.depth + 1) / 2) * 0.15
@@ -347,17 +228,15 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
     const ballsByDepth = (spinAngle: number): { back: BallPosition[]; front: BallPosition[] } => {
       const balls = Array.from({ length: BALLS }, (_, index): BallPosition => {
         const angle = ((TAU * index) / BALLS + spinAngle) % TAU
-        const segmentIndex = Math.min(RING_SEGMENTS - 1, Math.floor(angle / segmentStep))
         return {
           x: pitchRadius * Math.cos(angle),
           y: pitchRadius * Math.sin(angle) * tiltSin,
-          depth: Math.sin(angle),
-          segmentIndex
+          depth: Math.sin(angle)
         }
       })
-      const back = balls.filter((ball) => ringSegments[ball.segmentIndex].farSide).sort((left, right) => left.depth - right.depth)
-      const front = balls.filter((ball) => !ringSegments[ball.segmentIndex].farSide).sort((left, right) => left.depth - right.depth)
-      return { back, front }
+      const hiddenByGlobe = (ball: BallPosition): boolean => ball.depth < 0 && Math.hypot(ball.x, ball.y) < globeSize / 2 + ballRadius
+      const byDepth = (left: BallPosition, right: BallPosition): number => left.depth - right.depth
+      return { back: balls.filter(hiddenByGlobe).sort(byDepth), front: balls.filter((ball) => !hiddenByGlobe(ball)).sort(byDepth) }
     }
 
     const renderGlobeLayer = (image: HTMLImageElement): HTMLCanvasElement | null => {
@@ -415,7 +294,6 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
       context.rotate(ROLL)
       for (const ball of balls.front) drawBall(context, ball)
       context.restore()
-      if (frontLipLayer) context.drawImage(frontLipLayer, -size / 2, -size / 2, size, size)
       context.restore()
     }
 
