@@ -8,9 +8,10 @@ import {
   Check, ClipboardList, Copy, Home, Minus,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, Download,
-  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles
+  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles,
+  Monitor, Moon, Sun
 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
 import { normalize } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
@@ -22,7 +23,7 @@ import { readProducts } from './lib/idb'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
-import { useApp, useCart, type Tab } from './store/app'
+import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
@@ -52,7 +53,7 @@ export default function App(): ReactNode {
     tab, session, settings, customers, products, online, syncBusy,
     toast, sheet, selectedProduct, selectedOrderId, setTab, setSession, setSettings,
     setCustomers, setProducts, setOnline, setSyncBusy,
-    showToast, setSheet, setSelectedOrderId
+    showToast, setSheet, setSelectedOrderId, themePreference, setThemePreference
   } = state
   const [booting, setBooting] = useState(true)
   const [bootMinimumElapsed, setBootMinimumElapsed] = useState(false)
@@ -67,7 +68,8 @@ export default function App(): ReactNode {
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
-  const [dark, setDark] = useState(false)
+  const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const dark = themePreference === 'dark' || (themePreference === 'system' && systemDark)
   const syncRetryCount = useRef(0)
   const syncRetryAt = useRef(0)
   const syncRetryTimer = useRef<number | null>(null)
@@ -266,12 +268,19 @@ export default function App(): ReactNode {
   }, [session?.user.id, session?.user.role, syncNow, setCustomers])
 
   useEffect(() => {
+    if (themePreference !== 'system') return
     const query = window.matchMedia('(prefers-color-scheme: dark)')
-    const updateTheme = (): void => setDark(settings.theme === 'dark' || (settings.theme === 'system' && query.matches))
+    const updateTheme = (): void => setSystemDark(query.matches)
     updateTheme()
     query.addEventListener('change', updateTheme)
     return () => query.removeEventListener('change', updateTheme)
-  }, [settings.theme])
+  }, [themePreference])
+
+  useEffect(() => {
+    document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    if (themeColor) themeColor.content = dark ? '#142033' : '#ffffff'
+  }, [dark])
 
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
@@ -326,6 +335,11 @@ export default function App(): ReactNode {
       clearCart()
       setTab('home')
     }
+  }
+
+  const changeThemePreference = (preference: ThemePreference): void => {
+    if (preference === 'system') setSystemDark(window.matchMedia('(prefers-color-scheme: dark)').matches)
+    setThemePreference(preference)
   }
 
   const bootOverlay = bootOverlayStage !== 'hidden' && (
@@ -401,7 +415,7 @@ export default function App(): ReactNode {
           {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
-          {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} />}
+          {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
         <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
         {sheet === 'filters' && <FilterSheet
@@ -957,15 +971,44 @@ function OrderDetail({ id, settings, onClose }: { id: number; settings: Settings
   )
 }
 
-function AccountPage({ session, onLogout }: {
-  session: Session; onLogout: () => void
+function AccountPage({ session, onLogout, themePreference, onThemeChange }: {
+  session: Session; onLogout: () => void; themePreference: ThemePreference; onThemeChange: (preference: ThemePreference) => void
 }): ReactNode {
+  const themeGroup = useRef<HTMLDivElement>(null)
+  const themeOptions: { value: ThemePreference; label: string; icon: typeof Monitor }[] = [
+    { value: 'system', label: 'Sistem', icon: Monitor },
+    { value: 'light', label: 'Açık', icon: Sun },
+    { value: 'dark', label: 'Koyu', icon: Moon }
+  ]
+  const handleThemeKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>): void => {
+    const current = themeOptions.findIndex(({ value }) => value === themePreference)
+    let next: number
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (current + 1) % themeOptions.length
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (current - 1 + themeOptions.length) % themeOptions.length
+    else if (event.key === 'Home') next = 0
+    else if (event.key === 'End') next = themeOptions.length - 1
+    else return
+    event.preventDefault()
+    const preference = themeOptions[next].value
+    onThemeChange(preference)
+    requestAnimationFrame(() => themeGroup.current?.querySelector<HTMLButtonElement>(`[data-theme-choice="${preference}"]`)?.focus())
+  }
   return (
     <div className="page account-page">
       <PageTitle title="Hesap" />
       <section className="profile-card card">
         <div className="profile-avatar">{(session.user.display_name || session.user.username).charAt(0).toLocaleUpperCase('tr-TR')}</div>
         <div><strong>{session.user.display_name || session.user.username}</strong><span>{session.customer?.name ?? (session.user.role === 'admin' ? 'Yönetici' : session.user.role === 'ara' ? 'Ara kullanıcı' : 'Bayi')}</span></div>
+      </section>
+      <section className="card theme-setting-card" aria-labelledby="theme-heading">
+        <h2 id="theme-heading">Görünüm</h2>
+        <div className="theme-choice-group" role="radiogroup" aria-labelledby="theme-heading" onKeyDown={handleThemeKeyDown} ref={themeGroup}>
+          {themeOptions.map(({ value, label, icon: Icon }) => (
+            <button type="button" className="theme-choice" key={value} data-theme-choice={value} role="radio" aria-label={label} aria-checked={themePreference === value} tabIndex={themePreference === value ? 0 : -1} onClick={() => onThemeChange(value)}>
+              <Icon size={16} aria-hidden="true" />{label}
+            </button>
+          ))}
+        </div>
       </section>
       <section className="card account-list">
         {session.customer?.code && <InfoRow label="Cari kodu" value={session.customer.code} />}

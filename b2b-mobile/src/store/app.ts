@@ -5,6 +5,18 @@ import { DEFAULT_SETTINGS } from '../lib/defaults'
 import type { DimensionFilters } from '../lib/search'
 
 export type Tab = 'home' | 'products' | 'cart' | 'orders' | 'account'
+export type ThemePreference = 'system' | 'light' | 'dark'
+
+const THEME_STORAGE_KEY = 'yamansa.theme'
+
+function readThemePreference(): ThemePreference {
+  try {
+    const preference = localStorage.getItem(THEME_STORAGE_KEY)
+    return preference === 'light' || preference === 'dark' ? preference : 'system'
+  } catch {
+    return 'system'
+  }
+}
 
 export interface CartLine {
   product_id: number
@@ -85,6 +97,7 @@ export const useCart = create<CartState>()(persist((set) => ({
 
 interface AppState {
   tab: Tab
+  themePreference: ThemePreference
   session: Session | null
   settings: Settings
   customers: Customer[]
@@ -98,6 +111,7 @@ interface AppState {
   selectedProduct: Product | null
   selectedOrderId: number | null
   setTab: (tab: Tab) => void
+  setThemePreference: (preference: ThemePreference) => void
   setSession: (session: Session | null) => void
   setSettings: (settings: Settings) => void
   setCustomers: (customers: Customer[]) => void
@@ -113,6 +127,7 @@ interface AppState {
 
 export const useApp = create<AppState>((set) => ({
   tab: 'home',
+  themePreference: readThemePreference(),
   session: null,
   settings: DEFAULT_SETTINGS,
   customers: [],
@@ -126,6 +141,12 @@ export const useApp = create<AppState>((set) => ({
   selectedProduct: null,
   selectedOrderId: null,
   setTab: (tab) => set({ tab }),
+  setThemePreference: (themePreference) => {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, themePreference)
+    } catch {}
+    set({ themePreference })
+  },
   setSession: (session) => set({ session }),
   setSettings: (settings) => set({ settings }),
   setCustomers: (customers) => set({ customers }),
