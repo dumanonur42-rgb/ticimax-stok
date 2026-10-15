@@ -1,5 +1,6 @@
 import {
   ClipboardList,
+  Activity,
   FileUp,
   HelpCircle,
   LayoutDashboard,
@@ -36,6 +37,7 @@ const NAV: NavItem[] = [
   { page: 'stock', label: 'Stok Yönetimi', icon: <Warehouse size={20} aria-hidden />, key: '5', roles: ['admin'] },
   { page: 'customers', label: 'Bayiler', icon: <Users size={20} aria-hidden />, key: '6', roles: ['admin'] },
   { page: 'import', label: 'Stok Aktar', icon: <FileUp size={20} aria-hidden />, key: '7', roles: ['admin'] },
+  { page: 'activity', label: 'Hareketler', icon: <Activity size={20} aria-hidden />, key: '0', roles: ['admin'] },
   { page: 'settings', label: 'Ayarlar', icon: <SettingsIcon size={20} aria-hidden />, key: '8' },
   { page: 'help', label: 'Yardım', icon: <HelpCircle size={20} aria-hidden />, key: '9' }
 ]
@@ -49,7 +51,8 @@ export const PAGE_TITLE: Record<Page, string> = {
   customers: 'Bayiler',
   import: 'Stok Aktarımı',
   settings: 'Ayarlar',
-  help: 'Yardım ve Kısayollar'
+  help: 'Yardım ve Kısayollar',
+  activity: 'Hareketler'
 }
 
 export { useUpdateState }

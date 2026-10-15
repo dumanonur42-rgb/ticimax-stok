@@ -228,6 +228,7 @@ create or replace function public.adjust_stock(p_id bigint, p_delta numeric) ret
 language plpgsql security definer set search_path = public as $$
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  perform set_config('app.stock_source', 'adjust', true);
   update products set stock = greatest(0, stock + p_delta) where id = p_id;
 end $$;
 
@@ -239,6 +240,7 @@ declare
 begin
   select * into me from profiles where id = auth.uid() and active and approved;
   if me.id is null then raise exception 'Oturum açılmamış.'; end if;
+  perform set_config('app.stock_source', 'order', true);
   cid := case when me.role = 'admin' then p_customer_id else me.customer_id end;
   if cid is null then raise exception 'Lütfen bir bayi/müşteri seçin.'; end if;
   select name into cname from customers where id = cid;
@@ -290,6 +292,7 @@ begin
       raise exception 'Sipariş durumunu yalnızca yöneticiler değiştirebilir.';
     end if;
   end if;
+  perform set_config('app.stock_source', 'order_status', true);
   if p_status = 'iptal' and o.status <> 'iptal' then
     for it in select * from order_items where order_id = p_id and product_id is not null loop
       update products set stock = stock + it.qty where id = it.product_id;
@@ -367,6 +370,7 @@ language plpgsql security definer set search_path = public as $$
 declare t products; extra numeric;
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  perform set_config('app.stock_source', 'merge', true);
   if p_target = any (p_sources) then raise exception 'Ana ürün kaynaklar arasında olamaz.'; end if;
   select * into t from products where id = p_target and not deleted for update;
   if t.id is null then raise exception 'Ana ürün bulunamadı.'; end if;
@@ -407,6 +411,7 @@ create or replace function public.bulk_update_products(p_rows jsonb) returns set
 language plpgsql security definer set search_path = public as $$
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  perform set_config('app.stock_source', 'stock_screen', true);
   return query
     update products p set
       stock = coalesce((r->>'stock')::numeric, p.stock),
@@ -445,6 +450,7 @@ declare
   n integer;
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  perform set_config('app.stock_source', p_kind, true);
   perform pg_advisory_xact_lock(hashtext(p_id::text));
   select result into res from applied_ops where id = p_id;
   if found then return res; end if;
@@ -622,3 +628,71 @@ grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on all tables in schema public to authenticated;
 grant execute on all functions in schema public to authenticated;
 revoke execute on function public.handle_new_user() from authenticated, anon;
+
+-- Activity and stock logs (Yamansa B2B)
+create extension if not exists pgcrypto with schema extensions;
+
+create table if not exists public.activity_log (
+  id bigint generated always as identity primary key,
+  at timestamptz not null default now(),
+  user_id uuid not null default auth.uid() references auth.users(id) on delete cascade,
+  platform text not null check (platform in ('windows', 'android', 'ios', 'web')),
+  kind text not null check (kind in ('login', 'search', 'product_view', 'cart_add', 'order')),
+  product_id bigint references public.products(id) on delete set null,
+  sku text not null default '',
+  brand text not null default '',
+  query text not null default '',
+  qty numeric,
+  order_id bigint references public.orders(id) on delete set null,
+  detail jsonb not null default '{}'::jsonb
+);
+create index if not exists activity_log_at on public.activity_log (at desc);
+create index if not exists activity_log_user_at on public.activity_log (user_id, at desc);
+create index if not exists activity_log_product on public.activity_log (product_id);
+create index if not exists activity_log_order on public.activity_log (order_id);
+alter table public.activity_log enable row level security;
+drop policy if exists activity_log_insert on public.activity_log;
+create policy activity_log_insert on public.activity_log for insert to authenticated with check (user_id = auth.uid() and is_member());
+drop policy if exists activity_log_admin_select on public.activity_log;
+create policy activity_log_admin_select on public.activity_log for select to authenticated using (is_admin());
+
+create table if not exists public.stock_log (
+  id bigint generated always as identity primary key,
+  at timestamptz not null default now(),
+  product_id bigint references public.products(id) on delete set null,
+  sku text not null default '',
+  brand text not null default '',
+  box text not null default '',
+  old_stock numeric,
+  new_stock numeric not null,
+  delta numeric generated always as (new_stock - coalesce(old_stock, 0)) stored,
+  user_id uuid default auth.uid(),
+  source text not null default 'manual'
+);
+create index if not exists stock_log_at on public.stock_log (at desc);
+create index if not exists stock_log_product_at on public.stock_log (product_id, at desc);
+alter table public.stock_log enable row level security;
+drop policy if exists stock_log_admin_select on public.stock_log;
+create policy stock_log_admin_select on public.stock_log for select to authenticated using (is_admin());
+
+create or replace function public.log_stock_change() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if tg_op = 'UPDATE' and new.stock is not distinct from old.stock then return new; end if;
+  if tg_op = 'INSERT' and coalesce(new.stock, 0) = 0 then return new; end if;
+  insert into stock_log (product_id, sku, brand, box, old_stock, new_stock, user_id, source)
+  values (new.id, new.sku, new.brand, new.box, case when tg_op = 'UPDATE' then old.stock end, new.stock, auth.uid(),
+          coalesce(nullif(current_setting('app.stock_source', true), ''), case when tg_op = 'INSERT' then 'new_product' else 'manual' end));
+  return new;
+end $$;
+drop trigger if exists products_stock_log on public.products;
+create trigger products_stock_log after insert or update of stock on public.products
+  for each row execute function public.log_stock_change();
+
+create or replace function public.prune_logs() returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  delete from activity_log where at < now() - interval '90 days';
+  delete from stock_log where at < now() - interval '90 days';
+end $$;
