@@ -6,9 +6,9 @@ import {
   Check, ClipboardList, Copy, Home, Minus,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Wifi, Phone, MessageCircle, Download,
-  Package
+  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles
 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react'
 import { normalize } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
@@ -21,7 +21,7 @@ import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { useApp, useCart, type Tab } from './store/app'
 import mark from './assets/mark.png'
 
-const APP_VERSION = '1.0.0'
+const APP_VERSION = '1.0.1'
 const ANDROID_RELEASES_API = 'https://api.github.com/repos/dumanonur42-rgb/ticimax-stok/releases?per_page=100'
 interface AndroidUpdate {
   version: string
@@ -299,7 +299,7 @@ export default function App(): ReactNode {
       )}
       <main className="main-content" key={tab}>
         {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} lastSync={lastSync} syncBusy={syncBusy} syncProgress={syncProgress} onNavigate={setTab} onToast={showToast} />}
-      {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} onToast={showToast} />}
+        {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
         {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
         {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
         {tab === 'account' && <AccountPage session={session} lastSync={lastSync} syncBusy={syncBusy} platform={platform} onSync={() => void syncNow()} onCheckUpdate={() => void checkAndroidUpdate().then((available) => { if (available) { setUpdate(available); setSheet('update') } else showToast('Uygulamanız güncel.') }).catch((error) => showToast(userFacingError(error)))} onLogout={() => void onLogout()} />}
@@ -347,31 +347,48 @@ function HomePage({ session, settings, openOrders, products, lastSync, syncBusy,
     try { external(url) } catch { onToast('Bağlantı açılamadı.') }
   }
   const openCount = openOrders ?? 0
-  const productCount = syncProgress
-    ? `${num(syncProgress.done)}${syncProgress.total === null ? '' : ` / ${num(syncProgress.total)}`}`
-    : num(products.length)
+  const customerName = session.customer?.name ?? settings.company_name
+  const greetingName = session.user.display_name || session.user.username
+  const showCompany = normalize(customerName) !== normalize(greetingName) && normalize(customerName) !== normalize('Yamansa Rulman')
+  const productCount = syncProgress ? `${num(syncProgress.done)} / ${num(syncProgress.total ?? syncProgress.done)}` : num(products.length)
+  const progressPercent = syncProgress?.total ? Math.min(100, syncProgress.done / syncProgress.total * 100) : 0
   return (
     <div className="page home-page">
-      <div className="welcome-block">
-        <p className="eyebrow">YAMANSA RULMAN</p>
-        <h1>Merhaba, {session.user.display_name || session.user.username}</h1>
-        <p className="muted">{session.customer?.name ?? settings.company_name}</p>
-      </div>
+      <section className="home-hero">
+        <span className="home-hero-mark"><Sparkles size={20} /></span>
+        <p className="eyebrow">BAYİ PANELİ</p>
+        <h1>Merhaba, {greetingName}</h1>
+        {showCompany && <p>{customerName}</p>}
+      </section>
       <div className="summary-grid">
+        <button className="summary-card" onClick={() => onNavigate('products')}>
+          <span className="summary-icon"><Package size={20} /></span>
+          <span className="summary-value">{syncProgress ? productCount : num(products.length)}</span>
+          {syncProgress && <span className="progress-track"><span style={{ width: `${progressPercent}%` }} /></span>}
+          <span className="summary-label">{syncProgress ? 'Eşitlenen ürün' : 'Toplam ürün'}</span>
+        </button>
+        <button className="summary-card" onClick={() => { onNavigate('products') }}>
+          <span className="summary-icon"><Box size={20} /></span>
+          <span className="summary-value">{num(products.filter((product) => product.stock > 0).length)}</span>
+          <span className="summary-label">Stokta olan</span>
+        </button>
         <button className="summary-card" onClick={() => onNavigate('orders')}>
           <span className="summary-icon"><ClipboardList size={20} /></span>
           <span className="summary-value">{openOrders === null ? '—' : num(openCount)}</span>
           <span className="summary-label">Açık sipariş</span>
         </button>
-        <button className="summary-card" onClick={() => onNavigate('products')}>
-          <span className="summary-icon"><Package size={20} /></span>
-          <span className="summary-value">{syncBusy && !syncProgress && products.length === 0 ? '…' : productCount}</span>
-          <span className="summary-label">{syncProgress ? 'Eşitlenen ürün' : 'Ürün'}</span>
+        <button className="summary-card" onClick={() => onNavigate('cart')}>
+          <span className="summary-icon"><ShoppingCart size={20} /></span>
+          <span className="summary-value">{useCart.getState().lines.length}</span>
+          <span className="summary-label">Sepetteki kalem</span>
         </button>
       </div>
-      <section className="card sync-card">
-        <div className="card-title-row"><div><h2>Son eşitleme</h2><p className="muted">{syncBusy ? 'Eşitleniyor…' : timeLabel(lastSync)}</p></div><RefreshCw size={20} className="muted-icon" /></div>
-      </section>
+      <nav className="quick-actions" aria-label="Hızlı işlemler">
+        <button onClick={() => onNavigate('products')}><Search size={17} /> Ürün ara</button>
+        <button onClick={() => onNavigate('cart')}><ShoppingCart size={17} /> Sepet</button>
+        <button onClick={() => onNavigate('orders')}><ClipboardList size={17} /> Siparişler</button>
+      </nav>
+      <section className="sync-card"><span>Son eşitleme</span><strong>{syncBusy ? 'Eşitleniyor…' : timeLabel(lastSync)}</strong><RefreshCw size={18} className={syncBusy ? 'spin muted-icon' : 'muted-icon'} /></section>
       <section className="contacts-section">
         <h2>Size yardımcı olalım</h2>
         <div className="contact-list">
@@ -392,8 +409,8 @@ function HomePage({ session, settings, openOrders, products, lastSync, syncBusy,
   )
 }
 
-function ProductsPage({ entries, settings, session, onToast }: {
-  entries: SearchEntry[]; settings: Settings; session: Session; onToast: (message: string) => void
+function ProductsPage({ entries, settings, session, loading, onToast }: {
+  entries: SearchEntry[]; settings: Settings; session: Session; loading: boolean; onToast: (message: string) => void
 }): ReactNode {
   const setSheet = useApp((state) => state.setSheet)
   const setSelectedProduct = useApp((state) => state.setSelectedProduct)
@@ -401,42 +418,78 @@ function ProductsPage({ entries, settings, session, onToast }: {
   const dims = useApp((state) => state.catalogDimensions)
   const [query, setQuery] = useState('')
   const [inStock, setInStock] = useState(false)
+  const [view, setView] = useState<'table' | 'card'>(() => {
+    try { return localStorage.getItem('yb2b.productView') === 'card' ? 'card' : 'table' } catch { return 'table' }
+  })
+  const [sort, setSort] = useState<{ key: 'sku' | 'brand' | 'stock' | 'price'; direction: 'asc' | 'desc' } | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const searchResult = useMemo(() => {
     const start = performance.now()
     const matches = searchProducts(entries, query, { inStock, brands: new Set(selectedBrands), dimensions: dims })
     return { matches, elapsed: performance.now() - start }
   }, [entries, query, inStock, selectedBrands, dims])
-  const results = searchResult.matches
+  const results = useMemo(() => {
+    if (!sort) return searchResult.matches
+    const direction = sort.direction === 'asc' ? 1 : -1
+    return [...searchResult.matches].sort((a, b) => {
+      const left = a[sort.key]
+      const right = b[sort.key]
+      const comparison = sort.key === 'sku' || sort.key === 'brand'
+        ? String(left ?? '').localeCompare(String(right ?? ''), 'tr', { numeric: true, sensitivity: 'base' })
+        : Number(left ?? 0) - Number(right ?? 0)
+      return comparison * direction
+    })
+  }, [searchResult.matches, sort])
   const searchMs = searchResult.elapsed
   const virtualizer = useVirtualizer({
     count: results.length,
     getScrollElement: () => scrollRef.current,
-    estimateSize: () => 210,
+    estimateSize: () => view === 'table' ? 66 : 210,
     getItemKey: (index) => results[index].id,
     overscan: 5
   })
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const activeFilters = selectedBrands.length + (inStock ? 1 : 0) + Object.values(dims).filter((value) => value !== null).length
+  const cycleSort = (key: 'sku' | 'brand' | 'stock' | 'price'): void => setSort((current) => current?.key !== key ? { key, direction: 'asc' } : current.direction === 'asc' ? { key, direction: 'desc' } : null)
+  const setProductView = (next: 'table' | 'card'): void => {
+    setView(next)
+    virtualizer.measure()
+    try { localStorage.setItem('yb2b.productView', next) } catch { /* Storage may be unavailable in private browsing. */ }
+    scrollRef.current?.scrollTo({ top: 0 })
+  }
+  const onOpen = (product: Product): void => { setSelectedProduct(product); setSheet('detail') }
+  const column = (key: 'sku' | 'brand' | 'stock' | 'price', label: string, className: string): ReactNode => {
+    const current = sort?.key === key ? sort.direction : null
+    const Icon = current === 'asc' ? ArrowUp : current === 'desc' ? ArrowDown : ArrowUpDown
+    return <div role="columnheader" aria-sort={current === 'asc' ? 'ascending' : current === 'desc' ? 'descending' : 'none'} className={`table-head-cell ${className}`}><button type="button" onClick={() => cycleSort(key)}>{label}<Icon size={12} aria-hidden /></button></div>
+  }
   return (
     <div className="page products-page">
-      <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><span className="count-pill">{num(results.length)} ürün</span></div>
+      <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><div className="catalog-heading-actions"><div className="view-toggle" role="group" aria-label="Ürün görünümü"><button className={view === 'table' ? 'active' : ''} onClick={() => setProductView('table')} aria-pressed={view === 'table'}><Table2 size={16} />Tablo</button><button className={view === 'card' ? 'active' : ''} onClick={() => setProductView('card')} aria-pressed={view === 'card'}><LayoutGrid size={16} />Kart</button></div><span className="count-pill">{num(results.length)}</span></div></div>
       <div className="search-row">
         <div className="search-box"><Search size={19} aria-hidden /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
         <button className={`filter-button${activeFilters ? ' selected' : ''}`} onClick={() => setSheet('filters')} aria-label={`Filtreler${activeFilters ? `, ${activeFilters} seçili` : ''}`}><SlidersHorizontal size={19} />{activeFilters > 0 && <span>{activeFilters}</span>}</button>
       </div>
       <label className="stock-toggle"><input type="checkbox" checked={inStock} onChange={(event) => setInStock(event.target.checked)} /><span className="switch" /><span>Sadece stoktakiler</span></label>
       <div className="catalog-meta" data-search-ms={searchMs.toFixed(2)}><span>{entries.length ? `${num(results.length)} ürün gösteriliyor` : 'Katalog yükleniyor'}</span><span>{canShelf ? 'Raf bilgisi açık' : ''}</span></div>
-      <div className="catalog-scroll" ref={scrollRef} aria-label="Ürün listesi">
-        {results.length === 0 ? <div className="empty-state"><PackageSearch size={35} /><strong>Ürün bulunamadı</strong><span>Arama veya filtreleri değiştirebilirsiniz.</span></div> : (
-          <div className="virtual-list" style={{ height: virtualizer.getTotalSize() }}>
+      <div className={`catalog-scroll ${view === 'table' ? 'table-view' : 'card-view'}`} ref={scrollRef} role={view === 'table' ? 'table' : undefined} aria-label="Ürün listesi">
+        {view === 'table' && <div className={`catalog-table-header ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''}`} role="row">
+          {column('sku', 'Kod', 'sku-col')}{column('brand', 'Marka', 'brand-col')}{column('stock', 'Stok', 'stock-col')}
+          <div role="columnheader" className="box-col">Kutu</div>
+          {showPrices && column('price', 'Fiyat', 'price-col')}
+          {canShelf && <div role="columnheader" className="shelf-col">Raf</div>}
+          <div role="columnheader" className="add-col" aria-label="Sepete ekle" />
+          <div role="columnheader" className="desc-col">Açıklama</div>
+        </div>}
+        {loading && entries.length === 0 ? <div className="catalog-skeletons" aria-label="Ürünler yükleniyor">{Array.from({ length: 7 }, (_, i) => <div className="catalog-skeleton" key={i}><i /><i /><i /></div>)}</div> : results.length === 0 ? <div className="empty-state"><PackageSearch size={35} /><strong>Ürün bulunamadı</strong><span>Arama veya filtreleri değiştirebilirsiniz.</span></div> : (
+          <div className={view === 'table' ? `virtual-list table-list ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''}` : 'virtual-list'} style={{ height: virtualizer.getTotalSize() }} role={view === 'table' ? 'rowgroup' : undefined}>
             {virtualizer.getVirtualItems().map((item) => {
               const product = results[item.index]
               return (
-                <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}>
-                  <ProductCard product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => { setSelectedProduct(product); setSheet('detail') }} onToast={onToast} />
-                </div>
+                view === 'table'
+                  ? <ProductTableRow key={item.key} product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} index={item.index} start={item.start} measure={virtualizer.measureElement} />
+                  : <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}><ProductCard product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} /></div>
               )
             })}
           </div>
@@ -444,6 +497,32 @@ function ProductsPage({ entries, settings, session, onToast }: {
       </div>
     </div>
   )
+}
+
+function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
+  product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
+}): ReactNode {
+  const cart = useCart()
+  const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
+  const box = product.box.trim()
+  const boxNormalized = normalize(box).toLowerCase()
+  const boxClass = boxNormalized.includes('kutulu') && boxNormalized.includes('kutusuz') ? 'mixed' : boxNormalized.includes('kutusuz') ? 'kutusuz' : boxNormalized.includes('kutulu') ? 'kutulu' : 'unknown'
+  const dimensions = [product.d_inner, product.d_outer, product.width]
+  const add = (event: MouseEvent<HTMLButtonElement>): void => {
+    event.stopPropagation()
+    cart.add({ ...product, min_order: Math.max(1, product.min_order) }, Math.max(1, product.min_order))
+    onToast(`${product.sku} sepete eklendi.`)
+  }
+  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''}`} style={{ transform: `translateY(${start}px)` }}>
+    <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><span className={`box-badge ${boxClass}`}>{box || 'Kutu bilgisi yok'}</span>{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
+    <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
+    <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
+    <div role="cell" className="box-col"><span className={`box-badge ${boxClass}`}>{box || '—'}</span></div>
+    {showPrices && <div role="cell" className="price-col">{displayPrice(product.price, product.currency)}</div>}
+    {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
+    <div role="cell" className="add-col"><button type="button" aria-label={`${product.sku} sepete ekle`} onClick={add}><span className="cart-plus-icon"><ShoppingCart size={17} /><Plus size={10} /></span></button></div>
+    <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
+  </div>
 }
 
 function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
@@ -581,7 +660,11 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
   }
   return (
     <Sheet title="Ürün bilgisi" onClose={onClose}>
-      <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
+      <div className="detail-product-header">
+        <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
+        {product.brand.trim() && <strong className="detail-product-brand">{product.brand}</strong>}
+        <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span>{product.box.trim() && <span className={`box-badge ${normalize(product.box).toLowerCase().includes('kutusuz') ? 'kutusuz' : 'kutulu'}`}>{product.box}</span>}</div>
+      </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
         <DetailRow label="Marka" value={product.brand} />
@@ -706,9 +789,12 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
         </dl>}
         {!online && <p className="inline-warning"><WifiOff size={16} /> Sipariş vermek için internet bağlantısı gerekir.</p>}
         {mixedCurrency && <p className="inline-warning">Sepette farklı para birimleri var. Tek para birimiyle sipariş oluşturun.</p>}
-        <button className="button primary wide" disabled={busy || !online || mixedCurrency} onClick={() => void submit()}><Send size={18} />{busy ? 'Gönderiliyor…' : 'Siparişi oluştur'}</button>
         <button className="text-button" onClick={() => cart.clear()}><Trash2 size={16} /> Sepeti boşalt</button>
       </section>
+      <div className="cart-sticky-summary">
+        <div><span>Genel toplam</span><strong>{showPrices ? money(total, currency) : '—'}</strong></div>
+        <button className="button primary" disabled={busy || !online || mixedCurrency} onClick={() => void submit()}><Send size={17} />{busy ? 'Gönderiliyor…' : 'Siparişi gönder'}</button>
+      </div>
     </div>
   )
 }
@@ -730,14 +816,14 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
   return (
     <div className="page orders-page">
       <div className="page-heading"><PageTitle title="Siparişler" /><button className="icon-button" onClick={onRefresh} aria-label="Siparişleri yenile"><RefreshCw size={19} /></button></div>
-      {loading && <div className="loading-line">Siparişler yükleniyor…</div>}
+      {loading && <div className="order-skeletons" aria-label="Siparişler yükleniyor">{Array.from({ length: 4 }, (_, i) => <div className="order-skeleton card" key={i}><i /><i /><i /></div>)}</div>}
       {error && <p className="inline-warning" role="alert">{error}</p>}
       {!loading && !error && orders.length === 0 && <div className="empty-state card"><ClipboardList size={36} /><strong>Henüz sipariş yok</strong><span>Oluşturduğunuz siparişleri burada görebilirsiniz.</span></div>}
       <div className="order-list">{orders.map((order) => (
         <button className="order-card card" key={order.id} onClick={() => onSelectOrder(order.id)}>
           <div className="order-card-top"><strong>{order.order_no}</strong><span className={`status-pill status-${order.status}`}>{STATUS_LABEL[order.status]}</span></div>
           <div className="order-card-meta"><span>{new Date(order.created_at).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</span>{session?.user.role === 'admin' && <span>{order.customer_name}</span>}</div>
-          <div className="order-card-bottom"><span>{order.payment === 'kart' ? 'Kart' : 'Peşin'} · {order.currency}</span>{showPrices && <strong>{money(order.total, order.currency)}</strong>}</div>
+          <div className="order-card-bottom"><span>{order.payment === 'kart' ? 'Kart' : 'Peşin'} · {(order as Order & { item_count?: number }).item_count ?? '—'} kalem</span>{showPrices && <strong>{money(order.total, order.currency)}</strong>}</div>
           {selectedOrderId === order.id && <span className="sr-only">Seçili</span>}
         </button>
       ))}</div>

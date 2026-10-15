@@ -148,9 +148,12 @@ export async function dashboardOrders(): Promise<{ openOrders: number; ordersTod
 }
 
 export async function listOrders(): Promise<Order[]> {
-  const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false }).order('id', { ascending: false }).limit(300)
+  const { data, error } = await supabase.from('orders').select('*, order_items(count)').order('created_at', { ascending: false }).order('id', { ascending: false }).limit(300)
   if (error) throw new Error(errorMessage(error))
-  return (data ?? []).map((row) => mapOrder(row))
+  return (data ?? []).map((row) => {
+    const itemCount = (row as unknown as { order_items?: { count: number }[] }).order_items?.[0]?.count ?? 0
+    return Object.assign(mapOrder(row), { item_count: itemCount })
+  })
 }
 
 export async function getOrder(id: number): Promise<Order | null> {
