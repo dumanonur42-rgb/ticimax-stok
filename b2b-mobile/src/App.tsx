@@ -18,6 +18,7 @@ import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
 import { dashboardOrders, createOrder, getOrder, listCustomers, listOrders, loadSettings, restoreSession, signIn, signOut } from './lib/cloud'
+import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
@@ -156,7 +157,11 @@ export default function App(): ReactNode {
       }
       try {
         const restored = await restoreSession()
-        if (active && restored) setSession(restored)
+        if (active && restored) {
+          setSession(restored)
+          setActivitySession(restored.user.id)
+          logActivity({ kind: 'login', detail: { restored: true } })
+        }
       } catch {
         if (active && navigator.onLine) showToast('Oturum bilgisi yenilenemedi. Yeniden giriş yapın.')
       } finally {
@@ -312,6 +317,8 @@ export default function App(): ReactNode {
     setLoginBusy(true)
     try {
       const signedIn = await signIn(loginName, password)
+      setActivitySession(signedIn.user.id)
+      logActivity({ kind: 'login' })
       setSession(signedIn)
       setSettings(await loadSettings())
       setPassword('')
@@ -325,10 +332,13 @@ export default function App(): ReactNode {
 
   const onLogout = async (): Promise<void> => {
     try {
+      await flushActivity()
+      setActivitySession(null)
       await signOut()
     } catch {
       showToast('Oturum kapatılamadı. İnternet bağlantınızı kontrol edin.')
     } finally {
+      setActivitySession(null)
       setSession(null)
       setProducts([])
       setCustomers([])
@@ -543,6 +553,10 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
     const matches = searchProducts(entries, query, { inStock, brands: new Set(selectedBrands), dimensions: dims })
     return { matches, elapsed: performance.now() - start }
   }, [entries, query, inStock, selectedBrands, dims])
+  useEffect(() => {
+    scheduleActivitySearch(query)
+    return cancelActivitySearch
+  }, [query])
   const results = useMemo(() => {
     if (!sort) return searchResult.matches
     const direction = sort.direction === 'asc' ? 1 : -1
@@ -573,7 +587,11 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
     try { localStorage.setItem('yb2b.productView', next) } catch { /* Storage may be unavailable in private browsing. */ }
     scrollRef.current?.scrollTo({ top: 0 })
   }
-  const onOpen = (product: Product): void => { setSelectedProduct(product); setSheet('detail') }
+  const onOpen = (product: Product): void => {
+    logActivity({ kind: 'product_view', product_id: product.id, sku: product.sku, brand: product.brand })
+    setSelectedProduct(product)
+    setSheet('detail')
+  }
   const column = (key: 'sku' | 'brand' | 'stock' | 'price', label: string, className: string): ReactNode => {
     const current = sort?.key === key ? sort.direction : null
     const Icon = current === 'asc' ? ArrowUp : current === 'desc' ? ArrowDown : ArrowUpDown
@@ -624,7 +642,9 @@ function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onTo
   const price = displayPrice(product.price, product.currency)
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
-    cart.add({ ...product, min_order: Math.max(1, product.min_order) }, Math.max(1, product.min_order))
+    const qty = Math.max(1, product.min_order)
+    cart.add({ ...product, min_order: qty }, qty)
+    logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty })
     onToast(`${product.sku} sepete eklendi.`)
   }
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
@@ -649,6 +669,7 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
   const box = product.box.trim()
   const add = (): void => {
     cart.add({ ...product, min_order: Math.max(1, product.min_order) }, qty)
+    logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty })
     onToast(`${product.sku} sepete eklendi.`)
   }
   return (
@@ -787,7 +808,7 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
       </dl>
       <div className="product-actions detail-actions">
         <QuantityStepper qty={qty} setQty={setQty} min={Math.max(1, product.min_order)} sku={product.sku} />
-        <button className="button primary" onClick={() => { cart.add(product, qty); onToast(`${product.sku} sepete eklendi.`); onClose() }}><ShoppingCart size={18} /> Sepete ekle</button>
+        <button className="button primary" onClick={() => { cart.add(product, qty); logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty }); onToast(`${product.sku} sepete eklendi.`); onClose() }}><ShoppingCart size={18} /> Sepete ekle</button>
       </div>
     </Sheet>
   )
@@ -845,6 +866,7 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
           discount_pct: discountPct
         }))
       })
+      logActivity({ kind: 'order', order_id: order.id })
       cart.clear()
       setSuccessOrder(order)
       onOrderCreated()
