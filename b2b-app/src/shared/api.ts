@@ -94,13 +94,11 @@ export interface ApiMap {
   'app:discardFailedOps': [void, number]
   'app:openPath': [string, void]
   'app:openExternal': [string, void]
+  'app:openStoreUpdates': [void, void]
   'app:seedDemo': [number, number]
   'app:purgeProducts': [void, number]
 
   'update:state': [void, UpdateState]
-  'update:check': [void, void]
-  'update:download': [void, void]
-  'update:install': [void, void]
 }
 
 export type ApiChannel = keyof ApiMap

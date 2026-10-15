@@ -5,7 +5,6 @@ import { ArrowDown, ArrowUp, ChevronLeft, Copy, Download, Filter, Plus, Search, 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
-import { useSyncStatus } from '@/components/SyncBanner'
 import { api, onEvent } from '@/lib/api'
 import { money, num, productsToTsv } from '@/lib/format'
 import { StockPill } from '@/components/StockPill'
@@ -103,7 +102,6 @@ export function Catalog(): ReactNode {
   const [editing, setEditing] = useState<Product | 'new' | null>(null)
   const [activeIdx, setActiveIdx] = useState(0)
   const [version, setVersion] = useState(0)
-  const syncing = !!useSyncStatus()?.progress
   const pendingPages = useRef(new Set<number>())
   const bodyRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
@@ -568,13 +566,7 @@ export function Catalog(): ReactNode {
             aria-busy={loading}
             onKeyDown={onGridKey}
           >
-            {total === 0 && !loading && syncing && (
-              <div className="empty" aria-busy>
-                <h3>Ürün listesi hazırlanıyor…</h3>
-                <p>Ürünler buluttan ilk kez indiriliyor; birkaç saniye içinde burada görünecek.</p>
-              </div>
-            )}
-            {total === 0 && !loading && !syncing && (
+            {total === 0 && !loading && (
               <div className="empty">
                 <h3>Sonuç bulunamadı</h3>
                 <p>Aramayı veya filtreleri değiştirmeyi deneyin.</p>

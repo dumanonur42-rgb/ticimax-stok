@@ -247,8 +247,6 @@ export interface SyncStatus {
   /** Writes the cloud rejected (kept so the user can see and discard them). */
   failed: number
   message?: string
-  /** Set while the product mirror is being (re)built from the cloud. */
-  progress?: { done: number; total: number } | null
 }
 
 export interface UpdateState {
@@ -258,6 +256,9 @@ export interface UpdateState {
   notes?: string
   percent?: number
   message?: string
+  required?: boolean
+  storeBuild?: boolean
+  minimumVersion?: string
 }
 
 /** Sales contacts shown on the dashboard (WhatsApp + direct call). */
@@ -287,6 +288,9 @@ export interface Settings {
   density: 'comfortable' | 'compact'
   /** Admin devices: keep running in the tray after the window closes and show a Windows notification on new orders. */
   background_notifications: boolean
+  min_version_android?: string
+  min_version_ios?: string
+  min_version_windows?: string
 }
 
 export interface DashboardStats {

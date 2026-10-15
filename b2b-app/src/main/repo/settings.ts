@@ -30,6 +30,7 @@ const LOCAL_KEYS: ReadonlySet<keyof Settings> = new Set<keyof Settings>([
   'density',
   'background_notifications'
 ])
+const MIN_VERSION_KEYS = new Set(['min_version_android', 'min_version_ios', 'min_version_windows'])
 
 export function isLocalSetting(key: string): boolean {
   return LOCAL_KEYS.has(key as keyof Settings)
@@ -40,7 +41,7 @@ export function getSettings(): Settings {
   const rows = getDb().prepare('SELECT key, value FROM settings').all() as { key: string; value: string }[]
   const out: Record<string, unknown> = { ...DEFAULT_SETTINGS }
   for (const r of rows) {
-    if (r.key in DEFAULT_SETTINGS) {
+    if (r.key in DEFAULT_SETTINGS || MIN_VERSION_KEYS.has(r.key)) {
       try {
         out[r.key] = JSON.parse(r.value)
       } catch {
@@ -55,7 +56,7 @@ function writeLocal(patch: Record<string, unknown>): void {
   const db = getDb()
   const up = db.prepare('INSERT INTO settings(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value')
   db.transaction(() => {
-    for (const [k, v] of Object.entries(patch)) if (k in DEFAULT_SETTINGS) up.run(k, JSON.stringify(v))
+    for (const [k, v] of Object.entries(patch)) if (k in DEFAULT_SETTINGS || MIN_VERSION_KEYS.has(k)) up.run(k, JSON.stringify(v))
   })()
 }
 
@@ -65,7 +66,7 @@ export async function setSettings(patch: Partial<Settings>): Promise<Settings> {
     if (k in DEFAULT_SETTINGS && !isLocalSetting(k)) shared.push({ key: k, value: v })
   }
   if (shared.length) mustVoid(await cloud().from('settings').upsert(shared))
-  writeLocal(patch)
+  writeLocal(Object.fromEntries(Object.entries(patch).filter(([k]) => k in DEFAULT_SETTINGS)))
   return getSettings()
 }
 
@@ -79,6 +80,11 @@ export function setLocalSettings(patch: Partial<Settings>): Settings {
 export async function pullSettings(): Promise<void> {
   const rows = must(await cloud().from('settings').select('*'))
   const patch: Record<string, unknown> = {}
-  for (const r of rows) if (r.key in DEFAULT_SETTINGS && !isLocalSetting(r.key)) patch[r.key] = r.value
+  for (const r of rows) {
+    if ((r.key in DEFAULT_SETTINGS && !isLocalSetting(r.key)) || MIN_VERSION_KEYS.has(r.key)) patch[r.key] = r.value
+  }
+  const remoteKeys = new Set(rows.map((row) => row.key))
+  const remove = getDb().prepare('DELETE FROM settings WHERE key = ?')
+  for (const key of MIN_VERSION_KEYS) if (!remoteKeys.has(key)) remove.run(key)
   writeLocal(patch)
 }

@@ -1,5 +1,5 @@
 import type { SyncStatus } from '@shared/types'
-import { CloudAlert, CloudDownload, CloudOff, CloudUpload, Wifi } from 'lucide-react'
+import { CloudAlert, CloudOff, CloudUpload } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { api, onEvent } from '@/lib/api'
 import { num } from '@/lib/format'
@@ -12,7 +12,7 @@ export function useSyncStatus(): SyncStatus | null {
     const load = (): void => {
       api('app:syncStatus', undefined)
         .then((s) => alive && setStatus(s))
-        .catch(() => undefined)
+        .catch((error) => console.warn('Eşitleme durumu alınamadı.', error))
     }
     load()
     const off = onEvent('sync:changed', load)
@@ -20,7 +20,7 @@ export function useSyncStatus(): SyncStatus | null {
     const wake = (): void => {
       api('app:flushOutbox', undefined)
         .then((s) => alive && setStatus(s))
-        .catch(() => undefined)
+        .catch((error) => console.warn('Bekleyen kayıtlar gönderilemedi.', error))
     }
     window.addEventListener('online', wake)
     return () => {
@@ -40,21 +40,20 @@ export function ConnectionPill(): ReactNode {
   const [busy, setBusy] = useState(false)
   if (!s) return null
   const state = !s.online ? 'offline' : s.pending ? 'pending' : s.failed ? 'failed' : 'online'
-  const label = state === 'offline' ? 'Çevrimdışı' : state === 'pending' ? 'Gönderiliyor' : 'Çevrimiçi'
+  if (state === 'online') return null
+  const label = state === 'offline' ? 'Çevrimdışı' : state === 'pending' ? 'Gönderiliyor' : 'Gönderilemedi'
   const detail = s.pending ? ` · ${num(s.pending)} kayıt bekliyor` : s.failed ? ` · ${num(s.failed)} kayıt gönderilemedi` : ''
   const title =
     state === 'offline'
       ? `Sunucuya ulaşılamıyor${s.pending ? `; ${num(s.pending)} kayıt bu bilgisayarda bekliyor, bağlantı gelince bir kez gönderilecek` : ''}. Yeniden denemek için tıklayın.`
       : state === 'pending'
         ? `${num(s.pending)} kayıt sunucuya gönderiliyor.`
-        : state === 'failed'
-          ? `${num(s.failed)} kayıt sunucu tarafından kabul edilmedi. Ayrıntı ve kaldırma için tıklayın.`
-          : 'Sunucuya bağlı; değişiklikler anında paylaşılıyor. Bağlantıyı denetlemek için tıklayın.'
+      : `${num(s.failed)} kayıt sunucu tarafından kabul edilmedi. Ayrıntı ve kaldırma için tıklayın.`
   const retry = async (): Promise<void> => {
     setBusy(true)
     try {
       const r = await api('app:flushOutbox', undefined)
-      if (!r.online) toast(r.message ?? 'Sunucuya ulaşılamıyor.', 'error')
+      if (!r.online) return
       else if (r.failed && session?.user.role === 'admin') {
         const ok = window.confirm(
           `${num(r.failed)} kayıt sunucu tarafından kabul edilmedi (örn. başka bir bilgisayarda değişen/silinen ürün). Bu kayıtlar kuyruktan kaldırılsın mı? Ürün listesi sunucudaki haliyle güncellenir.`
@@ -65,12 +64,12 @@ export function ConnectionPill(): ReactNode {
         }
       }
     } catch (e) {
-      toast((e as Error).message, 'error')
+      console.warn('Bağlantı denetimi başarısız.', e)
     } finally {
       setBusy(false)
     }
   }
-  const Icon = state === 'offline' ? CloudOff : state === 'pending' ? CloudUpload : state === 'failed' ? CloudAlert : Wifi
+  const Icon = state === 'offline' ? CloudOff : state === 'pending' ? CloudUpload : CloudAlert
   return (
     <button
       type="button"
@@ -86,22 +85,5 @@ export function ConnectionPill(): ReactNode {
         {detail}
       </span>
     </button>
-  )
-}
-
-/** Topbar progress while the product mirror is being pulled from the cloud (first run / full refresh). */
-export function SyncBanner(): ReactNode {
-  const s = useSyncStatus()
-  const p = s?.progress
-  if (!p) return null
-  const pct = p.total ? Math.round((p.done / p.total) * 100) : 0
-  return (
-    <div className="update-banner sync-banner" role="status" aria-live="polite">
-      <CloudDownload size={16} aria-hidden />
-      <span>
-        Ürün listesi indiriliyor… <b>{num(p.done)}</b> / {num(p.total)}
-      </span>
-      <progress className="sync-progress" max={100} value={pct} aria-label={`Ürün listesi indiriliyor, yüzde ${pct}`} />
-    </div>
   )
 }

@@ -31,7 +31,7 @@ import {
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
 import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
-import { checkForUpdates, downloadAndInstall, installUpdate, updateState } from './updater'
+import { updateState } from './updater'
 
 let session: Session | null = null
 
@@ -101,8 +101,7 @@ async function activate(s: Session): Promise<void> {
   } catch (e) {
     console.error('settings pull failed', e)
   }
-  // The product mirror can take a while on a fresh install (12k rows); the UI opens right away
-  // and follows progress through sync:changed, then refreshes on products:changed.
+  // The product mirror can take a while on a fresh install; the UI opens right away and refreshes on products:changed.
   void (async () => {
     try {
       await pullProducts()
@@ -403,11 +402,12 @@ export function registerIpc(): void {
     if (!isAllowedExternal(url)) throw new Error('Bu bağlantı açılamaz.')
     await shell.openExternal(url)
   })
+  handle('app:openStoreUpdates', () => shell.openExternal('ms-windows-store://downloadsandupdates'))
   handle('app:syncStatus', () => syncStatus())
   handle('app:flushOutbox', async () => {
     requireRole()
     await flush()
-    if (!syncStatus().pending) await pullProducts().catch(() => undefined)
+    if (!syncStatus().pending) await pullProducts().catch((error) => console.warn('Stok eşitleme başarısız.', error))
     return syncStatus()
   })
   handle('app:discardFailedOps', () => {
@@ -421,9 +421,6 @@ export function registerIpc(): void {
     return n
   })
   handle('update:state', () => updateState())
-  handle('update:check', () => checkForUpdates())
-  handle('update:download', () => downloadAndInstall())
-  handle('update:install', () => installUpdate())
   handle('app:seedDemo', async (n) => {
     requireRole('admin')
     const r = await seedDemo(n)
