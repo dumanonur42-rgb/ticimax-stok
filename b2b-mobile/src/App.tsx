@@ -23,6 +23,8 @@ import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry 
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab } from './store/app'
+import { GlobeScene } from './components/GlobeScene'
+import logo from './assets/logo.png'
 import mark from './assets/mark.png'
 
 const APP_VERSION = __APP_VERSION__
@@ -52,6 +54,9 @@ export default function App(): ReactNode {
     showToast, setSheet, setSelectedOrderId
   } = state
   const [booting, setBooting] = useState(true)
+  const [bootMinimumElapsed, setBootMinimumElapsed] = useState(false)
+  const [bootOverlayStage, setBootOverlayStage] = useState<'visible' | 'fading' | 'hidden'>('visible')
+  const [globeSize] = useState(() => Math.round(Math.max(200, Math.min(300, window.innerWidth * 0.62, window.innerHeight * 0.62, window.innerHeight - 184))))
   const [loginName, setLoginName] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -68,6 +73,22 @@ export default function App(): ReactNode {
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const appReadyNotified = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
+    return () => window.clearTimeout(timeout)
+  }, [])
+
+  useEffect(() => {
+    if (!bootMinimumElapsed || booting || bootOverlayStage !== 'visible') return
+    setBootOverlayStage('fading')
+  }, [bootMinimumElapsed, booting, bootOverlayStage])
+
+  useEffect(() => {
+    if (bootOverlayStage !== 'fading') return
+    const timeout = window.setTimeout(() => setBootOverlayStage('hidden'), 350)
+    return () => window.clearTimeout(timeout)
+  }, [bootOverlayStage])
 
   useEffect(() => {
     if (!Capacitor.isNativePlatform() || appReadyNotified.current) return
@@ -306,79 +327,96 @@ export default function App(): ReactNode {
     }
   }
 
-  if (requiredUpdate) return (
-    <main className={`required-update${dark ? ' dark' : ''}`}>
-      <img className="login-mark" src={mark} alt="Yamansa Rulman" />
-      <h1>Güncelleme gerekli</h1>
-      <p>Uygulamayı kullanmaya devam etmek için {requiredUpdate.version} sürümünü yükleyin.</p>
-      <button className="button primary wide" onClick={() => {
-        if (requiredUpdate.platform === 'ios') void AppUpdate.openAppStore().catch((error) => console.warn('App Store could not be opened', error))
-        else external(requiredUpdate.url ?? androidReleasesPage())
-      }}>
-        {requiredUpdate.platform === 'ios' ? 'App Store’u aç' : 'APK güncellemesini indir'}
-      </button>
-    </main>
+  const bootOverlay = bootOverlayStage !== 'hidden' && (
+    <div className={`boot-overlay${bootOverlayStage === 'fading' ? ' is-fading' : ''}`} role="status" aria-label="Yamansa Rulman B2B açılıyor">
+      <div className="boot-brand">
+        <GlobeScene size={globeSize} />
+        <img className="boot-logo" src={logo} alt="" />
+      </div>
+    </div>
   )
-  if (booting) return <div className="boot-screen"><img src={mark} alt="" /><span>Yamansa Rulman</span></div>
+
+  if (requiredUpdate) return (
+    <>
+      <main className={`required-update${dark ? ' dark' : ''}`}>
+        <img className="login-mark" src={mark} alt="Yamansa Rulman" />
+        <h1>Güncelleme gerekli</h1>
+        <p>Uygulamayı kullanmaya devam etmek için {requiredUpdate.version} sürümünü yükleyin.</p>
+        <button className="button primary wide" onClick={() => {
+          if (requiredUpdate.platform === 'ios') void AppUpdate.openAppStore().catch((error) => console.warn('App Store could not be opened', error))
+          else external(requiredUpdate.url ?? androidReleasesPage())
+        }}>
+          {requiredUpdate.platform === 'ios' ? 'App Store’u aç' : 'APK güncellemesini indir'}
+        </button>
+      </main>
+      {bootOverlay}
+    </>
+  )
   if (!session) {
     return (
-      <main className={`login-screen${dark ? ' dark' : ''}`}>
-        <section className="login-card">
-          <img className="login-mark" src={mark} alt="Yamansa Rulman" />
-          <p className="eyebrow">BAYİ UYGULAMASI</p>
-          <h1>Hoş geldiniz</h1>
-          <p className="muted">Hesabınızla giriş yapın.</p>
-          <form className="login-form" onSubmit={(event) => void onLogin(event)}>
-            <label htmlFor="username">Kullanıcı adı</label>
-            <input id="username" autoComplete="username" value={loginName} onChange={(event) => setLoginName(event.target.value)} required />
-            <label htmlFor="password">Şifre</label>
-            <div className="password-wrap">
-              <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
-              <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
-                {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+      <>
+        <main className={`login-screen${dark ? ' dark' : ''}`}>
+          <section className="login-card">
+            <img className="login-mark" src={mark} alt="Yamansa Rulman" />
+            <p className="eyebrow">BAYİ UYGULAMASI</p>
+            <h1>Hoş geldiniz</h1>
+            <p className="muted">Hesabınızla giriş yapın.</p>
+            <form className="login-form" onSubmit={(event) => void onLogin(event)}>
+              <label htmlFor="username">Kullanıcı adı</label>
+              <input id="username" autoComplete="username" value={loginName} onChange={(event) => setLoginName(event.target.value)} required />
+              <label htmlFor="password">Şifre</label>
+              <div className="password-wrap">
+                <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+                <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
+                  {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+                </button>
+              </div>
+              {loginError && <p className="error-text" role="alert">{loginError}</p>}
+              {!online && <p className="error-text" role="status">Giriş yapmak için internet bağlantısı gerekir.</p>}
+              <button className="button primary wide" type="submit" disabled={loginBusy || !online}>
+                {loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap'}
               </button>
-            </div>
-            {loginError && <p className="error-text" role="alert">{loginError}</p>}
-            {!online && <p className="error-text" role="status">Giriş yapmak için internet bağlantısı gerekir.</p>}
-            <button className="button primary wide" type="submit" disabled={loginBusy || !online}>
-              {loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap'}
-            </button>
-          </form>
-          <p className="login-foot">Yardım için <a href={`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`} onClick={(event) => { event.preventDefault(); external(`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`) }}>bizi arayın</a>.</p>
-        </section>
-      </main>
+            </form>
+            <p className="login-foot">Yardım için <a href={`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`} onClick={(event) => { event.preventDefault(); external(`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`) }}>bizi arayın</a>.</p>
+          </section>
+        </main>
+        {bootOverlay}
+      </>
     )
   }
 
   return (
-    <div className={`app-shell${dark ? ' dark' : ''}`} data-theme={dark ? 'dark' : 'light'}>
-      <header className="app-header">
-        <div className="brand-lockup">
-          <img src={mark} alt="" />
-          <div><strong>{settings.company_name}</strong><span>B2B Uygulaması</span></div>
-        </div>
-        {!online && <div className="connection-chip" role="status"><WifiOff size={15} /><span>Çevrimdışı</span></div>}
-      </header>
-      <main className="main-content" key={tab}>
-        {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} onNavigate={setTab} onToast={showToast} />}
-        {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
-        {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
-        {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
-        {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} />}
-      </main>
-      <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
-      {sheet === 'filters' && <FilterSheet
-        entries={searchIndex}
-        initialBrands={state.catalogBrands}
-        initialDimensions={state.catalogDimensions}
-        onApply={state.setCatalogFilters}
-        onClose={() => setSheet(null)}
-      />}
-      {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
-      {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} />}
-      {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
-      {toast && <div className="toast" role="status">{toast}</div>}
-    </div>
+    <>
+      <div className={`app-shell${dark ? ' dark' : ''}`} data-theme={dark ? 'dark' : 'light'}>
+        <header className="app-header">
+          <div className="brand-lockup">
+            <img src={mark} alt="" />
+            <div><strong>{settings.company_name}</strong><span>B2B Uygulaması</span></div>
+          </div>
+          {!online && <div className="connection-chip" role="status"><WifiOff size={15} /><span>Çevrimdışı</span></div>}
+        </header>
+        <main className="main-content" key={tab}>
+          {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} onNavigate={setTab} onToast={showToast} />}
+          {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
+          {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
+          {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
+          {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} />}
+        </main>
+        <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
+        {sheet === 'filters' && <FilterSheet
+          entries={searchIndex}
+          initialBrands={state.catalogBrands}
+          initialDimensions={state.catalogDimensions}
+          onApply={state.setCatalogFilters}
+          onClose={() => setSheet(null)}
+        />}
+        {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
+        {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} />}
+        {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
+        {toast && <div className="toast" role="status">{toast}</div>}
+      </div>
+      {bootOverlay}
+    </>
   )
 }
 
