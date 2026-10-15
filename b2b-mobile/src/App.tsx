@@ -1002,7 +1002,7 @@ function InfoRow({ label, value }: { label: string; value: string }): ReactNode 
 }
 
 function UpdateSheet({ update, onClose }: { update: AndroidUpdate; onClose: () => void }): ReactNode {
-  return <Sheet title="Güncelleme var" onClose={onClose}><div className="update-content"><div className="update-icon"><Download size={25} /></div><h2>Yeni sürüm {update.version}</h2><p>Uygulamanın yeni sürümü hazır.</p>{update.notes && <div className="release-notes">{update.notes.slice(0, 900)}</div>}<button className="button primary wide" onClick={() => external(update.url)}><Download size={18} /> İndir</button></div></Sheet>
+  return <Sheet title="Güncelleme var" onClose={onClose}><div className="update-content"><div className="update-icon"><Download size={25} /></div><h2>Yeni sürüm {update.version}</h2><p>Uygulamanın yeni sürümü hazır.</p><button className="button primary wide" onClick={() => external(update.url)}><Download size={18} /> İndir</button></div></Sheet>
 }
 
 function Sheet({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }): ReactNode {
