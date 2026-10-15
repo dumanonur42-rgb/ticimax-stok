@@ -126,12 +126,6 @@ async function upsertLocalChunked(rows: ProductRow[]): Promise<void> {
   }
 }
 
-async function cloudCount(): Promise<number> {
-  const r = await cloud().from('products').select('id', { count: 'exact', head: true })
-  if (r.error) throw new Error(r.error.message)
-  return r.count ?? 0
-}
-
 /** `catalog_generation` is bumped by `purge_all_products()`; a mismatch forces a full refresh so hard deletes reach every cache. */
 async function cloudGeneration(): Promise<string> {
   const rows = must(await cloud().from('settings').select('value').eq('key', 'catalog_generation'))
@@ -151,9 +145,6 @@ export async function pullProducts(full = false): Promise<number> {
     const generation = await cloudGeneration()
     if (generation !== (getState('catalog_generation') ?? '0')) full = true
     const cursor = full ? null : getState('products_cursor')
-    // First run / full refresh: report page-by-page progress so the UI can show "3.000 / 12.000".
-    const total = cursor ? 0 : await cloudCount()
-    if (total) setStatus({ progress: { done: 0, total } })
     const seenIds: number[] = []
     let last = cursor
     const fetchPage = async (after: string | null, afterId: number): Promise<ProductRow[]> => {
@@ -176,7 +167,6 @@ export async function pullProducts(full = false): Promise<number> {
       await upsertLocalChunked(rows)
       n += rows.length
       for (const r of rows) seenIds.push(r.id)
-      if (total) setStatus({ progress: { done: Math.min(n, total), total } })
     }
     if (full) {
       // Full refresh: anything the cloud no longer returned (hard-deleted) leaves the mirror too.
@@ -197,11 +187,12 @@ export async function pullProducts(full = false): Promise<number> {
   })()
   try {
     await pulling
-    setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined, progress: null })
+    setStatus({ online: true, lastSync: new Date().toISOString(), message: undefined })
     if (n > 0 || full) listener('products')
     flush().catch(() => undefined)
   } catch (e) {
-    setStatus({ online: false, message: e instanceof Error ? e.message : String(e), progress: null })
+    console.warn('Stok eşitleme başarısız.', e)
+    setStatus({ online: false, message: undefined })
     throw e
   } finally {
     pulling = null
@@ -225,7 +216,7 @@ export function startRealtime(): void {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
       pullSettings()
         .then(() => listener('settings'))
-        .catch(() => undefined)
+        .catch((error) => console.warn('Ayarlar eşitlenemedi.', error))
     })
     .subscribe((state) => {
       if (state === 'SUBSCRIBED') {
@@ -235,10 +226,10 @@ export function startRealtime(): void {
     })
   timer = setInterval(() => {
     flush()
-      .catch(() => undefined)
+      .catch((error) => console.warn('Bekleyen kayıtlar gönderilemedi.', error))
       .then(() => pullProducts())
       .catch(() => undefined)
-    pollOrders().catch(() => undefined)
+    pollOrders().catch((error) => console.warn('Siparişler eşitlenemedi.', error))
   }, POLL_MS)
 }
 
