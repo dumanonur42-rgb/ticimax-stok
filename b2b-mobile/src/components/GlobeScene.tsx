@@ -230,7 +230,7 @@ export function GlobeScene({ size = 220, className = '' }: { size?: number; clas
         const angle = ((TAU * index) / BALLS + spinAngle) % TAU
         return {
           x: pitchRadius * Math.cos(angle),
-          y: pitchRadius * Math.sin(angle) * tiltSin,
+          y: pitchRadius * Math.sin(angle) * tiltSin - topZ * tiltCos,
           depth: Math.sin(angle)
         }
       })
