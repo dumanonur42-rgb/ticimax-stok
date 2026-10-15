@@ -92,9 +92,7 @@ interface AppState {
   catalogBrands: string[]
   catalogDimensions: DimensionFilters
   online: boolean
-  lastSync: string | null
   syncBusy: boolean
-  syncProgress: { done: number; total: number | null } | null
   toast: string
   sheet: 'filters' | 'detail' | 'order' | 'update' | null
   selectedProduct: Product | null
@@ -106,9 +104,7 @@ interface AppState {
   setProducts: (products: Product[]) => void
   setCatalogFilters: (brands: string[], dimensions: DimensionFilters) => void
   setOnline: (online: boolean) => void
-  setLastSync: (lastSync: string | null) => void
   setSyncBusy: (busy: boolean) => void
-  setSyncProgress: (progress: AppState['syncProgress']) => void
   showToast: (toast: string) => void
   setSheet: (sheet: AppState['sheet']) => void
   setSelectedProduct: (product: Product | null) => void
@@ -124,9 +120,7 @@ export const useApp = create<AppState>((set) => ({
   catalogBrands: [],
   catalogDimensions: { dMin: null, dMax: null, DMin: null, DMax: null, bMin: null, bMax: null },
   online: navigator.onLine,
-  lastSync: localStorage.getItem('yamansa-b2b-last-sync'),
   syncBusy: false,
-  syncProgress: null,
   toast: '',
   sheet: null,
   selectedProduct: null,
@@ -138,12 +132,7 @@ export const useApp = create<AppState>((set) => ({
   setProducts: (products) => set({ products }),
   setCatalogFilters: (catalogBrands, catalogDimensions) => set({ catalogBrands, catalogDimensions }),
   setOnline: (online) => set({ online }),
-  setLastSync: (lastSync) => {
-    if (lastSync) localStorage.setItem('yamansa-b2b-last-sync', lastSync)
-    set({ lastSync })
-  },
   setSyncBusy: (syncBusy) => set({ syncBusy }),
-  setSyncProgress: (syncProgress) => set({ syncProgress }),
   showToast: (toast) => set({ toast }),
   setSheet: (sheet) => set({ sheet }),
   setSelectedProduct: (selectedProduct) => set({ selectedProduct }),

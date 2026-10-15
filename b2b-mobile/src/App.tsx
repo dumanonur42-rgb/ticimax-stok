@@ -7,7 +7,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   Check, ClipboardList, Copy, Home, Minus,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
-  Trash2, UserRound, X, Eye, EyeOff, WifiOff, Wifi, Phone, MessageCircle, Download,
+  Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, MessageCircle, Download,
   Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type MouseEvent, type ReactNode } from 'react'
@@ -31,12 +31,6 @@ function userFacingError(error: unknown): string {
   return error instanceof Error ? error.message : 'Bir sorun oluştu. Yeniden deneyin.'
 }
 
-function timeLabel(value: string | null): string {
-  if (!value) return 'Henüz eşitlenmedi'
-  const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? 'Henüz eşitlenmedi' : date.toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })
-}
-
 function external(url: string): void {
   if (Capacitor.isNativePlatform()) {
     void AppLauncher.openUrl({ url }).catch(() => { window.open(url, '_system') })
@@ -52,9 +46,9 @@ export default function App(): ReactNode {
   const clearCart = useCart((cartState) => cartState.clear)
   const cartCount = useCart((cartState) => cartState.lines.reduce((sum, line) => sum + line.qty, 0))
   const {
-    tab, session, settings, customers, products, online, lastSync, syncBusy, syncProgress,
+    tab, session, settings, customers, products, online, syncBusy,
     toast, sheet, selectedProduct, selectedOrderId, setTab, setSession, setSettings,
-    setCustomers, setProducts, setOnline, setLastSync, setSyncBusy, setSyncProgress,
+    setCustomers, setProducts, setOnline, setSyncBusy,
     showToast, setSheet, setSelectedOrderId
   } = state
   const [booting, setBooting] = useState(true)
@@ -68,19 +62,36 @@ export default function App(): ReactNode {
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
   const [dark, setDark] = useState(false)
+  const syncRetryCount = useRef(0)
+  const syncRetryAt = useRef(0)
+  const syncRetryTimer = useRef<number | null>(null)
+  const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const searchIndex = useMemo(() => indexProducts(products), [products])
 
   const syncNow = useCallback(async () => {
     if (!useApp.getState().session) return
+    if (navigator.onLine === false) {
+      setOnline(false)
+      return
+    }
+    if (Date.now() < syncRetryAt.current) return
     setSyncBusy(true)
     try {
-      const result = await syncCatalog((done, total) => setSyncProgress({ done, total }))
-      setProducts(result.products)
-      refreshCart(result.products)
-      const now = new Date().toISOString()
-      setLastSync(now)
+      const result = await syncCatalog()
+      syncRetryCount.current = 0
+      syncRetryAt.current = 0
+      if (syncRetryTimer.current !== null) window.clearTimeout(syncRetryTimer.current)
+      syncRetryTimer.current = null
+      if (result.changed > 0) {
+        const scrollElement = document.querySelector<HTMLElement>('.catalog-scroll')
+        const scrollTop = scrollElement?.scrollTop
+        setProducts(result.products)
+        refreshCart(result.products)
+        if (scrollElement && scrollTop !== undefined) {
+          requestAnimationFrame(() => { scrollElement.scrollTop = scrollTop })
+        }
+      }
       setOnline(true)
-      setSyncProgress(null)
       try {
         setSettings(await loadSettings())
       } catch {
@@ -88,12 +99,20 @@ export default function App(): ReactNode {
       }
     } catch (error) {
       setOnline(false)
-      setSyncProgress(null)
-      if (useApp.getState().products.length === 0) showToast(userFacingError(error))
+      console.warn('Catalog sync failed', error)
+      syncRetryCount.current += 1
+      const delay = Math.min(5 * 60_000, 15_000 * 2 ** Math.min(syncRetryCount.current - 1, 5))
+      syncRetryAt.current = Date.now() + delay
+      if (syncRetryTimer.current !== null) window.clearTimeout(syncRetryTimer.current)
+      syncRetryTimer.current = window.setTimeout(() => {
+        syncRetryTimer.current = null
+        if (navigator.onLine) void syncNowRef.current()
+      }, delay)
     } finally {
       setSyncBusy(false)
     }
-  }, [refreshCart, setLastSync, setOnline, setProducts, setSettings, setSyncBusy, setSyncProgress, showToast])
+  }, [refreshCart, setOnline, setProducts, setSettings, setSyncBusy])
+  syncNowRef.current = syncNow
 
   useEffect(() => {
     let active = true
@@ -332,18 +351,10 @@ export default function App(): ReactNode {
           <img src={mark} alt="" />
           <div><strong>{settings.company_name}</strong><span>B2B Uygulaması</span></div>
         </div>
-        <div className={`connection-chip${online ? ' online' : ''}`} role="status">
-          {online ? <Wifi size={15} /> : <WifiOff size={15} />}
-          <span>{online ? 'Çevrimiçi' : 'Çevrimdışı'}</span>
-        </div>
+        {!online && <div className="connection-chip" role="status"><WifiOff size={15} /><span>Çevrimdışı</span></div>}
       </header>
-      {syncProgress && (
-        <div className="sync-progress" role="status">
-          Katalog eşitleniyor{syncProgress.total ? ` · ${num(syncProgress.done)} / ${num(syncProgress.total)}` : '…'}
-        </div>
-      )}
       <main className="main-content" key={tab}>
-        {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} lastSync={lastSync} syncBusy={syncBusy} syncProgress={syncProgress} onNavigate={setTab} onToast={showToast} />}
+        {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} onNavigate={setTab} onToast={showToast} />}
         {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
         {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
         {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
@@ -385,8 +396,8 @@ function BottomTabs({ tab, setTab, cartCount }: { tab: Tab; setTab: (tab: Tab) =
   )
 }
 
-function HomePage({ session, settings, openOrders, products, lastSync, syncBusy, syncProgress, onNavigate, onToast }: {
-  session: Session; settings: Settings; openOrders: number | null; products: Product[]; lastSync: string | null; syncBusy: boolean; syncProgress: { done: number; total: number | null } | null; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
+function HomePage({ session, settings, openOrders, products, onNavigate, onToast }: {
+  session: Session; settings: Settings; openOrders: number | null; products: Product[]; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
 }): ReactNode {
   const openContact = (url: string): void => {
     try { external(url) } catch { onToast('Bağlantı açılamadı.') }
@@ -395,8 +406,6 @@ function HomePage({ session, settings, openOrders, products, lastSync, syncBusy,
   const customerName = session.customer?.name ?? settings.company_name
   const greetingName = session.user.display_name || session.user.username
   const showCompany = normalize(customerName) !== normalize(greetingName) && normalize(customerName) !== normalize('Yamansa Rulman')
-  const productCount = syncProgress ? `${num(syncProgress.done)} / ${num(syncProgress.total ?? syncProgress.done)}` : num(products.length)
-  const progressPercent = syncProgress?.total ? Math.min(100, syncProgress.done / syncProgress.total * 100) : 0
   return (
     <div className="page home-page">
       <section className="home-hero">
@@ -408,9 +417,8 @@ function HomePage({ session, settings, openOrders, products, lastSync, syncBusy,
       <div className="summary-grid">
         <button className="summary-card" onClick={() => onNavigate('products')}>
           <span className="summary-icon"><Package size={20} /></span>
-          <span className="summary-value">{syncProgress ? productCount : num(products.length)}</span>
-          {syncProgress && <span className="progress-track"><span style={{ width: `${progressPercent}%` }} /></span>}
-          <span className="summary-label">{syncProgress ? 'Eşitlenen ürün' : 'Toplam ürün'}</span>
+          {products.length ? <span className="summary-value">{num(products.length)}</span> : <span className="summary-value summary-skeleton" aria-label=" " />}
+          {products.length > 0 && <span className="summary-label">Toplam ürün</span>}
         </button>
         <button className="summary-card" onClick={() => { onNavigate('products') }}>
           <span className="summary-icon"><Box size={20} /></span>
@@ -433,7 +441,6 @@ function HomePage({ session, settings, openOrders, products, lastSync, syncBusy,
         <button onClick={() => onNavigate('cart')}><ShoppingCart size={17} /> Sepet</button>
         <button onClick={() => onNavigate('orders')}><ClipboardList size={17} /> Siparişler</button>
       </nav>
-      <section className="sync-card"><span>Son eşitleme</span><strong>{syncBusy ? 'Eşitleniyor…' : timeLabel(lastSync)}</strong><RefreshCw size={18} className={syncBusy ? 'spin muted-icon' : 'muted-icon'} /></section>
       <section className="contacts-section">
         <h2>Size yardımcı olalım</h2>
         <div className="contact-list">

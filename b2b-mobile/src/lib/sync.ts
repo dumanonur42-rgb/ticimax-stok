@@ -59,7 +59,7 @@ function cursorOf(products: Product[]): { time: string; id: number } {
   return latest ? { time: latest.updated_at, id: latest.id } : { time: new Date(0).toISOString(), id: 0 }
 }
 
-async function pull(onProgress?: (done: number, total: number | null) => void): Promise<{ products: Product[]; changed: number }> {
+async function pull(): Promise<{ products: Product[]; changed: number }> {
   const currentGeneration = await generation()
   const [storedGeneration, storedTime, storedId] = await Promise.all([
     getState('catalog_generation'),
@@ -72,9 +72,6 @@ async function pull(onProgress?: (done: number, total: number | null) => void): 
   if (full) {
     const products: Product[] = []
     let afterId = 0
-    const { count, error: countError } = await supabase.from('products').select('id', { count: 'exact', head: true }).eq('active', true).eq('deleted', false)
-    if (countError) throw countError
-    const total = count ?? 0
     for (;;) {
       const { data, error } = await supabase.from('products')
         .select(PRODUCT_COLUMNS)
@@ -88,7 +85,6 @@ async function pull(onProgress?: (done: number, total: number | null) => void): 
       if (!rows.length) break
       products.push(...rows.map(toProduct))
       afterId = rows[rows.length - 1].id
-      onProgress?.(products.length, total)
       if (rows.length < PAGE_SIZE) break
     }
     await replaceProducts(products)
@@ -131,9 +127,9 @@ async function pull(onProgress?: (done: number, total: number | null) => void): 
   return { products: await readProducts(), changed }
 }
 
-export function syncCatalog(onProgress?: (done: number, total: number | null) => void): Promise<{ products: Product[]; changed: number }> {
+export function syncCatalog(): Promise<{ products: Product[]; changed: number }> {
   if (pendingPull) return pendingPull
-  pendingPull = pull(onProgress).finally(() => { pendingPull = null })
+  pendingPull = pull().finally(() => { pendingPull = null })
   return pendingPull
 }
 
