@@ -639,6 +639,14 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const [qty, setQty] = useState(Math.max(1, product.min_order))
+  const normalizedBox = normalize(product.box).toLowerCase()
+  const boxClass = normalizedBox.includes('kutulu') && normalizedBox.includes('kutusuz')
+    ? 'mixed'
+    : normalizedBox.includes('kutusuz')
+      ? 'kutusuz'
+      : normalizedBox.includes('kutulu')
+        ? 'kutulu'
+        : 'unknown'
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
@@ -663,14 +671,12 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
       <div className="detail-product-header">
         <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
         {product.brand.trim() && <strong className="detail-product-brand">{product.brand}</strong>}
-        <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span>{product.box.trim() && <span className={`box-badge ${normalize(product.box).toLowerCase().includes('kutusuz') ? 'kutusuz' : 'kutulu'}`}>{product.box}</span>}</div>
+        <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span>{product.box.trim() && <span className={`box-badge ${boxClass}`}>{product.box}</span>}</div>
       </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
-        <DetailRow label="Marka" value={product.brand} />
         {hasDimensions && <DetailRow label="Ölçü d × D × B" value={`${dimensionText} mm`} />}
-        <DetailRow label="Stok" value={`${num(product.stock)} ${product.unit || 'Adet'}`} />
-        <DetailRow label="Kutu durumu" value={product.box} />
+        {product.min_order > 0 && <DetailRow label="Min. sipariş" value={`${num(product.min_order)} ${product.unit || 'Adet'}`} />}
         {canShelf && <DetailRow label="Raf" value={product.shelf} />}
         {showPrices && <DetailRow label="Fiyat" value={displayPrice(product.price, product.currency)} />}
         {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={displayPrice(product.list_price, product.currency)} />}
@@ -792,7 +798,11 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
         <button className="text-button" onClick={() => cart.clear()}><Trash2 size={16} /> Sepeti boşalt</button>
       </section>
       <div className="cart-sticky-summary">
-        <div><span>Genel toplam</span><strong>{showPrices ? money(total, currency) : '—'}</strong></div>
+        <div className="cart-summary-copy">
+          {showPrices && <span className="cart-summary-breakdown">Ara toplam {money(gross, currency)} · KDV {money(vat, currency)}</span>}
+          <span className="cart-summary-label">Genel toplam</span>
+          <strong>{showPrices ? money(total, currency) : '—'}</strong>
+        </div>
         <button className="button primary" disabled={busy || !online || mixedCurrency} onClick={() => void submit()}><Send size={17} />{busy ? 'Gönderiliyor…' : 'Siparişi gönder'}</button>
       </div>
     </div>
