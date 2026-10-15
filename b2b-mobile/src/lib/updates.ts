@@ -32,10 +32,10 @@ let liveCheck: Promise<void> | null = null
 export async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
   const checkedAt = Number(localStorage.getItem(GITHUB_CHECK_CACHE) ?? 0)
   if (Date.now() - checkedAt < 6 * 60 * 60 * 1000) return null
-  localStorage.setItem(GITHUB_CHECK_CACHE, String(Date.now()))
   const response = await fetch(ANDROID_RELEASES_API, { headers: { Accept: 'application/vnd.github+json' } })
   if (!response.ok) throw new Error(`GitHub update check failed (${response.status})`)
   const releases = await response.json() as { tag_name?: string; body?: string; assets?: { name: string; browser_download_url: string }[]; draft?: boolean }[]
+  localStorage.setItem(GITHUB_CHECK_CACHE, String(Date.now()))
   const candidates = releases
     .filter((release) => !release.draft && /^b2b-android-v\d+\.\d+\.\d+$/.test(release.tag_name ?? ''))
     .map((release) => ({ release, version: (release.tag_name ?? '').replace(/^b2b-android-v/, '') }))

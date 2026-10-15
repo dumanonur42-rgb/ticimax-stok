@@ -66,7 +66,14 @@ export default function App(): ReactNode {
   const syncRetryAt = useRef(0)
   const syncRetryTimer = useRef<number | null>(null)
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
+  const appReadyNotified = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
+
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform() || appReadyNotified.current) return
+    appReadyNotified.current = true
+    void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+  }, [])
 
   const syncNow = useCallback(async () => {
     if (!useApp.getState().session) return
@@ -193,7 +200,6 @@ export default function App(): ReactNode {
       }
     }
     const runLiveCheck = (): void => { if (document.visibilityState === 'visible') void checkLiveUpdate() }
-    void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
     void checkLiveUpdate()
     void checkUpdates()
     void startFlexibleUpdateListener().then((handle) => { flexibleHandle = handle }).catch((error) => console.warn('Flexible update listener failed', error))
