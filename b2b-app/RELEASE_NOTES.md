@@ -8,6 +8,8 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama i
 
 - [yönetici] Hareketler sayfasında kullanıcı girişleri, aramaları, ürün görüntülemeleri, sepete eklemeleri ve stok değişiklikleri filtrelenip incelenebilir.
 - [yönetici] Seçilen kullanıcı için son giriş, sık baktığı ürünler ve arama terimleri görüntülenebilir.
+- [yönetici] Ayarlar › Kullanıcılar'da yöneticinin belirlediği şifreler göz simgesiyle görülüp kopyalanabilir.
+- Mobil ve Windows'taki ürün aramaları, görüntülemeler ve sepet hareketleri yöneticiye raporlanır.
 
 ## 1.0.19
 
