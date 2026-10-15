@@ -400,6 +400,13 @@ img { max-width: 100%; }
 .info-row strong { min-width: 0; text-align: right; overflow-wrap: anywhere; font-weight: 650; }
 .account-actions { display: grid; gap: 9px; margin-top: 13px; }
 .version-note { margin: 17px 0 0; color: var(--muted); text-align: center; font-size: .74rem; }
+.required-update { min-height: 100dvh; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); background: #f5f7fb; color: #17243a; text-align: center; }
+.required-update.dark { background: #101a28; color: #f4f7fc; }
+.required-update .login-mark { width: 72px; height: 72px; object-fit: contain; }
+.required-update h1, .required-update p { margin: 0; }
+.required-update p { max-width: 340px; color: #68758a; }
+.required-update.dark p { color: #aab6c7; }
+.required-update .button { width: min(100%, 340px); min-height: 48px; }
 .summary-skeleton { display: block; width: 72px; height: 22px; border-radius: 6px; background: var(--line); }
 .contact-info { min-width: 0; flex: 1 1 auto; }
 .contact-info strong, .contact-info span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
