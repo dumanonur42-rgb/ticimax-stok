@@ -3439,6 +3439,7 @@ dialog.update-dialog {
 }
 .traffic-up { color: var(--success); }
 .traffic-down { color: var(--danger); }
+.traffic-neutral { color: var(--text-muted); }
 .traffic-loading {
   color: var(--text-muted);
   font-size: 0.86rem;
@@ -3459,13 +3460,20 @@ dialog.update-dialog {
 .traffic-chart-scroll,
 .traffic-table-wrap {
   min-width: 0;
+}
+.traffic-table-wrap {
   overflow-x: auto;
+}
+.traffic-chart-plot {
+  position: relative;
+  width: 100%;
+  height: 128px;
 }
 .traffic-chart-scroll svg {
   display: block;
   width: 100%;
-  min-width: 320px;
-  height: 132px;
+  height: 128px;
+  overflow: visible;
 }
 .traffic-chart-axis {
   stroke: var(--border);
@@ -3473,6 +3481,45 @@ dialog.update-dialog {
 }
 .traffic-chart-bar {
   fill: var(--primary);
+}
+.traffic-chart-point {
+  cursor: help;
+  outline: none;
+}
+.traffic-chart-point:hover .traffic-chart-bar,
+.traffic-chart-point:focus-visible .traffic-chart-bar {
+  stroke: var(--text);
+  stroke-width: 2;
+}
+.traffic-chart-max {
+  position: absolute;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.traffic-chart-max.at-start {
+  transform: none;
+}
+.traffic-chart-max.at-end {
+  transform: translateX(-100%);
+}
+.traffic-chart-labels {
+  display: grid;
+  min-height: 16px;
+  margin-top: 3px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.traffic-chart-labels > span {
+  overflow: hidden;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 .traffic-panels {
   display: grid;

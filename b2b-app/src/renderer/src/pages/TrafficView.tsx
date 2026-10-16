@@ -45,7 +45,7 @@ async function cachedSummary(source: TrafficSource, key: string, from: string, t
 }
 
 function formatCount(value: number): string {
-  return new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(value || 0)
+  return Number(value || 0).toLocaleString('tr-TR')
 }
 
 function formatDay(value: string): string {
@@ -55,6 +55,16 @@ function formatDay(value: string): string {
 function dayKey(value: string): string {
   const date = new Date(value)
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date)
+}
+
+function chartDayLabel(value: string, includeWeekday: boolean): string {
+  const date = new Date(`${value}T12:00:00+03:00`)
+  const options: Intl.DateTimeFormatOptions = includeWeekday ? { weekday: 'short', timeZone: 'Europe/Istanbul' } : { day: 'numeric', month: 'short', timeZone: 'Europe/Istanbul' }
+  return new Intl.DateTimeFormat('tr-TR', options).format(date).replace(/\.$/, '')
+}
+
+function chartTooltip(entry: TrafficSummary['daily'][number]): string {
+  return `${chartDayLabel(entry.day, false)} ${chartDayLabel(entry.day, true)} · ${formatCount(entry.visitors)} ziyaretçi · ${formatCount(entry.searches)} arama`
 }
 
 function dayTitle(value: string): string {
@@ -83,6 +93,13 @@ function DeviceIcon({ device }: { device: string }): ReactNode {
   return <Globe size={14} />
 }
 
+function deviceLabel(device: string): string {
+  if (device === 'mobile') return 'Mobil'
+  if (device === 'desktop') return 'Masaüstü'
+  if (device === 'tablet') return 'Tablet'
+  return 'Bilinmiyor'
+}
+
 function sources(sources: string[]): ReactNode {
   return <span className="traffic-source-chips">{sources.map((source) => <span className="traffic-source-chip" key={source}>{sourceLabels[source] ?? source}</span>)}</span>
 }
@@ -99,25 +116,43 @@ function TopList<T extends { count: number; sources: string[] }>({ rows, label, 
 }
 
 function Metric({ title, value, previous, icon }: { title: string; value: number; previous: number | undefined; icon: ReactNode }): ReactNode {
-  const change = previous ? ((value - previous) / previous) * 100 : null
-  return <article className="card traffic-metric"><span className="traffic-metric-icon">{icon}</span><span className="traffic-metric-label">{title}</span><b>{formatCount(value)}</b>{change !== null && <small className={change >= 0 ? 'traffic-up' : 'traffic-down'}>{change >= 0 ? '▲' : '▼'} {Math.abs(change).toFixed(0)}%</small>}</article>
+  const change = previous === undefined || previous === 0 ? null : value === previous ? 0 : ((value - previous) / previous) * 100
+  const changeLabel = change === 0 ? '— değişmedi' : change === null ? '' : `${change > 0 ? '▲' : '▼'} %${Math.abs(change).toFixed(0)}`
+  const changeClass = change === 0 ? 'traffic-neutral' : change !== null && change > 0 ? 'traffic-up' : 'traffic-down'
+  return <article className="card traffic-metric"><span className="traffic-metric-icon">{icon}</span><span className="traffic-metric-label">{title}</span><b>{formatCount(value)}</b>{change !== null && <small className={changeClass}>{changeLabel}</small>}</article>
 }
 
 function DailyChart({ daily }: { daily: TrafficSummary['daily'] }): ReactNode {
   const values = daily.slice(-90)
-  const max = Math.max(1, ...values.map((entry) => entry.visitors))
-  const width = Math.max(320, values.length * 16)
-  const barWidth = Math.max(4, Math.min(12, width / Math.max(values.length, 1) - 4))
+  const maximum = Math.max(0, ...values.map((entry) => entry.visitors))
+  const width = 1000
+  const baseline = 104
+  const maxHeight = maximum ? 82 : 2
+  const slotWidth = width / Math.max(values.length, 1)
+  const barWidth = Math.max(2, Math.min(28, slotWidth * 0.62))
+  const maxIndex = Math.max(0, values.findIndex((entry) => entry.visitors === maximum))
+  const showEveryDay = values.length <= 14
   return <Panel title="Günlük ziyaretçi" icon={<Activity size={17} />} className="traffic-chart-panel">
-    {values.length ? <div className="traffic-chart-scroll"><svg viewBox={`0 0 ${width} 132`} role="img" aria-label="Günlük ziyaretçi sayısı">
-      <title>Günlük ziyaretçi sayısı</title>
-      <line x1="0" y1="108" x2={width} y2="108" className="traffic-chart-axis" />
-      {values.map((entry, index) => {
-        const height = Math.max(2, (entry.visitors / max) * 88)
-        const x = index * (width / values.length) + (width / values.length - barWidth) / 2
-        return <g key={entry.day}><title>{formatDay(entry.day)}: {formatCount(entry.visitors)} ziyaretçi</title><rect x={x} y={108 - height} width={barWidth} height={height} rx="3" className="traffic-chart-bar" /></g>
-      })}
-    </svg></div> : <p className="traffic-empty">Bu dönemde ziyaret yok.</p>}
+    {values.length ? <div className="traffic-chart-scroll">
+      <div className="traffic-chart-plot">
+        <svg viewBox={`0 0 ${width} 128`} preserveAspectRatio="none" role="group" aria-label="Günlük ziyaretçi sayısı">
+          <line x1="0" y1={baseline} x2={width} y2={baseline} className="traffic-chart-axis" />
+          {values.map((entry, index) => {
+            const height = Math.max(2, maximum ? (entry.visitors / maximum) * maxHeight : 2)
+            const x = index * slotWidth + (slotWidth - barWidth) / 2
+            const tooltip = chartTooltip(entry)
+            return <g key={entry.day} className="traffic-chart-point" role="img" tabIndex={0} aria-label={tooltip}>
+              <title>{tooltip}</title>
+              <rect x={x} y={baseline - height} width={barWidth} height={height} rx="3" className="traffic-chart-bar" />
+            </g>
+          })}
+        </svg>
+        <b className={`traffic-chart-max${maxIndex === 0 ? ' at-start' : maxIndex === values.length - 1 ? ' at-end' : ''}`} style={{ left: `${((maxIndex + 0.5) / values.length) * 100}%`, top: `${Math.max(0, baseline - maxHeight - 18)}px` }}>{formatCount(maximum)}</b>
+      </div>
+      <div className="traffic-chart-labels" style={{ gridTemplateColumns: `repeat(${values.length}, minmax(0, 1fr))` }} aria-hidden="true">
+        {values.map((entry, index) => <span key={entry.day}>{showEveryDay || index % 7 === 0 ? chartDayLabel(entry.day, showEveryDay) : ''}</span>)}
+      </div>
+    </div> : <p className="traffic-empty">Bu dönemde ziyaret yok.</p>}
   </Panel>
 }
 
@@ -145,8 +180,8 @@ function RecentActivity({ site, refresh }: { site: TrafficSite; refresh: number 
       <div className="traffic-recent-list">{groups.map((group) => <Fragment key={group.key}>
         <h4>{group.label}</h4>{group.rows.map((row) => {
           const Icon = kindIcons[row.kind]
-          const detail = row.kind === 'search' ? `“${row.query}” arandı` : row.kind === 'product_view' ? `${row.name || row.sku || 'Ürün'} görüntülendi` : row.kind === 'cart_add' ? `${row.name || row.sku || 'Ürün'} sepete eklendi${row.qty ? ` (${row.qty} adet)` : ''}` : row.kind === 'order' ? 'Sipariş verildi' : 'Siteyi ziyaret etti'
-          return <article className="traffic-recent-row" key={row.id}><span className={`activity-kind-badge activity-kind-${row.kind}`}><Icon size={14} /></span><span className="traffic-recent-detail">{detail}<small>{row.sku && row.kind !== 'product_view' ? row.sku : row.path}</small></span><span className="traffic-visitor">Ziyaretçi #{row.visitor.slice(-4)}<small><DeviceIcon device={row.device} />{row.device || 'Bilinmiyor'}</small></span><time>{new Intl.DateTimeFormat('tr-TR', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(row.at))}</time></article>
+          const detail = row.kind === 'search' ? `“${row.query}” arandı` : row.kind === 'product_view' ? `${row.name || row.sku || 'Ürün'} görüntülendi` : row.kind === 'cart_add' ? `${row.name || row.sku || 'Ürün'} sepete eklendi${row.qty !== null && row.qty !== undefined ? ` (${formatCount(row.qty)} adet)` : ''}` : row.kind === 'order' ? 'Sipariş verildi' : 'Siteyi ziyaret etti'
+          return <article className="traffic-recent-row" key={row.id}><span className={`activity-kind-badge activity-kind-${row.kind}`}><Icon size={14} /></span><span className="traffic-recent-detail">{detail}<small>{row.sku && row.kind !== 'product_view' ? row.sku : row.path}</small></span><span className="traffic-visitor">Ziyaretçi #{row.visitor.slice(-4)}<small><DeviceIcon device={row.device} />{deviceLabel(row.device)}</small></span><time>{new Intl.DateTimeFormat('tr-TR', { timeZone: 'Europe/Istanbul', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(row.at))}</time></article>
         })}</Fragment>)}</div>}
     {hasMore && <button className="btn sm traffic-load-more" onClick={() => setOffset((value) => value + 50)}>Daha fazla yükle</button>}
   </Panel>
@@ -219,7 +254,7 @@ export function TrafficView({ source }: { source: TrafficSource }): ReactNode {
         <Panel title="Sepete en çok eklenen" icon={<ShoppingCart size={17} />}><TopList rows={summary.topCart} label={(row) => `${row.sku}${row.label ? ` · ${row.label}` : ''}`} render={(row) => `${formatCount(row.qty)} adet`} /></Panel>
         {source !== 'app' && summary.zeroResults.length > 0 && <Panel title="Sonuç bulunamayan aramalar" icon={<Search size={17} />}><TopList rows={summary.zeroResults} label={(row) => (row as unknown as { term: string }).term} /></Panel>}
         {source === 'all' && <Panel title="Kaynaklara göre" icon={<Globe size={17} />} className="traffic-source-panel"><div className="traffic-table-wrap"><table className="table traffic-source-table"><thead><tr><th>Kaynak</th><th>Ziyaretçi</th><th>Arama</th><th>Ürün</th><th>Sepet</th><th>Sipariş</th></tr></thead><tbody>{summary.bySource.map((row) => <tr key={row.src}><th>{sourceLabels[row.src] ?? row.src}</th><td>{formatCount(row.visitors)}</td><td>{formatCount(row.searches)}</td><td>{formatCount(row.product_views)}</td><td>{formatCount(row.cart_adds)}</td><td>{formatCount(row.orders)}</td></tr>)}</tbody></table></div></Panel>}
-        <Panel title="Cihazlar" icon={<Monitor size={17} />}><ul className="traffic-devices">{summary.devices.map((item) => <li key={item.device}><DeviceIcon device={item.device} /><span>{item.device === 'unknown' ? 'Bilinmiyor' : item.device}</span><b>{formatCount(item.visitors)}</b></li>)}</ul></Panel>
+        <Panel title="Cihazlar" icon={<Monitor size={17} />}><ul className="traffic-devices">{summary.devices.map((item) => <li key={item.device}><DeviceIcon device={item.device} /><span>{deviceLabel(item.device)}</span><b>{formatCount(item.visitors)}</b></li>)}</ul></Panel>
       </div>
       {site && <RecentActivity key={site} site={site} refresh={refresh} />}
       {!counts && <p className="traffic-empty">Trafik verisi bulunamadı.</p>}
