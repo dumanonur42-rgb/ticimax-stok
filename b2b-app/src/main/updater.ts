@@ -66,6 +66,10 @@ export function updateState(): UpdateState {
   }
 }
 
+export function requestUpdateCheck(): void {
+  checkForUpdates()
+}
+
 /** Store (AppX) installs are updated by the Microsoft Store itself; the GitHub updater must stay off there. */
 const selfUpdating = (): boolean => app.isPackaged && !process.windowsStore
 

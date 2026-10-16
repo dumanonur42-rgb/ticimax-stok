@@ -7,7 +7,7 @@ import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
 import { cloud } from './cloud/client'
 import { flushActivity, logActivity, setActivitySession } from './activity'
 import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
-import { dbPath } from './db'
+import { dbPath, wipeProducts } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateMyCompany } from './repo/customers'
 import { dashboardStats } from './repo/dashboard'
@@ -32,8 +32,8 @@ import {
 } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
-import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, revealPassword, saveUser } from './repo/users'
-import { updateState } from './updater'
+import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, isTransientRestoreError, listUsers, login, logout, registerUser, revealPassword, saveUser } from './repo/users'
+import { requestUpdateCheck, updateState } from './updater'
 
 let session: Session | null = null
 
@@ -182,9 +182,17 @@ export function restoreSession(): Promise<Session | null> {
       try {
         const s = await currentSession()
         if (s) await activate(s, true)
+        else {
+          wipeProducts()
+          broadcast('products:changed')
+        }
         return s
       } catch (e) {
         console.error('session restore failed', e)
+        if (!isTransientRestoreError(e)) {
+          wipeProducts()
+          broadcast('products:changed')
+        }
         return null
       } finally {
         restoring = null
@@ -211,6 +219,8 @@ export function registerIpc(): void {
   })
   handle('auth:logout', async () => {
     await flushActivity()
+    wipeProducts()
+    broadcast('products:changed')
     deactivate()
     await logout()
   })
@@ -572,6 +582,7 @@ export function registerIpc(): void {
   })
 
   handle('app:info', () => ({ version: app.getVersion(), dbPath: dbPath(), platform: process.platform }))
+  handle('app:checkUpdates', () => requestUpdateCheck())
   handle('app:openPath', (p) => {
     shell.showItemInFolder(p)
   })

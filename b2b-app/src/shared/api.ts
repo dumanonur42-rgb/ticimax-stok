@@ -113,6 +113,7 @@ export interface ApiMap {
   'app:openPath': [string, void]
   'app:openExternal': [string, void]
   'app:openStoreUpdates': [void, void]
+  'app:checkUpdates': [void, void]
   'app:seedDemo': [number, number]
   'app:purgeProducts': [void, number]
 

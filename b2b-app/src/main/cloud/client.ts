@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync 
 import { dirname, join } from 'node:path'
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from './config'
 import type { Database } from './database.types'
+import { decryptAtRest, encryptAtRest } from '../storage'
 
 export type Cloud = SupabaseClient<Database, 'public'>
 
@@ -14,47 +15,70 @@ function tokenFile(): string {
   return join(app.getPath('userData'), 'data', 'cloud-session.json')
 }
 
+export const SESSION_CACHE_STORAGE_KEY = 'yamansa-b2b-profile-session'
+
+function readStorage(file: string): Record<string, string> {
+  if (!existsSync(file)) return {}
+  let decoded: ReturnType<typeof decryptAtRest>
+  let all: Record<string, string>
+  try {
+    decoded = decryptAtRest(readFileSync(file, 'utf8'))
+    const parsed: unknown = JSON.parse(decoded.value)
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('Invalid session storage')
+    all = parsed as Record<string, string>
+  } catch {
+    console.warn('Saved session storage is unreadable; the user must sign in again.')
+    const unreadableFile = `${file}.unreadable.${Date.now()}`
+    try {
+      renameSync(file, unreadableFile)
+    } catch {
+      try {
+        rmSync(file, { force: true })
+      } catch {}
+    }
+    return {}
+  }
+  if (!decoded.encrypted) writeStorage(file, all)
+  return all
+}
+
 function writeStorage(file: string, all: Record<string, string>): void {
   const temporaryFile = `${file}.tmp`
-  writeFileSync(temporaryFile, JSON.stringify(all), 'utf8')
+  mkdirSync(dirname(file), { recursive: true })
+  writeFileSync(temporaryFile, encryptAtRest(JSON.stringify(all)), { mode: 0o600 })
   renameSync(temporaryFile, file)
 }
 
 const fileStorage = {
   getItem(key: string): string | null {
-    try {
-      const f = tokenFile()
-      if (!existsSync(f)) return null
-      const all = JSON.parse(readFileSync(f, 'utf8')) as Record<string, string>
-      return all[key] ?? null
-    } catch {
-      return null
-    }
+    return readStorage(tokenFile())[key] ?? null
   },
   setItem(key: string, value: string): void {
     const f = tokenFile()
-    mkdirSync(dirname(f), { recursive: true })
-    let all: Record<string, string> = {}
-    try {
-      if (existsSync(f)) all = JSON.parse(readFileSync(f, 'utf8')) as Record<string, string>
-    } catch {
-      all = {}
-    }
+    const all = readStorage(f)
     all[key] = value
     writeStorage(f, all)
   },
   removeItem(key: string): void {
     const f = tokenFile()
-    try {
-      if (!existsSync(f)) return
-      const all = JSON.parse(readFileSync(f, 'utf8')) as Record<string, string>
-      delete all[key]
-      if (Object.keys(all).length === 0) rmSync(f, { force: true })
-      else writeStorage(f, all)
-    } catch {
-      rmSync(f, { force: true })
-    }
+    if (!existsSync(f)) return
+    const all = readStorage(f)
+    delete all[key]
+    if (Object.keys(all).length === 0) rmSync(f, { force: true })
+    else writeStorage(f, all)
   }
+}
+
+export function getStoredValue(key: string): string | null {
+  return fileStorage.getItem(key)
+}
+
+export function setStoredValue(key: string, value: string): void {
+  fileStorage.setItem(key, value)
+}
+
+export function removeStoredValue(key: string): void {
+  fileStorage.removeItem(key)
 }
 
 /** A request that gets no answer (captive Wi-Fi, half-open link) must fail like a lost connection instead of hanging. */

@@ -1,8 +1,11 @@
-import Database from 'better-sqlite3'
+import Database from 'better-sqlite3-multiple-ciphers'
 import { app } from 'electron'
-import { existsSync, mkdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { randomBytes } from 'node:crypto'
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 import { normalize, productKey } from '@shared/identity'
+import { decryptAtRest, encryptAtRest, ensureAtRestAvailable } from './storage'
+import { setStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 
 export { normalize, productKey }
 
@@ -16,14 +19,158 @@ export function dbPath(): string {
   return join(dir, 'yamansa-b2b.sqlite')
 }
 
+function keyPath(file: string): string {
+  return join(dirname(file), 'db.key')
+}
+
+function isPlaintextDatabase(file: string): boolean {
+  return existsSync(file) && readFileSync(file).subarray(0, 16).toString('binary') === 'SQLite format 3\0'
+}
+
+function quarantine(file: string, reason: string): void {
+  const suffix = `.unreadable.${Date.now()}`
+  if (existsSync(file)) renameSync(file, `${file}${suffix}`)
+  for (const ext of ['-wal', '-shm']) {
+    if (existsSync(`${file}${ext}`)) renameSync(`${file}${ext}`, `${file}${suffix}${ext}`)
+  }
+  console.error(`Local database moved aside (${reason}).`)
+}
+
+function readKey(file: string, keyFile: string): string | null {
+  if (!existsSync(keyFile)) return null
+  try {
+    const key = decryptAtRest(readFileSync(keyFile, 'utf8')).value
+    if (!/^[a-f0-9]{64}$/i.test(key)) throw new Error('Invalid database key')
+    return key
+  } catch (error) {
+    if (!isPlaintextDatabase(file)) quarantine(file, 'database key could not be decrypted')
+    const suffix = `.unreadable.${Date.now()}`
+    if (existsSync(keyFile)) renameSync(keyFile, `${keyFile}${suffix}`)
+    console.error('Local database key could not be read; starting with a new key.', error)
+    return null
+  }
+}
+
+function writeKey(keyFile: string): string {
+  const key = randomBytes(32).toString('hex')
+  const temporaryFile = `${keyFile}.tmp`
+  writeFileSync(temporaryFile, encryptAtRest(key), { mode: 0o600 })
+  renameSync(temporaryFile, keyFile)
+  return key
+}
+
+function configureEncryptedDb(database: DB, key: string): void {
+  database.pragma("cipher='sqlcipher'")
+  database.pragma(`key="x'${key}'"`)
+}
+
+function hasTable(database: DB, table: string): boolean {
+  return !!database.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?").get(table)
+}
+
+function migratePlaintextDatabase(file: string, key: string): void {
+  const plaintext = new Database(file)
+  const settings = hasTable(plaintext, 'settings') ? plaintext.prepare('SELECT key, value FROM settings').all() as { key: string; value: string }[] : []
+  const outbox = hasTable(plaintext, 'outbox') ? plaintext.prepare('SELECT seq, id, user_id, kind, payload, created_at, attempts, failed, error FROM outbox').all() as Array<Record<string, unknown>> : []
+  const sessionCache = hasTable(plaintext, 'sync_state')
+    ? (plaintext.prepare("SELECT value FROM sync_state WHERE key = 'session_cache'").get() as { value: string } | undefined)?.value
+    : undefined
+  plaintext.close()
+
+  const temporaryFile = `${file}.encrypted-migration.tmp`
+  const backupFile = `${file}.plain-migration.bak`
+  const backupWal = `${backupFile}-wal`
+  const backupShm = `${backupFile}-shm`
+  rmSync(temporaryFile, { force: true })
+  const migrated = new Database(temporaryFile)
+  configureEncryptedDb(migrated, key)
+  migrate(migrated)
+  migrated.transaction(() => {
+    const insertSetting = migrated.prepare('INSERT OR REPLACE INTO settings(key, value) VALUES (?, ?)')
+    for (const row of settings) insertSetting.run(row.key, row.value)
+    const insertOutbox = migrated.prepare('INSERT INTO outbox(seq, id, user_id, kind, payload, created_at, attempts, failed, error) VALUES (@seq, @id, @user_id, @kind, @payload, @created_at, @attempts, @failed, @error)')
+    for (const row of outbox) insertOutbox.run(row)
+  })()
+  migrated.close()
+
+  if (sessionCache) setStoredValue(SESSION_CACHE_STORAGE_KEY, sessionCache)
+  if (existsSync(backupFile)) rmSync(backupFile, { force: true })
+  if (existsSync(backupWal)) rmSync(backupWal, { force: true })
+  if (existsSync(backupShm)) rmSync(backupShm, { force: true })
+  for (const ext of ['-wal', '-shm']) {
+    if (existsSync(`${file}${ext}`)) renameSync(`${file}${ext}`, `${backupFile}${ext}`)
+  }
+  renameSync(file, backupFile)
+  try {
+    renameSync(temporaryFile, file)
+  } catch (error) {
+    renameSync(backupFile, file)
+    for (const ext of ['-wal', '-shm']) {
+      if (existsSync(`${backupFile}${ext}`)) renameSync(`${backupFile}${ext}`, `${file}${ext}`)
+    }
+    throw error
+  }
+  rmSync(backupFile, { force: true })
+  rmSync(backupWal, { force: true })
+  rmSync(backupShm, { force: true })
+}
+
+function restoreInterruptedMigration(file: string): void {
+  const backup = `${file}.plain-migration.bak`
+  if (!existsSync(file) && existsSync(backup)) {
+    renameSync(backup, file)
+    for (const ext of ['-wal', '-shm']) {
+      if (existsSync(`${backup}${ext}`)) renameSync(`${backup}${ext}`, `${file}${ext}`)
+    }
+  } else if (isPlaintextDatabase(file)) {
+    for (const ext of ['-wal', '-shm']) {
+      if (!existsSync(`${file}${ext}`) && existsSync(`${backup}${ext}`)) renameSync(`${backup}${ext}`, `${file}${ext}`)
+    }
+  }
+}
+
+function openEncryptedDatabase(file: string, key: string): DB {
+  const database = new Database(file)
+  try {
+    configureEncryptedDb(database, key)
+    database.pragma('journal_mode = WAL')
+    database.pragma('synchronous = NORMAL')
+    database.pragma('foreign_keys = ON')
+    database.pragma('cache_size = -65536')
+    migrate(database)
+    return database
+  } catch (error) {
+    database.close()
+    throw error
+  }
+}
+
+export function openDatabaseForSelfCheck(file: string, keyFile: string): DB {
+  ensureAtRestAvailable()
+  const key = readKey(file, keyFile) ?? writeKey(keyFile)
+  if (isPlaintextDatabase(file)) migratePlaintextDatabase(file, key)
+  return openEncryptedDatabase(file, key)
+}
+
 export function getDb(): DB {
   if (db) return db
-  db = new Database(dbPath())
-  db.pragma('journal_mode = WAL')
-  db.pragma('synchronous = NORMAL')
-  db.pragma('foreign_keys = ON')
-  db.pragma('cache_size = -65536')
-  migrate(db)
+  ensureAtRestAvailable()
+  const file = dbPath()
+  restoreInterruptedMigration(file)
+  const keyFile = keyPath(file)
+  const key = readKey(file, keyFile) ?? writeKey(keyFile)
+  if (isPlaintextDatabase(file)) migratePlaintextDatabase(file, key)
+  try {
+    db = openEncryptedDatabase(file, key)
+  } catch (error) {
+    if (!existsSync(file) || isPlaintextDatabase(file)) throw error
+    quarantine(file, 'encrypted database could not be opened')
+    db = openEncryptedDatabase(file, key)
+  }
+  const backup = `${file}.plain-migration.bak`
+  rmSync(backup, { force: true })
+  rmSync(`${backup}-wal`, { force: true })
+  rmSync(`${backup}-shm`, { force: true })
   return db
 }
 
@@ -35,6 +182,17 @@ export function closeDb(): void {
 export function reopenDb(): DB {
   closeDb()
   return getDb()
+}
+
+export function wipeProducts(): void {
+  const database = getDb()
+  database.transaction(() => {
+    database.exec('DELETE FROM products')
+    database.exec("INSERT INTO products_fts(products_fts) VALUES('rebuild')")
+    database.exec("DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation')")
+  })()
+  database.pragma('wal_checkpoint(TRUNCATE)')
+  database.exec('VACUUM')
 }
 
 const SCHEMA = `
