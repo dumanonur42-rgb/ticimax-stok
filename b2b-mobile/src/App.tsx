@@ -692,7 +692,7 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
     const minimum = Math.max(1, product.min_order)
-    const amount = variant === 'table' ? minimum : Math.max(minimum, Math.floor(qty))
+    const amount = cartLine !== undefined || variant === 'table' ? minimum : Math.max(minimum, Math.floor(qty))
     addToCart({ ...product, min_order: minimum }, amount)
     logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty: amount })
     onToast(`${product.sku} sepete eklendi (${amount} adet)`)
@@ -708,7 +708,7 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
         setPulsing(false)
       }, 320)
     })
-    onAdded?.()
+    if (!cartLine) onAdded?.()
   }
 
   const buttonClass = [
@@ -736,10 +736,30 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
   )
 }
 
+function ProductCartActions({ product, onToast, onAdded }: {
+  product: Product; onToast: (message: string) => void; onAdded?: () => void
+}): ReactNode {
+  const minimum = Math.max(1, product.min_order)
+  const cartLine = useCart((cartState) => cartState.lines.find((line) => line.product_id === product.id))
+  const setCartQty = useCart((cartState) => cartState.setQty)
+  const [draftQty, setDraftQty] = useState(minimum)
+  const qty = cartLine?.qty ?? draftQty
+  const setQty = (value: number): void => {
+    if (cartLine) setCartQty(product.id, value)
+    else setDraftQty(value)
+  }
+
+  return (
+    <>
+      <QuantityStepper qty={qty} setQty={setQty} min={minimum} sku={product.sku} />
+      <ProductAddButton variant="button" product={product} qty={qty} onToast={onToast} onAdded={onAdded} />
+    </>
+  )
+}
+
 function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
   product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const [qty, setQty] = useState(Math.max(1, product.min_order))
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
@@ -754,12 +774,7 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
       <div className="product-actions">
-        <div className="quantity-stepper" role="group" aria-label={`${product.sku} miktarı`}>
-          <button type="button" aria-label="Miktarı azalt" onClick={() => setQty((value) => Math.max(product.min_order, value - Math.max(1, product.min_order)))}><Minus size={16} /></button>
-          <input aria-label={`${product.sku} miktarı`} inputMode="numeric" value={qty} onChange={(event) => setQty(Math.max(Math.max(1, product.min_order), Number(event.target.value.replace(/\D/g, '')) || 1))} />
-          <button type="button" aria-label="Miktarı artır" onClick={() => setQty((value) => value + Math.max(1, product.min_order))}><Plus size={16} /></button>
-        </div>
-        <ProductAddButton variant="button" product={product} qty={qty} onToast={onToast} />
+        <ProductCartActions product={product} onToast={onToast} />
       </div>
     </article>
   )
@@ -835,7 +850,6 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
 }): ReactNode {
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
-  const [qty, setQty] = useState(Math.max(1, product.min_order))
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
@@ -877,8 +891,7 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
         <DetailRow label="Açıklama" value={product.description} />
       </dl>
       <div className="product-actions detail-actions">
-        <QuantityStepper qty={qty} setQty={setQty} min={Math.max(1, product.min_order)} sku={product.sku} />
-        <ProductAddButton variant="button" product={product} qty={qty} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
+        <ProductCartActions key={product.id} product={product} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
     </Sheet>
   )
