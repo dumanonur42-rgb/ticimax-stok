@@ -2,14 +2,21 @@
 /**
  * Plugin Name: Yamansa Hareket
  * Description: Hafif site hareketi ölçümü.
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 
 defined('ABSPATH') || exit;
 
+const YAMANSA_HAREKET_ASSET = 'yb-track.woo.0b15197adf.min.js';
+
 add_action('wp_enqueue_scripts', static function (): void {
-    $file = plugin_dir_path(__FILE__) . 'assets/yb-track.woo.min.js';
-    wp_enqueue_script('yamansa-hareket', plugin_dir_url(__FILE__) . 'assets/yb-track.woo.min.js', [], is_file($file) ? (string) filemtime($file) : '1.0.0', true);
+    wp_enqueue_script(
+        'yamansa-hareket',
+        plugin_dir_url(__FILE__) . 'assets/' . YAMANSA_HAREKET_ASSET,
+        [],
+        null,
+        true
+    );
 }, 99);
 
 add_filter('script_loader_tag', static function (string $tag, string $handle): string {
@@ -22,7 +29,7 @@ add_filter('script_loader_tag', static function (string $tag, string $handle): s
 foreach (['litespeed_optm_js_defer_exc', 'litespeed_optm_js_delay_exc', 'rocket_exclude_defer_js', 'rocket_exclude_delay_js'] as $filter) {
     add_filter($filter, static function ($excluded): array {
         $excluded = is_array($excluded) ? $excluded : [];
-        $excluded[] = 'yb-track.woo.min.js';
+        $excluded[] = YAMANSA_HAREKET_ASSET;
         return array_values(array_unique($excluded));
     });
 }

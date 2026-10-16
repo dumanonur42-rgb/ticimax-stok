@@ -1,4 +1,5 @@
-import { readFile, rm, writeFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { execFile } from 'node:child_process'
 import { transform } from 'esbuild'
 import { dirname, join } from 'node:path'
@@ -41,7 +42,22 @@ for (const build of builds) {
 }
 const wordpress = output.get('yb-track.woo.min.js')
 const ticimax = output.get('yb-track.ticimax.min.js')
-await writeFile(join(root, 'wp-plugin/yamansa-hareket/assets/yb-track.woo.min.js'), wordpress)
+const assetName = `yb-track.woo.${createHash('sha256').update(wordpress).digest('hex').slice(0, 10)}.min.js`
+const assetDir = join(root, 'wp-plugin/yamansa-hareket/assets')
+for (const file of await readdir(assetDir)) {
+  if (file.startsWith('yb-track.woo') && file.endsWith('.min.js') && file !== assetName) {
+    await rm(join(assetDir, file), { force: true })
+  }
+}
+await writeFile(join(assetDir, assetName), wordpress)
+const pluginPath = join(root, 'wp-plugin/yamansa-hareket/yamansa-hareket.php')
+const pluginSource = await readFile(pluginPath, 'utf8')
+const assetConstant = /^const YAMANSA_HAREKET_ASSET = '[^']+';$/m
+if (!assetConstant.test(pluginSource)) throw new Error('Missing YAMANSA_HAREKET_ASSET constant in plugin')
+await writeFile(
+  pluginPath,
+  pluginSource.replace(assetConstant, `const YAMANSA_HAREKET_ASSET = '${assetName}';`)
+)
 await writeFile(join(root, 'woo-snippet.html'), `<script defer>\n${wordpress}\n</script>\n`)
 await writeFile(join(root, 'ticimax-snippet.html'), `<script defer>\n${ticimax}\n</script>\n`)
 const archive = join(root, 'yamansa-hareket-plugin.zip')
