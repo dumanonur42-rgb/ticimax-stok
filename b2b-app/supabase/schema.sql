@@ -744,3 +744,16 @@ end $$;
 drop trigger if exists on_auth_password_change on auth.users;
 create trigger on_auth_password_change after update of encrypted_password on auth.users
   for each row execute function public.forget_password_on_change();
+
+-- Security hardening: no anon/public function execute; fixed search_path
+-- Functions are only callable by signed-in users (and the service role), never by anon/public.
+revoke execute on all functions in schema public from public, anon;
+grant execute on all functions in schema public to authenticated, service_role;
+revoke execute on function public.handle_new_user() from authenticated;
+grant execute on function public.handle_new_user() to supabase_auth_admin;
+revoke execute on function public.password_key() from authenticated;
+alter default privileges in schema public revoke execute on functions from public, anon;
+
+alter function public.touch_updated_at() set search_path = public;
+alter function public.norm_key(text) set search_path = public;
+alter function public.products_fill_key() set search_path = public;
