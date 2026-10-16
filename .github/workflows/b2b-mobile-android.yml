@@ -85,7 +85,7 @@ jobs:
           key_path="$RUNNER_TEMP/yamansa-android.jks"
           printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$key_path"
           echo "ANDROID_KEYSTORE_PATH=$key_path" >> "$GITHUB_ENV"
-      - name: Build signed release APK
+      - name: Build release APK
         run: ./gradlew assembleRelease
         working-directory: b2b-mobile/android
       - name: Name APK
@@ -95,7 +95,15 @@ jobs:
           version="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
           apk="Yamansa-Rulman-B2B-Android-${version}.apk"
           mkdir -p dist-android
-          cp android/app/build/outputs/apk/release/app-release.apk "dist-android/$apk"
+          out=android/app/build/outputs/apk/release
+          if [ -f "$out/app-release.apk" ]; then
+            cp "$out/app-release.apk" "dist-android/$apk"
+          elif [[ "$GITHUB_REF" == refs/tags/b2b-android-v* ]]; then
+            echo "Signed release APK missing" >&2
+            exit 1
+          else
+            cp "$out/app-release-unsigned.apk" "dist-android/$apk"
+          fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "path=dist-android/$apk" >> "$GITHUB_OUTPUT"
         working-directory: b2b-mobile
