@@ -1,9 +1,12 @@
-import { readFile, writeFile } from 'node:fs/promises'
+import { readFile, rm, writeFile } from 'node:fs/promises'
+import { execFile } from 'node:child_process'
 import { transform } from 'esbuild'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
 import { gzipSync } from 'node:zlib'
 
+const exec = promisify(execFile)
 const root = dirname(fileURLToPath(import.meta.url))
 const endpoint = 'https://wxcbajukvxmerdjaikuw.supabase.co/functions/v1/site-track'
 const template = await readFile(join(root, 'yb-track.js'), 'utf8')
@@ -39,4 +42,8 @@ for (const build of builds) {
 const wordpress = output.get('yb-track.woo.min.js')
 const ticimax = output.get('yb-track.ticimax.min.js')
 await writeFile(join(root, 'wp-plugin/yamansa-hareket/assets/yb-track.woo.min.js'), wordpress)
+await writeFile(join(root, 'woo-snippet.html'), `<script defer>\n${wordpress}\n</script>\n`)
 await writeFile(join(root, 'ticimax-snippet.html'), `<script defer>\n${ticimax}\n</script>\n`)
+const archive = join(root, 'yamansa-hareket-plugin.zip')
+await rm(archive, { force: true })
+await exec('zip', ['-q', '-r', archive, 'yamansa-hareket'], { cwd: join(root, 'wp-plugin') })

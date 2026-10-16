@@ -2,7 +2,7 @@
   'use strict';
   var endpoint = '__YB_TRACK_ENDPOINT__';
   var q = [], vid = '', sid = '', device = '', ref = '', timer = 0, busy = false;
-  var perf = false, work = 0;
+  var perf = false, work = 0, started = false;
 
   function safe(fn) {
     return function (event) {
@@ -120,20 +120,20 @@
         var item = productData(), qty = Number((form.querySelector('input.qty') || {}).value || 1);
         cartAdd(item.s, Math.max(1, qty || 1), item.n);
       }
-    }), { passive: true });
+    }), true);
     document.addEventListener('click', safe(function (event) {
       var button = event.target.closest && event.target.closest('button.single_add_to_cart_button,input[type="submit"][name="add-to-cart"]');
       var form = button && button.closest('form.cart');
       if (!form) return;
       var item = productData(), qty = Number((form.querySelector('input.qty') || {}).value || 1);
       cartAdd(item.s, Math.max(1, qty || 1), item.n);
-    }), { passive: true });
+    }), true);
     if (location.hostname.indexOf('rulmansitesi') >= 0) document.addEventListener('click', safe(function (event) {
       var link = event.target.closest && event.target.closest('a[href*="wa.me"]');
       if (link && /sipariş|order/i.test(link.textContent + ' ' + link.className)) {
         add('order', { p: path(false), x: document.querySelectorAll('.cart_item').length || 1 });
       }
-    }), { passive: true });
+    }));
   }
   /*</WOO>*/
   /*<TICIMAX>*/
@@ -171,7 +171,7 @@
         var selected = Number((document.querySelector('input[name="adet"],input.qty') || {}).value || 1);
         cartAdd(item.s, Math.max(1, selected || 1), item.n);
       }
-    }), { passive: true });
+    }));
     var completePage = location.pathname + ' ' + pageType;
     if (/order|siparis/i.test(completePage) && /success|complete|tamam|tesekkur|finish/i.test(completePage)) {
       var id = params.get('orderId') || params.get('siparisNo') || location.pathname;
@@ -192,8 +192,8 @@
     else sid = previous[0];
     touch();
     __YB_TRACK_ADAPTER_INIT__;
-    document.addEventListener('visibilitychange', safe(function () { if (document.visibilityState === 'hidden') flush(true); }), { passive: true });
-    window.addEventListener('pagehide', safe(function () { flush(true); }), { passive: true });
+    document.addEventListener('visibilitychange', safe(function () { if (document.visibilityState === 'hidden') flush(true); }));
+    window.addEventListener('pagehide', safe(function () { flush(true); }));
   }
   function start() {
     perf = window.__YB_TRACK_TEST_PERF === true;
@@ -201,9 +201,14 @@
     safe(init)();
   }
   function idle() {
+    if (started) return;
+    started = true;
     try { if (window.requestIdleCallback) window.requestIdleCallback(safe(start), { timeout: 3000 }); else window.setTimeout(safe(start), 1500); }
     catch (_) { window.setTimeout(safe(start), 1500); }
   }
   if (document.readyState === 'complete') idle();
-  else window.addEventListener('load', idle, { once: true, passive: true });
+  else {
+    window.addEventListener('load', idle);
+    document.addEventListener('readystatechange', function () { if (document.readyState === 'complete') idle(); });
+  }
 })();
