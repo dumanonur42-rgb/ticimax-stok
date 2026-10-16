@@ -9,7 +9,8 @@ const queue: Queued[] = []
 let activeUser: string | null = null
 let flushing: Promise<void> | null = null
 let searchTimer: number | null = null
-let lastLoggedSearch: string | null = null
+let lastSearchKey: string | null = null
+const lastProductViews = new Map<string, number>()
 
 function platform(): ActivityPlatform {
   const value = Capacitor.getPlatform()
@@ -17,15 +18,29 @@ function platform(): ActivityPlatform {
 }
 
 export function setActivitySession(userId: string | null): void {
-  if (activeUser === userId) return
+  if (activeUser !== userId) lastProductViews.clear()
   activeUser = userId
   cancelActivitySearch()
-  lastLoggedSearch = null
+  lastSearchKey = null
 }
 
 export function logActivity(event: ActivityEvent): void {
   if (!activeUser) return
+  const now = Date.now()
+  if (event.kind === 'search' && event.query !== undefined) {
+    const key = event.query.toLocaleLowerCase('tr-TR').replace(/[\s.\-\/_]+/g, '')
+    if (lastSearchKey === key) return
+    lastSearchKey = key
+  }
+  if (event.kind === 'product_view') {
+    for (const [key, at] of lastProductViews) if (now - at >= 60_000) lastProductViews.delete(key)
+    const key = event.product_id != null ? `id:${event.product_id}` : `sku:${event.sku ?? ''}|brand:${event.brand ?? ''}`
+    const lastViewedAt = lastProductViews.get(key)
+    if (lastViewedAt !== undefined && now - lastViewedAt < 60_000) return
+    lastProductViews.set(key, now)
+  }
   const row: ActivityLogInsert = {
+    at: new Date().toISOString(),
     platform: platform(),
     kind: event.kind,
     ...(event.product_id !== undefined ? { product_id: event.product_id } : {}),
@@ -48,8 +63,7 @@ export function scheduleActivitySearch(query: string): void {
   if (!owner || trimmed.length < 2) return
   searchTimer = window.setTimeout(() => {
     searchTimer = null
-    if (activeUser !== owner || lastLoggedSearch === trimmed) return
-    lastLoggedSearch = trimmed
+    if (activeUser !== owner) return
     logActivity({ kind: 'search', query: trimmed })
   }, 1500)
 }
