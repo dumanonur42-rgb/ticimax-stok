@@ -20,6 +20,9 @@ android {
     }
     signingConfigs {
         release {
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
             if (releaseStorePath) {
                 storeFile file(releaseStorePath)
                 storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
@@ -30,7 +33,7 @@ android {
     }
     buildTypes {
         release {
-            signingConfig releaseStorePath ? signingConfigs.release : signingConfigs.debug
+            signingConfig releaseStorePath ? signingConfigs.release : null
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
