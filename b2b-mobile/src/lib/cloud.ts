@@ -120,9 +120,9 @@ export async function restoreSession(): Promise<Session | null> {
   try {
     return await loadProfileSession(data.session.user.id)
   } catch (error) {
-    if (/Sunucuya ulaşılamıyor/.test(errorMessage(error))) {
+    if (!/Hesabınız devre dışı bırakılmış|Hesabınız henüz yönetici tarafından onaylanmadı|Kullanıcı adı veya şifre hatalı/i.test(errorMessage(error))) {
       const cached = cachedSession()
-      if (cached) return cached
+      if (cached?.user.id === data.session.user.id) return cached
     }
     throw error
   }
