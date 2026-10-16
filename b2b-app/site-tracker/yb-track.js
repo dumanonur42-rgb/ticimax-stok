@@ -24,11 +24,14 @@
   function touch() {
     try { sessionStorage.setItem('yb_sid', sid + ':' + Date.now()); } catch (_) {}
   }
+  function schedule() {
+    if (!timer) timer = window.setInterval(safe(function () { if (q.length) flush(false); else { clearInterval(timer); timer = 0; } }), 10_000);
+  }
   function add(kind, data) {
     if (q.length >= 100) return;
     touch();
     q.push({ k: kind, at: Date.now(), s: data.s || '', n: data.n || '', p: data.p || '', q: data.q || '', c: Number.isInteger(data.c) ? data.c : null, x: Number.isFinite(data.x) ? data.x : null });
-    if (!timer) timer = window.setInterval(safe(function () { if (q.length) flush(false); else { clearInterval(timer); timer = 0; } }), 10_000);
+    schedule();
   }
   function flush(beacon) {
     if (!q.length || (busy && !beacon)) return;
@@ -45,9 +48,15 @@
       try { if (navigator.sendBeacon(endpoint, new Blob([body], { type: 'text/plain' }))) q.splice(0, events.length); } catch (_) {}
     } else {
       busy = true;
+      q.splice(0, events.length);
       fetch(endpoint, { method: 'POST', mode: 'cors', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body })
-        .then(function (response) { if (response.ok || response.status === 204) q.splice(0, events.length); })
-        .catch(function () {}).then(safe(function () { busy = false; }));
+        .then(function (response) {
+          if (response.ok || response.status === 204) return;
+          q = events.concat(q).slice(0, 100);
+          schedule();
+        })
+        .catch(function () { q = events.concat(q).slice(0, 100); schedule(); })
+        .then(safe(function () { busy = false; }));
     }
     if (!q.length && timer) { clearInterval(timer); timer = 0; }
   }
