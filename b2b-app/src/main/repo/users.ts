@@ -1,3 +1,4 @@
+import { isAuthRetryableFetchError } from '@supabase/supabase-js'
 import type { Customer, CustomerInput, DealerLogin, Perm, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
 import { clearStoredSession, cloud, cloudError, ephemeralCloud, isConnectivityError, must, mustVoid } from '../cloud/client'
@@ -34,7 +35,7 @@ function validatePassword(p: string): void {
 
 async function profileOf(userId: string): Promise<User | null> {
   const r = await cloud().from('profiles').select('*').eq('id', userId).maybeSingle()
-  if (r.error) throw cloudError(r.error)
+  if (r.error) throw Object.assign(cloudError(r.error), { status: r.status })
   return r.data ? toUser(r.data) : null
 }
 
@@ -72,6 +73,13 @@ function forgetSession(): void {
   getDb().prepare('DELETE FROM sync_state WHERE key = ?').run(SESSION_KEY)
 }
 
+function isTransientRestoreError(error: unknown): boolean {
+  if (isConnectivityError(error) || isAuthRetryableFetchError(error)) return true
+  if (typeof error !== 'object' || error === null || !('status' in error)) return false
+  const status = Number((error as { status: unknown }).status)
+  return Number.isFinite(status) && status >= 500
+}
+
 export async function login(username: string, password: string): Promise<Session> {
   const sb = cloud()
   const auth = await sb.auth.signInWithPassword({ email: loginEmail(username), password })
@@ -104,7 +112,7 @@ export async function logout(): Promise<void> {
 export async function currentSession(): Promise<Session | null> {
   const r = await cloud().auth.getSession()
   if (r.error) {
-    if (isConnectivityError(r.error)) return rememberedSession(null)
+    if (isTransientRestoreError(r.error)) return rememberedSession(null)
     forgetSession()
     return null
   }
@@ -121,7 +129,7 @@ export async function currentSession(): Promise<Session | null> {
     }
     return await sessionOf(user)
   } catch (e) {
-    if (isConnectivityError(e)) return rememberedSession(userId)
+    if (isTransientRestoreError(e)) return rememberedSession(userId)
     throw e
   }
 }

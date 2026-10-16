@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { app } from 'electron'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from './config'
 import type { Database } from './database.types'
@@ -12,6 +12,12 @@ let client: Cloud | null = null
 /** Auth tokens live next to the SQLite cache so a signed-in user stays signed in across restarts. */
 function tokenFile(): string {
   return join(app.getPath('userData'), 'data', 'cloud-session.json')
+}
+
+function writeStorage(file: string, all: Record<string, string>): void {
+  const temporaryFile = `${file}.tmp`
+  writeFileSync(temporaryFile, JSON.stringify(all), 'utf8')
+  renameSync(temporaryFile, file)
 }
 
 const fileStorage = {
@@ -35,7 +41,7 @@ const fileStorage = {
       all = {}
     }
     all[key] = value
-    writeFileSync(f, JSON.stringify(all), 'utf8')
+    writeStorage(f, all)
   },
   removeItem(key: string): void {
     const f = tokenFile()
@@ -44,7 +50,7 @@ const fileStorage = {
       const all = JSON.parse(readFileSync(f, 'utf8')) as Record<string, string>
       delete all[key]
       if (Object.keys(all).length === 0) rmSync(f, { force: true })
-      else writeFileSync(f, JSON.stringify(all), 'utf8')
+      else writeStorage(f, all)
     } catch {
       rmSync(f, { force: true })
     }
@@ -73,6 +79,16 @@ export function cloud(): Cloud {
     global: { headers: { 'x-client-info': `yamansa-b2b/${app.getVersion()}` }, fetch: timedFetch }
   })
   return client
+}
+
+export async function quiesceAuth(): Promise<void> {
+  if (!client) return
+  try {
+    await client.auth.stopAutoRefresh()
+  } catch {}
+  try {
+    await client.auth.getSession()
+  } catch {}
 }
 
 const CONNECTIVITY_RE = /fetch failed|ENOTFOUND|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|network|Failed to fetch|aborted|cancelled|timeout|socket hang up/i
