@@ -692,7 +692,7 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
     const minimum = Math.max(1, product.min_order)
-    const amount = cartLine ? minimum : Math.max(minimum, Math.floor(qty))
+    const amount = variant === 'table' ? minimum : Math.max(minimum, Math.floor(qty))
     addToCart({ ...product, min_order: minimum }, amount)
     logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty: amount })
     onToast(`${product.sku} sepete eklendi (${amount} adet)`)
