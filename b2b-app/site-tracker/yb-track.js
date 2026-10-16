@@ -3,6 +3,9 @@
   var endpoint = '__YB_TRACK_ENDPOINT__';
   var q = [], vid = '', sid = '', device = '', ref = '', timer = 0, busy = false;
   var perf = false, work = 0, started = false;
+  var SEARCH_INPUTS = 'input[name="s"],input#txtbxArama,input.dgwt-wcas-search-input';
+  var SUGGEST_ITEMS = 'a.commercekit-ajs-product,a.dgwt-wcas-suggestion-product,#divSearchProducts li a';
+  var pendingSearch = '';
 
   function safe(fn) {
     return function (event) {
@@ -56,6 +59,39 @@
     var key = norm(text);
     try { if (sessionStorage.getItem('yb_search') === key) return; sessionStorage.setItem('yb_search', key); } catch (_) {}
     add('search', { q: text, p: path(true), c: count });
+  }
+  function isSearchInput(target) {
+    return !!(target && target.matches && target.matches(SEARCH_INPUTS));
+  }
+  function trackPendingSearch() {
+    if (pendingSearch.length >= 2) trackSearch(pendingSearch, null);
+    pendingSearch = '';
+  }
+  function listenForTypedSearch() {
+    document.addEventListener('input', safe(function (event) {
+      if (isSearchInput(event.target)) pendingSearch = String(event.target.value || '').trim().slice(0, 100);
+    }), true);
+    document.addEventListener('submit', safe(function (event) {
+      var form = event.target;
+      if (form && form.querySelector && form.querySelector(SEARCH_INPUTS)) pendingSearch = '';
+    }), true);
+    document.addEventListener('keydown', safe(function (event) {
+      if (event.key === 'Enter' && isSearchInput(event.target)) pendingSearch = '';
+    }), true);
+    document.addEventListener('click', safe(function (event) {
+      var target = event.target, link = target && target.closest ? target.closest('a[href]') : null;
+      if (link && (/(?:[?&])(?:s|kelime)=/i.test(link.getAttribute('href') || '') || link.matches('.commercekit-ajs-view-all,.js-dgwt-wcas-suggestion-more'))) {
+        pendingSearch = '';
+        return;
+      }
+      if (pendingSearch.length < 2 || !target || !target.closest || !target.closest(SUGGEST_ITEMS)) return;
+      var items = document.querySelectorAll(SUGGEST_ITEMS), count = 0;
+      for (var i = 0; i < items.length; i++) if (items[i].getClientRects().length > 0) count++;
+      var query = pendingSearch;
+      pendingSearch = '';
+      trackSearch(query, count);
+      flush(true);
+    }), true);
   }
   function productData() {
     var sku = '', name = '';
@@ -191,9 +227,10 @@
     if (!previous[0] || now - Number(previous[1]) > 1_800_000) { sid = randomId(); add('visit', { p: path(false) }); }
     else sid = previous[0];
     touch();
+    listenForTypedSearch();
     __YB_TRACK_ADAPTER_INIT__;
-    document.addEventListener('visibilitychange', safe(function () { if (document.visibilityState === 'hidden') flush(true); }));
-    window.addEventListener('pagehide', safe(function () { flush(true); }));
+    document.addEventListener('visibilitychange', safe(function () { if (document.visibilityState === 'hidden') { trackPendingSearch(); flush(true); } }));
+    window.addEventListener('pagehide', safe(function () { trackPendingSearch(); flush(true); }));
   }
   function start() {
     perf = window.__YB_TRACK_TEST_PERF === true;

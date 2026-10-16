@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Yamansa Hareket
  * Description: Hafif site hareketi ölçümü.
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 
 defined('ABSPATH') || exit;
 
-const YAMANSA_HAREKET_ASSET = 'yb-track.woo.0b15197adf.min.js';
+const YAMANSA_HAREKET_ASSET = 'yb-track.woo.f9806fe817.min.js';
 
 add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_script(
