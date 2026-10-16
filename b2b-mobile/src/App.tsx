@@ -31,6 +31,7 @@ import logo from './assets/logo.png'
 import mark from './assets/mark.png'
 
 const APP_VERSION = __APP_VERSION__
+const CART_ADDED_EVENT = 'yamansa:cart-added'
 
 function userFacingError(error: unknown): string {
   return error instanceof Error ? error.message : 'Bir sorun oluştu. Yeniden deneyin.'
@@ -49,7 +50,7 @@ export default function App(): ReactNode {
   const state = useApp()
   const refreshCart = useCart((cartState) => cartState.refresh)
   const clearCart = useCart((cartState) => cartState.clear)
-  const cartCount = useCart((cartState) => cartState.lines.reduce((sum, line) => sum + line.qty, 0))
+  const cartLineCount = useCart((cartState) => cartState.lines.length)
   const {
     tab, session, settings, customers, products, online, syncBusy,
     toast, sheet, selectedProduct, selectedOrderId, setTab, setSession, setSettings,
@@ -427,7 +428,7 @@ export default function App(): ReactNode {
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
           {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
-        <BottomTabs tab={tab} setTab={setTab} cartCount={cartCount} />
+        <BottomTabs tab={tab} setTab={setTab} cartLineCount={cartLineCount} />
         {sheet === 'filters' && <FilterSheet
           entries={searchIndex}
           initialBrands={state.catalogBrands}
@@ -445,7 +446,31 @@ export default function App(): ReactNode {
   )
 }
 
-function BottomTabs({ tab, setTab, cartCount }: { tab: Tab; setTab: (tab: Tab) => void; cartCount: number }): ReactNode {
+function BottomTabs({ tab, setTab, cartLineCount }: { tab: Tab; setTab: (tab: Tab) => void; cartLineCount: number }): ReactNode {
+  const [cartPulsing, setCartPulsing] = useState(false)
+  const pulseFrame = useRef<number | null>(null)
+  const pulseTimeout = useRef<number | null>(null)
+  useEffect(() => {
+    const pulseCartBadge = (): void => {
+      if (pulseFrame.current !== null) window.cancelAnimationFrame(pulseFrame.current)
+      if (pulseTimeout.current !== null) window.clearTimeout(pulseTimeout.current)
+      setCartPulsing(false)
+      pulseFrame.current = window.requestAnimationFrame(() => {
+        pulseFrame.current = null
+        setCartPulsing(true)
+        pulseTimeout.current = window.setTimeout(() => {
+          pulseTimeout.current = null
+          setCartPulsing(false)
+        }, 320)
+      })
+    }
+    window.addEventListener(CART_ADDED_EVENT, pulseCartBadge)
+    return () => {
+      window.removeEventListener(CART_ADDED_EVENT, pulseCartBadge)
+      if (pulseFrame.current !== null) window.cancelAnimationFrame(pulseFrame.current)
+      if (pulseTimeout.current !== null) window.clearTimeout(pulseTimeout.current)
+    }
+  }, [])
   const tabs: { id: Tab; label: string; icon: typeof Home }[] = [
     { id: 'home', label: 'Ana Sayfa', icon: Home },
     { id: 'products', label: 'Ürünler', icon: PackageSearch },
@@ -456,8 +481,8 @@ function BottomTabs({ tab, setTab, cartCount }: { tab: Tab; setTab: (tab: Tab) =
   return (
     <nav className="bottom-tabs" aria-label="Ana menü">
       {tabs.map(({ id, label, icon: Icon }) => (
-        <button type="button" key={id} className={tab === id ? 'tab active' : 'tab'} onClick={() => setTab(id)} aria-current={tab === id ? 'page' : undefined} aria-label={label}>
-          <span className="tab-icon"><Icon size={21} aria-hidden />{id === 'cart' && cartCount > 0 && <span className="tab-badge">{cartCount > 99 ? '99+' : cartCount}</span>}</span>
+        <button type="button" key={id} className={tab === id ? 'tab active' : 'tab'} onClick={() => setTab(id)} aria-current={tab === id ? 'page' : undefined} aria-label={id === 'cart' && cartLineCount > 0 ? `${label}, ${cartLineCount} ürün` : label}>
+          <span className="tab-icon"><Icon size={21} aria-hidden />{id === 'cart' && cartLineCount > 0 && <span className={`tab-badge${cartPulsing ? ' is-pulsing' : ''}`}>{cartLineCount > 99 ? '99+' : cartLineCount}</span>}</span>
           <span>{label}</span>
         </button>
       ))}
@@ -635,18 +660,10 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
 function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
   product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
 }): ReactNode {
-  const cart = useCart()
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
-  const add = (event: MouseEvent<HTMLButtonElement>): void => {
-    event.stopPropagation()
-    const qty = Math.max(1, product.min_order)
-    cart.add({ ...product, min_order: qty }, qty)
-    logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty })
-    onToast(`${product.sku} sepete eklendi.`)
-  }
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
     <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
@@ -654,24 +671,78 @@ function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onTo
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
     {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
-    <div role="cell" className="add-col"><button type="button" aria-label={`${product.sku} sepete ekle`} onClick={add}><span className="cart-plus-icon"><ShoppingCart size={17} /><Plus size={10} /></span></button></div>
+    <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
     <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
   </div>
+}
+
+function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
+  variant: 'table' | 'button'; product: Product; qty: number; onToast: (message: string) => void; onAdded?: () => void
+}): ReactNode {
+  const addToCart = useCart((cartState) => cartState.add)
+  const cartLine = useCart((cartState) => cartState.lines.find((line) => line.product_id === product.id))
+  const [pulsing, setPulsing] = useState(false)
+  const pulseFrame = useRef<number | null>(null)
+  const pulseTimeout = useRef<number | null>(null)
+  useEffect(() => () => {
+    if (pulseFrame.current !== null) window.cancelAnimationFrame(pulseFrame.current)
+    if (pulseTimeout.current !== null) window.clearTimeout(pulseTimeout.current)
+  }, [])
+
+  const add = (event: MouseEvent<HTMLButtonElement>): void => {
+    event.stopPropagation()
+    const minimum = Math.max(1, product.min_order)
+    const amount = cartLine ? minimum : Math.max(minimum, Math.floor(qty))
+    addToCart({ ...product, min_order: minimum }, amount)
+    logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty: amount })
+    onToast(`${product.sku} sepete eklendi (${amount} adet)`)
+    window.dispatchEvent(new Event(CART_ADDED_EVENT))
+    if (pulseFrame.current !== null) window.cancelAnimationFrame(pulseFrame.current)
+    if (pulseTimeout.current !== null) window.clearTimeout(pulseTimeout.current)
+    setPulsing(false)
+    pulseFrame.current = window.requestAnimationFrame(() => {
+      pulseFrame.current = null
+      setPulsing(true)
+      pulseTimeout.current = window.setTimeout(() => {
+        pulseTimeout.current = null
+        setPulsing(false)
+      }, 320)
+    })
+    onAdded?.()
+  }
+
+  const buttonClass = [
+    variant === 'table' ? 'cart-add-button table' : 'button add-button cart-add-button',
+    cartLine ? 'is-in-cart' : '',
+    pulsing ? 'is-pulsing' : ''
+  ].filter(Boolean).join(' ')
+
+  return (
+    <button
+      type="button"
+      className={buttonClass}
+      aria-label={cartLine ? `${product.sku} sepette, ${cartLine.qty} adet — bir daha ekle` : `${product.sku} sepete ekle`}
+      onClick={add}
+    >
+      <span className="cart-add-leading">
+        <span className="cart-add-icon">
+          <ShoppingCart size={variant === 'table' ? 17 : 18} aria-hidden />
+          {cartLine ? <Check className="cart-add-status" size={10} aria-hidden /> : <Plus className="cart-add-status" size={10} aria-hidden />}
+        </span>
+        {variant === 'button' && <span className="cart-add-text">{cartLine ? 'Sepette' : 'Sepete ekle'}</span>}
+      </span>
+      {cartLine && <span className="cart-quantity">{cartLine.qty > 99 ? '99+' : cartLine.qty}</span>}
+    </button>
+  )
 }
 
 function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
   product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const cart = useCart()
   const [qty, setQty] = useState(Math.max(1, product.min_order))
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const add = (): void => {
-    cart.add({ ...product, min_order: Math.max(1, product.min_order) }, qty)
-    logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty })
-    onToast(`${product.sku} sepete eklendi.`)
-  }
   return (
     <article className="product-card">
       <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
@@ -688,7 +759,7 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
           <input aria-label={`${product.sku} miktarı`} inputMode="numeric" value={qty} onChange={(event) => setQty(Math.max(Math.max(1, product.min_order), Number(event.target.value.replace(/\D/g, '')) || 1))} />
           <button type="button" aria-label="Miktarı artır" onClick={() => setQty((value) => value + Math.max(1, product.min_order))}><Plus size={16} /></button>
         </div>
-        <button type="button" className="button add-button" onClick={add}><ShoppingCart size={17} /> Sepete ekle</button>
+        <ProductAddButton variant="button" product={product} qty={qty} onToast={onToast} />
       </div>
     </article>
   )
@@ -762,7 +833,6 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
 function ProductDetail({ product, settings, session, onClose, onToast }: {
   product: Product; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const cart = useCart()
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const [qty, setQty] = useState(Math.max(1, product.min_order))
@@ -808,7 +878,7 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
       </dl>
       <div className="product-actions detail-actions">
         <QuantityStepper qty={qty} setQty={setQty} min={Math.max(1, product.min_order)} sku={product.sku} />
-        <button className="button primary" onClick={() => { cart.add(product, qty); logActivity({ kind: 'cart_add', product_id: product.id, sku: product.sku, brand: product.brand, qty }); onToast(`${product.sku} sepete eklendi.`); onClose() }}><ShoppingCart size={18} /> Sepete ekle</button>
+        <ProductAddButton variant="button" product={product} qty={qty} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
     </Sheet>
   )
