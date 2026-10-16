@@ -1,13 +1,23 @@
 import { PERMS, type Currency, type Customer, type CustomerProfile, type Perm, type Settings as S, type SyncStatus, type User, type UserRole } from '@shared/types'
 import { PERM_INFO, ROLE_PERMS } from '@shared/perms'
-import { Building2, Copy, Database, Eye, EyeOff, Pencil, Plus, Save, Trash2, UserCheck } from 'lucide-react'
-import { useEffect, useState, type ChangeEvent, type ReactNode } from 'react'
+import { Building2, Check, ChevronRight, Copy, Contrast, Database, Eye, EyeOff, LockKeyhole, Minus, Monitor, Moon, Pencil, Plus, RotateCcw, Save, Sun, Trash2, UserCheck, Users as UsersIcon, type LucideIcon } from 'lucide-react'
+import { useEffect, useRef, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Confirm, Field, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
+import './settings.css'
 
 type Tab = 'gorunum' | 'profil' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
+
+const SECTIONS: { id: Tab; label: string; hint: string; icon: LucideIcon; admin?: boolean; dealer?: boolean }[] = [
+  { id: 'gorunum', label: 'Görünüm & Erişilebilirlik', hint: 'Tema, yazı ve kullanım', icon: Monitor },
+  { id: 'profil', label: 'Firma bilgilerim', hint: 'Bayi firma kartı', icon: Building2, dealer: true },
+  { id: 'firma', label: 'Firma & Fiyat', hint: 'Şirket ve fiyat ayarları', icon: Building2, admin: true },
+  { id: 'kullanicilar', label: 'Kullanıcılar', hint: 'Hesaplar ve yetkiler', icon: UsersIcon, admin: true },
+  { id: 'veri', label: 'Bulut & Veri', hint: 'Eşitleme ve yerel kopya', icon: Database, admin: true },
+  { id: 'sifre', label: 'Şifre', hint: 'Giriş güvenliği', icon: LockKeyhole }
+]
 
 /** `go('settings', SETTINGS_TAB_USERS)` opens the user management tab directly. */
 export const SETTINGS_TAB_USERS = 1
@@ -16,54 +26,68 @@ export function SettingsPage(): ReactNode {
   const { session, settings, pageParam } = useApp()
   const isAdmin = session?.user.role === 'admin'
   const [tab, setTab] = useState<Tab>(pageParam === SETTINGS_TAB_USERS && isAdmin ? 'kullanicilar' : 'gorunum')
-  const tabs: { id: Tab; label: string; admin?: boolean; dealer?: boolean }[] = [
-    { id: 'gorunum', label: 'Görünüm & Erişilebilirlik' },
-    { id: 'profil', label: 'Firma bilgilerim', dealer: true },
-    { id: 'firma', label: 'Firma & Fiyat', admin: true },
-    { id: 'kullanicilar', label: 'Kullanıcılar', admin: true },
-    { id: 'veri', label: 'Bulut & Veri', admin: true },
-    { id: 'sifre', label: 'Şifre' }
-  ]
-  const visible = tabs.filter((t) => (!t.admin || isAdmin) && (!t.dealer || !isAdmin))
+  const { go } = useApp()
+  const visible = SECTIONS.filter((t) => (!t.admin || isAdmin) && (!t.dealer || !isAdmin))
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const selected = visible.find((item) => item.id === tab) ?? visible[0]
 
   return (
-    <div className="grid" style={{ gap: 16 }}>
-      <div className="tabs" role="tablist" aria-label="Ayar bölümleri">
-        {visible.map((t) => (
-          <button
-            key={t.id}
+    <div className="settings-layout">
+      <nav className="settings-nav" role="tablist" aria-label="Ayar bölümleri">
+        {visible.map((item, index) => {
+          const Icon = item.icon
+          return <button
+            key={item.id}
+            ref={(element) => { buttonRefs.current[index] = element }}
             role="tab"
-            id={`tab-${t.id}`}
-            aria-selected={tab === t.id}
-            aria-controls={`panel-${t.id}`}
-            className={`tab${tab === t.id ? ' active' : ''}`}
-            onClick={() => setTab(t.id)}
-            onKeyDown={(e) => {
-              const i = visible.findIndex((x) => x.id === tab)
-              if (e.key === 'ArrowRight') setTab(visible[(i + 1) % visible.length].id)
-              if (e.key === 'ArrowLeft') setTab(visible[(i - 1 + visible.length) % visible.length].id)
+            id={`tab-${item.id}`}
+            aria-selected={tab === item.id}
+            aria-controls={`panel-${item.id}`}
+            tabIndex={tab === item.id ? 0 : -1}
+            className={`settings-nav-item${tab === item.id ? ' active' : ''}`}
+            onClick={() => setTab(item.id)}
+            onKeyDown={(event) => {
+              let next = -1
+              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % visible.length
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + visible.length) % visible.length
+              if (event.key === 'Home') next = 0
+              if (event.key === 'End') next = visible.length - 1
+              if (next >= 0) {
+                event.preventDefault()
+                setTab(visible[next].id)
+                buttonRefs.current[next]?.focus()
+              }
             }}
           >
-            {t.label}
+            <Icon size={18} aria-hidden />
+            <span><strong>{item.label}</strong><small>{item.hint}</small></span>
+            <ChevronRight className="settings-nav-chevron" size={16} aria-hidden />
           </button>
-        ))}
-      </div>
-      <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
-        {tab === 'gorunum' && settings && <Appearance s={settings} />}
-        {tab === 'profil' && <MyCompany />}
-        {tab === 'firma' && settings && <Company s={settings} />}
-        {tab === 'kullanicilar' && <Users />}
-        {tab === 'veri' && <Data />}
-        {tab === 'sifre' && <Password />}
+        })}
+      </nav>
+      <div className="settings-content">
+        <header className="settings-panel-head">
+          <div><h2>{selected.label}</h2><p>{selected.hint}</p></div>
+        </header>
+        <div className="settings-panel" role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+          {tab === 'gorunum' && settings && <Appearance s={settings} />}
+          {tab === 'profil' && <MyCompany />}
+          {tab === 'firma' && settings && <Company s={settings} />}
+          {tab === 'kullanicilar' && <section className="settings-group"><header><h3>Kullanıcılar</h3><p>Hesapları ve erişim yetkilerini yönetin.</p></header><Users /></section>}
+          {tab === 'veri' && <Data />}
+          {tab === 'sifre' && <Password />}
+        </div>
       </div>
     </div>
   )
 }
 
 function Appearance({ s }: { s: S }): ReactNode {
-  const { session, updateSettings, toast } = useApp()
+  const { session, updateSettings, toast, go } = useApp()
   const isAdmin = session?.user.role === 'admin'
   const [version, setVersion] = useState('—')
+  const [checking, setChecking] = useState(false)
+  const [updateStatus, setUpdateStatus] = useState('Otomatik denetim açık')
   useEffect(() => {
     let active = true
     api('app:info', undefined)
@@ -76,44 +100,50 @@ function Appearance({ s }: { s: S }): ReactNode {
   const set = (patch: Partial<S>): void => {
     updateSettings(patch).catch((e) => toast(e.message, 'error'))
   }
+  const checkUpdates = async (): Promise<void> => {
+    setChecking(true)
+    try {
+      await api('app:checkUpdates', undefined)
+      setUpdateStatus('Denetim başlatıldı')
+    } catch (error) {
+      toast((error as Error).message, 'error')
+    } finally {
+      setChecking(false)
+    }
+  }
+  const themes: { id: S['theme']; label: string; icon: LucideIcon }[] = [
+    { id: 'system', label: 'Sistem', icon: Monitor },
+    { id: 'light', label: 'Açık', icon: Sun },
+    { id: 'dark', label: 'Koyu', icon: Moon },
+    { id: 'contrast', label: 'Yüksek kontrast', icon: Contrast }
+  ]
+  const adjustFont = (delta: number): void => set({ font_scale: Math.max(0.85, Math.min(1.5, Number((s.font_scale + delta).toFixed(2)))) })
   return (
-    <div className="card grid g2" style={{ gap: 16 }}>
-      <Field label="Tema">
-        {(id) => (
-          <select id={id} className="select" value={s.theme} onChange={(e) => set({ theme: e.target.value as S['theme'] })}>
-            <option value="system">Sistem</option>
-            <option value="light">Açık</option>
-            <option value="dark">Koyu</option>
-            <option value="contrast">Yüksek kontrast</option>
-          </select>
-        )}
-      </Field>
-      <Field label="Yoğunluk">
-        {(id) => (
-          <select id={id} className="select" value={s.density} onChange={(e) => set({ density: e.target.value as S['density'] })}>
-            <option value="comfortable">Rahat</option>
-            <option value="compact">Sıkışık (daha çok satır)</option>
-          </select>
-        )}
-      </Field>
-      <Field label={`Yazı boyutu: %${Math.round(s.font_scale * 100)}`} hint="Ctrl + / Ctrl − ile de değiştirebilirsiniz">
-        {(id) => <input id={id} type="range" min={0.85} max={1.5} step={0.05} value={s.font_scale} onChange={(e) => set({ font_scale: Number(e.target.value) })} style={{ width: '100%', margin: 0 }} />}
-      </Field>
-      <label className="check" style={{ alignSelf: 'end' }}>
-        <input type="checkbox" checked={s.reduce_motion} onChange={(e) => set({ reduce_motion: e.target.checked })} /> Animasyonları azalt
-      </label>
-      {isAdmin && (
-        <label className="check" style={{ gridColumn: 'span 2' }}>
-          <input type="checkbox" checked={s.background_notifications} onChange={(e) => set({ background_notifications: e.target.checked })} /> Pencere kapatılsa da
-          arka planda çalış ve yeni sipariş gelince Windows bildirimi göster (Windows açılışında otomatik başlar)
-        </label>
-      )}
-      <div style={{ gridColumn: 'span 2' }} className="muted small">
-        Kısayollar: <kbd>Ctrl</kbd>+<kbd>K</kbd> ürün ara · <kbd>F2</kbd> sepet · <kbd>F1</kbd> yardım · <kbd>Alt</kbd>+<kbd>1..8</kbd> sayfalar · listede <kbd>+</kbd> sepete ekle, <kbd>Enter</kbd> ayrıntı.
-      </div>
-      <div style={{ gridColumn: 'span 2' }} className="muted small">
-        Sürüm <b>{version}</b>
-      </div>
+    <div className="settings-stack">
+      <section className="settings-group">
+        <header><h3>Görünüm</h3><p>Uygulamayı gözünüze ve çalışma biçiminize göre ayarlayın.</p></header>
+        <div className="settings-field"><span className="label">Tema</span><div className="theme-grid" role="radiogroup" aria-label="Tema">
+          {themes.map(({ id, label, icon: Icon }) => <button key={id} type="button" role="radio" aria-checked={s.theme === id} className={`theme-option${s.theme === id ? ' selected' : ''}`} data-preview={id} onClick={() => set({ theme: id })}>
+            <span className="theme-swatch" aria-hidden><span className="theme-swatch-bar" /><span className="theme-swatch-body"><i className="theme-swatch-line" /><i className="theme-swatch-line short" /></span></span>
+            <span className="theme-option-text"><strong><Icon size={15} aria-hidden /> {label}</strong></span>{s.theme === id && <Check className="theme-check" size={18} aria-hidden />}
+          </button>)}
+        </div></div>
+        <div className="settings-field"><span className="label">Yoğunluk</span><div className="settings-segment" role="radiogroup" aria-label="Yoğunluk">
+          {([{ value: 'comfortable', label: 'Rahat' }, { value: 'compact', label: 'Sıkışık' }] as const).map((item) => <button key={item.value} role="radio" aria-checked={s.density === item.value} className={s.density === item.value ? 'active' : ''} onClick={() => set({ density: item.value })}>{item.label}</button>)}
+        </div></div>
+        <div className="settings-font">
+          <div className="settings-font-head"><label htmlFor="settings-font-scale">Yazı boyutu <b>%{Math.round(s.font_scale * 100)}</b></label><button className="btn sm" onClick={() => set({ font_scale: 1 })}><RotateCcw size={14} aria-hidden /> Sıfırla</button></div>
+          <div className="settings-font-control"><button className="btn icon" aria-label="Yazıyı küçült" onClick={() => adjustFont(-0.05)}><Minus size={16} aria-hidden /></button><input id="settings-font-scale" type="range" min={0.85} max={1.5} step={0.05} value={s.font_scale} onChange={(e) => set({ font_scale: Number(e.target.value) })} /><button className="btn icon" aria-label="Yazıyı büyüt" onClick={() => adjustFont(0.05)}><Plus size={16} aria-hidden /></button></div>
+          <p className="settings-preview" style={{ fontSize: `${s.font_scale}em` }}>Ürün kodu, fiyat ve açıklamalar bu boyutta görünür.</p>
+        </div>
+        <label className="settings-switch"><span><strong>Animasyonları azalt</strong><small>Hareketli geçişleri azaltır.</small></span><input type="checkbox" role="switch" checked={s.reduce_motion} onChange={(e) => set({ reduce_motion: e.target.checked })} /></label>
+        {isAdmin && <label className="settings-switch"><span><strong>Arka planda çalış ve Windows bildirimi göster</strong><small>Pencere kapandığında siparişleri izler; Windows açılışında başlar.</small></span><input type="checkbox" role="switch" checked={s.background_notifications} onChange={(e) => set({ background_notifications: e.target.checked })} /></label>}
+        <button className="settings-link" onClick={() => go('help')}>Klavye kısayolları <ChevronRight size={15} aria-hidden /> Yardım</button>
+      </section>
+      <section className="settings-group">
+        <header><h3>Uygulama</h3><p>Yüklü sürümü ve güncelleme durumunu görün.</p></header>
+        <div className="settings-app-row"><span><b>Sürüm {version}</b><small>{updateStatus}</small></span><button className="btn" disabled={checking} onClick={() => void checkUpdates()}>{checking ? 'Denetleniyor…' : 'Güncellemeleri denetle'}</button></div>
+      </section>
     </div>
   )
 }
@@ -121,6 +151,8 @@ function Appearance({ s }: { s: S }): ReactNode {
 function Company({ s }: { s: S }): ReactNode {
   const { updateSettings, toast } = useApp()
   const [f, setF] = useState<S>(s)
+  useEffect(() => setF(s), [s])
+  const dirty = JSON.stringify(f) !== JSON.stringify(s)
   const save = async (): Promise<void> => {
     try {
       await updateSettings(f)
@@ -138,35 +170,14 @@ function Company({ s }: { s: S }): ReactNode {
     </Field>
   )
   return (
-    <div className="card grid g2" style={{ gap: 14 }}>
-      {text('company_name', 'Firma adı')}
-      {text('company_phone', 'Telefon')}
-      {text('company_email', 'E-posta')}
-      {text('company_web', 'Web')}
-      <div style={{ gridColumn: 'span 2' }}>{text('company_address', 'Adres')}</div>
-      <Field label="Varsayılan para birimi">
-        {(id) => (
-          <select id={id} className="select" value={f.default_currency} onChange={(e) => setF({ ...f, default_currency: e.target.value as Currency })}>
-            <option value="TRY">TRY</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-          </select>
-        )}
-      </Field>
-      {numF('vat_pct', 'KDV (%)')}
-      {numF('card_price_pct', 'Kredi kartı fiyat farkı (%)', 'Ürünün kendi kredi kartı fiyatı boşsa peşin fiyata bu yüzde eklenir; 0 ise kart fiyatı gösterilmez')}
-      {numF('rate_usd', 'USD kuru (₺)')}
-      {numF('rate_eur', 'EUR kuru (₺)')}
-      {numF('low_stock_threshold', 'Kritik stok eşiği', 'Bu değerin altındaki ürünler "Azaldı" olarak işaretlenir')}
-      <label className="check" style={{ alignSelf: 'end' }}>
-        <input type="checkbox" checked={f.show_prices_to_dealers} onChange={(e) => setF({ ...f, show_prices_to_dealers: e.target.checked })} /> Bayiler fiyatları görebilsin
-      </label>
-      <div style={{ gridColumn: 'span 2' }} className="row">
-        <span className="spacer" />
-        <button className="btn primary" onClick={save}>
-          <Save size={16} aria-hidden /> Kaydet
-        </button>
-      </div>
+    <div className="settings-stack settings-company">
+      <section className="settings-group"><header><h3>Firma bilgileri</h3><p>Alışveriş ekranında ve belgelerde görünen iletişim bilgileri.</p></header><div className="settings-fields">{text('company_name', 'Firma adı')}{text('company_phone', 'Telefon')}{text('company_email', 'E-posta')}{text('company_web', 'Web')}<div className="span-all">{text('company_address', 'Adres')}</div></div></section>
+      <section className="settings-group"><header><h3>Fiyat ve kur</h3><p>Varsayılan para birimi, vergi ve fiyat hesaplama ayarları.</p></header><div className="settings-fields">
+        <Field label="Varsayılan para birimi">{(id) => <select id={id} className="select" value={f.default_currency} onChange={(e) => setF({ ...f, default_currency: e.target.value as Currency })}><option value="TRY">TRY</option><option value="USD">USD</option><option value="EUR">EUR</option></select>}</Field>
+        {numF('vat_pct', 'KDV (%)')}{numF('card_price_pct', 'Kredi kartı fiyat farkı (%)', 'Kendi kart fiyatı yoksa bu oran eklenir. 0 ise gösterilmez.')}{numF('rate_usd', 'USD kuru (₺)')}{numF('rate_eur', 'EUR kuru (₺)')}
+      </div></section>
+      <section className="settings-group"><header><h3>Stok ve bayiler</h3><p>Stok uyarısı ve bayi fiyat görünürlüğü.</p></header><div className="settings-fields">{numF('low_stock_threshold', 'Kritik stok eşiği', '"Azaldı" uyarısı bu değerin altında gösterilir.')}<label className="check"><input type="checkbox" checked={f.show_prices_to_dealers} onChange={(e) => setF({ ...f, show_prices_to_dealers: e.target.checked })} /> Bayiler fiyatları görebilsin</label></div></section>
+      {dirty && <div className="settings-savebar"><button className="btn" onClick={() => setF(s)}>Vazgeç</button><button className="btn primary" onClick={() => void save()}><Save size={16} aria-hidden /> Kaydet</button></div>}
     </div>
   )
 }
@@ -452,11 +463,27 @@ function Data(): ReactNode {
       .finally(() => setBusy(false))
   }
   return (
-    <div className="card grid" style={{ gap: 14 }}>
+    <div className="settings-stack">
+    <section className="settings-group">
+      <header><h3>Bulut durumu</h3><p>Ortak veriler bulutta; bu bilgisayarda şifreli ürün kopyası bulunur.</p></header>
+      <div className="settings-status-grid">
+        <div><small>Bağlantı</small><b className={`badge ${sync?.online ? 'ok' : 'out'}`}>{sync?.online ? 'Bağlı' : 'Bağlantı yok'}</b></div>
+        <div><small>Son eşitleme</small><b>{fmtTime(sync?.lastSync ?? null)}</b></div>
+        <div><small>Yerel ürün kopyası</small><b>{sync ? `${sync.productCount.toLocaleString('tr-TR')} ürün` : '—'}</b></div>
+        <div className="encrypted-tile"><small>Yerel veri</small><b><LockKeyhole size={15} aria-hidden /> Şifreli</b></div>
+      </div>
+      <p className="settings-encryption-note">Bu bilgisayardaki ürün kopyası şifreli tutulur, çıkış yapınca silinir.</p>
+    </section>
+    <section className="settings-group">
+      <header><h3>Eşitleme</h3><p>Ürünleri buluttan yeniden alın veya teknik dosya bilgilerini görüntüleyin.</p></header>
+      <div className="row wrap">
+        <button className="btn" disabled={busy} onClick={resync}><Database size={16} aria-hidden /> {busy ? 'Eşitleniyor…' : 'Ürünleri yeniden eşitle'}</button>
+      </div>
+      <details className="settings-details"><summary>Teknik ayrıntı</summary>
       <dl className="dl">
         <dt>Sürüm</dt>
         <dd className="row wrap" style={{ gap: 10 }}>
-          <span>Sürüm <b>{info?.version ?? '—'}</b></span>
+          <b>{info?.version ?? '—'}</b>
         </dd>
         <dt>Bulut bağlantısı</dt>
         <dd>
@@ -464,29 +491,24 @@ function Data(): ReactNode {
         </dd>
         <dt>Son eşitleme</dt>
         <dd>{fmtTime(sync?.lastSync ?? null)}</dd>
-        <dt>Yerel ürün kopyası</dt>
+        <dt>Ürün sayısı</dt>
         <dd>{sync ? `${sync.productCount.toLocaleString('tr-TR')} ürün` : '—'}</dd>
-        <dt>Arama önbelleği</dt>
+        <dt>Yerel ürün kopyası</dt>
         <dd className="mono small" style={{ wordBreak: 'break-all' }}>
           {info?.dbPath ?? '-'}
         </dd>
       </dl>
       <div className="row wrap">
-        <button className="btn" disabled={busy} onClick={resync}>
-          <Database size={16} aria-hidden /> {busy ? 'Eşitleniyor…' : 'Ürünleri yeniden eşitle'}
-        </button>
         <button className="btn" onClick={() => info && api('app:openPath', info.dbPath.replace(/[\\/][^\\/]+$/, '')).catch(() => undefined)}>
           Veri klasörünü aç
         </button>
-        <span className="spacer" />
-        <button className="btn danger" disabled={busy} onClick={() => setConfirmPurge(true)}>
-          <Trash2 size={16} aria-hidden /> Ürün listesini sil
-        </button>
       </div>
+      </details>
       <p className="muted small">
-        Ürünler, stoklar, bayiler, kullanıcılar ve siparişler tek bir ortak bulut veritabanında tutulur; tüm bilgisayarlar aynı veriyi görür. Bu bilgisayarda yalnızca hızlı
-        arama için ürünlerin bir kopyası saklanır ve otomatik eşitlenir.
+        Ürünler, stoklar, bayiler, kullanıcılar ve siparişler ortak bulut veritabanında tutulur.
       </p>
+    </section>
+    <section className="settings-danger-zone"><header><h3>Tehlikeli bölge</h3><p>Bu işlem ortak ürün listesini tüm bilgisayarlardan kaldırır.</p></header><button className="btn danger" disabled={busy} onClick={() => setConfirmPurge(true)}><Trash2 size={16} aria-hidden /> Ürün listesini sil</button></section>
       <Confirm
         open={confirmPurge}
         title="Ürün listesini sil"
@@ -579,6 +601,7 @@ function Password(): ReactNode {
   const [current, setCurrent] = useState('')
   const [next, setNext] = useState('')
   const [again, setAgain] = useState('')
+  const [visible, setVisible] = useState(false)
   const submit = async (): Promise<void> => {
     if (next.length < 4) return toast('Yeni şifre en az 4 karakter olmalı.', 'error')
     if (next !== again) return toast('Şifreler eşleşmiyor.', 'error')
@@ -594,16 +617,15 @@ function Password(): ReactNode {
   }
   return (
     <form
-      className="card grid"
-      style={{ gap: 12, maxWidth: 420 }}
+      className="card grid settings-password"
       onSubmit={(e) => {
         e.preventDefault()
         submit()
       }}
     >
-      <Field label="Mevcut şifre">{(id) => <input id={id} type="password" className="input" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} />}</Field>
-      <Field label="Yeni şifre">{(id) => <input id={id} type="password" className="input" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} />}</Field>
-      <Field label="Yeni şifre (tekrar)">{(id) => <input id={id} type="password" className="input" autoComplete="new-password" value={again} onChange={(e) => setAgain(e.target.value)} />}</Field>
+      <Field label="Mevcut şifre">{(id) => <div className="settings-password-input"><input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} /><button type="button" className="btn ghost icon" aria-label={visible ? 'Şifreyi gizle' : 'Şifreyi göster'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={16} /> : <Eye size={16} />}</button></div>}</Field>
+      <Field label="Yeni şifre">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} />}</Field>
+      <Field label="Yeni şifre (tekrar)">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={again} onChange={(e) => setAgain(e.target.value)} />}</Field>
       <button className="btn primary" type="submit">
         Şifreyi değiştir
       </button>

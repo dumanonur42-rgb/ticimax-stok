@@ -1,152 +1,241 @@
 import type { ReactNode } from 'react'
+import { Headset, Phone, Search } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { normalize } from '@shared/identity'
+import { api } from '@/lib/api'
 import { useApp } from '@/store/app'
+import './settings.css'
 
-const K = ({ children }: { children: ReactNode }): ReactNode => <kbd>{children}</kbd>
+type HelpItem = {
+  title: string
+  text: string
+  search?: string
+}
+
+type Shortcut = {
+  keys: string[][]
+  text: string
+  search?: string
+}
+
+const adminSteps: HelpItem[] = [
+  { title: 'Stok listenizi yükleyin', text: 'İçe Aktar’dan Excel veya CSV seçin; stok kodu zorunludur.', search: 'ürün stok içe aktar dosya' },
+  { title: 'Bayilerinizi ekleyin', text: 'Firma, iskonto ve para birimini tanımlayın.', search: 'bayi firma fiyat para birimi' },
+  { title: 'Bayi kullanıcıları açın', text: 'Ayarlar → Kullanıcılar’da kullanıcıyı bayiye bağlayın.', search: 'kullanıcı rol bayi ayarlar' },
+  { title: 'Sipariş alın', text: 'Ürün arayın, sepete ekleyin ve siparişi oluşturun.', search: 'ürün arama sepet sipariş' },
+  { title: 'Stokları güncelleyin', text: 'Yeni listeyi “Sadece stok ve fiyat güncelle” ile yükleyin.', search: 'stok fiyat güncelle' },
+  { title: 'Bulut ayarlarını kontrol edin', text: 'Bağlantı ve arka plan bildirimlerini Bulut & Veri’den görün.', search: 'bulut internet bağlantı bildirim arka plan' }
+]
+
+const dealerSteps: HelpItem[] = [
+  { title: 'Ürünleri bulun', text: 'Kod, marka, barkod veya ölçüyle arayın.', search: 'ürün stok kodu marka barkod muadil ölçü' },
+  { title: 'Sepete ekleyin', text: 'Sepette ürün miktarını düzenleyin.', search: 'sepet miktar' },
+  { title: 'Siparişi gönderin', text: 'Ödeme şeklini seçin, siparişi gönderip durumunu izleyin.', search: 'sipariş ödeme gönder takip' }
+]
+
+const generalShortcuts: Shortcut[] = [
+  { keys: [['Ctrl', 'K'], ['F3']], text: 'Ürün aramaya odaklan', search: 'arama ürün ara' },
+  { keys: [['F2']], text: 'Sepeti aç', search: 'sepet' },
+  { keys: [['F1']], text: 'Yardım sayfasını aç', search: 'yardım yardım sayfası' },
+  { keys: [['Alt', '1–8']], text: 'Sayfalar arasında geçiş yap', search: 'sayfa gezinme' },
+  { keys: [['Ctrl', '+'], ['Ctrl', '−'], ['Ctrl', '0']], text: 'Yazı boyutunu büyüt, küçült veya sıfırla', search: 'yazı boyutu font' },
+  { keys: [['Esc']], text: 'Açık paneli veya pencereyi kapat', search: 'panel pencere kapat' }
+]
+
+const productShortcuts: Shortcut[] = [
+  { keys: [['↑', '↓', 'Home', 'End', 'PgUp', 'PgDn']], text: 'Ürün listesinde gezin', search: 'yukarı aşağı home end pageup pagedown' },
+  { keys: [['Enter']], text: 'Seçili ürünün ayrıntısını aç', search: 'ürün detay' },
+  { keys: [['+']], text: 'Seçili ürünü sepete ekle', search: 'ürün sepet ekle' }
+]
+
+const searchTips: HelpItem[] = [
+  { title: 'Kod biçimi', text: '6205 2RS = 6205-2RS = 62052rs', search: 'boşluk tire nokta kod aynı sonuç' },
+  { title: 'Ölçüler', text: 'Ölçüler milimetredir; yalnızca iç çapı girerek de arayabilirsiniz.', search: 'milimetre mm iç çap ölçü' },
+  { title: 'Türkçe karakterler', text: 'Keçe ve KECE aynı sonucu verir.', search: 'türkçe karakter duyarsız' }
+]
+
+const faq: HelpItem[] = [
+  { title: 'Güncellemeler nasıl gelir?', text: 'Güncelleme arka planda iner. Pencere küçültülünce, kapatılınca ya da 5 dakika boşta kalınca kurulur; oturumunuz kapanmaz.', search: 'update güncelleme sessiz kurulum' },
+  { title: 'İnternet yokken çalışır mı?', text: 'Ürün listesi ve arama çalışır. Siparişler bağlantı gelince gönderilir.', search: 'çevrimdışı offline bağlantı sipariş' },
+  { title: 'Şifremi unuttum', text: 'Şifrenizi yenilemesi için yöneticinize başvurun.', search: 'şifre parola unutma sıfırlama yönetici' },
+  { title: 'Bilgisayardaki veriler güvende mi?', text: 'Bulut bağlantısı HTTPS kullanır. Bu bilgisayardaki ürün kopyası şifrelidir ve çıkış yapınca silinir.', search: 'yerel veri katalog ürün şifreli güvenlik çıkış' }
+]
+
+const securityItems: HelpItem[] = [
+  { title: '“Bilgisayarınız korundu” uyarısı', text: 'Kurulum dosyasını resmî Yamansa kaynağından aldıysanız Daha fazla bilgi → Yine de çalıştır ile devam edebilirsiniz.', search: 'windows defender smartscreen kurulum' },
+  { title: 'Uygulama denetim ilkesi engelliyor', text: 'Kurumsal bilgisayarda kurulum için sistem yöneticinizden yardım isteyin.', search: 'program files akıllı uygulama denetimi windows' },
+  { title: 'Dosyayı doğrulama', text: 'GitHub Releases sayfasındaki SHA-256 değerini PowerShell’de Get-FileHash ile karşılaştırın.', search: 'sha256 hash github doğrulama' }
+]
+
+const allHelpItems = [...adminSteps, ...dealerSteps, ...generalShortcuts.map((item) => ({ title: item.text, text: item.search ?? '' })), ...productShortcuts.map((item) => ({ title: item.text, text: item.search ?? '' })), ...searchTips, ...faq, ...securityItems]
+const KeySets = ({ sets }: { sets: string[][] }): ReactNode => (
+  <span className="help-keysets">
+    {sets.map((set, setIndex) => (
+      <span className="help-keyset" key={`${setIndex}-${set.join('-')}`}>
+        {setIndex > 0 && <span className="help-key-or">/</span>}
+        {set.map((key, keyIndex) => (
+          <span className="help-key-item" key={key}>
+            {keyIndex > 0 && <span className="help-key-plus">+</span>}
+            <kbd className="help-key">{key}</kbd>
+          </span>
+        ))}
+      </span>
+    ))}
+  </span>
+)
 
 export function Help(): ReactNode {
-  const isAdmin = useApp((s) => s.session?.user.role === 'admin')
+  const isAdmin = useApp((state) => state.session?.user.role === 'admin')
+  const [query, setQuery] = useState('')
+  const q = useMemo(() => normalize(query.trim()), [query])
+  const matches = (...values: string[]): boolean => !q || normalize(values.join(' ')).includes(q)
+  const steps = isAdmin ? adminSteps : dealerSteps
+  const visibleSteps = steps.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleGeneral = generalShortcuts.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
+  const visibleProduct = productShortcuts.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
+  const visibleTips = searchTips.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleFaq = faq.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleSecurity = securityItems.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const showAllSteps = matches('Hızlı başlangıç')
+  const showAllShortcuts = matches('Klavye kısayolları', 'Genel', 'Ürün listesi')
+  const showAllTips = matches('Arama ipuçları')
+  const showAllFaq = matches('Sık sorulan sorular')
+  const showAllSecurity = matches('Güvenlik ve kurulum')
+  const showSteps = showAllSteps || visibleSteps.length > 0
+  const showShortcuts = showAllShortcuts || visibleGeneral.length > 0 || visibleProduct.length > 0
+  const showTips = showAllTips || visibleTips.length > 0
+  const showFaq = showAllFaq || visibleFaq.length > 0
+  const showSecurity = showAllSecurity || visibleSecurity.length > 0
+  const hasMatches = showSteps || showShortcuts || showTips || showFaq || showSecurity || matches('İletişim', 'telefon', 'WhatsApp', '+90 552 610 93 63')
+  const open = (url: string): void => { void api('app:openExternal', url) }
+
   return (
-    <div className="grid g2" style={{ gap: 18, alignItems: 'start' }}>
-      <section className="card" aria-labelledby="h-keys">
-        <h2 id="h-keys">Klavye kısayolları</h2>
-        <table className="table small">
-          <tbody>
-            <tr>
-              <td>
-                <K>Ctrl</K>+<K>K</K> / <K>F3</K>
-              </td>
-              <td>Ürün aramaya odaklan</td>
-            </tr>
-            <tr>
-              <td>
-                <K>F2</K>
-              </td>
-              <td>Sepeti aç</td>
-            </tr>
-            <tr>
-              <td>
-                <K>F1</K>
-              </td>
-              <td>Bu yardım sayfası</td>
-            </tr>
-            <tr>
-              <td>
-                <K>Alt</K>+<K>1</K>…<K>8</K>
-              </td>
-              <td>Sayfalar arasında geçiş</td>
-            </tr>
-            <tr>
-              <td>
-                <K>Ctrl</K>+<K>+</K> / <K>−</K> / <K>0</K>
-              </td>
-              <td>Yazı boyutu büyüt / küçült / sıfırla</td>
-            </tr>
-            <tr>
-              <td>
-                <K>↑</K> <K>↓</K> <K>Home</K> <K>End</K> <K>PgUp</K> <K>PgDn</K>
-              </td>
-              <td>Ürün listesinde gezin</td>
-            </tr>
-            <tr>
-              <td>
-                <K>Enter</K>
-              </td>
-              <td>Seçili ürünün ayrıntısını aç</td>
-            </tr>
-            <tr>
-              <td>
-                <K>+</K>
-              </td>
-              <td>Seçili ürünü sepete ekle</td>
-            </tr>
-            <tr>
-              <td>
-                <K>Esc</K>
-              </td>
-              <td>Paneli / pencereyi kapat</td>
-            </tr>
-          </tbody>
-        </table>
+    <div className="help-page">
+      <section className="card help-header" aria-labelledby="help-title">
+        <div>
+          <h2 id="help-title">Yardım ve kısayollar</h2>
+          <p>Aradığınız konuyu yazın veya aşağıdaki başlıklara göz atın.</p>
+        </div>
+        <label className="help-search">
+          <Search size={18} aria-hidden />
+          <span className="sr-only">Yardımda ara</span>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Yardımda ara" />
+        </label>
       </section>
 
-      <section className="card grid" style={{ gap: 10 }} aria-labelledby="h-flow">
-        <h2 id="h-flow">Hızlı başlangıç</h2>
-        {isAdmin ? (
-          <ol style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>
-            <li>
-              <b>Stok listenizi yükleyin:</b> İçe Aktar sayfasından Excel/CSV dosyanızı seçin. Kolonlar otomatik eşlenir; sadece <i>Stok kodu</i> zorunludur.
-            </li>
-            <li>
-              <b>Bayilerinizi ekleyin:</b> Bayiler sayfasında firma, iskonto ve para birimi tanımlayın.
-            </li>
-            <li>
-              <b>Bayi kullanıcıları açın:</b> Ayarlar → Kullanıcılar'dan "Bayi" rolüyle kullanıcı oluşturup bayiye bağlayın. Bayi yalnızca kendi siparişlerini görür.
-            </li>
-            <li>
-              <b>Sipariş alın:</b> Ürünlerde arayın (stok kodu, ürün adı, marka, barkod, muadil), ölçüye göre filtreleyin, <K>+</K> ile sepete ekleyin, siparişi oluşturun.
-            </li>
-            <li>
-              <b>Stok güncelleyin:</b> Yeni stok listesini "Sadece stok ve fiyat güncelle" moduyla yükleyin; siparişler stoktan otomatik düşer.
-            </li>
-            <li>
-              <b>Her yerden aynı veri:</b> Ürün, stok, bayi ve siparişler ortak bulut veritabanındadır; bayilerin siparişleri anında burada görünür. Ayarlar →
-              Bulut & Veri'den bağlantı durumunu görebilir, "arka planda çalış" seçeneğiyle pencere kapalıyken de yeni sipariş bildirimi alabilirsiniz.
-            </li>
-          </ol>
-        ) : (
-          <ol style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>
-            <li>
-              <b>Ürün arayın:</b> Ürünler sayfasında stok kodu, marka, barkod veya muadil kodla arayın; d × D × B ölçüsüne göre filtreleyin.
-            </li>
-            <li>
-              <b>Sepete ekleyin:</b> Satırdaki <K>+</K> ile ürünü sepete atın, miktarı sepette düzenleyin.
-            </li>
-            <li>
-              <b>Sipariş oluşturun:</b> Sepette ödeme şeklini seçip siparişi gönderin; durumunu Siparişler sayfasından takip edin, gerekirse yazdırın.
-            </li>
-          </ol>
+      <section className="card contact help-contact" aria-labelledby="help-contact-title">
+        <header className="contact-head">
+          <span className="contact-head-icon"><Headset size={22} aria-hidden /></span>
+          <span>
+            <h3 id="help-contact-title">Bize ulaşın</h3>
+            <span className="muted small">Yardım için arayın veya WhatsApp’tan yazın.</span>
+          </span>
+        </header>
+        <div className="contact-actions">
+          <span className="contact-number">+90 552 610 93 63</span>
+          <button className="contact-btn whatsapp" onClick={() => open('https://wa.me/905526109363')}>WhatsApp</button>
+          <button className="contact-btn call" onClick={() => open('tel:+905526109363')}><Phone size={16} aria-hidden /> Ara</button>
+        </div>
+      </section>
+
+      <div className="help-grid">
+        {showSteps && (
+          <section className="card help-card" aria-labelledby="help-steps-title">
+            <h2 id="help-steps-title">Hızlı başlangıç</h2>
+            <ol className="help-steps">
+              {(showAllSteps ? steps : visibleSteps).map((step, index) => (
+                <li className="help-step" key={step.title}>
+                  <span className="help-step-number" aria-hidden>{index + 1}</span>
+                  <span className="help-step-copy">
+                    <strong>{step.title}</strong>
+                    <span>{step.text}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
         )}
-        <h3>Arama ipuçları</h3>
-        <ul style={{ paddingLeft: 20, display: 'grid', gap: 4 }}>
-          <li>
-            Boşluk, tire ve nokta önemsizdir: <code>6205 2RS</code>, <code>6205-2RS</code>, <code>62052rs</code> aynı sonucu verir.
-          </li>
-          <li>Ölçü filtreleri milimetre cinsindedir; yalnızca iç çap girerek de arayabilirsiniz.</li>
-          <li>Türkçe karakter duyarsızdır (Keçe / KECE).</li>
-        </ul>
-      </section>
 
-      <section className="card grid" style={{ gap: 10 }} aria-labelledby="h-secure">
-        <h2 id="h-secure">Güvenlik ve kurulum</h2>
-        <ul style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>
-          <li>
-            <b>Windows "Bilgisayarınız korundu" uyarısı:</b> kurulum dosyası dijital imzalı olmadığı için ilk çalıştırmada çıkabilir. <b>Daha fazla bilgi → Yine
-            de çalıştır</b> ile devam edin; dosya bilgilerinde (sağ tık → Özellikler → Ayrıntılar) şirket adı <b>Yamansa Rulman</b> yazmalıdır.
-          </li>
-          <li>
-            <b>"Uygulama denetim ilkesi tarafından engellendi":</b> kurulumda <b>"Bu bilgisayarı kullanan herkes için"</b> seçeneğini (varsayılan) bırakıp
-            Program Files'a kurun; şirket bilgisayarlarındaki ilkeler çoğunlukla yalnızca Program Files'a izin verir. Kişisel Windows 11'de hata sürüyorsa
-            neden <b>Akıllı Uygulama Denetimi</b>'dir (Windows Güvenliği → Uygulama ve tarayıcı denetimi); kapatma kararı bilgisayar sahibine aittir.
-          </li>
-          <li>
-            <b>Doğrulama:</b> her sürümün GitHub Releases sayfasında kurulum dosyasının SHA-256 özeti yazar; PowerShell'de <code>Get-FileHash</code> ile
-            karşılaştırabilirsiniz.
-          </li>
-          <li>
-            <b>Verileriniz:</b> giriş, ürün ve siparişler yalnızca Yamansa'nın bulut veritabanıyla şifreli (HTTPS) konuşur; kimin neyi görebileceği sunucuda
-            uygulanır, bayi yalnızca kendi verisini görür. Uygulama içinde dış web sayfası gösterilmez (bağlantılar tarayıcınızda açılır), kamera/mikrofon gibi izin istenmez.
-          </li>
-          <li>
-            <b>Güncellemeler</b> yalnızca resmî GitHub Releases sayfasından alınır ve siz onaylamadan kurulmaz.
-          </li>
-          {isAdmin ? (
-            <li>
-              <b>[Yönetici]</b> Ayrıntılı kurulum rehberi ve güvenlik duvarı adresleri için depodaki <code>b2b-app/KURULUM.md</code> dosyasına bakın; Defender yanlış
-              alarm verirse dosyayı Microsoft'a "yanlışlıkla algılandı" olarak bildirebilirsiniz.
-            </li>
-          ) : null}
-        </ul>
-      </section>
+        {showShortcuts && (
+          <section className="card help-card" aria-labelledby="help-shortcuts-title">
+            <h2 id="help-shortcuts-title">Klavye kısayolları</h2>
+            {(showAllShortcuts || visibleGeneral.length > 0) && (
+              <div className="help-shortcut-group">
+                <h3>Genel</h3>
+                <div className="help-shortcut-list">
+                  {(showAllShortcuts ? generalShortcuts : visibleGeneral).map((item) => (
+                    <div className="help-shortcut-row" key={item.text}>
+                      <KeySets sets={item.keys} />
+                      <span>{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {(showAllShortcuts || visibleProduct.length > 0) && (
+              <div className="help-shortcut-group">
+                <h3>Ürün listesi</h3>
+                <div className="help-shortcut-list">
+                  {(showAllShortcuts ? productShortcuts : visibleProduct).map((item) => (
+                    <div className="help-shortcut-row" key={item.text}>
+                      <KeySets sets={item.keys} />
+                      <span>{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {showTips && (
+          <section className="card help-card" aria-labelledby="help-tips-title">
+            <h2 id="help-tips-title">Arama ipuçları</h2>
+            <div className="help-tip-list">
+              {(showAllTips ? searchTips : visibleTips).map((item) => (
+                <div className="help-tip" key={item.title}>
+                  <strong>{item.title}</strong>
+                  {item.title === 'Kod biçimi' ? (
+                    <div className="help-code-equivalence" aria-label="Kod biçimleri eşdeğerdir">
+                      <code>6205 2RS</code><span>=</span><code>6205-2RS</code><span>=</span><code>62052rs</code>
+                    </div>
+                  ) : <span>{item.text}</span>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {showFaq && (
+          <section className="card help-card" aria-labelledby="help-faq-title">
+            <h2 id="help-faq-title">Sık sorulan sorular</h2>
+            <div className="help-accordion-list">
+              {(showAllFaq ? faq : visibleFaq).map((item) => (
+                <details className="help-accordion" key={item.title}>
+                  <summary>{item.title}</summary>
+                  <p>{item.text}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {showSecurity && (
+          <section className="card help-card" aria-labelledby="help-security-title">
+            <h2 id="help-security-title">Güvenlik ve kurulum</h2>
+            <div className="help-accordion-list">
+              {(showAllSecurity ? securityItems : visibleSecurity).map((item) => (
+                <details className="help-accordion" key={item.title}>
+                  <summary>{item.title}</summary>
+                  <p>{item.text}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {q && !hasMatches && <section className="card help-no-results" role="status">Aramanızla eşleşen içerik bulunamadı.</section>}
+      </div>
     </div>
   )
 }
