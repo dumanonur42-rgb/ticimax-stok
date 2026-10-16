@@ -4,6 +4,12 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.21
+
+- Yeni sürüm kurulduğunda oturum kapanmaz; tekrar giriş yapmanız gerekmez.
+- [yönetici] Hareketler sayfasına Genel, Yamansa Rulman Uygulama, Yamansa Rulman Web, Rulman Sitesi Web ve Teknik Kesici Web sekmeleri eklendi. En çok aranan, en çok bakılan ve sepete en çok eklenen ürünler seçilen döneme göre görülebilir.
+- [yönetici] Hareket kayıtlarının saatleri düzeltildi, çift arama ve çift görüntüleme kayıtları giderildi; tarih başlıkları, filtreler ve kişi özeti eklendi.
+
 ## 1.0.20
 
 - [yönetici] Hareketler sayfasında kullanıcı girişleri, aramaları, ürün görüntülemeleri, sepete eklemeleri ve stok değişiklikleri filtrelenip incelenebilir.
