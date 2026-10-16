@@ -771,3 +771,128 @@ revoke execute on function public.activity_log_clamp_at() from public, anon;
 drop trigger if exists activity_log_clamp_at on public.activity_log;
 create trigger activity_log_clamp_at before insert on public.activity_log
   for each row execute function public.activity_log_clamp_at();
+
+-- Website activity tracking and reporting
+-- Website activity (yamansarulman.com, rulmansitesi.com, teknikkesici.com.tr); written only by the site-track edge function.
+create table if not exists public.site_activity (
+  id bigint generated always as identity primary key,
+  at timestamptz not null default now(),
+  site text not null check (site in ('yamansarulman', 'rulmansitesi', 'teknikkesici')),
+  visitor text not null check (length(visitor) between 8 and 64),
+  kind text not null check (kind in ('visit', 'search', 'product_view', 'cart_add', 'order')),
+  sku text not null default '',
+  name text not null default '',
+  path text not null default '',
+  query text not null default '',
+  results integer,
+  qty numeric,
+  device text not null default '' check (device in ('', 'mobile', 'tablet', 'desktop')),
+  referrer text not null default ''
+);
+create index if not exists site_activity_at on public.site_activity (at desc);
+create index if not exists site_activity_site_at on public.site_activity (site, at desc);
+alter table public.site_activity enable row level security;
+revoke all on public.site_activity from anon;
+revoke insert, update, delete, truncate on public.site_activity from authenticated;
+grant select on public.site_activity to authenticated;
+drop policy if exists site_activity_admin_select on public.site_activity;
+create policy site_activity_admin_select on public.site_activity for select to authenticated using (is_admin());
+
+create or replace function public.prune_logs() returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  delete from activity_log where at < now() - interval '90 days';
+  delete from stock_log where at < now() - interval '90 days';
+  delete from site_activity where at < now() - interval '90 days';
+end $$;
+
+-- p_source: 'all' | 'app' | 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+create or replace function public.traffic_summary(p_source text, p_from timestamptz, p_to timestamptz)
+returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare result jsonb;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if p_source not in ('all', 'app', 'yamansarulman', 'rulmansitesi', 'teknikkesici') then
+    raise exception 'Geçersiz kaynak.';
+  end if;
+  with ev as (
+    select 'app'::text as src, a.at, case when a.kind = 'login' then 'visit' else a.kind end as kind,
+           a.user_id::text as who, upper(trim(a.sku)) as sku, a.brand as label, a.query, null::integer as results,
+           a.qty, a.platform as device
+      from activity_log a
+     where p_source in ('all', 'app') and a.at >= p_from and a.at < p_to
+    union all
+    select s.site, s.at, s.kind, s.visitor, upper(trim(s.sku)), s.name, s.query, s.results, s.qty, s.device
+      from site_activity s
+     where (p_source = 'all' or s.site = p_source) and s.at >= p_from and s.at < p_to
+  ),
+  totals as (
+    select count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'visit') as visits,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev
+  ),
+  by_source as (
+    select src, count(distinct who) as visitors,
+           count(*) filter (where kind = 'visit') as visits,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev group by src
+  ),
+  searches as (
+    select lower(regexp_replace(trim(query), '\s+', ' ', 'g')) as term,
+           regexp_replace(lower(query), '[\s.\-/_]+', '', 'g') as key, src, who, results
+      from ev where kind = 'search' and trim(query) <> ''
+  ),
+  top_searches as (
+    select mode() within group (order by term) as term, count(*) as count,
+           count(distinct src || ':' || who) as people, array_agg(distinct src) as sources
+      from searches group by key order by count(*) desc, key limit 15
+  ),
+  zero_results as (
+    select mode() within group (order by term) as term, count(*) as count, array_agg(distinct src) as sources
+      from searches where results = 0 group by key order by count(*) desc, key limit 15
+  ),
+  top_products as (
+    select sku, max(label) as label, count(*) as count, count(distinct src || ':' || who) as people,
+           array_agg(distinct src) as sources
+      from ev where kind = 'product_view' and sku <> '' group by sku order by count(*) desc, sku limit 15
+  ),
+  top_cart as (
+    select sku, max(label) as label, count(*) as count, coalesce(sum(qty), 0) as qty,
+           array_agg(distinct src) as sources
+      from ev where kind = 'cart_add' and sku <> '' group by sku order by count(*) desc, sku limit 15
+  ),
+  daily as (
+    select to_char(date_trunc('day', at at time zone 'Europe/Istanbul'), 'YYYY-MM-DD') as day,
+           count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev group by 1 order by 1
+  ),
+  devices as (
+    select coalesce(nullif(device, ''), 'unknown') as device, count(distinct src || ':' || who) as visitors
+      from ev group by 1 order by 2 desc
+  )
+  select jsonb_build_object(
+    'totals', (select to_jsonb(t) from totals t),
+    'bySource', coalesce((select jsonb_agg(to_jsonb(b) order by b.src) from by_source b), '[]'::jsonb),
+    'topSearches', coalesce((select jsonb_agg(to_jsonb(x)) from top_searches x), '[]'::jsonb),
+    'zeroResults', coalesce((select jsonb_agg(to_jsonb(x)) from zero_results x), '[]'::jsonb),
+    'topProducts', coalesce((select jsonb_agg(to_jsonb(x)) from top_products x), '[]'::jsonb),
+    'topCart', coalesce((select jsonb_agg(to_jsonb(x)) from top_cart x), '[]'::jsonb),
+    'daily', coalesce((select jsonb_agg(to_jsonb(x)) from daily x), '[]'::jsonb),
+    'devices', coalesce((select jsonb_agg(to_jsonb(x)) from devices x), '[]'::jsonb)
+  ) into result;
+  return result;
+end $$;
+revoke execute on function public.traffic_summary(text, timestamptz, timestamptz) from public, anon;
+grant execute on function public.traffic_summary(text, timestamptz, timestamptz) to authenticated;
