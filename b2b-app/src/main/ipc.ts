@@ -1,6 +1,6 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
-import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
+import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
@@ -81,6 +81,9 @@ function dateBoundary(value: string, end = false): string {
   if (Number.isNaN(date.getTime())) throw new Error('Tarih filtresi geçersiz.')
   return date.toISOString()
 }
+
+const trafficSources = new Set<TrafficSource>(['all', 'app', 'yamansarulman', 'rulmansitesi', 'teknikkesici'])
+const trafficSites = new Set<TrafficSite>(['yamansarulman', 'rulmansitesi', 'teknikkesici'])
 
 async function resolvePeople(ids: Array<string | null>): Promise<Map<string, ActivityPerson>> {
   const unique = [...new Set(ids.filter((id): id is string => !!id))]
@@ -293,6 +296,31 @@ export function registerIpc(): void {
       topViewedProducts: [...products.values()].sort((a, b) => b.views - a.views).slice(0, 5),
       topSearchTerms: [...terms.values()].sort((a, b) => b.searches - a.searches).slice(0, 5)
     }
+  })
+  handle('traffic:summary', async (query: TrafficSummaryQuery): Promise<TrafficSummary> => {
+    requireAdmin()
+    if (!query || !trafficSources.has(query.source)) throw new Error('Geçersiz trafik kaynağı.')
+    const from = new Date(query.from)
+    const to = new Date(query.to)
+    if (!Number.isFinite(from.getTime()) || !Number.isFinite(to.getTime()) || from >= to || to.getTime() - from.getTime() > 92 * 86400_000) {
+      throw new Error('Trafik tarih aralığı geçersiz.')
+    }
+    const result = await cloud().rpc('traffic_summary', {
+      p_source: query.source,
+      p_from: from.toISOString(),
+      p_to: to.toISOString()
+    })
+    if (result.error) throw result.error
+    return result.data as unknown as TrafficSummary
+  })
+  handle('traffic:recent', async (query: TrafficRecentQuery) => {
+    requireAdmin()
+    if (!query || !trafficSites.has(query.site)) throw new Error('Geçersiz site.')
+    const offset = Number.isFinite(query.offset) ? Math.max(0, Math.min(1_000_000, Math.floor(query.offset))) : 0
+    const result = await cloud().from('site_activity').select('*').eq('site', query.site)
+      .order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + 49)
+    if (result.error) throw result.error
+    return { rows: result.data, hasMore: result.data.length === 50 }
   })
   handle('stock:log', async (filters: StockLogQuery) => {
     requireAdmin()

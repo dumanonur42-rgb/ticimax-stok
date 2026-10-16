@@ -241,6 +241,56 @@ export interface Session {
 export type ActivityKind = 'login' | 'search' | 'product_view' | 'cart_add' | 'order'
 export type ActivityPlatform = 'windows' | 'android' | 'ios' | 'web'
 
+export type TrafficSite = 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+export type TrafficSource = 'all' | 'app' | TrafficSite
+export type SiteActivityKind = 'visit' | 'search' | 'product_view' | 'cart_add' | 'order'
+export interface SiteActivityRow {
+  id: number
+  at: string
+  site: TrafficSite
+  visitor: string
+  kind: SiteActivityKind
+  sku: string
+  name: string
+  path: string
+  query: string
+  results: number | null
+  qty: number | null
+  device: '' | 'mobile' | 'tablet' | 'desktop'
+  referrer: string
+}
+export interface TrafficRecentQuery {
+  site: TrafficSite
+  offset: number
+}
+export interface TrafficRecentPage {
+  rows: SiteActivityRow[]
+  hasMore: boolean
+}
+export interface TrafficSummaryQuery {
+  source: TrafficSource
+  from: string
+  to: string
+}
+export interface TrafficCounts {
+  visitors: number
+  visits: number
+  searches: number
+  product_views: number
+  cart_adds: number
+  orders: number
+}
+export interface TrafficSummary {
+  totals: TrafficCounts
+  bySource: (TrafficCounts & { src: string })[]
+  topSearches: { term: string; count: number; people: number; sources: string[] }[]
+  zeroResults: { term: string; count: number; sources: string[] }[]
+  topProducts: { sku: string; label: string; count: number; people: number; sources: string[] }[]
+  topCart: { sku: string; label: string; count: number; qty: number; sources: string[] }[]
+  daily: { day: string; visitors: number; searches: number; product_views: number; cart_adds: number; orders: number }[]
+  devices: { device: string; visitors: number }[]
+}
+
 export interface ActivityEvent {
   kind: ActivityKind
   product_id?: number | null

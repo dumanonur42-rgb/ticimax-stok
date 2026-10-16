@@ -7,6 +7,10 @@ import type {
   ActivityListQuery,
   ActivityPage,
   ActivitySummary,
+  TrafficRecentPage,
+  TrafficRecentQuery,
+  TrafficSummary,
+  TrafficSummaryQuery,
   StockLogQuery,
   StockLogPage,
   DashboardStats,
@@ -47,6 +51,8 @@ export interface ApiMap {
   'activity:open': [void, void]
   'activity:list': [ActivityListQuery, ActivityPage]
   'activity:summary': [string, ActivitySummary]
+  'traffic:summary': [TrafficSummaryQuery, TrafficSummary]
+  'traffic:recent': [TrafficRecentQuery, TrafficRecentPage]
   'stock:log': [StockLogQuery, StockLogPage]
   'clipboard:writeText': [string, void]
 
