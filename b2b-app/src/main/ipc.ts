@@ -1,6 +1,6 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
-import type { ActivityEvent, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
+import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
@@ -241,12 +241,14 @@ export function registerIpc(): void {
     if (filters.platform) query = query.eq('platform', filters.platform)
     if (filters.from) query = query.gte('at', dateBoundary(filters.from))
     if (filters.to) query = query.lte('at', dateBoundary(filters.to, true))
+    const text = filters.text?.trim().replace(/[%_,()]/g, ' ').trim()
+    if (text) query = query.or(`sku.ilike.%${text}%,query.ilike.%${text}%`)
     const result = await query.order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + limit - 1)
     if (result.error) throw result.error
     const people = await resolvePeople(result.data.map((row) => row.user_id))
     const rows: ActivityRow[] = result.data.map((row) => ({
       ...row,
-      person: people.get(row.user_id) ?? { display_name: row.user_id.slice(0, 8), username: '', company: '' }
+      person: people.get(row.user_id) ?? { display_name: 'Silinmiş kullanıcı', username: '', company: '' }
     }))
     return { rows, hasMore: rows.length === limit }
   })
@@ -255,16 +257,20 @@ export function registerIpc(): void {
     const since = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString()
     const result = await cloud()
       .from('activity_log')
-      .select('at,kind,product_id,sku,brand,query')
+      .select('at,kind,platform,product_id,sku,brand,query')
       .eq('user_id', userId)
       .gte('at', since)
       .order('at', { ascending: false })
       .limit(3000)
     if (result.error) throw result.error
     let lastLogin: string | null = null
+    const kindCounts: Record<ActivityKind, number> = { login: 0, search: 0, product_view: 0, cart_add: 0, order: 0 }
+    const usedPlatforms = new Set<ActivityPlatform>()
     const products = new Map<string, { product_id: number | null; sku: string; brand: string; views: number }>()
     const terms = new Map<string, { query: string; searches: number }>()
     for (const row of result.data) {
+      kindCounts[row.kind]++
+      usedPlatforms.add(row.platform)
       if (row.kind === 'login' && !lastLogin) lastLogin = row.at
       if (row.kind === 'product_view') {
         const key = row.product_id === null ? `${row.sku}|${row.brand}` : String(row.product_id)
@@ -281,6 +287,9 @@ export function registerIpc(): void {
     }
     return {
       lastLogin,
+      lastActivity: result.data[0]?.at ?? null,
+      kindCounts,
+      platforms: [...usedPlatforms],
       topViewedProducts: [...products.values()].sort((a, b) => b.views - a.views).slice(0, 5),
       topSearchTerms: [...terms.values()].sort((a, b) => b.searches - a.searches).slice(0, 5)
     }
@@ -299,7 +308,7 @@ export function registerIpc(): void {
     const people = await resolvePeople(result.data.map((row) => row.user_id))
     const rows: StockLogRow[] = result.data.map((row) => ({
       ...row,
-      person: row.user_id ? people.get(row.user_id) ?? { display_name: row.user_id.slice(0, 8), username: '', company: '' } : { display_name: '—', username: '', company: '' }
+      person: row.user_id ? people.get(row.user_id) ?? { display_name: 'Silinmiş kullanıcı', username: '', company: '' } : { display_name: '—', username: '', company: '' }
     }))
     return { rows, hasMore: rows.length === limit }
   })

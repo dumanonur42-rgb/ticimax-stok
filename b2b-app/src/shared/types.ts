@@ -272,6 +272,7 @@ export interface ActivityListQuery {
   platform?: ActivityPlatform
   from?: string
   to?: string
+  text?: string
   offset: number
   limit: number
 }
@@ -283,6 +284,9 @@ export interface ActivityPage {
 
 export interface ActivitySummary {
   lastLogin: string | null
+  lastActivity: string | null
+  kindCounts: Record<ActivityKind, number>
+  platforms: ActivityPlatform[]
   topViewedProducts: { product_id: number | null; sku: string; brand: string; views: number }[]
   topSearchTerms: { query: string; searches: number }[]
 }

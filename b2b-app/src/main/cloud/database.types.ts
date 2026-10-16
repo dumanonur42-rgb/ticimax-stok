@@ -130,7 +130,7 @@ export type ActivityLogRow = {
 }
 
 export type ActivityLogInsert = Pick<ActivityLogRow, 'platform' | 'kind'> &
-  Partial<Pick<ActivityLogRow, 'product_id' | 'sku' | 'brand' | 'query' | 'qty' | 'order_id' | 'detail'>>
+  Partial<Pick<ActivityLogRow, 'at' | 'product_id' | 'sku' | 'brand' | 'query' | 'qty' | 'order_id' | 'detail'>>
 
 export type StockLogRow = {
   id: number

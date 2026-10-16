@@ -757,3 +757,17 @@ alter default privileges in schema public revoke execute on functions from publi
 alter function public.touch_updated_at() set search_path = public;
 alter function public.norm_key(text) set search_path = public;
 alter function public.products_fill_key() set search_path = public;
+
+-- Activity log: client event time, clamped
+create or replace function public.activity_log_clamp_at() returns trigger
+language plpgsql set search_path = public as $$
+begin
+  if new.at is null or new.at > now() or new.at < now() - interval '3 days' then
+    new.at := now();
+  end if;
+  return new;
+end $$;
+revoke execute on function public.activity_log_clamp_at() from public, anon;
+drop trigger if exists activity_log_clamp_at on public.activity_log;
+create trigger activity_log_clamp_at before insert on public.activity_log
+  for each row execute function public.activity_log_clamp_at();
