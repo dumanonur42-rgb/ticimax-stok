@@ -175,7 +175,7 @@ export async function restoreSession(): Promise<Session | null> {
   }
   const cached = await cachedSession()
   if (!data.session) {
-    if (cached) {
+    if (cached && !navigator.onLine) {
       await unlockCatalogStorage()
       return cached
     }
