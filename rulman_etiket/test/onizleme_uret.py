@@ -1,13 +1,17 @@
 """Örnek etiketlerin 300 dpi PNG + PDF önizlemelerini üretir ve barkodları okuyup denetler.
 
-Kullanım:  python test/onizleme_uret.py          (rulman_etiket klasöründen)
-Çıktı:     test/onizleme/*.png, *.pdf, karsilastirma.png, dogrulama.md
+Kullanım:  python test/onizleme_uret.py [--referans FOTO.jpg]   (rulman_etiket klasöründen)
+Çıktı:     test/onizleme/*.png, *.pdf, dogrulama.md
+           --referans verilirse fotoğraf ile yan yana karşılaştırma görüntüsü geçici klasöre
+           yazılır (repoya girmez): <geçici klasör>/rulman_etiket_karsilastirma.png
 Okuma için zxing-cpp gerekir (uygulama zaten kare kod üretmek için kullanıyor).
 """
 from __future__ import annotations
 
+import argparse
 import io
 import sys
+import tempfile
 from pathlib import Path
 
 KLASOR = Path(__file__).resolve().parent
@@ -40,8 +44,8 @@ def oku(png: bytes) -> dict[str, str]:
     return sonuc
 
 
-def karsilastirma(png: bytes) -> None:
-    ref = Image.open(CIKTI / "referans.jpg").convert("RGB")
+def karsilastirma(png: bytes, referans: Path) -> Path:
+    ref = Image.open(referans).convert("RGB")
     biz = Image.open(io.BytesIO(png)).convert("RGB")
     h = 900
     ref = ref.resize((round(ref.width * h / ref.height), h), Image.LANCZOS)
@@ -59,10 +63,15 @@ def karsilastirma(png: bytes) -> None:
     d.text((2 * bosluk + ref.width, 20), "Bizim etiket (62 mm sürekli, 300 dpi)", fill="black", font=f)
     for x, w in ((bosluk, ref.width), (2 * bosluk + ref.width, biz.width)):
         d.rectangle((x - 1, ust - 1, x + w, ust + h), outline=(160, 160, 160))
-    tuval.save(CIKTI / "karsilastirma.png")
+    yol = Path(tempfile.gettempdir()) / "rulman_etiket_karsilastirma.png"
+    tuval.save(yol)
+    return yol
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(description="Örnek etiket önizlemeleri ve barkod denetimi")
+    ap.add_argument("--referans", type=Path, help="karşılaştırma için referans fotoğraf (repoya eklenmez)")
+    args = ap.parse_args()
     CIKTI.mkdir(exist_ok=True)
     satirlar = ["| Örnek | Boyut | Etiket (mm) | Code128 beklenen | Code128 okunan | DataMatrix beklenen | DataMatrix okunan | Sonuç |",
                 "|---|---|---|---|---|---|---|---|"]
@@ -86,8 +95,8 @@ def main() -> int:
                             f"`{g(b2)}` | `{g(o2)}` | {'TAMAM' if tamam else 'HATA'} |")
             print(f"{dosya:32s} {'TAMAM' if tamam else 'HATA '}  {y.mod} cubuk={y.cubuk_modul} "
                   f"dm={len(y.dm)}x{y.dm_modul} kod={y.kod_pt}pt {y.uyarilar}")
-            if ad == "01_6308_C3" and boyut == "62surekli":
-                karsilastirma(png)
+            if args.referans and ad == "01_6308_C3" and boyut == "62surekli":
+                print("karşılaştırma:", karsilastirma(png, args.referans))
     (CIKTI / "dogrulama.md").write_text("\n".join(satirlar) + "\n", encoding="utf-8")
     print("hata:", hata)
     return 1 if hata else 0

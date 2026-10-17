@@ -306,13 +306,13 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
     rakam_bosluk = 0.7 * MM
     cubuk_blok = _pt(cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
 
-    ek = veri.ek.strip()
+    ek_ham = veri.ek.strip()
     bilgiler = _bilgiler(veri)
     for kod_nominal in [p.kod_pt - i for i in range(0, int(p.kod_pt - KOD_MIN_TEK) + 1)]:
         kod_pt, kod_satir = _kod_sigdir(veri.kod.strip(), kod_nominal, w)
-        ek_pt = kod_pt
-        if ek:
-            ek_pt, ek = _tek_satir_sigdir(ek, kod_pt, KOD_MIN_IKI, w, True)
+        ek, ek_pt = ek_ham, kod_pt
+        if ek_ham:
+            ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, KOD_MIN_IKI, w, True)
 
         y = _pt(KENAR)
         if mod == "yan":
@@ -387,6 +387,11 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
         alt_y0 = (yukseklik - _pt(KENAR) - alt_blok_h - BOSLUK_UST_ADET) if veri.alt_tekrar else None
         cubuk_x = KENAR
         dm_x = SAG - dm_gen
+        uy = list(uyarilar)
+        if ek != ek_ham:
+            uy.append("Ek etikete sığmadığı için kısaltıldı.")
+        if bilgi_satir != bilgiler:
+            uy.append("Bilgi satırı etikete sığmadığı için kısaltıldı.")
         return Yerlesim(
             boyut=boyut, genislik=SAYFA_GENISLIK, yukseklik=yukseklik, mod=mod,
             cubuk_modul=m, cubuk_bitler=bitler, cubuk_x=cubuk_x, cubuk_y=cubuk_y, cubuk_h=cubuk_h,
@@ -395,7 +400,7 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             adet_taban=adet_taban, kod_pt=kod_pt, kod_satirlari=kod_satir, kod_tabanlari=kod_tabanlari,
             ek_pt=ek_pt, ek_taban=ek_taban,
             bilgi_pt=bilgi_pt, bilgi_satirlari=bilgi_satir, bilgi_tabanlari=bilgi_tabanlari,
-            alt_y0=alt_y0, uyarilar=uyarilar,
+            alt_y0=alt_y0, uyarilar=uy,
         )
     raise EtiketHatasi("Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın.")
 
