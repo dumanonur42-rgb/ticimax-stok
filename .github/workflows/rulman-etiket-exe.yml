@@ -74,22 +74,16 @@ jobs:
             $null = $p.Handle
             if (-not $p.WaitForExit(60000)) {
               Get-CimInstance Win32_Process | Format-Table ProcessId, ParentProcessId, Name, CommandLine -AutoSize | Out-String -Width 400 | Write-Host
-              if ($env:RULMAN_ETIKET_KONTROL_LOG -and (Test-Path $env:RULMAN_ETIKET_KONTROL_LOG)) {
-                Write-Host "Kontrol ilerleme kaydı:"
-                Get-Content $env:RULMAN_ETIKET_KONTROL_LOG | Write-Host
-              }
               try {
                 $p.Kill($true)
               } catch {
                 Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
                 & taskkill.exe /F /T /PID $p.Id | Out-Null
               }
-              Write-Error "$FailureMessage 60 saniyede bitmedi"
-              exit 1
+              throw "$FailureMessage 60 saniyede bitmedi"
             }
             if ($p.ExitCode -ne 0) {
-              Write-Error "$FailureMessage (çıkış kodu: $($p.ExitCode))"
-              exit 1
+              throw "$FailureMessage (çıkış kodu: $($p.ExitCode))"
             }
           }
 
@@ -101,12 +95,15 @@ jobs:
           Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
-          $kontrolLog = Join-Path $PWD "kontrol.log"
-          Remove-Item $kontrolLog -ErrorAction SilentlyContinue
-          $env:RULMAN_ETIKET_KONTROL_LOG = $kontrolLog
-          Invoke-RulmanEtiketSmoke -Arguments @("--kontrol") -FailureMessage "Uygulama dosyaları denetimden geçemedi"
-          Remove-Item Env:RULMAN_ETIKET_KONTROL_LOG -ErrorAction SilentlyContinue
-          Remove-Item $kontrolLog -ErrorAction SilentlyContinue
+          $kontrolRapor = Join-Path $PWD "kontrol.txt"
+          Remove-Item $kontrolRapor -ErrorAction SilentlyContinue
+          try {
+            Invoke-RulmanEtiketSmoke -Arguments @("--kontrol", "--rapor", ('"' + $kontrolRapor + '"')) -FailureMessage "Uygulama dosyaları denetimden geçemedi"
+          } finally {
+            if (Test-Path $kontrolRapor) {
+              Get-Content $kontrolRapor -Encoding utf8 | Write-Host
+            }
+          }
 
       - uses: actions/upload-artifact@v4
         with:
@@ -115,6 +112,7 @@ jobs:
             rulman_etiket/dist/Rulman Etiket.exe
             rulman_etiket/test_cikti.pdf
             rulman_etiket/test_surekli.pdf
+            rulman_etiket/kontrol.txt
 
       - name: Son sürüm etiketini güncelle
         if: github.ref == 'refs/heads/main'
