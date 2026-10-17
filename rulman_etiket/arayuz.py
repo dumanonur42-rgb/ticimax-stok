@@ -108,8 +108,10 @@ class Buton(tk.Frame):
             self.renk = (KART, KOYU, KOYU, "#9CA3AF")
             font, py, pxx = _f(10, True), 8, 14
         super().__init__(master, bg=self.renk[0], cursor="hand2", highlightthickness=1,
-                         highlightbackground=KOYU, highlightcolor=KOYU, padx=px(pxx),
-                         pady=px(py))
+                         highlightbackground=KOYU, highlightcolor=KIRMIZI, padx=px(pxx),
+                         pady=px(py), takefocus=1)
+        for tus in ("<Return>", "<KP_Enter>", "<space>"):
+            self.bind(tus, lambda _e: (self._tikla(), "break")[1])
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.yazi = tk.Label(self, text=metin, font=font, bg=self.renk[0], fg=self.renk[1])
@@ -290,7 +292,8 @@ def _kart(master, baslik: str = "", **kw) -> tk.Frame:
 class Onizleme(tk.Frame):
     """Etiketin gerçek oranında, gölgeli kâğıt görünümünde önizlemesi."""
 
-    BOS_METIN = "Rulman kodunu yazınca\netiket burada görünür"
+    BOS_METIN = "Etiket önizlemesi için\nrulman kodunu girin"
+    HATA_METIN = "Önizleme hazırlanamadı"
 
     def __init__(self, master):
         super().__init__(master, bg=KART, highlightbackground=CIZGI, highlightcolor=CIZGI,
@@ -344,7 +347,12 @@ class Onizleme(tk.Frame):
         bosluk = px(18)
         gw, gh = cw - 2 * bosluk, ch - 2 * bosluk
         png = None
-        if istek:
+        mesaj, renk = self.BOS_METIN, "#9CA3AF"
+        if isinstance(istek, str):
+            mesaj, renk, istek = istek, KIRMIZI, None
+            self.olcu.config(text="")
+        elif istek:
+            mesaj = self.HATA_METIN
             veri, boyut = istek
             try:
                 dpi = gw / (62 / 25.4)
@@ -366,8 +374,8 @@ class Onizleme(tk.Frame):
             x0, y0 = (cw - w) // 2, (ch - h) // 2
             self._golge(x0, y0, w, h)
             c.create_rectangle(x0, y0, x0 + w, y0 + h, fill=KART, outline=CIZGI)
-            c.create_text(cw / 2, ch / 2, text=self.BOS_METIN, font=_f(9), fill="#9CA3AF",
-                          justify="center")
+            c.create_text(cw / 2, ch / 2, text=mesaj, font=_f(9, renk == KIRMIZI), fill=renk,
+                          justify="center", width=max(px(60), w - px(28)))
             if not istek:
                 self.olcu.config(text="")
             return
@@ -586,8 +594,8 @@ class Uygulama(tk.Tk):
         self.kod_var = tk.StringVar()
         self.ek_var = tk.StringVar()
         self.adet_var = tk.StringVar(value="1")
-        self.bilgi1_var = tk.StringVar(value=str(self.ayar.get("bilgi1", "")))
-        self.bilgi2_var = tk.StringVar(value=str(self.ayar.get("bilgi2", "")))
+        self.bilgi1_var = tk.StringVar()
+        self.bilgi2_var = tk.StringVar()
         self.alt_var = tk.BooleanVar(value=bool(self.ayar.get("alt_tekrar", True)))
         boyutlar = list(ec.BOYUTLAR)
         boyut = self.ayar.get("boyut")
@@ -630,15 +638,18 @@ class Uygulama(tk.Tk):
         for v in (self.kod_var, self.ek_var, self.adet_var, self.bilgi1_var, self.bilgi2_var,
                   self.alt_var, self.boyut_var, self.kopya_var):
             v.trace_add("write", lambda *_: self._degisti())
-        for v in (self.bilgi1_var, self.bilgi2_var, self.alt_var, self.boyut_var,
-                  self.yazici_var):
+        for v in (self.alt_var, self.boyut_var, self.yazici_var):
             v.trace_add("write", lambda *_: self._ayar_kaydet_sonra())
         self.kod_var.trace_add("write", lambda *_: self._normallestir(self.kod_var, self.kod))
         self.ek_var.trace_add("write", lambda *_: self._normallestir(self.ek_var, self.ek))
         self.kod_var.trace_add("write", lambda *_: self._kod_yazi_boyu())
 
-        self.bind("<Return>", lambda _e: self.yazdir())
-        self.bind("<KP_Enter>", lambda _e: self.yazdir())
+        for alan in (self.kod, self.ek, self.adet.giris):
+            for tus in ("<Return>", "<KP_Enter>"):
+                alan.bind(tus, lambda _e: self.yazdir())
+        for alan in (self.bilgi1, self.bilgi2):
+            for tus in ("<Return>", "<KP_Enter>"):
+                alan.bind(tus, self._sonraki_alan)
         self.protocol("WM_DELETE_WINDOW", self.kapat)
         self._pencere_yerlestir()
         self.deiconify()
@@ -716,7 +727,9 @@ class Uygulama(tk.Tk):
         self.kod = _giris(kart, font=self.kod_font, textvariable=self.kod_var)
         _alan(kart, "Rulman kodu", self.kod, 1, ust=6)
         self.kod_ipucu = tk.Label(kart, text="", font=_f(8), fg=SOLUK, bg=KART, anchor="w",
-                                  width=1)
+                                  justify="left", width=1)
+        self.kod_ipucu.bind("<Configure>",
+                            lambda e: self.kod_ipucu.config(wraplength=max(px(80), e.width)))
         self.kod_ipucu.grid(row=3, column=0, sticky="ew", pady=(px(3), 0))
         self.kod.bind("<FocusOut>", lambda _e: self._kirp(self.kod_var))
 
@@ -868,6 +881,12 @@ class Uygulama(tk.Tk):
         v = self.veri()
         if not v.kod:
             return None
+        try:
+            hatalar = ec.dogrula(v)
+        except Exception:  # noqa: BLE001
+            hatalar = []
+        if hatalar:
+            return "Bu bilgilerle etiket basılamaz:\n\n" + "\n".join(hatalar)
         if v.adet < 1:
             v.adet = 1
         return v, self.boyut_var.get()
@@ -909,15 +928,22 @@ class Uygulama(tk.Tk):
         self._kayit_zamani = None
         a = self._ayar_oku()
         a.update({"boyut": self.boyut_var.get(), "yazici": self.yazici_var.get(),
-                  "alt_tekrar": bool(self.alt_var.get()),
-                  "bilgi1": self.bilgi1_var.get().strip(),
-                  "bilgi2": self.bilgi2_var.get().strip()})
+                  "alt_tekrar": bool(self.alt_var.get())})
+        # bilgi satırları saklanmaz; eski sürümden kalanları boşalt
+        for eski in ("bilgi1", "bilgi2"):
+            if eski in a:
+                a[eski] = ""
         if pencere and self.state() == "normal":
             a["pencere"] = self.geometry()
         try:
             yz.ayar_kaydet(a)
         except Exception:  # noqa: BLE001 - ayar yazılamazsa program yine çalışsın
             pass
+
+    @staticmethod
+    def _sonraki_alan(e):
+        e.widget.tk_focusNext().focus_set()
+        return "break"
 
     def kod_odakla(self):
         self.kod.focus_set()
