@@ -284,9 +284,6 @@ textarea {
   position: relative;
   transition: background var(--motion), color var(--motion);
 }
-[data-theme='dark'] .nav-item {
-  border-color: var(--border-strong);
-}
 .nav-item:hover {
   background: var(--navy-hover);
   color: var(--navy-text);
@@ -931,13 +928,6 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-[data-theme='dark'] .vgrid-head button {
-  padding: 4px 6px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--bg-hover);
-  color: var(--text);
 }
 .vgrid-body {
   flex: 1;
@@ -2432,9 +2422,6 @@ dialog.update-dialog {
 .tab[aria-selected='true'] {
   color: var(--text);
   border-bottom-color: var(--primary);
-}
-[data-theme='dark'] .tab:not([aria-selected='true']) {
-  border-bottom-color: var(--border-strong);
 }
 
 /* misc */

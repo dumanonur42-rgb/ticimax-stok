@@ -58,13 +58,7 @@
 .settings-switch small, .settings-app-row small { color: var(--text-muted); }
 .settings-switch input { width: 20px; height: 20px; flex: none; }
 .settings-link { display: inline-flex; align-items: center; gap: 7px; justify-self: start; border: 0; background: none; color: var(--primary); font: inherit; cursor: pointer; }
-[data-theme='dark'] .settings-link {
-  padding: 5px 8px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--bg-hover);
-  color: var(--primary-hover);
-}
+[data-theme='dark'] .settings-link { color: var(--primary-hover); }
 .settings-status-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .settings-status-grid > div { display: grid; align-content: start; gap: 8px; min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
 .settings-status-grid > div > .badge { width: fit-content; justify-self: start; }
