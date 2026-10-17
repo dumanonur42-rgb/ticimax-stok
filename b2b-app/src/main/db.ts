@@ -179,6 +179,13 @@ export function closeDb(): void {
   db = null
 }
 
+/** Remove the encrypted local catalog and key on sign-out; the next login creates fresh files. */
+export function deleteLocalDatabase(): void {
+  const file = dbPath()
+  closeDb()
+  for (const path of [file, `${file}-wal`, `${file}-shm`, keyPath(file)]) rmSync(path, { force: true })
+}
+
 export function reopenDb(): DB {
   closeDb()
   return getDb()

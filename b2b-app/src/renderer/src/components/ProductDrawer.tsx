@@ -67,6 +67,10 @@ export function ProductDrawer({
   }, [onClose])
 
   const addNow = (): void => {
+    if (product.price <= 0) {
+      toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+      return
+    }
     add(product, qty)
     toast(`${product.sku} × ${qty} sepete eklendi.`, 'success')
   }
@@ -137,7 +141,7 @@ export function ProductDrawer({
               <>
                 <dt>Fiyat</dt>
                 <dd>
-                  <strong>{money(product.price, product.currency)}</strong>
+                  <strong>{product.price > 0 ? money(product.price, product.currency) : 'Fiyat sorunuz'}</strong>
                   {product.list_price != null && product.list_price > product.price && (
                     <span className="muted small">
                       {' '}
@@ -209,7 +213,7 @@ export function ProductDrawer({
           <span className="spacer" />
           {showPrices && (
             <span aria-live="polite" className="nowrap">
-              <strong>{money(product.price * qty, product.currency)}</strong>
+                      <strong>{product.price > 0 ? money(product.price * qty, product.currency) : 'Fiyat sorunuz'}</strong>
               {cp != null && <span className="muted small"> · kart {money(cp * qty, product.currency)}</span>}
             </span>
           )}

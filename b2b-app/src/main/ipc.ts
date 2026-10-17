@@ -6,8 +6,8 @@ import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
 import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { flushActivity, logActivity, setActivitySession } from './activity'
-import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
-import { dbPath, wipeProducts } from './db'
+import { onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
+import { dbPath, deleteLocalDatabase, wipeProducts } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateMyCompany } from './repo/customers'
 import { dashboardStats } from './repo/dashboard'
@@ -145,6 +145,7 @@ export function currentRole(): Session['user']['role'] | null {
  */
 async function activate(s: Session, restored = false): Promise<void> {
   session = s
+  setStoragePolicy(s.user, getSettings().show_prices_to_dealers)
   sessionExpiredNotice = null
   if (sessionCheckTimer) clearInterval(sessionCheckTimer)
   sessionCheckTimer = setInterval(() => {
@@ -262,10 +263,10 @@ export function registerIpc(): void {
   })
   handle('auth:logout', async () => {
     await flushActivity()
-    wipeProducts()
-    broadcast('products:changed')
     deactivate()
     await logout()
+    deleteLocalDatabase()
+    broadcast('products:changed')
   })
   handle('auth:register', async (input) => {
     await registerUser(input)

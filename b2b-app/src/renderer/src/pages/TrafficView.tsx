@@ -89,6 +89,19 @@ function chartTooltip(entry: TrafficSummary['daily'][number]): string {
   return `${chartDayLabel(entry.day, false)} ${chartDayLabel(entry.day, true)} · ${formatCount(entry.visitors)} ziyaretçi · ${formatCount(entry.searches)} arama`
 }
 
+function completeDays(daily: TrafficSummary['daily']): TrafficSummary['daily'] {
+  if (daily.length < 2) return daily
+  const byDay = new Map(daily.map((entry) => [entry.day, entry]))
+  const start = new Date(`${daily[0].day}T12:00:00+03:00`)
+  const end = new Date(`${daily[daily.length - 1].day}T12:00:00+03:00`)
+  const result: TrafficSummary['daily'] = []
+  for (const date = new Date(start); date <= end; date.setUTCDate(date.getUTCDate() + 1)) {
+    const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul' }).format(date)
+    result.push(byDay.get(day) ?? { day, visitors: 0, searches: 0, product_views: 0, cart_adds: 0, orders: 0 })
+  }
+  return result
+}
+
 function dayTitle(value: string): string {
   const date = new Date(value)
   const today = dayKey(new Date().toISOString())
@@ -202,7 +215,7 @@ function Metric({ title, value, previous, icon }: { title: string; value: number
 }
 
 function DailyChart({ daily }: { daily: TrafficSummary['daily'] }): ReactNode {
-  const values = daily.slice(-90)
+  const values = completeDays(daily).slice(-90)
   const maximum = Math.max(0, ...values.map((entry) => entry.visitors))
   const width = 1000
   const baseline = 104

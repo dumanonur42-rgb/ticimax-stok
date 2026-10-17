@@ -1,8 +1,8 @@
 import type { Order, OrderStatus } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { Download, Printer, X } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
-import { Empty, Spinner } from '@/components/ui'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { Confirm, Empty, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -17,6 +17,8 @@ export function Orders(): ReactNode {
   const [status, setStatus] = useState<OrderStatus | ''>('')
   const [selectedId, setSelectedId] = useState<number | null>(pageParam)
   const [detail, setDetail] = useState<Order | null>(null)
+  const [confirmCancel, setConfirmCancel] = useState(false)
+  const cancelOpener = useRef<HTMLButtonElement | null>(null)
   const isDealer = session?.user.role !== 'admin'
   const isAdmin = session?.user.role === 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
@@ -71,9 +73,9 @@ export function Orders(): ReactNode {
           <table className="table orders-list-table">
             <thead>
               <tr>
-                <th>Sipariş No</th>
-                <th>Tarih</th>
-                <th>Müşteri</th>
+                <th className="nowrap" style={{ minWidth: 150 }}>Sipariş No</th>
+                <th className="nowrap" style={{ minWidth: 150 }}>Tarih</th>
+                <th style={{ width: '100%' }}>Müşteri</th>
                 <th>Durum</th>
                 {showPrices && <th className="right">Tutar</th>}
               </tr>
@@ -88,7 +90,7 @@ export function Orders(): ReactNode {
                   onClick={() => setSelectedId(o.id)}
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedId(o.id)}
                 >
-                  <td className="mono">{o.order_no}</td>
+                  <td className="mono nowrap">{o.order_no}</td>
                   <td className="nowrap small">{date(o.created_at)}</td>
                   <td>{o.customer_name || '-'}</td>
                   <td>
@@ -191,8 +193,17 @@ export function Orders(): ReactNode {
               ))}
             </div>
           )}
-          {detail.status !== 'iptal' && detail.status !== 'teslim' && (
+          {isAdmin && detail.status !== 'iptal' && detail.status !== 'teslim' && (
             <button className="btn sm danger" onClick={() => setOrderStatus('iptal')}>
+              Siparişi iptal et
+            </button>
+          )}
+          {isDealer && detail.status === 'beklemede' && detail.customer_id === session?.user.customer_id && (
+            <button
+              ref={cancelOpener}
+              className="btn sm danger"
+              onClick={() => setConfirmCancel(true)}
+            >
               Siparişi iptal et
             </button>
           )}
@@ -203,6 +214,21 @@ export function Orders(): ReactNode {
           )}
         </aside>
       )}
+      <Confirm
+        open={confirmCancel}
+        title="Siparişi iptal et"
+        text="Sipariş iptal edilsin mi? Bu işlem geri alınamaz."
+        danger
+        confirmLabel="İptal et"
+        onCancel={() => {
+          setConfirmCancel(false)
+          cancelOpener.current?.focus()
+        }}
+        onConfirm={() => {
+          setConfirmCancel(false)
+          void setOrderStatus('iptal').finally(() => cancelOpener.current?.focus())
+        }}
+      />
     </div>
   )
 }

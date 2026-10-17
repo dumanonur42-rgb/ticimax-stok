@@ -103,6 +103,7 @@ jobs:
             b2b-app/dist/*.blockmap
             b2b-app/dist/latest.yml
             b2b-app/dist/SHA256SUMS.txt
+          make_latest: true
           if-no-files-found: error
       - name: Extract release notes for this version (tags only)
         if: startsWith(github.ref, 'refs/tags/b2b-v')

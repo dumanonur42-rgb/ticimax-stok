@@ -106,7 +106,9 @@ function Appearance({ s }: { s: S }): ReactNode {
       await api('app:checkUpdates', undefined)
       setUpdateStatus('Denetim başlatıldı')
     } catch (error) {
-      toast((error as Error).message, 'error')
+      const message = (error as Error).message
+      setUpdateStatus(message.startsWith('Güncelleme') ? message : `Güncelleme denetlenemedi: ${message}`)
+      toast(message, 'error')
     } finally {
       setChecking(false)
     }
@@ -142,7 +144,7 @@ function Appearance({ s }: { s: S }): ReactNode {
       </section>
       <section className="settings-group">
         <header><h3>Uygulama</h3><p>Yüklü sürümü ve güncelleme durumunu görün.</p></header>
-        <div className="settings-app-row"><span><b>Sürüm {version}</b><small>{updateStatus}</small></span><button className="btn" disabled={checking} onClick={() => void checkUpdates()}>{checking ? 'Denetleniyor…' : 'Güncellemeleri denetle'}</button></div>
+        <div className="settings-app-row"><span><b>Sürüm {version} </b><small>{updateStatus}</small></span><button className="btn" disabled={checking} onClick={() => void checkUpdates()}>{checking ? 'Denetleniyor…' : 'Güncellemeleri denetle'}</button></div>
       </section>
     </div>
   )
@@ -454,7 +456,7 @@ function Data(): ReactNode {
     setBusy(true)
     api('app:resync', undefined)
       .then((n) => toast(`${n} ürün buluttan yeniden alındı.`, 'success'))
-      .catch((error) => console.warn('Ürün eşitleme başarısız.', error))
+      .catch((error) => toast((error as Error).message || 'Ürün eşitleme başarısız.', 'error'))
       .finally(() => setBusy(false))
   }
   const purge = (): void => {

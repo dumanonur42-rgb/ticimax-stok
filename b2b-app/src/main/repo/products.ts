@@ -80,8 +80,18 @@ function buildWhere(f: ProductFilter, exclude?: keyof ProductFilter): Where {
     }
     if (parts.length) clauses.push(`(${parts.join(' OR ')})`)
     if (qn) {
-      rank = 'CASE WHEN p.sku_norm = ? THEN 0 WHEN p.sku_norm LIKE ? THEN 1 WHEN p.sku_norm LIKE ? THEN 2 ELSE 3 END'
-      rankParams.push(qn, `${qn}%`, `%${qn}%`)
+      const knownBrands = new Set(
+        (getDb().prepare("SELECT DISTINCT brand_norm FROM products WHERE brand_norm <> ''").all() as { brand_norm: string }[])
+          .map((row) => row.brand_norm)
+      )
+      const skuTokens = normalizeText(q)
+        .split(' ')
+        .filter((token) => token && !knownBrands.has(token))
+      const skuQuery = skuTokens.join('')
+      const compact = /^[A-ZÇĞİÖŞÜ]+\s+\d/i.test(q) || /^[A-ZÇĞİÖŞÜ]+\s*[-.]\s*\d/i.test(q) ? skuQuery : ''
+      const rankValue = compact || skuQuery || qn
+      rank = 'CASE WHEN p.sku_norm = ? THEN 0 WHEN p.sku_norm = ? THEN 1 WHEN p.sku_norm LIKE ? THEN 2 WHEN p.sku_norm LIKE ? THEN 3 ELSE 4 END'
+      rankParams.push(rankValue, qn, `${rankValue}%`, `%${rankValue}%`)
     }
   }
 

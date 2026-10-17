@@ -12,7 +12,7 @@ import {
   Warehouse
 } from 'lucide-react'
 import { useEffect, type ReactNode } from 'react'
-import { api } from '@/lib/api'
+import { api, beginLogout, endLogout } from '@/lib/api'
 import { ConnectionPill } from '@/components/SyncBanner'
 import { useUpdateState } from '@/components/UpdateDialog'
 import { ROLE_LABEL } from '@/lib/format'
@@ -103,10 +103,16 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
   }, [page])
 
   const logout = async (): Promise<void> => {
-    await api('auth:logout', undefined)
-    clearCart()
-    setSession(null)
-    toast('Oturum kapatıldı.')
+    beginLogout()
+    try {
+      await api('auth:logout', undefined)
+      clearCart()
+      setSession(null)
+      document.title = 'Yamansa Rulman B2B'
+      toast('Oturum kapatıldı.')
+    } finally {
+      endLogout()
+    }
   }
 
   const initials = (session?.user.display_name || session?.user.username || '?').slice(0, 1).toUpperCase()

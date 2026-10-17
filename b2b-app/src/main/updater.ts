@@ -89,6 +89,7 @@ export function checkForUpdates(): void {
   lastCheckAt = Date.now()
   autoUpdater.checkForUpdates().catch((error: Error) => {
     console.warn('Güncelleme denetimi başarısız.', error)
+    set({ status: 'error', message: `Güncelleme denetlenemedi: ${error.message}` })
     retrySilently()
   })
 }
@@ -137,7 +138,7 @@ export function startUpdater(): void {
   })
   autoUpdater.on('error', (error) => {
     console.warn('Güncelleme başarısız.', error)
-    set({ status: 'idle' })
+    set({ status: 'error', message: `Güncelleme denetlenemedi: ${error.message}` })
     retrySilently()
   })
 

@@ -232,14 +232,14 @@ export function Import(): ReactNode {
           </div>
 
           <div className="row">
-            <button className="btn" onClick={() => setPreview(null)}>
+            <button className="btn" onClick={() => { clearTrial(); setPreview(null) }}>
               Vazgeç
             </button>
             <span className="spacer" />
-            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku} title="Hiçbir şey yazmadan sonucu hesaplar">
+            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title="Hiçbir şey yazmadan sonucu hesaplar">
               Önce dene
             </button>
-            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku}>
+            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0}>
               <Upload size={16} aria-hidden /> {num(preview.totalRows)} satırı içe aktar
             </button>
           </div>
