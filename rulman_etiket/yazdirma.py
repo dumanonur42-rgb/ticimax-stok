@@ -137,7 +137,12 @@ def _belgeler_klasoru() -> Path:
 
 def cikti_klasoru() -> Path:
     klasor = _belgeler_klasoru() / "Rulman Etiket"
-    klasor.mkdir(parents=True, exist_ok=True)
+    try:
+        klasor.mkdir(parents=True, exist_ok=True)
+    except OSError as hata:
+        raise YazdirmaHatasi(
+            "Belgeler içinde 'Rulman Etiket' klasörü oluşturulamadı. Klasöre yazma izniniz olduğunu kontrol edin."
+        ) from hata
     return klasor
 
 
@@ -303,8 +308,31 @@ def _yazdirma_pdf_yolu() -> Path:
     else:
         temel = Path.home() / ".cache"
     klasor = temel / "Rulman Etiket" / "yazdirma"
-    klasor.mkdir(parents=True, exist_ok=True)
+    try:
+        klasor.mkdir(parents=True, exist_ok=True)
+    except OSError as hata:
+        raise YazdirmaHatasi(
+            "Yazdırma için geçici dosya oluşturulamadı. Bilgisayarda yer olduğunu kontrol edin."
+        ) from hata
     return klasor / "son_etiket.pdf"
+
+
+def _kullanici_ayarini_sil(yazici_kolu: Any) -> None:
+    from ctypes import wintypes
+
+    winspool = ctypes.WinDLL("winspool.drv")
+    winspool.SetPrinterW.argtypes = [
+        wintypes.HANDLE,
+        wintypes.DWORD,
+        ctypes.c_void_p,
+        wintypes.DWORD,
+    ]
+    winspool.SetPrinterW.restype = wintypes.BOOL
+    bos = ctypes.c_void_p(None)
+    if not winspool.SetPrinterW(
+        int(yazici_kolu), 9, ctypes.addressof(bos), 0
+    ):
+        winspool.SetPrinterW(int(yazici_kolu), 9, None, 0)
 
 
 @contextmanager
@@ -320,25 +348,47 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
         ) from hata
 
     yazici_kolu = None
-    eski = None
-    duzey = 9
+    eski9 = None
+    eski9_okundu = False
     try:
         try:
             yazici_kolu = win32print.OpenPrinter(
                 yazici, {"DesiredAccess": win32print.PRINTER_ACCESS_USE}
             )
-            eski = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
-            if eski is None:
-                duzey = 2
-                eski = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
-            if eski is None:
-                raise RuntimeError
-
-            yeni = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
+            eski9 = win32print.GetPrinter(yazici_kolu, 9)["pDevMode"]
+            eski9_okundu = True
+            if eski9 is None:
+                yeni = win32print.GetPrinter(yazici_kolu, 2)["pDevMode"]
+            else:
+                yeni = win32print.GetPrinter(yazici_kolu, 9)["pDevMode"]
             if yeni is None:
                 raise RuntimeError
             if boyut == "62x100":
-                kagit_boyutu, kagit_genisligi, kagit_uzunlugu = 275, 620, 1000
+                port = win32print.GetPrinter(yazici_kolu, 2)["pPortName"]
+                kagit_boyutu = 256
+                try:
+                    kodlar = win32print.DeviceCapabilities(yazici, port, 2)
+                    olculer = win32print.DeviceCapabilities(yazici, port, 3)
+                    for kod, olcu in zip(kodlar or [], olculer or []):
+                        if isinstance(olcu, dict):
+                            x, y = olcu.get("x"), olcu.get("y")
+                        elif isinstance(olcu, (tuple, list)) and len(olcu) >= 2:
+                            x, y = olcu[:2]
+                        else:
+                            continue
+                        try:
+                            if (
+                                kod != 256
+                                and abs(float(x) - 620) <= 3
+                                and abs(float(y) - 1000) <= 3
+                            ):
+                                kagit_boyutu = int(kod)
+                                break
+                        except (TypeError, ValueError):
+                            continue
+                except Exception:
+                    kagit_boyutu = 256
+                kagit_genisligi, kagit_uzunlugu = 620, 1000
             elif boyut == "62surekli":
                 import pymupdf
 
@@ -349,7 +399,6 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
                 kagit_boyutu, kagit_genisligi = 256, 620
             else:
                 raise RuntimeError
-
             yeni.Fields |= 0x1 | 0x2 | 0x4 | 0x8
             yeni.PaperSize = kagit_boyutu
             yeni.PaperWidth = kagit_genisligi
@@ -369,9 +418,14 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
         yield
     finally:
         if yazici_kolu is not None:
-            if eski is not None:
+            if eski9_okundu:
                 try:
-                    win32print.SetPrinter(yazici_kolu, 9, {"pDevMode": eski}, 0)
+                    if eski9 is None:
+                        _kullanici_ayarini_sil(yazici_kolu)
+                    else:
+                        win32print.SetPrinter(
+                            yazici_kolu, 9, {"pDevMode": eski9}, 0
+                        )
                 except Exception:
                     pass
             try:
