@@ -6,38 +6,43 @@ import { api } from '@/lib/api'
 import { useApp } from '@/store/app'
 import './settings.css'
 
+type Audience = 'admin' | 'user'
+
 type HelpItem = {
   title: string
   text: string
   search?: string
+  audience?: Audience
 }
 
 type Shortcut = {
   keys: string[][]
   text: string
   search?: string
+  audience?: Audience
 }
 
 const adminSteps: HelpItem[] = [
-  { title: 'Stok listenizi yükleyin', text: 'İçe Aktar’dan Excel veya CSV seçin; stok kodu zorunludur.', search: 'ürün stok içe aktar dosya' },
-  { title: 'Bayilerinizi ekleyin', text: 'Firma, iskonto ve para birimini tanımlayın.', search: 'bayi firma fiyat para birimi' },
-  { title: 'Bayi kullanıcıları açın', text: 'Ayarlar → Kullanıcılar’da kullanıcıyı bayiye bağlayın.', search: 'kullanıcı rol bayi ayarlar' },
-  { title: 'Sipariş alın', text: 'Ürün arayın, sepete ekleyin ve siparişi oluşturun.', search: 'ürün arama sepet sipariş' },
-  { title: 'Stokları güncelleyin', text: 'Yeni listeyi “Sadece stok ve fiyat güncelle” ile yükleyin.', search: 'stok fiyat güncelle' },
-  { title: 'Bulut ayarlarını kontrol edin', text: 'Bağlantı ve arka plan bildirimlerini Bulut & Veri’den görün.', search: 'bulut internet bağlantı bildirim arka plan' }
+  { title: 'Stok listenizi yükleyin', text: 'İçe Aktar’dan Excel veya CSV seçin; stok kodu zorunludur.', search: 'ürün stok içe aktar dosya', audience: 'admin' },
+  { title: 'Bayilerinizi ekleyin', text: 'Firma, iskonto ve para birimini tanımlayın.', search: 'bayi firma fiyat para birimi', audience: 'admin' },
+  { title: 'Bayi kullanıcıları açın', text: 'Ayarlar → Kullanıcılar’da kullanıcıyı bayiye bağlayın.', search: 'kullanıcı rol bayi ayarlar', audience: 'admin' },
+  { title: 'Sipariş alın', text: 'Ürün arayın, sepete ekleyin ve siparişi oluşturun.', search: 'ürün arama sepet sipariş', audience: 'admin' },
+  { title: 'Stokları güncelleyin', text: 'Yeni listeyi “Sadece stok ve fiyat güncelle” ile yükleyin.', search: 'stok fiyat güncelle', audience: 'admin' },
+  { title: 'Bulut ayarlarını kontrol edin', text: 'Bağlantı ve arka plan bildirimlerini Bulut & Veri’den görün.', search: 'bulut internet bağlantı bildirim arka plan', audience: 'admin' }
 ]
 
 const dealerSteps: HelpItem[] = [
-  { title: 'Ürünleri bulun', text: 'Kod, marka, barkod veya ölçüyle arayın.', search: 'ürün stok kodu marka barkod muadil ölçü' },
-  { title: 'Sepete ekleyin', text: 'Sepette ürün miktarını düzenleyin.', search: 'sepet miktar' },
-  { title: 'Siparişi gönderin', text: 'Ödeme şeklini seçin, siparişi gönderip durumunu izleyin.', search: 'sipariş ödeme gönder takip' }
+  { title: 'Ürünleri bulun', text: 'Kod, marka, barkod veya ölçüyle arayın.', search: 'ürün stok kodu marka barkod muadil ölçü', audience: 'user' },
+  { title: 'Sepete ekleyin', text: 'Sepette ürün miktarını düzenleyin.', search: 'sepet miktar', audience: 'user' },
+  { title: 'Siparişi gönderin', text: 'Ödeme şeklini seçin, siparişi gönderip durumunu izleyin.', search: 'sipariş ödeme gönder takip', audience: 'user' }
 ]
 
 const generalShortcuts: Shortcut[] = [
   { keys: [['Ctrl', 'K'], ['F3']], text: 'Ürün aramaya odaklan', search: 'arama ürün ara' },
   { keys: [['F2']], text: 'Sepeti aç', search: 'sepet' },
   { keys: [['F1']], text: 'Yardım sayfasını aç', search: 'yardım yardım sayfası' },
-  { keys: [['Alt', '1–8']], text: 'Sayfalar arasında geçiş yap', search: 'sayfa gezinme' },
+  { keys: [['Alt', '0–9']], text: 'Sayfalar arasında geçiş yap', search: 'sayfa gezinme', audience: 'admin' },
+  { keys: [['Alt', '1–4'], ['Alt', '8–9']], text: 'Sayfalar arasında geçiş yap', search: 'sayfa gezinme', audience: 'user' },
   { keys: [['Ctrl', '+'], ['Ctrl', '−'], ['Ctrl', '0']], text: 'Yazı boyutunu büyüt, küçült veya sıfırla', search: 'yazı boyutu font' },
   { keys: [['Esc']], text: 'Açık paneli veya pencereyi kapat', search: 'panel pencere kapat' }
 ]
@@ -57,17 +62,16 @@ const searchTips: HelpItem[] = [
 const faq: HelpItem[] = [
   { title: 'Güncellemeler nasıl gelir?', text: 'Güncelleme arka planda iner. Pencere küçültülünce, kapatılınca ya da 5 dakika boşta kalınca kurulur; oturumunuz kapanmaz.', search: 'update güncelleme sessiz kurulum' },
   { title: 'İnternet yokken çalışır mı?', text: 'Ürün listesi ve arama çalışır. Siparişler bağlantı gelince gönderilir.', search: 'çevrimdışı offline bağlantı sipariş' },
-  { title: 'Şifremi unuttum', text: 'Şifrenizi yenilemesi için yöneticinize başvurun.', search: 'şifre parola unutma sıfırlama yönetici' },
+  { title: 'Şifremi unuttum', text: 'Şifrenizi yenilemesi için yöneticinize başvurun.', search: 'şifre parola unutma sıfırlama yönetici', audience: 'user' },
+  { title: 'Bir kullanıcı şifresini unuttu', text: "Ayarlar › Kullanıcılar'da kişiyi düzenleyip yeni şifre belirleyin. Belirlediğiniz şifreyi göz simgesiyle görebilirsiniz.", search: 'şifre parola unutma sıfırlama kullanıcı', audience: 'admin' },
   { title: 'Bilgisayardaki veriler güvende mi?', text: 'Bulut bağlantısı HTTPS kullanır. Bu bilgisayardaki ürün kopyası şifrelidir ve çıkış yapınca silinir.', search: 'yerel veri katalog ürün şifreli güvenlik çıkış' }
 ]
 
 const securityItems: HelpItem[] = [
   { title: '“Bilgisayarınız korundu” uyarısı', text: 'Kurulum dosyasını resmî Yamansa kaynağından aldıysanız Daha fazla bilgi → Yine de çalıştır ile devam edebilirsiniz.', search: 'windows defender smartscreen kurulum' },
   { title: 'Uygulama denetim ilkesi engelliyor', text: 'Kurumsal bilgisayarda kurulum için sistem yöneticinizden yardım isteyin.', search: 'program files akıllı uygulama denetimi windows' },
-  { title: 'Dosyayı doğrulama', text: 'GitHub Releases sayfasındaki SHA-256 değerini PowerShell’de Get-FileHash ile karşılaştırın.', search: 'sha256 hash github doğrulama' }
+  { title: 'Dosyayı doğrulama', text: 'GitHub Releases sayfasındaki SHA-256 değerini PowerShell’de Get-FileHash ile karşılaştırın.', search: 'sha256 hash github doğrulama', audience: 'admin' }
 ]
-
-const allHelpItems = [...adminSteps, ...dealerSteps, ...generalShortcuts.map((item) => ({ title: item.text, text: item.search ?? '' })), ...productShortcuts.map((item) => ({ title: item.text, text: item.search ?? '' })), ...searchTips, ...faq, ...securityItems]
 const KeySets = ({ sets }: { sets: string[][] }): ReactNode => (
   <span className="help-keysets">
     {sets.map((set, setIndex) => (
@@ -89,13 +93,19 @@ export function Help(): ReactNode {
   const [query, setQuery] = useState('')
   const q = useMemo(() => normalize(query.trim()), [query])
   const matches = (...values: string[]): boolean => !q || normalize(values.join(' ')).includes(q)
-  const steps = isAdmin ? adminSteps : dealerSteps
+  const forRole = <T extends { audience?: Audience },>(list: T[]): T[] => list.filter((item) => !item.audience || item.audience === (isAdmin ? 'admin' : 'user'))
+  const steps = forRole([...adminSteps, ...dealerSteps])
+  const roleGeneral = forRole(generalShortcuts)
+  const roleProduct = forRole(productShortcuts)
+  const roleTips = forRole(searchTips)
+  const roleFaq = forRole(faq)
+  const roleSecurity = forRole(securityItems)
   const visibleSteps = steps.filter((item) => matches(item.title, item.text, item.search ?? ''))
-  const visibleGeneral = generalShortcuts.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
-  const visibleProduct = productShortcuts.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
-  const visibleTips = searchTips.filter((item) => matches(item.title, item.text, item.search ?? ''))
-  const visibleFaq = faq.filter((item) => matches(item.title, item.text, item.search ?? ''))
-  const visibleSecurity = securityItems.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleGeneral = roleGeneral.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
+  const visibleProduct = roleProduct.filter((item) => matches(item.text, item.search ?? '', item.keys.flat().join(' ')))
+  const visibleTips = roleTips.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleFaq = roleFaq.filter((item) => matches(item.title, item.text, item.search ?? ''))
+  const visibleSecurity = roleSecurity.filter((item) => matches(item.title, item.text, item.search ?? ''))
   const showAllSteps = matches('Hızlı başlangıç')
   const showAllShortcuts = matches('Klavye kısayolları', 'Genel', 'Ürün listesi')
   const showAllTips = matches('Arama ipuçları')
@@ -186,8 +196,8 @@ export function Help(): ReactNode {
               <div className="help-shortcut-group">
                 <h3>Genel</h3>
                 <div className="help-shortcut-list">
-                  {(showAllShortcuts ? generalShortcuts : visibleGeneral).map((item) => (
-                    <div className="help-shortcut-row" key={item.text}>
+                  {(showAllShortcuts ? roleGeneral : visibleGeneral).map((item) => (
+                    <div className="help-shortcut-row" key={`${item.text}-${item.keys.flat().join('-')}`}>
                       <KeySets sets={item.keys} />
                       <span>{item.text}</span>
                     </div>
@@ -199,7 +209,7 @@ export function Help(): ReactNode {
               <div className="help-shortcut-group">
                 <h3>Ürün listesi</h3>
                 <div className="help-shortcut-list">
-                  {(showAllShortcuts ? productShortcuts : visibleProduct).map((item) => (
+                  {(showAllShortcuts ? roleProduct : visibleProduct).map((item) => (
                     <div className="help-shortcut-row" key={item.text}>
                       <KeySets sets={item.keys} />
                       <span>{item.text}</span>
@@ -215,7 +225,7 @@ export function Help(): ReactNode {
           <section className="card help-card" aria-labelledby="help-tips-title">
             <h2 id="help-tips-title">Arama ipuçları</h2>
             <div className="help-tip-list">
-              {(showAllTips ? searchTips : visibleTips).map((item) => (
+              {(showAllTips ? roleTips : visibleTips).map((item) => (
                 <div className="help-tip" key={item.title}>
                   <strong>{item.title}</strong>
                   {item.title === 'Kod biçimi' ? (
@@ -233,7 +243,7 @@ export function Help(): ReactNode {
           <section className="card help-card" aria-labelledby="help-faq-title">
             <h2 id="help-faq-title">Sık sorulan sorular</h2>
             <div className="help-accordion-list">
-              {(showAllFaq ? faq : visibleFaq).map((item) => (
+              {(showAllFaq ? roleFaq : visibleFaq).map((item) => (
                 <details className="help-accordion" key={item.title}>
                   <summary>{item.title}</summary>
                   <p>{item.text}</p>
@@ -247,7 +257,7 @@ export function Help(): ReactNode {
           <section className="card help-card" aria-labelledby="help-security-title">
             <h2 id="help-security-title">Güvenlik ve kurulum</h2>
             <div className="help-accordion-list">
-              {(showAllSecurity ? securityItems : visibleSecurity).map((item) => (
+              {(showAllSecurity ? roleSecurity : visibleSecurity).map((item) => (
                 <details className="help-accordion" key={item.title}>
                   <summary>{item.title}</summary>
                   <p>{item.text}</p>
