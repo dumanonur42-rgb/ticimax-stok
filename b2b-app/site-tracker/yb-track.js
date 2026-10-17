@@ -33,8 +33,8 @@
     q.push({ k: kind, at: Date.now(), s: data.s || '', n: data.n || '', p: data.p || '', q: data.q || '', c: Number.isInteger(data.c) ? data.c : null, x: Number.isFinite(data.x) ? data.x : null });
     schedule();
   }
-  function flush(beacon) {
-    if (!q.length || (busy && !beacon)) return;
+  function flush(pageExit) {
+    if (!q.length || (busy && !pageExit)) return;
     var events = q.slice(0, 25), body = '';
     while (events.length) {
       body = JSON.stringify({ v: vid, d: device, r: ref, e: events.map(function (item) {
@@ -44,20 +44,21 @@
       events.pop();
     }
     if (!events.length) return;
-    if (beacon) {
-      try { if (navigator.sendBeacon(endpoint, new Blob([body], { type: 'text/plain' }))) q.splice(0, events.length); } catch (_) {}
-    } else {
-      busy = true;
-      q.splice(0, events.length);
-      fetch(endpoint, { method: 'POST', mode: 'cors', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body })
-        .then(function (response) {
-          if (response.ok || response.status === 204) return;
-          q = events.concat(q).slice(0, 100);
-          schedule();
-        })
-        .catch(function () { q = events.concat(q).slice(0, 100); schedule(); })
-        .then(safe(function () { busy = false; }));
-    }
+    var ownsBusy = !busy;
+    if (ownsBusy) busy = true;
+    q.splice(0, events.length);
+    fetch(endpoint, { method: 'POST', mode: 'cors', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body })
+      .then(function (response) {
+        if (response.ok || response.status === 204 || pageExit) return;
+        q = events.concat(q).slice(0, 100);
+        schedule();
+      })
+      .catch(function () {
+        if (pageExit) return;
+        q = events.concat(q).slice(0, 100);
+        schedule();
+      })
+      .then(safe(function () { if (ownsBusy) busy = false; }));
     if (!q.length && timer) { clearInterval(timer); timer = 0; }
   }
   function path(search) { return (location.pathname + (search ? location.search : '')).slice(0, 300); }

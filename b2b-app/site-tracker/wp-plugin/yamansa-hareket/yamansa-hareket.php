@@ -7,7 +7,7 @@
 
 defined('ABSPATH') || exit;
 
-const YAMANSA_HAREKET_ASSET = 'yb-track.woo.e146ef9b66.min.js';
+const YAMANSA_HAREKET_ASSET = 'yb-track.woo.cb9bd33ce9.min.js';
 
 add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_script(
