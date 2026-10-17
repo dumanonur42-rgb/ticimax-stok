@@ -39,12 +39,16 @@ def _kontrol() -> int:
     _kontrol_izle("kontrol başladı")
     sumatra_ok = resource_path("SumatraPDF.exe").is_file()
     _kontrol_izle("SumatraPDF denetimi tamamlandı")
+    _kontrol_izle("SumatraPDF satırı yazılıyor")
     _satir(
         "SumatraPDF dosyası",
         "Başarılı" if sumatra_ok else "Başarısız",
     )
+    _kontrol_izle("SumatraPDF satırı yazıldı")
 
+    _kontrol_izle("Yazı tipi yolu çözülüyor")
     font_klasoru = resource_path("fonts")
+    _kontrol_izle("Yazı tipi yolu çözüldü")
     _kontrol_izle("Yazı tipi denetimi başladı")
     font_ok = font_klasoru.is_dir() and all(
         (font_klasoru / ad).is_file()
