@@ -1,0 +1,364 @@
+from __future__ import annotations
+
+import ctypes
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import uuid
+from dataclasses import asdict, fields, is_dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from etiket_cizim import BOYUTLAR, EtiketVerisi, ciz, dogrula
+
+
+class YazdirmaHatasi(Exception):
+    pass
+
+
+def resource_path(ad: str) -> Path:
+    return Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent)) / ad
+
+
+def kod_duzelt(metin: str) -> str:
+    return metin.strip().replace("İ", "I").replace("ı", "I").upper()
+
+
+def yazicilari_listele() -> list[str]:
+    if sys.platform != "win32":
+        return []
+    try:
+        sonuc = subprocess.run(
+            [
+                "powershell",
+                "-NoProfile",
+                "-Command",
+                "Get-CimInstance Win32_Printer | Select-Object -ExpandProperty Name",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            check=False,
+            creationflags=0x08000000,
+        )
+        return [satir.strip() for satir in sonuc.stdout.splitlines() if satir.strip()]
+    except Exception:
+        return []
+
+
+def varsayilan_yazici(yazicilar: list[str]) -> str | None:
+    for yazici in yazicilar:
+        if "brother" in yazici.casefold():
+            return yazici
+    for yazici in yazicilar:
+        if "ql" in yazici.casefold():
+            return yazici
+    if sys.platform == "win32":
+        try:
+            sonuc = subprocess.run(
+                [
+                    "powershell",
+                    "-NoProfile",
+                    "-Command",
+                    'Get-CimInstance Win32_Printer -Filter "Default=TRUE" | '
+                    "Select-Object -ExpandProperty Name",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=15,
+                check=False,
+                creationflags=0x08000000,
+            )
+            varsayilan = next(
+                (satir.strip() for satir in sonuc.stdout.splitlines() if satir.strip()),
+                None,
+            )
+            if varsayilan in yazicilar:
+                return varsayilan
+        except Exception:
+            pass
+    return yazicilar[0] if yazicilar else None
+
+
+def _belgeler_klasoru() -> Path:
+    varsayilan = Path.home() / "Documents"
+    if sys.platform != "win32":
+        return varsayilan
+
+    class GUID(ctypes.Structure):
+        _fields_ = [
+            ("Data1", ctypes.c_uint32),
+            ("Data2", ctypes.c_uint16),
+            ("Data3", ctypes.c_uint16),
+            ("Data4", ctypes.c_ubyte * 8),
+        ]
+
+    klasor_yolu = ctypes.c_wchar_p()
+    belgelere_ait_id = uuid.UUID("FDD39AD0-238F-46AF-ADB4-6C85480369C7")
+    guid = GUID(
+        belgelere_ait_id.time_low,
+        belgelere_ait_id.time_mid,
+        belgelere_ait_id.time_hi_version,
+        (ctypes.c_ubyte * 8).from_buffer_copy(belgelere_ait_id.bytes[8:]),
+    )
+    try:
+        shell32 = ctypes.windll.shell32
+        shell32.SHGetKnownFolderPath.argtypes = [
+            ctypes.POINTER(GUID),
+            ctypes.c_uint32,
+            ctypes.c_void_p,
+            ctypes.POINTER(ctypes.c_wchar_p),
+        ]
+        shell32.SHGetKnownFolderPath.restype = ctypes.c_long
+        sonuc = shell32.SHGetKnownFolderPath(
+            ctypes.byref(guid), 0, None, ctypes.byref(klasor_yolu)
+        )
+        if sonuc == 0 and klasor_yolu.value:
+            return Path(klasor_yolu.value)
+    except Exception:
+        pass
+    finally:
+        if klasor_yolu.value:
+            try:
+                ole32 = ctypes.windll.ole32
+                ole32.CoTaskMemFree.argtypes = [ctypes.c_void_p]
+                ole32.CoTaskMemFree.restype = None
+                ole32.CoTaskMemFree(ctypes.cast(klasor_yolu, ctypes.c_void_p))
+            except Exception:
+                pass
+    return varsayilan
+
+
+def cikti_klasoru() -> Path:
+    klasor = _belgeler_klasoru() / "Rulman Etiket"
+    klasor.mkdir(parents=True, exist_ok=True)
+    return klasor
+
+
+def _veri_klasoru() -> Path:
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        temel = Path(appdata)
+    elif sys.platform == "win32":
+        temel = Path.home() / "AppData" / "Roaming"
+    else:
+        temel = Path.home() / ".config"
+    return temel / "Rulman Etiket"
+
+
+def ayar_klasoru() -> Path:
+    return _veri_klasoru()
+
+
+def _json_yaz(dosya: Path, veri: Any) -> None:
+    dosya.parent.mkdir(parents=True, exist_ok=True)
+    gecici_yol: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=dosya.parent,
+            prefix=f".{dosya.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as gecici:
+            gecici_yol = Path(gecici.name)
+            json.dump(veri, gecici, ensure_ascii=False, indent=2)
+            gecici.write("\n")
+        os.replace(gecici_yol, dosya)
+    finally:
+        if gecici_yol is not None and gecici_yol.exists():
+            try:
+                gecici_yol.unlink()
+            except OSError:
+                pass
+
+
+def ayar_oku() -> dict:
+    try:
+        veri = json.loads((_veri_klasoru() / "ayarlar.json").read_text(encoding="utf-8"))
+        return veri if isinstance(veri, dict) else {}
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
+def ayar_kaydet(ayarlar: dict) -> None:
+    birlesik = ayar_oku()
+    birlesik.update(ayarlar)
+    try:
+        _json_yaz(_veri_klasoru() / "ayarlar.json", birlesik)
+    except OSError:
+        pass
+
+
+def _etiket_alanlari() -> set[str]:
+    return {alan.name for alan in fields(EtiketVerisi)}
+
+
+def son_kodlar() -> list[dict]:
+    try:
+        veri = json.loads((_veri_klasoru() / "son_kodlar.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return []
+    if not isinstance(veri, list):
+        return []
+
+    alanlar = _etiket_alanlari()
+    sonuc = []
+    for kayit in veri:
+        if not isinstance(kayit, dict):
+            continue
+        kod = kayit.get("kod")
+        if not isinstance(kod, str) or not kod.strip():
+            continue
+        sonuc.append({anahtar: deger for anahtar, deger in kayit.items() if anahtar in alanlar})
+        if len(sonuc) == 20:
+            break
+    return sonuc
+
+
+def son_kod_ekle(veri: EtiketVerisi | dict) -> None:
+    if is_dataclass(veri) and not isinstance(veri, type):
+        yeni = asdict(veri)
+    elif isinstance(veri, dict):
+        yeni = dict(veri)
+    else:
+        return
+
+    alanlar = _etiket_alanlari()
+    yeni = {anahtar: deger for anahtar, deger in yeni.items() if anahtar in alanlar}
+    kod = yeni.get("kod")
+    if not isinstance(kod, str) or not kod.strip():
+        return
+
+    gecmis = [
+        kayit
+        for kayit in son_kodlar()
+        if (kayit.get("kod"), kayit.get("ek", "")) != (kod, yeni.get("ek", ""))
+    ]
+    try:
+        _json_yaz(_veri_klasoru() / "son_kodlar.json", [yeni, *gecmis][:20])
+    except OSError:
+        pass
+
+
+def pdf_kaydet(
+    veri: EtiketVerisi, boyut: str, kopya: int, yol: str | Path | None = None
+) -> Path:
+    if boyut not in BOYUTLAR:
+        raise YazdirmaHatasi("Etiket boyutu seçimi geçersiz.")
+    if isinstance(kopya, bool) or not isinstance(kopya, int) or not 1 <= kopya <= 999:
+        raise YazdirmaHatasi("Kopya sayısı 1 ile 999 arasında olmalıdır.")
+    hatalar = dogrula(veri)
+    if hatalar:
+        raise YazdirmaHatasi("\n".join(hatalar))
+
+    if yol is None:
+        temiz_kod = re.sub(r"[^\w-]", "_", veri.kod, flags=re.UNICODE).strip("_")[:40]
+        yol = cikti_klasoru() / f"{datetime.now():%Y%m%d_%H%M%S}_{temiz_kod or 'etiket'}.pdf"
+    hedef = Path(yol)
+    belge = None
+    try:
+        belge = ciz(veri, boyut, kopya)
+        hedef.parent.mkdir(parents=True, exist_ok=True)
+        belge.save(hedef)
+    except (PermissionError, OSError) as hata:
+        raise YazdirmaHatasi(
+            "PDF kaydedilemedi. Dosya başka bir programda açık olabilir, kapatıp tekrar deneyin."
+        ) from hata
+    except Exception as hata:
+        raise YazdirmaHatasi(
+            "PDF oluşturulamadı. Etiket bilgilerini kontrol edip tekrar deneyin."
+        ) from hata
+    finally:
+        if belge is not None:
+            try:
+                belge.close()
+            except Exception:
+                pass
+    return hedef
+
+
+def _sumatra() -> str | None:
+    adaylar = [
+        str(resource_path("SumatraPDF.exe")),
+        shutil.which("SumatraPDF"),
+    ]
+    for degisken in ("LOCALAPPDATA", "ProgramFiles", "ProgramFiles(x86)"):
+        kok = os.environ.get(degisken)
+        if kok:
+            adaylar.append(str(Path(kok) / "SumatraPDF" / "SumatraPDF.exe"))
+    return next((aday for aday in adaylar if aday and os.path.isfile(aday)), None)
+
+
+def _yazdirma_pdf_yolu() -> Path:
+    if sys.platform == "win32":
+        temel = Path(os.environ.get("LOCALAPPDATA") or Path.home() / "AppData" / "Local")
+    else:
+        temel = Path.home() / ".cache"
+    klasor = temel / "Rulman Etiket" / "yazdirma"
+    klasor.mkdir(parents=True, exist_ok=True)
+    return klasor / "son_etiket.pdf"
+
+
+def yazdir(veri: EtiketVerisi, boyut: str, kopya: int, yazici: str) -> Path:
+    if sys.platform != "win32":
+        raise YazdirmaHatasi("Yazdırma yalnızca Windows'ta yapılabilir.")
+    if not yazici:
+        raise YazdirmaHatasi("Yazıcı seçilmedi. Listeden Brother QL-550 yazıcısını seçin.")
+    yazicilar = yazicilari_listele()
+    if yazicilar and yazici not in yazicilar:
+        raise YazdirmaHatasi(
+            f"'{yazici}' adlı yazıcı bulunamadı. Yazıcının açık ve bağlı olduğundan emin olun."
+        )
+    sumatra = _sumatra()
+    if not sumatra:
+        raise YazdirmaHatasi(
+            "SumatraPDF bulunamadı. Programın dosyaları eksik olabilir; uygulamayı yeniden kurun."
+        )
+
+    pdf_yolu = _yazdirma_pdf_yolu()
+    try:
+        pdf = pdf_kaydet(veri, boyut, kopya, yol=pdf_yolu)
+    except YazdirmaHatasi:
+        if not pdf_yolu.exists():
+            raise
+        zamanli_yol = pdf_yolu.with_name(
+            f"etiket_{datetime.now():%Y%m%d_%H%M%S_%f}.pdf"
+        )
+        pdf = pdf_kaydet(veri, boyut, kopya, yol=zamanli_yol)
+    try:
+        sonuc = subprocess.run(
+            [
+                sumatra,
+                "-print-to",
+                yazici,
+                "-print-settings",
+                "noscale",
+                "-silent",
+                "-exit-when-done",
+                str(pdf),
+            ],
+            check=False,
+            timeout=120,
+            capture_output=True,
+            creationflags=0x08000000,
+        )
+    except subprocess.TimeoutExpired as hata:
+        raise YazdirmaHatasi(
+            "Yazıcı yanıt vermedi. Yazıcının açık, bağlı ve kâğıt takılı olduğunu kontrol edin."
+        ) from hata
+    except OSError as hata:
+        raise YazdirmaHatasi(
+            "Yazdırma başlatılamadı. Yazıcının açık ve bağlı olduğunu kontrol edin."
+        ) from hata
+    if sonuc.returncode != 0:
+        raise YazdirmaHatasi(
+            "Yazıcı etiketi kabul etmedi. Yazıcının açık ve bağlı olduğunu kontrol edin."
+        )
+    return pdf
