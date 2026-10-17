@@ -71,7 +71,9 @@ jobs:
             )
 
             $p = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList $Arguments -PassThru -NoNewWindow
+            $null = $p.Handle
             if (-not $p.WaitForExit(60000)) {
+              Get-CimInstance Win32_Process | Format-Table ProcessId, ParentProcessId, Name, CommandLine -AutoSize | Out-String -Width 400 | Write-Host
               try {
                 $p.Kill($true)
               } catch {
