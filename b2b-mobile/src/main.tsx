@@ -6,6 +6,7 @@ import { SystemInsets, type SystemInsetsValue } from './lib/systemInsets'
 import './styles.css'
 
 const root = document.documentElement
+const SYSTEM_INSETS_BOOTSTRAP_TIMEOUT_MS = 400
 root.dataset.platform = Capacitor.getPlatform()
 
 function applyInsets(insets: SystemInsetsValue): void {
@@ -48,10 +49,19 @@ async function initializeSystemInsets(): Promise<void> {
 }
 
 async function bootstrap(): Promise<void> {
-  try {
-    await initializeSystemInsets()
-  } catch {
+  const initialization = initializeSystemInsets().catch(() => {
     root.dataset.keyboardOpen = 'false'
+  })
+  let timeoutId: number | undefined
+  try {
+    await Promise.race([
+      initialization,
+      new Promise<void>((resolve) => {
+        timeoutId = window.setTimeout(resolve, SYSTEM_INSETS_BOOTSTRAP_TIMEOUT_MS)
+      })
+    ])
+  } finally {
+    if (timeoutId !== undefined) window.clearTimeout(timeoutId)
   }
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
