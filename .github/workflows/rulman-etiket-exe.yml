@@ -82,6 +82,12 @@ jobs:
             rulman_etiket/test_cikti.pdf
             rulman_etiket/test_surekli.pdf
 
+      - name: Son sürüm etiketini güncelle
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git tag -f rulman-etiket-latest $env:GITHUB_SHA
+          git push -f origin refs/tags/rulman-etiket-latest
+
       - name: Son sürüm (main)
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
@@ -91,6 +97,12 @@ jobs:
           body: "Brother QL-550 rulman kutu etiketi uygulaması."
           prerelease: false
           files: "rulman_etiket/dist/Rulman Etiket.exe"
+
+      - name: Deneme sürümü etiketini güncelle
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git tag -f rulman-etiket-test $env:GITHUB_SHA
+          git push -f origin refs/tags/rulman-etiket-test
 
       - name: Deneme sürümü (dal)
         if: github.ref != 'refs/heads/main'
