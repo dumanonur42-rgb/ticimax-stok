@@ -849,7 +849,9 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
     onClose()
   }
   return (
-    <Sheet title="Filtreler" onClose={onClose}>
+    <Sheet title="Filtreler" onClose={onClose} footer={
+      <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
+    }>
       <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
         <div className="brand-options">{visibleBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
         {(hiddenBrandCount > 0 || showAllBrands) && <button type="button" className="show-more-brands" onClick={() => setShowAllBrands((value) => !value)}>{showAllBrands ? 'Daha az göster' : `Tümünü göster (+${num(hiddenBrandCount)})`}</button>}
@@ -857,7 +859,6 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
       <section className="filter-section"><h3>Ölçü aralığı <small>mm</small></h3><div className="measure-grid">{([
         ['İç çap (d)', 'dMin', 'dMax'], ['Dış çap (D)', 'DMin', 'DMax'], ['Genişlik (B)', 'bMin', 'bMax']
       ] as const).map(([label, minKey, maxKey]) => <div className="range-group" key={minKey}><span>{label}</span><div className="range-inputs"><input aria-label={`${label} en az`} type="number" inputMode="decimal" placeholder="Min" value={ranges[minKey]} onChange={(event) => setRanges((prev) => ({ ...prev, [minKey]: event.target.value }))} /><input aria-label={`${label} en çok`} type="number" inputMode="decimal" placeholder="Maks" value={ranges[maxKey]} onChange={(event) => setRanges((prev) => ({ ...prev, [maxKey]: event.target.value }))} /></div></div>)}</div></section>
-      <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
     </Sheet>
   )
 }
@@ -1154,13 +1155,14 @@ function UpdateSheet({ update, onClose }: { update: AndroidUpdate; onClose: () =
   return <Sheet title="Güncelleme var" onClose={onClose}><div className="update-content"><div className="update-icon"><Download size={25} /></div><h2>Yeni sürüm {update.version}</h2><p>Uygulamanın yeni sürümü hazır.</p><button className="button primary wide" onClick={() => external(update.url)}><Download size={18} /> İndir</button></div></Sheet>
 }
 
-function Sheet({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }): ReactNode {
+function Sheet({ title, onClose, children, footer }: { title: string; onClose: () => void; children: ReactNode; footer?: ReactNode }): ReactNode {
   return (
     <div className="sheet-backdrop" role="presentation" onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
       <section className="bottom-sheet" role="dialog" aria-modal="true" aria-label={title}>
         <div className="sheet-handle" />
         <div className="sheet-heading"><h2>{title}</h2><button className="icon-button" onClick={onClose} aria-label="Kapat"><X size={21} /></button></div>
         <div className="sheet-body">{children}</div>
+        {footer && <div className="sheet-footer">{footer}</div>}
       </section>
     </div>
   )

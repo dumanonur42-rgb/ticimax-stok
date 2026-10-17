@@ -53,6 +53,7 @@ img { max-width: 100%; }
   --muted: #66758b;
   --line: #e2e8f0;
   width: 100%;
+  height: 100vh;
   height: 100dvh;
   min-height: 100%;
   color: var(--ink);
@@ -83,6 +84,7 @@ img { max-width: 100%; }
   inset: 0;
   display: grid;
   place-items: center;
+  min-height: 100vh;
   min-height: 100dvh;
   padding:
     max(20px, var(--safe-top))
@@ -363,12 +365,12 @@ img { max-width: 100%; }
 .empty-state span { font-size: .85rem; }
 .empty-state .button { margin-top: 5px; }
 
-.sheet-backdrop { position: fixed; z-index: 30; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: var(--safe-top) var(--safe-right) 0 var(--safe-left); background: #07132680; }
-.bottom-sheet { width: min(100%, 680px); max-height: min(88dvh, 820px); display: flex; flex-direction: column; overflow: hidden; border-radius: 22px 22px 0 0; background: var(--surface); box-shadow: 0 -10px 40px #0713262c; padding-bottom: max(var(--safe-bottom), var(--keyboard)); }
+.sheet-backdrop { position: fixed; z-index: 30; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: var(--safe-top) var(--safe-right) max(var(--safe-bottom), var(--keyboard)) var(--safe-left); background: #07132680; }
+.bottom-sheet { width: min(100%, 680px); max-height: min(88vh, calc(100vh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard)) - 12px), 820px); display: flex; flex-direction: column; overflow: hidden; border-radius: 22px 22px 0 0; background: var(--surface); box-shadow: 0 -10px 40px #0713262c; }
 .sheet-handle { width: 38px; height: 4px; flex: 0 0 4px; margin: 9px auto 2px; border-radius: 999px; background: #aab5c4; }
 .sheet-heading { flex: 0 0 auto; min-height: 54px; padding: 4px 13px 5px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .sheet-heading h2 { margin: 0; font-size: 1.03rem; }
-.sheet-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scroll-padding-bottom: calc(max(var(--safe-bottom), var(--keyboard)) + 16px); padding: 16px; }
+.sheet-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scroll-padding: 12px 0 16px; padding: 16px; }
 .filter-section { margin-bottom: 19px; }
 .filter-section h3 { margin: 0 0 10px; font-size: .9rem; }
 .filter-section h3 small { color: var(--muted); font-weight: 500; }
@@ -385,7 +387,8 @@ img { max-width: 100%; }
 .range-inputs { min-width: 0; display: flex; gap: 8px; }
 .range-inputs input { min-width: 0; width: 50%; min-height: 42px; padding: 8px 10px; font-size: .9rem; }
 .show-more-brands { width: 100%; min-height: 44px; margin-top: 6px; border: 0; border-radius: 9px; color: var(--navy); background: var(--surface-2); font-size: .82rem; font-weight: 700; }
-.sheet-actions { position: sticky; bottom: 0; display: flex; gap: 9px; margin: 15px -16px 0; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--surface); }
+.sheet-footer { flex: 0 0 auto; border-top: 1px solid var(--line); background: var(--surface); }
+.sheet-actions { display: flex; gap: 9px; padding: 12px 16px; }
 .sheet-actions .button { flex: 1; }
 .detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .detail-heading .product-sku { font-size: 1.1rem; }
@@ -471,7 +474,7 @@ img { max-width: 100%; }
 .info-row strong { min-width: 0; text-align: right; overflow-wrap: anywhere; font-weight: 650; }
 .account-actions { display: grid; gap: 9px; margin-top: 13px; }
 .version-note { margin: 17px 0 0; color: var(--muted); text-align: center; font-size: .74rem; }
-.required-update { min-height: 100dvh; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: max(24px, var(--safe-top)) calc(24px + var(--safe-right)) max(24px, var(--safe-bottom)) calc(24px + var(--safe-left)); background: linear-gradient(to bottom, var(--status-bar-color) 0 var(--safe-top), #f5f7fb var(--safe-top)); color: #17243a; text-align: center; }
+.required-update { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: max(24px, var(--safe-top)) calc(24px + var(--safe-right)) max(24px, var(--safe-bottom)) calc(24px + var(--safe-left)); background: linear-gradient(to bottom, var(--status-bar-color) 0 var(--safe-top), #f5f7fb var(--safe-top)); color: #17243a; text-align: center; }
 .required-update.dark { background: #101a28; color: #f4f7fc; }
 .required-update .login-mark { width: 72px; height: 72px; object-fit: contain; }
 .required-update h1, .required-update p { margin: 0; }
@@ -619,6 +622,7 @@ img { max-width: 100%; }
 .cart-line-bottom { margin-top: 5px; }
 .cart-sticky-summary { position: fixed; z-index: 6; left: var(--safe-left); right: var(--safe-right); bottom: var(--bottom-tabs-height); width: auto; max-width: 1000px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 auto; padding: 8px 14px; border-top: 1px solid var(--line); background: var(--surface); box-shadow: 0 -6px 18px #07132618; }
 :root[data-keyboard-open='true'] .cart-sticky-summary { bottom: max(var(--safe-bottom), var(--keyboard)); }
+:root[data-keyboard-open='true'] .cart-page { padding-bottom: calc(140px + max(var(--safe-bottom), var(--keyboard))); scroll-padding-bottom: calc(140px + max(var(--safe-bottom), var(--keyboard))); }
 .cart-summary-copy { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cart-summary-breakdown { color: var(--muted); font-size: .61rem; line-height: 1.2; overflow-wrap: anywhere; }
 .cart-summary-label { color: var(--muted); font-size: .68rem; line-height: 1.2; }
@@ -704,4 +708,8 @@ img { max-width: 100%; }
   .catalog-table-row { min-height: 44px; padding-block: 0; }
   .catalog-table-row .add-col button { width: 44px; height: 44px; }
   .catalog-table-row .sku-subline { flex-direction: row; align-items: center; }
+}
+
+@supports (height: 100dvh) {
+  .bottom-sheet { max-height: min(88dvh, calc(100dvh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard)) - 12px), 820px); }
 }

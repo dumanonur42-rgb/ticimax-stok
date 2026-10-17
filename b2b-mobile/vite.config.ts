@@ -11,6 +11,9 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version)
   },
+  build: {
+    target: 'chrome83'
+  },
   plugins: [react()],
   resolve: {
     alias: {
