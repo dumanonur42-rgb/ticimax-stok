@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import ctypes
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -35,7 +36,9 @@ def _yaz_hata(metin: str) -> None:
 
 
 def _kontrol() -> int:
+    _kontrol_izle("kontrol başladı")
     sumatra_ok = resource_path("SumatraPDF.exe").is_file()
+    _kontrol_izle("SumatraPDF denetimi tamamlandı")
     _satir(
         "SumatraPDF dosyası",
         "Başarılı" if sumatra_ok else "Başarısız",
@@ -47,9 +50,11 @@ def _kontrol() -> int:
         for dosya in font_klasoru.rglob("*")
         if dosya.is_file()
     )
+    _kontrol_izle("Yazı tipi denetimi tamamlandı")
     _satir("Yazı tipleri", "Başarılı" if font_ok else "Başarısız")
 
     cizim_ok = False
+    _kontrol_izle("Etiket çizimi başladı")
     try:
         belge = ciz(EtiketVerisi(kod="6205-2RS", ek="C3"), "62x100", 1)
         try:
@@ -58,18 +63,32 @@ def _kontrol() -> int:
             belge.close()
     except Exception:
         cizim_ok = False
+    _kontrol_izle("Etiket çizimi tamamlandı")
     _satir("Etiket oluşturma denemesi", "Başarılı" if cizim_ok else "Başarısız")
     yazici_modulu_ok = True
     if sys.platform == "win32":
+        _kontrol_izle("win32print içe aktarımı başladı")
         try:
             import win32print
         except Exception:
             yazici_modulu_ok = False
+        _kontrol_izle("win32print içe aktarımı tamamlandı")
         _satir(
             "Yazıcı ayar modülü",
             "Başarılı" if yazici_modulu_ok else "Başarısız",
         )
     return 0 if sumatra_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
+
+
+def _kontrol_izle(adim: str) -> None:
+    yol = os.environ.get("RULMAN_ETIKET_KONTROL_LOG")
+    if not yol:
+        return
+    try:
+        with Path(yol).open("a", encoding="utf-8") as dosya:
+            dosya.write(f"{adim}\n")
+    except OSError:
+        pass
 
 
 def _satir(kontrol: str, sonuc: str) -> None:

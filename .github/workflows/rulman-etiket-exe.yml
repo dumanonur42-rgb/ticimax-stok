@@ -74,6 +74,10 @@ jobs:
             $null = $p.Handle
             if (-not $p.WaitForExit(60000)) {
               Get-CimInstance Win32_Process | Format-Table ProcessId, ParentProcessId, Name, CommandLine -AutoSize | Out-String -Width 400 | Write-Host
+              if ($env:RULMAN_ETIKET_KONTROL_LOG -and (Test-Path $env:RULMAN_ETIKET_KONTROL_LOG)) {
+                Write-Host "Kontrol ilerleme kaydı:"
+                Get-Content $env:RULMAN_ETIKET_KONTROL_LOG | Write-Host
+              }
               try {
                 $p.Kill($true)
               } catch {
@@ -97,7 +101,12 @@ jobs:
           Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
+          $kontrolLog = Join-Path $PWD "kontrol.log"
+          Remove-Item $kontrolLog -ErrorAction SilentlyContinue
+          $env:RULMAN_ETIKET_KONTROL_LOG = $kontrolLog
           Invoke-RulmanEtiketSmoke -Arguments @("--kontrol") -FailureMessage "Uygulama dosyaları denetimden geçemedi"
+          Remove-Item Env:RULMAN_ETIKET_KONTROL_LOG -ErrorAction SilentlyContinue
+          Remove-Item $kontrolLog -ErrorAction SilentlyContinue
 
       - uses: actions/upload-artifact@v4
         with:
