@@ -218,6 +218,11 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
     if boyut == "62surekli" and not (SUREKLI_MIN_MM <= h_mm <= SUREKLI_MAX_MM):
         s.hatalar.append(f"sürekli rulo uzunluğu {h_mm:.1f} mm (QL-550: 25-1000 mm)")
 
+    girilen = "".join(str(v[k]) for k in ("kod", "ek", "bilgi1", "bilgi2", "adet_yazisi"))
+    if "…" in page.get_text() and "…" not in girilen:
+        kesik = [sat for sat in page.get_text().splitlines() if "…" in sat]
+        s.hatalar.append(f"yazı kesilmiş (…): {kesik}")
+
     img = _png(page)
     if png_yol:
         img.save(png_yol)
