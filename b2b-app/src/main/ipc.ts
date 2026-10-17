@@ -1,10 +1,10 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
 import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, net, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
-import { cloud } from './cloud/client'
+import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { flushActivity, logActivity, setActivitySession } from './activity'
 import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
 import { dbPath, wipeProducts } from './db'
@@ -36,6 +36,10 @@ import { approveUser, changePassword, createDealerAccount, currentSession, delet
 import { requestUpdateCheck, updateState } from './updater'
 
 let session: Session | null = null
+let sessionExpiredNotice: string | null = null
+const SESSION_EXPIRED_MESSAGE = 'Oturumunuz kapandı, lütfen yeniden giriş yapın.'
+let sessionCheckTimer: ReturnType<typeof setInterval> | null = null
+let sessionCheckInFlight = false
 
 const EXTERNAL_HOSTS = new Set(['wa.me', 'api.whatsapp.com', 'github.com', 'www.microsoft.com'])
 
@@ -141,6 +145,26 @@ export function currentRole(): Session['user']['role'] | null {
  */
 async function activate(s: Session, restored = false): Promise<void> {
   session = s
+  sessionExpiredNotice = null
+  if (sessionCheckTimer) clearInterval(sessionCheckTimer)
+  sessionCheckTimer = setInterval(() => {
+    if (sessionCheckInFlight || !session) return
+    sessionCheckInFlight = true
+    const userId = session.user.id
+    void cloud().auth.getSession().then(({ data, error }) => {
+      if (session?.user.id !== userId) return
+      if (error) {
+        if (!isTransientRestoreError(error)) expireSession()
+      } else if ((!data.session && net.isOnline()) || (data.session && data.session.user.id !== userId)) {
+        expireSession()
+      }
+    }).catch((error) => {
+      if (!isTransientRestoreError(error)) expireSession()
+    }).finally(() => {
+      sessionCheckInFlight = false
+    })
+  }, 30_000)
+  sessionCheckTimer.unref?.()
   setOutboxUser(s.user.id)
   setActivitySession(s.user.id)
   logActivity({ kind: 'login', ...(restored ? { detail: { restored: true } } : {}) })
@@ -165,11 +189,22 @@ async function activate(s: Session, restored = false): Promise<void> {
 }
 
 function deactivate(): void {
+  if (sessionCheckTimer) clearInterval(sessionCheckTimer)
+  sessionCheckTimer = null
   setActivitySession(null)
   session = null
   setOutboxUser(null)
   stopRealtime()
   stopAdminNotifications()
+}
+
+function expireSession(): void {
+  if (!session) return
+  deactivate()
+  wipeProducts()
+  broadcast('products:changed')
+  sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
+  broadcast('session:changed')
 }
 
 /** Restores the remembered cloud session (refresh token on disk) before the window shows. */
@@ -179,10 +214,12 @@ export function restoreSession(): Promise<Session | null> {
   if (session) return Promise.resolve(session)
   if (!restoring) {
     restoring = (async () => {
+      const hadStoredSession = Boolean(getStoredValue(SESSION_CACHE_STORAGE_KEY))
       try {
         const s = await currentSession()
         if (s) await activate(s, true)
         else {
+          if (hadStoredSession) sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
           wipeProducts()
           broadcast('products:changed')
         }
@@ -190,6 +227,7 @@ export function restoreSession(): Promise<Session | null> {
       } catch (e) {
         console.error('session restore failed', e)
         if (!isTransientRestoreError(e)) {
+          if (hadStoredSession) sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
           wipeProducts()
           broadcast('products:changed')
         }
@@ -203,6 +241,11 @@ export function restoreSession(): Promise<Session | null> {
 }
 
 export function registerIpc(): void {
+  cloud().auth.onAuthStateChange((event) => {
+    if (event !== 'SIGNED_OUT') return
+    setTimeout(expireSession, 0)
+  })
+
   onSyncEvent((event, payload) => {
     if (event === 'status') broadcast('sync:changed', payload)
     else if (event === 'products') broadcast('products:changed')
@@ -356,7 +399,7 @@ export function registerIpc(): void {
   })
   handle('auth:session', async () => {
     if (restoring) await restoring
-    return session
+    return { session, notice: session ? null : sessionExpiredNotice }
   })
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.username, current, next))
   handle('clipboard:writeText', (text) => {

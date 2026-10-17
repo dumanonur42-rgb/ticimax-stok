@@ -8,7 +8,7 @@ import { useApp } from '@/store/app'
 
 type Mode = 'login' | 'register'
 
-export function Login(): ReactNode {
+export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
   const setSession = useApp((s) => s.setSession)
   const [mode, setMode] = useState<Mode>('login')
   const [username, setUsername] = useState('')
@@ -106,6 +106,11 @@ export function Login(): ReactNode {
             {error && (
               <div id="login-error" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal', lineHeight: 1.35 }}>
                 {error}
+              </div>
+            )}
+            {sessionNotice && (
+              <div id="session-expired" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal', lineHeight: 1.35 }}>
+                {sessionNotice}
               </div>
             )}
             {notice && (

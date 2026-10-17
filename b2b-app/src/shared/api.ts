@@ -45,7 +45,7 @@ export interface ApiMap {
   'auth:login': [{ username: string; password: string }, Session]
   'auth:logout': [void, void]
   'auth:register': [{ username: string; display_name: string; company_name: string; password: string }, void]
-  'auth:session': [void, Session | null]
+  'auth:session': [void, { session: Session | null; notice: string | null }]
   'auth:changePassword': [{ current: string; next: string }, void]
   'activity:log': [ActivityEvent, void]
   'activity:open': [void, void]

@@ -74,15 +74,24 @@ const PAGES: Record<ReturnType<typeof useApp.getState>['page'], () => ReactNode>
 export function App(): ReactNode {
   const { session, setSession, loadSettings, page } = useApp()
   const [ready, setReady] = useState(false)
+  const [sessionNotice, setSessionNotice] = useState('')
   useApplySettings()
   useFontShortcuts()
 
   useEffect(() => {
-    Promise.all([api('auth:session', undefined).then(setSession), loadSettings()])
+    const refreshSession = async (): Promise<void> => {
+      const result = await api('auth:session', undefined)
+      setSession(result.session)
+      setSessionNotice(result.notice ?? '')
+    }
+    Promise.all([refreshSession(), loadSettings()])
       .catch(() => undefined)
       .finally(() => setReady(true))
     const offSession = onEvent('session:changed', () => {
-      api('auth:session', undefined).then(setSession).catch(() => setSession(null))
+      refreshSession().catch(() => {
+        setSession(null)
+        setSessionNotice('')
+      })
     })
     // Shared settings changed by an admin on another computer.
     const offSettings = onEvent('settings:changed', () => {
@@ -113,7 +122,7 @@ export function App(): ReactNode {
   if (!session)
     return (
       <>
-        <Login />
+        <Login sessionNotice={sessionNotice} />
         <UpdateDialog />
         <Toasts />
       </>

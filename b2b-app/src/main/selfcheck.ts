@@ -165,7 +165,21 @@ async function storageSelfCheck(): Promise<boolean> {
   const fileMigrated = storedAfterRestore.startsWith('safe:') || storedAfterRestore.startsWith('dev-plain:')
   if (!sessionRestored || !fileMigrated) ok = false
   console.log(`session-file migration: ${sessionRestored && fileMigrated ? 'ok' : 'failed'} (stored session restored after legacy-file migration)`)
-  await cloud().auth.signOut({ scope: 'local' })
+  const auth = cloud().auth
+  const signOut = auth.signOut
+  let signOutScope: string | undefined
+  auth.signOut = async (options) => {
+    signOutScope = options?.scope
+    return { error: null }
+  }
+  try {
+    await logout()
+  } finally {
+    auth.signOut = signOut
+  }
+  if (signOutScope !== 'local') ok = false
+  console.log(`logout sign-out scope: ${signOutScope === 'local' ? 'ok' : 'failed'} (local)`)
+  await auth.signOut({ scope: 'local' })
 
   const dbHeaderPlaintext = readFileSync(dbPath()).subarray(0, 16).toString('binary') === 'SQLite format 3\0'
   if (dbHeaderPlaintext) ok = false

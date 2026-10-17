@@ -83,11 +83,11 @@ export async function login(username: string, password: string): Promise<Session
   if (auth.error) throw cloudError(auth.error)
   const user = await profileOf(auth.data.user.id)
   if (!user || !user.active) {
-    await sb.auth.signOut()
+    await sb.auth.signOut({ scope: 'local' })
     throw new Error(user ? 'Hesabınız devre dışı bırakılmış.' : 'Kullanıcı adı veya şifre hatalı.')
   }
   if (!user.approved) {
-    await sb.auth.signOut()
+    await sb.auth.signOut({ scope: 'local' })
     throw new Error('Hesabınız henüz yönetici tarafından onaylanmadı.')
   }
   return sessionOf(user)
@@ -95,7 +95,7 @@ export async function login(username: string, password: string): Promise<Session
 
 export async function logout(): Promise<void> {
   forgetSession()
-  const r = await cloud().auth.signOut()
+  const r = await cloud().auth.signOut({ scope: 'local' })
   if (r.error) {
     console.error('signOut failed', r.error)
     clearStoredSession()
@@ -120,6 +120,7 @@ export async function currentSession(): Promise<Session | null> {
   }
   if (!r.data.session) {
     forgetSession()
+    clearStoredSession()
     return null
   }
   const userId = r.data.session.user.id
