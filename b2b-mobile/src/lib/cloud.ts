@@ -2,19 +2,24 @@ import { PERMS, type Customer, type Order, type OrderInput, type Settings, type 
 import { createClient } from '@supabase/supabase-js'
 import type { Database, CustomerRow, OrderItemRow, OrderRow, ProfileRow } from '@desktopDatabase'
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@desktopConfig'
+import { isAuthApiError, isAuthRetryableFetchError } from '@supabase/supabase-js'
 import { DEFAULT_SETTINGS, SHARED_SETTING_KEYS } from './defaults'
 import { loginEmail } from './loginEmail'
+import { clearLocalCatalog, unlockCatalogStorage } from './idb'
+import { CART_STORAGE_KEY, secureStorage } from './secureStorage'
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: false
+    detectSessionInUrl: false,
+    storage: secureStorage
   },
   realtime: { params: { eventsPerSecond: 5 } }
 })
 
-const SESSION_CACHE = 'yamansa-b2b-session'
+export const SESSION_CACHE = 'yamansa-b2b-session'
+export const SUPABASE_AUTH_STORAGE_KEY = `sb-${new URL(SUPABASE_URL).hostname.split('.')[0]}-auth-token`
 const MIN_VERSION_CACHE = 'yb2b.minimumVersions'
 const MIN_VERSION_KEYS = ['min_version_android', 'min_version_ios', 'min_version_windows'] as const
 
@@ -29,12 +34,41 @@ export function cachedMinimumVersion(key: typeof MIN_VERSION_KEYS[number]): stri
 }
 
 function errorMessage(error: unknown): string {
-  const message = error instanceof Error ? error.message : String(error)
+  const message = error instanceof Error
+    ? error.message
+    : typeof error === 'object' && error !== null && 'message' in error
+      ? String(error.message)
+      : String(error)
   if (/Invalid login credentials/i.test(message)) return 'Kullanıcı adı veya şifre hatalı.'
   if (/fetch failed|Failed to fetch|network|timeout|ECONN|ENOTFOUND|aborted/i.test(message)) {
     return 'Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.'
   }
   return message
+}
+
+function isRetryableFailure(error: unknown): boolean {
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return true
+  if (isAuthRetryableFetchError(error)) return true
+  if (error instanceof TypeError) return true
+  const message = errorMessage(error)
+  return /fetch failed|Failed to fetch|network|timeout|ECONN|ENOTFOUND|aborted|temporarily unavailable/i.test(message)
+}
+
+function isAuthoritativeAuthFailure(error: unknown): boolean {
+  return isAuthApiError(error) && [400, 401, 403].includes(error.status)
+}
+
+class InvalidProfileError extends Error {
+  constructor(public readonly reason: 'missing' | 'inactive' | 'unapproved') {
+    super(reason)
+    this.name = 'InvalidProfileError'
+  }
+}
+
+async function wipeLocalUserData(): Promise<void> {
+  await clearLocalCatalog()
+  await secureStorage.removeItem(SESSION_CACHE)
+  await secureStorage.removeItem(CART_STORAGE_KEY)
 }
 
 function mapProfile(profile: ProfileRow): User {
@@ -54,14 +88,9 @@ function mapProfile(profile: ProfileRow): User {
 async function loadProfileSession(userId: string): Promise<Session> {
   const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
   if (error) throw new Error(errorMessage(error))
-  if (!profile || !profile.active) {
-    await supabase.auth.signOut()
-    throw new Error(profile ? 'Hesabınız devre dışı bırakılmış.' : 'Kullanıcı adı veya şifre hatalı.')
-  }
-  if (!profile.approved) {
-    await supabase.auth.signOut()
-    throw new Error('Hesabınız henüz yönetici tarafından onaylanmadı.')
-  }
+  if (!profile) throw new InvalidProfileError('missing')
+  if (!profile.active) throw new InvalidProfileError('inactive')
+  if (!profile.approved) throw new InvalidProfileError('unapproved')
   const user = mapProfile(profile)
   let customer: Customer | null = null
   if (user.customer_id !== null) {
@@ -70,7 +99,8 @@ async function loadProfileSession(userId: string): Promise<Session> {
     if (data) customer = mapCustomer(data)
   }
   const session = { user, customer }
-  localStorage.setItem(SESSION_CACHE, JSON.stringify(session))
+  await secureStorage.setItem(SESSION_CACHE, JSON.stringify(session))
+  await unlockCatalogStorage()
   return session
 }
 
@@ -82,10 +112,10 @@ function mapCustomer(row: CustomerRow): Customer {
   }
 }
 
-function cachedSession(): Session | null {
+async function cachedSession(): Promise<Session | null> {
+  const raw = await secureStorage.getItem(SESSION_CACHE)
+  if (!raw) return null
   try {
-    const raw = localStorage.getItem(SESSION_CACHE)
-    if (!raw) return null
     const session = JSON.parse(raw) as Session
     session.user.perms ??= []
     return session
@@ -105,6 +135,17 @@ export async function signIn(username: string, password: string): Promise<Sessio
     if (error) throw new Error(errorMessage(error))
     return await loadProfileSession(data.user.id)
   } catch (error) {
+    if (error instanceof InvalidProfileError) {
+      await wipeLocalUserData()
+    }
+    if (error instanceof InvalidProfileError) {
+      const message = error.reason === 'inactive'
+        ? 'Hesabınız devre dışı bırakılmış.'
+        : error.reason === 'unapproved'
+          ? 'Hesabınız henüz yönetici tarafından onaylanmadı.'
+          : 'Kullanıcı adı veya şifre hatalı.'
+      throw new Error(message)
+    }
     throw new Error(errorMessage(error))
   }
 }
@@ -112,25 +153,66 @@ export async function signIn(username: string, password: string): Promise<Sessio
 export async function restoreSession(): Promise<Session | null> {
   const { data, error } = await supabase.auth.getSession()
   if (error) {
-    const cached = cachedSession()
-    if (cached) return cached
+    if (isRetryableFailure(error)) {
+      const cached = await cachedSession()
+      if (cached) {
+        await unlockCatalogStorage()
+        return cached
+      }
+      throw new Error(errorMessage(error))
+    }
+    if (isAuthoritativeAuthFailure(error)) {
+      await supabase.auth.signOut({ scope: 'local' })
+      await wipeLocalUserData()
+      return null
+    }
+    const cached = await cachedSession()
+    if (cached) {
+      await unlockCatalogStorage()
+      return cached
+    }
     throw new Error(errorMessage(error))
   }
-  if (!data.session) return null
+  const cached = await cachedSession()
+  if (!data.session) {
+    if (cached) {
+      await unlockCatalogStorage()
+      return cached
+    }
+    await wipeLocalUserData()
+    return null
+  }
   try {
     return await loadProfileSession(data.session.user.id)
   } catch (error) {
-    if (!/Hesabınız devre dışı bırakılmış|Hesabınız henüz yönetici tarafından onaylanmadı|Kullanıcı adı veya şifre hatalı/i.test(errorMessage(error))) {
-      const cached = cachedSession()
-      if (cached?.user.id === data.session.user.id) return cached
+    if (isRetryableFailure(error)) {
+      if (cached?.user.id === data.session.user.id) {
+        await unlockCatalogStorage()
+        return cached
+      }
+      throw new Error(errorMessage(error))
     }
-    throw error
+    if (error instanceof InvalidProfileError) {
+      await supabase.auth.signOut({ scope: 'local' })
+      await wipeLocalUserData()
+      return null
+    }
+    if (cached?.user.id === data.session.user.id) {
+      await unlockCatalogStorage()
+      return cached
+    }
+    throw new Error(errorMessage(error))
   }
 }
 
 export async function signOut(): Promise<void> {
-  localStorage.removeItem(SESSION_CACHE)
-  const { error } = await supabase.auth.signOut()
+  let error: Error | null = null
+  try {
+    const result = await supabase.auth.signOut({ scope: 'local' })
+    error = result.error
+  } finally {
+    await wipeLocalUserData()
+  }
   if (error) throw new Error(errorMessage(error))
 }
 

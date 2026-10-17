@@ -21,6 +21,7 @@ import { dashboardOrders, createOrder, getOrder, listCustomers, listOrders, load
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
+import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
@@ -151,6 +152,7 @@ export default function App(): ReactNode {
     let active = true
     void (async () => {
       try {
+        if (await purgeLegacyWebDataIfNeeded()) return
         const cached = await readProducts()
         if (active && cached.length) setProducts(cached)
       } catch {
@@ -162,6 +164,10 @@ export default function App(): ReactNode {
           setSession(restored)
           setActivitySession(restored.user.id)
           logActivity({ kind: 'login', detail: { restored: true } })
+        } else if (active) {
+          setProducts([])
+          setCustomers([])
+          clearCart()
         }
       } catch {
         if (active && navigator.onLine) showToast('Oturum bilgisi yenilenemedi. Yeniden giriş yapın.')
@@ -178,7 +184,7 @@ export default function App(): ReactNode {
       window.removeEventListener('online', onOnline)
       window.removeEventListener('offline', onOffline)
     }
-  }, [platform, setProducts, setSession, setOnline, showToast, setSheet, syncNow])
+  }, [platform, setProducts, setSession, setOnline, setCustomers, clearCart, showToast, setSheet, syncNow])
 
   useEffect(() => {
     if (!Capacitor.isNativePlatform() || (platform !== 'android' && platform !== 'ios')) return
@@ -332,12 +338,17 @@ export default function App(): ReactNode {
   }
 
   const onLogout = async (): Promise<void> => {
+    let failed = false
     try {
       await flushActivity()
-      setActivitySession(null)
+    } catch {
+      failed = true
+    }
+    setActivitySession(null)
+    try {
       await signOut()
     } catch {
-      showToast('Oturum kapatılamadı. İnternet bağlantınızı kontrol edin.')
+      failed = true
     } finally {
       setActivitySession(null)
       setSession(null)
@@ -345,6 +356,7 @@ export default function App(): ReactNode {
       setCustomers([])
       clearCart()
       setTab('home')
+      if (failed) showToast('Oturum kapatıldı ancak bazı işlemler tamamlanamadı.')
     }
   }
 

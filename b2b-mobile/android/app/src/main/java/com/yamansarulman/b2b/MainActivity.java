@@ -1,10 +1,17 @@
 package com.yamansarulman.b2b;
 
+import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        registerPlugin(WebDataPurgePlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

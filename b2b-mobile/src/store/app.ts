@@ -3,6 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import type { Customer, PaymentType, Product, Settings, Session } from '@shared/types'
 import { DEFAULT_SETTINGS } from '../lib/defaults'
 import type { DimensionFilters } from '../lib/search'
+import { CART_STORAGE_KEY, secureStorage } from '../lib/secureStorage'
 
 export type Tab = 'home' | 'products' | 'cart' | 'orders' | 'account'
 export type ThemePreference = 'system' | 'light' | 'dark'
@@ -93,7 +94,7 @@ export const useCart = create<CartState>()(persist((set) => ({
     }
   }),
   clear: () => set({ lines: [], payment: 'pesin', note: '', customerId: null })
-}), { name: 'yamansa-b2b-cart', storage: createJSONStorage(() => localStorage) }))
+}), { name: CART_STORAGE_KEY, storage: createJSONStorage(() => secureStorage) }))
 
 interface AppState {
   tab: Tab
