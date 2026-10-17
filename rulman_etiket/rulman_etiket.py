@@ -96,7 +96,17 @@ def _kontrol_izle(adim: str) -> None:
 
 
 def _satir(kontrol: str, sonuc: str) -> None:
-    print(f"{kontrol}: {sonuc}")
+    cikti = sys.stdout
+    if cikti is None:
+        return
+    try:
+        cikti.reconfigure(errors="replace")
+    except (AttributeError, OSError, ValueError):
+        pass
+    try:
+        print(f"{kontrol}: {sonuc}", file=cikti)
+    except (OSError, UnicodeError):
+        pass
 
 
 def _arayuzu_baslat() -> int:
