@@ -1,22 +1,14 @@
-type Site = 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+import { parseSiteOrigin, type Site } from './origin.ts'
+
 type Kind = 'visit' | 'search' | 'product_view' | 'cart_add' | 'order'
 type Device = '' | 'mobile' | 'tablet' | 'desktop'
 type EventInput = { k: unknown; t: unknown; s?: unknown; n?: unknown; p?: unknown; q?: unknown; c?: unknown; x?: unknown }
 type DenoRuntime = { env: { get(name: string): string | undefined }; serve(handler: (request: Request) => Response | Promise<Response>): void }
 
 const runtime = (globalThis as unknown as { Deno: DenoRuntime }).Deno
-const hosts: Record<string, Site> = {
-  'yamansarulman.com': 'yamansarulman', 'www.yamansarulman.com': 'yamansarulman',
-  'rulmansitesi.com': 'rulmansitesi', 'www.rulmansitesi.com': 'rulmansitesi',
-  'teknikkesici.com.tr': 'teknikkesici', 'www.teknikkesici.com.tr': 'teknikkesici'
-}
 const kinds = new Set<Kind>(['visit', 'search', 'product_view', 'cart_add', 'order'])
 const rate = new Map<string, { start: number; count: number }>()
 const windowMs = 600_000
-
-function hostname(value: string): string {
-  try { return new URL(value.includes('://') ? value : `https://${value}`).hostname.toLowerCase() } catch { return '' }
-}
 
 function cors(origin: string): Headers {
   return new Headers({
@@ -74,10 +66,12 @@ function limit(key: string, count: number, now: number): number {
 runtime.serve(async (request) => {
   const originHeader = request.headers.get('origin') ?? ''
   const referer = request.headers.get('referer') ?? ''
-  const sourceHost = hostname(originHeader || referer)
-  const site = hosts[sourceHost]
-  const origin = site ? (originHeader ? new URL(originHeader).origin : `https://${sourceHost}`) : ''
-  if (!site) return response(403, '')
+  const parsedOrigin = originHeader ? parseSiteOrigin(originHeader) : null
+  const parsedReferer = !originHeader && referer ? parseSiteOrigin(referer, true) : null
+  const source = parsedOrigin ?? parsedReferer
+  if ((originHeader && !parsedOrigin) || (!originHeader && referer && !parsedReferer) || !source) return response(403, '')
+  const { site } = source
+  const origin = parsedOrigin?.origin ?? ''
   if (request.method === 'OPTIONS') return response(204, origin)
   if (request.method !== 'POST') return response(405, origin)
   if (/(bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit|pingdom)/i.test(request.headers.get('user-agent') ?? '')) {
@@ -90,10 +84,10 @@ runtime.serve(async (request) => {
     const input = JSON.parse(text) as { v?: unknown; d?: unknown; r?: unknown; e?: unknown }
     if (typeof input.v !== 'string' || !/^[A-Za-z0-9_-]{8,64}$/.test(input.v) || !Array.isArray(input.e)) return response(204, origin)
     const device: Device = input.d === 'mobile' || input.d === 'tablet' || input.d === 'desktop' ? input.d : ''
-    const referrer = hosts[hostname(clean(input.r, 255))] ? hostname(clean(input.r, 255)) : ''
+    const referrer = parseSiteOrigin(clean(input.r, 255), true)?.site ?? ''
     const now = Date.now()
     const visitorIp = request.headers.get('cf-connecting-ip') || (request.headers.get('x-forwarded-for') ?? '').split(',')[0].trim()
-    const accepted = limit(`${input.v}|${visitorIp}`, Math.min(input.e.length, 25), now)
+    const accepted = limit(visitorIp || 'unknown', Math.min(input.e.length, 25), now)
     const rows = (input.e as EventInput[]).slice(0, accepted).flatMap((event) => {
       if (!kinds.has(event.k as Kind) || !Number.isInteger(event.t) || Number(event.t) < 0 || Number(event.t) > windowMs) return []
       if (event.c !== undefined && event.c !== null && (!Number.isInteger(event.c) || Number(event.c) < 0)) return []

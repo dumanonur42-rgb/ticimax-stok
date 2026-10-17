@@ -232,74 +232,104 @@ begin
   update products set stock = greatest(0, stock + p_delta) where id = p_id;
 end $$;
 
+alter table public.order_items add column if not exists stock_deducted numeric;
+
+create or replace function public.setting_num(p_key text, p_default numeric) returns numeric
+language sql stable security definer set search_path = public as $$
+  select coalesce((select case when jsonb_typeof(value) = 'number' then (value #>> '{}')::numeric
+                              when jsonb_typeof(value) = 'string' and (value #>> '{}') ~ '^-?[0-9]+(\.[0-9]+)?$' then (value #>> '{}')::numeric end
+                   from settings where key = p_key), p_default)
+$$;
+revoke all on function public.setting_num(text, numeric) from public, anon;
+
 create or replace function public.create_order(p_customer_id bigint, p_note text, p_payment text, p_currency text, p_vat_pct numeric, p_items jsonb)
 returns bigint language plpgsql security definer set search_path = public as $$
 declare
-  me profiles; cid bigint; cname text; oid bigint; ono text; seq int; prefix text;
-  it jsonb; gross numeric := 0; sub numeric := 0; lt numeric; q numeric; up numeric; dp numeric; pid bigint;
+  me profiles; cid bigint; cname text; cdisc numeric; oid bigint; ono text; seq int; prefix text;
+  it jsonb; pr products; q numeric; up numeric; lt numeric; gross numeric := 0; sub numeric := 0;
+  pay text; vat numeric; card_pct numeric; cur text := null; n int := 0; ded numeric;
 begin
   select * into me from profiles where id = auth.uid() and active and approved;
   if me.id is null then raise exception 'Oturum açılmamış.'; end if;
   perform set_config('app.stock_source', 'order', true);
   cid := case when me.role = 'admin' then p_customer_id else me.customer_id end;
   if cid is null then raise exception 'Lütfen bir bayi/müşteri seçin.'; end if;
-  select name into cname from customers where id = cid;
-  if jsonb_array_length(coalesce(p_items, '[]'::jsonb)) = 0 then raise exception 'Sipariş en az bir kalem içermeli.'; end if;
-
+  select name, greatest(0, least(100, coalesce(discount_pct, 0))) into cname, cdisc from customers where id = cid;
+  if cname is null then raise exception 'Müşteri bulunamadı.'; end if;
+  if jsonb_typeof(p_items) is distinct from 'array' or jsonb_array_length(p_items) = 0 then raise exception 'Sepetiniz boş.'; end if;
+  if jsonb_array_length(p_items) > 500 then raise exception 'Bir siparişte en fazla 500 kalem olabilir.'; end if;
+  pay := case when p_payment = 'kart' then 'kart' else 'pesin' end;
+  vat := greatest(0, least(100, setting_num('vat_pct', 20)));
+  card_pct := greatest(0, setting_num('card_price_pct', 5));
+  for it in select * from jsonb_array_elements(p_items) loop
+    q := coalesce((it->>'qty')::numeric, 0);
+    if q <= 0 then continue; end if;
+    select * into pr from products where id = nullif(it->>'product_id', '')::bigint;
+    if pr.id is null or pr.deleted or not pr.active then
+      raise exception 'Sepetteki "%" ürünü artık satışta değil. Lütfen sepetten çıkarın.', coalesce(it->>'sku', '');
+    end if;
+    if cur is null then cur := pr.currency; elsif cur <> pr.currency then
+      raise exception 'Sepette farklı para birimleri var; tek para birimiyle sipariş oluşturun.';
+    end if;
+    up := case when pay = 'kart' then coalesce(pr.card_price, case when card_pct > 0 then round(pr.price * (1 + card_pct / 100), 2) end, pr.price) else pr.price end;
+    if coalesce(up, 0) <= 0 then
+      raise exception 'Fiyatı olmayan ürün siparişe eklenemez: %. Fiyat için lütfen bizi arayın.', pr.sku;
+    end if;
+    gross := gross + q * up;
+    sub := sub + round(q * up * (1 - cdisc / 100), 2);
+    n := n + 1;
+  end loop;
+  if n = 0 then raise exception 'Sepetiniz boş.'; end if;
   perform pg_advisory_xact_lock(hashtext('order_no'));
   prefix := 'SP-' || to_char(now() at time zone 'Europe/Istanbul', 'YYYYMMDD') || '-';
   select coalesce(max(substr(order_no, length(prefix) + 1)::int), 0) + 1 into seq from orders where order_no like prefix || '%';
   ono := prefix || lpad(seq::text, 3, '0');
-
-  for it in select * from jsonb_array_elements(p_items) loop
-    q := coalesce((it->>'qty')::numeric, 0);
-    if q <= 0 then continue; end if;
-    up := coalesce((it->>'unit_price')::numeric, 0);
-    dp := coalesce((it->>'discount_pct')::numeric, 0);
-    gross := gross + q * up;
-    sub := sub + round(q * up * (1 - dp / 100), 2);
-  end loop;
-  if sub = 0 and gross = 0 then raise exception 'Sipariş en az bir kalem içermeli.'; end if;
-
   insert into orders (order_no, customer_id, customer_name, status, note, payment, currency, subtotal, discount, vat_pct, vat, total, created_by, created_by_id)
-  values (ono, cid, coalesce(cname, ''), 'beklemede', coalesce(p_note, ''), case when p_payment = 'kart' then 'kart' else 'pesin' end,
-          coalesce(p_currency, 'TRY'), round(sub, 2), round(gross - sub, 2), p_vat_pct, round(sub * p_vat_pct / 100, 2),
-          round(sub + round(sub * p_vat_pct / 100, 2), 2), coalesce(nullif(me.display_name, ''), me.username), me.id)
+  values (ono, cid, cname, 'beklemede', left(coalesce(p_note, ''), 2000), pay, cur, round(sub, 2), round(gross - sub, 2), vat,
+          round(sub * vat / 100, 2), round(sub + round(sub * vat / 100, 2), 2), coalesce(nullif(me.display_name, ''), me.username), me.id)
   returning id into oid;
-
   for it in select * from jsonb_array_elements(p_items) loop
     q := coalesce((it->>'qty')::numeric, 0);
     if q <= 0 then continue; end if;
-    up := coalesce((it->>'unit_price')::numeric, 0);
-    dp := coalesce((it->>'discount_pct')::numeric, 0);
-    lt := round(q * up * (1 - dp / 100), 2);
-    pid := nullif(it->>'product_id', '')::bigint;
-    insert into order_items (order_id, product_id, sku, name, qty, unit_price, discount_pct, line_total)
-    values (oid, pid, coalesce(it->>'sku', ''), coalesce(it->>'name', ''), q, up, dp, lt);
-    if pid is not null then update products set stock = greatest(0, stock - q) where id = pid; end if;
+    select * into pr from products where id = (it->>'product_id')::bigint for update;
+    up := case when pay = 'kart' then coalesce(pr.card_price, case when card_pct > 0 then round(pr.price * (1 + card_pct / 100), 2) end, pr.price) else pr.price end;
+    lt := round(q * up * (1 - cdisc / 100), 2);
+    ded := least(q, greatest(pr.stock, 0));
+    insert into order_items (order_id, product_id, sku, name, qty, unit_price, discount_pct, line_total, stock_deducted)
+    values (oid, pr.id, pr.sku, pr.name, q, up, cdisc, lt, ded);
+    update products set stock = greatest(0, stock - q) where id = pr.id;
   end loop;
   return oid;
 end $$;
 
 create or replace function public.set_order_status(p_id bigint, p_status text) returns void
 language plpgsql security definer set search_path = public as $$
-declare o orders; it order_items;
+declare o orders; it order_items; ded numeric;
 begin
-  select * into o from orders where id = p_id;
+  if p_status is null or p_status not in ('taslak', 'beklemede', 'onaylandi', 'hazirlaniyor', 'teslim', 'iptal') then
+    raise exception 'Geçersiz sipariş durumu.';
+  end if;
+  select * into o from orders where id = p_id for update;
   if o.id is null then raise exception 'Sipariş bulunamadı.'; end if;
   if not is_admin() then
     if p_status <> 'iptal' or o.customer_id is distinct from my_customer_id() then
       raise exception 'Sipariş durumunu yalnızca yöneticiler değiştirebilir.';
     end if;
+    if o.status <> 'beklemede' then
+      raise exception 'Bu sipariş artık iptal edilemez. Lütfen bizi arayın.';
+    end if;
   end if;
+  if o.status = p_status then return; end if;
   perform set_config('app.stock_source', 'order_status', true);
   if p_status = 'iptal' and o.status <> 'iptal' then
     for it in select * from order_items where order_id = p_id and product_id is not null loop
-      update products set stock = stock + it.qty where id = it.product_id;
+      update products set stock = stock + coalesce(it.stock_deducted, it.qty) where id = it.product_id;
     end loop;
-  elsif o.status = 'iptal' and p_status <> 'iptal' then
+  elsif o.status = 'iptal' then
     for it in select * from order_items where order_id = p_id and product_id is not null loop
+      select least(it.qty, greatest(stock, 0)) into ded from products where id = it.product_id for update;
       update products set stock = greatest(0, stock - it.qty) where id = it.product_id;
+      update order_items set stock_deducted = coalesce(ded, 0) where id = it.id;
     end loop;
   end if;
   update orders set status = p_status, updated_at = now() where id = p_id;
@@ -539,17 +569,17 @@ end $$;
 
 create or replace function public.dashboard_orders(p_customer bigint) returns jsonb
 language plpgsql stable security definer set search_path = public as $$
-declare cid bigint; res jsonb;
+declare cid bigint; res jsonb; adm boolean := is_admin();
 begin
   if not is_member() then raise exception 'Oturum açılmamış.'; end if;
-  cid := case when is_admin() or has_perm('all_orders') then p_customer else my_customer_id() end;
+  cid := case when adm or has_perm('all_orders') then p_customer else my_customer_id() end;
   select jsonb_build_object(
     'openOrders', (select count(*) from orders where status in ('beklemede','onaylandi','hazirlaniyor') and (cid is null or customer_id = cid)),
     'ordersToday', (select count(*) from orders where (created_at at time zone 'Europe/Istanbul')::date = (now() at time zone 'Europe/Istanbul')::date and (cid is null or customer_id = cid)),
-    'customerCount', (select count(*) from customers where active),
-    'pendingUsers', case when is_admin() then (select count(*) from profiles where not approved) else 0 end,
+    'customerCount', case when adm then (select count(*) from customers where active) else 0 end,
+    'pendingUsers', case when adm then (select count(*) from profiles where not approved) else 0 end,
     'recentOrders', coalesce((select jsonb_agg(to_jsonb(o)) from (select * from orders where cid is null or customer_id = cid order by created_at desc, id desc limit 8) o), '[]'::jsonb),
-    'lastImport', (select to_jsonb(l) from import_logs l order by id desc limit 1)
+    'lastImport', case when adm then (select to_jsonb(l) from import_logs l order by id desc limit 1) end
   ) into res;
   return res;
 end $$;
@@ -683,8 +713,6 @@ create trigger products_stock_log after insert or update of stock on public.prod
   for each row execute function public.log_stock_change();
 
 -- Approximate visitor province / company network (DB-IP Lite, CC BY 4.0). Raw IPs are never stored.
-alter table public.site_activity add column if not exists city text not null default '';
-alter table public.site_activity add column if not exists org text not null default '';
 create table if not exists public.geo_city (ip_from inet primary key, ip_to inet not null, city text not null default '');
 create table if not exists public.geo_org (ip_from inet primary key, ip_to inet not null, org text not null default '');
 alter table public.geo_city enable row level security;
@@ -810,7 +838,9 @@ create table if not exists public.site_activity (
   results integer,
   qty numeric,
   device text not null default '' check (device in ('', 'mobile', 'tablet', 'desktop')),
-  referrer text not null default ''
+  referrer text not null default '',
+  city text not null default '',
+  org text not null default ''
 );
 create index if not exists site_activity_at on public.site_activity (at desc);
 create index if not exists site_activity_site_at on public.site_activity (site, at desc);
