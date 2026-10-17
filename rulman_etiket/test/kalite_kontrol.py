@@ -391,6 +391,11 @@ def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
             s.hatalar.append(f"--kopya 2 ama {doc.page_count} sayfa")
         if v["adet_yazisi"] == "Qty":
             sayfa_kontrol(doc[0], v, boyut, s, None)
+            import etiket_cizim as ec
+            veri = ec.EtiketVerisi(**{k: v[k] for k in v})
+            if hasattr(ec, "uyarilar") and any("kare koda" in u for u in ec.uyarilar(veri, boyut)):
+                s.hatalar = [h for h in s.hatalar if not h.startswith("DataMatrix: bilgi")]
+                s.uyarilar.append("uygulama uyarısı: bilgi kare koda eklenmedi")
         else:
             s.uyarilar.append("CLI'de adet yazısı argümanı yok; yalnız barkod kontrol edildi")
     except Exception as e:  # noqa: BLE001
@@ -489,13 +494,22 @@ def main() -> int:
             else:
                 en_uzun = n
                 try:
-                    doc = ec.ciz(ec.EtiketVerisi(kod=kod, ek="C3"), boyut)
-                    if _coz(_png(doc[0]))["Code128"] != [kod + " C3"]:
+                    ev = ec.EtiketVerisi(kod=kod, ek="C3")
+                    doc = ec.ciz(ev, boyut)
+                    c = _coz(_png(doc[0]))
+                    yalniz_kare = any("çizgili barkod basılmadı" in u for u in ec.uyarilar(ev, boyut))
+                    if yalniz_kare:
+                        sn.olcum.setdefault(f"yalniz_karekod_{boyut}", n)
+                        if c["Code128"] or c["DataMatrix"] != [kod + " C3\n1"]:
+                            sn.hatalar.append(f"{boyut} {n} karakter: yalnız kare kod modunda okuma yanlış: {c}")
+                    elif c["Code128"] != [kod + " C3"]:
                         sn.hatalar.append(f"{boyut} {n} karakter: Code128 okunmadı")
                 except Exception as e:  # noqa: BLE001
                     sn.hatalar.append(f"{boyut} {n} karakter kabul edildi ama çizilemedi: {e}")
         sn.olcum[f"en_uzun_{boyut}"] = en_uzun
-        sn.uyarilar.append(f"{boyut}: ek=C3 ile en uzun kod {en_uzun} karakter; ilk ret -> {mesaj}")
+        yk = sn.olcum.get(f"yalniz_karekod_{boyut}")
+        sn.uyarilar.append(f"{boyut}: ek=C3 ile en uzun kod {en_uzun} karakter; ilk ret -> {mesaj or 'yok'}"
+                           + (f"; {yk}+ karakterde çizgili barkod basılmıyor" if yk else ""))
     sonuclar.append(sn)
 
     # kopya ve önizleme
