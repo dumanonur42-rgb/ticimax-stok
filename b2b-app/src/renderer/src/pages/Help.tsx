@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react'
-import { ChevronRight, Headset, MessageCircle, Phone, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { SUPPORT_CONTACTS } from '@shared/types'
 import { normalize } from '@shared/identity'
-import { api } from '@/lib/api'
+import { ContactCard } from '@/components/ContactCard'
 import { useApp } from '@/store/app'
 import './settings.css'
 
@@ -72,6 +73,7 @@ const securityItems: HelpItem[] = [
   { title: 'Uygulama denetim ilkesi engelliyor', text: 'Kurumsal bilgisayarda kurulum için sistem yöneticinizden yardım isteyin.', search: 'program files akıllı uygulama denetimi windows' },
   { title: 'Dosyayı doğrulama', text: 'GitHub Releases sayfasındaki SHA-256 değerini PowerShell’de Get-FileHash ile karşılaştırın.', search: 'sha256 hash github doğrulama', audience: 'admin' }
 ]
+const contactSearchTerms = SUPPORT_CONTACTS.flatMap(({ name, phone }) => [name, phone, phone.replace(/\D/g, '')])
 const KeySets = ({ sets }: { sets: string[][] }): ReactNode => (
   <span className="help-keysets">
     {sets.map((set, setIndex) => (
@@ -116,8 +118,7 @@ export function Help(): ReactNode {
   const showTips = showAllTips || visibleTips.length > 0
   const showFaq = showAllFaq || visibleFaq.length > 0
   const showSecurity = showAllSecurity || visibleSecurity.length > 0
-  const hasMatches = showSteps || showShortcuts || showTips || showFaq || showSecurity || matches('İletişim', 'telefon', 'WhatsApp', '+90 552 610 93 63')
-  const open = (url: string): void => { void api('app:openExternal', url) }
+  const hasMatches = showSteps || showShortcuts || showTips || showFaq || showSecurity || matches('İletişim', 'telefon', 'WhatsApp', 'Bize ulaşın', ...contactSearchTerms)
 
   return (
     <div className="help-page">
@@ -133,43 +134,7 @@ export function Help(): ReactNode {
         </label>
       </section>
 
-      <section className="card contact help-contact" aria-labelledby="help-contact-title">
-        <header className="contact-head">
-          <span className="contact-head-icon"><Headset size={22} aria-hidden /></span>
-          <span>
-            <h3 id="help-contact-title">Bize ulaşın</h3>
-            <span className="muted small">Sorunuz olursa yazın ya da arayın.</span>
-          </span>
-        </header>
-        <div className="help-contact-actions">
-          <button
-            className="help-contact-tile whatsapp"
-            type="button"
-            aria-label="WhatsApp'tan yazın: +90 552 610 93 63"
-            onClick={() => open('https://wa.me/905526109363')}
-          >
-            <span className="help-contact-icon"><MessageCircle size={20} aria-hidden /></span>
-            <span className="help-contact-copy">
-              <strong>WhatsApp'tan yazın</strong>
-              <span className="contact-number">+90 552 610 93 63</span>
-            </span>
-            <ChevronRight className="help-contact-arrow" size={20} aria-hidden />
-          </button>
-          <button
-            className="help-contact-tile call"
-            type="button"
-            aria-label="Hemen arayın: +90 552 610 93 63"
-            onClick={() => open('tel:+905526109363')}
-          >
-            <span className="help-contact-icon"><Phone size={20} aria-hidden /></span>
-            <span className="help-contact-copy">
-              <strong>Hemen arayın</strong>
-              <span className="contact-number">+90 552 610 93 63</span>
-            </span>
-            <ChevronRight className="help-contact-arrow" size={20} aria-hidden />
-          </button>
-        </div>
-      </section>
+      <ContactCard subtitle="Sorunuz olursa yazın ya da arayın." headingId="help-contact-title" />
 
       <div className="help-grid">
         {showSteps && (

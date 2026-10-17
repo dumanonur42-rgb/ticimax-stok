@@ -76,47 +76,6 @@
 .help-search { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-sunken); color: var(--text-muted); }
 .help-search:focus-within { border-color: var(--primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent); }
 .help-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; }
-.contact.help-contact { display: grid; gap: 16px; min-width: 0; container: help-contact / inline-size; }
-.help-contact .contact-head { min-width: 0; }
-.help-contact .contact-head-icon { border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--border)); border-radius: 50%; }
-.help-contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0; }
-.help-contact-tile {
-  --help-contact-accent: var(--primary);
-  --help-contact-tint: color-mix(in srgb, var(--help-contact-accent) 10%, var(--bg-elev));
-  --help-contact-border: color-mix(in srgb, var(--help-contact-accent) 42%, var(--border));
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 20px;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  min-height: 76px;
-  padding: 12px 14px;
-  border: 1px solid var(--help-contact-border);
-  border-radius: 12px;
-  background: var(--help-contact-tint);
-  color: var(--text);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: background-color 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
-}
-.help-contact-tile.whatsapp { --help-contact-accent: #137a38; --help-contact-tint: color-mix(in srgb, #25d366 11%, var(--bg-elev)); }
-.help-contact-tile.call { --help-contact-accent: #1d4ed8; }
-[data-theme='dark'] .help-contact-tile.whatsapp { --help-contact-accent: #4ade80; }
-[data-theme='dark'] .help-contact-tile.call { --help-contact-accent: #60a5fa; }
-.help-contact-icon { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--help-contact-border); border-radius: 50%; background: var(--help-contact-tint); color: var(--help-contact-accent); }
-.help-contact-copy { display: grid; gap: 3px; min-width: 0; }
-.help-contact-copy strong { min-width: 0; }
-.help-contact-copy .contact-number { font-size: .9em; font-weight: 650; letter-spacing: .01em; white-space: nowrap; }
-.help-contact-arrow { color: var(--help-contact-accent); }
-.help-contact-tile:hover { border-color: var(--help-contact-accent); background: color-mix(in srgb, var(--help-contact-accent) 17%, var(--bg-elev)); transform: translateY(-1px); }
-.help-contact-tile:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-[data-theme='contrast'] .help-contact .contact-head-icon { border: 2px solid var(--text); background: var(--bg-elev); color: var(--text); }
-[data-theme='contrast'] .help-contact-tile,
-[data-theme='contrast'] .help-contact-tile.whatsapp,
-[data-theme='contrast'] .help-contact-tile.call { --help-contact-accent: var(--text); --help-contact-tint: var(--bg-elev); --help-contact-border: var(--text); border-width: 2px; background: var(--bg-elev); color: var(--text); }
-[data-theme='contrast'] .help-contact-icon { border: 2px solid currentColor; background: var(--bg-elev); color: var(--text); }
-[data-theme='contrast'] .help-contact-tile:hover { border-color: var(--text); background: var(--bg-hover); }
 .help-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
 .help-grid > * { min-width: 0; }
 .help-card { display: grid; gap: 14px; min-width: 0; }
@@ -149,9 +108,6 @@
 @media (min-width: 1100px) { .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) {
   .help-shortcut-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-}
-@container help-contact (max-width: 640px) {
-  .help-contact-actions { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 1000px) {
   .settings-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
