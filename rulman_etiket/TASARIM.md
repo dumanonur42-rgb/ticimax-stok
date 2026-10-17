@@ -98,7 +98,7 @@ Burada kod yazısı daha büyük tutuldu (62x100'de genişliğin %71'i, 62 süre
 **DataMatrix** (ECC200, kare, `zxing-cpp` ile matris; modüller vektör dikdörtgen):
 - Modül: hedef genişlik / modül sayısı (62x100: 168 nokta = 14.2 mm, sürekli: 156 nokta = 13.2 mm), **en az 5 nokta (0.42 mm)**, en çok 8 nokta (0.68 mm).
 - Sessiz bölge: sağda ve üstte kenar boşluğu (3.05 mm ≥ 1 modül), solda Code128 sağ sessiz bölgesi.
-- 5 noktada 180 noktayı (15.2 mm) geçecekse bilgi satırları kare koddan çıkarılır (etikette yazılı kalır); uyarı: "Bilgi satırları çok uzun olduğu için kare koda eklenmedi."
+- 5 noktada 260 noktayı (22 mm, 52x52 modül) geçecekse bilgi satırları kare koddan çıkarılır (etikette yazılı kalır); uyarı: "Bilgi satırları çok uzun olduğu için kare koda eklenmedi." Büyük kare kod çubuk barkodun yanına sığmazsa yerleşim "geniş" moda geçer (kare kod bilgi satırlarının sağına iner).
 - Türkçe harfler UTF-8 (ECI 26) ile kodlanır; zxing tabanlı okuyucular ve güncel el terminalleri doğru okur. Çok eski okuyucular Türkçe harfleri bozuk gösterebilir (rulman kodu ASCII olduğundan kodu etkilemez).
 
 ## 5. Otomatik sığdırma kuralları

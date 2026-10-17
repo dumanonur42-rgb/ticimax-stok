@@ -109,7 +109,7 @@ ICERIK = SAG - KENAR              # 660 nokta = 55.9 mm
 SESSIZ = 10                       # Code128 sessiz bölge (modül)
 CUBUK_MODUL = (3, 2)              # denenen Code128 modül genişlikleri (nokta)
 DM_MODUL_MAX, DM_MODUL_MIN = 8, 5  # DataMatrix modülü (nokta): 0.68 .. 0.42 mm
-DM_EN_FAZLA = 180                 # DataMatrix en fazla 180 nokta (15.2 mm)
+DM_EN_FAZLA = 260                 # DataMatrix en fazla 260 nokta (22 mm, 52x52 modül x 5 nokta)
 KOD_MIN_TEK = 12                  # tek satır kod için en küçük punto
 KOD_MIN_IKI = 9                   # iki satır kod için en küçük punto
 BILGI_MIN = 6
