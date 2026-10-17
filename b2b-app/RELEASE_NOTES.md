@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.22
+
+- Bilgisayardaki ürün kopyası artık şifreli tutulur; dosya kopyalansa bile başka bir yerde açılamaz. Çıkış yapınca ya da hesap kapatılınca bu kopya silinir.
+- Ayarlar ve Yardım ekranları yenilendi: daha düzenli bölümler, Yardım'da arama, sık sorulan sorular ve gruplanmış klavye kısayolları.
+
 ## 1.0.21
 
 - Yeni sürüm kurulduğunda oturum kapanmaz; tekrar giriş yapmanız gerekmez.
