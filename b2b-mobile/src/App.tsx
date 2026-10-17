@@ -2,6 +2,7 @@ import { App as CapacitorApp } from '@capacitor/app'
 import { AppLauncher } from '@capacitor/app-launcher'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
+import { Network } from '@capacitor/network'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
@@ -17,7 +18,7 @@ import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
-import { dashboardOrders, createOrder, getOrder, listCustomers, listOrders, loadSettings, restoreSession, signIn, signOut } from './lib/cloud'
+import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
@@ -151,6 +152,7 @@ export default function App(): ReactNode {
 
   useEffect(() => {
     let active = true
+    let networkListener: { remove: () => Promise<void> } | undefined
     void (async () => {
       try {
         if (await purgeLegacyWebDataIfNeeded()) return
@@ -176,14 +178,58 @@ export default function App(): ReactNode {
         if (active) setBooting(false)
       }
     })()
-    const onOnline = (): void => { setOnline(true); void syncNow() }
-    const onOffline = (): void => setOnline(false)
+    const verifySession = (): void => {
+      if (!useApp.getState().session) return
+      void restoreSession().then((restored) => {
+        if (restored) {
+          setSession(restored)
+          setActivitySession(restored.user.id)
+        } else {
+          setSession(null)
+          setProducts([])
+          setCustomers([])
+          clearCart()
+        }
+      }).catch(() => undefined)
+    }
+    const onOnline = (): void => { setOnline(true); void syncNow(); verifySession() }
+    const onOffline = (): void => { setOnline(false); setLoginError('') }
+    const onSessionRestored = (event: Event): void => {
+      const restored = (event as CustomEvent<Session | null>).detail
+      if (restored) {
+        setSession(restored)
+        setActivitySession(restored.user.id)
+      } else {
+        setSession(null)
+        setProducts([])
+        setCustomers([])
+        clearCart()
+      }
+    }
     window.addEventListener('online', onOnline)
     window.addEventListener('offline', onOffline)
+    window.addEventListener('yamansa:session-restored', onSessionRestored)
+    let disposed = false
+    if (platform === 'android' || platform === 'ios') {
+      void Network.addListener('networkStatusChange', (status) => {
+        if (status.connected) onOnline()
+        else onOffline()
+      }).then((listener) => {
+        if (disposed) void listener.remove()
+        else networkListener = listener
+      })
+      void Network.getStatus().then((status) => {
+        if (status.connected) setOnline(true)
+        else onOffline()
+      }).catch(() => undefined)
+    }
     return () => {
       active = false
+      disposed = true
+      void networkListener?.remove()
       window.removeEventListener('online', onOnline)
       window.removeEventListener('offline', onOffline)
+      window.removeEventListener('yamansa:session-restored', onSessionRestored)
     }
   }, [platform, setProducts, setSession, setOnline, setCustomers, clearCart, showToast, setSheet, syncNow])
 
@@ -291,12 +337,31 @@ export default function App(): ReactNode {
 
   useEffect(() => {
     document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light'
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
     if (themeColor) themeColor.content = dark ? '#142033' : '#ffffff'
     if (platform === 'android') {
       void SystemInsets.setNavigationBarStyle({ dark }).catch(() => undefined)
     }
   }, [dark, platform])
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (tab !== 'cart') {
+      root.style.removeProperty('--cart-summary-height')
+      return
+    }
+    const summary = document.querySelector<HTMLElement>('.cart-sticky-summary')
+    if (!summary) return
+    const updateHeight = (): void => root.style.setProperty('--cart-summary-height', `${summary.getBoundingClientRect().height}px`)
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(summary)
+    return () => {
+      observer.disconnect()
+      root.style.removeProperty('--cart-summary-height')
+    }
+  }, [tab, cartLineCount, settings.show_prices_to_dealers, settings.vat_pct])
 
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
@@ -406,10 +471,10 @@ export default function App(): ReactNode {
             <p className="muted">Hesabınızla giriş yapın.</p>
             <form className="login-form" onSubmit={(event) => void onLogin(event)}>
               <label htmlFor="username">Kullanıcı adı</label>
-              <input id="username" autoComplete="username" value={loginName} onChange={(event) => setLoginName(event.target.value)} required />
+              <input id="username" autoComplete="username" value={loginName} onChange={(event) => { setLoginName(event.target.value); setLoginError('') }} required />
               <label htmlFor="password">Şifre</label>
               <div className="password-wrap">
-                <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+                <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={(event) => { setPassword(event.target.value); setLoginError('') }} required />
                 <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
                   {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
                 </button>
@@ -430,7 +495,7 @@ export default function App(): ReactNode {
 
   return (
     <>
-      <div className={`app-shell${dark ? ' dark' : ''}`} data-theme={dark ? 'dark' : 'light'}>
+      <div className={`app-shell${dark ? ' dark' : ''}`} data-theme={dark ? 'dark' : 'light'} data-tab={tab} data-cart-summary={cartLineCount > 0 ? 'true' : 'false'}>
         <header className="app-header">
           <div className="brand-lockup">
             <img src={mark} alt="" />
@@ -454,7 +519,7 @@ export default function App(): ReactNode {
           onClose={() => setSheet(null)}
         />}
         {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
-        {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} />}
+        {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} onRefresh={() => setOrderRefresh((n) => n + 1)} onToast={showToast} />}
         {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
         {toast && <div className="toast" role="status">{toast}</div>}
       </div>
@@ -521,7 +586,7 @@ function HomePage({ session, settings, openOrders, products, onNavigate, onToast
     <div className="page home-page">
       <section className="home-hero">
         <span className="home-hero-mark"><Sparkles size={20} /></span>
-        <p className="eyebrow">BAYİ PANELİ</p>
+        <p className="eyebrow">{session.user.role === 'admin' ? 'YÖNETİM PANELİ' : 'BAYİ PANELİ'}</p>
         <h1>Merhaba, {greetingName}</h1>
         {showCompany && <p>{customerName}</p>}
       </section>
@@ -1034,19 +1099,60 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
   settings: Settings; refreshKey: number; selectedOrderId: number | null; onSelectOrder: (id: number) => void; onRefresh: () => void
 }): ReactNode {
   const session = useApp((state) => state.session)
+  const online = useApp((state) => state.online)
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [cachedAt, setCachedAt] = useState('')
+  const [usingOfflineCache, setUsingOfflineCache] = useState(false)
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
   useEffect(() => {
     let active = true
-    setLoading(true)
-    void listOrders().then((data) => { if (active) { setOrders(data); setError('') } }).catch((reason) => { if (active) setError(userFacingError(reason)) }).finally(() => { if (active) setLoading(false) })
+    const load = async (): Promise<void> => {
+      setLoading(true)
+      setError('')
+      if (!online || navigator.onLine === false) {
+        const cached = await readCachedOrders().catch(() => null)
+        if (active) {
+          setOrders(cached?.orders ?? [])
+          setCachedAt(cached?.updatedAt ?? '')
+          setUsingOfflineCache(true)
+          if (!cached) setError('Çevrimdışı kullanılabilecek kayıtlı sipariş bulunamadı.')
+        }
+        if (active) setLoading(false)
+        return
+      }
+      try {
+        const data = await listOrders()
+        const cached = await cacheOrders(data).catch(() => null)
+        if (active) {
+          setOrders(data)
+          setCachedAt(cached?.updatedAt ?? new Date().toISOString())
+          setUsingOfflineCache(false)
+        }
+      } catch (reason) {
+        const cached = await readCachedOrders().catch(() => null)
+        if (active) {
+          if (cached) {
+            setOrders(cached.orders)
+            setCachedAt(cached.updatedAt)
+            setUsingOfflineCache(true)
+          } else {
+            setError(userFacingError(reason))
+          }
+        }
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+    void load()
     return () => { active = false }
-  }, [refreshKey])
+  }, [refreshKey, online])
+  const offline = usingOfflineCache || !online || navigator.onLine === false
   return (
     <div className="page orders-page">
       <div className="page-heading"><PageTitle title="Siparişler" /><button className="icon-button" onClick={onRefresh} aria-label="Siparişleri yenile"><RefreshCw size={19} /></button></div>
+      {offline && cachedAt && <p className="muted offline-note" role="status">Son güncelleme: {new Date(cachedAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })} · çevrimdışı</p>}
       {loading && <div className="order-skeletons" aria-label="Siparişler yükleniyor">{Array.from({ length: 4 }, (_, i) => <div className="order-skeleton card" key={i}><i /><i /><i /></div>)}</div>}
       {error && <p className="inline-warning" role="alert">{error}</p>}
       {!loading && !error && orders.length === 0 && <div className="empty-state card"><ClipboardList size={36} /><strong>Henüz sipariş yok</strong><span>Oluşturduğunuz siparişleri burada görebilirsiniz.</span></div>}
@@ -1062,18 +1168,82 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
   )
 }
 
-function OrderDetail({ id, settings, onClose }: { id: number; settings: Settings; onClose: () => void }): ReactNode {
+function OrderDetail({ id, settings, onClose, onRefresh, onToast }: { id: number; settings: Settings; onClose: () => void; onRefresh: () => void; onToast: (message: string) => void }): ReactNode {
   const [order, setOrder] = useState<Order | null>(null)
   const [error, setError] = useState('')
+  const [cachedAt, setCachedAt] = useState('')
+  const [usingOfflineCache, setUsingOfflineCache] = useState(false)
+  const [cancelBusy, setCancelBusy] = useState(false)
   const session = useApp((state) => state.session)
+  const online = useApp((state) => state.online)
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
   useEffect(() => {
     let active = true
-    void getOrder(id).then((value) => { if (active) setOrder(value) }).catch((reason) => { if (active) setError(userFacingError(reason)) })
+    const load = async (): Promise<void> => {
+      setError('')
+      if (!online || navigator.onLine === false) {
+        const cached = await readCachedOrder(id).catch(() => null)
+        if (active) {
+          setOrder(cached?.order ?? null)
+          setCachedAt(cached?.updatedAt ?? '')
+          setUsingOfflineCache(true)
+          if (!cached) setError('Sipariş ayrıntısı çevrimdışıyken kullanılamıyor.')
+        }
+        return
+      }
+      try {
+        const value = await getOrder(id)
+        if (value) {
+          const cached = await cacheOrder(value).catch(() => null)
+          if (active) setCachedAt(cached?.updatedAt ?? new Date().toISOString())
+        }
+        if (active) {
+          setOrder(value)
+          setUsingOfflineCache(false)
+        }
+      } catch (reason) {
+        const cached = await readCachedOrder(id).catch(() => null)
+        if (active && cached) {
+          setOrder(cached.order)
+          setCachedAt(cached.updatedAt)
+          setUsingOfflineCache(true)
+        } else if (active) {
+          setError(userFacingError(reason))
+        }
+      }
+    }
+    void load()
     return () => { active = false }
-  }, [id])
+  }, [id, online])
+  const canCancel = !!order &&
+    session?.user.role === 'bayi' &&
+    order.customer_id === session.customer?.id &&
+    order.status === 'beklemede' &&
+    !usingOfflineCache &&
+    online &&
+    navigator.onLine !== false
+  const onCancel = async (): Promise<void> => {
+    if (!order || !canCancel || cancelBusy) return
+    if (!window.confirm('Sipariş iptal edilsin mi? Bu işlem geri alınamaz.')) return
+    setCancelBusy(true)
+    try {
+      await cancelOrder(order.id)
+      onRefresh()
+      onToast('Sipariş iptal edildi.')
+      const updated = await getOrder(order.id)
+      if (updated) {
+        await cacheOrder(updated).catch(() => undefined)
+        setOrder(updated)
+      }
+    } catch (reason) {
+      setError(userFacingError(reason))
+    } finally {
+      setCancelBusy(false)
+    }
+  }
   return (
     <Sheet title="Sipariş ayrıntısı" onClose={onClose}>
+      {usingOfflineCache && cachedAt && <p className="muted offline-note" role="status">Son güncelleme: {new Date(cachedAt).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })} · çevrimdışı</p>}
       {!order && !error && <p className="muted">Sipariş yükleniyor…</p>}
       {error && <p className="error-text">{error}</p>}
       {order && <>
@@ -1089,6 +1259,7 @@ function OrderDetail({ id, settings, onClose }: { id: number; settings: Settings
             <div className="total-row"><dt>Genel toplam</dt><dd>{money(order.total, order.currency)}</dd></div>
           </dl>
         )}
+        {canCancel && <button className="button danger wide" disabled={cancelBusy} onClick={() => void onCancel()}>{cancelBusy ? 'İptal ediliyor…' : 'Siparişi iptal et'}</button>}
       </>}
     </Sheet>
   )

@@ -1,5 +1,6 @@
 import type { Product } from '@shared/types'
 import type { ProductRow } from '@desktopDatabase'
+import { hasPerm } from '@shared/perms'
 import { getState, putProducts, readProducts, removeProducts, replaceProducts, setState } from './idb'
 import { loadSettings, supabase } from './cloud'
 import { useApp } from '../store/app'
@@ -11,11 +12,36 @@ const PRODUCT_COLUMNS = [
   'box', 'barcode', 'description', 'equivalents', 'active', 'deleted', 'updated_at'
 ].join(',')
 
+interface ProductStoragePolicy {
+  canSeeShelf: boolean
+  hidePrices: boolean
+  signature: string
+}
+
 let pendingPull: Promise<{ products: Product[]; changed: number }> | null = null
 let realtimeChannel: ReturnType<typeof supabase.channel> | null = null
 let realtimeTimer: ReturnType<typeof setTimeout> | null = null
 
-function toProduct(row: ProductRow): Product {
+function storagePolicy(): ProductStoragePolicy {
+  const user = useApp.getState().session?.user
+  const settings = useApp.getState().settings
+  const canSeeShelf = hasPerm(user, 'shelf')
+  const canSeePrices = user?.role === 'admin' ||
+    settings.show_prices_to_dealers !== false ||
+    hasPerm(user, 'prices')
+  return {
+    canSeeShelf,
+    hidePrices: !!user && user.role !== 'admin' && !canSeePrices,
+    signature: JSON.stringify({
+      role: user?.role ?? null,
+      shelf: canSeeShelf,
+      prices: hasPerm(user, 'prices'),
+      showPricesToDealers: settings.show_prices_to_dealers !== false
+    })
+  }
+}
+
+function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
   return {
     id: row.id,
     sku: row.sku,
@@ -29,12 +55,12 @@ function toProduct(row: ProductRow): Product {
     width: row.width == null ? null : Number(row.width),
     stock: Number(row.stock),
     unit: row.unit,
-    price: Number(row.price),
+    price: (policy.hidePrices ? null : Number(row.price)) as unknown as number,
     currency: row.currency,
     list_price: row.list_price == null ? null : Number(row.list_price),
     card_price: row.card_price == null ? null : Number(row.card_price),
     min_order: Number(row.min_order),
-    shelf: row.shelf,
+    shelf: policy.canSeeShelf ? row.shelf : '',
     box: row.box,
     barcode: row.barcode,
     image: '',
@@ -60,13 +86,18 @@ function cursorOf(products: Product[]): { time: string; id: number } {
 }
 
 async function pull(): Promise<{ products: Product[]; changed: number }> {
+  useApp.getState().setSettings(await loadSettings())
   const currentGeneration = await generation()
-  const [storedGeneration, storedTime, storedId] = await Promise.all([
+  const policy = storagePolicy()
+  const [storedGeneration, storedTime, storedId, storedPolicy] = await Promise.all([
     getState('catalog_generation'),
     getState('products_cursor_time'),
-    getState('products_cursor_id')
+    getState('products_cursor_id'),
+    getState('product_storage_policy')
   ])
-  const full = !storedTime || storedGeneration !== currentGeneration
+  const policyChanged = storedPolicy !== policy.signature
+  if (policyChanged) await replaceProducts([])
+  const full = !storedTime || storedGeneration !== currentGeneration || policyChanged
   let changed = 0
 
   if (full) {
@@ -83,7 +114,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       if (error) throw error
       const rows = (data ?? []) as unknown as ProductRow[]
       if (!rows.length) break
-      products.push(...rows.map(toProduct))
+      products.push(...rows.map((row) => toProduct(row, policy)))
       afterId = rows[rows.length - 1].id
       if (rows.length < PAGE_SIZE) break
     }
@@ -92,9 +123,10 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     await Promise.all([
       setState('products_cursor_time', cursor.time),
       setState('products_cursor_id', String(cursor.id)),
-      setState('catalog_generation', currentGeneration)
+      setState('catalog_generation', currentGeneration),
+      setState('product_storage_policy', policy.signature)
     ])
-    changed = products.length
+    changed = policyChanged ? Math.max(1, products.length) : products.length
   } else {
     let time = storedTime
     let id = Number(storedId ?? 0)
@@ -108,7 +140,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       if (error) throw error
       const rows = (data ?? []) as unknown as ProductRow[]
       if (!rows.length) break
-      const active = rows.filter((row) => row.active && !row.deleted).map(toProduct)
+      const active = rows.filter((row) => row.active && !row.deleted).map((row) => toProduct(row, policy))
       const removed = rows.filter((row) => !row.active || row.deleted).map((row) => row.id)
       await Promise.all([putProducts(active), removeProducts(removed)])
       const last = rows[rows.length - 1]

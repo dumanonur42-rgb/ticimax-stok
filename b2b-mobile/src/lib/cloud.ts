@@ -1,11 +1,13 @@
 import { PERMS, type Customer, type Order, type OrderInput, type Settings, type Session, type User } from '@shared/types'
 import { createClient } from '@supabase/supabase-js'
+import { Capacitor } from '@capacitor/core'
+import { Network } from '@capacitor/network'
 import type { Database, CustomerRow, OrderItemRow, OrderRow, ProfileRow } from '@desktopDatabase'
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@desktopConfig'
 import { isAuthApiError, isAuthRetryableFetchError } from '@supabase/supabase-js'
 import { DEFAULT_SETTINGS, SHARED_SETTING_KEYS } from './defaults'
 import { loginEmail } from './loginEmail'
-import { clearLocalCatalog, unlockCatalogStorage } from './idb'
+import { clearLocalCatalog, getState, setState, unlockCatalogStorage } from './idb'
 import { CART_STORAGE_KEY, secureStorage } from './secureStorage'
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -22,6 +24,18 @@ export const SESSION_CACHE = 'yamansa-b2b-session'
 export const SUPABASE_AUTH_STORAGE_KEY = `sb-${new URL(SUPABASE_URL).hostname.split('.')[0]}-auth-token`
 const MIN_VERSION_CACHE = 'yb2b.minimumVersions'
 const MIN_VERSION_KEYS = ['min_version_android', 'min_version_ios', 'min_version_windows'] as const
+const ORDERS_CACHE_KEY = 'offline:orders:list'
+const orderCacheKey = (id: number): string => `offline:orders:detail:${id}`
+
+export interface CachedOrderList {
+  orders: Order[]
+  updatedAt: string
+}
+
+export interface CachedOrderDetail {
+  order: Order
+  updatedAt: string
+}
 
 export function cachedMinimumVersion(key: typeof MIN_VERSION_KEYS[number]): string | undefined {
   try {
@@ -31,6 +45,40 @@ export function cachedMinimumVersion(key: typeof MIN_VERSION_KEYS[number]): stri
   } catch {
     return undefined
   }
+}
+
+export async function readCachedOrders(): Promise<CachedOrderList | null> {
+  const raw = await getState(ORDERS_CACHE_KEY)
+  if (!raw) return null
+  try {
+    const value = JSON.parse(raw) as CachedOrderList
+    return Array.isArray(value.orders) && typeof value.updatedAt === 'string' ? value : null
+  } catch {
+    return null
+  }
+}
+
+export async function cacheOrders(orders: Order[]): Promise<CachedOrderList> {
+  const cached = { orders, updatedAt: new Date().toISOString() }
+  await setState(ORDERS_CACHE_KEY, JSON.stringify(cached))
+  return cached
+}
+
+export async function readCachedOrder(id: number): Promise<CachedOrderDetail | null> {
+  const raw = await getState(orderCacheKey(id))
+  if (!raw) return null
+  try {
+    const value = JSON.parse(raw) as CachedOrderDetail
+    return value.order?.id === id && typeof value.updatedAt === 'string' ? value : null
+  } catch {
+    return null
+  }
+}
+
+export async function cacheOrder(order: Order): Promise<CachedOrderDetail> {
+  const cached = { order, updatedAt: new Date().toISOString() }
+  await setState(orderCacheKey(order.id), JSON.stringify(cached))
+  return cached
 }
 
 function errorMessage(error: unknown): string {
@@ -62,6 +110,61 @@ class InvalidProfileError extends Error {
   constructor(public readonly reason: 'missing' | 'inactive' | 'unapproved') {
     super(reason)
     this.name = 'InvalidProfileError'
+  }
+}
+
+class SessionRestoreTimeoutError extends Error {
+  constructor() {
+    super('Session restore timed out')
+    this.name = 'SessionRestoreTimeoutError'
+  }
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  let timeout: number | undefined
+  return Promise.race([
+    promise,
+    new Promise<never>((_, reject) => {
+      timeout = window.setTimeout(() => reject(new SessionRestoreTimeoutError()), timeoutMs)
+    })
+  ]).finally(() => {
+    if (timeout !== undefined) window.clearTimeout(timeout)
+  })
+}
+
+async function isNetworkOffline(): Promise<boolean> {
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return true
+  if (!Capacitor.isNativePlatform()) return false
+  try {
+    const status = await withTimeout(Network.getStatus(), 250)
+    return !status.connected
+  } catch {
+    return false
+  }
+}
+
+function dispatchRestoredSession(session: Session | null): void {
+  window.dispatchEvent(new CustomEvent<Session | null>('yamansa:session-restored', { detail: session }))
+}
+
+async function verifySessionInBackground(): Promise<void> {
+  try {
+    if (await isNetworkOffline()) return
+    const { data, error } = await withTimeout(supabase.auth.getSession(), 4000)
+    if (error) return
+    if (!data.session) {
+      await wipeLocalUserData()
+      dispatchRestoredSession(null)
+      return
+    }
+    const session = await withTimeout(loadProfileSession(data.session.user.id), 4000)
+    dispatchRestoredSession(session)
+  } catch (error) {
+    if (error instanceof InvalidProfileError) {
+      await supabase.auth.signOut({ scope: 'local' })
+      await wipeLocalUserData()
+      dispatchRestoredSession(null)
+    }
   }
 }
 
@@ -151,10 +254,28 @@ export async function signIn(username: string, password: string): Promise<Sessio
 }
 
 export async function restoreSession(): Promise<Session | null> {
-  const { data, error } = await supabase.auth.getSession()
+  const cached = await cachedSession()
+  if (await isNetworkOffline()) {
+    if (cached) {
+      await unlockCatalogStorage()
+      void verifySessionInBackground()
+    }
+    return cached
+  }
+  let authResult: Awaited<ReturnType<typeof supabase.auth.getSession>>
+  try {
+    authResult = await withTimeout(supabase.auth.getSession(), 4000)
+  } catch (error) {
+    if (cached) {
+      await unlockCatalogStorage()
+      void verifySessionInBackground()
+      return cached
+    }
+    throw new Error(errorMessage(error))
+  }
+  const { data, error } = authResult
   if (error) {
     if (isRetryableFailure(error)) {
-      const cached = await cachedSession()
       if (cached) {
         await unlockCatalogStorage()
         return cached
@@ -166,24 +287,18 @@ export async function restoreSession(): Promise<Session | null> {
       await wipeLocalUserData()
       return null
     }
-    const cached = await cachedSession()
     if (cached) {
       await unlockCatalogStorage()
       return cached
     }
     throw new Error(errorMessage(error))
   }
-  const cached = await cachedSession()
   if (!data.session) {
-    if (cached && !navigator.onLine) {
-      await unlockCatalogStorage()
-      return cached
-    }
     await wipeLocalUserData()
     return null
   }
   try {
-    return await loadProfileSession(data.session.user.id)
+    return await withTimeout(loadProfileSession(data.session.user.id), 4000)
   } catch (error) {
     if (isRetryableFailure(error)) {
       if (cached?.user.id === data.session.user.id) {
@@ -269,6 +384,11 @@ export async function getOrder(id: number): Promise<Order | null> {
   const { data: items, error: itemError } = await supabase.from('order_items').select('*').eq('order_id', id).order('id')
   if (itemError) throw new Error(errorMessage(itemError))
   return mapOrder(data, items ?? [])
+}
+
+export async function cancelOrder(id: number): Promise<void> {
+  const { error } = await supabase.rpc('set_order_status', { p_id: id, p_status: 'iptal' })
+  if (error) throw new Error(errorMessage(error))
 }
 
 function mapOrder(row: OrderRow, items?: OrderItemRow[]): Order {
