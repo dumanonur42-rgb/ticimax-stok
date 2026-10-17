@@ -127,5 +127,23 @@ jobs:
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$apk" "$checksum" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$tag" "$apk" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes
+            gh release create "$tag" "$apk" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes --latest=false
           fi
+      - name: Update Android channel manifest
+        if: startsWith(github.ref, 'refs/tags/b2b-android-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          tag="$GITHUB_REF_NAME"
+          apk="${{ steps.apk.outputs.path }}"
+          version="${{ steps.apk.outputs.version }}"
+          version_code="$(sed -nE 's/^[[:space:]]*versionCode[[:space:]]+([0-9]+).*/\1/p' android/app/build.gradle | head -n1)"
+          sha256="$(sha256sum "$apk" | awk '{print $1}')"
+          apk_url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${tag}/$(basename "$apk")"
+          printf '{"version":"%s","versionCode":%s,"apkUrl":"%s","sha256":"%s"}\n' "$version" "$version_code" "$apk_url" "$sha256" > android-latest.json
+          channel="b2b-mobile-channel"
+          if ! gh release view "$channel" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$channel" --repo "$GITHUB_REPOSITORY" --title "B2B Mobile Update Channel" --notes "Mobile app update manifests." --prerelease --latest=false || gh release view "$channel" --repo "$GITHUB_REPOSITORY" >/dev/null
+          fi
+          gh release upload "$channel" android-latest.json --repo "$GITHUB_REPOSITORY" --clobber

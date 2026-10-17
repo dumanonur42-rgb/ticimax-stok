@@ -30,6 +30,10 @@ jobs:
           archive="b2b-mobile-web-${version}.zip"
           (cd dist && zip -qr "../$archive" .)
           sha256sum "$archive" | tee "$archive.sha256"
+          checksum="$(sha256sum "$archive" | awk '{print $1}')"
+          min_native="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${archive}"
+          printf '{"version":"%s","url":"%s","checksum":"%s","minNative":"%s"}\n' "$version" "$url" "$checksum" "$min_native" > live-update.json
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "archive=$archive" >> "$GITHUB_OUTPUT"
       - name: Create or update GitHub Release
@@ -42,5 +46,10 @@ jobs:
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$archive" "$checksum" --repo "$GITHUB_REPOSITORY" --clobber
           else
-            gh release create "$tag" "$archive" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes
+            gh release create "$tag" "$archive" "$checksum" --repo "$GITHUB_REPOSITORY" --title "$tag" --generate-notes --latest=false
           fi
+          channel="b2b-mobile-channel"
+          if ! gh release view "$channel" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$channel" --repo "$GITHUB_REPOSITORY" --title "B2B Mobile Update Channel" --notes "Mobile app update manifests." --prerelease --latest=false || gh release view "$channel" --repo "$GITHUB_REPOSITORY" >/dev/null
+          fi
+          gh release upload "$channel" live-update.json --repo "$GITHUB_REPOSITORY" --clobber

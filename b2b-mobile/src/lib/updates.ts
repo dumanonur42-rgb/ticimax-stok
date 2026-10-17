@@ -1,15 +1,17 @@
 import { AppUpdate, FlexibleUpdateInstallStatus } from '@capawesome/capacitor-app-update'
 import { App as CapacitorApp } from '@capacitor/app'
-import { Capacitor } from '@capacitor/core'
+import { Capacitor, CapacitorHttp } from '@capacitor/core'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { compareVersions } from '@shared/version'
 import { cachedMinimumVersion } from './cloud'
 
 const APP_VERSION = __APP_VERSION__
-const MANIFEST_URL = 'https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/main/b2b-mobile/live-update.json'
-const ANDROID_RELEASES_API = 'https://api.github.com/repos/dumanonur42-rgb/ticimax-stok/releases?per_page=100'
-const ANDROID_RELEASES_PAGE = 'https://github.com/dumanonur42-rgb/ticimax-stok/releases'
-const GITHUB_CHECK_CACHE = 'yb2b.githubUpdateCheckedAt'
+const CHANNEL_TAG = 'b2b-mobile-channel'
+const CHANNEL_URL = `https://github.com/dumanonur42-rgb/ticimax-stok/releases/download/${CHANNEL_TAG}`
+const MANIFEST_URL = `${CHANNEL_URL}/live-update.json`
+const ANDROID_LATEST_URL = `${CHANNEL_URL}/android-latest.json`
+const ANDROID_RELEASES_PAGE = `https://github.com/dumanonur42-rgb/ticimax-stok/releases/tag/${CHANNEL_TAG}`
+const CHANNEL_CHECK_CACHE = 'yb2b.mobileChannelCheckedAt'
 const PENDING_FLEXIBLE_UPDATE = 'yb2b.pendingFlexibleUpdate'
 
 export interface AndroidUpdate {
@@ -25,25 +27,44 @@ interface LiveUpdateManifest {
   minNative: string
 }
 
+interface AndroidChannelManifest {
+  version: string
+  versionCode: number
+  apkUrl: string
+  sha256: string
+}
+
+async function fetchChannelJson<T>(url: string): Promise<T> {
+  try {
+    const response = await fetch(url, { cache: 'no-store', headers: { Accept: 'application/json' } })
+    if (!response.ok) throw new Error(`Mobile update request failed (${response.status})`)
+    return await response.json() as T
+  } catch (error) {
+    if (!Capacitor.isNativePlatform()) throw error
+    const response = await CapacitorHttp.get({ url, headers: { Accept: 'application/json' }, responseType: 'json' })
+    if (response.status < 200 || response.status >= 300) throw new Error(`Mobile update request failed (${response.status})`)
+    return response.data as T
+  }
+}
+
 let liveRetryCount = 0
 let liveRetryAt = 0
 let liveCheck: Promise<void> | null = null
 
 export async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
-  const checkedAt = Number(localStorage.getItem(GITHUB_CHECK_CACHE) ?? 0)
+  const checkedAt = Number(localStorage.getItem(CHANNEL_CHECK_CACHE) ?? 0)
   if (Date.now() - checkedAt < 6 * 60 * 60 * 1000) return null
-  const response = await fetch(ANDROID_RELEASES_API, { headers: { Accept: 'application/vnd.github+json' } })
-  if (!response.ok) throw new Error(`GitHub update check failed (${response.status})`)
-  const releases = await response.json() as { tag_name?: string; body?: string; assets?: { name: string; browser_download_url: string }[]; draft?: boolean }[]
-  localStorage.setItem(GITHUB_CHECK_CACHE, String(Date.now()))
-  const candidates = releases
-    .filter((release) => !release.draft && /^b2b-android-v\d+\.\d+\.\d+$/.test(release.tag_name ?? ''))
-    .map((release) => ({ release, version: (release.tag_name ?? '').replace(/^b2b-android-v/, '') }))
-    .sort((a, b) => compareVersions(b.version, a.version))
-  const latest = candidates[0]
-  if (!latest || compareVersions(latest.version, APP_VERSION) <= 0) return null
-  const apk = latest.release.assets?.find((asset) => asset.name.endsWith('.apk'))
-  return apk ? { version: latest.version, url: apk.browser_download_url, notes: latest.release.body ?? '' } : null
+  const latest = await fetchChannelJson<AndroidChannelManifest>(ANDROID_LATEST_URL)
+  if (!/^\d+\.\d+\.\d+$/.test(latest.version) ||
+    !Number.isInteger(latest.versionCode) ||
+    !/^https:\/\/github\.com\/dumanonur42-rgb\/ticimax-stok\/releases\/download\//.test(latest.apkUrl) ||
+    !/^[a-f\d]{64}$/i.test(latest.sha256)) {
+    throw new Error('Invalid Android update manifest')
+  }
+  localStorage.setItem(CHANNEL_CHECK_CACHE, String(Date.now()))
+  return compareVersions(latest.version, APP_VERSION) > 0
+    ? { version: latest.version, url: latest.apkUrl, notes: '' }
+    : null
 }
 
 export function androidReleasesPage(): string {
@@ -54,12 +75,10 @@ export async function checkLiveUpdate(): Promise<void> {
   if (!Capacitor.isNativePlatform() || navigator.onLine === false || Date.now() < liveRetryAt || liveCheck) return liveCheck ?? undefined
   liveCheck = (async () => {
     try {
-      const [response, native] = await Promise.all([
-        fetch(MANIFEST_URL, { cache: 'no-store' }),
+      const [manifest, native] = await Promise.all([
+        fetchChannelJson<LiveUpdateManifest>(MANIFEST_URL),
         CapacitorApp.getInfo()
       ])
-      if (!response.ok) throw new Error(`Live manifest request failed (${response.status})`)
-      const manifest = await response.json() as LiveUpdateManifest
       if (!manifest.url || !/^[a-f\d]{64}$/i.test(manifest.checksum) || !/^\d+\.\d+\.\d+$/.test(manifest.version) || !/^\d+\.\d+\.\d+$/.test(manifest.minNative)) {
         throw new Error('Invalid live update manifest')
       }
