@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: windows-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -59,20 +60,42 @@ jobs:
             rulman_etiket.py
 
       - name: Oluşturulan PDF'leri dene
+        timeout-minutes: 5
         working-directory: rulman_etiket
+        shell: pwsh
         run: |
+          function Invoke-RulmanEtiketSmoke {
+            param(
+              [string[]]$Arguments,
+              [string]$FailureMessage
+            )
+
+            $p = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList $Arguments -PassThru -NoNewWindow
+            if (-not $p.WaitForExit(60000)) {
+              try {
+                $p.Kill($true)
+              } catch {
+                Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+                & taskkill.exe /F /T /PID $p.Id | Out-Null
+              }
+              Write-Error "$FailureMessage 60 saniyede bitmedi"
+              exit 1
+            }
+            if ($p.ExitCode -ne 0) {
+              Write-Error "$FailureMessage (çıkış kodu: $($p.ExitCode))"
+              exit 1
+            }
+          }
+
           $etiket = "$PWD\test_cikti.pdf"
-          $p = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList "--kod 6308-C-2HRS --ek C3 --adet 1 --pdf `"$etiket`"" -Wait -PassThru -NoNewWindow
-          if ($p.ExitCode -ne 0) { Write-Error "PDF oluşturma başarısız: $($p.ExitCode)"; exit 1 }
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--adet", "1", "--pdf", ('"' + $etiket + '"')) -FailureMessage "PDF oluşturma başarısız"
           if (-not (Test-Path $etiket) -or (Get-Item $etiket).Length -le 0) { Write-Error "PDF dosyası oluşmadı"; exit 1 }
 
           $surekli = "$PWD\test_surekli.pdf"
-          $s = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList "--kod 6308-C-2HRS --boyut 62surekli --pdf `"$surekli`"" -Wait -PassThru -NoNewWindow
-          if ($s.ExitCode -ne 0) { Write-Error "Sürekli etiket PDF oluşturma başarısız: $($s.ExitCode)"; exit 1 }
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
-          $k = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList "--kontrol" -Wait -PassThru -NoNewWindow
-          if ($k.ExitCode -ne 0) { Write-Error "Uygulama dosyaları denetimden geçemedi"; exit 1 }
+          Invoke-RulmanEtiketSmoke -Arguments @("--kontrol") -FailureMessage "Uygulama dosyaları denetimden geçemedi"
 
       - uses: actions/upload-artifact@v4
         with:
