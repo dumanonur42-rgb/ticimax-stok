@@ -813,7 +813,6 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
       className={buttonClass}
       aria-label={cartLine ? `${product.sku} sepette, ${cartLine.qty} adet — bir daha ekle` : `${product.sku} sepete ekle`}
       onClick={add}
-      disabled={product.price == null || product.price <= 0}
     >
       <span className="cart-add-leading">
         <span className="cart-add-icon">
