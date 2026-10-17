@@ -59,7 +59,17 @@ def _kontrol() -> int:
     except Exception:
         cizim_ok = False
     _satir("Etiket oluşturma denemesi", "Başarılı" if cizim_ok else "Başarısız")
-    return 0 if sumatra_ok and font_ok and cizim_ok else 1
+    yazici_modulu_ok = True
+    if sys.platform == "win32":
+        try:
+            import win32print
+        except Exception:
+            yazici_modulu_ok = False
+        _satir(
+            "Yazıcı ayar modülü",
+            "Başarılı" if yazici_modulu_ok else "Başarısız",
+        )
+    return 0 if sumatra_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
 
 
 def _satir(kontrol: str, sonuc: str) -> None:

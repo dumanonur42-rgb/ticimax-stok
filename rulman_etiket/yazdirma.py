@@ -9,10 +9,11 @@ import subprocess
 import sys
 import tempfile
 import uuid
+from contextlib import contextmanager
 from dataclasses import asdict, fields, is_dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 from etiket_cizim import BOYUTLAR, EtiketVerisi, ciz, dogrula
 
@@ -306,6 +307,79 @@ def _yazdirma_pdf_yolu() -> Path:
     return klasor / "son_etiket.pdf"
 
 
+@contextmanager
+def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
+    if "brother" not in yazici.casefold() and "ql" not in yazici.casefold():
+        yield
+        return
+    try:
+        import win32print
+    except ImportError as hata:
+        raise YazdirmaHatasi(
+            "Yazıcının kağıt ayarı değiştirilemedi. Program dosyaları eksik olabilir."
+        ) from hata
+
+    yazici_kolu = None
+    eski = None
+    duzey = 9
+    try:
+        try:
+            yazici_kolu = win32print.OpenPrinter(
+                yazici, {"DesiredAccess": win32print.PRINTER_ACCESS_USE}
+            )
+            eski = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
+            if eski is None:
+                duzey = 2
+                eski = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
+            if eski is None:
+                raise RuntimeError
+
+            yeni = win32print.GetPrinter(yazici_kolu, duzey)["pDevMode"]
+            if yeni is None:
+                raise RuntimeError
+            if boyut == "62x100":
+                kagit_boyutu, kagit_genisligi, kagit_uzunlugu = 275, 620, 1000
+            elif boyut == "62surekli":
+                import pymupdf
+
+                with pymupdf.open(pdf) as belge:
+                    if not belge.page_count:
+                        raise RuntimeError
+                    kagit_uzunlugu = round(belge[0].rect.height / 72 * 254)
+                kagit_boyutu, kagit_genisligi = 256, 620
+            else:
+                raise RuntimeError
+
+            yeni.Fields |= 0x1 | 0x2 | 0x4 | 0x8
+            yeni.PaperSize = kagit_boyutu
+            yeni.PaperWidth = kagit_genisligi
+            yeni.PaperLength = kagit_uzunlugu
+            yeni.Orientation = 1
+            sonuc = win32print.DocumentProperties(
+                0, yazici_kolu, yazici, yeni, yeni, 8 | 2
+            )
+            if sonuc < 0:
+                raise RuntimeError
+            win32print.SetPrinter(yazici_kolu, 9, {"pDevMode": yeni}, 0)
+        except Exception as hata:
+            raise YazdirmaHatasi(
+                "Yazıcının kağıt ayarı değiştirilemedi. Yazıcının açık olduğunu ve Brother sürücüsünün kurulu olduğunu kontrol edin."
+            ) from hata
+
+        yield
+    finally:
+        if yazici_kolu is not None:
+            if eski is not None:
+                try:
+                    win32print.SetPrinter(yazici_kolu, 9, {"pDevMode": eski}, 0)
+                except Exception:
+                    pass
+            try:
+                win32print.ClosePrinter(yazici_kolu)
+            except Exception:
+                pass
+
+
 def yazdir(veri: EtiketVerisi, boyut: str, kopya: int, yazici: str) -> Path:
     if sys.platform != "win32":
         raise YazdirmaHatasi("Yazdırma yalnızca Windows'ta yapılabilir.")
@@ -332,31 +406,32 @@ def yazdir(veri: EtiketVerisi, boyut: str, kopya: int, yazici: str) -> Path:
             f"etiket_{datetime.now():%Y%m%d_%H%M%S_%f}.pdf"
         )
         pdf = pdf_kaydet(veri, boyut, kopya, yol=zamanli_yol)
-    try:
-        sonuc = subprocess.run(
-            [
-                sumatra,
-                "-print-to",
-                yazici,
-                "-print-settings",
-                "noscale",
-                "-silent",
-                "-exit-when-done",
-                str(pdf),
-            ],
-            check=False,
-            timeout=120,
-            capture_output=True,
-            creationflags=0x08000000,
-        )
-    except subprocess.TimeoutExpired as hata:
-        raise YazdirmaHatasi(
-            "Yazıcı yanıt vermedi. Yazıcının açık, bağlı ve kâğıt takılı olduğunu kontrol edin."
-        ) from hata
-    except OSError as hata:
-        raise YazdirmaHatasi(
-            "Yazdırma başlatılamadı. Yazıcının açık ve bağlı olduğunu kontrol edin."
-        ) from hata
+    with _kagit_ayari(yazici, boyut, pdf):
+        try:
+            sonuc = subprocess.run(
+                [
+                    sumatra,
+                    "-print-to",
+                    yazici,
+                    "-print-settings",
+                    "noscale",
+                    "-silent",
+                    "-exit-when-done",
+                    str(pdf),
+                ],
+                check=False,
+                timeout=120,
+                capture_output=True,
+                creationflags=0x08000000,
+            )
+        except subprocess.TimeoutExpired as hata:
+            raise YazdirmaHatasi(
+                "Yazıcı yanıt vermedi. Yazıcının açık, bağlı ve kâğıt takılı olduğunu kontrol edin."
+            ) from hata
+        except OSError as hata:
+            raise YazdirmaHatasi(
+                "Yazdırma başlatılamadı. Yazıcının açık ve bağlı olduğunu kontrol edin."
+            ) from hata
     if sonuc.returncode != 0:
         raise YazdirmaHatasi(
             "Yazıcı etiketi kabul etmedi. Yazıcının açık ve bağlı olduğunu kontrol edin."
