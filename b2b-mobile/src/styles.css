@@ -677,13 +677,17 @@ img { max-width: 100%; }
   .bottom-tabs { min-height: calc(45px + var(--safe-bottom)); padding: 1px calc(5px + var(--safe-right)) max(1px, var(--safe-bottom)) calc(5px + var(--safe-left)); }
   .tab { min-height: 44px; flex-direction: row; gap: 5px; font-size: .68rem; }
   .tab-icon svg { width: 18px; height: 18px; }
+  .bottom-sheet { max-height: min(88vh, calc(100vh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard))), 820px); }
+  .sheet-handle { display: none; }
+  .sheet-heading { min-height: 48px; padding-top: 2px; padding-bottom: 2px; }
+  .sheet-actions { padding-top: 8px; padding-bottom: 8px; }
 
   .products-page {
     display: grid;
     grid-template-columns: auto auto minmax(100px, 1fr) 44px auto;
     grid-template-rows: 44px minmax(0, 1fr);
     gap: 4px 8px;
-    padding: 4px 10px;
+    padding: 4px calc(10px + var(--safe-right)) 4px calc(10px + var(--safe-left));
   }
   .products-page .page-heading,
   .products-page .catalog-heading-actions,
@@ -710,6 +714,31 @@ img { max-width: 100%; }
   .catalog-table-row .sku-subline { flex-direction: row; align-items: center; }
 }
 
+@media (max-height: 420px) {
+  .bottom-sheet {
+    height: min(88vh, calc(100vh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard))), 820px);
+    max-height: min(88vh, calc(100vh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard))), 820px);
+  }
+  .sheet-heading { min-height: 29px; padding-top: 0; padding-bottom: 0; }
+  .sheet-heading .icon-button { width: 28px; height: 28px; min-width: 28px; min-height: 28px; }
+  .sheet-heading h2 { font-size: .88rem; }
+  .sheet-body { padding: 0 8px; }
+  .filter-section { margin-bottom: 0; }
+  .filter-section h3 { display: none; }
+  .sheet-search { height: 30px; gap: 6px; padding: 0 8px; }
+  .brand-options { margin-top: 2px; }
+  .brand-option { min-height: 30px; gap: 6px; padding: 2px 8px; font-size: .75rem; }
+  .brand-option input { width: 14px; height: 14px; min-width: 14px; min-height: 14px; }
+  .sheet-actions { gap: 6px; padding: 2px 8px; }
+  .sheet-actions .button { min-height: 30px; padding: 2px 6px; font-size: .72rem; }
+}
+
 @supports (height: 100dvh) {
   .bottom-sheet { max-height: min(88dvh, calc(100dvh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard)) - 12px), 820px); }
+  @media (max-height: 420px) {
+    .bottom-sheet {
+      height: min(88dvh, calc(100dvh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard))), 820px);
+      max-height: min(88dvh, calc(100dvh - var(--safe-top) - max(var(--safe-bottom), var(--keyboard))), 820px);
+    }
+  }
 }
