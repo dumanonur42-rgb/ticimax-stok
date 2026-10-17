@@ -4,6 +4,15 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.23
+
+- Çıkış yapmak artık yalnızca bu cihazı etkiler; diğer cihazlardaki oturumlar kapanmaz.
+- Oturum sona ererse giriş ekranında yeniden giriş yapmanız gerektiği açıkça bildirilir.
+- Yardım'daki yöneticiye özel bölümleri yalnızca yöneticiler görür.
+- Ana Sayfa ve Yardım'daki “Bize ulaşın” kartı yenilendi.
+- Koyu temada düğmeler artık daha kolay okunuyor.
+- Site hareketlerinde şehir, şirket ağı ve ziyaretçi takma adı da gösterilir.
+
 ## 1.0.22
 
 - Bilgisayardaki ürün kopyası artık şifreli tutulur; dosya kopyalansa bile başka bir yerde açılamaz. Çıkış yapınca ya da hesap kapatılınca bu kopya silinir.
