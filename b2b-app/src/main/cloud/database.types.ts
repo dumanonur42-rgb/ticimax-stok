@@ -147,6 +147,8 @@ export type SiteActivityRow = {
   results: number | null
   qty: number | null
   device: SiteActivityDevice
+  city: string
+  org: string
   referrer: string
 }
 export type SiteActivityInsert = Omit<SiteActivityRow, 'id'> & { id?: number; at?: string }

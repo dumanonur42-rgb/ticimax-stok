@@ -120,10 +120,28 @@ runtime.serve(async (request) => {
       const url = runtime.env.get('SUPABASE_URL')
       const key = runtime.env.get('SUPABASE_SERVICE_ROLE_KEY')
       if (url && key) {
+        let city = ''
+        let org = ''
+        const headers = { apikey: key, authorization: `Bearer ${key}`, 'content-type': 'application/json' }
+        if (visitorIp) {
+          try {
+            const geo = await fetch(`${url}/rest/v1/rpc/site_geo`, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({ p_ip: visitorIp })
+            })
+            if (geo.ok) {
+              const value = await geo.json() as { city?: unknown; org?: unknown }
+              city = clean(value.city, 80)
+              org = clean(value.org, 160)
+            }
+          } catch {}
+        }
+        const enrichedRows = rows.map((row) => ({ ...row, city, org }))
         const result = await fetch(`${url}/rest/v1/site_activity`, {
           method: 'POST',
-          headers: { apikey: key, authorization: `Bearer ${key}`, 'content-type': 'application/json', Prefer: 'return=minimal' },
-          body: JSON.stringify(rows)
+          headers: { ...headers, Prefer: 'return=minimal' },
+          body: JSON.stringify(enrichedRows)
         })
         if (!result.ok) console.error('site-track insert failed:', result.status)
       }

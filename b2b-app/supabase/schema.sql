@@ -682,6 +682,29 @@ drop trigger if exists products_stock_log on public.products;
 create trigger products_stock_log after insert or update of stock on public.products
   for each row execute function public.log_stock_change();
 
+-- Approximate visitor province / company network (DB-IP Lite, CC BY 4.0). Raw IPs are never stored.
+alter table public.site_activity add column if not exists city text not null default '';
+alter table public.site_activity add column if not exists org text not null default '';
+create table if not exists public.geo_city (ip_from inet primary key, ip_to inet not null, city text not null default '');
+create table if not exists public.geo_org (ip_from inet primary key, ip_to inet not null, org text not null default '');
+alter table public.geo_city enable row level security;
+alter table public.geo_org enable row level security;
+revoke all on public.geo_city, public.geo_org from anon, authenticated;
+
+create or replace function public.site_geo(p_ip text) returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare v inet; c text; o text;
+begin
+  begin v := host(p_ip::inet)::inet; exception when others then return jsonb_build_object('city', '', 'org', ''); end;
+  select g.city into c from (select * from geo_city where ip_from <= v order by ip_from desc limit 1) g
+   where g.ip_to >= v and family(g.ip_to) = family(v);
+  select g.org into o from (select * from geo_org where ip_from <= v order by ip_from desc limit 1) g
+   where g.ip_to >= v and family(g.ip_to) = family(v);
+  return jsonb_build_object('city', coalesce(c, ''), 'org', coalesce(o, ''));
+end $$;
+revoke execute on function public.site_geo(text) from public, anon, authenticated;
+grant execute on function public.site_geo(text) to service_role;
+
 create or replace function public.prune_logs() returns void
 language plpgsql security definer set search_path = public as $$
 begin
@@ -819,11 +842,11 @@ begin
   with ev as (
     select 'app'::text as src, a.at, case when a.kind = 'login' then 'visit' else a.kind end as kind,
            a.user_id::text as who, upper(trim(a.sku)) as sku, a.brand as label, a.query, null::integer as results,
-           a.qty, a.platform as device
+           a.qty, a.platform as device, ''::text as city, ''::text as org
       from activity_log a
      where p_source in ('all', 'app') and a.at >= p_from and a.at < p_to
     union all
-    select s.site, s.at, s.kind, s.visitor, upper(trim(s.sku)), s.name, s.query, s.results, s.qty, s.device
+    select s.site, s.at, s.kind, s.visitor, upper(trim(s.sku)), s.name, s.query, s.results, s.qty, s.device, s.city, s.org
       from site_activity s
      where (p_source = 'all' or s.site = p_source) and s.at >= p_from and s.at < p_to
   ),
@@ -881,6 +904,19 @@ begin
   devices as (
     select coalesce(nullif(device, ''), 'unknown') as device, count(distinct src || ':' || who) as visitors
       from ev group by 1 order by 2 desc
+  ),
+  cities as (
+    select city, count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'search') as searches
+      from ev where src <> 'app' and city <> '' group by city order by 2 desc, city limit 15
+  ),
+  companies as (
+    select org, count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'search') as searches,
+           max(at) as last_at, array_agg(distinct src) as sources
+      from ev where src <> 'app' and org <> '' group by org order by 2 desc, max(at) desc limit 15
   )
   select jsonb_build_object(
     'totals', (select to_jsonb(t) from totals t),
@@ -890,7 +926,9 @@ begin
     'topProducts', coalesce((select jsonb_agg(to_jsonb(x)) from top_products x), '[]'::jsonb),
     'topCart', coalesce((select jsonb_agg(to_jsonb(x)) from top_cart x), '[]'::jsonb),
     'daily', coalesce((select jsonb_agg(to_jsonb(x)) from daily x), '[]'::jsonb),
-    'devices', coalesce((select jsonb_agg(to_jsonb(x)) from devices x), '[]'::jsonb)
+    'devices', coalesce((select jsonb_agg(to_jsonb(x)) from devices x), '[]'::jsonb),
+    'cities', coalesce((select jsonb_agg(to_jsonb(x)) from cities x), '[]'::jsonb),
+    'companies', coalesce((select jsonb_agg(to_jsonb(x)) from companies x), '[]'::jsonb)
   ) into result;
   return result;
 end $$;

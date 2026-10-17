@@ -257,11 +257,15 @@ export interface SiteActivityRow {
   results: number | null
   qty: number | null
   device: '' | 'mobile' | 'tablet' | 'desktop'
+  city: string
+  org: string
   referrer: string
 }
 export interface TrafficRecentQuery {
-  site: TrafficSite
+  site?: TrafficSite
   offset: number
+  city?: string
+  org?: string
 }
 export interface TrafficRecentPage {
   rows: SiteActivityRow[]
@@ -289,6 +293,8 @@ export interface TrafficSummary {
   topCart: { sku: string; label: string; count: number; qty: number; sources: string[] }[]
   daily: { day: string; visitors: number; searches: number; product_views: number; cart_adds: number; orders: number }[]
   devices: { device: string; visitors: number }[]
+  cities: { city: string; visitors: number; product_views: number; searches: number }[]
+  companies: { org: string; visitors: number; product_views: number; searches: number; last_at: string; sources: string[] }[]
 }
 
 export interface ActivityEvent {

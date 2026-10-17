@@ -325,9 +325,13 @@ export function registerIpc(): void {
   })
   handle('traffic:recent', async (query: TrafficRecentQuery) => {
     requireAdmin()
-    if (!query || !trafficSites.has(query.site)) throw new Error('Geçersiz site.')
+    if (!query || (query.site !== undefined && !trafficSites.has(query.site))) throw new Error('Geçersiz site.')
     const offset = Number.isFinite(query.offset) ? Math.max(0, Math.min(1_000_000, Math.floor(query.offset))) : 0
-    const result = await cloud().from('site_activity').select('*').eq('site', query.site)
+    let activityQuery = cloud().from('site_activity').select('*')
+    if (query.site) activityQuery = activityQuery.eq('site', query.site)
+    if (query.city) activityQuery = activityQuery.eq('city', query.city)
+    if (query.org) activityQuery = activityQuery.eq('org', query.org)
+    const result = await activityQuery
       .order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + 49)
     if (result.error) throw result.error
     return { rows: result.data, hasMore: result.data.length === 50 }

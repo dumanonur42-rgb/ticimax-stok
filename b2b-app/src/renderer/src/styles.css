@@ -3682,6 +3682,150 @@ dialog.update-dialog {
 .traffic-devices b {
   font-variant-numeric: tabular-nums;
 }
+.traffic-geo-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.traffic-geo-list > li {
+  min-width: 0;
+}
+.traffic-geo-row {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.traffic-geo-row:hover,
+.traffic-geo-row[aria-pressed='true'] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--bg-elev));
+}
+.traffic-geo-row:focus-visible,
+.traffic-filter-chip:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.traffic-geo-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3px 8px;
+  min-width: 0;
+}
+.traffic-geo-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.traffic-geo-stats,
+.traffic-company-meta {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+.traffic-geo-stats {
+  white-space: nowrap;
+}
+.traffic-geo-bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--bg-sunken);
+}
+.traffic-geo-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+}
+.traffic-company-row {
+  align-items: start;
+}
+.traffic-company-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.traffic-company-name > svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+.traffic-company-meta {
+  overflow-wrap: anywhere;
+}
+.traffic-company-row .traffic-source-chips {
+  margin-top: 0;
+}
+.traffic-geo-attribution {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+.traffic-attribution-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.traffic-attribution-link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.traffic-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.traffic-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-sunken);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+[data-theme='contrast'] .traffic-geo-row {
+  border: 2px solid currentColor;
+  background: var(--bg-elev);
+}
+[data-theme='contrast'] .traffic-geo-row:hover,
+[data-theme='contrast'] .traffic-geo-row[aria-pressed='true'] {
+  border-color: currentColor;
+  background: var(--bg-elev);
+}
+[data-theme='contrast'] .traffic-geo-bar > span {
+  background: currentColor;
+}
+[data-theme='contrast'] .traffic-attribution-link {
+  color: var(--text);
+}
+[data-theme='contrast'] .traffic-filter-chip {
+  border-width: 2px;
+  background: var(--bg-elev);
+}
 .traffic-recent-panel {
   margin-top: 12px;
 }
@@ -3717,8 +3861,24 @@ dialog.update-dialog {
   font-size: 0.76rem;
 }
 .traffic-visitor {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--text-muted);
   font-size: 0.78rem;
+}
+.traffic-visitor-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-weight: 600;
+}
+.traffic-visitor-name > svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--text-muted);
 }
 .traffic-recent-row time {
   color: var(--text-muted);
@@ -3756,9 +3916,22 @@ dialog.update-dialog {
   }
   .traffic-recent-row {
     grid-template-columns: 28px minmax(0, 1fr) 44px;
+    grid-template-areas:
+      'kind detail time'
+      '. visitor visitor';
   }
   .traffic-visitor {
-    display: none;
+    display: block;
+    grid-area: visitor;
+  }
+  .traffic-recent-row > .activity-kind-badge {
+    grid-area: kind;
+  }
+  .traffic-recent-detail {
+    grid-area: detail;
+  }
+  .traffic-recent-row > time {
+    grid-area: time;
   }
 }
 @media (max-width: 480px) {
