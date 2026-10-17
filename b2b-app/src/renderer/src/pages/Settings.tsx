@@ -202,6 +202,7 @@ function Users(): ReactNode {
     }
   }
   const [del, setDel] = useState<User | null>(null)
+  const addUserButtonRef = useRef<HTMLButtonElement>(null)
   const load = (): void => {
     api('users:list', undefined).then(setUsers).catch((e) => toast(e.message, 'error'))
   }
@@ -240,8 +241,10 @@ function Users(): ReactNode {
     try {
       await api('users:delete', del.id)
       toast('Kullanıcı silindi.', 'success')
+      setEditing(null)
       setDel(null)
       load()
+      window.requestAnimationFrame(() => addUserButtonRef.current?.focus())
     } catch (e) {
       toast((e as Error).message, 'error')
     }
@@ -254,7 +257,7 @@ function Users(): ReactNode {
           Kayıtlı herkes burada listelenir. Rol, kullanıcının yetkilerini belirler; "Kayıt ol" ile gelen hesaplar siz onaylayana kadar giriş yapamaz.
         </p>
         <span className="spacer" />
-        <button className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'bayi', perms: [], customer_id: null, password: '', active: 1 })}>
+        <button ref={addUserButtonRef} className="btn primary" onClick={() => setEditing({ username: '', display_name: '', role: 'bayi', perms: [], customer_id: null, password: '', active: 1 })}>
           <Plus size={16} aria-hidden /> Yeni kullanıcı
         </button>
       </div>

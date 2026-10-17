@@ -793,6 +793,46 @@ textarea.input {
 .import-log-table th,
 .import-log-table td {
   min-width: 0;
+  overflow-wrap: anywhere;
+}
+.import-log-table th:nth-child(1) { width: 16%; }
+.import-log-table th:nth-child(2) { width: 26%; }
+.import-log-table th:nth-child(3) { width: 16%; }
+.import-log-table th:nth-child(n + 4) { width: 10.5%; }
+.import-log-date {
+  color: var(--text-muted);
+}
+.import-log-note {
+  margin: 4px 16px 12px;
+}
+.import-log-filename {
+  overflow-wrap: anywhere;
+}
+.import-log-deleted-badge {
+  margin-left: 6px;
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+  background: var(--bg-elev);
+}
+.import-log-old {
+  color: var(--text-muted);
+  background: var(--bg-sunken);
+}
+.import-log-purge-summary {
+  color: var(--text);
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .import-log-table th,
+  .import-log-table td {
+    padding: 6px 4px;
+    font-size: .74rem;
+  }
+  .import-log-table thead th { font-size: .7rem; }
+  .import-log-table th:nth-child(1) { width: 17%; }
+  .import-log-table th:nth-child(2) { width: 21%; }
+  .import-log-table th:nth-child(3) { width: 14%; }
+  .import-log-table th:nth-child(n + 4) { width: 12%; }
 }
 .import-log-file {
   overflow-wrap: anywhere;

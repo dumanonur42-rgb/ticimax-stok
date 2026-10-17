@@ -208,10 +208,14 @@ export function Dashboard(): ReactNode {
                     tabIndex={0}
                     role="button"
                     aria-label={`${p.sku} ürününü aç`}
-                    onClick={() => setSelected(p)}
+                    onClick={(e) => {
+                      e.currentTarget.focus()
+                      setSelected(p)
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault()
+                        e.currentTarget.focus()
                         setSelected(p)
                       }
                     }}

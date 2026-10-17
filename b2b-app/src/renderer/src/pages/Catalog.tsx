@@ -302,7 +302,10 @@ export function Catalog(): ReactNode {
       if (p) togglePicked(p)
     } else if (e.key === 'Enter') {
       const p = rows.get(activeIdx)
-      if (p) setSelected(p)
+      if (p) {
+        bodyRef.current?.focus()
+        setSelected(p)
+      }
     } else if (e.key === '+' || (e.key === 'Insert' && !e.ctrlKey)) {
       const p = rows.get(activeIdx)
       if (p) {
@@ -601,12 +604,14 @@ export function Catalog(): ReactNode {
                     id={`prow-${v.index}`}
                     className={`vrow${v.index % 2 ? ' odd' : ''}${p.active ? '' : ' inactive'}${picked.has(p.id) ? ' picked' : ''}`}
                     role="row"
+                    tabIndex={-1}
                     aria-rowindex={v.index + 1}
                     aria-selected={isActive}
                     style={{ transform: `translateY(${v.start}px)`, height: v.size }}
                     onClick={() => {
                       setActiveIdx(v.index)
                       if (window.getSelection()?.toString()) return
+                      bodyRef.current?.focus()
                       setSelected(p)
                     }}
                   >

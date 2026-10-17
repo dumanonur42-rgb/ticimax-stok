@@ -50,19 +50,32 @@ function buildWhere(f: ProductFilter, exclude?: keyof ProductFilter): Where {
   if (q) {
     const qn = normalize(q)
     const fts = ftsQuery(q)
+    const shortTokens = normalizeText(q).split(' ').filter((token) => token.length > 0 && token.length < 3)
     const parts: string[] = []
     if (qn) {
       parts.push('p.sku_norm LIKE ?')
       params.push(`%${qn}%`)
     }
     if (fts) {
-      parts.push('p.id IN (SELECT rowid FROM products_fts WHERE products_fts MATCH ?)')
+      const ftsParts = ['p.id IN (SELECT rowid FROM products_fts WHERE products_fts MATCH ?)']
       params.push(fts)
+      for (const token of shortTokens) {
+        ftsParts.push('(p.sku_norm LIKE ? OR p.name_norm LIKE ? OR p.brand_norm LIKE ?)')
+        const like = `%${token}%`
+        params.push(like, like, like)
+      }
+      parts.push(`(${ftsParts.join(' AND ')})`)
     } else {
       const tn = normalizeText(q)
       if (tn) {
-        parts.push('p.name_norm LIKE ?')
+        const nameParts = ['p.name_norm LIKE ?']
         params.push(`%${tn}%`)
+        for (const token of shortTokens) {
+          nameParts.push('(p.sku_norm LIKE ? OR p.name_norm LIKE ? OR p.brand_norm LIKE ?)')
+          const like = `%${token}%`
+          params.push(like, like, like)
+        }
+        parts.push(`(${nameParts.join(' AND ')})`)
       }
     }
     if (parts.length) clauses.push(`(${parts.join(' OR ')})`)
@@ -501,6 +514,11 @@ export async function deleteProduct(id: number): Promise<void> {
 export async function purgeAllProducts(): Promise<number> {
   const n = must(await cloud().rpc('purge_all_products'))
   getDb().exec('DELETE FROM products')
+  try {
+    must(await cloud().from('import_logs').insert({ filename: '', mode: 'purge', inserted: 0, updated: 0, unchanged: 0, deactivated: n }))
+  } catch (error) {
+    console.warn('Ürün listesi silme geçmişi kaydedilemedi.', error)
+  }
   return n
 }
 

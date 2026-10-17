@@ -206,6 +206,7 @@ CREATE TABLE IF NOT EXISTS products (
   name TEXT NOT NULL DEFAULT '',
   name_norm TEXT NOT NULL DEFAULT '',
   brand TEXT NOT NULL DEFAULT '',
+  brand_norm TEXT NOT NULL DEFAULT '',
   category TEXT NOT NULL DEFAULT '',
   type TEXT NOT NULL DEFAULT '',
   seal TEXT NOT NULL DEFAULT '',
@@ -219,10 +220,12 @@ CREATE TABLE IF NOT EXISTS products (
   min_order REAL NOT NULL DEFAULT 1,
   shelf TEXT NOT NULL DEFAULT '',
   box TEXT NOT NULL DEFAULT '',
+  box_norm TEXT NOT NULL DEFAULT '',
   barcode TEXT NOT NULL DEFAULT '',
   image TEXT NOT NULL DEFAULT '',
   description TEXT NOT NULL DEFAULT '',
   equivalents TEXT NOT NULL DEFAULT '',
+  eq_norm TEXT NOT NULL DEFAULT '',
   active INTEGER NOT NULL DEFAULT 1,
   updated_at TEXT NOT NULL DEFAULT (datetime('now','localtime'))
 );
@@ -242,17 +245,17 @@ CREATE VIRTUAL TABLE IF NOT EXISTS products_fts USING fts5(
 );
 CREATE TRIGGER IF NOT EXISTS products_ai AFTER INSERT ON products BEGIN
   INSERT INTO products_fts(rowid, sku, name, brand, box, equivalents, barcode)
-  VALUES (new.id, new.sku_norm, new.name_norm, new.brand, new.box, new.equivalents, new.barcode);
+  VALUES (new.id, new.sku_norm, new.name_norm, new.brand_norm, new.box_norm, new.eq_norm, new.barcode);
 END;
 CREATE TRIGGER IF NOT EXISTS products_ad AFTER DELETE ON products BEGIN
   INSERT INTO products_fts(products_fts, rowid, sku, name, brand, box, equivalents, barcode)
-  VALUES ('delete', old.id, old.sku_norm, old.name_norm, old.brand, old.box, old.equivalents, old.barcode);
+  VALUES ('delete', old.id, old.sku_norm, old.name_norm, old.brand_norm, old.box_norm, old.eq_norm, old.barcode);
 END;
 CREATE TRIGGER IF NOT EXISTS products_au AFTER UPDATE ON products BEGIN
   INSERT INTO products_fts(products_fts, rowid, sku, name, brand, box, equivalents, barcode)
-  VALUES ('delete', old.id, old.sku_norm, old.name_norm, old.brand, old.box, old.equivalents, old.barcode);
+  VALUES ('delete', old.id, old.sku_norm, old.name_norm, old.brand_norm, old.box_norm, old.eq_norm, old.barcode);
   INSERT INTO products_fts(rowid, sku, name, brand, box, equivalents, barcode)
-  VALUES (new.id, new.sku_norm, new.name_norm, new.brand, new.box, new.equivalents, new.barcode);
+  VALUES (new.id, new.sku_norm, new.name_norm, new.brand_norm, new.box_norm, new.eq_norm, new.barcode);
 END;
 
 CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -276,7 +279,7 @@ CREATE TABLE IF NOT EXISTS outbox (
  * The local file is only ever a copy of the cloud catalogue: whatever a pre-cloud install left
  * behind (single-machine products, users, orders) is discarded, never shown or uploaded.
  */
-const MIRROR_SCHEMA = '3'
+const MIRROR_SCHEMA = '4'
 
 function migrate(d: DB): void {
   d.exec('CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)')

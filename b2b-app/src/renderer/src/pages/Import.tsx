@@ -45,6 +45,11 @@ export function Import(): ReactNode {
   const [errors, setErrors] = useState<string[]>([])
   const [trial, setTrial] = useState<ImportResult | null>(null)
 
+  const clearTrial = (): void => {
+    setTrial(null)
+    setErrors([])
+  }
+
   const loadLogs = (): void => {
     api('import:logs', undefined).then(setLogs).catch(() => setLogs([]))
   }
@@ -100,6 +105,14 @@ export function Import(): ReactNode {
   }
 
   const used = new Set(Object.values(mapping).filter(Boolean))
+  const newestResetIndex = logs.findIndex((log) => log.mode === 'purge' || log.mode === 'replace')
+  const modeLabel = (value: string): string => {
+    if (value === 'upsert') return 'Ekle / güncelle'
+    if (value === 'replace') return 'Listeyi değiştir'
+    if (value === 'stock_only') return 'Sadece stok'
+    if (value === 'purge') return 'Silme'
+    return value
+  }
 
   return (
     <div className="grid" style={{ gap: 18 }}>
@@ -135,7 +148,7 @@ export function Import(): ReactNode {
           <div className="grid g3">
             <Field label="Yükleme modu">
               {(id) => (
-                <select id={id} className="select" value={mode} onChange={(e) => setMode(e.target.value as typeof mode)}>
+                <select id={id} className="select" value={mode} onChange={(e) => { clearTrial(); setMode(e.target.value as typeof mode) }}>
                   <option value="upsert">Güncelle / ekle (önerilen)</option>
                   <option value="stock_only">Sadece stok ve fiyat güncelle</option>
                   <option value="replace">Eski listeyi sil, dosyadakileri yükle</option>
@@ -144,7 +157,7 @@ export function Import(): ReactNode {
             </Field>
             <Field label="Varsayılan para birimi" hint="Dosyada kolon yoksa kullanılır">
               {(id) => (
-                <select id={id} className="select" value={defaultCurrency} onChange={(e) => setDefaultCurrency(e.target.value as Currency)}>
+                <select id={id} className="select" value={defaultCurrency} onChange={(e) => { clearTrial(); setDefaultCurrency(e.target.value as Currency) }}>
                   <option value="TRY">TRY</option>
                   <option value="USD">USD</option>
                   <option value="EUR">EUR</option>
@@ -152,7 +165,7 @@ export function Import(): ReactNode {
               )}
             </Field>
             <label className="check" style={{ alignSelf: 'end' }}>
-              <input type="checkbox" checked={deactivateMissing} onChange={(e) => setDeactivateMissing(e.target.checked)} disabled={mode === 'replace'} /> Dosyada olmayan ürünleri pasife al
+              <input type="checkbox" checked={deactivateMissing} onChange={(e) => { clearTrial(); setDeactivateMissing(e.target.checked) }} disabled={mode === 'replace'} /> Dosyada olmayan ürünleri pasife al
             </label>
             {mode === 'replace' && (
               <p className="muted small" role="note" style={{ gridColumn: '1 / -1', margin: 0 }}>
@@ -160,8 +173,8 @@ export function Import(): ReactNode {
                 otomatik yansır (açık uygulamalar birkaç saniye içinde yeni listeyi çeker); sipariş geçmişi korunur.
               </p>
             )}
-            <Field label="Varsayılan marka">{(id) => <input id={id} className="input" value={defaultBrand} onChange={(e) => setDefaultBrand(e.target.value)} />}</Field>
-            <Field label="Varsayılan kategori">{(id) => <input id={id} className="input" value={defaultCategory} onChange={(e) => setDefaultCategory(e.target.value)} />}</Field>
+            <Field label="Varsayılan marka">{(id) => <input id={id} className="input" value={defaultBrand} onChange={(e) => { clearTrial(); setDefaultBrand(e.target.value) }} />}</Field>
+            <Field label="Varsayılan kategori">{(id) => <input id={id} className="input" value={defaultCategory} onChange={(e) => { clearTrial(); setDefaultCategory(e.target.value) }} />}</Field>
           </div>
 
           <h3>Kolon eşleme</h3>
@@ -177,7 +190,7 @@ export function Import(): ReactNode {
                   className="select"
                   value={mapping[f.key] ?? ''}
                   aria-required={f.required}
-                  onChange={(e) => setMapping((m) => ({ ...m, [f.key]: e.target.value || undefined }))}
+                  onChange={(e) => { clearTrial(); setMapping((m) => ({ ...m, [f.key]: e.target.value || undefined })) }}
                 >
                   <option value="">— eşlenmedi —</option>
                   {preview.headers.map((h) => (
@@ -258,6 +271,9 @@ export function Import(): ReactNode {
         <h2 id="logs-title" style={{ padding: '14px 16px 0' }}>
           Geçmiş yüklemeler
         </h2>
+        <p className="muted small import-log-note">
+          Geçmiş, yapılan yüklemelerin kaydıdır; silinen listelerin ürünleri uygulamada yer almaz.
+        </p>
         {logs.length === 0 ? (
           <p className="muted" style={{ padding: 16 }}>
             Henüz yükleme yapılmadı.
@@ -276,17 +292,31 @@ export function Import(): ReactNode {
               </tr>
             </thead>
             <tbody>
-              {logs.map((l) => (
-                <tr key={l.id}>
-                  <td className="nowrap">{date(l.created_at)}</td>
-                  <td className="import-log-file" title={l.filename}>{l.filename}</td>
-                  <td>{l.mode}</td>
-                  <td className="right">{num(l.inserted)}</td>
-                  <td className="right">{num(l.updated)}</td>
-                  <td className="right">{num(l.unchanged)}</td>
-                  <td className="right">{num(l.deactivated)}</td>
-                </tr>
-              ))}
+              {logs.map((l, index) => {
+                const deletedList = newestResetIndex >= 0 && index > newestResetIndex
+                const purge = l.mode === 'purge'
+                const filename = purge ? 'Tüm ürün listesi silindi' : l.filename
+                return (
+                  <tr key={l.id} className={deletedList ? 'import-log-old' : undefined}>
+                    <td className="import-log-date">{date(l.created_at)}</td>
+                    <td className="import-log-file" title={filename}>
+                      <span className="import-log-filename">{filename}</span>
+                      {deletedList && <span className="badge neutral import-log-deleted-badge">Silinen liste</span>}
+                    </td>
+                    <td>{modeLabel(l.mode)}</td>
+                    {purge ? (
+                      <td colSpan={4} className="import-log-purge-summary">{num(l.deactivated)} ürün silindi</td>
+                    ) : (
+                      <>
+                        <td className="right">{num(l.inserted)}</td>
+                        <td className="right">{num(l.updated)}</td>
+                        <td className="right">{num(l.unchanged)}</td>
+                        <td className="right">{num(l.deactivated)}</td>
+                      </>
+                    )}
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         )}

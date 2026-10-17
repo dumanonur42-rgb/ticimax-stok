@@ -1,6 +1,6 @@
 import type { SyncStatus } from '@shared/types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
-import { getDb } from '../db'
+import { getDb, normalizeText } from '../db'
 import { pullSettings } from '../repo/settings'
 import { cloud, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
@@ -68,10 +68,10 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
-const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, box, barcode, image, description, equivalents, active, updated_at)
-  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@box,@barcode,@image,@description,@equivalents,@active,@updated_at)`
+const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, category, type, seal, d_inner, d_outer, width, stock, unit,
+  price, currency, list_price, card_price, min_order, shelf, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
+  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
+  @currency,@list_price,@card_price,@min_order,@shelf,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 export function upsertLocal(rows: ProductRow[]): void {
@@ -93,6 +93,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         name: r.name,
         name_norm: r.name_norm,
         brand: r.brand,
+        brand_norm: normalizeText(r.brand),
         category: r.category,
         type: r.type,
         seal: r.seal,
@@ -108,10 +109,12 @@ export function upsertLocal(rows: ProductRow[]): void {
         min_order: Number(r.min_order),
         shelf: r.shelf,
         box: r.box,
+        box_norm: normalizeText(r.box),
         barcode: r.barcode,
         image: r.image,
         description: r.description,
         equivalents: r.equivalents,
+        eq_norm: normalizeText(r.equivalents),
         active: r.active ? 1 : 0,
         updated_at: r.updated_at
       })

@@ -29,6 +29,19 @@ export function ProductDrawer({
   const lvl = stockLevel(product.stock, threshold)
 
   useEffect(() => {
+    const active = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const grid = document.querySelector<HTMLElement>('[role="grid"]')
+    const row = grid?.querySelector<HTMLElement>('[aria-selected="true"]') ?? document.querySelector<HTMLElement>('[role="button"][tabindex="0"]')
+    const activeContext = active && active !== document.body && (active.closest('[role="grid"]') || active.closest('[role="button"]'))
+    const target = activeContext ? active : row ?? grid
+    return () => {
+      if (target?.isConnected) target.focus()
+      else if (row?.isConnected) row.focus()
+      else if (grid?.isConnected) grid.focus()
+    }
+  }, [])
+
+  useEffect(() => {
     void api('activity:log', {
       kind: 'product_view',
       product_id: product.id,
