@@ -22,6 +22,7 @@ import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearc
 import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
+import { SystemInsets } from './lib/systemInsets'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
@@ -292,21 +293,25 @@ export default function App(): ReactNode {
     document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
     if (themeColor) themeColor.content = dark ? '#142033' : '#ffffff'
-  }, [dark])
+    if (platform === 'android') {
+      void SystemInsets.setNavigationBarStyle({ dark }).catch(() => undefined)
+    }
+  }, [dark, platform])
 
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
-    const goBack = (): void => {
+    const goBack = (exitAtHome: boolean): void => {
       const current = useApp.getState()
       if (current.sheet) current.setSheet(null)
       else if (current.tab !== 'home') current.setTab('home')
+      else if (exitAtHome && platform === 'android') void CapacitorApp.exitApp()
     }
     if (platform === 'android') {
-      void CapacitorApp.addListener('backButton', goBack).then((listener) => { handle = listener })
+      void CapacitorApp.addListener('backButton', () => goBack(true)).then((listener) => { handle = listener })
       return () => { void handle?.remove() }
     }
     const onKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') goBack()
+      if (event.key === 'Escape') goBack(false)
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
