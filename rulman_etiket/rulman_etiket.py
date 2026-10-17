@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import ctypes
-import os
 import sys
 import traceback
 from pathlib import Path
@@ -29,36 +28,32 @@ from yazdirma import (
     resource_path,
 )
 
+_RAPOR_YOLU: Path | None = None
+
 
 def _yaz_hata(metin: str) -> None:
+    _rapora_yaz(metin)
+    if getattr(sys, "frozen", False):
+        return
     if sys.stderr is not None:
         print(metin, file=sys.stderr)
 
 
 def _kontrol() -> int:
-    _kontrol_izle("kontrol başladı")
     sumatra_ok = resource_path("SumatraPDF.exe").is_file()
-    _kontrol_izle("SumatraPDF denetimi tamamlandı")
-    _kontrol_izle("SumatraPDF satırı yazılıyor")
     _satir(
         "SumatraPDF dosyası",
         "Başarılı" if sumatra_ok else "Başarısız",
     )
-    _kontrol_izle("SumatraPDF satırı yazıldı")
 
-    _kontrol_izle("Yazı tipi yolu çözülüyor")
     font_klasoru = resource_path("fonts")
-    _kontrol_izle("Yazı tipi yolu çözüldü")
-    _kontrol_izle("Yazı tipi denetimi başladı")
     font_ok = font_klasoru.is_dir() and all(
         (font_klasoru / ad).is_file()
         for ad in ("LiberationSans-Bold.ttf", "LiberationSans-Regular.ttf")
     )
-    _kontrol_izle("Yazı tipi denetimi tamamlandı")
     _satir("Yazı tipleri", "Başarılı" if font_ok else "Başarısız")
 
     cizim_ok = False
-    _kontrol_izle("Etiket çizimi başladı")
     try:
         belge = ciz(EtiketVerisi(kod="6205-2RS", ek="C3"), "62x100", 1)
         try:
@@ -67,46 +62,49 @@ def _kontrol() -> int:
             belge.close()
     except Exception:
         cizim_ok = False
-    _kontrol_izle("Etiket çizimi tamamlandı")
     _satir("Etiket oluşturma denemesi", "Başarılı" if cizim_ok else "Başarısız")
     yazici_modulu_ok = True
     if sys.platform == "win32":
-        _kontrol_izle("win32print içe aktarımı başladı")
         try:
             import win32print
         except Exception:
             yazici_modulu_ok = False
-        _kontrol_izle("win32print içe aktarımı tamamlandı")
         _satir(
             "Yazıcı ayar modülü",
             "Başarılı" if yazici_modulu_ok else "Başarısız",
         )
-    return 0 if sumatra_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
+    sonuc = 0 if sumatra_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
+    _rapora_yaz(f"Sonuç: {'Başarılı' if sonuc == 0 else 'Başarısız'}")
+    return sonuc
 
 
-def _kontrol_izle(adim: str) -> None:
-    yol = os.environ.get("RULMAN_ETIKET_KONTROL_LOG")
-    if not yol:
+def _raporu_sifirla() -> None:
+    if _RAPOR_YOLU is None:
         return
     try:
-        with Path(yol).open("a", encoding="utf-8") as dosya:
-            dosya.write(f"{adim}\n")
+        _RAPOR_YOLU.parent.mkdir(parents=True, exist_ok=True)
+        _RAPOR_YOLU.write_text("", encoding="utf-8")
+    except OSError:
+        pass
+
+
+def _rapora_yaz(metin: str) -> None:
+    if _RAPOR_YOLU is None:
+        return
+    try:
+        _RAPOR_YOLU.parent.mkdir(parents=True, exist_ok=True)
+        with _RAPOR_YOLU.open("a", encoding="utf-8") as dosya:
+            dosya.write(f"{metin}\n")
     except OSError:
         pass
 
 
 def _satir(kontrol: str, sonuc: str) -> None:
-    cikti = sys.stdout
-    if cikti is None:
+    satir = f"{kontrol}: {sonuc}"
+    _rapora_yaz(satir)
+    if getattr(sys, "frozen", False):
         return
-    try:
-        cikti.reconfigure(errors="replace")
-    except (AttributeError, OSError, ValueError):
-        pass
-    try:
-        print(f"{kontrol}: {sonuc}", file=cikti)
-    except (OSError, UnicodeError):
-        pass
+    print(satir)
 
 
 def _arayuzu_baslat() -> int:
@@ -147,7 +145,12 @@ def main() -> int:
     parser.add_argument("--alt-tekrar-yok", action="store_true")
     parser.add_argument("--pdf")
     parser.add_argument("--kontrol", action="store_true")
+    parser.add_argument("--rapor")
     args = parser.parse_args()
+
+    global _RAPOR_YOLU
+    _RAPOR_YOLU = Path(args.rapor) if args.rapor else None
+    _raporu_sifirla()
 
     if args.kontrol:
         return _kontrol()
@@ -168,7 +171,8 @@ def main() -> int:
         except YazdirmaHatasi as hata:
             _yaz_hata(str(hata))
             return 1
-        print(yol)
+        if not getattr(sys, "frozen", False):
+            print(yol)
         return 0
     return _arayuzu_baslat()
 
