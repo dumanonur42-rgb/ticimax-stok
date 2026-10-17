@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Headset, Phone, Search } from 'lucide-react'
+import { ChevronRight, Headset, MessageCircle, Phone, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { normalize } from '@shared/identity'
 import { api } from '@/lib/api'
@@ -128,13 +128,36 @@ export function Help(): ReactNode {
           <span className="contact-head-icon"><Headset size={22} aria-hidden /></span>
           <span>
             <h3 id="help-contact-title">Bize ulaşın</h3>
-            <span className="muted small">Yardım için arayın veya WhatsApp’tan yazın.</span>
+            <span className="muted small">Sorunuz olursa yazın ya da arayın.</span>
           </span>
         </header>
-        <div className="contact-actions">
-          <span className="contact-number">+90 552 610 93 63</span>
-          <button className="contact-btn whatsapp" onClick={() => open('https://wa.me/905526109363')}>WhatsApp</button>
-          <button className="contact-btn call" onClick={() => open('tel:+905526109363')}><Phone size={16} aria-hidden /> Ara</button>
+        <div className="help-contact-actions">
+          <button
+            className="help-contact-tile whatsapp"
+            type="button"
+            aria-label="WhatsApp'tan yazın: +90 552 610 93 63"
+            onClick={() => open('https://wa.me/905526109363')}
+          >
+            <span className="help-contact-icon"><MessageCircle size={20} aria-hidden /></span>
+            <span className="help-contact-copy">
+              <strong>WhatsApp'tan yazın</strong>
+              <span className="contact-number">+90 552 610 93 63</span>
+            </span>
+            <ChevronRight className="help-contact-arrow" size={20} aria-hidden />
+          </button>
+          <button
+            className="help-contact-tile call"
+            type="button"
+            aria-label="Hemen arayın: +90 552 610 93 63"
+            onClick={() => open('tel:+905526109363')}
+          >
+            <span className="help-contact-icon"><Phone size={20} aria-hidden /></span>
+            <span className="help-contact-copy">
+              <strong>Hemen arayın</strong>
+              <span className="contact-number">+90 552 610 93 63</span>
+            </span>
+            <ChevronRight className="help-contact-arrow" size={20} aria-hidden />
+          </button>
         </div>
       </section>
 
