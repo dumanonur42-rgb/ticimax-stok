@@ -1,0 +1,2 @@
+[functions.site-track]
+verify_jwt = false
