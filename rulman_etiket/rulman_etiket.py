@@ -36,7 +36,7 @@ def _yaz_hata(metin: str) -> None:
 
 def _kontrol() -> int:
     sumatra_ok = resource_path("SumatraPDF.exe").is_file()
-    yazdir(
+    _satir(
         "SumatraPDF dosyası",
         "Başarılı" if sumatra_ok else "Başarısız",
     )
@@ -47,7 +47,7 @@ def _kontrol() -> int:
         for dosya in font_klasoru.rglob("*")
         if dosya.is_file()
     )
-    yazdir("Yazı tipleri", "Başarılı" if font_ok else "Başarısız")
+    _satir("Yazı tipleri", "Başarılı" if font_ok else "Başarısız")
 
     cizim_ok = False
     try:
@@ -58,11 +58,11 @@ def _kontrol() -> int:
             belge.close()
     except Exception:
         cizim_ok = False
-    yazdir("Etiket oluşturma denemesi", "Başarılı" if cizim_ok else "Başarısız")
+    _satir("Etiket oluşturma denemesi", "Başarılı" if cizim_ok else "Başarısız")
     return 0 if sumatra_ok and font_ok and cizim_ok else 1
 
 
-def yazdir(kontrol: str, sonuc: str) -> None:
+def _satir(kontrol: str, sonuc: str) -> None:
     print(f"{kontrol}: {sonuc}")
 
 
