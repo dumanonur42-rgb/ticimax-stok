@@ -22,6 +22,22 @@ function scrollFocusedField(): void {
   const activeElement = document.activeElement
   if (!(activeElement instanceof HTMLElement)) return
   if (!activeElement.matches('input, textarea, select, [contenteditable="true"]')) return
+  const loginScreen = activeElement.closest<HTMLElement>('.login-screen')
+  if (loginScreen) {
+    requestAnimationFrame(() => {
+      const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue('--keyboard')) || 0
+      const safeTop = Number.parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 0
+      const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
+      const visibleBottom = Math.min(window.innerHeight, window.visualViewport?.height ?? window.innerHeight) - keyboard - 16
+      const field = activeElement.getBoundingClientRect()
+      const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
+      const needed = Math.max(field.bottom, submit?.bottom ?? field.bottom) - visibleBottom
+      const available = Math.max(0, field.top - visibleTop)
+      if (needed > 0 && available > 0) loginScreen.scrollBy({ top: Math.min(needed, available), behavior: 'smooth' })
+      else if (field.top < visibleTop) loginScreen.scrollBy({ top: field.top - visibleTop, behavior: 'smooth' })
+    })
+    return
+  }
   requestAnimationFrame(() => activeElement.scrollIntoView({
     block: 'center',
     inline: 'nearest',

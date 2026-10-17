@@ -4,6 +4,7 @@ import type { Product } from '@shared/types'
 export interface SearchEntry {
   product: Product
   sku: string
+  skuCompact: string
   haystack: string
   brand: string
 }
@@ -21,21 +22,20 @@ export function indexProducts(products: Product[]): SearchEntry[] {
   return products.map((product) => ({
     product,
     sku: normalize(product.sku),
+    skuCompact: normalize(product.sku),
     brand: normalize(product.brand),
-    haystack: normalize(
-      [
-        product.sku,
-        product.brand,
-        product.name,
-        product.description,
-        product.equivalents,
-        product.box,
-        product.barcode,
-        product.category,
-        product.type,
-        product.seal
-      ].join(' ')
-    )
+    haystack: [
+      product.sku,
+      product.brand,
+      product.name,
+      product.description,
+      product.equivalents,
+      product.box,
+      product.barcode,
+      product.category,
+      product.type,
+      product.seal
+    ].map(normalize).filter(Boolean).join('|')
   }))
 }
 
@@ -48,8 +48,10 @@ export function searchProducts(
     dimensions?: DimensionFilters
   } = {}
 ): Product[] {
-  const normalizedQuery = normalize(query.trim())
   const tokens = query.trim().split(/\s+/).filter(Boolean).map(normalize)
+  const knownBrands = new Set(entries.map((entry) => entry.brand).filter(Boolean))
+  const skuTokens = tokens.filter((token) => !knownBrands.has(token))
+  const skuQuery = skuTokens.join('')
   const exact: Product[] = []
   const prefix: Product[] = []
   const contains: Product[] = []
@@ -68,9 +70,11 @@ export function searchProducts(
     if (tokens.some((token) => !entry.haystack.includes(token))) continue
     if (!tokens.length) {
       other.push(p)
-    } else if (entry.sku === normalizedQuery) {
+    } else if (!skuQuery) {
+      other.push(p)
+    } else if (entry.skuCompact === skuQuery) {
       exact.push(p)
-    } else if (entry.sku.startsWith(normalizedQuery)) {
+    } else if (entry.skuCompact.startsWith(skuQuery)) {
       prefix.push(p)
     } else {
       contains.push(p)

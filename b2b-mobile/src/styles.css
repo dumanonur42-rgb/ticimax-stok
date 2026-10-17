@@ -20,7 +20,7 @@
   --yellow-bg: #fff4d6;
   --red: #b42318;
   --red-bg: #ffefed;
-  --status-bar-color: transparent;
+  --status-bar-color: #0b2a5b;
   --native-top: 0px;
   --native-right: 0px;
   --native-bottom: 0px;
@@ -31,11 +31,24 @@
   --safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--native-bottom, 0px));
   --safe-left: max(env(safe-area-inset-left, 0px), var(--native-left, 0px));
   --bottom-tabs-height: calc(64px + var(--safe-bottom));
+  --cart-summary-height: 72px;
 }
 
+:root[data-theme='dark'] { --background: #0b1220; }
 * { box-sizing: border-box; }
 html, body, #root { width: 100%; height: 100%; min-height: 100%; margin: 0; }
 body { overflow: hidden; background: var(--background); color: var(--ink); font-size: 16px; }
+:root::before {
+  content: '';
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--safe-top);
+  background: var(--status-bar-color);
+  pointer-events: none;
+}
 button, input, textarea, select { font: inherit; }
 button { color: inherit; }
 button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible {
@@ -103,21 +116,26 @@ img { max-width: 100%; }
 .globe-scene { display: block; flex: 0 0 auto; }
 
 .login-screen {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   padding:
     max(22px, var(--safe-top))
     calc(20px + var(--safe-right))
-    max(22px, var(--safe-bottom))
+    max(22px, var(--safe-bottom), var(--keyboard))
     calc(20px + var(--safe-left));
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background:
     linear-gradient(to bottom, var(--status-bar-color) 0 var(--safe-top), transparent var(--safe-top)),
     radial-gradient(circle at 80% 5%, #dbe9fa 0, transparent 40%),
     var(--background);
 }
 .login-card {
+  flex: 0 0 auto;
   width: min(100%, 430px);
+  margin: auto;
   padding: clamp(24px, 7vw, 40px);
   border: 1px solid var(--line);
   border-radius: 24px;
@@ -426,6 +444,7 @@ img { max-width: 100%; }
 .totals .total-row { margin-top: 4px; padding-top: 11px; border-top: 1px solid var(--line); font-size: .97rem; font-weight: 800; }
 .totals .total-row dt, .totals .total-row dd { color: var(--navy); }
 .inline-warning { display: flex; align-items: flex-start; gap: 7px; color: var(--yellow); font-size: .82rem; line-height: 1.4; }
+.offline-note { margin: 0 0 10px; font-size: .78rem; }
 .checkout-card > .button { margin-top: 5px; }
 
 .orders-page > .page-heading { margin-bottom: 12px; }
@@ -505,6 +524,8 @@ img { max-width: 100%; }
 .update-platform-note { margin: 0; color: var(--muted); text-align: center; font-size: .84rem; }
 .toast { position: fixed; z-index: 50; left: var(--safe-left); right: var(--safe-right); bottom: calc(76px + var(--safe-bottom)); width: fit-content; max-width: calc(100vw - 32px - var(--safe-left) - var(--safe-right)); margin: 0 auto; padding: 11px 15px; border-radius: 12px; background: #142033; color: white; box-shadow: 0 8px 28px #07132638; font-size: .84rem; text-align: center; }
 :root[data-keyboard-open='true'] .toast { bottom: calc(12px + max(var(--safe-bottom), var(--keyboard))); }
+.app-shell[data-tab='cart'][data-cart-summary='true'] .toast { bottom: calc(64px + var(--cart-summary-height) + 8px + var(--safe-bottom)); }
+:root[data-keyboard-open='true'] .app-shell[data-tab='cart'][data-cart-summary='true'] .toast { bottom: calc(var(--cart-summary-height) + 8px + max(var(--safe-bottom), var(--keyboard))); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 @media (min-width: 600px) {
@@ -516,8 +537,8 @@ img { max-width: 100%; }
 }
 @media (min-width: 800px) {
   .app-shell { max-width: 1000px; margin-inline: auto; border-inline: 1px solid var(--line); }
-  body { background: #e8edf4; }
-  .dark body { background: #0b1220; }
+  body { background: var(--background); }
+  :root[data-theme='dark'] body { background: #0b1220; }
 }
 @media (max-width: 360px) {
   .app-header { padding-left: calc(10px + var(--safe-left)); padding-right: calc(10px + var(--safe-right)); }
