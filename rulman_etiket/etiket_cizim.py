@@ -208,7 +208,7 @@ class Yerlesim:
     boyut: str
     genislik: float                  # pt
     yukseklik: float                 # pt
-    mod: str                         # "yan" (barkod + DataMatrix yan yana) | "genis"
+    mod: str                         # "yan" | "genis" (barkod tam genişlik) | "karekod" (yalnız DataMatrix)
     cubuk_modul: int                 # nokta
     cubuk_bitler: str
     cubuk_x: int                     # nokta
@@ -285,7 +285,8 @@ def _ust_sira(veri: EtiketVerisi, p: _Profil):
         if len(bitler) * m <= ICERIK:
             uyarilar.append("Kod uzun olduğu için barkod tam genişlikte, kare kod aşağıda.")
             return "genis", m, bitler, dm, DM_MODUL_MIN, dm_metin, uyarilar
-    raise EtiketHatasi("Kod barkoda sığmıyor; daha kısa yazın.")
+    uyarilar.append("Kod çok uzun olduğu için çizgili barkod basılmadı; kare kod var.")
+    return "karekod", 0, "", dm, en_iyi, dm_metin, uyarilar
 
 
 def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
@@ -301,7 +302,7 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
 
     rakam = barkod_metni(veri)
     rakam_pt, rakam = _tek_satir_sigdir(rakam, p.rakam_pt, RAKAM_MIN,
-                                        _pt(max(cubuk_gen, 0)) + _pt(2 * SESSIZ * m) * 0.8, False)
+                                        _pt(cubuk_gen), False)
     rakam_bosluk = 0.7 * MM
     cubuk_blok = _pt(cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
 
@@ -318,6 +319,10 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             dm_y = KENAR
             cubuk_y = KENAR
             ust_h = max(_pt(dm_gen), cubuk_blok)
+        elif mod == "karekod":
+            dm_y = KENAR
+            cubuk_y = KENAR
+            ust_h = _pt(dm_gen)
         else:
             cubuk_y = KENAR
             ust_h = cubuk_blok
@@ -440,12 +445,13 @@ def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
     sh.commit(overlay=True)
 
     # barkod altı yazı: çubukların ortasına
-    rakam = barkod_metni(veri)
-    if _gen(rakam, y.rakam_pt, False) > _pt(len(y.cubuk_bitler) * m) + _pt(2 * SESSIZ * m) * 0.8:
-        rakam = _tek_satir_sigdir(rakam, y.rakam_pt, RAKAM_MIN, 1e9, False)[1]
+    rakam = barkod_metni(veri) if bit else ""
+    if rakam and _gen(rakam, y.rakam_pt, False) > _pt(len(bit) * m):
+        rakam = _tek_satir_sigdir(rakam, y.rakam_pt, RAKAM_MIN, _pt(len(bit) * m), False)[1]
     cubuk_orta = _pt(y.cubuk_x + len(y.cubuk_bitler) * m / 2)
-    rx = max(_pt(KENAR) * 0.5, cubuk_orta - _gen(rakam, y.rakam_pt, False) / 2)
-    yaz(rx, y.rakam_taban, rakam, y.rakam_pt, normal)
+    rx = max(_pt(KENAR), cubuk_orta - _gen(rakam, y.rakam_pt, False) / 2)
+    if rakam:
+        yaz(rx, y.rakam_taban, rakam, y.rakam_pt, normal)
 
     x = _pt(KENAR)
     adet = _adet_satiri(veri)
@@ -484,6 +490,7 @@ def ciz(veri: EtiketVerisi, boyut: str = "62x100", kopya: int = 1) -> pymupdf.Do
     doc = pymupdf.open()
     page = doc.new_page(width=y.genislik, height=y.yukseklik)
     _sayfa_ciz(page, veri, y)
+    doc.subset_fonts()
     for _ in range(kopya - 1):
         doc.fullcopy_page(0)
     doc.set_metadata({"title": f"Rulman Etiket - {barkod_metni(veri)}", "creator": "Rulman Etiket"})
