@@ -81,6 +81,7 @@ Alt tekrar kapalıysa uzunluk = içerik + 3.05 mm alt boşluk (ör. `51100` → 
 Referansla oran: referansta kod yazısı genişliğin ~%51'i, büyük harf yüksekliği / adet yazısı ≈ 1.4, kod / bilgi ≈ 1.5.
 Burada kod yazısı daha büyük tutuldu (62x100'de genişliğin %71'i, 62 sürekli'de %64'ü; kod/adet = 2.0, kod/bilgi = 2.5)
 çünkü raftan okunacak asıl bilgi koddur. Dikey sıra ve boşluk mantığı referansla aynıdır.
+Kod puntosu bilinçli olarak sabit bir üst sınırdır (62x100: 20 pt, sürekli: 18 pt) ve kısa kodlar (`608-2Z`, `51100`) da bu puntoda basılır: referans etikette de punto koddan koda değişmez, bu puntoda kod zaten referanstan büyüktür ve böylece raftaki bütün kutularda kod aynı boyda görünür.
 
 ## 4. Barkod kuralları
 
@@ -107,10 +108,10 @@ Burada kod yazısı daha büyük tutuldu (62x100'de genişliğin %71'i, 62 süre
 |---|---|
 | Uzun kod | Tek satıra sığana kadar 0.5 pt adımlarla küçülür (20/18 pt → **en az 12 pt**). |
 | Hâlâ sığmıyor | İki satıra bölünür: **'-' işaretinden sonra** (tire ilk satırda kalır), iki satırın uzununu en kısa yapan tire seçilir. İki satır 20/18 pt'den başlayıp **en az 9 pt**'ye kadar küçülür. Tire yoksa (ör. 40 karakter harf) en dengeli harf yerinden bölünür. |
-| Ek (C3) | Kodla aynı punto; tek başına sığmazsa küçülür (en az 9 pt), yine sığmazsa "…" ile kısaltılır (ek en fazla 15 karakter). |
+| Ek (C3) | Kodla aynı punto; tek başına sığmazsa küçülür (en az 9 pt), yine sığmazsa "…" ile kısaltılır (ek en fazla 15 karakter); uyarı: "Ek etikete sığmadığı için kısaltıldı." |
 | Ek boş | Ek satırı hiç çizilmez, alttaki her şey bir satır yukarı kayar (üstte ve alt tekrarda). |
 | Bilgi satırı boş | Satır kalkar; ikisi de boşsa bilgi bloğu ve önündeki 3.5 mm boşluk da kalkar. |
-| Uzun bilgi satırı | İki satır aynı puntoda kalır: 8/7.5 pt'den 0.25 pt adımla **en az 6 pt**'ye kadar küçülür; yine sığmazsa sonu "…" ile kesilir. Satır kaydırma yapılmaz (en fazla 60 karakter). |
+| Uzun bilgi satırı | İki satır aynı puntoda kalır: 8/7.5 pt'den 0.25 pt adımla **en az 6 pt**'ye kadar küçülür; yine sığmazsa sonu "…" ile kesilir (bütün yerleşim modlarında); uyarı: "Bilgi satırı etikete sığmadığı için kısaltıldı." Satır kaydırma yapılmaz (en fazla 60 karakter). |
 | 62x100'e sığmama | Kod puntosu 1 pt adımlarla 12 pt'ye kadar düşürülür; yine sığmazsa `dogrula` hata döner: "Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın." |
 | Sürekli rulo | Hiç sığmama yok; uzunluk büyür. |
 | Alt tekrar | `alt_tekrar` (varsayılan **açık**). Kapalıysa alt blok çizilmez; 62x100'de alt kısım boş kalır, süreklide etiket kısalır. |
@@ -142,8 +143,10 @@ PyInstaller notu: `fonts/` klasörü exe'ye `fonts/` adıyla eklenmeli (`--add-d
 ## 8. Önizlemeler
 
 `python test/onizleme_uret.py` (rulman_etiket klasöründen) → `test/onizleme/`:
-`NN_ad_62x100.png/.pdf`, `NN_ad_62surekli.png/.pdf` (300 dpi), `karsilastirma.png` (referans fotoğraf ↔ 6308-C-2HRS C3, 62 mm sürekli),
+`NN_ad_62x100.png/.pdf`, `NN_ad_62surekli.png/.pdf` (300 dpi) ve
 `dogrulama.md` (aşağıdaki tablo). Çıkış kodu 0 = bütün barkodlar doğru okundu.
+Referans fotoğraf (marka deseni, EAN ve lot numarası içerdiği için) repoda tutulmaz; karşılaştırma için
+`python test/onizleme_uret.py --referans <foto.jpg>` çalıştırılır, görüntü geçici klasöre yazılır (`test/onizleme/.gitignore` bu dosyaları dışarıda tutar).
 
 ## 9. Barkod doğrulama sonuçları
 
