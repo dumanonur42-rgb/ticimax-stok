@@ -25,7 +25,7 @@ let realtimeTimer: ReturnType<typeof setTimeout> | null = null
 function storagePolicy(): ProductStoragePolicy {
   const user = useApp.getState().session?.user
   const settings = useApp.getState().settings
-  const canSeeShelf = hasPerm(user, 'shelf')
+  const canSeeShelf = user?.role === 'admin' || user?.role === 'ara' || hasPerm(user, 'shelf')
   const canSeePrices = user?.role === 'admin' ||
     settings.show_prices_to_dealers !== false ||
     hasPerm(user, 'prices')
@@ -55,10 +55,10 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
     width: row.width == null ? null : Number(row.width),
     stock: Number(row.stock),
     unit: row.unit,
-    price: (policy.hidePrices ? null : Number(row.price)) as unknown as number,
+    price: policy.hidePrices ? null : Number(row.price),
     currency: row.currency,
-    list_price: row.list_price == null ? null : Number(row.list_price),
-    card_price: row.card_price == null ? null : Number(row.card_price),
+    list_price: policy.hidePrices || row.list_price == null ? null : Number(row.list_price),
+    card_price: policy.hidePrices || row.card_price == null ? null : Number(row.card_price),
     min_order: Number(row.min_order),
     shelf: policy.canSeeShelf ? row.shelf : '',
     box: row.box,
@@ -96,7 +96,6 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     getState('product_storage_policy')
   ])
   const policyChanged = storedPolicy !== policy.signature
-  if (policyChanged) await replaceProducts([])
   const full = !storedTime || storedGeneration !== currentGeneration || policyChanged
   let changed = 0
 
@@ -116,7 +115,6 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       if (!rows.length) break
       products.push(...rows.map((row) => toProduct(row, policy)))
       afterId = rows[rows.length - 1].id
-      if (rows.length < PAGE_SIZE) break
     }
     await replaceProducts(products)
     const cursor = cursorOf(products)
@@ -128,7 +126,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     ])
     changed = policyChanged ? Math.max(1, products.length) : products.length
   } else {
-    let time = storedTime
+    let time = new Date(new Date(storedTime).getTime() - 5 * 60_000).toISOString()
     let id = Number(storedId ?? 0)
     for (;;) {
       const { data, error } = await supabase.from('products')
@@ -147,7 +145,6 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       time = last.updated_at
       id = last.id
       changed += rows.length
-      if (rows.length < PAGE_SIZE) break
     }
     if (changed) {
       await Promise.all([

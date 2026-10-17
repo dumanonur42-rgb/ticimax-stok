@@ -1,7 +1,8 @@
 import type { Currency, OrderStatus, Product } from '@shared/types'
 
 const currencyFormatters = new Map<Currency, Intl.NumberFormat>()
-export function money(value: number, currency: Currency = 'TRY'): string {
+export function money(value: number | null, currency: Currency = 'TRY'): string {
+  if (value == null) return 'Fiyat gizli'
   let formatter = currencyFormatters.get(currency)
   if (!formatter) {
     formatter = new Intl.NumberFormat('tr-TR', { style: 'currency', currency, maximumFractionDigits: 2 })
@@ -10,8 +11,8 @@ export function money(value: number, currency: Currency = 'TRY'): string {
   return formatter.format(value)
 }
 
-export function displayPrice(value: number, currency: Currency = 'TRY'): string {
-  return value === 0 ? 'Fiyat sorunuz' : money(value, currency)
+export function displayPrice(value: number | null, currency: Currency = 'TRY'): string {
+  return value == null ? 'Fiyat gizli' : value === 0 ? 'Fiyat sorunuz' : money(value, currency)
 }
 
 const numberFormatter = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 2 })
@@ -42,7 +43,7 @@ export function productsToTsv(products: Product[], options: { canShelf: boolean;
     { label: 'Kutu durumu', value: (product) => product.box },
     { label: 'Açıklama', value: (product) => product.description }
   )
-  if (options.showPrices) columns.push({ label: 'Fiyat', value: (product) => money(product.price, product.currency) })
+  if (options.showPrices) columns.push({ label: 'Fiyat', value: (product) => displayPrice(product.price, product.currency) })
   return [columns.map((column) => column.label), ...products.map((product) => columns.map((column) => clean(column.value(product))))]
     .map((row) => row.join('\t'))
     .join('\r\n')

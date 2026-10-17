@@ -13,7 +13,7 @@ export interface Product {
   width: number | null
   stock: number
   unit: string
-  price: number
+  price: number | null
   currency: Currency
   list_price: number | null
   card_price: number | null

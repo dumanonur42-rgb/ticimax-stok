@@ -773,6 +773,14 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
 
   const add = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
+    if (product.price == null) {
+      onToast('Bu ürünün fiyatı gizli.')
+      return
+    }
+    if (product.price <= 0) {
+      onToast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.')
+      return
+    }
     const minimum = Math.max(1, product.min_order)
     const amount = cartLine !== undefined || variant === 'table' ? minimum : Math.max(minimum, Math.floor(qty))
     addToCart({ ...product, min_order: minimum }, amount)
@@ -805,6 +813,7 @@ function ProductAddButton({ variant, product, qty, onToast, onAdded }: {
       className={buttonClass}
       aria-label={cartLine ? `${product.sku} sepette, ${cartLine.qty} adet — bir daha ekle` : `${product.sku} sepete ekle`}
       onClick={add}
+      disabled={product.price == null || product.price <= 0}
     >
       <span className="cart-add-leading">
         <span className="cart-add-icon">
@@ -1003,15 +1012,19 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
   const currency = cart.lines[0]?.currency ?? customer?.currency ?? settings.default_currency ?? 'TRY'
   const mixedCurrency = cart.lines.some((line) => line.currency !== currency)
   const discountPct = customer?.discount_pct ?? 0
-  const lineUnit = (line: (typeof cart.lines)[number]): number => priceFor(cart.payment, line.unit_price, line.card_price, settings.card_price_pct)
-  const gross = cart.lines.reduce((total, line) => total + line.qty * lineUnit(line), 0)
-  const subtotal = gross * (1 - discountPct / 100)
-  const vat = subtotal * (settings.vat_pct / 100)
-  const total = subtotal + vat
+  const lineUnit = (line: (typeof cart.lines)[number]): number | null => priceFor(cart.payment, line.unit_price, line.card_price, settings.card_price_pct)
+  const hiddenPrice = cart.lines.some((line) => lineUnit(line) == null)
+  const zeroPrice = cart.lines.some((line) => lineUnit(line) === 0)
+  const gross = hiddenPrice ? null : cart.lines.reduce((sum, line) => sum + line.qty * (lineUnit(line) ?? 0), 0)
+  const subtotal = gross == null ? null : gross * (1 - discountPct / 100)
+  const vat = subtotal == null ? null : subtotal * (settings.vat_pct / 100)
+  const total = subtotal == null || vat == null ? null : subtotal + vat
   useEffect(() => { cart.refresh(products) }, [products])
   const submit = async (): Promise<void> => {
     if (busyRef.current || !cart.lines.length) return
     if (!online) return onToast('Sipariş oluşturmak için internet bağlantısı gerekir.')
+    if (hiddenPrice) return onToast('Bu ürünün fiyatı gizli.')
+    if (zeroPrice) return onToast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.')
     if (!isDealer && !cart.customerId) return onToast('Lütfen bir bayi/müşteri seçin.')
     if (mixedCurrency) return onToast('Sepette farklı para birimleri var; tek para birimiyle sipariş oluşturun.')
     busyRef.current = true
@@ -1028,7 +1041,7 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
           sku: line.sku,
           name: line.name,
           qty: line.qty,
-          unit_price: lineUnit(line),
+          unit_price: lineUnit(line) ?? 0,
           discount_pct: discountPct
         }))
       })
@@ -1066,7 +1079,7 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
           <div className="cart-line-head"><div><strong className="product-sku">{line.sku}</strong><span className="cart-brand">{line.brand}</span></div><button className="icon-button danger-icon" onClick={() => cart.remove(line.product_id)} aria-label={`${line.sku} sepetten çıkar`}><Trash2 size={19} /></button></div>
           {line.name.trim() && normalize(line.name) !== normalize(line.sku) && <div className="cart-line-name">{line.name}</div>}
           {line.qty > line.stock && <span className="stock-warning">Stokta {num(line.stock)} {line.stock === 1 ? 'adet' : 'adet'} var</span>}
-          <div className="cart-line-bottom"><QuantityStepper qty={line.qty} setQty={(qty) => cart.setQty(line.product_id, qty)} min={line.min_order} sku={line.sku} />{showPrices && <strong>{displayPrice(lineUnit(line) * line.qty, line.currency)}</strong>}</div>
+          <div className="cart-line-bottom"><QuantityStepper qty={line.qty} setQty={(qty) => cart.setQty(line.product_id, qty)} min={line.min_order} sku={line.sku} />{showPrices && <strong>{displayPrice((lineUnit(line) ?? 0) * line.qty, line.currency)}</strong>}</div>
         </article>
       ))}</div>
       <section className="card checkout-card">
@@ -1075,11 +1088,13 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
         <label className="field-label">Sipariş notu<textarea value={cart.note} onChange={(event) => cart.setNote(event.target.value)} rows={2} placeholder="Varsa teslimat notu" /></label>
         {showPrices && <dl className="totals">
           <div><dt>Ara toplam</dt><dd>{money(gross, currency)}</dd></div>
-          {discountPct > 0 && <div><dt>Bayi indirimi (%{num(discountPct)})</dt><dd>−{money(gross - subtotal, currency)}</dd></div>}
+          {discountPct > 0 && <div><dt>Bayi indirimi (%{num(discountPct)})</dt><dd>{gross == null || subtotal == null ? 'Fiyat gizli' : `−${money(gross - subtotal, currency)}`}</dd></div>}
           <div><dt>KDV (%{num(settings.vat_pct)})</dt><dd>{money(vat, currency)}</dd></div>
           <div className="total-row"><dt>Genel toplam</dt><dd>{money(total, currency)}</dd></div>
         </dl>}
         {!online && <p className="inline-warning"><WifiOff size={16} /> Sipariş vermek için internet bağlantısı gerekir.</p>}
+        {hiddenPrice && <p className="inline-warning">Bu ürünün fiyatı gizli.</p>}
+        {zeroPrice && <p className="inline-warning">Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.</p>}
         {mixedCurrency && <p className="inline-warning">Sepette farklı para birimleri var. Tek para birimiyle sipariş oluşturun.</p>}
         <button className="text-button" onClick={() => cart.clear()}><Trash2 size={16} /> Sepeti boşalt</button>
       </section>
@@ -1089,7 +1104,7 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
           <span className="cart-summary-label">Genel toplam</span>
           <strong>{showPrices ? money(total, currency) : '—'}</strong>
         </div>
-        <button className="button primary" disabled={busy || !online || mixedCurrency} onClick={() => void submit()}><Send size={17} />{busy ? 'Gönderiliyor…' : 'Siparişi gönder'}</button>
+        <button className="button primary" disabled={busy || !online || mixedCurrency || hiddenPrice || zeroPrice} onClick={() => void submit()}><Send size={17} />{busy ? 'Gönderiliyor…' : 'Siparişi gönder'}</button>
       </div>
     </div>
   )

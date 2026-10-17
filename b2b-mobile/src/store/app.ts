@@ -27,7 +27,7 @@ export interface CartLine {
   qty: number
   min_order: number
   stock: number
-  unit_price: number
+  unit_price: number | null
   card_price: number | null
   currency: Product['currency']
   shelf: string
