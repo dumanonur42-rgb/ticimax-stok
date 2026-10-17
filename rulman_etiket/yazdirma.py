@@ -23,7 +23,10 @@ class YazdirmaHatasi(Exception):
 
 
 def resource_path(ad: str) -> Path:
-    return Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent)) / ad
+    klasor = getattr(sys, "_MEIPASS", None)
+    if klasor is None:
+        klasor = Path(__file__).resolve().parent
+    return Path(klasor) / ad
 
 
 def kod_duzelt(metin: str) -> str:
