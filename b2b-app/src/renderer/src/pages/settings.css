@@ -25,10 +25,12 @@
   font: inherit;
   cursor: pointer;
 }
+[data-theme='dark'] .settings-nav-item { border-color: var(--border-strong); }
 .settings-nav-item > span { display: grid; min-width: 0; gap: 3px; }
 .settings-nav-item strong { color: var(--text); font-size: .9rem; }
 .settings-nav-item small { color: var(--text-muted); font-size: .78rem; }
 .settings-nav-item.active { border-color: var(--border); background: var(--bg-elev); box-shadow: var(--shadow); }
+[data-theme='dark'] .settings-nav-item.active { border-color: var(--border-strong); }
 .settings-nav-item.active > svg:first-child { color: var(--primary); }
 .settings-nav-chevron { margin-left: auto; flex: none; }
 .settings-content, .settings-panel { min-width: 0; }
@@ -45,6 +47,8 @@
 .settings-segment { display: flex; width: fit-content; max-width: 100%; padding: 3px; gap: 4px; border: 1px solid var(--border); border-radius: 9px; background: var(--bg-sunken); }
 .settings-segment button { min-height: 36px; padding: 5px 14px; border: 0; border-radius: 6px; background: transparent; color: var(--text); font: inherit; cursor: pointer; }
 .settings-segment button.active { background: var(--bg-elev); box-shadow: 0 1px 4px #0002; font-weight: 700; }
+[data-theme='dark'] .settings-segment { border-color: var(--border-strong); }
+[data-theme='dark'] .settings-segment button { border: 1px solid var(--border-strong); }
 .settings-font { display: grid; gap: 8px; }
 .settings-font-head, .settings-font-control, .settings-app-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
 .settings-font-control input { flex: 1; min-width: 60px; }
@@ -54,6 +58,13 @@
 .settings-switch small, .settings-app-row small { color: var(--text-muted); }
 .settings-switch input { width: 20px; height: 20px; flex: none; }
 .settings-link { display: inline-flex; align-items: center; gap: 7px; justify-self: start; border: 0; background: none; color: var(--primary); font: inherit; cursor: pointer; }
+[data-theme='dark'] .settings-link {
+  padding: 5px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
+  color: var(--primary-hover);
+}
 .settings-status-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .settings-status-grid > div { display: grid; align-content: start; gap: 8px; min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
 .settings-status-grid > div > .badge { width: fit-content; justify-self: start; }

@@ -51,7 +51,7 @@
   --bg-stripe: #1a2438;
   --border: #2b3856;
   --border-soft: #202b42;
-  --border-strong: #46557a;
+  --border-strong: #7185ad;
   --text: #e6ebf5;
   --text-muted: #a5b1c8;
   --text-faint: #7d8aa5;
@@ -284,6 +284,9 @@ textarea {
   position: relative;
   transition: background var(--motion), color var(--motion);
 }
+[data-theme='dark'] .nav-item {
+  border-color: var(--border-strong);
+}
 .nav-item:hover {
   background: var(--navy-hover);
   color: var(--navy-text);
@@ -433,6 +436,14 @@ textarea {
 .btn.icon.sm {
   width: 30px;
 }
+[data-theme='dark'] .btn.ghost {
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+}
+[data-theme='dark'] .btn.ghost:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--bg-hover));
+}
 .input,
 .select,
 textarea.input {
@@ -513,6 +524,9 @@ textarea.input {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
+}
+[data-theme='dark'] .card.stat {
+  border-color: var(--border-strong);
 }
 .grid {
   display: grid;
@@ -743,6 +757,13 @@ textarea.input {
   outline: 2px solid var(--focus);
   outline-offset: 1px;
 }
+[data-theme='dark'] .seg {
+  border-color: var(--border-strong);
+}
+[data-theme='dark'] .seg-btn.on {
+  outline: 1px solid var(--border-strong);
+  outline-offset: -1px;
+}
 [data-theme='contrast'] .seg-btn.on {
   outline: 2px solid var(--text);
 }
@@ -911,6 +932,13 @@ textarea.input {
   align-items: center;
   gap: 4px;
 }
+[data-theme='dark'] .vgrid-head button {
+  padding: 4px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
+  color: var(--text);
+}
 .vgrid-body {
   flex: 1;
   overflow-x: hidden;
@@ -971,6 +999,9 @@ textarea.input {
   color: var(--text-muted);
   border-color: var(--border);
   background: transparent;
+}
+[data-theme='dark'] .vrow .cart-btn {
+  border-color: var(--border-strong);
 }
 .vrow:hover .cart-btn,
 .vrow[aria-selected='true'] .cart-btn,
@@ -1270,6 +1301,11 @@ textarea.input {
 .fmore:hover {
   background: var(--bg-hover);
 }
+[data-theme='dark'] .fmore {
+  color: var(--primary-hover);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-hover);
+}
 .fempty {
   margin: 4px 6px;
   font-size: 0.85rem;
@@ -1380,6 +1416,9 @@ textarea.input {
 }
 .chip button:hover {
   background: var(--bg-hover);
+}
+[data-theme='dark'] .chip {
+  border-color: var(--border-strong);
 }
 
 /* drawer */
@@ -1530,6 +1569,9 @@ dialog.modal::backdrop {
 .theme-option:hover {
   border-color: var(--border-strong);
   transform: translateY(-1px);
+}
+[data-theme='dark'] .theme-option {
+  border-color: var(--border-strong);
 }
 .theme-option.selected {
   border-color: var(--primary);
@@ -1857,6 +1899,11 @@ dialog.update-dialog {
   background: none;
   cursor: pointer;
   color: inherit;
+}
+[data-theme='dark'] .toast button {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-hover);
 }
 
 #page-title:focus {
@@ -2300,6 +2347,15 @@ dialog.update-dialog {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
+[data-theme='dark'] .contact-btn {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+[data-theme='dark'] .contact-btn:hover,
+[data-theme='dark'] .contact-btn:focus-visible {
+  background: color-mix(in srgb, var(--contact-accent) 16%, var(--bg-hover));
+  border-color: var(--contact-accent);
+}
 [data-theme='contrast'] .contact-list {
   border: 2px solid currentColor;
 }
@@ -2376,6 +2432,9 @@ dialog.update-dialog {
 .tab[aria-selected='true'] {
   color: var(--text);
   border-bottom-color: var(--primary);
+}
+[data-theme='dark'] .tab:not([aria-selected='true']) {
+  border-bottom-color: var(--border-strong);
 }
 
 /* misc */
@@ -3706,6 +3765,9 @@ dialog.update-dialog {
   text-align: left;
   cursor: pointer;
 }
+[data-theme='dark'] .traffic-geo-row {
+  border-color: var(--border-strong);
+}
 .traffic-geo-row:hover,
 .traffic-geo-row[aria-pressed='true'] {
   border-color: var(--primary);
@@ -3806,6 +3868,9 @@ dialog.update-dialog {
   font-size: 0.8rem;
   overflow-wrap: anywhere;
   cursor: pointer;
+}
+[data-theme='dark'] .traffic-filter-chip {
+  border-color: var(--border-strong);
 }
 [data-theme='contrast'] .traffic-geo-row {
   border: 2px solid currentColor;
