@@ -4,6 +4,15 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.24
+
+- Türkçe harfli aramalar düzeltildi: "ÇİN" ya da "çin" yazınca ilgili ürünler bulunur, marka filtresiyle birlikte de çalışır.
+- "6205 ZZ" gibi kısa ekli aramalar artık yalnızca uyan ürünleri gösterir.
+- Ürün detayı kapanınca klavye listede kaldığı yerden devam eder.
+- [yönetici] Kullanıcı silindikten sonra düzenleme penceresi kapanır.
+- [yönetici] Stok Aktar'da ayar ya da kolon eşleşmesi değişince eski deneme sonucu temizlenir.
+- [yönetici] Geçmiş yüklemelerde silinen listeler "Silinen liste" olarak işaretlenir, tüm ürün listesini silme işlemi de geçmişe yazılır.
+
 ## 1.0.23
 
 - Çıkış yapmak artık yalnızca bu cihazı etkiler; diğer cihazlardaki oturumlar kapanmaz.
