@@ -102,7 +102,7 @@ export const useCart = create<CartState>()(
                 name: p.name,
                 brand: p.brand,
                 qty: step,
-                unit_price: p.price,
+                unit_price: p.price ?? 0,
                 card_price: p.card_price,
                 currency: p.currency,
                 stock: p.stock,
@@ -126,7 +126,7 @@ export const useCart = create<CartState>()(
         set((s) => ({
           lines: s.lines.map((l) => {
             const p = products.find((x) => x.id === l.product_id)
-            return p ? { ...l, unit_price: p.price, card_price: p.card_price, currency: p.currency, stock: p.stock, name: p.name, sku: p.sku } : l
+            return p ? { ...l, unit_price: p.price ?? 0, card_price: p.card_price, currency: p.currency, stock: p.stock, name: p.name, sku: p.sku } : l
           })
         }))
     }),

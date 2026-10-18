@@ -47,6 +47,7 @@ const round2 = (v: number | string): number => Math.round(Number(v) * 100) / 100
 const editText = (p: Product, k: EditKey): string => {
   if (k === 'shelf') return p.shelf
   if (k === 'card_price') return p.card_price == null ? '' : String(round2(p.card_price))
+  if (k === 'price') return p.price == null ? '' : String(round2(p.price))
   return String(round2(p[k]))
 }
 
@@ -67,7 +68,7 @@ function toPatch(p: Product, e: Edit): BulkProductPatch | null {
   }
   if (e.price != null) {
     const n = parseNum(e.price) ?? 0
-    if (n !== round2(p.price)) {
+    if (p.price == null || n !== round2(p.price)) {
       out.price = n
       changed = true
     }
@@ -717,7 +718,7 @@ function BulkEdit({ items, cardPct, onClose, onDone }: { items: Product[]; cardP
       else if (stockMode === 'sub') r.stock = p.stock - sv
       if (shelfOn) r.shelf = shelf.trim()
       if (priceMode === 'set') r.price = pv
-      else if (priceMode === 'pct') r.price = Math.round(p.price * (1 + pv / 100) * 100) / 100
+      else if (priceMode === 'pct' && p.price != null) r.price = Math.round(p.price * (1 + pv / 100) * 100) / 100
       if (cardMode === 'set') r.card_price = cv
       else if (cardMode === 'auto') r.card_price = null
       if (active === 'on') r.active = true

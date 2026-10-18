@@ -1,6 +1,6 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
-import type { ActivityEvent, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
+import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityPlatform, ActivityRow, ActivitySummary, ActivityPerson, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
@@ -255,16 +255,20 @@ export function registerIpc(): void {
     const since = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString()
     const result = await cloud()
       .from('activity_log')
-      .select('at,kind,product_id,sku,brand,query')
+      .select('at,kind,platform,product_id,sku,brand,query')
       .eq('user_id', userId)
       .gte('at', since)
       .order('at', { ascending: false })
       .limit(3000)
     if (result.error) throw result.error
     let lastLogin: string | null = null
+    const kindCounts: Record<ActivityKind, number> = { login: 0, search: 0, product_view: 0, cart_add: 0, order: 0 }
+    const usedPlatforms = new Set<ActivityPlatform>()
     const products = new Map<string, { product_id: number | null; sku: string; brand: string; views: number }>()
     const terms = new Map<string, { query: string; searches: number }>()
     for (const row of result.data) {
+      kindCounts[row.kind]++
+      usedPlatforms.add(row.platform)
       if (row.kind === 'login' && !lastLogin) lastLogin = row.at
       if (row.kind === 'product_view') {
         const key = row.product_id === null ? `${row.sku}|${row.brand}` : String(row.product_id)
@@ -281,6 +285,9 @@ export function registerIpc(): void {
     }
     return {
       lastLogin,
+      lastActivity: result.data[0]?.at ?? null,
+      kindCounts,
+      platforms: [...usedPlatforms],
       topViewedProducts: [...products.values()].sort((a, b) => b.views - a.views).slice(0, 5),
       topSearchTerms: [...terms.values()].sort((a, b) => b.searches - a.searches).slice(0, 5)
     }

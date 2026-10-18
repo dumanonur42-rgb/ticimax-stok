@@ -240,7 +240,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     width: p.width ?? null,
     stock: p.stock,
     unit: p.unit,
-    price: p.price,
+    price: p.price ?? 0,
     currency: p.currency,
     list_price: p.list_price ?? null,
     card_price: p.card_price ?? null,
