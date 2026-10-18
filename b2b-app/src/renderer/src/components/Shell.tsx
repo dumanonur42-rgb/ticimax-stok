@@ -110,6 +110,8 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
       setSession(null)
       document.title = 'Yamansa Rulman B2B'
       toast('Oturum kapatıldı.')
+    } catch (error) {
+      toast((error as Error).message || 'Oturum kapatılamadı.', 'error')
     } finally {
       endLogout()
     }

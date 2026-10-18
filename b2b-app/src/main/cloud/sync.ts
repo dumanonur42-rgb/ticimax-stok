@@ -36,11 +36,7 @@ export function setStoragePolicy(user: User, showPricesToDealers: boolean): void
     canSeeShelf: user.role === 'admin' || user.role === 'ara' || user.perms.includes('shelf'),
     hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices')
   }
-  if (next.canSeeShelf !== storagePolicy.canSeeShelf || next.hidePrices !== storagePolicy.hidePrices) {
-    storagePolicy = next
-  } else {
-    storagePolicy = next
-  }
+  storagePolicy = next
 }
 
 export function syncStatus(): SyncStatus {

@@ -3,7 +3,7 @@ import { hasPerm } from '@shared/perms'
 import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, net, shell } from 'electron'
 import { join } from 'node:path'
-import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
+import { discardFailedOps, flush, outboxCounts, setOutboxUser } from './cloud/outbox'
 import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { flushActivity, logActivity, setActivitySession } from './activity'
 import { onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
@@ -263,6 +263,9 @@ export function registerIpc(): void {
   })
   handle('auth:logout', async () => {
     await flushActivity()
+    await flush()
+    const pending = outboxCounts().pending
+    if (pending > 0) throw new Error(`Gönderilmemiş ${pending} kayıt var. İnternet bağlantısı gelince tekrar çıkış yapın.`)
     deactivate()
     await logout()
     deleteLocalDatabase()
