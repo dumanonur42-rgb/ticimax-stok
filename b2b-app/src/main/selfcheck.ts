@@ -12,6 +12,7 @@ import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBran
 import { boxMentions, canonBrand } from '@shared/identity'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
+import { cardPrice, priceFor } from '@shared/price'
 
 /**
  * Headless sanity run: `electron . --selfcheck`.
@@ -191,6 +192,20 @@ export async function runSelfCheck(): Promise<number> {
   const t0 = performance.now()
   const db = getDb()
   let ok = await storageSelfCheck()
+  const cardPricingOk =
+    cardPrice(null, 1, 5) === null &&
+    cardPrice(0, 1, 5) === null &&
+    cardPrice(-1, 1, 5) === null &&
+    cardPrice(10, 0, 5) === null &&
+    cardPrice(10, null, 0) === null &&
+    cardPrice(10, null, 5) === 10.5 &&
+    priceFor('kart', 10, null, 0) === 10 &&
+    priceFor('kart', null, null, 5) === null
+  if (!cardPricingOk) {
+    console.error('card price visibility or payment fallback failed')
+    ok = false
+  }
+  console.log(`card price visibility: ${cardPricingOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {

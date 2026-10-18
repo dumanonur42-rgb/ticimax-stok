@@ -71,11 +71,18 @@ export function Orders(): ReactNode {
           <Empty title="Sipariş bulunamadı" />
         ) : (
           <table className="table orders-list-table">
+            <colgroup>
+              <col className="order-number-column" />
+              <col className="order-date-column" />
+              <col className="order-customer-column" />
+              <col className="order-status-column" />
+              {showPrices && <col className="order-total-column" />}
+            </colgroup>
             <thead>
               <tr>
-                <th className="nowrap" style={{ minWidth: 150 }}>Sipariş No</th>
-                <th className="nowrap" style={{ minWidth: 150 }}>Tarih</th>
-                <th style={{ width: '100%' }}>Müşteri</th>
+                <th className="nowrap">Sipariş No</th>
+                <th className="nowrap">Tarih</th>
+                <th>Müşteri</th>
                 <th>Durum</th>
                 {showPrices && <th className="right">Tutar</th>}
               </tr>
@@ -90,9 +97,13 @@ export function Orders(): ReactNode {
                   onClick={() => setSelectedId(o.id)}
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedId(o.id)}
                 >
-                  <td className="mono nowrap">{o.order_no}</td>
-                  <td className="nowrap small">{date(o.created_at)}</td>
-                  <td>{o.customer_name || '-'}</td>
+                  <td className="mono nowrap order-number-cell">{o.order_no}</td>
+                  <td className="nowrap small order-date-cell">{date(o.created_at)}</td>
+                  <td>
+                    <span className="truncate order-customer-name" title={o.customer_name || '-'}>
+                      {o.customer_name || '-'}
+                    </span>
+                  </td>
                   <td>
                     <span className={`badge ${STATUS_CLASS[o.status]}`}>{STATUS_LABEL[o.status]}</span>
                   </td>
