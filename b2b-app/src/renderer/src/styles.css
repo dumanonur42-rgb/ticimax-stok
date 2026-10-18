@@ -719,11 +719,25 @@ textarea.input {
   letter-spacing: 0.01em;
 }
 .stock-pill-unit {
-  max-width: 38px;
+  max-width: 44px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.68rem;
   font-weight: 600;
+}
+.vrow .stock-cell {
+  container-type: inline-size;
+}
+@container (max-width: 84px) {
+  .stock-pill {
+    min-width: 0;
+    padding-inline: 3px;
+  }
+}
+@container (max-width: 76px) {
+  .stock-pill-unit {
+    display: none;
+  }
 }
 .stock-pill-text {
   font-weight: 700;
@@ -1142,6 +1156,13 @@ textarea.input {
   color: var(--text-muted);
   border-color: var(--border);
   background: transparent;
+}
+.vrow .cart-cell {
+  overflow: visible;
+}
+.vrow .cart-cell .cart-btn {
+  flex: none;
+  white-space: nowrap;
 }
 [data-theme='dark'] .vrow .cart-btn {
   border-color: var(--border-strong);

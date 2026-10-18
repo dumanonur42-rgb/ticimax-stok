@@ -34,16 +34,16 @@ interface Column {
 }
 
 const COLUMNS: Column[] = [
-  { key: 'pick', label: '', min: 40 },
-  { key: 'shelf', label: 'Raf', min: 150, grow: 1.2, drop: 5, sort: 'shelf', perm: 'shelf' },
-  { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
-  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 4 },
+  { key: 'pick', label: '', min: 36 },
+  { key: 'shelf', label: 'Raf', min: 240, drop: 4, sort: 'shelf', perm: 'shelf' },
+  { key: 'sku', label: 'Ürün Kodu', min: 194, grow: 1.6, sort: 'sku' },
+  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 5 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
-  { key: 'stock', label: 'Stok', min: 150, sort: 'stock', align: 'right' },
-  { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 3 },
-  { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
-  { key: 'price', label: 'Fiyat', min: 195, grow: 0.4, sort: 'price', align: 'right' },
-  { key: 'act', label: '', min: 100 }
+  { key: 'stock', label: 'Stok', min: 65, grow: 0.4, sort: 'stock', align: 'right' },
+  { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 2 },
+  { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 3 },
+  { key: 'price', label: 'Fiyat', min: 146, grow: 0.4, sort: 'price', align: 'right' },
+  { key: 'act', label: '', min: 106 }
 ]
 
 /** Chip style for the packaging label: the two common states get their own look, anything else is neutral. */
@@ -195,10 +195,18 @@ export function Catalog(): ReactNode {
     return () => ro.disconnect()
   }, [])
   const hasDimensions = total > rows.size || Array.from(rows.values()).some((product) => product.d_inner != null || product.d_outer != null || product.width != null)
-  const layoutColumns = useMemo(
-    () => COLUMNS.map((column) => (column.key === 'shelf' ? { ...column, min: Math.ceil(281 * (settings?.font_scale ?? 1)), grow: 2.5 } : column)),
-    [settings?.font_scale]
-  )
+  const layoutColumns = useMemo(() => {
+    const scale = settings?.font_scale ?? 1
+    const compact = gridW < 900
+    return COLUMNS.map((column) => {
+      if (column.key === 'shelf') return { ...column, min: gridW < 1200 ? 229 : 240 }
+      if (column.key === 'sku') return { ...column, min: Math.ceil(178 * scale + 20) }
+      if (column.key === 'stock') return { ...column, min: compact ? Math.ceil(45 + 20 * scale) : 104 }
+      if (column.key === 'price') return { ...column, min: Math.ceil(96 * scale + 50) }
+      if (column.key === 'act') return { ...column, min: Math.ceil(72 * scale + 34) }
+      return column
+    })
+  }, [settings?.font_scale, gridW])
   const cols = useMemo(
     () =>
       fitColumns(
@@ -652,7 +660,7 @@ export function Catalog(): ReactNode {
                         )}
                       </div>
                     )}
-                    <div className="cell sku" role="gridcell" title={p.name}>
+                    <div className="cell sku" role="gridcell" title={`${p.sku} · ${p.name}`}>
                       {p.sku}
                     </div>
                     {has.has('brand') && (
@@ -665,7 +673,7 @@ export function Catalog(): ReactNode {
                         {p.d_inner != null || p.d_outer != null || p.width != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
                       </div>
                     )}
-                    <div className="cell right" role="gridcell">
+                    <div className="cell right stock-cell" role="gridcell">
                       <StockPill stock={p.stock} threshold={threshold} unit={p.unit} />
                     </div>
                     {has.has('box') && (
@@ -683,7 +691,7 @@ export function Catalog(): ReactNode {
                         {p.price != null && p.price > 0 ? money(p.price, p.currency) : <span className="badge low">Fiyat sorunuz</span>}
                       </div>
                     )}
-                    <div className="cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
+                    <div className="cell cart-cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
                       <button
                         className="btn sm cart-btn"
                         onClick={(e) => {
