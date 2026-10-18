@@ -310,7 +310,7 @@ export function Catalog(): ReactNode {
       const p = rows.get(activeIdx)
       if (p) {
         e.preventDefault()
-        if (p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+        if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
         else {
           addToCart(p)
           toast(`${p.sku} sepete eklendi.`, 'success')
@@ -669,7 +669,7 @@ export function Catalog(): ReactNode {
                     )}
                     {has.has('price') && (
                       <div className="cell right nowrap" role="gridcell">
-                        {p.price > 0 ? money(p.price, p.currency) : <span className="badge low">Fiyat sorunuz</span>}
+                        {p.price != null && p.price > 0 ? money(p.price, p.currency) : <span className="badge low">Fiyat sorunuz</span>}
                       </div>
                     )}
                     <div className="cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
@@ -677,14 +677,14 @@ export function Catalog(): ReactNode {
                         className="btn sm cart-btn"
                         onClick={(e) => {
                           e.stopPropagation()
-                          if (p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+                          if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
                           else {
                             addToCart(p)
                             toast(`${p.sku} sepete eklendi.`, 'success')
                           }
                         }}
                         aria-label={`${p.sku} sepete ekle`}
-                        disabled={(p.stock <= 0 && !isAdmin) || p.price <= 0}
+                        disabled={(p.stock <= 0 && !isAdmin) || p.price == null || p.price <= 0}
                       >
                         <Plus size={16} aria-hidden /> Sepet
                       </button>

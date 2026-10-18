@@ -2,7 +2,8 @@ import type { Currency, OrderStatus, Product } from '@shared/types'
 
 const fmtCache = new Map<string, Intl.NumberFormat>()
 
-export function money(n: number, cur: Currency = 'TRY'): string {
+export function money(n: number | null | undefined, cur: Currency = 'TRY'): string {
+  if (n == null) return 'Fiyat sorunuz'
   let f = fmtCache.get(cur)
   if (!f) {
     f = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: cur, maximumFractionDigits: 2 })

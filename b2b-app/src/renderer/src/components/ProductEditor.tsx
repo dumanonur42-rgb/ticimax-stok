@@ -204,7 +204,7 @@ export function ProductEditor({
         </Field>
         {text('unit', 'Birim')}
         <Field label="Fiyat">
-          {(id) => <input id={id} className="input" inputMode="decimal" value={form.price} onChange={(e) => set('price', Number(e.target.value.replace(',', '.')) || 0)} />}
+          {(id) => <input id={id} className="input" inputMode="decimal" value={form.price ?? ''} onChange={(e) => set('price', Number(e.target.value.replace(',', '.')) || 0)} />}
         </Field>
         <Field label="Para birimi">
           {(id) => (

@@ -69,7 +69,7 @@ async function writeCheck(): Promise<boolean> {
       payment: 'pesin',
       currency: 'TRY',
       vat_pct: 20,
-      items: [{ product_id: sample.id, sku: sample.sku, name: sample.name, qty: 2, unit_price: sample.price, discount_pct: 0 }]
+      items: [{ product_id: sample.id, sku: sample.sku, name: sample.name, qty: 2, unit_price: sample.price ?? 0, discount_pct: 0 }]
     })
     console.log(`dealer order ${order.order_no}: total ${order.total}, customer ${order.customer_id}`)
     if (order.customer_id !== ds.customer?.id) ok = false
