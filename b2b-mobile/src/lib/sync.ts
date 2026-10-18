@@ -89,10 +89,9 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
   useApp.getState().setSettings(await loadSettings())
   const currentGeneration = await generation()
   const policy = storagePolicy()
-  const [storedGeneration, storedTime, storedId, storedPolicy] = await Promise.all([
+  const [storedGeneration, storedTime, storedPolicy] = await Promise.all([
     getState('catalog_generation'),
     getState('products_cursor_time'),
-    getState('products_cursor_id'),
     getState('product_storage_policy')
   ])
   const policyChanged = storedPolicy !== policy.signature
@@ -127,7 +126,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     changed = policyChanged ? Math.max(1, products.length) : products.length
   } else {
     let time = new Date(new Date(storedTime).getTime() - 5 * 60_000).toISOString()
-    let id = Number(storedId ?? 0)
+    let id = 0
     for (;;) {
       const { data, error } = await supabase.from('products')
         .select(PRODUCT_COLUMNS)
