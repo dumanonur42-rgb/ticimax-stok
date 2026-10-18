@@ -526,6 +526,23 @@ def main() -> int:
             ean_dogrula.hatalar.append(f"{numara!r} doğrulama çöktü: {e}")
     sonuclar.append(ean_dogrula)
 
+    rastgele = Sonuc("rastgele_ean13", "api", "-")
+    try:
+        for _ in range(200):
+            numara = ec.rastgele_ean13()
+            if len(numara) != 13 or not numara.startswith("20") or ec.ean13(numara) != numara:
+                rastgele.hatalar.append(f"geçersiz rastgele EAN-13: {numara!r}")
+                break
+        from unittest.mock import patch
+        kullanilan = {ec.ean13("20" + "0" * 10)}
+        with patch.object(ec.secrets, "randbelow", side_effect=[0] * 10 + [1] + [0] * 9):
+            yeni = ec.rastgele_ean13(kullanilan)
+        if yeni in kullanilan:
+            rastgele.hatalar.append("rastgele_ean13 kullanılmış numarayı yeniden üretti")
+    except Exception as e:  # noqa: BLE001
+        rastgele.hatalar.append(f"rastgele_ean13 denemesi çöktü: {e}")
+    sonuclar.append(rastgele)
+
     recent = Sonuc("son_kod_barkod", "api", "-")
     try:
         import yazdirma as yz

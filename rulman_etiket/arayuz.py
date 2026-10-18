@@ -745,11 +745,21 @@ class Uygulama(tk.Tk):
         self.adet = Sayac(satir, self.adet_var, 1, 99999)
         _alan(satir, "Adet", self.adet, 0, sutun=1, ipady=0)
 
-        self.barkod = _giris(kart, font=_f(11), textvariable=self.barkod_var)
-        _alan(kart, "Barkod numarası (isteğe bağlı)", self.barkod, 5, ust=8)
+        self.barkod_satir = tk.Frame(kart, bg=KART)
+        self.barkod_satir.columnconfigure(0, weight=1)
+        self.barkod = _giris(self.barkod_satir, font=_f(11), textvariable=self.barkod_var)
+        self.barkod.grid(row=0, column=0, sticky="ew", ipady=px(4))
+        self.barkod_rastgele = Buton(
+            self.barkod_satir, "Rastgele", self._rastgele_barkod, tur="kucuk")
+        self.barkod_rastgele.grid(row=0, column=1, sticky="ns", padx=(px(8), 0))
+        _alan(kart, "Barkod numarası (isteğe bağlı)", self.barkod_satir, 5, ust=8, ipady=0)
         self.barkod_ipucu = tk.Label(
-            kart, text="13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.",
+            kart,
+            text='13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.\n"Rastgele" yeni numara üretir.',
             font=_f(8), fg=SOLUK, bg=KART, anchor="w", justify="left", width=1)
+        self.barkod_ipucu.bind(
+            "<Configure>",
+            lambda e: self.barkod_ipucu.config(wraplength=max(px(80), e.width)))
         self.barkod_ipucu.grid(row=7, column=0, sticky="ew", pady=(px(3), 0))
 
         tk.Label(kart, text="Bilgi satırları (isteğe bağlı)", font=_f(8), fg=SOLUK, bg=KART,
@@ -866,6 +876,14 @@ class Uygulama(tk.Tk):
             finally:
                 self._normallesiyor = False
 
+    def _rastgele_barkod(self):
+        kullanilan = {
+            str(k.get("barkod_no", "")).replace(" ", "")
+            for k in self._son_kodlar() if k.get("barkod_no")
+        }
+        self.barkod_var.set(ec.rastgele_ean13(kullanilan))
+        self.barkod.focus_set()
+
     def _kirp(self, var: tk.StringVar):
         if var.get() != var.get().strip():
             var.set(var.get().strip())
@@ -939,7 +957,8 @@ class Uygulama(tk.Tk):
         self.onizleme.uyari_goster(notlar)
         barkod_hata = next((h for h in hatalar if h.startswith("Barkod numarası")), None)
         self.barkod_ipucu.config(
-            text=barkod_hata or "13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.",
+            text=barkod_hata or
+            '13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.\n"Rastgele" yeni numara üretir.',
             fg=KIRMIZI if barkod_hata else SOLUK)
         if hatalar:
             self.kod_ipucu.config(text=hatalar[0], fg=KIRMIZI)
