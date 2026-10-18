@@ -4,6 +4,12 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.26
+
+- Sipariş listesinde sipariş numarası ve tarih artık tam görünür.
+- Fiyatı girilmemiş ürünlerde kredi kartı fiyatı da gösterilmez.
+- [yönetici] Stok Aktar'da Excel ya da CSV olmayan dosya seçilince "Dosya okunamadı" uyarısı çıkar.
+
 ## 1.0.25
 
 - Sipariş tutarı artık sunucuda ürünün kendi fiyatından hesaplanır.
