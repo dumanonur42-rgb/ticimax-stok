@@ -4,6 +4,22 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.25
+
+- Sipariş tutarı artık sunucuda ürünün kendi fiyatından hesaplanır.
+- Fiyatı girilmemiş ürünlerde "Fiyat sorunuz" yazar; bu ürünler sepete eklenmez, "Fiyat için lütfen bizi arayın" uyarısı çıkar.
+- Bayi yalnızca "beklemede" olan siparişini iptal edebilir; iptalden önce onay sorulur ve stok doğru miktarda geri eklenir.
+- İnternet yokken sipariş gönderilemeyeceği hemen açıkça yazılır.
+- "SKF 6205", "6205 SKF" ve "NU 1052" gibi aramalarda doğru ürünler üstte çıkar.
+- Çıkış yapınca bilgisayardaki şifreli ürün kopyası tamamen silinir; gönderilmemiş kayıt varsa çıkış yapılmaz ve uyarı verilir.
+- Fiyat ve raf görme yetkisi olmayan kullanıcıların bilgisayarına bu bilgiler hiç indirilmez.
+- Sipariş listesinde tarih ve sipariş numarası artık kesilmez; raf sütunu genişledi.
+- Ürün güncellemeleri artık atlanmaz.
+- Güncelleme hataları Türkçe ve anlaşılır yazılır.
+- [yönetici] Stok Aktar'da boş ya da geçersiz dosya açıkça reddedilir; "Vazgeç"ten sonra eski uyarılar temizlenir.
+- [yönetici] Hareketler grafiğinde ziyaret olmayan günler de 0 olarak gösterilir.
+- [yönetici] Pencereler kapanınca klavye açan düğmeye geri döner.
+
 ## 1.0.24
 
 - Türkçe harfli aramalar düzeltildi: "ÇİN" ya da "çin" yazınca ilgili ürünler bulunur, marka filtresiyle birlikte de çalışır.
