@@ -85,6 +85,69 @@ class EtiketHatasi(ValueError):
     """str(e) kullanıcıya gösterilecek Türkçe metindir."""
 
 
+@dataclass(frozen=True)
+class _Logo:
+    png: bytes
+    width: int
+    height: int
+
+
+_LOGO_BUYUKLUK = 10 * 1024 * 1024
+_LOGO_ACILAMADI = "Logo dosyası açılamadı. PNG veya JPG seçin."
+
+
+def _logo_hazirla(logo: bytes | None) -> _Logo | None:
+    if logo is None:
+        return None
+    if not isinstance(logo, bytes):
+        raise EtiketHatasi(_LOGO_ACILAMADI)
+    if len(logo) > _LOGO_BUYUKLUK:
+        raise EtiketHatasi("Logo dosyası çok büyük (en fazla 10 MB).")
+    if not (
+        logo.startswith(b"\x89PNG\r\n\x1a\n") or logo.startswith(b"\xff\xd8\xff")
+    ):
+        raise EtiketHatasi(_LOGO_ACILAMADI)
+    try:
+        source = pymupdf.Pixmap(logo)
+        if source.width < 1 or source.height < 1 or source.colorspace is None:
+            raise ValueError
+        rgb = pymupdf.Pixmap(pymupdf.csRGB, source)
+        samples = np.frombuffer(rgb.samples, dtype=np.uint8).reshape(
+            rgb.height, rgb.width, rgb.n
+        )
+        gray = (
+            (samples[:, :, 0].astype(np.uint32) * 299
+             + samples[:, :, 1].astype(np.uint32) * 587
+             + samples[:, :, 2].astype(np.uint32) * 114 + 500) // 1000
+        ).astype(np.uint8)
+        if rgb.alpha:
+            alpha = samples[:, :, 3].astype(np.uint32)
+            gray = (
+                (gray.astype(np.uint32) * alpha + 255 * (255 - alpha) + 127) // 255
+            ).astype(np.uint8)
+
+        content = np.argwhere(gray < 250)
+        if content.size:
+            y0, x0 = content.min(axis=0)
+            y1, x1 = content.max(axis=0) + 1
+            gray = gray[y0:y1, x0:x1]
+        gray = np.ascontiguousarray(gray)
+        pixmap = pymupdf.Pixmap(
+            pymupdf.csGRAY, gray.shape[1], gray.shape[0], gray.tobytes(), 0
+        )
+        return _Logo(pixmap.tobytes("png"), gray.shape[1], gray.shape[0])
+    except Exception as error:  # noqa: BLE001 - image decoders expose varying errors
+        raise EtiketHatasi(_LOGO_ACILAMADI) from error
+
+
+def logo_normalize(logo: bytes) -> bytes:
+    """Validate, flatten, trim, and normalize a PNG/JPG logo to grayscale PNG."""
+    prepared = _logo_hazirla(logo)
+    if prepared is None:
+        raise EtiketHatasi(_LOGO_ACILAMADI)
+    return prepared.png
+
+
 # ------------------------------------------------------------ ölçü profili
 @dataclass(frozen=True)
 class _Profil:
@@ -266,6 +329,8 @@ class Yerlesim:
     ean_guard_ek: int = 0
     ean_rakam_pt: float = 0
     ean_rakam_taban: float = 0
+    kod_genislik: float = 0
+    logo_rect: tuple[float, float, float, float] | None = None
 
 
 def _kod_sigdir(kod: str, nominal: float, w: float) -> tuple[float, list[str]]:
@@ -335,7 +400,9 @@ def _ust_sira(veri: EtiketVerisi, p: _Profil):
     return "karekod", 0, "", dm, en_iyi, dm_metin, uyarilar
 
 
-def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
+def yerlesim(
+    veri: EtiketVerisi, boyut: str = "62x100", *, logo: bytes | None = None
+) -> Yerlesim:
     if boyut not in PROFILLER:
         raise EtiketHatasi(f"Bilinmeyen etiket boyutu: {boyut}")
     p = PROFILLER[boyut]
@@ -345,6 +412,15 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
     cubuk_h = _nokta(p.cubuk_mm)
     cubuk_gen = len(bitler) * m
     w = _pt(ICERIK)
+    logo_bilgi = _logo_hazirla(logo)
+    logo_w = logo_h = 0.0
+    if logo_bilgi:
+        logo_h = 5 * MM
+        logo_w = logo_h * logo_bilgi.width / logo_bilgi.height
+        if logo_w > 20 * MM:
+            logo_w = 20 * MM
+            logo_h = logo_w * logo_bilgi.height / logo_bilgi.width
+    kod_genislik = w - logo_w - (2 * MM if logo_bilgi else 0)
 
     ean_kodu = ean13(veri.barkod_no) if mod == "ean" else ""
     ean_x = KENAR + 9 * m if mod == "ean" else 0
@@ -364,10 +440,10 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
     ek_ham = veri.ek.strip()
     bilgiler = _bilgiler(veri)
     for kod_nominal in [p.kod_pt - i for i in range(0, int(p.kod_pt - KOD_MIN_TEK) + 1)]:
-        kod_pt, kod_satir = _kod_sigdir(veri.kod.strip(), kod_nominal, w)
+        kod_pt, kod_satir = _kod_sigdir(veri.kod.strip(), kod_nominal, kod_genislik)
         ek, ek_pt = ek_ham, kod_pt
         if ek_ham:
-            ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, KOD_MIN_IKI, w, True)
+            ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, KOD_MIN_IKI, kod_genislik, True)
 
         y = _pt(KENAR)
         if mod in ("yan", "ean"):
@@ -450,6 +526,10 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             uy.append("Ek etikete sığmadığı için kısaltıldı.")
         if bilgi_satir != bilgiler:
             uy.append("Bilgi satırı etikete sığmadığı için kısaltıldı.")
+        logo_rect = None
+        if logo_bilgi:
+            son_taban = ek_taban if ek_taban is not None else kod_tabanlari[-1]
+            logo_rect = (_pt(SAG) - logo_w, son_taban - logo_h, _pt(SAG), son_taban)
         return Yerlesim(
             boyut=boyut, genislik=SAYFA_GENISLIK, yukseklik=yukseklik, mod=mod,
             cubuk_modul=m, cubuk_bitler=bitler, cubuk_x=cubuk_x, cubuk_y=cubuk_y, cubuk_h=cubuk_h,
@@ -461,17 +541,22 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             alt_y0=alt_y0, uyarilar=uy,
             ean_kodu=ean_kodu, ean_x=ean_x, ean_guard_ek=ean_guard_ek,
             ean_rakam_pt=ean_rakam_pt, ean_rakam_taban=ean_rakam_taban,
+            kod_genislik=kod_genislik, logo_rect=logo_rect,
         )
     raise EtiketHatasi("Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın.")
 
 
-def uyarilar(veri: EtiketVerisi, boyut: str = "62x100") -> list[str]:
+def uyarilar(
+    veri: EtiketVerisi, boyut: str = "62x100", *, logo: bytes | None = None
+) -> list[str]:
     """Basmaya engel olmayan notlar (ör. bilgi kare koda eklenmedi)."""
-    return yerlesim(veri, boyut).uyarilar
+    return yerlesim(veri, boyut, logo=logo).uyarilar
 
 
 # -------------------------------------------------------------------- çizim
-def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
+def _sayfa_ciz(
+    page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim, logo: bytes | None = None
+) -> None:
     tw = pymupdf.TextWriter(page.rect)
     kalin, normal = _font(True), _font(False)
 
@@ -552,14 +637,26 @@ def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
     p = PROFILLER[y.boyut]
     ek = veri.ek.strip()
 
-    def kod_blogu(adet_taban: float, kod_tabanlari: list[float], ek_taban: float | None) -> None:
+    logo_yerleri: list[pymupdf.Rect] = []
+
+    def kod_blogu(
+        adet_taban: float,
+        kod_tabanlari: list[float],
+        ek_taban: float | None,
+        kayma: float = 0,
+    ) -> None:
         yaz(x, adet_taban, adet, p.adet_pt, kalin)
         for s, t in zip(y.kod_satirlari, kod_tabanlari):
             yaz(x, t, s, y.kod_pt, kalin)
         if ek_taban is not None:
-            ek_s = ek if _gen(ek, y.ek_pt, True) <= _pt(ICERIK) else _tek_satir_sigdir(
-                ek, y.ek_pt, KOD_MIN_IKI, _pt(ICERIK), True)[1]
+            ek_s = ek if _gen(ek, y.ek_pt, True) <= y.kod_genislik else _tek_satir_sigdir(
+                ek, y.ek_pt, KOD_MIN_IKI, y.kod_genislik, True)[1]
             yaz(x, ek_taban, ek_s, y.ek_pt, kalin)
+        if logo and y.logo_rect:
+            rect = pymupdf.Rect(*y.logo_rect)
+            rect.y0 += kayma
+            rect.y1 += kayma
+            logo_yerleri.append(rect)
 
     kod_blogu(y.adet_taban, y.kod_tabanlari, y.ek_taban)
     for s, t in zip(y.bilgi_satirlari, y.bilgi_tabanlari):
@@ -567,11 +664,19 @@ def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
     if y.alt_y0 is not None:
         kayma = y.alt_y0 + BOSLUK_UST_ADET + p.adet_pt * BUYUK_HARF - y.adet_taban
         kod_blogu(y.adet_taban + kayma, [t + kayma for t in y.kod_tabanlari],
-                  None if y.ek_taban is None else y.ek_taban + kayma)
+                  None if y.ek_taban is None else y.ek_taban + kayma, kayma)
     tw.write_text(page, color=(0, 0, 0))
+    for rect in logo_yerleri:
+        page.insert_image(rect, stream=logo, keep_proportion=False, overlay=True)
 
 
-def ciz(veri: EtiketVerisi, boyut: str = "62x100", kopya: int = 1) -> pymupdf.Document:
+def ciz(
+    veri: EtiketVerisi,
+    boyut: str = "62x100",
+    kopya: int = 1,
+    *,
+    logo: bytes | None = None,
+) -> pymupdf.Document:
     """Vektörel PDF. Her kopya ayrı sayfa (yazıcıda ayrı etiket)."""
     hatalar = dogrula(veri)
     if boyut not in BOYUTLAR:
@@ -580,10 +685,12 @@ def ciz(veri: EtiketVerisi, boyut: str = "62x100", kopya: int = 1) -> pymupdf.Do
         hatalar.append(f"Kopya sayısı 1 ile {MAX_KOPYA} arasında olmalı.")
     if hatalar:
         raise EtiketHatasi("\n".join(hatalar))
-    y = yerlesim(veri, boyut)
+    logo_bilgi = _logo_hazirla(logo)
+    logo_png = logo_bilgi.png if logo_bilgi else None
+    y = yerlesim(veri, boyut, logo=logo_png)
     doc = pymupdf.open()
     page = doc.new_page(width=y.genislik, height=y.yukseklik)
-    _sayfa_ciz(page, veri, y)
+    _sayfa_ciz(page, veri, y, logo_png)
     doc.subset_fonts()
     for _ in range(kopya - 1):
         doc.fullcopy_page(0)
@@ -591,8 +698,10 @@ def ciz(veri: EtiketVerisi, boyut: str = "62x100", kopya: int = 1) -> pymupdf.Do
     return doc
 
 
-def onizleme_png(veri: EtiketVerisi, boyut: str = "62x100", dpi: int = 300) -> bytes:
-    doc = ciz(veri, boyut, 1)
+def onizleme_png(
+    veri: EtiketVerisi, boyut: str = "62x100", dpi: int = 300, *, logo: bytes | None = None
+) -> bytes:
+    doc = ciz(veri, boyut, 1, logo=logo)
     try:
         return doc[0].get_pixmap(dpi=dpi, alpha=False).tobytes("png")
     finally:

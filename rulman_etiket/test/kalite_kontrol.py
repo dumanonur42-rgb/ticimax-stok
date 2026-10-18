@@ -214,7 +214,10 @@ def _nokta_kati(deger_pt: float, dpi: int) -> tuple[float, bool]:
     return n, abs(n - round(n)) < 0.02
 
 
-def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Path | None):
+def sayfa_kontrol(
+    page: pymupdf.Page, v: dict, boyut: str, s: Sonuc,
+    png_yol: Path | None, logo_sayisi: int = 0,
+):
     w_mm, h_mm = page.rect.width / MM, page.rect.height / MM
     s.olcum["sayfa_mm"] = f"{w_mm:.1f}x{h_mm:.1f}"
     if abs(w_mm - 62) > 0.3:
@@ -300,8 +303,11 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
     for y in YASAK_METIN:
         if y in tum and y not in (v["kod"] + v["ek"] + v["bilgi1"] + v["bilgi2"]).upper():
             s.hatalar.append(f"yasak metin: {y}")
-    if page.get_images():
-        s.uyarilar.append(f"sayfada {len(page.get_images())} raster görsel var (logo olmamalı)")
+    if len(page.get_images()) != logo_sayisi:
+        s.uyarilar.append(
+            f"sayfada {len(page.get_images())} raster görsel var "
+            f"({logo_sayisi} logo bekleniyordu)"
+        )
     # fontlar gömülü mü
     for f in page.get_fonts():
         if f[1] in ("n/a", "") or (f[2] in ("Type1", "TrueType") and not f[0]):
@@ -414,7 +420,7 @@ def ciz_kontrol(ec, ad, boyut, v, cikti: Path) -> Sonuc:
     return s
 
 
-def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
+def cli_kontrol(ad, boyut, v, cikti: Path, logo: Path | None = None) -> Sonuc:
     s = Sonuc(ad, "cli", boyut)
     pdf = cikti / f"{ad}_cli.pdf"
     arg = [sys.executable, str(KOK / "rulman_etiket.py"), "--kod", v["kod"], "--ek", v["ek"],
@@ -422,6 +428,8 @@ def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
            "--boyut", boyut, "--kopya", "2", "--pdf", str(pdf)]
     if v.get("barkod_no"):
         arg.extend(["--barkod", v["barkod_no"]])
+    if logo:
+        arg.extend(["--logo", str(logo)])
     if not v["alt_tekrar"]:
         arg.append("--alt-tekrar-yok")
     try:
@@ -432,8 +440,11 @@ def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
         doc = pymupdf.open(pdf)
         if doc.page_count != 2:
             s.hatalar.append(f"--kopya 2 ama {doc.page_count} sayfa")
+        if logo and any(len(page.get_image_info()) != 2 for page in doc):
+            s.hatalar.append("CLI logosu kopya sayfalarında iki kez yer almadı")
         if v["adet_yazisi"] == "Qty":
-            sayfa_kontrol(doc[0], v, boyut, s, None)
+            logo_sayisi = (2 if v["alt_tekrar"] else 1) if logo else 0
+            sayfa_kontrol(doc[0], v, boyut, s, None, logo_sayisi)
             import etiket_cizim as ec
             veri = ec.EtiketVerisi(**{k: v[k] for k in v})
             if hasattr(ec, "uyarilar") and any("kare koda" in u for u in ec.uyarilar(veri, boyut)):
@@ -443,6 +454,161 @@ def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
             s.uyarilar.append("CLI'de adet yazısı argümanı yok; yalnız barkod kontrol edildi")
     except Exception as e:  # noqa: BLE001
         s.hatalar.append(f"ÇÖKTÜ: {type(e).__name__}: {e}")
+    return s
+
+
+def _sentetik_logolar() -> tuple[bytes, bytes, bytes]:
+    doc = pymupdf.open()
+    page = doc.new_page(width=240, height=100)
+    page.draw_rect(pymupdf.Rect(28, 18, 78, 80), color=(0, 0, 0), fill=(0, 0, 0))
+    page.insert_text((90, 68), "QC", fontsize=48, fontname="helv", color=(0, 0, 0))
+    normal = page.get_pixmap(colorspace=pymupdf.csRGB, alpha=False).tobytes("png")
+    doc.close()
+
+    doc = pymupdf.open()
+    page = doc.new_page(width=500, height=70)
+    page.draw_rect(pymupdf.Rect(24, 22, 474, 48), color=(0, 0, 0), fill=(0, 0, 0))
+    page.insert_text((40, 43), "WIDE", fontsize=18, fontname="helv", color=(1, 1, 1))
+    wide = page.get_pixmap(colorspace=pymupdf.csRGB, alpha=False).tobytes("png")
+    doc.close()
+
+    rgba = np.full((100, 240, 4), 255, dtype=np.uint8)
+    rgba[:, :, 3] = 0
+    rgba[20:80, 30:200, :3] = 0
+    rgba[20:80, 30:200, 3] = 255
+    rgba[20:80, 29, :3] = 0
+    rgba[20:80, 29, 3] = 128
+    alpha = pymupdf.Pixmap(
+        pymupdf.csRGB, 240, 100, rgba.tobytes(), 1
+    ).tobytes("png")
+    return normal, wide, alpha
+
+
+def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
+    s = Sonuc("logo", "api", "62x100/62surekli")
+    try:
+        import yazdirma as yz
+        from unittest.mock import patch
+
+        normal, wide, alpha = _sentetik_logolar()
+        trimmed = ec.logo_normalize(normal)
+        trimmed_alpha = ec.logo_normalize(alpha)
+        trimmed_jpeg = ec.logo_normalize(pymupdf.Pixmap(normal).tobytes("jpeg"))
+        normal_source = pymupdf.Pixmap(normal)
+        trimmed_pix = pymupdf.Pixmap(trimmed)
+        alpha_source = pymupdf.Pixmap(alpha)
+        alpha_pix = pymupdf.Pixmap(trimmed_alpha)
+        if (trimmed_pix.width >= normal_source.width
+                or trimmed_pix.height >= normal_source.height):
+            s.hatalar.append("beyaz kenarlar otomatik kırpılmadı")
+        if not alpha_source.alpha or alpha_pix.alpha or alpha_pix.colorspace.n != 1:
+            s.hatalar.append("RGBA logo beyaza düzleştirilip gri tona dönüştürülmedi")
+        if alpha_pix.width >= alpha_source.width or alpha_pix.height >= alpha_source.height:
+            s.hatalar.append("saydam kenarlar otomatik kırpılmadı")
+        alpha_samples = np.frombuffer(alpha_pix.samples, dtype=np.uint8)
+        if not np.any((alpha_samples > 0) & (alpha_samples < 255)):
+            s.hatalar.append("yarı saydam logo pikselleri beyaz zemine düzleştirilmedi")
+        if pymupdf.Pixmap(trimmed_jpeg).colorspace.n != 1:
+            s.hatalar.append("JPEG logo gri PNG'ye normalize edilmedi")
+
+        with tempfile.TemporaryDirectory() as td:
+            with patch.object(yz, "_veri_klasoru", return_value=Path(td)):
+                kaydedilen = yz.logo_kaydet(alpha)
+                if kaydedilen != trimmed_alpha or yz.logo_oku() != trimmed_alpha:
+                    s.hatalar.append("logo_kaydet/logo_oku normalize PNG'yi saklamadı")
+                yz.ayar_kaydet({"logo_kilitli": True})
+                if not yz.ayar_oku().get("logo_kilitli"):
+                    s.hatalar.append("logo_kilitli ayarı saklanmadı")
+                yz.logo_sil()
+                if yz.logo_oku() is not None:
+                    s.hatalar.append("logo_sil saklanan logoyu kaldırmadı")
+
+        for bad, expected in (
+            (b"bozuk", "Logo dosyası açılamadı. PNG veya JPG seçin."),
+            (b"\x89PNG\r\n\x1a\nbozuk", "Logo dosyası açılamadı. PNG veya JPG seçin."),
+            (b"x" * (10 * 1024 * 1024 + 1),
+             "Logo dosyası çok büyük (en fazla 10 MB)."),
+        ):
+            try:
+                ec.logo_normalize(bad)
+            except ec.EtiketHatasi as error:
+                if str(error) != expected:
+                    s.hatalar.append(f"logo hatası {str(error)!r} != {expected!r}")
+            else:
+                s.hatalar.append(f"geçersiz logo kabul edildi: {expected}")
+
+        ornekler = [
+            ("logo_ean_tekrar", V("6205-2RS", "C3", barkod_no="8691234567890"),
+             trimmed, "62x100"),
+            ("logo_ean_surekli", V("6308", "C3", barkod_no="869123456789", alt=True),
+             trimmed_alpha, "62surekli"),
+            ("logo_kodsuz_tekrar", V("6308", "C3", alt=False), trimmed_alpha, "62x100"),
+            ("logo_uzun_kod", V("NNU4930-S-K-M-SP-XL-C3", "P6",
+                                barkod_no="8691234567890"), wide, "62surekli"),
+        ]
+        cli_logo = cikti / "sentetik_logo.png"
+        cli_logo.write_bytes(trimmed)
+        for ad, giris, logo, boyut in ornekler:
+            veri = ec.EtiketVerisi(**giris)
+            yer = ec.yerlesim(veri, boyut, logo=logo)
+            if not yer.logo_rect:
+                s.hatalar.append(f"{ad}: logo dikdörtgeni yok")
+                continue
+            rect = pymupdf.Rect(*yer.logo_rect)
+            expected_h = 5.0
+            if ad == "logo_uzun_kod":
+                expected_h = rect.height / MM
+                if abs(rect.width / MM - 20) > 0.05 or rect.height >= 5 * MM:
+                    s.hatalar.append("20 mm genişlik sınırında yükseklik orantılı küçülmedi")
+            elif abs(rect.height / MM - expected_h) > 0.05:
+                s.hatalar.append(f"{ad}: logo yüksekliği {rect.height / MM:.2f} mm değil")
+            beklenen_kod_genisligi = ec.ICERIK * ec.NOKTA - rect.width - 2 * MM
+            if abs(yer.kod_genislik - beklenen_kod_genisligi) > 0.05:
+                s.hatalar.append(f"{ad}: kod/suffix genişliği logoya göre ayrılmadı")
+
+            doc = ec.ciz(veri, boyut, logo=logo)
+            page = doc[0]
+            rects = [pymupdf.Rect(i["bbox"]) for i in page.get_image_info()]
+            beklenen_sayi = 2 if giris["alt_tekrar"] else 1
+            sayfa_kontrol(
+                page, giris, boyut, s, cikti / f"{ad}.png", beklenen_sayi
+            )
+            if len(rects) != beklenen_sayi:
+                s.hatalar.append(f"{ad}: {len(rects)} logo görüntüsü, {beklenen_sayi} olmalı")
+            for image_rect in rects:
+                kenarlar = (
+                    image_rect.x0 / MM,
+                    image_rect.y0 / MM,
+                    (page.rect.width - image_rect.x1) / MM,
+                    (page.rect.height - image_rect.y1) / MM,
+                )
+                if min(kenarlar) < 3.0 - 0.05:
+                    s.hatalar.append(
+                        f"{ad}: logo kenar boşluğu 3 mm'den küçük: {kenarlar!r}"
+                    )
+                if abs(image_rect.x1 - ec.SAG * ec.NOKTA) > 0.05:
+                    s.hatalar.append(f"{ad}: logo sağ kenara hizalı değil")
+                for text, bbox, *_ in _metin_kutulari(page):
+                    if text in yer.kod_satirlari or (
+                        giris["ek"] and text.strip() == giris["ek"]
+                    ):
+                        if bbox.intersects(image_rect):
+                            s.hatalar.append(f"{ad}: logo {text!r} kod/ek satırıyla çakışıyor")
+            if len(rects) == 2 and abs(rects[1].y0 - rects[0].y0) < 10 * MM:
+                s.hatalar.append(f"{ad}: alt tekrar logosu ayrı blokta değil")
+            doc.close()
+
+        if not cli_yok:
+            s_cli = cli_kontrol(
+                "logo_cli", "62x100",
+                V("6205-2RS", "C3", barkod_no="8691234567890"),
+                cikti, logo=cli_logo,
+            )
+            s.hatalar.extend(s_cli.hatalar)
+            s.uyarilar.extend(s_cli.uyarilar)
+    except Exception as error:  # noqa: BLE001
+        s.hatalar.append(f"logo kontrolü çöktü: {type(error).__name__}: {error}")
+        traceback.print_exc()
     return s
 
 
@@ -474,7 +640,10 @@ def main() -> int:
 
     # sözleşme
     sz = Sonuc("sozlesme", "api", "-")
-    for isim in ("EtiketVerisi", "BOYUTLAR", "dogrula", "ciz", "onizleme_png"):
+    for isim in (
+        "EtiketVerisi", "BOYUTLAR", "dogrula", "yerlesim", "uyarilar",
+        "logo_normalize", "ciz", "onizleme_png",
+    ):
         if not hasattr(ec, isim):
             sz.hatalar.append(f"etiket_cizim.{isim} yok")
     if getattr(ec, "BOYUTLAR", None) is not None and set(ec.BOYUTLAR) != {"62x100", "62surekli"}:
@@ -486,6 +655,8 @@ def main() -> int:
 
     for ad, boyut, v in ORNEKLER:
         sonuclar.append(ciz_kontrol(ec, ad, boyut, v, a.cikti))
+
+    sonuclar.append(logo_kontrol(ec, a.cikti, a.cli_yok))
 
     # dogrula
     d = Sonuc("dogrula", "api", "-")

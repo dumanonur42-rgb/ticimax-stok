@@ -15,7 +15,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterator
 
-from etiket_cizim import BOYUTLAR, EtiketVerisi, ciz, dogrula
+from etiket_cizim import (
+    BOYUTLAR,
+    EtiketHatasi,
+    EtiketVerisi,
+    ciz,
+    dogrula,
+    logo_normalize,
+)
 
 
 class YazdirmaHatasi(Exception):
@@ -205,6 +212,46 @@ def ayar_kaydet(ayarlar: dict) -> None:
         pass
 
 
+def _logo_yolu() -> Path:
+    return _veri_klasoru() / "logo.png"
+
+
+def logo_kaydet(logo: bytes) -> bytes:
+    png = logo_normalize(logo)
+    hedef = _logo_yolu()
+    hedef.parent.mkdir(parents=True, exist_ok=True)
+    gecici_yol: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb",
+            dir=hedef.parent,
+            prefix=f".{hedef.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as gecici:
+            gecici_yol = Path(gecici.name)
+            gecici.write(png)
+        os.replace(gecici_yol, hedef)
+    finally:
+        if gecici_yol is not None and gecici_yol.exists():
+            try:
+                gecici_yol.unlink()
+            except OSError:
+                pass
+    return png
+
+
+def logo_oku() -> bytes | None:
+    try:
+        return logo_normalize(_logo_yolu().read_bytes())
+    except (OSError, EtiketHatasi):
+        return None
+
+
+def logo_sil() -> None:
+    _logo_yolu().unlink(missing_ok=True)
+
+
 def _etiket_alanlari() -> set[str]:
     return {alan.name for alan in fields(EtiketVerisi)}
 
@@ -258,7 +305,12 @@ def son_kod_ekle(veri: EtiketVerisi | dict) -> None:
 
 
 def pdf_kaydet(
-    veri: EtiketVerisi, boyut: str, kopya: int, yol: str | Path | None = None
+    veri: EtiketVerisi,
+    boyut: str,
+    kopya: int,
+    yol: str | Path | None = None,
+    *,
+    logo: bytes | None = None,
 ) -> Path:
     if boyut not in BOYUTLAR:
         raise YazdirmaHatasi("Etiket boyutu seçimi geçersiz.")
@@ -274,9 +326,11 @@ def pdf_kaydet(
     hedef = Path(yol)
     belge = None
     try:
-        belge = ciz(veri, boyut, kopya)
+        belge = ciz(veri, boyut, kopya, logo=logo)
         hedef.parent.mkdir(parents=True, exist_ok=True)
         belge.save(hedef)
+    except EtiketHatasi as hata:
+        raise YazdirmaHatasi(str(hata)) from hata
     except (PermissionError, OSError) as hata:
         raise YazdirmaHatasi(
             "PDF kaydedilemedi. Dosya başka bir programda açık olabilir, kapatıp tekrar deneyin."
@@ -438,7 +492,14 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
                 pass
 
 
-def yazdir(veri: EtiketVerisi, boyut: str, kopya: int, yazici: str) -> Path:
+def yazdir(
+    veri: EtiketVerisi,
+    boyut: str,
+    kopya: int,
+    yazici: str,
+    *,
+    logo: bytes | None = None,
+) -> Path:
     if sys.platform != "win32":
         raise YazdirmaHatasi("Yazdırma yalnızca Windows'ta yapılabilir.")
     if not yazici:
@@ -456,14 +517,14 @@ def yazdir(veri: EtiketVerisi, boyut: str, kopya: int, yazici: str) -> Path:
 
     pdf_yolu = _yazdirma_pdf_yolu()
     try:
-        pdf = pdf_kaydet(veri, boyut, kopya, yol=pdf_yolu)
+        pdf = pdf_kaydet(veri, boyut, kopya, yol=pdf_yolu, logo=logo)
     except YazdirmaHatasi:
         if not pdf_yolu.exists():
             raise
         zamanli_yol = pdf_yolu.with_name(
             f"etiket_{datetime.now():%Y%m%d_%H%M%S_%f}.pdf"
         )
-        pdf = pdf_kaydet(veri, boyut, kopya, yol=zamanli_yol)
+        pdf = pdf_kaydet(veri, boyut, kopya, yol=zamanli_yol, logo=logo)
     with _kagit_ayari(yazici, boyut, pdf):
         try:
             sonuc = subprocess.run(

@@ -340,7 +340,13 @@ class Onizleme(tk.Frame):
         if cw < 20 or ch < 20 or not self._uretici:
             return
         istek = self._uretici()
-        anahtar = (cw, ch, repr(istek))
+        if istek and not isinstance(istek, str) and len(istek) == 3:
+            veri, boyut, logo = istek
+            onizleme = (veri, boyut)
+        else:
+            logo = None
+            onizleme = istek
+        anahtar = (cw, ch, repr(onizleme), hash(logo) if logo else None)
         if anahtar == self._son and not zorla:
             return
         self._son = anahtar
@@ -353,14 +359,17 @@ class Onizleme(tk.Frame):
             self.olcu.config(text="")
         elif istek:
             mesaj = self.HATA_METIN
-            veri, boyut = istek
+            if len(istek) == 3:
+                veri, boyut, logo = istek
+            else:
+                veri, boyut = istek
             try:
                 dpi = gw / (62 / 25.4)
-                png = ec.onizleme_png(veri, boyut, dpi=max(20, int(dpi)))
+                png = ec.onizleme_png(veri, boyut, dpi=max(20, int(dpi)), logo=logo)
                 w, h = struct.unpack(">II", png[16:24])
                 if h > gh:
                     dpi = dpi * gh / h
-                    png = ec.onizleme_png(veri, boyut, dpi=max(20, int(dpi)))
+                    png = ec.onizleme_png(veri, boyut, dpi=max(20, int(dpi)), logo=logo)
                     w, h = struct.unpack(">II", png[16:24])
                 yuk_mm = round(h / int(dpi) * 25.4)
                 self.olcu.config(text=f"62 × {yuk_mm} mm")
@@ -588,6 +597,7 @@ class Uygulama(tk.Tk):
         self._kayit_zamani = None
         self._onizleme_zamani = None
         self._normallesiyor = False
+        self.logo = yz.logo_oku()
         self._simge()
         self._stil()
 
@@ -625,10 +635,12 @@ class Uygulama(tk.Tk):
         sag = tk.Frame(govde, bg=BG)
         sag.grid(row=0, column=2, sticky="ns", padx=(px(14), 0))
         sag.columnconfigure(0, weight=1, minsize=px(250))
-        sag.rowconfigure(1, weight=1)
+        sag.rowconfigure(2, weight=1)
         self._baski(sag)
+        self.logo_kilit_var = tk.BooleanVar(value=bool(self.ayar.get("logo_kilitli", False)))
+        self._logo_karti(sag)
         self.son = SonListe(sag, self.son_secildi)
-        self.son.grid(row=1, column=0, sticky="nsew", pady=(px(12), 0))
+        self.son.grid(row=2, column=0, sticky="nsew", pady=(px(12), 0))
         self.son.doldur(self._son_kodlar())
 
         self.durum = DurumCubugu(self, [("Klasörü aç", self.klasoru_ac),
@@ -801,6 +813,105 @@ class Uygulama(tk.Tk):
         satir2.columnconfigure(0, minsize=px(120))
         _alan(satir2, "Kopya", self.kopya, 0, ipady=0)
 
+    def _logo_karti(self, sag: tk.Frame):
+        kart = _kart(sag, "LOGO")
+        kart.grid(row=1, column=0, sticky="ew", pady=(px(12), 0))
+        self.logo_onizleme = tk.Label(
+            kart, text="Logo yok", font=_f(8), fg=SOLUK, bg=KART, anchor="center"
+        )
+        self.logo_onizleme.grid(row=1, column=0, sticky="ew", pady=(px(7), px(5)))
+
+        dugmeler = tk.Frame(kart, bg=KART)
+        dugmeler.grid(row=2, column=0, sticky="ew")
+        for sutun in (0, 1):
+            dugmeler.columnconfigure(sutun, weight=1, uniform="logo")
+        self.logo_yukle_btn = Buton(
+            dugmeler, "Logo yükle", self._logo_yukle, tur="kucuk"
+        )
+        self.logo_yukle_btn.grid(row=0, column=0, sticky="ew", padx=(0, px(4)))
+        self.logo_kaldir_btn = Buton(
+            dugmeler, "Kaldır", self._logo_kaldir, tur="kucuk"
+        )
+        self.logo_kaldir_btn.grid(row=0, column=1, sticky="ew", padx=(px(4), 0))
+
+        self.logo_kilit = Anahtar(kart, self.logo_kilit_var, "Logoyu kilitle")
+        self.logo_kilit.grid(row=3, column=0, sticky="w", pady=(px(8), 0))
+        self.logo_kilit_ipucu = tk.Label(
+            kart, text="", font=_f(8), fg=SOLUK, bg=KART, anchor="w", justify="left", width=1
+        )
+        self.logo_kilit_ipucu.bind(
+            "<Configure>",
+            lambda e: self.logo_kilit_ipucu.config(wraplength=max(px(80), e.width)),
+        )
+        self.logo_kilit_ipucu.grid(row=4, column=0, sticky="ew", pady=(px(4), 0))
+        self.logo_kilit_var.trace_add("write", lambda *_: self._logo_kilit_degisti())
+        self._logo_karti_guncelle()
+
+    def _logo_karti_guncelle(self):
+        if self.logo:
+            try:
+                resim = tk.PhotoImage(data=base64.b64encode(self.logo).decode("ascii"))
+                sx = max(1, (resim.width() + px(170) - 1) // px(170))
+                sy = max(1, (resim.height() + px(38) - 1) // px(38))
+                self.logo_onizleme.image = resim.subsample(sx, sy)
+                self.logo_onizleme.config(image=self.logo_onizleme.image, text="")
+            except (tk.TclError, OSError):
+                self.logo_onizleme.config(image="", text="Logo yüklü")
+                self.logo_onizleme.image = None
+        else:
+            self.logo_onizleme.config(image="", text="Logo yok")
+            self.logo_onizleme.image = None
+        kilitli = bool(self.logo_kilit_var.get())
+        self.logo_yukle_btn.durum(not kilitli)
+        self.logo_kaldir_btn.durum(bool(self.logo) and not kilitli)
+        self.logo_kilit_ipucu.config(
+            text="Logo kilitli. Değiştirmek için kilidi açın." if kilitli else ""
+        )
+
+    def _logo_kilit_degisti(self):
+        self._logo_karti_guncelle()
+        self._ayar_kaydet_sonra()
+
+    def _logo_yukle(self):
+        if self.logo_kilit_var.get():
+            return
+        yol = filedialog.askopenfilename(
+            parent=self,
+            title="Logo seç",
+            filetypes=[("Logo dosyaları", "*.png *.jpg *.jpeg"), ("PNG", "*.png"), ("JPG", "*.jpg *.jpeg")],
+        )
+        if not yol:
+            return
+        try:
+            self.logo = yz.logo_kaydet(Path(yol).read_bytes())
+        except ec.EtiketHatasi as hata:
+            self.durum.yaz("hata", "Logo yüklenemedi", str(hata))
+            return
+        except OSError:
+            self.durum.yaz(
+                "hata", "Logo yüklenemedi",
+                "Logo dosyası okunamadı veya uygulama veri klasörüne kaydedilemedi.",
+            )
+            return
+        self._logo_karti_guncelle()
+        self._degisti()
+        self.durum.yaz("tamam", "Logo yüklendi", "Etiketlerde otomatik kullanılır.")
+
+    def _logo_kaldir(self):
+        if self.logo_kilit_var.get():
+            return
+        try:
+            yz.logo_sil()
+        except OSError:
+            self.durum.yaz(
+                "hata", "Logo kaldırılamadı", "Uygulama veri klasörüne erişilemiyor."
+            )
+            return
+        self.logo = None
+        self._logo_karti_guncelle()
+        self._degisti()
+        self.durum.yaz("tamam", "Logo kaldırıldı")
+
     def _pencere_yerlestir(self):
         self.update_idletasks()
         en_az_w, en_az_h = self.winfo_reqwidth(), self.winfo_reqheight()
@@ -931,7 +1042,12 @@ class Uygulama(tk.Tk):
             return "Bu bilgilerle etiket basılamaz:\n\n" + "\n".join(hatalar)
         if v.adet < 1:
             v.adet = 1
-        return v, self.boyut_var.get()
+        boyut = self.boyut_var.get()
+        try:
+            ec.yerlesim(v, boyut, logo=self.logo)
+        except ec.EtiketHatasi as hata:
+            return "Bu bilgilerle etiket basılamaz:\n\n" + str(hata)
+        return v, boyut, self.logo
 
     def _degisti(self):
         if self._onizleme_zamani:
@@ -951,7 +1067,7 @@ class Uygulama(tk.Tk):
         notlar = []
         if v.kod and not hatalar and hasattr(ec, "uyarilar"):
             try:
-                notlar = list(ec.uyarilar(v, self.boyut_var.get()))
+                notlar = list(ec.uyarilar(v, self.boyut_var.get(), logo=self.logo))
             except Exception:  # noqa: BLE001
                 notlar = []
         self.onizleme.uyari_goster(notlar)
@@ -975,7 +1091,8 @@ class Uygulama(tk.Tk):
         self._kayit_zamani = None
         a = self._ayar_oku()
         a.update({"boyut": self.boyut_var.get(), "yazici": self.yazici_var.get(),
-                  "alt_tekrar": bool(self.alt_var.get())})
+                  "alt_tekrar": bool(self.alt_var.get()),
+                  "logo_kilitli": bool(self.logo_kilit_var.get())})
         # bilgi satırları saklanmaz; eski sürümden kalanları boşalt
         for eski in ("bilgi1", "bilgi2"):
             if eski in a:
@@ -1062,7 +1179,7 @@ class Uygulama(tk.Tk):
 
         def is_():
             try:
-                sonuc["yol"] = yz.yazdir(v, boyut, kopya, yazici)
+                sonuc["yol"] = yz.yazdir(v, boyut, kopya, yazici, logo=self.logo)
             except yz.YazdirmaHatasi as e:
                 sonuc["hata"] = str(e) or "Etiket yazıcıya gönderilemedi."
             except Exception:  # noqa: BLE001
@@ -1108,7 +1225,9 @@ class Uygulama(tk.Tk):
             self.kod_odakla()
             return
         try:
-            cikti = yz.pdf_kaydet(v, self.boyut_var.get(), self._kopya(), Path(yol))
+            cikti = yz.pdf_kaydet(
+                v, self.boyut_var.get(), self._kopya(), Path(yol), logo=self.logo
+            )
         except yz.YazdirmaHatasi as e:
             Uyari(self, "PDF kaydedilemedi", str(e))
             return
