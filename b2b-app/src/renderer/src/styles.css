@@ -848,6 +848,28 @@ textarea.input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.orders-list-table .order-number-column {
+  width: 180px;
+}
+.orders-list-table .order-date-column {
+  width: 164px;
+}
+.orders-list-table .order-status-column {
+  width: 126px;
+}
+.orders-list-table .order-total-column {
+  width: 120px;
+}
+.orders-list-table .order-number-cell,
+.orders-list-table .order-date-cell {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+.orders-list-table .order-customer-name {
+  display: block;
+  max-width: 100%;
+}
 .cart-items-table th:nth-child(1) {
   width: 128px;
 }
@@ -862,18 +884,6 @@ textarea.input {
 }
 .cart-items-table .qty-input {
   width: 72px;
-}
-.orders-list-table th:nth-child(1) {
-  width: 142px;
-}
-.orders-list-table th:nth-child(2) {
-  width: 112px;
-}
-.orders-list-table th:nth-child(4) {
-  width: 126px;
-}
-.orders-list-table th:last-child:not(:nth-child(4)) {
-  width: 120px;
 }
 @media (max-width: 1000px) {
   .cart-layout,

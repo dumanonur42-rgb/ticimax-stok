@@ -303,7 +303,7 @@ export function Stock(): ReactNode {
   const cell = (p: Product, idx: number, k: EditKey, label: string, extra?: ReactNode): ReactNode => {
     const e = edits.get(p.id)
     const dirty = e?.[k] != null
-    const value = dirty ? e[k]! : editText(p, k)
+    const value = k === 'card_price' && (p.price == null || p.price <= 0) ? '' : dirty ? e[k]! : editText(p, k)
     return (
       <div className={`cell edit-cell${k === 'shelf' ? '' : ' right'}`} role="gridcell">
         {extra}
@@ -473,6 +473,7 @@ export function Stock(): ReactNode {
                   const e = edits.get(p.id)
                   const stockNow = e?.stock != null ? (parseNum(e.stock) ?? 0) : p.stock
                   const lvl = stockLevel(stockNow, threshold)
+                  const automaticCardPrice = p.card_price == null ? cardPrice(p.price, null, cardPct) : null
                   const isSel = selected.has(p.id)
                   return (
                     <div
@@ -507,9 +508,9 @@ export function Stock(): ReactNode {
                         v.index,
                         'card_price',
                         'kredi kartı fiyatı',
-                        p.card_price == null && cardPct > 0 ? (
+                        automaticCardPrice != null ? (
                           <span className="faint small nowrap" title="Otomatik (peşin + %)">
-                            {money(cardPrice(p.price, null, cardPct) ?? 0, p.currency)}
+                            {money(automaticCardPrice, p.currency)}
                           </span>
                         ) : undefined
                       )}

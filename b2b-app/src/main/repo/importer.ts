@@ -18,6 +18,7 @@ interface Parsed {
 }
 
 const pending = new Map<string, Parsed>()
+const UNREADABLE_FILE_ERROR = 'Dosya okunamadı. Lütfen geçerli bir Excel (.xlsx, .xls) ya da CSV dosyası seçin.'
 
 type Field = keyof ProductInput
 
@@ -111,13 +112,26 @@ function parseFile(path: string): Parsed {
     const res = Papa.parse<string[]>(text, { skipEmptyLines: 'greedy', delimitersToGuess: [';', ',', '\t', '|'] })
     matrix = res.data.map((r) => r.map((c) => String(c ?? '').trim()))
   } else {
-    const wb = XLSX.read(readFileSync(path), { type: 'buffer', cellDates: false })
+    const file = readFileSync(path)
+    const zipWorkbook = file[0] === 0x50 && file[1] === 0x4b && [0x03, 0x05, 0x07].includes(file[2])
+    const compoundWorkbook = file.subarray(0, 8).equals(Buffer.from('D0CF11E0A1B11AE1', 'hex'))
+    const xml = file.toString('utf8', 0, 512)
+    const xmlWorkbook = ext === '.xls' && /^\uFEFF?\s*<\?xml\b/i.test(xml) && /<(?:\w+:)?Workbook(?:\s|>)/i.test(xml)
+    if (!['.xlsx', '.xls'].includes(ext) || (ext === '.xlsx' ? !zipWorkbook : !compoundWorkbook && !xmlWorkbook)) {
+      throw new Error(UNREADABLE_FILE_ERROR)
+    }
+    let wb: XLSX.WorkBook
+    try {
+      wb = XLSX.read(file, { type: 'buffer', cellDates: false })
+    } catch {
+      throw new Error(UNREADABLE_FILE_ERROR)
+    }
     const sheets = wb.SheetNames.map((n) =>
       (XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: false, defval: '' }) as unknown[][])
         .map((r) => r.map((c) => String(c ?? '').trim()))
         .filter((r) => r.some((c) => c !== ''))
     ).filter((m) => m.length)
-    if (!sheets.length) throw new Error('Dosya boş görünüyor.')
+    if (!sheets.length) throw new Error(UNREADABLE_FILE_ERROR)
     // The product table is the sheet whose header row names a code column (a summary sheet may come first);
     // further sheets with the same header row (one sheet per shelf/depot) are appended to it.
     const score = (m: string[][]): number => {
@@ -135,10 +149,12 @@ function parseFile(path: string): Parsed {
     })
   }
   matrix = matrix.filter((r) => r.some((c) => c !== ''))
-  if (!matrix.length) throw new Error('Dosya boş görünüyor.')
+  if (!matrix.length) throw new Error(UNREADABLE_FILE_ERROR)
   const width = Math.max(...matrix.map((r) => r.length))
   const headers = Array.from({ length: width }, (_, i) => matrix[0][i] || `Sütun ${i + 1}`)
-  return { filename, headers, rows: matrix.slice(1).map((r) => Array.from({ length: width }, (_, i) => r[i] ?? '')) }
+  const rows = matrix.slice(1).map((r) => Array.from({ length: width }, (_, i) => r[i] ?? ''))
+  if (!headers.some((header) => header.trim()) || !rows.length) throw new Error(UNREADABLE_FILE_ERROR)
+  return { filename, headers, rows }
 }
 
 export function previewFile(path: string): ImportPreview {

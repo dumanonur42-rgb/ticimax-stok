@@ -36,7 +36,7 @@ function fieldValue(p: Product, k: FieldKey): string {
     case 'price':
       return money(p.price, p.currency)
     case 'card_price':
-      return p.card_price == null ? '' : money(p.card_price, p.currency)
+      return p.price == null || p.price <= 0 || p.card_price == null || p.card_price <= 0 ? '' : money(p.card_price, p.currency)
     case 'list_price':
       return p.list_price == null ? '' : money(p.list_price, p.currency)
     default:

@@ -149,8 +149,14 @@ export function ProductDrawer({
                     </span>
                   )}
                 </dd>
-                <dt>Kredi Kartı Fiyatı</dt>
-                <dd>{cp == null ? <span className="muted">—</span> : <strong>{money(cp, product.currency)}</strong>}</dd>
+                {cp != null && (
+                  <>
+                    <dt>Kredi Kartı Fiyatı</dt>
+                    <dd>
+                      <strong>{money(cp, product.currency)}</strong>
+                    </dd>
+                  </>
+                )}
               </>
             )}
             {product.min_order > 1 && (
