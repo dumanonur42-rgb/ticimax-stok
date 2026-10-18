@@ -42,9 +42,11 @@ export function Customers(): ReactNode {
     load()
     window.addEventListener('online', load)
     const off = onEvent('customers:changed', load)
+    const offSync = onEvent('sync:changed', load)
     return () => {
       window.removeEventListener('online', load)
       off()
+      offSync()
     }
   }, [q])
 

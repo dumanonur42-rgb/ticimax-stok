@@ -2,7 +2,7 @@ import type { ActivityKind, ActivityPlatform, ActivityRow, ActivitySummary, Stoc
 import type { Customer, User } from '@shared/types'
 import { CalendarDays, Eye, Globe, LogIn, Monitor, PackageCheck, RefreshCw, Search, ShoppingCart, Smartphone } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { api } from '@/lib/api'
+import { api, onEvent } from '@/lib/api'
 import { LoadError } from '@/components/ui'
 import { useApp } from '@/store/app'
 import { TrafficView } from './TrafficView'
@@ -151,6 +151,17 @@ export function ActivityLogs(): ReactNode {
       setStockRefresh((value) => value + 1)
     }
   }
+  useEffect(() => {
+    const reload = (): void => {
+      if (sourceTab === 'app') refresh()
+    }
+    window.addEventListener('online', reload)
+    const offSync = onEvent('sync:changed', reload)
+    return () => {
+      window.removeEventListener('online', reload)
+      offSync()
+    }
+  }, [sourceTab, tab])
   const selectedUser = users.find((user) => user.id === userId)
   const stockHasFilters = Boolean(sku.trim() || userId || source || from || to)
   const hasMore = tab === 'activity' ? activityHasMore : stockHasMore

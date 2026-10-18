@@ -7,8 +7,9 @@ export async function listOrders(opts: { q?: string; status?: OrderStatus; custo
   let query = cloud().from('orders').select('*').order('created_at', { ascending: false }).order('id', { ascending: false })
   if (opts.status) query = query.eq('status', opts.status)
   if (opts.customer_id) query = query.eq('customer_id', opts.customer_id)
-  if (opts.q && opts.q.trim()) {
-    const like = `%${opts.q.trim().replace(/[%_,()]/g, ' ')}%`
+  const search = opts.q?.trim().toLocaleLowerCase('tr-TR')
+  if (search) {
+    const like = `%${search.replace(/[%_,()]/g, ' ')}%`
     query = query.or(`order_no.ilike.${like},customer_name.ilike.${like},note.ilike.${like}`)
   }
   return must(await query.limit(opts.limit ?? 500)).map((r) => toOrder(r))

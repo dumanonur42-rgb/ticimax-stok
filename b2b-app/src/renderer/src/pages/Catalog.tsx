@@ -35,14 +35,14 @@ interface Column {
 
 const COLUMNS: Column[] = [
   { key: 'pick', label: '', min: 40 },
-  { key: 'shelf', label: 'Raf', min: 150, grow: 0.7, drop: 5, sort: 'shelf', perm: 'shelf' },
+  { key: 'shelf', label: 'Raf', min: 150, grow: 1.2, drop: 5, sort: 'shelf', perm: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
-  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
+  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 4 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
   { key: 'stock', label: 'Stok', min: 150, sort: 'stock', align: 'right' },
   { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 3 },
   { key: 'description', label: 'Açıklama', min: 120, grow: 1.2, drop: 2 },
-  { key: 'price', label: 'Fiyat', min: 100, grow: 0.4, drop: 4, sort: 'price', align: 'right' },
+  { key: 'price', label: 'Fiyat', min: 195, grow: 0.4, sort: 'price', align: 'right' },
   { key: 'act', label: '', min: 100 }
 ]
 
@@ -194,13 +194,18 @@ export function Catalog(): ReactNode {
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
+  const hasDimensions = total > rows.size || Array.from(rows.values()).some((product) => product.d_inner != null || product.d_outer != null || product.width != null)
+  const layoutColumns = useMemo(
+    () => COLUMNS.map((column) => (column.key === 'shelf' ? { ...column, min: Math.ceil(281 * (settings?.font_scale ?? 1)), grow: 2.5 } : column)),
+    [settings?.font_scale]
+  )
   const cols = useMemo(
     () =>
       fitColumns(
-        COLUMNS.filter((c) => (showPrices || c.key !== 'price') && (!c.perm || hasPerm(session?.user, c.perm))),
+        layoutColumns.filter((c) => (showPrices || c.key !== 'price') && (hasDimensions || c.key !== 'dims') && (!c.perm || hasPerm(session?.user, c.perm))),
         gridW
       ),
-    [showPrices, session?.user, gridW]
+    [layoutColumns, showPrices, session?.user, gridW, hasDimensions]
   )
   const has = useMemo(() => new Set(cols.map((c) => c.key)), [cols])
   const gridCols = cols.map((c) => (c.grow ? `minmax(${c.min}px, ${c.grow}fr)` : `${c.min}px`)).join(' ')

@@ -35,7 +35,14 @@ export function Orders(): ReactNode {
       .catch((e) => setOrdersError((e as Error).message || 'Siparişler alınamadı.'))
   }, [q, status])
   useEffect(load, [load])
-  useEffect(() => onEvent('orders:changed', load), [load])
+  useEffect(() => {
+    const offOrders = onEvent('orders:changed', load)
+    const offSync = onEvent('sync:changed', load)
+    return () => {
+      offOrders()
+      offSync()
+    }
+  }, [load])
   useEffect(() => {
     window.addEventListener('online', load)
     return () => window.removeEventListener('online', load)
@@ -103,7 +110,12 @@ export function Orders(): ReactNode {
         ) : !orders ? (
           <Spinner />
         ) : orders.length === 0 ? (
-          <Empty title="Sipariş bulunamadı" />
+          <Empty
+            title={q.trim() || status ? 'Aramaya uyan sipariş yok' : 'Henüz sipariş yok'}
+            hint={q.trim() || status ? 'Arama ve durum filtrelerini değiştirebilir ya da temizleyebilirsiniz.' : 'Sipariş oluşturulduğunda burada görünür.'}
+          >
+            {(q.trim() || status) && <button className="btn" onClick={() => { setQ(''); setStatus('') }}>Filtreleri temizle</button>}
+          </Empty>
         ) : (
           <table className="table orders-list-table">
             <colgroup>

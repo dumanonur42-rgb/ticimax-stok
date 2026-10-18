@@ -32,6 +32,7 @@ function useApplySettings(): void {
     dark.addEventListener('change', apply)
     root.dataset.density = settings.density
     root.dataset.motion = settings.reduce_motion ? 'reduce' : 'auto'
+    root.style.setProperty('--font-scale', String(settings.font_scale))
     root.style.fontSize = `${Math.round(settings.font_scale * 100)}%`
     return () => dark.removeEventListener('change', apply)
   }, [settings])

@@ -2,7 +2,7 @@ import type { Currency, ImportLog, ImportPreview, ImportResult, ProductInput } f
 import { FileSpreadsheet, FileDown, Upload } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Field, LoadError, Spinner } from '@/components/ui'
-import { api } from '@/lib/api'
+import { api, onEvent } from '@/lib/api'
 import { date, num } from '@/lib/format'
 import { useApp } from '@/store/app'
 
@@ -60,7 +60,15 @@ export function Import(): ReactNode {
       .then((items) => { setLogs(items); setLogsLoading(false) })
       .catch((error) => { setLogsError((error as Error).message || 'İçe aktarım geçmişi alınamadı.'); setLogsLoading(false) })
   }
-  useEffect(loadLogs, [])
+  useEffect(() => {
+    loadLogs()
+    window.addEventListener('online', loadLogs)
+    const offSync = onEvent('sync:changed', loadLogs)
+    return () => {
+      window.removeEventListener('online', loadLogs)
+      offSync()
+    }
+  }, [])
 
   const pick = async (): Promise<void> => {
     setBusy(true)
@@ -116,6 +124,7 @@ export function Import(): ReactNode {
 
   const used = new Set(Object.values(mapping).filter(Boolean))
   const newestResetIndex = logs.findIndex((log) => log.mode === 'purge' || log.mode === 'replace')
+  const importDisabledReason = !mapping.sku ? 'Ürün kodu kolonunu seçin.' : preview?.totalRows === 0 ? 'Dosyada ürün satırı yok.' : ''
   const modeLabel = (value: string): string => {
     if (value === 'upsert') return 'Ekle / güncelle'
     if (value === 'replace') return 'Listeyi değiştir'
@@ -201,6 +210,7 @@ export function Import(): ReactNode {
                   className="select"
                   value={mapping[f.key] ?? ''}
                   aria-required={f.required}
+                  aria-invalid={f.key === 'sku' && !mapping.sku}
                   onChange={(e) => { clearTrial(); setMapping((m) => ({ ...m, [f.key]: e.target.value || undefined })) }}
                 >
                   <option value="">— eşlenmedi —</option>
@@ -242,15 +252,16 @@ export function Import(): ReactNode {
             </table>
           </div>
 
-          <div className="row">
+          <div className="row wrap">
             <button className="btn" onClick={() => { clearTrial(); setPreview(null) }}>
               Vazgeç
             </button>
             <span className="spacer" />
-            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={!mapping.sku ? 'Ürün kodu kolonunu seçin' : 'Hiçbir şey yazmadan sonucu hesaplar'}>
+            {importDisabledReason && <span id="import-action-reason" className="muted small" role="status">{importDisabledReason}</span>}
+            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={importDisabledReason || 'Hiçbir şey yazmadan sonucu hesaplar'} aria-describedby={importDisabledReason ? 'import-action-reason' : undefined}>
               {dryRunBusy ? 'Deneme hesaplanıyor…' : 'Önce dene'}
             </button>
-            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={!mapping.sku ? 'Ürün kodu kolonunu seçin' : undefined}>
+            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={importDisabledReason || undefined} aria-describedby={importDisabledReason ? 'import-action-reason' : undefined}>
               <Upload size={16} aria-hidden /> {num(preview.totalRows)} satırı içe aktar
             </button>
           </div>
