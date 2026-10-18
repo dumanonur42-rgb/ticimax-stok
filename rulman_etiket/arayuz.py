@@ -593,6 +593,7 @@ class Uygulama(tk.Tk):
 
         self.kod_var = tk.StringVar()
         self.ek_var = tk.StringVar()
+        self.barkod_var = tk.StringVar()
         self.adet_var = tk.StringVar(value="1")
         self.bilgi1_var = tk.StringVar()
         self.bilgi2_var = tk.StringVar()
@@ -635,16 +636,17 @@ class Uygulama(tk.Tk):
         self.durum.grid(row=3, column=0, sticky="ew")
 
         self.yazicilari_yenile(ilk=True)
-        for v in (self.kod_var, self.ek_var, self.adet_var, self.bilgi1_var, self.bilgi2_var,
-                  self.alt_var, self.boyut_var, self.kopya_var):
+        for v in (self.kod_var, self.ek_var, self.barkod_var, self.adet_var, self.bilgi1_var,
+                  self.bilgi2_var, self.alt_var, self.boyut_var, self.kopya_var):
             v.trace_add("write", lambda *_: self._degisti())
         for v in (self.alt_var, self.boyut_var, self.yazici_var):
             v.trace_add("write", lambda *_: self._ayar_kaydet_sonra())
         self.kod_var.trace_add("write", lambda *_: self._normallestir(self.kod_var, self.kod))
         self.ek_var.trace_add("write", lambda *_: self._normallestir(self.ek_var, self.ek))
+        self.barkod_var.trace_add("write", lambda *_: self._barkod_bosluklarini_kaldir())
         self.kod_var.trace_add("write", lambda *_: self._kod_yazi_boyu())
 
-        for alan in (self.kod, self.ek, self.adet.giris):
+        for alan in (self.kod, self.ek, self.barkod, self.adet.giris):
             for tus in ("<Return>", "<KP_Enter>"):
                 alan.bind(tus, lambda _e: self.yazdir())
         for alan in (self.bilgi1, self.bilgi2):
@@ -743,13 +745,20 @@ class Uygulama(tk.Tk):
         self.adet = Sayac(satir, self.adet_var, 1, 99999)
         _alan(satir, "Adet", self.adet, 0, sutun=1, ipady=0)
 
+        self.barkod = _giris(kart, font=_f(11), textvariable=self.barkod_var)
+        _alan(kart, "Barkod numarası (isteğe bağlı)", self.barkod, 5, ust=8)
+        self.barkod_ipucu = tk.Label(
+            kart, text="13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.",
+            font=_f(8), fg=SOLUK, bg=KART, anchor="w", justify="left", width=1)
+        self.barkod_ipucu.grid(row=7, column=0, sticky="ew", pady=(px(3), 0))
+
         tk.Label(kart, text="Bilgi satırları (isteğe bağlı)", font=_f(8), fg=SOLUK, bg=KART,
-                 anchor="w").grid(row=5, column=0, sticky="w", pady=(px(8), px(3)))
+                 anchor="w").grid(row=8, column=0, sticky="w", pady=(px(8), px(3)))
         self.bilgi1 = _giris(kart, font=_f(10), textvariable=self.bilgi1_var)
-        self.bilgi1.grid(row=6, column=0, sticky="ew", ipady=px(3))
+        self.bilgi1.grid(row=9, column=0, sticky="ew", ipady=px(3))
         self.bilgi2 = _giris(kart, font=_f(10), textvariable=self.bilgi2_var)
-        self.bilgi2.grid(row=7, column=0, sticky="ew", ipady=px(3), pady=(px(5), 0))
-        Anahtar(kart, self.alt_var, "Altta tekrar yazsın").grid(row=8, column=0, sticky="w",
+        self.bilgi2.grid(row=10, column=0, sticky="ew", ipady=px(3), pady=(px(5), 0))
+        Anahtar(kart, self.alt_var, "Altta tekrar yazsın").grid(row=11, column=0, sticky="w",
                                                                 pady=(px(10), 0))
 
         dugmeler = tk.Frame(kart, bg=KART)
@@ -843,6 +852,20 @@ class Uygulama(tk.Tk):
             finally:
                 self._normallesiyor = False
 
+    def _barkod_bosluklarini_kaldir(self):
+        if self._normallesiyor:
+            return
+        eski = self.barkod_var.get()
+        yeni = eski.replace(" ", "")
+        if yeni != eski:
+            self._normallesiyor = True
+            try:
+                imlec = self.barkod.index("insert")
+                self.barkod_var.set(yeni)
+                self.barkod.icursor(max(0, imlec - len(eski) + len(yeni)))
+            finally:
+                self._normallesiyor = False
+
     def _kirp(self, var: tk.StringVar):
         if var.get() != var.get().strip():
             var.set(var.get().strip())
@@ -875,6 +898,7 @@ class Uygulama(tk.Tk):
             bilgi1=self.bilgi1_var.get().strip(),
             bilgi2=self.bilgi2_var.get().strip(),
             alt_tekrar=bool(self.alt_var.get()),
+            barkod_no=self.barkod_var.get().replace(" ", ""),
         )
 
     def _onizleme_istegi(self):
@@ -913,6 +937,10 @@ class Uygulama(tk.Tk):
             except Exception:  # noqa: BLE001
                 notlar = []
         self.onizleme.uyari_goster(notlar)
+        barkod_hata = next((h for h in hatalar if h.startswith("Barkod numarası")), None)
+        self.barkod_ipucu.config(
+            text=barkod_hata or "13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.",
+            fg=KIRMIZI if barkod_hata else SOLUK)
         if hatalar:
             self.kod_ipucu.config(text=hatalar[0], fg=KIRMIZI)
         else:
@@ -1085,6 +1113,7 @@ class Uygulama(tk.Tk):
     def son_secildi(self, k: dict):
         self.kod_var.set(str(k.get("kod", "")))
         self.ek_var.set(str(k.get("ek", "")))
+        self.barkod_var.set(str(k.get("barkod_no", "")))
         try:
             adet = int(k.get("adet", 1))
         except (TypeError, ValueError):

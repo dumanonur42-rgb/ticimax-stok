@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import pymupdf
 import zxingcpp
-from barcode import Code128
+from barcode import Code128, EAN13
 
 # ---------------------------------------------------------------- birimler
 MM = 72 / 25.4            # 1 mm = 2.8346 pt
@@ -71,6 +71,7 @@ class EtiketVerisi:
     bilgi1: str = ""
     bilgi2: str = ""
     alt_tekrar: bool = True
+    barkod_no: str = ""
 
 
 BOYUTLAR: dict[str, str] = {
@@ -153,6 +154,20 @@ def _code128(metin: str) -> str:
     return Code128(metin).build()[0]
 
 
+def ean13(barkod_no: str) -> str:
+    """12 haneyi tamamlar veya 13 haneli EAN-13 kontrol hanesini doğrular."""
+    numara = (barkod_no or "").replace(" ", "")
+    if len(numara) not in (12, 13) or any(c < "0" or c > "9" for c in numara):
+        raise EtiketHatasi("Barkod numarası 12 veya 13 haneli olmalı, sadece rakam.")
+    ilk_haneler = numara[:12]
+    toplam = sum(int(hane) * (1 if i % 2 == 0 else 3)
+                 for i, hane in enumerate(ilk_haneler))
+    kontrol = str((-toplam) % 10)
+    if len(numara) == 13 and numara[-1] != kontrol:
+        raise EtiketHatasi(f"Barkod numarasının son hanesi hatalı (doğrusu {kontrol} olmalı).")
+    return ilk_haneler + kontrol
+
+
 def _datamatrix(metin: str) -> list[list[bool]]:
     """Kare DataMatrix (ECC200). Türkçe harfler UTF-8 ECI ile kodlanır."""
     b = zxingcpp.create_barcode(metin, zxingcpp.BarcodeFormat.DataMatrix, force_square=True)
@@ -173,6 +188,11 @@ def dogrula(veri: EtiketVerisi) -> list[str]:
         hatalar.append(f"Rulman kodu en fazla {MAX_KOD} karakter olabilir (şu an {len(kod)}).")
     if len(ek) > MAX_EK:
         hatalar.append(f"Ek (ör. C3) en fazla {MAX_EK} karakter olabilir.")
+    if (veri.barkod_no or "").replace(" ", ""):
+        try:
+            ean13(veri.barkod_no)
+        except EtiketHatasi as e:
+            hatalar.append(str(e))
     for ad, metin in (("Rulman kodu", kod), ("Ek", ek)):
         kotu = sorted({c for c in metin if not (32 <= ord(c) <= 126)})
         if kotu:
@@ -232,6 +252,11 @@ class Yerlesim:
     bilgi_tabanlari: list[float]
     alt_y0: float | None             # alt tekrar bloğu üst sınırı (pt)
     uyarilar: list[str] = field(default_factory=list)
+    ean_kodu: str = ""
+    ean_x: int = 0
+    ean_guard_ek: int = 0
+    ean_rakam_pt: float = 0
+    ean_rakam_taban: float = 0
 
 
 def _kod_sigdir(kod: str, nominal: float, w: float) -> tuple[float, list[str]]:
@@ -265,8 +290,7 @@ def _tek_satir_sigdir(s: str, nominal: float, en_kucuk: float, w: float, kalin: 
 
 
 def _ust_sira(veri: EtiketVerisi, p: _Profil):
-    """Code128 + DataMatrix yerleşimini seçer."""
-    bitler = _code128(barkod_metni(veri))
+    """EAN-13/Code128 + DataMatrix yerleşimini seçer."""
     uyarilar: list[str] = []
     dm_metin = datamatrix_metni(veri)
     dm = _datamatrix(dm_metin)
@@ -276,6 +300,19 @@ def _ust_sira(veri: EtiketVerisi, p: _Profil):
         uyarilar.append("Bilgi satırları çok uzun olduğu için kare koda eklenmedi.")
     n = len(dm)
     en_iyi = max(DM_MODUL_MIN, min(DM_MODUL_MAX, p.dm_hedef // n))
+    if (veri.barkod_no or "").replace(" ", ""):
+        ean_kodu = ean13(veri.barkod_no)
+        bitler = EAN13(ean_kodu[:12]).build()[0]
+        for dm_modul in range(en_iyi, DM_MODUL_MIN - 1, -1):
+            dm_x = SAG - n * dm_modul
+            for m in (4, 3):
+                ean_x = KENAR + 9 * m
+                ean_sag = ean_x + len(bitler) * m
+                if dm_x - ean_sag >= 7 * m:
+                    return "ean", m, bitler, dm, dm_modul, dm_metin, uyarilar
+        raise EtiketHatasi("EAN-13 ve kare kod etikete sığmıyor.")
+
+    bitler = _code128(barkod_metni(veri))
     for dm_modul in range(en_iyi, DM_MODUL_MIN - 1, -1):
         dm_x = SAG - n * dm_modul
         for m in CUBUK_MODUL:
@@ -300,11 +337,20 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
     cubuk_gen = len(bitler) * m
     w = _pt(ICERIK)
 
-    rakam = barkod_metni(veri)
-    rakam_pt, rakam = _tek_satir_sigdir(rakam, p.rakam_pt, RAKAM_MIN,
-                                        _pt(cubuk_gen), False)
+    ean_kodu = ean13(veri.barkod_no) if mod == "ean" else ""
+    ean_x = KENAR + 9 * m if mod == "ean" else 0
+    ean_rakam_pt = p.rakam_pt if mod == "ean" else 0
+    ean_guard_ek = round((0.3 * MM + ean_rakam_pt * BUYUK_HARF) / NOKTA) if mod == "ean" else 0
     rakam_bosluk = 0.7 * MM
-    cubuk_blok = _pt(cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
+    if mod == "ean":
+        rakam_pt, rakam = 0, ""
+        cubuk_blok = (_pt(cubuk_h) + 0.3 * MM
+                      + ean_rakam_pt * (BUYUK_HARF + ALT_TASMA))
+    else:
+        rakam = barkod_metni(veri)
+        rakam_pt, rakam = _tek_satir_sigdir(rakam, p.rakam_pt, RAKAM_MIN,
+                                            _pt(cubuk_gen), False)
+        cubuk_blok = _pt(cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
 
     ek_ham = veri.ek.strip()
     bilgiler = _bilgiler(veri)
@@ -315,7 +361,7 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, KOD_MIN_IKI, w, True)
 
         y = _pt(KENAR)
-        if mod == "yan":
+        if mod in ("yan", "ean"):
             dm_y = KENAR
             cubuk_y = KENAR
             ust_h = max(_pt(dm_gen), cubuk_blok)
@@ -327,7 +373,10 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             cubuk_y = KENAR
             ust_h = cubuk_blok
             dm_y = 0  # aşağıda belirlenir
-        rakam_taban = _pt(cubuk_y + cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
+        rakam_taban = (_pt(cubuk_y + cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
+                       if mod != "ean" else 0)
+        ean_rakam_taban = (_pt(cubuk_y + cubuk_h) + 0.3 * MM
+                           + ean_rakam_pt * BUYUK_HARF if mod == "ean" else 0)
         y += ust_h
 
         def blok(y: float) -> tuple[float, list[float], float | None, float]:
@@ -346,7 +395,7 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
         adet_taban, kod_tabanlari, ek_taban, y = blok(y)
         alt_blok_h = blok(0)[3] - BOSLUK_UST_ADET + ALT_TASMA * kod_pt
 
-        bilgi_w = w if mod == "yan" else w - _pt(dm_gen) - 2 * MM
+        bilgi_w = w if mod in ("yan", "ean") else w - _pt(dm_gen) - 2 * MM
         bilgi_pt, bilgi_satir = p.bilgi_pt, []
         if bilgiler:
             sonuc = [_tek_satir_sigdir(b, p.bilgi_pt, BILGI_MIN, bilgi_w, False) for b in bilgiler]
@@ -401,6 +450,8 @@ def yerlesim(veri: EtiketVerisi, boyut: str = "62x100") -> Yerlesim:
             ek_pt=ek_pt, ek_taban=ek_taban,
             bilgi_pt=bilgi_pt, bilgi_satirlari=bilgi_satir, bilgi_tabanlari=bilgi_tabanlari,
             alt_y0=alt_y0, uyarilar=uy,
+            ean_kodu=ean_kodu, ean_x=ean_x, ean_guard_ek=ean_guard_ek,
+            ean_rakam_pt=ean_rakam_pt, ean_rakam_taban=ean_rakam_taban,
         )
     raise EtiketHatasi("Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın.")
 
@@ -419,19 +470,38 @@ def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
         tw.append((x, taban), s, font=f, fontsize=pt)
 
     sh = page.new_shape()
-    # Code128: modül ızgarası tam nokta
-    m = y.cubuk_modul
-    i, bit = 0, y.cubuk_bitler
-    while i < len(bit):
-        if bit[i] == "1":
-            j = i
-            while j < len(bit) and bit[j] == "1":
-                j += 1
-            x0 = y.cubuk_x + i * m
-            sh.draw_rect(pymupdf.Rect(_pt(x0), _pt(y.cubuk_y), _pt(y.cubuk_x + j * m), _pt(y.cubuk_y + y.cubuk_h)))
-            i = j
-        else:
-            i += 1
+    if y.ean_kodu:
+        m = y.cubuk_modul
+        i, bit = 0, y.cubuk_bitler
+        while i < len(bit):
+            koruyucu = i < 3 or 45 <= i < 50 or i >= 92
+            if bit[i] == "1":
+                j = i
+                while j < len(bit) and bit[j] == "1" and (
+                    (j < 3 or 45 <= j < 50 or j >= 92) == koruyucu
+                ):
+                    j += 1
+                x0 = y.ean_x + i * m
+                yukseklik = y.cubuk_h + (y.ean_guard_ek if koruyucu else 0)
+                sh.draw_rect(pymupdf.Rect(_pt(x0), _pt(y.cubuk_y),
+                                          _pt(y.ean_x + j * m), _pt(y.cubuk_y + yukseklik)))
+                i = j
+            else:
+                i += 1
+    else:
+        # Code128: modül ızgarası tam nokta
+        m = y.cubuk_modul
+        i, bit = 0, y.cubuk_bitler
+        while i < len(bit):
+            if bit[i] == "1":
+                j = i
+                while j < len(bit) and bit[j] == "1":
+                    j += 1
+                x0 = y.cubuk_x + i * m
+                sh.draw_rect(pymupdf.Rect(_pt(x0), _pt(y.cubuk_y), _pt(y.cubuk_x + j * m), _pt(y.cubuk_y + y.cubuk_h)))
+                i = j
+            else:
+                i += 1
     # DataMatrix: satır satır yatay şeritler
     d = y.dm_modul
     for r, satir in enumerate(y.dm):
@@ -449,14 +519,24 @@ def _sayfa_ciz(page: pymupdf.Page, veri: EtiketVerisi, y: Yerlesim) -> None:
     sh.finish(color=None, fill=(0, 0, 0), width=0)
     sh.commit(overlay=True)
 
-    # barkod altı yazı: çubukların ortasına
-    rakam = barkod_metni(veri) if bit else ""
-    if rakam and _gen(rakam, y.rakam_pt, False) > _pt(len(bit) * m):
-        rakam = _tek_satir_sigdir(rakam, y.rakam_pt, RAKAM_MIN, _pt(len(bit) * m), False)[1]
-    cubuk_orta = _pt(y.cubuk_x + len(y.cubuk_bitler) * m / 2)
-    rx = max(_pt(KENAR), cubuk_orta - _gen(rakam, y.rakam_pt, False) / 2)
-    if rakam:
-        yaz(rx, y.rakam_taban, rakam, y.rakam_pt, normal)
+    if y.ean_kodu:
+        merkezler = [(y.ean_x - 4.5 * m, y.ean_kodu[0])]
+        merkezler.extend((y.ean_x + (3 + 7 * i + 3.5) * m, h)
+                         for i, h in enumerate(y.ean_kodu[1:7]))
+        merkezler.extend((y.ean_x + (50 + 7 * i + 3.5) * m, h)
+                         for i, h in enumerate(y.ean_kodu[7:]))
+        for merkez, hane in merkezler:
+            yaz(_pt(merkez) - _gen(hane, y.ean_rakam_pt, False) / 2,
+                y.ean_rakam_taban, hane, y.ean_rakam_pt, normal)
+    else:
+        # barkod altı yazı: çubukların ortasına
+        rakam = barkod_metni(veri) if bit else ""
+        if rakam and _gen(rakam, y.rakam_pt, False) > _pt(len(bit) * m):
+            rakam = _tek_satir_sigdir(rakam, y.rakam_pt, RAKAM_MIN, _pt(len(bit) * m), False)[1]
+        cubuk_orta = _pt(y.cubuk_x + len(y.cubuk_bitler) * m / 2)
+        rx = max(_pt(KENAR), cubuk_orta - _gen(rakam, y.rakam_pt, False) / 2)
+        if rakam:
+            yaz(rx, y.rakam_taban, rakam, y.rakam_pt, normal)
 
     x = _pt(KENAR)
     adet = _adet_satiri(veri)

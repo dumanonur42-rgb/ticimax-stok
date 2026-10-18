@@ -95,6 +95,10 @@ jobs:
           Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
+          $ean = "$PWD\test_ean.pdf"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6205-2RS", "--barkod", "8691234567890", "--pdf", ('"' + $ean + '"')) -FailureMessage "EAN-13 PDF oluşturma başarısız"
+          if (-not (Test-Path $ean) -or (Get-Item $ean).Length -le 0) { Write-Error "EAN-13 PDF dosyası oluşmadı"; exit 1 }
+
           $kontrolRapor = Join-Path $PWD "kontrol.txt"
           Remove-Item $kontrolRapor -ErrorAction SilentlyContinue
           try {
