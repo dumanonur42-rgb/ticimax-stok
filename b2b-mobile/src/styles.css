@@ -118,7 +118,7 @@ img { max-width: 100%; }
 .login-screen {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   padding:
     max(22px, var(--safe-top))
@@ -135,7 +135,7 @@ img { max-width: 100%; }
 .login-card {
   flex: 0 0 auto;
   width: min(100%, 430px);
-  margin: auto;
+  margin: var(--login-top, 0px) auto 0;
   padding: clamp(24px, 7vw, 40px);
   border: 1px solid var(--line);
   border-radius: 24px;
@@ -149,6 +149,8 @@ img { max-width: 100%; }
 .login-card > .muted { margin: 9px 0 25px; font-size: .94rem; }
 .login-form { display: flex; flex-direction: column; gap: 10px; }
 .login-form > label, .field-label { margin-top: 7px; font-size: .86rem; font-weight: 650; }
+.login-field-error { min-height: 1.15em; margin: 0; color: var(--red); font-size: .82rem; line-height: 1.15; }
+.login-message-slot { min-height: 1.2em; }
 .login-form input, .field-label input, .field-label select, .field-label textarea, .range-field input {
   min-width: 0;
   width: 100%;
@@ -165,6 +167,7 @@ img { max-width: 100%; }
 .login-foot { margin: 25px 0 0; text-align: center; color: var(--muted); font-size: .86rem; }
 .login-foot a { color: var(--blue); font-weight: 700; }
 .error-text { color: var(--red); font-size: .88rem; margin: 4px 0 8px; }
+.summary-retry { color: var(--muted); font-size: .68rem; font-weight: 600; }
 
 .app-header {
   flex: 0 0 auto;

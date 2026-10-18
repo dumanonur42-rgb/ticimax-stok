@@ -68,7 +68,9 @@ export default function App(): ReactNode {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState('')
+  const [loginFieldError, setLoginFieldError] = useState<'username' | 'password' | null>(null)
   const [loginBusy, setLoginBusy] = useState(false)
+  const [homeCatalogStatus, setHomeCatalogStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [homeOpenOrders, setHomeOpenOrders] = useState<number | null>(null)
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
@@ -86,6 +88,30 @@ export default function App(): ReactNode {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
     return () => window.clearTimeout(timeout)
   }, [])
+
+  useEffect(() => {
+    if (booting || session) return
+    const root = document.documentElement
+    const measure = (): void => {
+      if (root.dataset.keyboardOpen === 'true') return
+      const screen = document.querySelector<HTMLElement>('.login-screen')
+      const card = screen?.querySelector<HTMLElement>('.login-card')
+      if (!screen || !card) return
+      const screenStyle = getComputedStyle(screen)
+      const available = screen.clientHeight -
+        Number.parseFloat(screenStyle.paddingTop) -
+        Number.parseFloat(screenStyle.paddingBottom) -
+        card.offsetHeight
+      root.style.setProperty('--login-top', `${Math.max(0, available / 2)}px`)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    window.addEventListener('orientationchange', measure)
+    return () => {
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('orientationchange', measure)
+    }
+  }, [booting, session])
 
   useEffect(() => {
     if (!bootMinimumElapsed || booting || bootOverlayStage !== 'visible') return
@@ -108,12 +134,18 @@ export default function App(): ReactNode {
     if (!useApp.getState().session) return
     if (navigator.onLine === false) {
       setOnline(false)
+      if (!useApp.getState().products.length) setHomeCatalogStatus('error')
       return
     }
-    if (Date.now() < syncRetryAt.current) return
+    if (Date.now() < syncRetryAt.current) {
+      if (!useApp.getState().products.length) setHomeCatalogStatus('error')
+      return
+    }
+    if (!useApp.getState().products.length) setHomeCatalogStatus('loading')
     setSyncBusy(true)
     try {
       const result = await syncCatalog()
+      setHomeCatalogStatus('ready')
       syncRetryCount.current = 0
       syncRetryAt.current = 0
       if (syncRetryTimer.current !== null) window.clearTimeout(syncRetryTimer.current)
@@ -135,6 +167,7 @@ export default function App(): ReactNode {
       }
     } catch (error) {
       setOnline(false)
+      if (!useApp.getState().products.length) setHomeCatalogStatus('error')
       console.warn('Catalog sync failed', error)
       syncRetryCount.current += 1
       const delay = Math.min(5 * 60_000, 15_000 * 2 ** Math.min(syncRetryCount.current - 1, 5))
@@ -391,9 +424,20 @@ export default function App(): ReactNode {
   const onLogin = async (event: FormEvent): Promise<void> => {
     event.preventDefault()
     setLoginError('')
+    if (!loginName.trim()) {
+      setLoginFieldError('username')
+      document.getElementById('username')?.focus()
+      return
+    }
+    if (!password) {
+      setLoginFieldError('password')
+      document.getElementById('password')?.focus()
+      return
+    }
+    setLoginFieldError(null)
     setLoginBusy(true)
     try {
-      const signedIn = await signIn(loginName, password)
+      const signedIn = await signIn(loginName.trim(), password)
       setActivitySession(signedIn.user.id)
       logActivity({ kind: 'login' })
       setSession(signedIn)
@@ -469,17 +513,41 @@ export default function App(): ReactNode {
             <p className="eyebrow">BAYİ UYGULAMASI</p>
             <h1>Hoş geldiniz</h1>
             <p className="muted">Hesabınızla giriş yapın.</p>
-            <form className="login-form" onSubmit={(event) => void onLogin(event)}>
+            <form className="login-form" noValidate onSubmit={(event) => void onLogin(event)}>
               <label htmlFor="username">Kullanıcı adı</label>
-              <input id="username" autoComplete="username" value={loginName} onChange={(event) => { setLoginName(event.target.value); setLoginError('') }} required />
+              <input
+                id="username"
+                autoComplete="username"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="next"
+                value={loginName}
+                onChange={(event) => { setLoginName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault()
+                    document.getElementById('password')?.focus()
+                  }
+                }}
+              />
+              <p className="login-field-error" role="alert">{loginFieldError === 'username' ? 'Kullanıcı adını yazın' : '\u00a0'}</p>
               <label htmlFor="password">Şifre</label>
               <div className="password-wrap">
-                <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={(event) => { setPassword(event.target.value); setLoginError('') }} required />
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  enterKeyHint="go"
+                  value={password}
+                  onChange={(event) => { setPassword(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                />
                 <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
                   {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
                 </button>
               </div>
-              {loginError && <p className="error-text" role="alert">{loginError}</p>}
+              <p className="login-field-error" role="alert">{loginFieldError === 'password' ? 'Şifrenizi yazın' : '\u00a0'}</p>
+              <p className="error-text login-message-slot" role="alert">{loginError || '\u00a0'}</p>
               {!online && <p className="error-text" role="status">Giriş yapmak için internet bağlantısı gerekir.</p>}
               <button className="button primary wide" type="submit" disabled={loginBusy || !online}>
                 {loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap'}
@@ -504,7 +572,7 @@ export default function App(): ReactNode {
           {!online && <div className="connection-chip" role="status"><WifiOff size={15} /><span>Çevrimdışı</span></div>}
         </header>
         <main className="main-content" key={tab}>
-          {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} onNavigate={setTab} onToast={showToast} />}
+          {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} catalogStatus={homeCatalogStatus} onRetryCatalog={() => void syncNow()} onNavigate={setTab} onToast={showToast} />}
           {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
@@ -572,8 +640,8 @@ function BottomTabs({ tab, setTab, cartLineCount }: { tab: Tab; setTab: (tab: Ta
   )
 }
 
-function HomePage({ session, settings, openOrders, products, onNavigate, onToast }: {
-  session: Session; settings: Settings; openOrders: number | null; products: Product[]; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
+function HomePage({ session, settings, openOrders, products, catalogStatus, onRetryCatalog, onNavigate, onToast }: {
+  session: Session; settings: Settings; openOrders: number | null; products: Product[]; catalogStatus: 'loading' | 'ready' | 'error'; onRetryCatalog: () => void; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
 }): ReactNode {
   const openContact = (url: string): void => {
     try { external(url) } catch { onToast('Bağlantı açılamadı.') }
@@ -582,6 +650,12 @@ function HomePage({ session, settings, openOrders, products, onNavigate, onToast
   const customerName = session.customer?.name ?? settings.company_name
   const greetingName = session.user.display_name || session.user.username
   const showCompany = normalize(customerName) !== normalize(greetingName) && normalize(customerName) !== normalize('Yamansa Rulman')
+  const catalogLoading = products.length === 0 && catalogStatus === 'loading'
+  const catalogError = products.length === 0 && catalogStatus === 'error'
+  const openProducts = (): void => {
+    if (catalogError) onRetryCatalog()
+    else onNavigate('products')
+  }
   return (
     <div className="page home-page">
       <section className="home-hero">
@@ -591,15 +665,17 @@ function HomePage({ session, settings, openOrders, products, onNavigate, onToast
         {showCompany && <p>{customerName}</p>}
       </section>
       <div className="summary-grid">
-        <button className="summary-card" onClick={() => onNavigate('products')}>
+        <button className="summary-card" onClick={openProducts}>
           <span className="summary-icon"><Package size={20} /></span>
-          {products.length ? <span className="summary-value">{num(products.length)}</span> : <span className="summary-value summary-skeleton" aria-label=" " />}
-          {products.length > 0 && <span className="summary-label">Toplam ürün</span>}
+          {catalogLoading ? <span className="summary-value summary-skeleton" aria-label="Ürünler yükleniyor" /> : <span className="summary-value">{catalogError ? '—' : num(products.length)}</span>}
+          <span className="summary-label">Toplam ürün</span>
+          {catalogError && <span className="summary-retry">Yenile</span>}
         </button>
-        <button className="summary-card" onClick={() => { onNavigate('products') }}>
+        <button className="summary-card" onClick={openProducts}>
           <span className="summary-icon"><Box size={20} /></span>
-          <span className="summary-value">{num(products.filter((product) => product.stock > 0).length)}</span>
+          {catalogLoading ? <span className="summary-value summary-skeleton" aria-label="Ürünler yükleniyor" /> : <span className="summary-value">{catalogError ? '—' : num(products.filter((product) => product.stock > 0).length)}</span>}
           <span className="summary-label">Stokta olan</span>
+          {catalogError && <span className="summary-retry">Yenile</span>}
         </button>
         <button className="summary-card" onClick={() => onNavigate('orders')}>
           <span className="summary-icon"><ClipboardList size={20} /></span>

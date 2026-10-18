@@ -28,13 +28,18 @@ function scrollFocusedField(): void {
       const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue('--keyboard')) || 0
       const safeTop = Number.parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
-      const visibleBottom = Math.min(window.innerHeight, window.visualViewport?.height ?? window.innerHeight) - keyboard - 16
+      const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
+      const keyboardTop = keyboard > 0 ? window.innerHeight - keyboard : window.innerHeight
+      const visibleBottom = Math.min(viewportBottom, keyboardTop) - 16
       const field = activeElement.getBoundingClientRect()
       const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
-      const needed = Math.max(field.bottom, submit?.bottom ?? field.bottom) - visibleBottom
-      const available = Math.max(0, field.top - visibleTop)
-      if (needed > 0 && available > 0) loginScreen.scrollBy({ top: Math.min(needed, available), behavior: 'smooth' })
-      else if (field.top < visibleTop) loginScreen.scrollBy({ top: field.top - visibleTop, behavior: 'smooth' })
+      const targetTop = Math.min(field.top, submit?.top ?? field.top)
+      const targetBottom = Math.max(field.bottom, submit?.bottom ?? field.bottom)
+      if (targetTop >= visibleTop && targetBottom <= visibleBottom) return
+      const needed = Math.max(0, targetBottom - visibleBottom)
+      const available = Math.max(0, targetTop - visibleTop)
+      const amount = targetTop < visibleTop ? targetTop - visibleTop : Math.min(needed, available)
+      if (amount) loginScreen.scrollBy({ top: amount, behavior: 'auto' })
     })
     return
   }
