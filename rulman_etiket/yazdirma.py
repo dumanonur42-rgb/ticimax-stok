@@ -248,7 +248,8 @@ def son_kod_ekle(veri: EtiketVerisi | dict) -> None:
     gecmis = [
         kayit
         for kayit in son_kodlar()
-        if (kayit.get("kod"), kayit.get("ek", "")) != (kod, yeni.get("ek", ""))
+        if (kayit.get("kod"), kayit.get("ek", ""), kayit.get("barkod_no", ""))
+        != (kod, yeni.get("ek", ""), yeni.get("barkod_no", ""))
     ]
     try:
         _json_yaz(_veri_klasoru() / "son_kodlar.json", [yeni, *gecmis][:20])

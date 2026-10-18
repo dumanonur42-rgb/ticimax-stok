@@ -41,9 +41,9 @@ YASAK_METIN = ["4047643", "0254X0511", "0074647607", "070684642", "FAG", "SCHAEF
                "SKF", "X-LIFE", "TIMKEN", "NSK", "NTN", "KOYO", "MADE IN PORTUGAL"]
 
 
-def V(kod, ek="", adet=1, bilgi1="", bilgi2="", alt=True, yazi="Qty"):
+def V(kod, ek="", adet=1, bilgi1="", bilgi2="", alt=True, yazi="Qty", barkod_no=""):
     return dict(kod=kod, ek=ek, adet=adet, adet_yazisi=yazi, bilgi1=bilgi1, bilgi2=bilgi2,
-                alt_tekrar=alt)
+                alt_tekrar=alt, barkod_no=barkod_no)
 
 
 ORNEKLER: list[tuple[str, str, dict]] = [
@@ -70,6 +70,10 @@ ORNEKLER: list[tuple[str, str, dict]] = [
     ("17_surekli_bilgili", "62surekli", V("23122-E1-K-TVPB", "C3", bilgi1="Menşei: Almanya",
                                           bilgi2="Raf B-04")),
     ("18_iki_kisa_ek", "62x100", V("6201", "2RS C3", adet=10)),
+    ("19_ean13", "62x100", V("6205-2RS", "C3", barkod_no="8691234567890")),
+    ("20_ean12_surekli", "62surekli", V("6308", barkod_no="869123456789")),
+    ("21_uzun_kod_ean", "62x100", V("NNU4930-S-K-M-SP-XL-C3", "P6",
+                                    barkod_no="8691234567890")),
 ]
 
 DOGRULA_HATALI = [
@@ -138,13 +142,15 @@ def _nokta_kaydir(img: Image.Image, kalin: bool) -> Image.Image:
 
 
 def _coz(img: Image.Image) -> dict[str, list[str]]:
-    out: dict[str, list[str]] = {"Code128": [], "DataMatrix": [], "diger": []}
+    out: dict[str, list[str]] = {"Code128": [], "DataMatrix": [], "EAN13": [], "diger": []}
     for r in zxingcpp.read_barcodes(img):
         ad = r.format.name if hasattr(r.format, "name") else str(r.format)
         if "Code128" in ad:
             out["Code128"].append(r.text)
         elif "DataMatrix" in ad:
             out["DataMatrix"].append(r.text)
+        elif "EAN13" in ad or "EAN-13" in ad:
+            out["EAN13"].append(r.text)
         else:
             out["diger"].append(f"{ad}:{r.text}")
     return out
@@ -186,7 +192,7 @@ def _dolu_dikdortgenler(page: pymupdf.Page) -> list[pymupdf.Rect]:
 
 
 def _barkod_cubuklari(page: pymupdf.Page) -> list[pymupdf.Rect]:
-    """Sol üstteki Code128 çubukları (dar, uzun dolu dikdörtgenler)."""
+    """Sol üstteki barkod çizgileri (dar, uzun dolu dikdörtgenler)."""
     cub = []
     for d in page.get_drawings():
         if d.get("fill") is None:
@@ -221,7 +227,7 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
     girilen = "".join(str(v[k]) for k in ("kod", "ek", "bilgi1", "bilgi2", "adet_yazisi"))
     if "…" in page.get_text() and "…" not in girilen:
         kesik = [sat for sat in page.get_text().splitlines() if "…" in sat]
-        s.hatalar.append(f"yazı kesilmiş (…): {kesik}")
+        s.uyarilar.append(f"yazı kullanılabilir alana sığmadığı için kısaltıldı: {kesik}")
 
     img = _png(page)
     if png_yol:
@@ -247,9 +253,28 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
     # barkodlar
     coz = _coz(img)
     s.olcum["code128"] = coz["Code128"]
-    beklenen = beklenen_code128(v)
-    if coz["Code128"] != [beklenen]:
-        s.hatalar.append(f"Code128 {coz['Code128']!r} != [{beklenen!r}]")
+    if v.get("barkod_no"):
+        import etiket_cizim as ec
+        beklenen_ean = ec.ean13(v["barkod_no"])
+        s.olcum["ean13"] = coz["EAN13"]
+        if coz["EAN13"] != [beklenen_ean]:
+            s.hatalar.append(f"EAN-13 {coz['EAN13']!r} != [{beklenen_ean!r}]")
+        if coz["Code128"]:
+            s.hatalar.append(f"EAN kipinde Code128 bulunmamalı: {coz['Code128']!r}")
+        if min(sol, sag, ust, alt) < 3.0:
+            s.hatalar.append(f"EAN etiketinde kenar boşluğu 3 mm'den küçük: "
+                             f"{sol:.2f}/{ust:.2f}/{sag:.2f}/{alt:.2f}")
+        cub = _barkod_cubuklari(page)
+        yukseklikler = [r.height for r in cub]
+        normal = min(yukseklikler, default=0)
+        koruyucular = [h for h in yukseklikler if h > normal + 0.1 * MM]
+        if not koruyucular or max(koruyucular, default=0) <= normal:
+            s.hatalar.append("EAN-13 koruyucu çizgileri normal çizgilerden uzun değil")
+        s.olcum["ean_guard_cubuk"] = len(koruyucular)
+    else:
+        beklenen = beklenen_code128(v)
+        if coz["Code128"] != [beklenen]:
+            s.hatalar.append(f"Code128 {coz['Code128']!r} != [{beklenen!r}]")
     if len(coz["DataMatrix"]) != 1:
         s.hatalar.append(f"DataMatrix sayısı {len(coz['DataMatrix'])}")
     else:
@@ -262,8 +287,13 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
     # baskıdaki mürekkep yayılması / incelmesi (±1 nokta) sonrası okunabilirlik
     for ad, kalin in (("kalın", True), ("ince", False)):
         c = _coz(_nokta_kaydir(img, kalin))
-        if c["Code128"] != [beklenen] or len(c["DataMatrix"]) != 1:
-            s.uyarilar.append(f"±1 nokta ({ad}) baskıda okunmadı: {c['Code128']}/{len(c['DataMatrix'])}")
+        if v.get("barkod_no"):
+            okunur = c["EAN13"] == [beklenen_ean]
+        else:
+            okunur = c["Code128"] == [beklenen]
+        if not okunur or len(c["DataMatrix"]) != 1:
+            s.uyarilar.append(f"±1 nokta ({ad}) baskıda okunmadı: "
+                              f"{c['Code128']}/{c['EAN13']}/{len(c['DataMatrix'])}")
 
     # yasak marka metinleri / görseller
     tum = page.get_text().upper()
@@ -325,11 +355,17 @@ def sayfa_kontrol(page: pymupdf.Page, v: dict, boyut: str, s: Sonuc, png_yol: Pa
         sag_engel = [r.x0 for r in cizim if r.x0 >= bx1 + 0.01 and r.y0 < by1 and r.y1 > by0]
         sag_bos = (min(sag_engel) if sag_engel else page.rect.width) - bx1
         s.olcum["sessiz_modul(s/s)"] = f"{bx0 / en_ince:.0f}/{sag_bos / en_ince:.0f}"
-        if bx0 < 10 * en_ince - 0.01 or sag_bos < 10 * en_ince - 0.01:
+        if v.get("barkod_no"):
+            sol_sessiz = (bx0 - 36 * 72 / DPI) / en_ince
+            s.olcum["ean_sessiz_modul(s/s)"] = f"{sol_sessiz:.0f}/{sag_bos / en_ince:.0f}"
+            if sol_sessiz < 9 - 0.01 or sag_bos < 7 * en_ince - 0.01:
+                s.hatalar.append(f"EAN-13 sessiz bölgesi dar: sol {sol_sessiz:.1f}, "
+                                 f"sağ {sag_bos / en_ince:.1f} modül")
+        elif bx0 < 10 * en_ince - 0.01 or sag_bos < 10 * en_ince - 0.01:
             s.hatalar.append(f"Code128 sessiz bölge 10 modülden dar: sol {bx0 / en_ince:.1f}, "
                              f"sağ {sag_bos / en_ince:.1f} modül")
     else:
-        s.uyarilar.append("Code128 çubukları vektör olarak bulunamadı (resim olabilir)")
+        s.uyarilar.append("Barkod çizgileri vektör olarak bulunamadı (resim olabilir)")
     # gri piksel oranı barkod bölgesinde (ızgaraya oturmama göstergesi)
     if cub:
         x0 = int(min(r.x0 for r in cub) / 72 * DPI)
@@ -384,6 +420,8 @@ def cli_kontrol(ad, boyut, v, cikti: Path) -> Sonuc:
     arg = [sys.executable, str(KOK / "rulman_etiket.py"), "--kod", v["kod"], "--ek", v["ek"],
            "--adet", str(v["adet"]), "--bilgi1", v["bilgi1"], "--bilgi2", v["bilgi2"],
            "--boyut", boyut, "--kopya", "2", "--pdf", str(pdf)]
+    if v.get("barkod_no"):
+        arg.extend(["--barkod", v["barkod_no"]])
     if not v["alt_tekrar"]:
         arg.append("--alt-tekrar-yok")
     try:
@@ -466,6 +504,46 @@ def main() -> int:
             d.hatalar.append(f"{ad} çöktü: {e}")
     sonuclar.append(d)
 
+    ean_dogrula = Sonuc("ean13_dogrula", "api", "-")
+    for numara, beklenen in (("869123456789", "8691234567890"),
+                             ("869 123 456 789", "8691234567890"),
+                             ("8691234567890", "8691234567890")):
+        try:
+            if ec.ean13(numara) != beklenen:
+                ean_dogrula.hatalar.append(f"{numara!r}: ean13 sonucu {ec.ean13(numara)!r}")
+        except Exception as e:  # noqa: BLE001
+            ean_dogrula.hatalar.append(f"{numara!r} çöktü: {e}")
+    for numara, beklenen in (
+        ("8691234567892", "Barkod numarasının son hanesi hatalı (doğrusu 0 olmalı)."),
+        ("86912345678A", "Barkod numarası 12 veya 13 haneli olmalı, sadece rakam."),
+        ("86912345678", "Barkod numarası 12 veya 13 haneli olmalı, sadece rakam."),
+    ):
+        try:
+            hata = ec.dogrula(ec.EtiketVerisi(kod="6205", barkod_no=numara))
+            if beklenen not in hata:
+                ean_dogrula.hatalar.append(f"{numara!r} için {beklenen!r} hatası yok: {hata!r}")
+        except Exception as e:  # noqa: BLE001
+            ean_dogrula.hatalar.append(f"{numara!r} doğrulama çöktü: {e}")
+    sonuclar.append(ean_dogrula)
+
+    recent = Sonuc("son_kod_barkod", "api", "-")
+    try:
+        import yazdirma as yz
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as td:
+            with patch.object(yz, "_veri_klasoru", return_value=Path(td)):
+                etiket = ec.EtiketVerisi(kod="6205", barkod_no="869123456789")
+                yz.son_kod_ekle(etiket)
+                json_kayit = json.loads((Path(td) / "son_kodlar.json").read_text(encoding="utf-8"))
+                geri = yz.son_kodlar()
+                if not json_kayit or json_kayit[0].get("barkod_no") != etiket.barkod_no:
+                    recent.hatalar.append("son_kodlar.json barkod_no alanını saklamadı")
+                if not geri or geri[0].get("barkod_no") != etiket.barkod_no:
+                    recent.hatalar.append("son_kodlar() barkod_no alanını geri yüklemedi")
+    except Exception as e:  # noqa: BLE001
+        recent.hatalar.append(f"son_kod barkod_no denemesi çöktü: {e}")
+    sonuclar.append(recent)
+
     # garip girişler: dogrula reddetmezse çizim temiz olmalı
     for ad, v in TUHAF_GIRIS:
         s = Sonuc("tuhaf_" + ad, "api", "62x100")
@@ -534,6 +612,10 @@ def main() -> int:
                 c = _coz(img.convert("L"))
                 if c["Code128"] != [beklenen_code128(ORNEKLER[2][2])]:
                     k.uyarilar.append(f"{boyut} 150 dpi önizlemede Code128 okunmadı")
+        sablon = KOK / "test" / "onizleme" / "01_6308_C3_62x100.png"
+        ilk = ec.EtiketVerisi("6308-C-2HRS", "C3", 1)
+        if not sablon.is_file() or ec.onizleme_png(ilk, "62x100", dpi=300) != sablon.read_bytes():
+            k.hatalar.append("EAN boşken 62x100 çıktı değişti")
     except Exception as e:  # noqa: BLE001
         k.hatalar.append(f"ÇÖKTÜ: {type(e).__name__}: {e}")
     sonuclar.append(k)

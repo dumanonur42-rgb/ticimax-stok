@@ -137,6 +137,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Rulman kutu etiketi oluşturur.")
     parser.add_argument("--kod")
     parser.add_argument("--ek", default="")
+    parser.add_argument("--barkod", default="")
     parser.add_argument("--adet", type=int, default=1)
     parser.add_argument("--bilgi1", default="")
     parser.add_argument("--bilgi2", default="")
@@ -161,6 +162,7 @@ def main() -> int:
         veri = EtiketVerisi(
             kod=kod_duzelt(args.kod),
             ek=kod_duzelt(args.ek),
+            barkod_no=args.barkod,
             adet=args.adet,
             bilgi1=args.bilgi1.strip(),
             bilgi2=args.bilgi2.strip(),

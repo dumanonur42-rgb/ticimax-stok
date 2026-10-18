@@ -20,7 +20,7 @@ sys.path.insert(0, str(KLASOR.parent))
 import zxingcpp  # noqa: E402
 from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 
-from etiket_cizim import (BOYUTLAR, EtiketVerisi, MM, barkod_metni, ciz,  # noqa: E402
+from etiket_cizim import (BOYUTLAR, EtiketVerisi, MM, barkod_metni, ciz, ean13,  # noqa: E402
                           datamatrix_metni, onizleme_png, yerlesim)
 
 CIKTI = KLASOR / "onizleme"
@@ -33,13 +33,20 @@ ORNEKLER: list[tuple[str, EtiketVerisi]] = [
     ("05_NU2215", EtiketVerisi("NU2215-E-XL-TVP2", "C3", 2)),
     ("06_turkce", EtiketVerisi("608-2Z", "", 100, bilgi1="ÇİFT TARAF KAPAKLI ŞIĞ İĞNE ÜÖ")),
     ("07_alt_tekrar_yok", EtiketVerisi("51100", "", 1, alt_tekrar=False)),
+    ("08_ean13", EtiketVerisi("6205-2RS", "C3", barkod_no="8691234567890")),
+    ("09_ean12_otomatik", EtiketVerisi("6308", barkod_no="869123456789")),
+    ("10_uzun_kod_ean", EtiketVerisi("NNU4930-S-K-M-SP-XL-C3", "P6",
+                                     barkod_no="8691234567890")),
 ]
 
 
 def oku(png: bytes) -> dict[str, str]:
     img = Image.open(io.BytesIO(png)).convert("L")
     sonuc = {}
-    for r in zxingcpp.read_barcodes(img, formats=(zxingcpp.BarcodeFormat.Code128, zxingcpp.BarcodeFormat.DataMatrix)):
+    for r in zxingcpp.read_barcodes(
+        img, formats=(zxingcpp.BarcodeFormat.Code128, zxingcpp.BarcodeFormat.DataMatrix,
+                      zxingcpp.BarcodeFormat.EAN13)
+    ):
         sonuc[r.format.name] = r.text
     return sonuc
 
@@ -73,7 +80,7 @@ def main() -> int:
     ap.add_argument("--referans", type=Path, help="karşılaştırma için referans fotoğraf (repoya eklenmez)")
     args = ap.parse_args()
     CIKTI.mkdir(exist_ok=True)
-    satirlar = ["| Örnek | Boyut | Etiket (mm) | Code128 beklenen | Code128 okunan | DataMatrix beklenen | DataMatrix okunan | Sonuç |",
+    satirlar = ["| Örnek | Boyut | Etiket (mm) | Barkod beklenen | Barkod okunan | DataMatrix beklenen | DataMatrix okunan | Sonuç |",
                 "|---|---|---|---|---|---|---|---|"]
     hata = 0
     for ad, veri in ORNEKLER:
@@ -86,8 +93,10 @@ def main() -> int:
             doc.close()
             y = yerlesim(veri, boyut)
             okunan = oku(png)
-            b1, b2 = barkod_metni(veri), y.dm_metin
-            o1, o2 = okunan.get("Code128", "—"), okunan.get("DataMatrix", "—")
+            barkod_turu = "EAN13" if veri.barkod_no else "Code128"
+            b1 = ean13(veri.barkod_no) if veri.barkod_no else barkod_metni(veri)
+            b2 = y.dm_metin
+            o1, o2 = okunan.get(barkod_turu, "—"), okunan.get("DataMatrix", "—")
             tamam = o1 == b1 and o2 == b2
             hata += not tamam
             g = lambda s: s.replace("\n", "⏎").replace("|", "\\|")  # noqa: E731
