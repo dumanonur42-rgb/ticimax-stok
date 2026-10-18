@@ -8,6 +8,7 @@ Barkod ve DataMatrix modülleri 300 dpi nokta ızgarasına oturtulur
 """
 from __future__ import annotations
 
+import secrets
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -166,6 +167,14 @@ def ean13(barkod_no: str) -> str:
     if len(numara) == 13 and numara[-1] != kontrol:
         raise EtiketHatasi(f"Barkod numarasının son hanesi hatalı (doğrusu {kontrol} olmalı).")
     return ilk_haneler + kontrol
+
+
+def rastgele_ean13(kullanilan: set[str] | frozenset = frozenset()) -> str:
+    while True:
+        numara = "20" + "".join(str(secrets.randbelow(10)) for _ in range(10))
+        tam_numara = ean13(numara)
+        if tam_numara not in kullanilan:
+            return tam_numara
 
 
 def _datamatrix(metin: str) -> list[list[bool]]:
