@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -78,6 +79,13 @@ def karsilastirma(png: bytes, referans: Path) -> Path:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Örnek etiket önizlemeleri ve barkod denetimi")
     ap.add_argument("--referans", type=Path, help="karşılaştırma için referans fotoğraf (repoya eklenmez)")
+    ap.add_argument(
+        "--logo",
+        type=Path,
+        default=Path(os.environ["RULMAN_ETIKET_LOGO"])
+        if os.environ.get("RULMAN_ETIKET_LOGO") else None,
+        help="logo dosyası (veya RULMAN_ETIKET_LOGO ortam değişkeni)",
+    )
     args = ap.parse_args()
     CIKTI.mkdir(exist_ok=True)
     satirlar = ["| Örnek | Boyut | Etiket (mm) | Barkod beklenen | Barkod okunan | DataMatrix beklenen | DataMatrix okunan | Sonuç |",
@@ -106,6 +114,34 @@ def main() -> int:
                   f"dm={len(y.dm)}x{y.dm_modul} kod={y.kod_pt}pt {y.uyarilar}")
             if args.referans and ad == "01_6308_C3" and boyut == "62surekli":
                 print("karşılaştırma:", karsilastirma(png, args.referans))
+    if args.logo:
+        logo = args.logo.read_bytes()
+        logo_ornekler = [
+            ("11_logo_ean_tekrar", EtiketVerisi(
+                "6205-2RS", "C3", barkod_no="8691234567890", alt_tekrar=True)),
+            ("12_logo_surekli", EtiketVerisi("6308-C-2HRS", "C3", alt_tekrar=True)),
+            ("13_logo_uzun_kod", EtiketVerisi(
+                "NNU4930-S-K-M-SP-XL-C3", "P6", barkod_no="8691234567890")),
+        ]
+        for ad, veri in logo_ornekler:
+            for boyut in BOYUTLAR:
+                png = onizleme_png(veri, boyut, dpi=300, logo=logo)
+                dosya = f"{ad}_{boyut}"
+                (CIKTI / f"{dosya}.png").write_bytes(png)
+                doc = ciz(veri, boyut, logo=logo)
+                doc.save(CIKTI / f"{dosya}.pdf", garbage=4, deflate=True)
+                doc.close()
+                y = yerlesim(veri, boyut, logo=logo)
+                okunan = oku(png)
+                barkod_turu = "EAN13" if veri.barkod_no else "Code128"
+                beklenen = ean13(veri.barkod_no) if veri.barkod_no else barkod_metni(veri)
+                tamam = okunan.get(barkod_turu) == beklenen
+                tamam = tamam and okunan.get("DataMatrix") == y.dm_metin
+                hata += not tamam
+                print(f"{dosya:32s} {'TAMAM' if tamam else 'HATA '}  logo "
+                      f"{y.logo_rect} {y.uyarilar}")
+    else:
+        print("Logo örnekleri atlandı (--logo veya RULMAN_ETIKET_LOGO yok).")
     (CIKTI / "dogrulama.md").write_text("\n".join(satirlar) + "\n", encoding="utf-8")
     print("hata:", hata)
     return 1 if hata else 0

@@ -138,6 +138,7 @@ def main() -> int:
     parser.add_argument("--kod")
     parser.add_argument("--ek", default="")
     parser.add_argument("--barkod", default="")
+    parser.add_argument("--logo", type=Path)
     parser.add_argument("--adet", type=int, default=1)
     parser.add_argument("--bilgi1", default="")
     parser.add_argument("--bilgi2", default="")
@@ -159,6 +160,11 @@ def main() -> int:
         if args.kod is None:
             _yaz_hata("PDF oluşturmak için --kod seçeneği gereklidir.")
             return 2
+        try:
+            logo = args.logo.read_bytes() if args.logo else None
+        except OSError:
+            _yaz_hata("Logo dosyası açılamadı. PNG veya JPG seçin.")
+            return 1
         veri = EtiketVerisi(
             kod=kod_duzelt(args.kod),
             ek=kod_duzelt(args.ek),
@@ -169,7 +175,7 @@ def main() -> int:
             alt_tekrar=not args.alt_tekrar_yok,
         )
         try:
-            yol = pdf_kaydet(veri, args.boyut, args.kopya, yol=args.pdf)
+            yol = pdf_kaydet(veri, args.boyut, args.kopya, yol=args.pdf, logo=logo)
         except YazdirmaHatasi as hata:
             _yaz_hata(str(hata))
             return 1
