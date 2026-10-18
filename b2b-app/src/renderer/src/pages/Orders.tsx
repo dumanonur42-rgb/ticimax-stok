@@ -1,8 +1,8 @@
 import type { Order, OrderStatus } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { Download, Printer, X } from 'lucide-react'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Confirm, Empty, Spinner } from '@/components/ui'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { Confirm, Empty, LoadError, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -13,25 +13,58 @@ const FLOW: OrderStatus[] = ['beklemede', 'onaylandi', 'hazirlaniyor', 'teslim']
 export function Orders(): ReactNode {
   const { pageParam, session, toast, settings } = useApp()
   const [orders, setOrders] = useState<Order[] | null>(null)
+  const [ordersError, setOrdersError] = useState('')
   const [q, setQ] = useState('')
   const [status, setStatus] = useState<OrderStatus | ''>('')
   const [selectedId, setSelectedId] = useState<number | null>(pageParam)
   const [detail, setDetail] = useState<Order | null>(null)
+  const [detailLoading, setDetailLoading] = useState(false)
+  const [detailError, setDetailError] = useState('')
+  const [detailRefresh, setDetailRefresh] = useState(0)
+  const selectedOpener = useRef<HTMLElement | null>(null)
   const [confirmCancel, setConfirmCancel] = useState(false)
   const cancelOpener = useRef<HTMLButtonElement | null>(null)
   const isDealer = session?.user.role !== 'admin'
   const isAdmin = session?.user.role === 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
-  const load = (): void => {
-    api('orders:list', { q, status: status || undefined }).then(setOrders).catch((e) => toast(e.message, 'error'))
-  }
-  useEffect(load, [q, status])
-  useEffect(() => onEvent('orders:changed', load), [q, status])
+  const load = useCallback((): void => {
+    setOrdersError('')
+    api('orders:list', { q, status: status || undefined })
+      .then(setOrders)
+      .catch((e) => setOrdersError((e as Error).message || 'Siparişler alınamadı.'))
+  }, [q, status])
+  useEffect(load, [load])
+  useEffect(() => onEvent('orders:changed', load), [load])
   useEffect(() => {
-    if (selectedId == null) return setDetail(null)
-    api('orders:get', selectedId).then(setDetail).catch((e) => toast(e.message, 'error'))
-  }, [selectedId, orders])
+    window.addEventListener('online', load)
+    return () => window.removeEventListener('online', load)
+  }, [load])
+  useEffect(() => {
+    if (selectedId == null) {
+      setDetail(null)
+      setDetailError('')
+      setDetailLoading(false)
+      requestAnimationFrame(() => {
+        if (selectedOpener.current?.isConnected) selectedOpener.current.focus()
+      })
+      return
+    }
+    setDetail(null)
+    setDetailError('')
+    setDetailLoading(true)
+    api('orders:get', selectedId)
+      .then(setDetail)
+      .catch((e) => setDetailError((e as Error).message || 'Sipariş ayrıntısı alınamadı.'))
+      .finally(() => setDetailLoading(false))
+  }, [selectedId, detailRefresh])
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape' && selectedId !== null && !document.querySelector('dialog[open]')) setSelectedId(null)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [selectedId])
 
   const setOrderStatus = async (s: OrderStatus): Promise<void> => {
     if (!detail) return
@@ -65,7 +98,9 @@ export function Orders(): ReactNode {
             {orders ? `${num(orders.length)} sipariş` : ''}
           </span>
         </div>
-        {!orders ? (
+        {ordersError ? (
+          <LoadError message={ordersError} onRetry={load} />
+        ) : !orders ? (
           <Spinner />
         ) : orders.length === 0 ? (
           <Empty title="Sipariş bulunamadı" />
@@ -94,8 +129,16 @@ export function Orders(): ReactNode {
                   className="clickable"
                   aria-selected={o.id === selectedId}
                   tabIndex={0}
-                  onClick={() => setSelectedId(o.id)}
-                  onKeyDown={(e) => e.key === 'Enter' && setSelectedId(o.id)}
+                  onClick={(e) => {
+                    selectedOpener.current = e.currentTarget
+                    setSelectedId(o.id)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      selectedOpener.current = e.currentTarget
+                      setSelectedId(o.id)
+                    }
+                  }}
                 >
                   <td className="mono nowrap order-number-cell">{o.order_no}</td>
                   <td className="nowrap small order-date-cell">{date(o.created_at)}</td>
@@ -115,8 +158,10 @@ export function Orders(): ReactNode {
         )}
       </section>
 
-      {detail && (
+      {selectedId !== null && (
         <aside className="card grid" aria-labelledby="od-title" style={{ gap: 14 }}>
+          {detailLoading ? <Spinner /> : detailError ? <LoadError message={detailError} onRetry={() => setDetailRefresh((value) => value + 1)} /> : detail && (
+            <>
           <div className="row">
             <h2 id="od-title" className="mono" style={{ margin: 0, flex: 1 }}>
               {detail.order_no}
@@ -205,7 +250,10 @@ export function Orders(): ReactNode {
             </div>
           )}
           {isAdmin && detail.status !== 'iptal' && detail.status !== 'teslim' && (
-            <button className="btn sm danger" onClick={() => setOrderStatus('iptal')}>
+            <button className="btn sm danger" onClick={(event) => {
+              cancelOpener.current = event.currentTarget
+              setConfirmCancel(true)
+            }}>
               Siparişi iptal et
             </button>
           )}
@@ -223,12 +271,14 @@ export function Orders(): ReactNode {
               İptali geri al
             </button>
           )}
+            </>
+          )}
         </aside>
       )}
       <Confirm
         open={confirmCancel}
         title="Siparişi iptal et"
-        text="Sipariş iptal edilsin mi? Bu işlem geri alınamaz."
+        text={isAdmin ? 'Sipariş iptal edilsin mi? Yönetici, iptal edilen siparişi daha sonra yeniden açabilir.' : 'Sipariş iptal edilsin mi? Bu işlem bayi panelinden geri alınamaz.'}
         danger
         confirmLabel="İptal et"
         onCancel={() => {

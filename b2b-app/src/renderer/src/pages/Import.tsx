@@ -1,7 +1,7 @@
 import type { Currency, ImportLog, ImportPreview, ImportResult, ProductInput } from '@shared/types'
 import { FileSpreadsheet, FileDown, Upload } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
-import { Field, Spinner } from '@/components/ui'
+import { Field, LoadError, Spinner } from '@/components/ui'
 import { api } from '@/lib/api'
 import { date, num } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -41,7 +41,10 @@ export function Import(): ReactNode {
   const [defaultBrand, setDefaultBrand] = useState('')
   const [defaultCategory, setDefaultCategory] = useState('')
   const [busy, setBusy] = useState(false)
+  const [dryRunBusy, setDryRunBusy] = useState(false)
   const [logs, setLogs] = useState<ImportLog[]>([])
+  const [logsLoading, setLogsLoading] = useState(true)
+  const [logsError, setLogsError] = useState('')
   const [errors, setErrors] = useState<string[]>([])
   const [trial, setTrial] = useState<ImportResult | null>(null)
 
@@ -51,7 +54,11 @@ export function Import(): ReactNode {
   }
 
   const loadLogs = (): void => {
-    api('import:logs', undefined).then(setLogs).catch(() => setLogs([]))
+    setLogsError('')
+    setLogsLoading(true)
+    api('import:logs', undefined)
+      .then((items) => { setLogs(items); setLogsLoading(false) })
+      .catch((error) => { setLogsError((error as Error).message || 'İçe aktarım geçmişi alınamadı.'); setLogsLoading(false) })
   }
   useEffect(loadLogs, [])
 
@@ -70,6 +77,7 @@ export function Import(): ReactNode {
       toast((e as Error).message, 'error')
     } finally {
       setBusy(false)
+      setDryRunBusy(false)
     }
   }
 
@@ -85,6 +93,7 @@ export function Import(): ReactNode {
     )
       return
     setBusy(true)
+    setDryRunBusy(dryRun)
     try {
       const r = await api('import:run', { token: preview.token, mapping, mode, deactivateMissing, defaultCurrency, defaultBrand, defaultCategory, dryRun })
       if (dryRun) {
@@ -101,6 +110,7 @@ export function Import(): ReactNode {
       toast((e as Error).message, 'error')
     } finally {
       setBusy(false)
+      setDryRunBusy(false)
     }
   }
 
@@ -178,6 +188,7 @@ export function Import(): ReactNode {
           </div>
 
           <h3>Kolon eşleme</h3>
+          {!mapping.sku && <p className="badge low" role="status">İçe aktarmak için “Ürün kodu / adı” kolonunu seçin.</p>}
           <div className="mapping" role="group" aria-label="Kolon eşleme">
             {FIELDS.map((f) => (
               <div key={f.key} className="map-row">
@@ -205,14 +216,14 @@ export function Import(): ReactNode {
           </div>
 
           <h3>Önizleme (ilk {preview.rows.length} satır)</h3>
-          <div className="table-wrap">
+          <div className="table-wrap import-preview-wrap">
             <table className="table small">
               <thead>
                 <tr>
                   {preview.headers.map((h) => (
                     <th key={h} className="nowrap">
                       {h}
-                      {used.has(h) && <div className="badge ok" style={{ marginTop: 2 }}>{FIELDS.find((f) => mapping[f.key] === h)?.label}</div>}
+                      {used.has(h) && <div className="badge ok import-mapped-label" style={{ marginTop: 2 }}>· {FIELDS.find((f) => mapping[f.key] === h)?.label}</div>}
                     </th>
                   ))}
                 </tr>
@@ -236,10 +247,10 @@ export function Import(): ReactNode {
               Vazgeç
             </button>
             <span className="spacer" />
-            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title="Hiçbir şey yazmadan sonucu hesaplar">
-              Önce dene
+            <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={!mapping.sku ? 'Ürün kodu kolonunu seçin' : 'Hiçbir şey yazmadan sonucu hesaplar'}>
+              {dryRunBusy ? 'Deneme hesaplanıyor…' : 'Önce dene'}
             </button>
-            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0}>
+            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={!mapping.sku ? 'Ürün kodu kolonunu seçin' : undefined}>
               <Upload size={16} aria-hidden /> {num(preview.totalRows)} satırı içe aktar
             </button>
           </div>
@@ -249,7 +260,7 @@ export function Import(): ReactNode {
               <span className="badge ok">{num(trial.inserted)} yeni</span>
               <span className="badge neutral">{num(trial.updated)} güncellenecek</span>
               <span className="badge neutral">{num(trial.unchanged)} değişmeyecek</span>
-              <span className="badge low">{num(trial.errors.length)} uyarı</span>
+              <span className={`badge ${trial.errors.length ? 'low' : 'neutral'}`}>{num(trial.errors.length)} uyarı</span>
               <span className="muted small">Henüz hiçbir şey yazılmadı.</span>
             </div>
           )}
@@ -274,7 +285,11 @@ export function Import(): ReactNode {
         <p className="muted small import-log-note">
           Geçmiş, yapılan yüklemelerin kaydıdır; silinen listelerin ürünleri uygulamada yer almaz.
         </p>
-        {logs.length === 0 ? (
+        {logsError ? (
+          <LoadError message={logsError} onRetry={loadLogs} />
+        ) : logsLoading ? (
+          <p className="muted" style={{ padding: 16 }}>Geçmiş yükleniyor…</p>
+        ) : logs.length === 0 ? (
           <p className="muted" style={{ padding: 16 }}>
             Henüz yükleme yapılmadı.
           </p>

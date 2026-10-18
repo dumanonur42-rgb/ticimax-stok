@@ -1,10 +1,12 @@
-import { app, BrowserWindow, Menu, session, shell } from 'electron'
+import { app, BrowserWindow, Menu, nativeTheme, screen, session, shell } from 'electron'
+import { readFileSync, renameSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { getDb } from './db'
 import { isAllowedExternal, registerIpc, restoreSession } from './ipc'
 import { isBackgroundMode, isQuitting, registerMainWindow } from './notify'
 import { productFacets, searchProducts } from './repo/products'
+import { getSettings } from './repo/settings'
 import { runSelfCheck } from './selfcheck'
 import { startUpdater } from './updater'
 
@@ -13,6 +15,42 @@ const SPLASH_MIN_MS = 3000
 const SPLASH_LEAVE_MS = 450
 let splashShownAt = 0
 let mainWin: BrowserWindow | null = null
+
+interface WindowState {
+  x: number
+  y: number
+  width: number
+  height: number
+  maximized: boolean
+}
+
+function loadWindowState(): WindowState | null {
+  try {
+    const parsed = JSON.parse(readFileSync(join(app.getPath('userData'), 'window-state.json'), 'utf8')) as Partial<WindowState>
+    if (![parsed.x, parsed.y, parsed.width, parsed.height].every((value) => Number.isFinite(value))) return null
+    const state = parsed as WindowState
+    if (state.width < 980 || state.height < 640 || state.width > 6000 || state.height > 6000) return null
+    const visible = screen.getAllDisplays().some(({ workArea }) => {
+      const width = Math.min(state.x + state.width, workArea.x + workArea.width) - Math.max(state.x, workArea.x)
+      const height = Math.min(state.y + state.height, workArea.y + workArea.height) - Math.max(state.y, workArea.y)
+      return width >= 80 && height >= 80
+    })
+    return visible ? { ...state, maximized: state.maximized === true } : null
+  } catch {
+    return null
+  }
+}
+
+function saveWindowState(state: WindowState): void {
+  const path = join(app.getPath('userData'), 'window-state.json')
+  const temp = `${path}.tmp`
+  try {
+    writeFileSync(temp, JSON.stringify(state), 'utf8')
+    renameSync(temp, path)
+  } catch {
+    return
+  }
+}
 
 const WEB_PREFERENCES = {
   preload: join(__dirname, '../preload/index.js'),
@@ -101,10 +139,21 @@ function createSplash(): BrowserWindow {
 
 function createWindow(showSplash = true): void {
   const splash = showSplash ? createSplash() : null
-
-  const win = new BrowserWindow({
+  const restored = loadWindowState()
+  const area = screen.getPrimaryDisplay().workArea
+  const initial: WindowState = restored ?? {
+    x: Math.round(area.x + (area.width - 1400) / 2),
+    y: Math.round(area.y + (area.height - 900) / 2),
     width: 1400,
     height: 900,
+    maximized: false
+  }
+
+  const win = new BrowserWindow({
+    x: initial.x,
+    y: initial.y,
+    width: initial.width,
+    height: initial.height,
     minWidth: 980,
     minHeight: 640,
     show: false,
@@ -114,6 +163,28 @@ function createWindow(showSplash = true): void {
     icon: join(__dirname, '../../resources/icon.png'),
     webPreferences: WEB_PREFERENCES
   })
+  let normalBounds = { x: initial.x, y: initial.y, width: initial.width, height: initial.height }
+  let saveTimer: ReturnType<typeof setTimeout> | null = null
+  const persist = (): void => {
+    if (saveTimer) clearTimeout(saveTimer)
+    saveTimer = setTimeout(() => {
+      const bounds = win.isMaximized() ? normalBounds : win.getBounds()
+      if (!win.isMaximized()) normalBounds = bounds
+      saveWindowState({ ...bounds, maximized: win.isMaximized() })
+    }, 200)
+  }
+  const persistImmediately = (): void => {
+    if (saveTimer) clearTimeout(saveTimer)
+    const bounds = win.isMaximized() ? normalBounds : win.getBounds()
+    if (!win.isMaximized()) normalBounds = bounds
+    saveWindowState({ ...bounds, maximized: win.isMaximized() })
+  }
+  win.on('move', persist)
+  win.on('resize', persist)
+  win.on('maximize', persist)
+  win.on('unmaximize', persist)
+  win.on('close', persistImmediately)
+  if (initial.maximized) win.maximize()
   hardenWebContents(win)
 
   mainWin = win
@@ -151,6 +222,7 @@ function createWindow(showSplash = true): void {
   load(win)
 }
 
+app.commandLine.appendSwitch('lang', 'tr-TR')
 if (process.platform === 'linux') app.commandLine.appendSwitch('enable-transparent-visuals')
 app.setName('Yamansa Rulman B2B')
 app.setAppUserModelId('com.yamansarulman.b2b')
@@ -182,6 +254,8 @@ if (process.argv.includes('--selfcheck')) {
     Menu.setApplicationMenu(null)
     hardenSession()
     getDb()
+    const theme = getSettings().theme
+    nativeTheme.themeSource = theme === 'dark' || theme === 'contrast' ? 'dark' : theme === 'light' ? 'light' : 'system'
     registerIpc()
     registerMainWindow(
       () => mainWin,

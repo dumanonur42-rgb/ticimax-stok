@@ -10,6 +10,7 @@ type Mode = 'login' | 'register'
 
 export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
   const setSession = useApp((s) => s.setSession)
+  const go = useApp((s) => s.go)
   const [mode, setMode] = useState<Mode>('login')
   const [username, setUsername] = useState('')
   const [displayName, setDisplayName] = useState('')
@@ -19,6 +20,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [busy, setBusy] = useState(false)
+  const [capsLock, setCapsLock] = useState(false)
 
   const switchMode = (m: Mode): void => {
     setMode(m)
@@ -26,6 +28,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
     setNotice('')
     setPassword('')
     setPassword2('')
+    setCapsLock(false)
   }
 
   const submit = async (e: FormEvent): Promise<void> => {
@@ -35,8 +38,15 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
     setNotice('')
     try {
       if (mode === 'login') {
-        setSession(await api('auth:login', { username, password }))
+        if (!username.trim() || !password) throw new Error('Kullanıcı adı ve şifre zorunludur.')
+        const session = await api('auth:login', { username, password })
+        setSession(session)
+        go('dashboard')
       } else {
+        if (username.trim().length < 3) throw new Error('Kullanıcı adı en az 3 karakter olmalıdır.')
+        if (companyName.trim().length < 2) throw new Error('İşletme adı en az 2 karakter olmalıdır.')
+        if (password.length < 4) throw new Error('Şifre en az 4 karakter olmalıdır.')
+        if (!password2) throw new Error('Şifre tekrarını girin.')
         if (password !== password2) throw new Error('Şifreler birbiriyle eşleşmiyor.')
         await api('auth:register', { username, display_name: displayName, company_name: companyName, password })
         switchMode('login')
@@ -63,7 +73,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
         <GlobeScene size={420} />
       </aside>
       <div className="login-form">
-        <form className="card" onSubmit={submit} aria-labelledby="login-title" aria-describedby={error ? 'login-error' : notice ? 'login-notice' : undefined}>
+        <form className="card" noValidate onSubmit={submit} aria-labelledby="login-title" aria-describedby={error ? 'login-feedback' : sessionNotice ? 'login-feedback' : notice ? 'login-feedback' : undefined}>
           <h1 id="login-title" style={{ fontSize: '1.4rem', marginBottom: 4 }}>
             {isRegister ? 'Kayıt ol' : 'Oturum aç'}
           </h1>
@@ -93,31 +103,27 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
                   autoComplete={isRegister ? 'new-password' : 'current-password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))}
+                  onBlur={() => setCapsLock(false)}
                   required
                   minLength={isRegister ? 4 : undefined}
                 />
               )}
             </Field>
+            {capsLock && <p className="login-caps-warning" role="status">Caps Lock açık.</p>}
             {isRegister && (
               <Field label="Şifre (tekrar)">
-                {(id) => <input id={id} className="input" type="password" autoComplete="new-password" value={password2} onChange={(e) => setPassword2(e.target.value)} required />}
+                {(id) => <input id={id} className="input" type="password" autoComplete="new-password" value={password2} onChange={(e) => setPassword2(e.target.value)} onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))} onBlur={() => setCapsLock(false)} required />}
               </Field>
             )}
-            {error && (
-              <div id="login-error" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal', lineHeight: 1.35 }}>
-                {error}
-              </div>
-            )}
-            {sessionNotice && (
-              <div id="session-expired" role="alert" className="badge out" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal', lineHeight: 1.35 }}>
-                {sessionNotice}
-              </div>
-            )}
-            {notice && (
-              <div id="login-notice" role="status" className="badge ok" style={{ padding: '8px 12px', borderRadius: 8, whiteSpace: 'normal' }}>
-                {notice}
-              </div>
-            )}
+            <div
+              id="login-feedback"
+              className={`login-feedback${error || sessionNotice ? ' error' : notice ? ' success' : ''}`}
+              role={error || sessionNotice ? 'alert' : 'status'}
+              aria-live="polite"
+            >
+              {error || sessionNotice || notice || '\u00a0'}
+            </div>
             <button className="btn primary" type="submit" disabled={busy} style={{ height: 44 }}>
               {isRegister ? <UserPlus size={18} aria-hidden /> : <LogIn size={18} aria-hidden />}
               {busy ? (isRegister ? 'Kaydediliyor…' : 'Giriş yapılıyor…') : isRegister ? 'Kayıt ol' : 'Giriş yap'}
@@ -130,7 +136,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
             </div>
             {!isRegister && (
               <p className="faint small" style={{ margin: 0 }}>
-                Giriş yaptığınızda oturumunuz hatırlanır; yalnızca "Çıkış" yaptığınızda tekrar şifre istenir.
+                Giriş yaptığınızda oturumunuz hatırlanır; yalnızca "Oturumu kapat" seçtiğinizde tekrar şifre istenir.
               </p>
             )}
           </div>

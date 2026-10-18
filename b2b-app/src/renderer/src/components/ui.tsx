@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { useEffect, useId, useRef, type ReactNode } from 'react'
+import { useLayoutEffect, useId, useRef, type ReactNode } from 'react'
 import { useApp } from '@/store/app'
 
 export function Field({
@@ -47,18 +47,34 @@ export function Modal({
   wide?: boolean
 }): ReactNode {
   const ref = useRef<HTMLDialogElement>(null)
-  useEffect(() => {
+  const previousFocus = useRef<HTMLElement | null>(null)
+  useLayoutEffect(() => {
     const d = ref.current
     if (!d) return
-    if (open && !d.open) d.showModal()
-    if (!open && d.open) d.close()
+    if (open && !d.open) {
+      previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+      d.showModal()
+      requestAnimationFrame(() => {
+        const target =
+          d.querySelector<HTMLElement>('[data-initial-focus]') ??
+          d.querySelector<HTMLElement>('.modal-foot button:not(:disabled), .modal-foot [href], .modal-body input:not(:disabled), .modal-body select:not(:disabled), .modal-body textarea:not(:disabled), .modal-body button:not(:disabled)')
+        target?.focus()
+      })
+    }
+    if (!open && d.open) {
+      d.close()
+      requestAnimationFrame(() => {
+        const previous = previousFocus.current
+        if (previous?.isConnected) previous.focus()
+        else document.querySelector<HTMLElement>('#page-title')?.focus()
+      })
+    }
   }, [open])
   return (
     <dialog
       ref={ref}
       className={`modal${wide ? ' wide' : ''}`}
       aria-labelledby="modal-title"
-      onClose={onClose}
       onCancel={(e) => {
         e.preventDefault()
         onClose()
@@ -116,6 +132,18 @@ export function Spinner({ label = 'Yükleniyor' }: { label?: string }): ReactNod
   )
 }
 
+export function LoadError({ message, onRetry }: { message: string; onRetry: () => void }): ReactNode {
+  const visibleMessage = /fetch|network|failed|timeout|connection|socket|ipc/i.test(message)
+    ? 'Veriler alınamadı. İnternet bağlantınızı kontrol edin.'
+    : message
+  return (
+    <div className="load-error" role="alert">
+      <span>{visibleMessage}</span>
+      <button className="btn sm" onClick={onRetry}>Tekrar dene</button>
+    </div>
+  )
+}
+
 export function Confirm({
   open,
   title,
@@ -140,10 +168,10 @@ export function Confirm({
       onClose={onCancel}
       footer={
         <>
-          <button className="btn" onClick={onCancel}>
+          <button className="btn" onClick={onCancel} data-initial-focus>
             Vazgeç
           </button>
-          <button className={`btn ${danger ? 'danger' : 'primary'}`} onClick={onConfirm} autoFocus>
+          <button className={`btn ${danger ? 'danger' : 'primary'}`} onClick={onConfirm}>
             {confirmLabel}
           </button>
         </>

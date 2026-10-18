@@ -1,7 +1,7 @@
 import type { Currency, Customer, CustomerInput, DealerLogin } from '@shared/types'
 import { KeyRound, Pencil, Plus } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
-import { Confirm, Empty, Field, Modal, Spinner } from '@/components/ui'
+import { Confirm, Empty, Field, LoadError, Modal, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { useApp } from '@/store/app'
 
@@ -26,6 +26,7 @@ export function Customers(): ReactNode {
   const { toast, session } = useApp()
   const isAdmin = session?.user.role === 'admin'
   const [list, setList] = useState<Customer[] | null>(null)
+  const [loadError, setLoadError] = useState('')
   const [q, setQ] = useState('')
   const [editing, setEditing] = useState<(CustomerInput & { id?: number }) | null>(null)
   const [login, setLogin] = useState<DealerLogin>(emptyLogin)
@@ -34,11 +35,17 @@ export function Customers(): ReactNode {
   const [confirmDelete, setConfirmDelete] = useState<Customer | null>(null)
 
   const load = (): void => {
-    api('customers:list', { q }).then(setList).catch((e) => toast(e.message, 'error'))
+    setLoadError('')
+    api('customers:list', { q }).then(setList).catch((e) => setLoadError((e as Error).message || 'Bayi listesi alınamadı.'))
   }
   useEffect(() => {
     load()
-    return onEvent('customers:changed', load)
+    window.addEventListener('online', load)
+    const off = onEvent('customers:changed', load)
+    return () => {
+      window.removeEventListener('online', load)
+      off()
+    }
   }, [q])
 
   const save = async (): Promise<void> => {
@@ -89,10 +96,12 @@ export function Customers(): ReactNode {
           </button>
         )}
       </div>
-      {!list ? (
+      {loadError ? (
+        <LoadError message={loadError} onRetry={load} />
+      ) : !list ? (
         <Spinner />
       ) : list.length === 0 ? (
-        <Empty title="Bayi bulunamadı" hint="Yeni bayi ekleyerek başlayın." />
+        <Empty title={q.trim() ? 'Aramaya uyan bayi yok.' : 'Bayi bulunamadı'} hint={q.trim() ? 'Başka bir arama deneyin.' : 'Yeni bayi ekleyerek başlayın.'} />
       ) : (
         <table className="table">
           <thead>

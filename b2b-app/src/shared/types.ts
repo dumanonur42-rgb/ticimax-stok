@@ -379,6 +379,7 @@ export interface StockLogPage {
 
 export interface SyncStatus {
   online: boolean
+  checked?: boolean
   lastSync: string | null
   productCount: number
   /** Catalogue writes saved on this computer that still have to reach the cloud. */

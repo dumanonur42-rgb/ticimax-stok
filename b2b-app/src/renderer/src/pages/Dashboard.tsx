@@ -1,11 +1,11 @@
 import type { DashboardStats, Product } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { ContactCard } from '@/components/ContactCard'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
-import { Empty, Spinner } from '@/components/ui'
+import { Empty, LoadError, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, money, num, STATUS_CLASS, STATUS_LABEL } from '@/lib/format'
 import { SETTINGS_TAB_USERS } from '@/pages/Settings'
@@ -13,6 +13,7 @@ import { useApp, useCart } from '@/store/app'
 
 export function Dashboard(): ReactNode {
   const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [loadError, setLoadError] = useState('')
   const [selected, setSelected] = useState<Product | null>(null)
   const [editing, setEditing] = useState<Product | null>(null)
   const { go, session, toast, settings } = useApp()
@@ -23,24 +24,28 @@ export function Dashboard(): ReactNode {
   const cartCount = useCart((s) => s.lines.length)
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
-  const load = (): void => {
+  const load = useCallback((): void => {
+    setLoadError('')
     api('dashboard:stats', undefined)
       .then(setStats)
-      .catch((e) => toast(e.message, 'error'))
-  }
+      .catch((e) => setLoadError((e as Error).message || 'Ana sayfa verileri alınamadı.'))
+  }, [])
   useEffect(() => {
     load()
     const a = onEvent('products:changed', load)
     const b = onEvent('orders:changed', load)
     const c = onEvent('users:changed', load)
+    window.addEventListener('online', load)
     return () => {
       a()
       b()
       c()
+      window.removeEventListener('online', load)
     }
-  }, [])
+  }, [load])
 
-  if (!stats) return <Spinner />
+  if (!stats) return loadError ? <LoadError message={loadError} onRetry={load} /> : <Spinner />
+  const loadWarning = loadError ? <LoadError message={loadError} onRetry={load} /> : null
 
   const Stat = ({ icon, label, value, onClick }: { icon: ReactNode; label: string; value: string | number; onClick?: () => void }): ReactNode => (
     <button className="card stat" onClick={onClick} disabled={!onClick} style={{ textAlign: 'left', cursor: onClick ? 'pointer' : 'default' }}>
@@ -54,8 +59,10 @@ export function Dashboard(): ReactNode {
   if (isDealer)
     return (
       <div className="grid" style={{ gap: 18 }}>
+        {loadWarning}
         <section className="hero card" aria-labelledby="welcome">
           <div>
+            {session?.user.role === 'ara' && <span className="badge info dashboard-role-label">BAYİ PANELİ</span>}
             <h2 id="welcome">Hoş geldiniz{session?.customer ? `, ${session.customer.name}` : ''}</h2>
             <p className="muted">Stok kodu, ölçü (örn. 25x52x15) veya marka ile arayın; ürünü sepete ekleyip sipariş oluşturun.</p>
             <div className="row wrap">
@@ -110,6 +117,7 @@ export function Dashboard(): ReactNode {
 
   return (
     <div className="grid" style={{ gap: 18 }}>
+      {loadWarning}
       <div className="grid g4">
         <Stat icon={<Boxes size={18} aria-hidden />} label="Toplam ürün" value={num(stats.productCount)} onClick={() => go('catalog')} />
         <Stat icon={<PackageCheck size={18} aria-hidden />} label="Stokta" value={num(stats.inStockCount)} />

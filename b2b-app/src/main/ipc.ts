@@ -1,7 +1,7 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
 import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, net, shell } from 'electron'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, nativeTheme, net, shell } from 'electron'
 import { join } from 'node:path'
 import { discardFailedOps, flush, outboxCounts, setOutboxUser } from './cloud/outbox'
 import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
@@ -592,6 +592,7 @@ export function registerIpc(): void {
     const shared = Object.keys(patch).some((k) => !isLocalSetting(k))
     if (shared && s.user.role !== 'admin') throw new Error('Bu ayarı yalnızca yönetici değiştirebilir.')
     const out = shared ? await setSettings(patch) : setLocalSettings(patch)
+    nativeTheme.themeSource = out.theme === 'dark' || out.theme === 'contrast' ? 'dark' : out.theme === 'light' ? 'light' : 'system'
     if (patch.background_notifications !== undefined && s.user.role === 'admin') setBackgroundMode(out.background_notifications)
     broadcast('settings:changed')
     return out

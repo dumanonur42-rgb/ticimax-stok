@@ -5,6 +5,7 @@ import { ArrowDown, ArrowUp, ChevronLeft, Copy, Download, Filter, Plus, Search, 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
+import { LoadError } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { money, num, productsToTsv } from '@/lib/format'
 import { StockPill } from '@/components/StockPill'
@@ -108,6 +109,7 @@ export function Catalog(): ReactNode {
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
   const [picked, setPicked] = useState<Map<number, Product>>(new Map())
   const [loading, setLoading] = useState(false)
+  const [loadError, setLoadError] = useState('')
   const [selected, setSelected] = useState<Product | null>(null)
   const [editing, setEditing] = useState<Product | 'new' | null>(null)
   const [activeIdx, setActiveIdx] = useState(0)
@@ -118,6 +120,10 @@ export function Catalog(): ReactNode {
   const selectAllRef = useRef<HTMLInputElement>(null)
 
   const fullFilter = useMemo<ProductFilter>(() => ({ ...filter, q: dq }), [filter, dq])
+  const hasActiveFilter = Boolean(
+    dq.trim() ||
+      Object.entries(filter).some(([key, value]) => key !== 'sort' && key !== 'sortDir' && (Array.isArray(value) ? value.some(Boolean) : Boolean(value)))
+  )
 
   useEffect(() => onEvent('products:changed', () => setVersion((v) => v + 1)), [])
 
@@ -125,6 +131,7 @@ export function Catalog(): ReactNode {
   useEffect(() => {
     let cancelled = false
     setLoading(true)
+    setLoadError('')
     pendingPages.current.clear()
     Promise.all([api('products:search', { ...fullFilter, offset: 0, limit: PAGE }), api('products:facets', fullFilter)])
       .then(([page, f]) => {
@@ -137,7 +144,7 @@ export function Catalog(): ReactNode {
         setActiveIdx(0)
         bodyRef.current?.scrollTo({ top: 0 })
       })
-      .catch((e) => toast(e.message, 'error'))
+      .catch((e) => { if (!cancelled) setLoadError((e as Error).message || 'Ürün listesi alınamadı.') })
       .finally(() => !cancelled && setLoading(false))
     return () => {
       cancelled = true
@@ -582,13 +589,12 @@ export function Catalog(): ReactNode {
             aria-busy={loading}
             onKeyDown={onGridKey}
           >
-            {total === 0 && !loading && (
+            {loadError && <LoadError message={loadError} onRetry={() => setVersion((value) => value + 1)} />}
+            {total === 0 && !loading && !loadError && (
               <div className="empty">
-                <h3>Sonuç bulunamadı</h3>
-                <p>Aramayı veya filtreleri değiştirmeyi deneyin.</p>
-                <button className="btn" onClick={clearAll}>
-                  Filtreleri temizle
-                </button>
+                <h3>{hasActiveFilter ? 'Aramaya uyan ürün yok.' : 'Ürün bulunamadı'}</h3>
+                <p>{hasActiveFilter ? 'Aramayı veya filtreleri değiştirmeyi deneyin.' : 'Henüz ürün eklenmemiş.'}</p>
+                {hasActiveFilter && <button className="btn" onClick={clearAll}>Filtreleri temizle</button>}
               </div>
             )}
             <div style={{ height: virt.getTotalSize(), position: 'relative' }}>
@@ -651,7 +657,7 @@ export function Catalog(): ReactNode {
                     )}
                     {has.has('dims') && (
                       <div className="cell mono small muted truncate" role="gridcell">
-                        {p.d_inner != null || p.d_outer != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
+                        {p.d_inner != null || p.d_outer != null || p.width != null ? `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` : ''}
                       </div>
                     )}
                     <div className="cell right" role="gridcell">
