@@ -11,5 +11,5 @@ export function cardPrice(price: number | null, card_price: number | null | unde
 }
 
 export function priceFor(payment: PaymentType, price: number | null, card_price: number | null | undefined, pct: number): number | null {
-  return payment === 'kart' ? cardPrice(price, card_price, pct) : price
+  return payment === 'kart' ? (cardPrice(price, card_price, pct) ?? price) : price
 }
