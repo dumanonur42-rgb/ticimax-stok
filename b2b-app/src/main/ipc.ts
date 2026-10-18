@@ -1,13 +1,13 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
-import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityPlatform, ActivityRow, ActivitySummary, ActivityPerson, StockLogQuery, StockLogRow, Order, Perm, Session } from '@shared/types'
-import { app, BrowserWindow, clipboard, dialog, ipcMain, shell } from 'electron'
+import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
+import { app, BrowserWindow, clipboard, dialog, ipcMain, net, shell } from 'electron'
 import { join } from 'node:path'
-import { discardFailedOps, flush, setOutboxUser } from './cloud/outbox'
-import { cloud } from './cloud/client'
+import { discardFailedOps, flush, outboxCounts, setOutboxUser } from './cloud/outbox'
+import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { flushActivity, logActivity, setActivitySession } from './activity'
-import { onSyncEvent, pullProducts, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
-import { dbPath } from './db'
+import { onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
+import { dbPath, deleteLocalDatabase, wipeProducts } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateMyCompany } from './repo/customers'
 import { dashboardStats } from './repo/dashboard'
@@ -32,10 +32,14 @@ import {
 } from './repo/products'
 import { seedDemo } from './repo/seed'
 import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
-import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, listUsers, login, logout, registerUser, saveUser } from './repo/users'
-import { updateState } from './updater'
+import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, isTransientRestoreError, listUsers, login, logout, registerUser, revealPassword, saveUser } from './repo/users'
+import { requestUpdateCheck, updateState } from './updater'
 
 let session: Session | null = null
+let sessionExpiredNotice: string | null = null
+const SESSION_EXPIRED_MESSAGE = 'Oturumunuz kapandı, lütfen yeniden giriş yapın.'
+let sessionCheckTimer: ReturnType<typeof setInterval> | null = null
+let sessionCheckInFlight = false
 
 const EXTERNAL_HOSTS = new Set(['wa.me', 'api.whatsapp.com', 'github.com', 'www.microsoft.com'])
 
@@ -81,6 +85,9 @@ function dateBoundary(value: string, end = false): string {
   if (Number.isNaN(date.getTime())) throw new Error('Tarih filtresi geçersiz.')
   return date.toISOString()
 }
+
+const trafficSources = new Set<TrafficSource>(['all', 'app', 'yamansarulman', 'rulmansitesi', 'teknikkesici'])
+const trafficSites = new Set<TrafficSite>(['yamansarulman', 'rulmansitesi', 'teknikkesici'])
 
 async function resolvePeople(ids: Array<string | null>): Promise<Map<string, ActivityPerson>> {
   const unique = [...new Set(ids.filter((id): id is string => !!id))]
@@ -138,6 +145,27 @@ export function currentRole(): Session['user']['role'] | null {
  */
 async function activate(s: Session, restored = false): Promise<void> {
   session = s
+  setStoragePolicy(s.user, getSettings().show_prices_to_dealers)
+  sessionExpiredNotice = null
+  if (sessionCheckTimer) clearInterval(sessionCheckTimer)
+  sessionCheckTimer = setInterval(() => {
+    if (sessionCheckInFlight || !session) return
+    sessionCheckInFlight = true
+    const userId = session.user.id
+    void cloud().auth.getSession().then(({ data, error }) => {
+      if (session?.user.id !== userId) return
+      if (error) {
+        if (!isTransientRestoreError(error)) expireSession()
+      } else if ((!data.session && net.isOnline()) || (data.session && data.session.user.id !== userId)) {
+        expireSession()
+      }
+    }).catch((error) => {
+      if (!isTransientRestoreError(error)) expireSession()
+    }).finally(() => {
+      sessionCheckInFlight = false
+    })
+  }, 30_000)
+  sessionCheckTimer.unref?.()
   setOutboxUser(s.user.id)
   setActivitySession(s.user.id)
   logActivity({ kind: 'login', ...(restored ? { detail: { restored: true } } : {}) })
@@ -162,11 +190,22 @@ async function activate(s: Session, restored = false): Promise<void> {
 }
 
 function deactivate(): void {
+  if (sessionCheckTimer) clearInterval(sessionCheckTimer)
+  sessionCheckTimer = null
   setActivitySession(null)
   session = null
   setOutboxUser(null)
   stopRealtime()
   stopAdminNotifications()
+}
+
+function expireSession(): void {
+  if (!session) return
+  deactivate()
+  wipeProducts()
+  broadcast('products:changed')
+  sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
+  broadcast('session:changed')
 }
 
 /** Restores the remembered cloud session (refresh token on disk) before the window shows. */
@@ -176,12 +215,23 @@ export function restoreSession(): Promise<Session | null> {
   if (session) return Promise.resolve(session)
   if (!restoring) {
     restoring = (async () => {
+      const hadStoredSession = Boolean(getStoredValue(SESSION_CACHE_STORAGE_KEY))
       try {
         const s = await currentSession()
         if (s) await activate(s, true)
+        else {
+          if (hadStoredSession) sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
+          wipeProducts()
+          broadcast('products:changed')
+        }
         return s
       } catch (e) {
         console.error('session restore failed', e)
+        if (!isTransientRestoreError(e)) {
+          if (hadStoredSession) sessionExpiredNotice = SESSION_EXPIRED_MESSAGE
+          wipeProducts()
+          broadcast('products:changed')
+        }
         return null
       } finally {
         restoring = null
@@ -192,6 +242,11 @@ export function restoreSession(): Promise<Session | null> {
 }
 
 export function registerIpc(): void {
+  cloud().auth.onAuthStateChange((event) => {
+    if (event !== 'SIGNED_OUT') return
+    setTimeout(expireSession, 0)
+  })
+
   onSyncEvent((event, payload) => {
     if (event === 'status') broadcast('sync:changed', payload)
     else if (event === 'products') broadcast('products:changed')
@@ -208,8 +263,13 @@ export function registerIpc(): void {
   })
   handle('auth:logout', async () => {
     await flushActivity()
+    await flush()
+    const pending = outboxCounts().pending
+    if (pending > 0) throw new Error(`Gönderilmemiş ${pending} kayıt var. İnternet bağlantısı gelince tekrar çıkış yapın.`)
     deactivate()
     await logout()
+    deleteLocalDatabase()
+    broadcast('products:changed')
   })
   handle('auth:register', async (input) => {
     await registerUser(input)
@@ -241,12 +301,14 @@ export function registerIpc(): void {
     if (filters.platform) query = query.eq('platform', filters.platform)
     if (filters.from) query = query.gte('at', dateBoundary(filters.from))
     if (filters.to) query = query.lte('at', dateBoundary(filters.to, true))
+    const text = filters.text?.trim().replace(/[%_,()]/g, ' ').trim()
+    if (text) query = query.or(`sku.ilike.%${text}%,query.ilike.%${text}%`)
     const result = await query.order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + limit - 1)
     if (result.error) throw result.error
     const people = await resolvePeople(result.data.map((row) => row.user_id))
     const rows: ActivityRow[] = result.data.map((row) => ({
       ...row,
-      person: people.get(row.user_id) ?? { display_name: row.user_id.slice(0, 8), username: '', company: '' }
+      person: people.get(row.user_id) ?? { display_name: 'Silinmiş kullanıcı', username: '', company: '' }
     }))
     return { rows, hasMore: rows.length === limit }
   })
@@ -292,6 +354,35 @@ export function registerIpc(): void {
       topSearchTerms: [...terms.values()].sort((a, b) => b.searches - a.searches).slice(0, 5)
     }
   })
+  handle('traffic:summary', async (query: TrafficSummaryQuery): Promise<TrafficSummary> => {
+    requireAdmin()
+    if (!query || !trafficSources.has(query.source)) throw new Error('Geçersiz trafik kaynağı.')
+    const from = new Date(query.from)
+    const to = new Date(query.to)
+    if (!Number.isFinite(from.getTime()) || !Number.isFinite(to.getTime()) || from >= to || to.getTime() - from.getTime() > 92 * 86400_000) {
+      throw new Error('Trafik tarih aralığı geçersiz.')
+    }
+    const result = await cloud().rpc('traffic_summary', {
+      p_source: query.source,
+      p_from: from.toISOString(),
+      p_to: to.toISOString()
+    })
+    if (result.error) throw result.error
+    return result.data as unknown as TrafficSummary
+  })
+  handle('traffic:recent', async (query: TrafficRecentQuery) => {
+    requireAdmin()
+    if (!query || (query.site !== undefined && !trafficSites.has(query.site))) throw new Error('Geçersiz site.')
+    const offset = Number.isFinite(query.offset) ? Math.max(0, Math.min(1_000_000, Math.floor(query.offset))) : 0
+    let activityQuery = cloud().from('site_activity').select('*')
+    if (query.site) activityQuery = activityQuery.eq('site', query.site)
+    if (query.city) activityQuery = activityQuery.eq('city', query.city)
+    if (query.org) activityQuery = activityQuery.eq('org', query.org)
+    const result = await activityQuery
+      .order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + 49)
+    if (result.error) throw result.error
+    return { rows: result.data, hasMore: result.data.length === 50 }
+  })
   handle('stock:log', async (filters: StockLogQuery) => {
     requireAdmin()
     const { offset, limit } = pageBounds(filters.offset, filters.limit)
@@ -306,13 +397,13 @@ export function registerIpc(): void {
     const people = await resolvePeople(result.data.map((row) => row.user_id))
     const rows: StockLogRow[] = result.data.map((row) => ({
       ...row,
-      person: row.user_id ? people.get(row.user_id) ?? { display_name: row.user_id.slice(0, 8), username: '', company: '' } : { display_name: '—', username: '', company: '' }
+      person: row.user_id ? people.get(row.user_id) ?? { display_name: 'Silinmiş kullanıcı', username: '', company: '' } : { display_name: '—', username: '', company: '' }
     }))
     return { rows, hasMore: rows.length === limit }
   })
   handle('auth:session', async () => {
     if (restoring) await restoring
-    return session
+    return { session, notice: session ? null : sessionExpiredNotice }
   })
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.username, current, next))
   handle('clipboard:writeText', (text) => {
@@ -484,6 +575,10 @@ export function registerIpc(): void {
     await deleteUser(id)
     broadcast('users:changed')
   })
+  handle('users:revealPassword', (id) => {
+    requireAdmin()
+    return revealPassword(id)
+  })
   handle('users:approve', async (id) => {
     requireRole('admin')
     const r = await approveUser(id)
@@ -538,6 +633,7 @@ export function registerIpc(): void {
   })
 
   handle('app:info', () => ({ version: app.getVersion(), dbPath: dbPath(), platform: process.platform }))
+  handle('app:checkUpdates', () => requestUpdateCheck())
   handle('app:openPath', (p) => {
     shell.showItemInFolder(p)
   })

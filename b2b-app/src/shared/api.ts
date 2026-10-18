@@ -7,6 +7,10 @@ import type {
   ActivityListQuery,
   ActivityPage,
   ActivitySummary,
+  TrafficRecentPage,
+  TrafficRecentQuery,
+  TrafficSummary,
+  TrafficSummaryQuery,
   StockLogQuery,
   StockLogPage,
   DashboardStats,
@@ -41,12 +45,14 @@ export interface ApiMap {
   'auth:login': [{ username: string; password: string }, Session]
   'auth:logout': [void, void]
   'auth:register': [{ username: string; display_name: string; company_name: string; password: string }, void]
-  'auth:session': [void, Session | null]
+  'auth:session': [void, { session: Session | null; notice: string | null }]
   'auth:changePassword': [{ current: string; next: string }, void]
   'activity:log': [ActivityEvent, void]
   'activity:open': [void, void]
   'activity:list': [ActivityListQuery, ActivityPage]
   'activity:summary': [string, ActivitySummary]
+  'traffic:summary': [TrafficSummaryQuery, TrafficSummary]
+  'traffic:recent': [TrafficRecentQuery, TrafficRecentPage]
   'stock:log': [StockLogQuery, StockLogPage]
   'clipboard:writeText': [string, void]
 
@@ -87,6 +93,7 @@ export interface ApiMap {
   ]
   'users:delete': [string, void]
   'users:approve': [string, User]
+  'users:revealPassword': [string, string | null]
 
   'settings:get': [void, Settings]
   'settings:set': [Partial<Settings>, Settings]
@@ -106,6 +113,7 @@ export interface ApiMap {
   'app:openPath': [string, void]
   'app:openExternal': [string, void]
   'app:openStoreUpdates': [void, void]
+  'app:checkUpdates': [void, void]
   'app:seedDemo': [number, number]
   'app:purgeProducts': [void, number]
 

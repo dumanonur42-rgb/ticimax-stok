@@ -9,14 +9,32 @@ const queue: Queued[] = []
 let activeUser: string | null = null
 let flushing: Promise<void> | null = null
 let quittingAfterFlush = false
+let lastSearchKey: string | null = null
+const lastProductViews = new Map<string, number>()
 
 export function setActivitySession(userId: string | null): void {
+  if (activeUser !== userId) lastProductViews.clear()
   activeUser = userId
+  lastSearchKey = null
 }
 
 export function logActivity(event: ActivityEvent): void {
   if (!activeUser) return
+  const now = Date.now()
+  if (event.kind === 'search' && event.query !== undefined) {
+    const key = event.query.toLocaleLowerCase('tr-TR').replace(/[\s.\-\/_]+/g, '')
+    if (lastSearchKey === key) return
+    lastSearchKey = key
+  }
+  if (event.kind === 'product_view') {
+    for (const [key, at] of lastProductViews) if (now - at >= 60_000) lastProductViews.delete(key)
+    const key = event.product_id != null ? `id:${event.product_id}` : `sku:${event.sku ?? ''}|brand:${event.brand ?? ''}`
+    const lastViewedAt = lastProductViews.get(key)
+    if (lastViewedAt !== undefined && now - lastViewedAt < 60_000) return
+    lastProductViews.set(key, now)
+  }
   const row: ActivityLogInsert = {
+    at: new Date().toISOString(),
     platform: 'windows',
     kind: event.kind,
     ...(event.product_id !== undefined ? { product_id: event.product_id } : {}),

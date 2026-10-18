@@ -1,6 +1,11 @@
 import type { ProductRow } from './cloud/database.types'
+import Database from 'better-sqlite3-multiple-ciphers'
+import { app } from 'electron'
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { pullProducts, upsertLocal } from './cloud/sync'
-import { getDb, normalize, normalizeText, productKey } from './db'
+import { dbPath, getDb, normalize, normalizeText, openDatabaseForSelfCheck, productKey, wipeProducts } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
 import { brandCountsFromRows, parseBox, suggestMapping } from './repo/importer'
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
@@ -96,10 +101,96 @@ async function writeCheck(): Promise<boolean> {
   return ok
 }
 
+async function storageSelfCheck(): Promise<boolean> {
+  let ok = true
+  const dir = join(app.getPath('userData'), 'security-selfcheck', String(Date.now()))
+  mkdirSync(dir, { recursive: true })
+  const legacyPath = join(dir, 'legacy.sqlite')
+  const keyPath = join(dir, 'db.key')
+  const legacy = new Database(legacyPath)
+  legacy.exec(`
+    CREATE TABLE settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+    CREATE TABLE outbox (seq INTEGER PRIMARY KEY AUTOINCREMENT, id TEXT NOT NULL UNIQUE, user_id TEXT NOT NULL, kind TEXT NOT NULL, payload TEXT NOT NULL, created_at TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, failed INTEGER NOT NULL DEFAULT 0, error TEXT);
+    CREATE TABLE sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+    INSERT INTO settings VALUES ('company_name', 'Yamansa');
+    INSERT INTO outbox VALUES (1, 'selfcheck-outbox', 'user-1', 'order', '{}', '2026-01-01T00:00:00Z', 2, 0, NULL);
+    INSERT INTO sync_state VALUES ('products_cursor', 'stale');
+    INSERT INTO sync_state VALUES ('catalog_generation', 'stale');
+    INSERT INTO sync_state VALUES ('session_cache', '{\"user\":{\"id\":\"legacy-user\",\"perms\":[]},\"customer\":null}');
+  `)
+  legacy.close()
+
+  const migrated = openDatabaseForSelfCheck(legacyPath, keyPath)
+  const headerIsPlaintext = readFileSync(legacyPath).subarray(0, 16).toString('binary') === 'SQLite format 3\0'
+  const settings = migrated.prepare("SELECT value FROM settings WHERE key = 'company_name'").get() as { value: string } | undefined
+  const outbox = migrated.prepare("SELECT id, attempts FROM outbox").get() as { id: string; attempts: number } | undefined
+  const productCount = (migrated.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
+  const staleState = migrated.prepare("SELECT COUNT(*) AS c FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation', 'session_cache')").get() as { c: number }
+  migrated.close()
+  const migratedSession = getStoredValue(SESSION_CACHE_STORAGE_KEY)
+  if (headerIsPlaintext || settings?.value !== 'Yamansa' || outbox?.id !== 'selfcheck-outbox' || outbox.attempts !== 2 || productCount !== 0 || staleState.c !== 0 || !migratedSession) ok = false
+  console.log(`plaintext migration: ${ok ? 'ok' : 'failed'} (encrypted header, settings/outbox preserved, products/sync state reset)`)
+
+  const sessionFile = join(app.getPath('userData'), 'data', 'cloud-session.json')
+  const sessionDir = join(app.getPath('userData'), 'data')
+  writeFileSync(sessionFile, '{garbage session data')
+  const corruptSessionRecovered = getStoredValue(SESSION_CACHE_STORAGE_KEY) === null
+    && !existsSync(sessionFile)
+    && readdirSync(sessionDir).some((name) => name.startsWith('cloud-session.json.unreadable.'))
+  if (!corruptSessionRecovered) ok = false
+  console.log(`corrupt session recovery: ${corruptSessionRecovered ? 'ok' : 'failed'}`)
+
+  const authKey = 'sb-wxcbajukvxmerdjaikuw-auth-token'
+  const fixtureSession = {
+    access_token: 'selfcheck-access-token',
+    refresh_token: 'selfcheck-refresh-token',
+    token_type: 'bearer',
+    expires_in: 3600,
+    expires_at: Math.floor(Date.now() / 1000) + 3600,
+    user: {
+      id: '00000000-0000-4000-8000-000000000001',
+      aud: 'authenticated',
+      role: 'authenticated',
+      email: 'selfcheck@example.com',
+      app_metadata: { provider: 'email', providers: ['email'] },
+      user_metadata: {},
+      created_at: new Date().toISOString()
+    }
+  }
+  const profileCache = getStoredValue(SESSION_CACHE_STORAGE_KEY) ?? ''
+  writeFileSync(sessionFile, JSON.stringify({ [authKey]: JSON.stringify(fixtureSession), [SESSION_CACHE_STORAGE_KEY]: profileCache }))
+  const restored = await cloud().auth.getSession()
+  const storedAfterRestore = readFileSync(sessionFile, 'utf8')
+  const sessionRestored = !restored.error && restored.data.session?.refresh_token === fixtureSession.refresh_token
+  const fileMigrated = storedAfterRestore.startsWith('safe:') || storedAfterRestore.startsWith('dev-plain:')
+  if (!sessionRestored || !fileMigrated) ok = false
+  console.log(`session-file migration: ${sessionRestored && fileMigrated ? 'ok' : 'failed'} (stored session restored after legacy-file migration)`)
+  const auth = cloud().auth
+  const signOut = auth.signOut
+  let signOutScope: string | undefined
+  auth.signOut = async (options) => {
+    signOutScope = options?.scope
+    return { error: null }
+  }
+  try {
+    await logout()
+  } finally {
+    auth.signOut = signOut
+  }
+  if (signOutScope !== 'local') ok = false
+  console.log(`logout sign-out scope: ${signOutScope === 'local' ? 'ok' : 'failed'} (local)`)
+  await auth.signOut({ scope: 'local' })
+
+  const dbHeaderPlaintext = readFileSync(dbPath()).subarray(0, 16).toString('binary') === 'SQLite format 3\0'
+  if (dbHeaderPlaintext) ok = false
+  console.log(`database encryption header: ${dbHeaderPlaintext ? 'failed' : 'ok'}`)
+  return ok
+}
+
 export async function runSelfCheck(): Promise<number> {
   const t0 = performance.now()
   const db = getDb()
-  let ok = true
+  let ok = await storageSelfCheck()
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {
@@ -331,6 +422,17 @@ export async function runSelfCheck(): Promise<number> {
       ok = false
     }
   } else console.log('cloud check skipped (B2B_CHECK_USER/B2B_CHECK_PASS not set)')
+
+  const outboxBeforeWipe = (db.prepare('SELECT COUNT(*) AS c FROM outbox').get() as { c: number }).c
+  db.prepare("INSERT OR REPLACE INTO sync_state(key, value) VALUES ('products_cursor', 'stale'), ('catalog_generation', 'stale')").run()
+  wipeProducts()
+  const productsAfterWipe = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
+  const ftsAfterWipe = (db.prepare('SELECT COUNT(*) AS c FROM products_fts').get() as { c: number }).c
+  const stateAfterWipe = (db.prepare("SELECT COUNT(*) AS c FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation')").get() as { c: number }).c
+  const outboxAfterWipe = (db.prepare('SELECT COUNT(*) AS c FROM outbox').get() as { c: number }).c
+  const wipeOk = productsAfterWipe === 0 && ftsAfterWipe === 0 && stateAfterWipe === 0 && outboxAfterWipe === outboxBeforeWipe
+  console.log(`logout product wipe: ${wipeOk ? 'ok' : 'failed'} (products/FTS/cursors cleared; outbox retained)`)
+  ok = wipeOk && ok
 
   console.log(ok ? 'SELFCHECK OK' : 'SELFCHECK FAILED')
   return ok ? 0 : 1

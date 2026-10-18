@@ -1,6 +1,8 @@
 /** Hand-maintained mirror of supabase/schema.sql for typed supabase-js queries. */
 import type { ActivityKind, ActivityPlatform, Currency, OrderStatus, PaymentType, UserRole } from '@shared/types'
 
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
 export type ProductRow = {
   id: number
   sku: string
@@ -129,6 +131,28 @@ export type ActivityLogRow = {
   detail: Record<string, unknown>
 }
 
+export type SiteActivitySite = 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+export type SiteActivityKind = 'visit' | 'search' | 'product_view' | 'cart_add' | 'order'
+export type SiteActivityDevice = '' | 'mobile' | 'tablet' | 'desktop'
+export type SiteActivityRow = {
+  id: number
+  at: string
+  site: SiteActivitySite
+  visitor: string
+  kind: SiteActivityKind
+  sku: string
+  name: string
+  path: string
+  query: string
+  results: number | null
+  qty: number | null
+  device: SiteActivityDevice
+  city: string
+  org: string
+  referrer: string
+}
+export type SiteActivityInsert = Omit<SiteActivityRow, 'id'> & { id?: number; at?: string }
+
 export type ActivityLogInsert = Pick<ActivityLogRow, 'platform' | 'kind'> &
   Partial<Pick<ActivityLogRow, 'at' | 'product_id' | 'sku' | 'brand' | 'query' | 'qty' | 'order_id' | 'detail'>>
 
@@ -165,6 +189,7 @@ export interface Database {
       import_logs: Table<ImportLogRow, Omit<ImportLogRow, 'id' | 'created_at'>>
       activity_log: Table<ActivityLogRow, ActivityLogInsert>
       stock_log: Table<StockLogRow>
+      site_activity: Table<SiteActivityRow, SiteActivityInsert>
     }
     Views: Record<string, never>
     Functions: {
@@ -183,6 +208,7 @@ export interface Database {
       }
       set_order_status: { Args: { p_id: number; p_status: string }; Returns: undefined }
       admin_set_password: { Args: { p_user: string; p_password: string }; Returns: undefined }
+      admin_get_password: { Args: { p_user: string }; Returns: string | null }
       prune_logs: { Args: Record<string, never>; Returns: undefined }
       admin_delete_user: { Args: { p_user: string }; Returns: undefined }
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
@@ -192,6 +218,7 @@ export interface Database {
       bulk_update_products: { Args: { p_rows: unknown[] }; Returns: ProductRow[] }
       apply_op: { Args: { p_id: string; p_kind: string; p_payload: Record<string, unknown> }; Returns: OpReceipt }
       dashboard_orders: { Args: { p_customer: number | null }; Returns: DashboardOrdersJson }
+      traffic_summary: { Args: { p_source: string; p_from: string; p_to: string }; Returns: Json }
     }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>

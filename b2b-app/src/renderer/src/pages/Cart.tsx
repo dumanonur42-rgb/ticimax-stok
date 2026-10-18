@@ -29,6 +29,8 @@ export function Cart(): ReactNode {
   const mixedCurrency = cart.lines.some((l) => l.currency !== currency)
   const cardPct = settings?.card_price_pct ?? 0
   const lineUnit = (l: (typeof cart.lines)[number]): number => priceFor(cart.payment, l.unit_price, l.card_price, cardPct) ?? l.unit_price
+  const zeroPrice = cart.lines.some((l) => lineUnit(l) <= 0)
+  const offline = typeof navigator !== 'undefined' && !navigator.onLine
 
   const totals = useMemo(() => {
     const gross = cart.lines.reduce((s, l) => s + l.qty * lineUnit(l), 0)
@@ -41,6 +43,8 @@ export function Cart(): ReactNode {
 
   const submit = async (): Promise<void> => {
     if (!cart.lines.length) return
+    if (offline) return toast('İnternet bağlantısı yok. Bağlantı gelince siparişi gönderebilirsiniz.', 'error')
+    if (zeroPrice) return toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
     if (!isDealer && !cart.customerId) return toast('Lütfen bir bayi/müşteri seçin.', 'error')
     if (mixedCurrency) return toast('Sepette farklı para birimleri var; tek para birimiyle sipariş oluşturun.', 'error')
     setBusy(true)
@@ -121,8 +125,8 @@ export function Cart(): ReactNode {
                     </button>
                   </div>
                 </td>
-                {showPrices && <td className="right nowrap">{money(lineUnit(l), l.currency)}</td>}
-                {showPrices && <td className="right nowrap">{money(lineUnit(l) * l.qty, l.currency)}</td>}
+                {showPrices && <td className="right nowrap">{lineUnit(l) > 0 ? money(lineUnit(l), l.currency) : <span className="badge low">Fiyat sorunuz</span>}</td>}
+                {showPrices && <td className="right nowrap">{lineUnit(l) > 0 ? money(lineUnit(l) * l.qty, l.currency) : <span className="badge low">Fiyat sorunuz</span>}</td>}
                 <td>
                   <button className="btn ghost icon sm" onClick={() => cart.remove(l.product_id)} aria-label={`${l.sku} sepetten çıkar`}>
                     <Trash2 size={16} aria-hidden />
@@ -191,7 +195,9 @@ export function Cart(): ReactNode {
             {overStock.length} kalemde miktar stoktan fazla; sipariş yine oluşturulur, tedarik süresi değişebilir.
           </p>
         )}
-        <button className="btn primary" style={{ height: 46 }} onClick={submit} disabled={busy}>
+        {zeroPrice && <p className="badge low" role="alert">Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.</p>}
+        {offline && <p className="badge low" role="alert">İnternet bağlantısı yok. Bağlantı gelince siparişi gönderebilirsiniz.</p>}
+        <button className="btn primary" style={{ height: 46 }} onClick={submit} disabled={busy || offline || zeroPrice}>
           <Send size={18} aria-hidden /> Siparişi oluştur
         </button>
         <button className="btn ghost" onClick={() => setConfirmClear(true)}>

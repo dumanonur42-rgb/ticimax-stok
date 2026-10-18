@@ -2,6 +2,8 @@ import { app, BrowserWindow, powerMonitor } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import type { UpdateState } from '@shared/types'
 import { compareVersions } from '@shared/version'
+import { flushActivity } from './activity'
+import { quiesceAuth } from './cloud/client'
 import { getSettings } from './repo/settings'
 
 const CHECK_EVERY_MS = 30 * 60 * 1000
@@ -14,10 +16,44 @@ let retryDelay = 30_000
 let retryTimer: NodeJS.Timeout | null = null
 let downloaded = false
 let installing = false
+let authQuiesced = false
+let authQuiescePromise: Promise<void> | null = null
 
 function set(next: Partial<UpdateState>): void {
   state = { ...state, ...next, current: app.getVersion() }
   for (const w of BrowserWindow.getAllWindows()) w.webContents.send('update:changed')
+}
+
+function quiesceAuthOnce(): Promise<void> {
+  if (authQuiesced) return Promise.resolve()
+  if (!authQuiescePromise) {
+    authQuiescePromise = quiesceAuth().finally(() => {
+      authQuiesced = true
+      authQuiescePromise = null
+    })
+  }
+  return authQuiescePromise
+}
+
+async function prepareForInstall(): Promise<void> {
+  let timeout: NodeJS.Timeout | undefined
+  await Promise.race([
+    Promise.allSettled([quiesceAuthOnce(), flushActivity()]).then(() => undefined),
+    new Promise<void>((resolve) => {
+      timeout = setTimeout(resolve, 5_000)
+    })
+  ])
+  if (timeout) clearTimeout(timeout)
+}
+
+function installDownloadedUpdate(): void {
+  void prepareForInstall()
+    .then(() => autoUpdater.quitAndInstall(true, true))
+    .catch((error: unknown) => {
+      installing = false
+      set({ status: 'downloaded' })
+      console.warn('Güncellemenin kurulması başarısız.', error)
+    })
 }
 
 export function updateState(): UpdateState {
@@ -28,6 +64,10 @@ export function updateState(): UpdateState {
     storeBuild: !!process.windowsStore,
     minimumVersion
   }
+}
+
+export function requestUpdateCheck(): void {
+  checkForUpdates()
 }
 
 /** Store (AppX) installs are updated by the Microsoft Store itself; the GitHub updater must stay off there. */
@@ -49,6 +89,7 @@ export function checkForUpdates(): void {
   lastCheckAt = Date.now()
   autoUpdater.checkForUpdates().catch((error: Error) => {
     console.warn('Güncelleme denetimi başarısız.', error)
+    set({ status: 'error', message: `Güncelleme denetlenemedi: ${error.message}` })
     retrySilently()
   })
 }
@@ -64,17 +105,19 @@ function installIfIdle(): void {
   if (allHidden || powerMonitor.getSystemIdleTime() >= 300) {
     installing = true
     set({ status: 'installing' })
-    autoUpdater.quitAndInstall(true, true)
+    installDownloadedUpdate()
   }
 }
 
 export function startUpdater(): void {
+  app.on('before-quit', () => {
+    if (!authQuiesced) void quiesceAuthOnce()
+  })
   if (!selfUpdating()) return
   autoUpdater.autoDownload = true
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.allowDowngrade = false
   autoUpdater.logger = null
-
   autoUpdater.on('checking-for-update', () => set({ status: 'checking' }))
   autoUpdater.on('update-not-available', () => {
     retryDelay = 30_000
@@ -88,14 +131,14 @@ export function startUpdater(): void {
     if (updateState().required) {
       installing = true
       set({ status: 'installing' })
-      setTimeout(() => autoUpdater.quitAndInstall(true, true), 400)
+      setTimeout(installDownloadedUpdate, 400)
     } else if (powerMonitor.getSystemIdleTime() >= 300) {
       installIfIdle()
     }
   })
   autoUpdater.on('error', (error) => {
     console.warn('Güncelleme başarısız.', error)
-    set({ status: 'idle' })
+    set({ status: 'error', message: `Güncelleme denetlenemedi: ${error.message}` })
     retrySilently()
   })
 

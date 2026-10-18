@@ -1,8 +1,8 @@
+import { isAuthRetryableFetchError } from '@supabase/supabase-js'
 import type { Customer, CustomerInput, DealerLogin, Perm, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
-import { clearStoredSession, cloud, cloudError, ephemeralCloud, isConnectivityError, must, mustVoid } from '../cloud/client'
+import { clearStoredSession, cloud, cloudError, ephemeralCloud, getStoredValue, isConnectivityError, must, mustVoid, removeStoredValue, SESSION_CACHE_STORAGE_KEY, setStoredValue } from '../cloud/client'
 import { fromCustomer, toCustomer, toUser } from '../cloud/map'
-import { getDb } from '../db'
 
 const LOGIN_DOMAIN = 'login.yamansab2b.app'
 
@@ -34,7 +34,7 @@ function validatePassword(p: string): void {
 
 async function profileOf(userId: string): Promise<User | null> {
   const r = await cloud().from('profiles').select('*').eq('id', userId).maybeSingle()
-  if (r.error) throw cloudError(r.error)
+  if (r.error) throw Object.assign(cloudError(r.error), { status: r.status })
   return r.data ? toUser(r.data) : null
 }
 
@@ -51,25 +51,30 @@ async function sessionOf(user: User): Promise<Session> {
 }
 
 /**
- * The last confirmed profile is kept in the local database so the app can open with the signed-in user while
+ * The last confirmed profile is kept with the encrypted auth cache so the app can open with the signed-in user while
  * the cloud is unreachable (the refresh token on disk still proves who was signed in). Cleared on sign-out.
  */
-const SESSION_KEY = 'session_cache'
-
 function rememberSession(s: Session): void {
-  getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(SESSION_KEY, JSON.stringify(s))
+  setStoredValue(SESSION_CACHE_STORAGE_KEY, JSON.stringify(s))
 }
 
 function rememberedSession(userId: string | null): Session | null {
-  const r = getDb().prepare('SELECT value FROM sync_state WHERE key = ?').get(SESSION_KEY) as { value: string } | undefined
-  if (!r) return null
-  const s = JSON.parse(r.value) as Session
+  const value = getStoredValue(SESSION_CACHE_STORAGE_KEY)
+  if (!value) return null
+  const s = JSON.parse(value) as Session
   s.user.perms ??= []
   return userId === null || s.user.id === userId ? s : null
 }
 
 function forgetSession(): void {
-  getDb().prepare('DELETE FROM sync_state WHERE key = ?').run(SESSION_KEY)
+  removeStoredValue(SESSION_CACHE_STORAGE_KEY)
+}
+
+export function isTransientRestoreError(error: unknown): boolean {
+  if (isConnectivityError(error) || isAuthRetryableFetchError(error)) return true
+  if (typeof error !== 'object' || error === null || !('status' in error)) return false
+  const status = Number((error as { status: unknown }).status)
+  return Number.isFinite(status) && status >= 500
 }
 
 export async function login(username: string, password: string): Promise<Session> {
@@ -78,11 +83,11 @@ export async function login(username: string, password: string): Promise<Session
   if (auth.error) throw cloudError(auth.error)
   const user = await profileOf(auth.data.user.id)
   if (!user || !user.active) {
-    await sb.auth.signOut()
+    await sb.auth.signOut({ scope: 'local' })
     throw new Error(user ? 'Hesabınız devre dışı bırakılmış.' : 'Kullanıcı adı veya şifre hatalı.')
   }
   if (!user.approved) {
-    await sb.auth.signOut()
+    await sb.auth.signOut({ scope: 'local' })
     throw new Error('Hesabınız henüz yönetici tarafından onaylanmadı.')
   }
   return sessionOf(user)
@@ -90,7 +95,7 @@ export async function login(username: string, password: string): Promise<Session
 
 export async function logout(): Promise<void> {
   forgetSession()
-  const r = await cloud().auth.signOut()
+  const r = await cloud().auth.signOut({ scope: 'local' })
   if (r.error) {
     console.error('signOut failed', r.error)
     clearStoredSession()
@@ -104,12 +109,18 @@ export async function logout(): Promise<void> {
 export async function currentSession(): Promise<Session | null> {
   const r = await cloud().auth.getSession()
   if (r.error) {
-    if (isConnectivityError(r.error)) return rememberedSession(null)
+    if (isTransientRestoreError(r.error)) {
+      const remembered = rememberedSession(null)
+      if (remembered) return remembered
+      throw r.error
+    }
     forgetSession()
+    clearStoredSession()
     return null
   }
   if (!r.data.session) {
     forgetSession()
+    clearStoredSession()
     return null
   }
   const userId = r.data.session.user.id
@@ -117,11 +128,18 @@ export async function currentSession(): Promise<Session | null> {
     const user = await profileOf(userId)
     if (!user || !user.active || !user.approved) {
       forgetSession()
+      clearStoredSession()
       return null
     }
     return await sessionOf(user)
   } catch (e) {
-    if (isConnectivityError(e)) return rememberedSession(userId)
+    if (isTransientRestoreError(e)) {
+      const remembered = rememberedSession(userId)
+      if (remembered) return remembered
+      throw e
+    }
+    forgetSession()
+    clearStoredSession()
     throw e
   }
 }
@@ -226,7 +244,13 @@ export async function saveUser(u: {
     .eq('id', id)
     .select('*')
     .single()
-  return toUser(must(r))
+  const user = toUser(must(r))
+  mustVoid(await sb.rpc('admin_set_password', { p_user: id, p_password: u.password }))
+  return user
+}
+
+export async function revealPassword(id: string): Promise<string | null> {
+  return must(await cloud().rpc('admin_get_password', { p_user: id })) ?? null
 }
 
 export async function approveUser(id: string): Promise<User> {

@@ -1,6 +1,6 @@
-import type { SyncStatus } from '@shared/types'
+import type { SyncStatus, User } from '@shared/types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
-import { getDb } from '../db'
+import { getDb, normalizeText } from '../db'
 import { pullSettings } from '../repo/settings'
 import { cloud, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
@@ -18,9 +18,10 @@ type Listener = (event: 'products' | 'orders' | 'users' | 'customers' | 'setting
 let listener: Listener = () => undefined
 let channel: RealtimeChannel | null = null
 let timer: NodeJS.Timeout | null = null
-let pulling: Promise<void> | null = null
+let pulling: Promise<number> | null = null
 let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pending: 0, failed: 0 }
 let onNewOrder: ((o: OrderRow) => void) | null = null
+let storagePolicy = { canSeeShelf: false, hidePrices: false }
 
 export function onSyncEvent(l: Listener): void {
   listener = l
@@ -28,6 +29,14 @@ export function onSyncEvent(l: Listener): void {
 
 export function onNewOrderRow(cb: ((o: OrderRow) => void) | null): void {
   onNewOrder = cb
+}
+
+export function setStoragePolicy(user: User, showPricesToDealers: boolean): void {
+  const next = {
+    canSeeShelf: user.role === 'admin' || user.role === 'ara' || user.perms.includes('shelf'),
+    hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices')
+  }
+  storagePolicy = next
 }
 
 export function syncStatus(): SyncStatus {
@@ -68,10 +77,10 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
-const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, box, barcode, image, description, equivalents, active, updated_at)
-  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@box,@barcode,@image,@description,@equivalents,@active,@updated_at)`
+const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, category, type, seal, d_inner, d_outer, width, stock, unit,
+  price, currency, list_price, card_price, min_order, shelf, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
+  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
+  @currency,@list_price,@card_price,@min_order,@shelf,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 export function upsertLocal(rows: ProductRow[]): void {
@@ -93,6 +102,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         name: r.name,
         name_norm: r.name_norm,
         brand: r.brand,
+        brand_norm: normalizeText(r.brand),
         category: r.category,
         type: r.type,
         seal: r.seal,
@@ -101,17 +111,19 @@ export function upsertLocal(rows: ProductRow[]): void {
         width: r.width,
         stock: Number(r.stock),
         unit: r.unit,
-        price: Number(r.price),
+        price: storagePolicy.hidePrices ? null : Number(r.price),
         currency: r.currency,
-        list_price: r.list_price === null ? null : Number(r.list_price),
-        card_price: r.card_price === null ? null : Number(r.card_price),
+        list_price: storagePolicy.hidePrices || r.list_price === null ? null : Number(r.list_price),
+        card_price: storagePolicy.hidePrices || r.card_price === null ? null : Number(r.card_price),
         min_order: Number(r.min_order),
-        shelf: r.shelf,
+        shelf: storagePolicy.canSeeShelf ? r.shelf : '',
         box: r.box,
+        box_norm: normalizeText(r.box),
         barcode: r.barcode,
         image: r.image,
         description: r.description,
         equivalents: r.equivalents,
+        eq_norm: normalizeText(r.equivalents),
         active: r.active ? 1 : 0,
         updated_at: r.updated_at
       })
@@ -135,8 +147,9 @@ async function cloudGeneration(): Promise<string> {
 /** Incremental pull: everything changed since the stored cursor (or all rows on first run / `full`). */
 export async function pullProducts(full = false): Promise<number> {
   if (pulling) {
-    await pulling
-    return 0
+    const active = pulling
+    const result = await active
+    return full ? pullProducts(true) : result
   }
   let n = 0
   pulling = (async () => {
@@ -144,7 +157,9 @@ export async function pullProducts(full = false): Promise<number> {
     const db = getDb()
     const generation = await cloudGeneration()
     if (generation !== (getState('catalog_generation') ?? '0')) full = true
-    const cursor = full ? null : getState('products_cursor')
+    const storedCursor = full ? null : getState('products_cursor')
+    const cursor = storedCursor ? new Date(new Date(storedCursor).getTime() - 5 * 60_000).toISOString() : null
+    if (!full && getState('product_storage_policy') !== JSON.stringify(storagePolicy)) full = true
     const seenIds: number[] = []
     let last = cursor
     const fetchPage = async (after: string | null, afterId: number): Promise<ProductRow[]> => {
@@ -160,7 +175,7 @@ export async function pullProducts(full = false): Promise<number> {
       if (!rows.length) break
       const tail = rows[rows.length - 1]
       last = tail.updated_at
-      if (rows.length === PAGE) {
+      if (rows.length > 0) {
         next = fetchPage(tail.updated_at, tail.id)
         next.catch(() => undefined) // surfaces via the await above, not as an unhandled rejection
       }
@@ -182,8 +197,10 @@ export async function pullProducts(full = false): Promise<number> {
     }
     setState('products_cursor', last ?? new Date(0).toISOString())
     setState('catalog_generation', generation)
+    setState('product_storage_policy', JSON.stringify(storagePolicy))
     // FTS5 auto-merges small incremental writes; a full merge is only worth its cost after a bulk pull.
     if (full || n >= 500) db.exec("INSERT INTO products_fts(products_fts) VALUES('optimize')")
+    return n
   })()
   try {
     await pulling

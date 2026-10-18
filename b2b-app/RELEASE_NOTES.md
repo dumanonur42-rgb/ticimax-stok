@@ -4,10 +4,41 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.24
+
+- Türkçe harfli aramalar düzeltildi: "ÇİN" ya da "çin" yazınca ilgili ürünler bulunur, marka filtresiyle birlikte de çalışır.
+- "6205 ZZ" gibi kısa ekli aramalar artık yalnızca uyan ürünleri gösterir.
+- Ürün detayı kapanınca klavye listede kaldığı yerden devam eder.
+- [yönetici] Kullanıcı silindikten sonra düzenleme penceresi kapanır.
+- [yönetici] Stok Aktar'da ayar ya da kolon eşleşmesi değişince eski deneme sonucu temizlenir.
+- [yönetici] Geçmiş yüklemelerde silinen listeler "Silinen liste" olarak işaretlenir, tüm ürün listesini silme işlemi de geçmişe yazılır.
+
+## 1.0.23
+
+- Çıkış yapmak artık yalnızca bu cihazı etkiler; diğer cihazlardaki oturumlar kapanmaz.
+- Oturum sona ererse giriş ekranında yeniden giriş yapmanız gerektiği açıkça bildirilir.
+- Yardım'daki yöneticiye özel bölümleri yalnızca yöneticiler görür.
+- Ana Sayfa ve Yardım'daki “Bize ulaşın” kartı yenilendi.
+- Koyu temada düğmeler artık daha kolay okunuyor.
+- Site hareketlerinde şehir, şirket ağı ve ziyaretçi takma adı da gösterilir.
+
+## 1.0.22
+
+- Bilgisayardaki ürün kopyası artık şifreli tutulur; dosya kopyalansa bile başka bir yerde açılamaz. Çıkış yapınca ya da hesap kapatılınca bu kopya silinir.
+- Ayarlar ve Yardım ekranları yenilendi: daha düzenli bölümler, Yardım'da arama, sık sorulan sorular ve gruplanmış klavye kısayolları.
+
+## 1.0.21
+
+- Yeni sürüm kurulduğunda oturum kapanmaz; tekrar giriş yapmanız gerekmez.
+- [yönetici] Hareketler sayfasına Genel, Yamansa Rulman Uygulama, Yamansa Rulman Web, Rulman Sitesi Web ve Teknik Kesici Web sekmeleri eklendi. En çok aranan, en çok bakılan ve sepete en çok eklenen ürünler seçilen döneme göre görülebilir.
+- [yönetici] Hareket kayıtlarının saatleri düzeltildi, çift arama ve çift görüntüleme kayıtları giderildi; tarih başlıkları, filtreler ve kişi özeti eklendi.
+
 ## 1.0.20
 
 - [yönetici] Hareketler sayfasında kullanıcı girişleri, aramaları, ürün görüntülemeleri, sepete eklemeleri ve stok değişiklikleri filtrelenip incelenebilir.
 - [yönetici] Seçilen kullanıcı için son giriş, sık baktığı ürünler ve arama terimleri görüntülenebilir.
+- [yönetici] Ayarlar › Kullanıcılar'da yöneticinin belirlediği şifreler göz simgesiyle görülüp kopyalanabilir.
+- Mobil ve Windows'taki ürün aramaları, görüntülemeler ve sepet hareketleri yöneticiye raporlanır.
 
 ## 1.0.19
 

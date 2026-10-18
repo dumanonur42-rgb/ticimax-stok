@@ -232,86 +232,109 @@ begin
   update products set stock = greatest(0, stock + p_delta) where id = p_id;
 end $$;
 
+alter table public.order_items add column if not exists stock_deducted numeric;
+
+create or replace function public.setting_num(p_key text, p_default numeric) returns numeric
+language sql stable security definer set search_path = public as $$
+  select coalesce((select case when jsonb_typeof(value) = 'number' then (value #>> '{}')::numeric
+                              when jsonb_typeof(value) = 'string' and (value #>> '{}') ~ '^-?[0-9]+(\.[0-9]+)?$' then (value #>> '{}')::numeric end
+                   from settings where key = p_key), p_default)
+$$;
+revoke all on function public.setting_num(text, numeric) from public, anon;
+
 create or replace function public.create_order(p_customer_id bigint, p_note text, p_payment text, p_currency text, p_vat_pct numeric, p_items jsonb)
 returns bigint language plpgsql security definer set search_path = public as $$
 declare
-  me profiles; cid bigint; cname text; oid bigint; ono text; seq int; prefix text;
-  it jsonb; gross numeric := 0; sub numeric := 0; lt numeric; q numeric; up numeric; dp numeric; pid bigint;
+  me profiles; cid bigint; cname text; cdisc numeric; oid bigint; ono text; seq int; prefix text;
+  it jsonb; pr products; q numeric; up numeric; lt numeric; gross numeric := 0; sub numeric := 0;
+  pay text; vat numeric; card_pct numeric; cur text := null; n int := 0; ded numeric;
 begin
   select * into me from profiles where id = auth.uid() and active and approved;
   if me.id is null then raise exception 'Oturum açılmamış.'; end if;
   perform set_config('app.stock_source', 'order', true);
   cid := case when me.role = 'admin' then p_customer_id else me.customer_id end;
   if cid is null then raise exception 'Lütfen bir bayi/müşteri seçin.'; end if;
-  select name into cname from customers where id = cid;
-  if jsonb_array_length(coalesce(p_items, '[]'::jsonb)) = 0 then raise exception 'Sipariş en az bir kalem içermeli.'; end if;
-
+  select name, greatest(0, least(100, coalesce(discount_pct, 0))) into cname, cdisc from customers where id = cid;
+  if cname is null then raise exception 'Müşteri bulunamadı.'; end if;
+  if jsonb_typeof(p_items) is distinct from 'array' or jsonb_array_length(p_items) = 0 then raise exception 'Sepetiniz boş.'; end if;
+  if jsonb_array_length(p_items) > 500 then raise exception 'Bir siparişte en fazla 500 kalem olabilir.'; end if;
+  pay := case when p_payment = 'kart' then 'kart' else 'pesin' end;
+  vat := greatest(0, least(100, setting_num('vat_pct', 20)));
+  card_pct := greatest(0, setting_num('card_price_pct', 5));
+  for it in select * from jsonb_array_elements(p_items) loop
+    q := coalesce((it->>'qty')::numeric, 0);
+    if q <= 0 then continue; end if;
+    select * into pr from products where id = nullif(it->>'product_id', '')::bigint;
+    if pr.id is null or pr.deleted or not pr.active then
+      raise exception 'Sepetteki "%" ürünü artık satışta değil. Lütfen sepetten çıkarın.', coalesce(it->>'sku', '');
+    end if;
+    if cur is null then cur := pr.currency; elsif cur <> pr.currency then
+      raise exception 'Sepette farklı para birimleri var; tek para birimiyle sipariş oluşturun.';
+    end if;
+    up := case when pay = 'kart' then coalesce(pr.card_price, case when card_pct > 0 then round(pr.price * (1 + card_pct / 100), 2) end, pr.price) else pr.price end;
+    if coalesce(up, 0) <= 0 then
+      raise exception 'Fiyatı olmayan ürün siparişe eklenemez: %. Fiyat için lütfen bizi arayın.', pr.sku;
+    end if;
+    gross := gross + q * up;
+    sub := sub + round(q * up * (1 - cdisc / 100), 2);
+    n := n + 1;
+  end loop;
+  if n = 0 then raise exception 'Sepetiniz boş.'; end if;
   perform pg_advisory_xact_lock(hashtext('order_no'));
   prefix := 'SP-' || to_char(now() at time zone 'Europe/Istanbul', 'YYYYMMDD') || '-';
   select coalesce(max(substr(order_no, length(prefix) + 1)::int), 0) + 1 into seq from orders where order_no like prefix || '%';
   ono := prefix || lpad(seq::text, 3, '0');
-
-  for it in select * from jsonb_array_elements(p_items) loop
-    q := coalesce((it->>'qty')::numeric, 0);
-    if q <= 0 then continue; end if;
-    up := coalesce((it->>'unit_price')::numeric, 0);
-    dp := coalesce((it->>'discount_pct')::numeric, 0);
-    gross := gross + q * up;
-    sub := sub + round(q * up * (1 - dp / 100), 2);
-  end loop;
-  if sub = 0 and gross = 0 then raise exception 'Sipariş en az bir kalem içermeli.'; end if;
-
   insert into orders (order_no, customer_id, customer_name, status, note, payment, currency, subtotal, discount, vat_pct, vat, total, created_by, created_by_id)
-  values (ono, cid, coalesce(cname, ''), 'beklemede', coalesce(p_note, ''), case when p_payment = 'kart' then 'kart' else 'pesin' end,
-          coalesce(p_currency, 'TRY'), round(sub, 2), round(gross - sub, 2), p_vat_pct, round(sub * p_vat_pct / 100, 2),
-          round(sub + round(sub * p_vat_pct / 100, 2), 2), coalesce(nullif(me.display_name, ''), me.username), me.id)
+  values (ono, cid, cname, 'beklemede', left(coalesce(p_note, ''), 2000), pay, cur, round(sub, 2), round(gross - sub, 2), vat,
+          round(sub * vat / 100, 2), round(sub + round(sub * vat / 100, 2), 2), coalesce(nullif(me.display_name, ''), me.username), me.id)
   returning id into oid;
-
   for it in select * from jsonb_array_elements(p_items) loop
     q := coalesce((it->>'qty')::numeric, 0);
     if q <= 0 then continue; end if;
-    up := coalesce((it->>'unit_price')::numeric, 0);
-    dp := coalesce((it->>'discount_pct')::numeric, 0);
-    lt := round(q * up * (1 - dp / 100), 2);
-    pid := nullif(it->>'product_id', '')::bigint;
-    insert into order_items (order_id, product_id, sku, name, qty, unit_price, discount_pct, line_total)
-    values (oid, pid, coalesce(it->>'sku', ''), coalesce(it->>'name', ''), q, up, dp, lt);
-    if pid is not null then update products set stock = greatest(0, stock - q) where id = pid; end if;
+    select * into pr from products where id = (it->>'product_id')::bigint for update;
+    up := case when pay = 'kart' then coalesce(pr.card_price, case when card_pct > 0 then round(pr.price * (1 + card_pct / 100), 2) end, pr.price) else pr.price end;
+    lt := round(q * up * (1 - cdisc / 100), 2);
+    ded := least(q, greatest(pr.stock, 0));
+    insert into order_items (order_id, product_id, sku, name, qty, unit_price, discount_pct, line_total, stock_deducted)
+    values (oid, pr.id, pr.sku, pr.name, q, up, cdisc, lt, ded);
+    update products set stock = greatest(0, stock - q) where id = pr.id;
   end loop;
   return oid;
 end $$;
 
 create or replace function public.set_order_status(p_id bigint, p_status text) returns void
 language plpgsql security definer set search_path = public as $$
-declare o orders; it order_items;
+declare o orders; it order_items; ded numeric;
 begin
-  select * into o from orders where id = p_id;
+  if p_status is null or p_status not in ('taslak', 'beklemede', 'onaylandi', 'hazirlaniyor', 'teslim', 'iptal') then
+    raise exception 'Geçersiz sipariş durumu.';
+  end if;
+  select * into o from orders where id = p_id for update;
   if o.id is null then raise exception 'Sipariş bulunamadı.'; end if;
   if not is_admin() then
     if p_status <> 'iptal' or o.customer_id is distinct from my_customer_id() then
       raise exception 'Sipariş durumunu yalnızca yöneticiler değiştirebilir.';
     end if;
+    if o.status <> 'beklemede' then
+      raise exception 'Bu sipariş artık iptal edilemez. Lütfen bizi arayın.';
+    end if;
   end if;
+  if o.status = p_status then return; end if;
   perform set_config('app.stock_source', 'order_status', true);
   if p_status = 'iptal' and o.status <> 'iptal' then
     for it in select * from order_items where order_id = p_id and product_id is not null loop
-      update products set stock = stock + it.qty where id = it.product_id;
+      update products set stock = stock + coalesce(it.stock_deducted, it.qty) where id = it.product_id;
     end loop;
-  elsif o.status = 'iptal' and p_status <> 'iptal' then
+  elsif o.status = 'iptal' then
     for it in select * from order_items where order_id = p_id and product_id is not null loop
+      select least(it.qty, greatest(stock, 0)) into ded from products where id = it.product_id for update;
       update products set stock = greatest(0, stock - it.qty) where id = it.product_id;
+      update order_items set stock_deducted = coalesce(ded, 0) where id = it.id;
     end loop;
   end if;
   update orders set status = p_status, updated_at = now() where id = p_id;
 end $$;
 
-create or replace function public.admin_set_password(p_user uuid, p_password text) returns void
-language plpgsql security definer set search_path = public, extensions as $$
-begin
-  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
-  if length(p_password) < 6 then raise exception 'Şifre en az 6 karakter olmalı.'; end if;
-  update auth.users set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now() where id = p_user;
-end $$;
 
 create or replace function public.admin_delete_user(p_user uuid) returns void
 language plpgsql security definer set search_path = public as $$
@@ -546,17 +569,17 @@ end $$;
 
 create or replace function public.dashboard_orders(p_customer bigint) returns jsonb
 language plpgsql stable security definer set search_path = public as $$
-declare cid bigint; res jsonb;
+declare cid bigint; res jsonb; adm boolean := is_admin();
 begin
   if not is_member() then raise exception 'Oturum açılmamış.'; end if;
-  cid := case when is_admin() or has_perm('all_orders') then p_customer else my_customer_id() end;
+  cid := case when adm or has_perm('all_orders') then p_customer else my_customer_id() end;
   select jsonb_build_object(
     'openOrders', (select count(*) from orders where status in ('beklemede','onaylandi','hazirlaniyor') and (cid is null or customer_id = cid)),
     'ordersToday', (select count(*) from orders where (created_at at time zone 'Europe/Istanbul')::date = (now() at time zone 'Europe/Istanbul')::date and (cid is null or customer_id = cid)),
-    'customerCount', (select count(*) from customers where active),
-    'pendingUsers', case when is_admin() then (select count(*) from profiles where not approved) else 0 end,
+    'customerCount', case when adm then (select count(*) from customers where active) else 0 end,
+    'pendingUsers', case when adm then (select count(*) from profiles where not approved) else 0 end,
     'recentOrders', coalesce((select jsonb_agg(to_jsonb(o)) from (select * from orders where cid is null or customer_id = cid order by created_at desc, id desc limit 8) o), '[]'::jsonb),
-    'lastImport', (select to_jsonb(l) from import_logs l order by id desc limit 1)
+    'lastImport', case when adm then (select to_jsonb(l) from import_logs l order by id desc limit 1) end
   ) into res;
   return res;
 end $$;
@@ -689,6 +712,27 @@ drop trigger if exists products_stock_log on public.products;
 create trigger products_stock_log after insert or update of stock on public.products
   for each row execute function public.log_stock_change();
 
+-- Approximate visitor province / company network (DB-IP Lite, CC BY 4.0). Raw IPs are never stored.
+create table if not exists public.geo_city (ip_from inet primary key, ip_to inet not null, city text not null default '');
+create table if not exists public.geo_org (ip_from inet primary key, ip_to inet not null, org text not null default '');
+alter table public.geo_city enable row level security;
+alter table public.geo_org enable row level security;
+revoke all on public.geo_city, public.geo_org from anon, authenticated;
+
+create or replace function public.site_geo(p_ip text) returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare v inet; c text; o text;
+begin
+  begin v := host(p_ip::inet)::inet; exception when others then return jsonb_build_object('city', '', 'org', ''); end;
+  select g.city into c from (select * from geo_city where ip_from <= v order by ip_from desc limit 1) g
+   where g.ip_to >= v and family(g.ip_to) = family(v);
+  select g.org into o from (select * from geo_org where ip_from <= v order by ip_from desc limit 1) g
+   where g.ip_to >= v and family(g.ip_to) = family(v);
+  return jsonb_build_object('city', coalesce(c, ''), 'org', coalesce(o, ''));
+end $$;
+revoke execute on function public.site_geo(text) from public, anon, authenticated;
+grant execute on function public.site_geo(text) to service_role;
+
 create or replace function public.prune_logs() returns void
 language plpgsql security definer set search_path = public as $$
 begin
@@ -696,3 +740,227 @@ begin
   delete from activity_log where at < now() - interval '90 days';
   delete from stock_log where at < now() - interval '90 days';
 end $$;
+
+-- Admin-set passwords, readable only by admins (encrypted with a Vault key; wiped when the user changes it).
+create table if not exists public.user_passwords (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  secret bytea not null,
+  set_at timestamptz not null default now(),
+  set_by uuid
+);
+alter table public.user_passwords enable row level security;
+revoke all on public.user_passwords from anon, authenticated;
+
+do $$ begin
+  if not exists (select 1 from vault.secrets where name = 'yamansa_password_key') then
+    perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'), 'yamansa_password_key');
+  end if;
+end $$;
+
+create or replace function public.password_key() returns text
+language sql stable security definer set search_path = public as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'yamansa_password_key'
+$$;
+revoke execute on function public.password_key() from public, anon, authenticated;
+
+create or replace function public.admin_set_password(p_user uuid, p_password text) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if length(p_password) < 6 then raise exception 'Şifre en az 6 karakter olmalı.'; end if;
+  update auth.users set encrypted_password = crypt(p_password, gen_salt('bf')), updated_at = now() where id = p_user;
+  insert into user_passwords (user_id, secret, set_at, set_by)
+  values (p_user, pgp_sym_encrypt(p_password, password_key()), now(), auth.uid())
+  on conflict (user_id) do update set secret = excluded.secret, set_at = excluded.set_at, set_by = excluded.set_by;
+end $$;
+
+create or replace function public.admin_get_password(p_user uuid) returns text
+language plpgsql security definer set search_path = public, extensions as $$
+declare s bytea;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  select secret into s from user_passwords where user_id = p_user;
+  if s is null then return null; end if;
+  return pgp_sym_decrypt(s, password_key());
+end $$;
+
+create or replace function public.forget_password_on_change() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.encrypted_password is distinct from old.encrypted_password then
+    delete from user_passwords where user_id = new.id;
+  end if;
+  return new;
+end $$;
+drop trigger if exists on_auth_password_change on auth.users;
+create trigger on_auth_password_change after update of encrypted_password on auth.users
+  for each row execute function public.forget_password_on_change();
+
+-- Security hardening: no anon/public function execute; fixed search_path
+-- Functions are only callable by signed-in users (and the service role), never by anon/public.
+revoke execute on all functions in schema public from public, anon;
+grant execute on all functions in schema public to authenticated, service_role;
+revoke execute on function public.handle_new_user() from authenticated;
+grant execute on function public.handle_new_user() to supabase_auth_admin;
+revoke execute on function public.password_key() from authenticated;
+alter default privileges in schema public revoke execute on functions from public, anon;
+
+alter function public.touch_updated_at() set search_path = public;
+alter function public.norm_key(text) set search_path = public;
+alter function public.products_fill_key() set search_path = public;
+
+-- Activity log: client event time, clamped
+create or replace function public.activity_log_clamp_at() returns trigger
+language plpgsql set search_path = public as $$
+begin
+  if new.at is null or new.at > now() or new.at < now() - interval '3 days' then
+    new.at := now();
+  end if;
+  return new;
+end $$;
+revoke execute on function public.activity_log_clamp_at() from public, anon;
+drop trigger if exists activity_log_clamp_at on public.activity_log;
+create trigger activity_log_clamp_at before insert on public.activity_log
+  for each row execute function public.activity_log_clamp_at();
+
+-- Website activity tracking and reporting
+-- Website activity (yamansarulman.com, rulmansitesi.com, teknikkesici.com.tr); written only by the site-track edge function.
+create table if not exists public.site_activity (
+  id bigint generated always as identity primary key,
+  at timestamptz not null default now(),
+  site text not null check (site in ('yamansarulman', 'rulmansitesi', 'teknikkesici')),
+  visitor text not null check (length(visitor) between 8 and 64),
+  kind text not null check (kind in ('visit', 'search', 'product_view', 'cart_add', 'order')),
+  sku text not null default '',
+  name text not null default '',
+  path text not null default '',
+  query text not null default '',
+  results integer,
+  qty numeric,
+  device text not null default '' check (device in ('', 'mobile', 'tablet', 'desktop')),
+  referrer text not null default '',
+  city text not null default '',
+  org text not null default ''
+);
+create index if not exists site_activity_at on public.site_activity (at desc);
+create index if not exists site_activity_site_at on public.site_activity (site, at desc);
+alter table public.site_activity enable row level security;
+revoke all on public.site_activity from anon;
+revoke insert, update, delete, truncate on public.site_activity from authenticated;
+grant select on public.site_activity to authenticated;
+drop policy if exists site_activity_admin_select on public.site_activity;
+create policy site_activity_admin_select on public.site_activity for select to authenticated using (is_admin());
+
+create or replace function public.prune_logs() returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  delete from activity_log where at < now() - interval '90 days';
+  delete from stock_log where at < now() - interval '90 days';
+  delete from site_activity where at < now() - interval '90 days';
+end $$;
+
+-- p_source: 'all' | 'app' | 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+create or replace function public.traffic_summary(p_source text, p_from timestamptz, p_to timestamptz)
+returns jsonb language plpgsql stable security definer set search_path = public as $$
+declare result jsonb;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if p_source not in ('all', 'app', 'yamansarulman', 'rulmansitesi', 'teknikkesici') then
+    raise exception 'Geçersiz kaynak.';
+  end if;
+  with ev as (
+    select 'app'::text as src, a.at, case when a.kind = 'login' then 'visit' else a.kind end as kind,
+           a.user_id::text as who, upper(trim(a.sku)) as sku, a.brand as label, a.query, null::integer as results,
+           a.qty, a.platform as device, ''::text as city, ''::text as org
+      from activity_log a
+     where p_source in ('all', 'app') and a.at >= p_from and a.at < p_to
+    union all
+    select s.site, s.at, s.kind, s.visitor, upper(trim(s.sku)), s.name, s.query, s.results, s.qty, s.device, s.city, s.org
+      from site_activity s
+     where (p_source = 'all' or s.site = p_source) and s.at >= p_from and s.at < p_to
+  ),
+  totals as (
+    select count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'visit') as visits,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev
+  ),
+  by_source as (
+    select src, count(distinct who) as visitors,
+           count(*) filter (where kind = 'visit') as visits,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev group by src
+  ),
+  searches as (
+    select lower(regexp_replace(trim(query), '\s+', ' ', 'g')) as term,
+           regexp_replace(lower(query), '[\s.\-/_]+', '', 'g') as key, src, who, results
+      from ev where kind = 'search' and trim(query) <> ''
+  ),
+  top_searches as (
+    select mode() within group (order by term) as term, count(*) as count,
+           count(distinct src || ':' || who) as people, array_agg(distinct src) as sources
+      from searches group by key order by count(*) desc, key limit 15
+  ),
+  zero_results as (
+    select mode() within group (order by term) as term, count(*) as count, array_agg(distinct src) as sources
+      from searches where results = 0 group by key order by count(*) desc, key limit 15
+  ),
+  top_products as (
+    select sku, max(label) as label, count(*) as count, count(distinct src || ':' || who) as people,
+           array_agg(distinct src) as sources
+      from ev where kind = 'product_view' and sku <> '' group by sku order by count(*) desc, sku limit 15
+  ),
+  top_cart as (
+    select sku, max(label) as label, count(*) as count, coalesce(sum(qty), 0) as qty,
+           array_agg(distinct src) as sources
+      from ev where kind = 'cart_add' and sku <> '' group by sku order by count(*) desc, sku limit 15
+  ),
+  daily as (
+    select to_char(date_trunc('day', at at time zone 'Europe/Istanbul'), 'YYYY-MM-DD') as day,
+           count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'search') as searches,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'cart_add') as cart_adds,
+           count(*) filter (where kind = 'order') as orders
+      from ev group by 1 order by 1
+  ),
+  devices as (
+    select coalesce(nullif(device, ''), 'unknown') as device, count(distinct src || ':' || who) as visitors
+      from ev group by 1 order by 2 desc
+  ),
+  cities as (
+    select city, count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'search') as searches
+      from ev where src <> 'app' and city <> '' group by city order by 2 desc, city limit 15
+  ),
+  companies as (
+    select org, count(distinct src || ':' || who) as visitors,
+           count(*) filter (where kind = 'product_view') as product_views,
+           count(*) filter (where kind = 'search') as searches,
+           max(at) as last_at, array_agg(distinct src) as sources
+      from ev where src <> 'app' and org <> '' group by org order by 2 desc, max(at) desc limit 15
+  )
+  select jsonb_build_object(
+    'totals', (select to_jsonb(t) from totals t),
+    'bySource', coalesce((select jsonb_agg(to_jsonb(b) order by b.src) from by_source b), '[]'::jsonb),
+    'topSearches', coalesce((select jsonb_agg(to_jsonb(x)) from top_searches x), '[]'::jsonb),
+    'zeroResults', coalesce((select jsonb_agg(to_jsonb(x)) from zero_results x), '[]'::jsonb),
+    'topProducts', coalesce((select jsonb_agg(to_jsonb(x)) from top_products x), '[]'::jsonb),
+    'topCart', coalesce((select jsonb_agg(to_jsonb(x)) from top_cart x), '[]'::jsonb),
+    'daily', coalesce((select jsonb_agg(to_jsonb(x)) from daily x), '[]'::jsonb),
+    'devices', coalesce((select jsonb_agg(to_jsonb(x)) from devices x), '[]'::jsonb),
+    'cities', coalesce((select jsonb_agg(to_jsonb(x)) from cities x), '[]'::jsonb),
+    'companies', coalesce((select jsonb_agg(to_jsonb(x)) from companies x), '[]'::jsonb)
+  ) into result;
+  return result;
+end $$;
+revoke execute on function public.traffic_summary(text, timestamptz, timestamptz) from public, anon;
+grant execute on function public.traffic_summary(text, timestamptz, timestamptz) to authenticated;

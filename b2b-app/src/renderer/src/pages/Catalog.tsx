@@ -34,7 +34,7 @@ interface Column {
 
 const COLUMNS: Column[] = [
   { key: 'pick', label: '', min: 40 },
-  { key: 'shelf', label: 'Raf', min: 96, grow: 0.5, drop: 5, sort: 'shelf', perm: 'shelf' },
+  { key: 'shelf', label: 'Raf', min: 150, grow: 0.7, drop: 5, sort: 'shelf', perm: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', min: 150, grow: 1.6, sort: 'sku' },
   { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 6 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
@@ -302,13 +302,19 @@ export function Catalog(): ReactNode {
       if (p) togglePicked(p)
     } else if (e.key === 'Enter') {
       const p = rows.get(activeIdx)
-      if (p) setSelected(p)
+      if (p) {
+        bodyRef.current?.focus()
+        setSelected(p)
+      }
     } else if (e.key === '+' || (e.key === 'Insert' && !e.ctrlKey)) {
       const p = rows.get(activeIdx)
       if (p) {
         e.preventDefault()
-        addToCart(p)
-        toast(`${p.sku} sepete eklendi.`, 'success')
+        if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+        else {
+          addToCart(p)
+          toast(`${p.sku} sepete eklendi.`, 'success')
+        }
       }
     }
   }
@@ -601,12 +607,14 @@ export function Catalog(): ReactNode {
                     id={`prow-${v.index}`}
                     className={`vrow${v.index % 2 ? ' odd' : ''}${p.active ? '' : ' inactive'}${picked.has(p.id) ? ' picked' : ''}`}
                     role="row"
+                    tabIndex={-1}
                     aria-rowindex={v.index + 1}
                     aria-selected={isActive}
                     style={{ transform: `translateY(${v.start}px)`, height: v.size }}
                     onClick={() => {
                       setActiveIdx(v.index)
                       if (window.getSelection()?.toString()) return
+                      bodyRef.current?.focus()
                       setSelected(p)
                     }}
                   >
@@ -661,7 +669,7 @@ export function Catalog(): ReactNode {
                     )}
                     {has.has('price') && (
                       <div className="cell right nowrap" role="gridcell">
-                        {money(p.price, p.currency)}
+                        {p.price != null && p.price > 0 ? money(p.price, p.currency) : <span className="badge low">Fiyat sorunuz</span>}
                       </div>
                     )}
                     <div className="cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
@@ -669,11 +677,14 @@ export function Catalog(): ReactNode {
                         className="btn sm cart-btn"
                         onClick={(e) => {
                           e.stopPropagation()
-                          addToCart(p)
-                          toast(`${p.sku} sepete eklendi.`, 'success')
+                          if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+                          else {
+                            addToCart(p)
+                            toast(`${p.sku} sepete eklendi.`, 'success')
+                          }
                         }}
                         aria-label={`${p.sku} sepete ekle`}
-                        disabled={p.stock <= 0 && !isAdmin}
+                        disabled={(p.stock <= 0 && !isAdmin) || p.price == null || p.price <= 0}
                       >
                         <Plus size={16} aria-hidden /> Sepet
                       </button>

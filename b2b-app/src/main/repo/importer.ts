@@ -194,6 +194,8 @@ const BATCH = 500
 export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   const parsed = pending.get(opts.token)
   if (!parsed) throw new Error('İçe aktarma oturumu bulunamadı, dosyayı yeniden seçin.')
+  if (!parsed.rows.length) throw new Error('Dosya okunamadı. Lütfen Excel (.xlsx) ya da CSV dosyası seçin.')
+  if (opts.mode === 'replace' && !opts.dryRun && parsed.rows.length === 0) throw new Error('Değiştirilecek ürün satırı bulunamadı.')
   const idx = (f: Field): number => {
     const h = opts.mapping[f]
     return h ? parsed.headers.indexOf(h) : -1
