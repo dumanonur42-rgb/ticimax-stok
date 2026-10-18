@@ -12,7 +12,7 @@ type Tab = 'gorunum' | 'profil' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
 
 const SECTIONS: { id: Tab; label: string; hint: string; icon: LucideIcon; admin?: boolean; dealer?: boolean }[] = [
   { id: 'gorunum', label: 'Görünüm & Erişilebilirlik', hint: 'Tema, yazı ve kullanım', icon: Monitor },
-  { id: 'profil', label: 'Bayi firma kartı', hint: 'Firma ve iletişim bilgileri', icon: Building2, dealer: true },
+  { id: 'profil', label: 'Firma bilgileri', hint: 'Firma ve iletişim bilgileri', icon: Building2, dealer: true },
   { id: 'firma', label: 'Firma & Fiyat', hint: 'Şirket ve fiyat ayarları', icon: Building2, admin: true },
   { id: 'kullanicilar', label: 'Kullanıcılar', hint: 'Hesaplar ve yetkiler', icon: UsersIcon, admin: true },
   { id: 'veri', label: 'Bulut & Veri', hint: 'Eşitleme ve yerel kopya', icon: Database, admin: true },
@@ -252,6 +252,17 @@ function Users(): ReactNode {
       toast((e as Error).message, 'error')
     }
   }
+  const customerDetails = (customerId: number | null): ReactNode => {
+    const customer = customers.find((item) => item.id === customerId)
+    if (!customer) return '—'
+    const detail = [customer.code, customer.city].filter(Boolean).join(' · ')
+    return (
+      <span title={[customer.name, detail].filter(Boolean).join(' · ')}>
+        {customer.name}
+        {detail && <small className="small muted" style={{ display: 'block' }}>{detail}</small>}
+      </span>
+    )
+  }
 
   return (
     <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
@@ -309,7 +320,7 @@ function Users(): ReactNode {
               </td>
               <td>{u.display_name}</td>
               <td title={ROLE_HINT[u.role]}>{ROLE_LABEL[u.role]}</td>
-              <td>{customers.find((c) => c.id === u.customer_id)?.name ?? '-'}</td>
+              <td>{customerDetails(u.customer_id)}</td>
               <td className="small muted nowrap">{u.created_at ? date(u.created_at) : '-'}</td>
               <td>
                 {!u.approved ? <span className="badge low">Onay bekliyor</span> : u.active ? <span className="badge ok">Aktif</span> : <span className="badge neutral">Pasif</span>}
@@ -406,7 +417,7 @@ function Users(): ReactNode {
                 })}
               </fieldset>
             )}
-            <Field label={editing.role === 'ara' ? 'Bayi firma kartı' : 'Cari kart'} hint={editing.role !== 'admin' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
+            <Field label={editing.role === 'ara' ? 'Bağlı cari kart' : 'Cari kart'} hint={editing.role !== 'admin' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
               {(id) => (
                 <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role === 'admin'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>
                   <option value="">Yeni cari kart oluştur</option>

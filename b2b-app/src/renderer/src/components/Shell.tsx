@@ -59,7 +59,7 @@ export const PAGE_TITLE: Record<Page, string> = {
 export { useUpdateState }
 
 export function Shell({ children }: { children: ReactNode }): ReactNode {
-  const { page, go, session, setSession, toast } = useApp()
+  const { page, go, session, settings, setSession, toast } = useApp()
   const cartCount = useCart((s) => s.lines.length)
   const clearCart = useCart((s) => s.clear)
   const [confirmLogout, setConfirmLogout] = useState(false)
@@ -72,11 +72,15 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
+    const topnav = nav.closest('.topnav')
     const measure = (): void => {
       const wasCompact = nav.classList.contains('compact')
+      const wasTopnavCompact = topnav?.classList.contains('nav-compact') ?? false
       nav.classList.remove('compact')
+      topnav?.classList.remove('nav-compact')
       const needsCompact = nav.scrollWidth > nav.clientWidth + 1
       if (wasCompact) nav.classList.add('compact')
+      if (wasTopnavCompact) topnav?.classList.add('nav-compact')
       setCompactNav(needsCompact)
     }
     const observer = new ResizeObserver(measure)
@@ -88,7 +92,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
       observer.disconnect()
       window.removeEventListener('resize', measure)
     }
-  }, [items.length])
+  }, [items.length, settings?.font_scale])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {

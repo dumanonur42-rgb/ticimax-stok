@@ -6,14 +6,18 @@ Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama i
 
 ## 1.0.27
 
-- Üst menü dar pencerelerde simgelerle gösterilir; tüm sayfalara erişim korunur.
+- Üst menü dar pencerelerde ve büyük yazı boyutlarında simgelerle gösterilir; tüm sayfalara erişim korunur.
 - İnternet kesildiğinde listeler boş görünmek yerine tekrar deneme seçeneği sunar.
 - Yeniden bağlantı kurulduğunda açık listeler kendiliğinden yenilenir.
 - Sipariş verirken internet bağlantısı yoksa sipariş gönderilemeyeceği açıkça belirtilir.
 - Şifre alanlarında Caps Lock açık olduğunda uyarı gösterilir.
 - Bayi kullanıcısının girişinden sonra ana sayfa açılır.
 - Son 7 günlük trafik grafiğinde eksik günler sıfır olarak gösterilir.
+- “Fiyat sorunuz” etiketi kesilmez; büyük yazıda raf bilgileri için daha çok yer ayrılır.
+- Sipariş araması Türkçe karakterleri doğru değerlendirir; sipariş numarası ve tarihi tam görünür.
+- Koyu temada yazılar, rozetler ve seçili satırlar daha belirgin.
 - [yönetici] Stok Aktar'da hatalı dosyalar için anlaşılır uyarılar ve yükleme geçmişi için yeniden deneme bulunur.
+- [yönetici] Stok Aktar'da eşleme ve deneme ilerlemesi görünür; Yardım araması sayfayı bulur.
 
 ## 1.0.26
 

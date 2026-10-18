@@ -144,6 +144,10 @@
 html {
   font-size: calc(15px * var(--font-scale, 1));
 }
+svg.lucide[width][height] {
+  width: calc(attr(width px) * var(--font-scale, 1));
+  height: calc(attr(height px) * var(--font-scale, 1));
+}
 body {
   margin: 0;
   font-family: var(--font);
@@ -720,7 +724,6 @@ textarea.input {
   text-overflow: ellipsis;
   font-size: 0.68rem;
   font-weight: 600;
-  opacity: 0.75;
 }
 .stock-pill-text {
   font-weight: 700;
@@ -948,12 +951,6 @@ textarea.input {
   .orders-layout {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 340px) !important;
   }
-  .orders-list-table .order-number-column {
-    width: 160px;
-  }
-  .orders-list-table .order-date-column {
-    width: 145px;
-  }
   .orders-list-table .order-status-column {
     width: 110px;
   }
@@ -996,6 +993,9 @@ textarea.input {
   text-align: left;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
+}
+.table .right {
+  text-align: right;
 }
 .table th {
   font-size: 0.82rem;
@@ -1107,6 +1107,10 @@ textarea.input {
 .vrow[aria-selected='true'] {
   background: var(--bg-selected);
   box-shadow: inset 3px 0 0 var(--primary);
+}
+.table tr[aria-selected='true'] .badge,
+.vrow[aria-selected='true'] .badge {
+  border-color: currentColor;
 }
 .vrow.picked:not([aria-selected='true']) {
   background: color-mix(in srgb, var(--primary) 8%, var(--bg-elev));
@@ -1967,6 +1971,7 @@ dialog.update-dialog {
 .vrow .shelf-cell .shelf-tag {
   width: 100%;
   display: block;
+  overflow: hidden;
   line-height: 30px;
   text-align: left;
   height: 32px;
@@ -1979,6 +1984,8 @@ dialog.update-dialog {
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   box-shadow: none;
 }
 .vrow:hover .shelf-cell .shelf-tag,

@@ -35,11 +35,13 @@ export function Dashboard(): ReactNode {
     const a = onEvent('products:changed', load)
     const b = onEvent('orders:changed', load)
     const c = onEvent('users:changed', load)
+    const d = onEvent('sync:changed', load)
     window.addEventListener('online', load)
     return () => {
       a()
       b()
       c()
+      d()
       window.removeEventListener('online', load)
     }
   }, [load])
