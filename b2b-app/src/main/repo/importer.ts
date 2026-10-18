@@ -131,7 +131,7 @@ function parseFile(path: string): Parsed {
         .map((r) => r.map((c) => String(c ?? '').trim()))
         .filter((r) => r.some((c) => c !== ''))
     ).filter((m) => m.length)
-    if (!sheets.length) throw new Error(UNREADABLE_FILE_ERROR)
+    if (!sheets.length) throw new Error('Dosyada ürün satırı yok.')
     // The product table is the sheet whose header row names a code column (a summary sheet may come first);
     // further sheets with the same header row (one sheet per shelf/depot) are appended to it.
     const score = (m: string[][]): number => {
@@ -149,11 +149,12 @@ function parseFile(path: string): Parsed {
     })
   }
   matrix = matrix.filter((r) => r.some((c) => c !== ''))
-  if (!matrix.length) throw new Error(UNREADABLE_FILE_ERROR)
+  if (!matrix.length) throw new Error('Dosyada ürün satırı yok.')
   const width = Math.max(...matrix.map((r) => r.length))
   const headers = Array.from({ length: width }, (_, i) => matrix[0][i] || `Sütun ${i + 1}`)
   const rows = matrix.slice(1).map((r) => Array.from({ length: width }, (_, i) => r[i] ?? ''))
-  if (!headers.some((header) => header.trim()) || !rows.length) throw new Error(UNREADABLE_FILE_ERROR)
+  if (!headers.some((header) => header.trim())) throw new Error(UNREADABLE_FILE_ERROR)
+  if (!rows.length) throw new Error('Dosyada ürün satırı yok.')
   return { filename, headers, rows }
 }
 

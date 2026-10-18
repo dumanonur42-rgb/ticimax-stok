@@ -4,6 +4,17 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.27
+
+- Üst menü dar pencerelerde simgelerle gösterilir; tüm sayfalara erişim korunur.
+- İnternet kesildiğinde listeler boş görünmek yerine tekrar deneme seçeneği sunar.
+- Yeniden bağlantı kurulduğunda açık listeler kendiliğinden yenilenir.
+- Sipariş verirken internet bağlantısı yoksa sipariş gönderilemeyeceği açıkça belirtilir.
+- Şifre alanlarında Caps Lock açık olduğunda uyarı gösterilir.
+- Bayi kullanıcısının girişinden sonra ana sayfa açılır.
+- Son 7 günlük trafik grafiğinde eksik günler sıfır olarak gösterilir.
+- [yönetici] Stok Aktar'da hatalı dosyalar için anlaşılır uyarılar ve yükleme geçmişi için yeniden deneme bulunur.
+
 ## 1.0.26
 
 - Sipariş listesinde sipariş numarası ve tarih artık tam görünür.

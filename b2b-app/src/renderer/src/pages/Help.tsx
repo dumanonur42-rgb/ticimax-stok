@@ -24,7 +24,7 @@ type Shortcut = {
 }
 
 const adminSteps: HelpItem[] = [
-  { title: 'Stok listenizi yükleyin', text: 'İçe Aktar’dan Excel veya CSV seçin; stok kodu zorunludur.', search: 'ürün stok içe aktar dosya', audience: 'admin' },
+  { title: 'Stok listenizi yükleyin', text: 'Stok Aktar’dan Excel veya CSV seçin; stok kodu zorunludur.', search: 'ürün stok aktar stok aktarım içe aktar dosya', audience: 'admin' },
   { title: 'Bayilerinizi ekleyin', text: 'Firma, iskonto ve para birimini tanımlayın.', search: 'bayi firma fiyat para birimi', audience: 'admin' },
   { title: 'Bayi kullanıcıları açın', text: 'Ayarlar → Kullanıcılar’da kullanıcıyı bayiye bağlayın.', search: 'kullanıcı rol bayi ayarlar', audience: 'admin' },
   { title: 'Sipariş alın', text: 'Ürün arayın, sepete ekleyin ve siparişi oluşturun.', search: 'ürün arama sepet sipariş', audience: 'admin' },
@@ -78,7 +78,7 @@ const KeySets = ({ sets }: { sets: string[][] }): ReactNode => (
   <span className="help-keysets">
     {sets.map((set, setIndex) => (
       <span className="help-keyset" key={`${setIndex}-${set.join('-')}`}>
-        {setIndex > 0 && <span className="help-key-or">/</span>}
+        {setIndex > 0 && <span className="help-key-or">ya da</span>}
         {set.map((key, keyIndex) => (
           <span className="help-key-item" key={key}>
             {keyIndex > 0 && <span className="help-key-plus">+</span>}
@@ -119,6 +119,7 @@ export function Help(): ReactNode {
   const showFaq = showAllFaq || visibleFaq.length > 0
   const showSecurity = showAllSecurity || visibleSecurity.length > 0
   const hasMatches = showSteps || showShortcuts || showTips || showFaq || showSecurity || matches('İletişim', 'telefon', 'WhatsApp', 'Bize ulaşın', ...contactSearchTerms)
+  const resultCount = visibleSteps.length + visibleGeneral.length + visibleProduct.length + visibleTips.length + visibleFaq.length + visibleSecurity.length
 
   return (
     <div className="help-page">
@@ -132,6 +133,7 @@ export function Help(): ReactNode {
           <span className="sr-only">Yardımda ara</span>
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Yardımda ara" />
         </label>
+        <p className="help-result-count" aria-live="polite">{q ? `${resultCount} sonuç` : 'Yardım içerikleri'}</p>
       </section>
 
       <ContactCard subtitle="Sorunuz olursa yazın ya da arayın." headingId="help-contact-title" />

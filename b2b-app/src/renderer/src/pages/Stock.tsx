@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { MergeDialog } from '@/components/MergeDialog'
 import { ProductEditor } from '@/components/ProductEditor'
 import { QuickEntry } from '@/components/QuickEntry'
-import { Confirm, Field, Modal } from '@/components/ui'
+import { Confirm, Field, LoadError, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { StockPill } from '@/components/StockPill'
 import { money, num, stockLevel } from '@/lib/format'
@@ -105,6 +105,7 @@ export function Stock(): ReactNode {
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Map<number, Product>>(new Map())
   const [loading, setLoading] = useState(false)
+  const [loadError, setLoadError] = useState('')
   const [version, setVersion] = useState(0)
   const [activeIdx, setActiveIdx] = useState(0)
   const [edits, setEdits] = useState<Map<number, Edit>>(new Map())
@@ -129,6 +130,7 @@ export function Stock(): ReactNode {
   useEffect(() => {
     let cancelled = false
     setLoading(true)
+    setLoadError('')
     pendingPages.current.clear()
     api('products:search', { ...filter, offset: 0, limit: PAGE })
       .then((page) => {
@@ -138,7 +140,7 @@ export function Stock(): ReactNode {
         setRows(m)
         setTotal(page.total)
       })
-      .catch((e) => toast(e.message, 'error'))
+      .catch((e) => setLoadError((e as Error).message || 'Stok listesi alınamadı.'))
       .finally(() => !cancelled && setLoading(false))
     return () => {
       cancelled = true
@@ -161,7 +163,7 @@ export function Stock(): ReactNode {
             return m
           })
         })
-        .catch((e) => toast(e.message, 'error'))
+        .catch((e) => setLoadError((e as Error).message || 'Stok listesi alınamadı.'))
     },
     [filter, toast]
   )
@@ -433,6 +435,7 @@ export function Stock(): ReactNode {
             )}
           </div>
 
+          {loadError && <LoadError message={loadError} onRetry={() => setVersion((value) => value + 1)} />}
           <div className="vgrid stock-vgrid" style={{ ['--cols' as string]: gridCols }}>
             <div className="vgrid-head" role="row">
               {COLUMNS.map((c) =>

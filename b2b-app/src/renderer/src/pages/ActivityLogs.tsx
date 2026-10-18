@@ -3,6 +3,7 @@ import type { Customer, User } from '@shared/types'
 import { CalendarDays, Eye, Globe, LogIn, Monitor, PackageCheck, RefreshCw, Search, ShoppingCart, Smartphone } from 'lucide-react'
 import { Fragment, useEffect, useMemo, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { api } from '@/lib/api'
+import { LoadError } from '@/components/ui'
 import { useApp } from '@/store/app'
 import { TrafficView } from './TrafficView'
 
@@ -78,7 +79,11 @@ export function ActivityLogs(): ReactNode {
   const [stockRefresh, setStockRefresh] = useState(0)
   const [activity, setActivity] = useState<ActivityRow[]>([])
   const [stock, setStock] = useState<StockLogRow[]>([])
+  const [activityLoading, setActivityLoading] = useState(true)
+  const [stockLoading, setStockLoading] = useState(true)
   const [summary, setSummary] = useState<ActivitySummary | null>(null)
+  const [activityError, setActivityError] = useState('')
+  const [stockError, setStockError] = useState('')
   const activityGroups = useMemo(() => groupByDay(activity), [activity])
   const stockGroups = useMemo(() => groupByDay(stock), [stock])
   useEffect(() => {
@@ -102,17 +107,21 @@ export function ActivityLogs(): ReactNode {
   useEffect(() => {
     if (sourceTab !== 'app' || tab !== 'activity') return
     let cancelled = false
+    setActivityError('')
+    setActivityLoading(true)
     api('activity:list', { userId: userId || undefined, kind: (kind || undefined) as ActivityKind | undefined, platform: (platform || undefined) as ActivityPlatform | undefined, from: from || undefined, to: to || undefined, text: debouncedText || undefined, offset: activityOffset, limit: 50 })
-      .then((page) => { if (!cancelled) { setActivity((prev) => activityOffset ? [...prev, ...page.rows] : page.rows); setActivityHasMore(page.hasMore) } })
-      .catch((e) => toast(e.message, 'error'))
+      .then((page) => { if (!cancelled) { setActivity((prev) => activityOffset ? [...prev, ...page.rows] : page.rows); setActivityHasMore(page.hasMore); setActivityLoading(false) } })
+      .catch((e) => { if (!cancelled) { setActivityError((e as Error).message || 'Hareketler alınamadı.'); setActivityLoading(false) } })
     return () => { cancelled = true }
   }, [sourceTab, tab, userId, kind, platform, from, to, debouncedText, activityOffset, activityRefresh])
   useEffect(() => {
     if (sourceTab !== 'app' || tab !== 'stock') return
     let cancelled = false
+    setStockError('')
+    setStockLoading(true)
     api('stock:log', { sku: sku || undefined, userId: userId || undefined, source: source || undefined, from: from || undefined, to: to || undefined, offset: stockOffset, limit: 50 })
-      .then((page) => { if (!cancelled) { setStock((prev) => stockOffset ? [...prev, ...page.rows] : page.rows); setStockHasMore(page.hasMore) } })
-      .catch((e) => toast(e.message, 'error'))
+      .then((page) => { if (!cancelled) { setStock((prev) => stockOffset ? [...prev, ...page.rows] : page.rows); setStockHasMore(page.hasMore); setStockLoading(false) } })
+      .catch((e) => { if (!cancelled) { setStockError((e as Error).message || 'Stok hareketleri alınamadı.'); setStockLoading(false) } })
     return () => { cancelled = true }
   }, [sourceTab, tab, sku, userId, source, from, to, stockOffset, stockRefresh])
   useEffect(() => {
@@ -173,10 +182,10 @@ export function ActivityLogs(): ReactNode {
         <div className="activity-summary-list"><b>En çok baktığı ürünler</b>{summary.topViewedProducts.length ? summary.topViewedProducts.map((product) => <span key={`${product.product_id}-${product.sku}`}>{product.sku}{product.brand && ` · ${product.brand}`} ({product.views})</span>) : <span>Kayıt yok</span>}</div>
         <div className="activity-summary-list"><b>En çok aradığı kelimeler</b>{summary.topSearchTerms.length ? summary.topSearchTerms.map((term) => <span key={term.query}>“{term.query}” ({term.searches})</span>) : <span>Kayıt yok</span>}</div>
       </div>}
-      <div className="activity-table-wrap"><table className="table activity-table"><thead><tr><th>Zaman</th><th>Kişi</th><th>Platform</th><th>Hareket</th></tr></thead><tbody>{activityGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={4} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td className="activity-person"><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></td><td><span className="activity-platform"><PlatformIcon platform={row.platform} />{platforms.find(([key]) => key === row.platform)?.[1] ?? row.platform}</span></td><td><span className="activity-description"><ActivityKindBadge kind={row.kind} /><span>{activityText(row)}</span></span></td></tr>)}</Fragment>)}</tbody></table>{!activity.length && <p className="activity-empty">Kayıt bulunamadı.</p>}</div>
+      <div className="activity-table-wrap"><table className="table activity-table"><thead><tr><th>Zaman</th><th>Kişi</th><th>Platform</th><th>Hareket</th></tr></thead><tbody>{activityGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={4} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td className="activity-person"><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></td><td><span className="activity-platform"><PlatformIcon platform={row.platform} />{platforms.find(([key]) => key === row.platform)?.[1] ?? row.platform}</span></td><td><span className="activity-description"><ActivityKindBadge kind={row.kind} /><span>{activityText(row)}</span></span></td></tr>)}</Fragment>)}</tbody></table>{activityError ? <LoadError message={activityError} onRetry={refresh} /> : activityLoading ? <p className="activity-empty" role="status">Hareketler yükleniyor…</p> : !activity.length && <p className="activity-empty">Kayıt bulunamadı.</p>}</div>
     </> : <>
       <div className="activity-filters"><input className="input sm" aria-label="Ürün kodu ara" placeholder="Ürün kodu" value={sku} onChange={(e) => setSku(e.target.value)} />{filterPerson}<select className="select sm" aria-label="Stok kaynağı" value={source} onChange={(e) => setSource(e.target.value)}><option value="">Tüm kaynaklar</option>{sources.map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select>{dateFilters}<button className="btn sm activity-refresh" onClick={refresh}><RefreshCw size={15} aria-hidden /> Yenile</button></div>
-      <div className="activity-table-wrap"><table className="table activity-table stock-activity-table"><thead><tr><th>Zaman</th><th>Ürün</th><th>Eski → Yeni</th><th>Fark</th><th>Kim</th><th>Kaynak</th></tr></thead><tbody>{stockGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={6} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td><b>{row.sku}</b><small>{[row.brand, row.box].filter(Boolean).join(' · ')}</small></td><td>{row.old_stock ?? '—'} → {row.new_stock}</td><td className={row.delta > 0 ? 'activity-positive' : row.delta < 0 ? 'activity-negative' : ''}>{row.delta > 0 ? '+' : ''}{row.delta}</td><td className="activity-person"><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></td><td>{sourceName(row.source)}</td></tr>)}</Fragment>)}</tbody></table>{!stock.length && <p className="activity-empty">{stockHasFilters ? 'Kayıt bulunamadı.' : 'Henüz stok değişikliği yok.'}</p>}</div>
+      <div className="activity-table-wrap"><table className="table activity-table stock-activity-table"><thead><tr><th>Zaman</th><th>Ürün</th><th>Eski → Yeni</th><th>Fark</th><th>Kim</th><th>Kaynak</th></tr></thead><tbody>{stockGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={6} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td><b>{row.sku}</b><small>{[row.brand, row.box].filter(Boolean).join(' · ')}</small></td><td>{row.old_stock ?? '—'} → {row.new_stock}</td><td className={row.delta > 0 ? 'activity-positive' : row.delta < 0 ? 'activity-negative' : ''}>{row.delta > 0 ? '+' : ''}{row.delta}</td><td className="activity-person"><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></td><td>{sourceName(row.source)}</td></tr>)}</Fragment>)}</tbody></table>{stockError ? <LoadError message={stockError} onRetry={refresh} /> : stockLoading ? <p className="activity-empty" role="status">Stok hareketleri yükleniyor…</p> : !stock.length && <p className="activity-empty">{stockHasFilters ? 'Kayıt bulunamadı.' : 'Henüz stok değişikliği yok.'}</p>}</div>
     </>}
     {hasMore && <button className="btn activity-more" onClick={() => tab === 'activity' ? setActivityOffset((value) => value + 50) : setStockOffset((value) => value + 50)}>Daha fazla yükle</button>}
     </>}

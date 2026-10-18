@@ -38,9 +38,21 @@ export function ConnectionPill(): ReactNode {
   const session = useApp((a) => a.session)
   const toast = useApp((a) => a.toast)
   const [busy, setBusy] = useState(false)
-  if (!s) return null
-  const state = !s.online ? 'offline' : s.pending ? 'pending' : s.failed ? 'failed' : 'online'
-  if (state === 'online') return null
+  const [browserOnline, setBrowserOnline] = useState(() => navigator.onLine)
+  useEffect(() => {
+    const online = (): void => setBrowserOnline(true)
+    const offline = (): void => setBrowserOnline(false)
+    window.addEventListener('online', online)
+    window.addEventListener('offline', offline)
+    return () => {
+      window.removeEventListener('online', online)
+      window.removeEventListener('offline', offline)
+    }
+  }, [])
+  if (!s) return <span className="conn-pill-slot" aria-hidden="true" />
+  const offline = !browserOnline || (s.checked === true && !s.online)
+  const state = offline ? 'offline' : s.pending ? 'pending' : s.failed ? 'failed' : 'online'
+  if (state === 'online') return <span className="conn-pill-slot" aria-hidden="true" />
   const label = state === 'offline' ? 'Çevrimdışı' : state === 'pending' ? 'Gönderiliyor' : 'Gönderilemedi'
   const detail = s.pending ? ` · ${num(s.pending)} kayıt bekliyor` : s.failed ? ` · ${num(s.failed)} kayıt gönderilemedi` : ''
   const title =
@@ -50,10 +62,17 @@ export function ConnectionPill(): ReactNode {
         ? `${num(s.pending)} kayıt sunucuya gönderiliyor.`
       : `${num(s.failed)} kayıt sunucu tarafından kabul edilmedi. Ayrıntı ve kaldırma için tıklayın.`
   const retry = async (): Promise<void> => {
+    if (!navigator.onLine) {
+      toast('Hâlâ bağlantı yok.', 'error')
+      return
+    }
     setBusy(true)
     try {
       const r = await api('app:flushOutbox', undefined)
-      if (!r.online) return
+      if (!r.online) {
+        toast('Hâlâ bağlantı yok.', 'error')
+        return
+      }
       else if (r.failed && session?.user.role === 'admin') {
         const ok = window.confirm(
           `${num(r.failed)} kayıt sunucu tarafından kabul edilmedi (örn. başka bir bilgisayarda değişen/silinen ürün). Bu kayıtlar kuyruktan kaldırılsın mı? Ürün listesi sunucudaki haliyle güncellenir.`

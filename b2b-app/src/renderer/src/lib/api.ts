@@ -1,6 +1,7 @@
 import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 
 let loggingOut = false
+let suppressLogoutSessionErrorUntil = 0
 
 export function beginLogout(): void {
   loggingOut = true
@@ -8,12 +9,13 @@ export function beginLogout(): void {
 
 export function endLogout(): void {
   loggingOut = false
+  suppressLogoutSessionErrorUntil = Date.now() + 3000
 }
 
 export function api<C extends ApiChannel>(channel: C, args: ApiArgs<C>): Promise<ApiResult<C>> {
   return window.api.invoke(channel, args).catch((e: unknown) => {
     const message = cleanError(e)
-    if (loggingOut && message === 'Oturum açılmamış.') return new Promise<ApiResult<C>>(() => undefined)
+    if ((loggingOut || Date.now() < suppressLogoutSessionErrorUntil) && message === 'Oturum açılmamış.') return undefined as ApiResult<C>
     throw new Error(message)
   })
 }

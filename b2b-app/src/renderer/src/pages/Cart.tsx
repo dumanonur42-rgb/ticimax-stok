@@ -4,6 +4,7 @@ import { priceFor } from '@shared/price'
 import { Minus, Plus, Send, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Confirm, Empty, Field } from '@/components/ui'
+import { useSyncStatus } from '@/components/SyncBanner'
 import { api } from '@/lib/api'
 import { money, num } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
@@ -14,12 +15,24 @@ export function Cart(): ReactNode {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [busy, setBusy] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
+  const sync = useSyncStatus()
+  const [browserOnline, setBrowserOnline] = useState(() => navigator.onLine)
   const isDealer = session?.user.role !== 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
   useEffect(() => {
     api('customers:list', {}).then(setCustomers).catch(() => setCustomers([]))
     if (cart.lines.length) api('products:bySkus', cart.lines.map((l) => l.sku)).then(cart.refreshFrom).catch(() => undefined)
+  }, [])
+  useEffect(() => {
+    const online = (): void => setBrowserOnline(true)
+    const offline = (): void => setBrowserOnline(false)
+    window.addEventListener('online', online)
+    window.addEventListener('offline', offline)
+    return () => {
+      window.removeEventListener('online', online)
+      window.removeEventListener('offline', offline)
+    }
   }, [])
 
   const customer = isDealer ? session?.customer ?? null : customers.find((c) => c.id === cart.customerId) ?? null
@@ -30,7 +43,7 @@ export function Cart(): ReactNode {
   const cardPct = settings?.card_price_pct ?? 0
   const lineUnit = (l: (typeof cart.lines)[number]): number => priceFor(cart.payment, l.unit_price, l.card_price, cardPct) ?? l.unit_price
   const zeroPrice = cart.lines.some((l) => lineUnit(l) <= 0)
-  const offline = typeof navigator !== 'undefined' && !navigator.onLine
+  const offline = !browserOnline || (sync?.checked === true && !sync.online)
 
   const totals = useMemo(() => {
     const gross = cart.lines.reduce((s, l) => s + l.qty * lineUnit(l), 0)
@@ -138,7 +151,7 @@ export function Cart(): ReactNode {
         </table>
       </section>
 
-      <aside className="card grid" aria-labelledby="summary" style={{ gap: 14 }}>
+      <aside className="card grid cart-summary" aria-labelledby="summary" style={{ gap: 14 }}>
         <h2 id="summary">Sipariş özeti</h2>
         {!isDealer && (
           <Field label="Bayi / Müşteri *">

@@ -23,7 +23,7 @@ export function ProductDrawer({
   const toast = useApp((s) => s.toast)
   const cardPct = useApp((s) => s.settings?.card_price_pct ?? 0)
   const cp = cardPrice(product.price, product.card_price, cardPct)
-  const [qty, setQty] = useState(Math.max(1, product.min_order || 1))
+  const [qty, setQty] = useState(String(Math.max(1, product.min_order || 1)))
   const [equivalents, setEquivalents] = useState<Product[]>([])
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
@@ -48,7 +48,7 @@ export function ProductDrawer({
       sku: product.sku,
       brand: product.brand
     }).catch(() => undefined)
-    setQty(Math.max(1, product.min_order || 1))
+    setQty(String(Math.max(1, product.min_order || 1)))
     const skus = product.equivalents
       .split(/[,;\n]/)
       .map((s) => s.trim())
@@ -60,7 +60,7 @@ export function ProductDrawer({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape' && !document.querySelector('dialog[open]')) onClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -71,8 +71,10 @@ export function ProductDrawer({
       toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
       return
     }
-    add(product, qty)
-    toast(`${product.sku} × ${qty} sepete eklendi.`, 'success')
+    const quantity = Math.max(1, Math.floor(Number(qty) || 1))
+    setQty(String(quantity))
+    add(product, quantity)
+    toast(`${product.sku} × ${quantity} sepete eklendi.`, 'success')
   }
 
   return (
@@ -171,7 +173,7 @@ export function ProductDrawer({
                 <dd className="mono">{product.barcode}</dd>
               </>
             )}
-            {product.d_inner != null && (
+            {(product.d_inner != null || product.d_outer != null || product.width != null) && (
               <>
                 <dt>Ölçü</dt>
                 <dd>
@@ -208,22 +210,30 @@ export function ProductDrawer({
         </div>
         <div className="drawer-foot">
           <div className="row" style={{ gap: 4 }} role="group" aria-label="Miktar">
-            <button className="btn icon sm" onClick={() => setQty((n) => Math.max(1, n - (product.min_order || 1)))} aria-label="Azalt">
+            <button className="btn icon sm" onClick={() => setQty(String(Math.max(1, (Number(qty) || 1) - (product.min_order || 1))))} aria-label="Azalt">
               <Minus size={14} aria-hidden />
             </button>
-            <input className="qty-input" inputMode="numeric" aria-label="Miktar" value={qty} onChange={(e) => setQty(Math.max(1, Number(e.target.value.replace(/\D/g, '')) || 1))} onKeyDown={(e) => e.key === 'Enter' && addNow()} />
-            <button className="btn icon sm" onClick={() => setQty((n) => n + (product.min_order || 1))} aria-label="Artır">
+            <input
+              className="qty-input"
+              inputMode="numeric"
+              aria-label="Miktar"
+              value={qty}
+              onChange={(e) => setQty(e.target.value.replace(/\D/g, ''))}
+              onBlur={() => setQty(String(Math.max(1, Math.floor(Number(qty) || 1))))}
+              onKeyDown={(e) => e.key === 'Enter' && addNow()}
+            />
+            <button className="btn icon sm" onClick={() => setQty(String((Number(qty) || 1) + (product.min_order || 1)))} aria-label="Artır">
               <Plus size={14} aria-hidden />
             </button>
           </div>
           <span className="spacer" />
           {showPrices && (
-            <span aria-live="polite" className="nowrap">
-              <strong>{product.price != null && product.price > 0 ? money(product.price * qty, product.currency) : 'Fiyat sorunuz'}</strong>
-              {cp != null && <span className="muted small"> · kart {money(cp * qty, product.currency)}</span>}
+            <span aria-live="polite" className="nowrap drawer-price">
+              <strong>{product.price != null && product.price > 0 ? money(product.price * (Number(qty) || 1), product.currency) : 'Fiyat sorunuz'}</strong>
+              {cp != null && <span className="muted small"> · kart {money(cp * (Number(qty) || 1), product.currency)}</span>}
             </span>
           )}
-          <button className="btn primary" onClick={addNow}>
+          <button className="btn primary" onClick={addNow} disabled={product.price == null || product.price <= 0}>
             <ShoppingCart size={16} aria-hidden /> Sepete ekle
           </button>
         </div>

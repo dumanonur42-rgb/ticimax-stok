@@ -12,7 +12,7 @@ type Tab = 'gorunum' | 'profil' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
 
 const SECTIONS: { id: Tab; label: string; hint: string; icon: LucideIcon; admin?: boolean; dealer?: boolean }[] = [
   { id: 'gorunum', label: 'Görünüm & Erişilebilirlik', hint: 'Tema, yazı ve kullanım', icon: Monitor },
-  { id: 'profil', label: 'Firma bilgilerim', hint: 'Bayi firma kartı', icon: Building2, dealer: true },
+  { id: 'profil', label: 'Bayi firma kartı', hint: 'Firma ve iletişim bilgileri', icon: Building2, dealer: true },
   { id: 'firma', label: 'Firma & Fiyat', hint: 'Şirket ve fiyat ayarları', icon: Building2, admin: true },
   { id: 'kullanicilar', label: 'Kullanıcılar', hint: 'Hesaplar ve yetkiler', icon: UsersIcon, admin: true },
   { id: 'veri', label: 'Bulut & Veri', hint: 'Eşitleme ve yerel kopya', icon: Database, admin: true },
@@ -192,6 +192,7 @@ function Users(): ReactNode {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [editing, setEditing] = useState<UserForm | null>(null)
   const [revealed, setRevealed] = useState<Record<string, string | null>>({})
+  const [passwordCapsLock, setPasswordCapsLock] = useState(false)
   const hidePassword = (id: string): void => setRevealed(({ [id]: _, ...rest }) => rest)
   const reveal = async (u: User): Promise<void> => {
     if (u.id in revealed) return hidePassword(u.id)
@@ -405,21 +406,22 @@ function Users(): ReactNode {
                 })}
               </fieldset>
             )}
-            <Field label="Cari kart" hint={editing.role !== 'admin' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
+            <Field label={editing.role === 'ara' ? 'Bayi firma kartı' : 'Cari kart'} hint={editing.role !== 'admin' ? 'Boş bırakılırsa kullanıcı için yeni bir cari kart açılır.' : undefined}>
               {(id) => (
                 <select id={id} className="select" value={editing.customer_id ?? ''} disabled={editing.role === 'admin'} onChange={(e) => setEditing({ ...editing, customer_id: e.target.value ? Number(e.target.value) : null })}>
                   <option value="">Yeni cari kart oluştur</option>
                   {customers.map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.name}
+                      {c.name} · {c.code}{c.city ? ` · ${c.city}` : ''}
                     </option>
                   ))}
                 </select>
               )}
             </Field>
             <Field label={editing.id ? 'Yeni şifre (boş: değişmez)' : 'Şifre *'}>
-              {(id) => <input id={id} type="password" className="input" autoComplete="new-password" value={editing.password ?? ''} onChange={(e) => setEditing({ ...editing, password: e.target.value })} />}
+              {(id) => <input id={id} type="password" className="input" autoComplete="new-password" value={editing.password ?? ''} onChange={(e) => setEditing({ ...editing, password: e.target.value })} onKeyUp={(e) => setPasswordCapsLock(e.getModifierState('CapsLock'))} onBlur={() => setPasswordCapsLock(false)} />}
             </Field>
+            {passwordCapsLock && <p className="muted small" role="status">Caps Lock açık.</p>}
             <label className="check" style={{ alignSelf: 'end' }}>
               <input type="checkbox" checked={!!editing.active} onChange={(e) => setEditing({ ...editing, active: e.target.checked ? 1 : 0 })} /> Aktif
             </label>
@@ -607,6 +609,7 @@ function Password(): ReactNode {
   const [next, setNext] = useState('')
   const [again, setAgain] = useState('')
   const [visible, setVisible] = useState(false)
+  const [capsLock, setCapsLock] = useState(false)
   const submit = async (): Promise<void> => {
     if (next.length < 4) return toast('Yeni şifre en az 4 karakter olmalı.', 'error')
     if (next !== again) return toast('Şifreler eşleşmiyor.', 'error')
@@ -628,9 +631,10 @@ function Password(): ReactNode {
         submit()
       }}
     >
-      <Field label="Mevcut şifre">{(id) => <div className="settings-password-input"><input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} /><button type="button" className="btn ghost icon" aria-label={visible ? 'Şifreyi gizle' : 'Şifreyi göster'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={16} /> : <Eye size={16} />}</button></div>}</Field>
-      <Field label="Yeni şifre">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} />}</Field>
-      <Field label="Yeni şifre (tekrar)">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={again} onChange={(e) => setAgain(e.target.value)} />}</Field>
+      <Field label="Mevcut şifre">{(id) => <div className="settings-password-input"><input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))} onBlur={() => setCapsLock(false)} /><button type="button" className="btn ghost icon" aria-label={visible ? 'Şifreyi gizle' : 'Şifreyi göster'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={16} /> : <Eye size={16} />}</button></div>}</Field>
+      <Field label="Yeni şifre">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={next} onChange={(e) => setNext(e.target.value)} onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))} onBlur={() => setCapsLock(false)} />}</Field>
+      <Field label="Yeni şifre (tekrar)">{(id) => <input id={id} type={visible ? 'text' : 'password'} className="input" autoComplete="new-password" value={again} onChange={(e) => setAgain(e.target.value)} onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))} onBlur={() => setCapsLock(false)} />}</Field>
+      {capsLock && <p className="small" role="status">Caps Lock açık.</p>}
       <button className="btn primary" type="submit">
         Şifreyi değiştir
       </button>

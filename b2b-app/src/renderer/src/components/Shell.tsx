@@ -11,10 +11,11 @@ import {
   Users,
   Warehouse
 } from 'lucide-react'
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api, beginLogout, endLogout } from '@/lib/api'
 import { ConnectionPill } from '@/components/SyncBanner'
 import { useUpdateState } from '@/components/UpdateDialog'
+import { Confirm } from '@/components/ui'
 import { ROLE_LABEL } from '@/lib/format'
 import type { UserRole } from '@shared/types'
 import { useApp, useCart, type Page } from '@/store/app'
@@ -61,8 +62,33 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
   const { page, go, session, setSession, toast } = useApp()
   const cartCount = useCart((s) => s.lines.length)
   const clearCart = useCart((s) => s.clear)
+  const [confirmLogout, setConfirmLogout] = useState(false)
+  const [compactNav, setCompactNav] = useState(true)
+  const navRef = useRef<HTMLElement>(null)
+  const logoutOpener = useRef<HTMLButtonElement>(null)
   const role = session?.user.role ?? 'bayi'
   const items = NAV.filter((n) => !n.roles || n.roles.includes(role))
+
+  useEffect(() => {
+    const nav = navRef.current
+    if (!nav) return
+    const measure = (): void => {
+      const wasCompact = nav.classList.contains('compact')
+      nav.classList.remove('compact')
+      const needsCompact = nav.scrollWidth > nav.clientWidth + 1
+      if (wasCompact) nav.classList.add('compact')
+      setCompactNav(needsCompact)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(nav)
+    if (nav.parentElement) observer.observe(nav.parentElement)
+    window.addEventListener('resize', measure)
+    requestAnimationFrame(measure)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [items.length])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
@@ -108,6 +134,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
       await api('auth:logout', undefined)
       clearCart()
       setSession(null)
+      go('dashboard')
       document.title = 'Yamansa Rulman B2B'
       toast('Oturum kapatıldı.')
     } catch (error) {
@@ -125,13 +152,13 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
       <a href="#main" className="skip-link">
         İçeriğe geç
       </a>
-      <header className="topnav" aria-label="Ana menü">
+      <header className={`topnav${compactNav ? ' nav-compact' : ''}`} aria-label="Ana menü">
         <div className="brand">
           <img className="brand-mark" src={mark} alt="" />
           <img className="brand-logo" src={logo} alt="Yamansa Rulman" />
           <small>{role === 'admin' ? 'Yönetim Paneli' : role === 'bayi' ? 'Bayi Portalı' : 'Kullanıcı Paneli'}</small>
         </div>
-        <nav className="nav" aria-label="Sayfalar">
+        <nav ref={navRef} className={`nav${compactNav ? ' compact' : ''}`} aria-label="Sayfalar">
           {items.map((n) => (
             <button
               key={n.page}
@@ -160,7 +187,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
           <span className="avatar" aria-hidden>
             {initials}
           </span>
-          <div className="truncate" style={{ flex: 1 }}>
+          <div className="user-details truncate" style={{ flex: 1 }}>
             <strong className="truncate" style={{ display: 'block' }}>
               {session?.user.display_name || session?.user.username}
             </strong>
@@ -169,7 +196,7 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
               {update && <span className="app-version"> · v{update.current}</span>}
             </span>
           </div>
-          <button className="btn ghost icon sm" onClick={logout} aria-label="Oturumu kapat" title="Oturumu kapat">
+          <button ref={logoutOpener} className="btn ghost icon sm" onClick={() => setConfirmLogout(true)} aria-label="Oturumu kapat" title="Oturumu kapat">
             <LogOut size={18} aria-hidden />
           </button>
         </div>
@@ -190,6 +217,20 @@ export function Shell({ children }: { children: ReactNode }): ReactNode {
           {children}
         </main>
       </div>
+      <Confirm
+        open={confirmLogout}
+        title="Oturumu kapat"
+        text="Oturumu kapatmak istiyor musunuz?"
+        confirmLabel="Oturumu kapat"
+        onCancel={() => {
+          setConfirmLogout(false)
+          logoutOpener.current?.focus()
+        }}
+        onConfirm={() => {
+          setConfirmLogout(false)
+          void logout()
+        }}
+      />
     </div>
   )
 }

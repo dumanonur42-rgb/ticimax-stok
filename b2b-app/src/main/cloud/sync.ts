@@ -20,6 +20,7 @@ let channel: RealtimeChannel | null = null
 let timer: NodeJS.Timeout | null = null
 let pulling: Promise<number> | null = null
 let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pending: 0, failed: 0 }
+let connectionChecked = false
 let onNewOrder: ((o: OrderRow) => void) | null = null
 let storagePolicy = { canSeeShelf: false, hidePrices: false }
 
@@ -40,10 +41,11 @@ export function setStoragePolicy(user: User, showPricesToDealers: boolean): void
 }
 
 export function syncStatus(): SyncStatus {
-  return { ...status, ...outboxCounts(), productCount: countLocal() }
+  return { ...status, checked: connectionChecked, ...outboxCounts(), productCount: countLocal() }
 }
 
 function setStatus(patch: Partial<SyncStatus>): void {
+  if (patch.online !== undefined) connectionChecked = true
   status = { ...status, ...patch }
   listener('status', syncStatus())
 }

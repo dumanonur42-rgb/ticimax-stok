@@ -27,6 +27,8 @@ win:
   requestedExecutionLevel: asInvoker
   legalTrademarks: Yamansa Rulman
 nsis:
+  installerLanguages:
+    - tr_TR
   oneClick: false
   # "Bu bilgisayarı kullanan herkes" (Program Files) is preselected: AppLocker's default rules only allow
   # executables under Program Files/Windows, so a per-user %LOCALAPPDATA% install is blocked on managed PCs.

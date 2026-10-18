@@ -26,6 +26,7 @@ function useApplySettings(): void {
     const apply = (): void => {
       const theme = settings.theme === 'system' ? (dark.matches ? 'dark' : 'light') : settings.theme
       root.dataset.theme = theme
+      root.lang = 'tr'
     }
     apply()
     dark.addEventListener('change', apply)
@@ -72,11 +73,15 @@ const PAGES: Record<ReturnType<typeof useApp.getState>['page'], () => ReactNode>
 }
 
 export function App(): ReactNode {
-  const { session, setSession, loadSettings, page } = useApp()
+  const { session, setSession, loadSettings, page, go } = useApp()
   const [ready, setReady] = useState(false)
   const [sessionNotice, setSessionNotice] = useState('')
   useApplySettings()
   useFontShortcuts()
+
+  useEffect(() => {
+    if (session?.user.role !== 'admin' && ['import', 'customers', 'stock', 'activity'].includes(page)) go('dashboard')
+  }, [session?.user.role, page, go])
 
   useEffect(() => {
     const refreshSession = async (): Promise<void> => {

@@ -28,6 +28,7 @@ interface AppState {
 }
 
 let toastSeq = 0
+const recentToasts = new Map<string, number>()
 
 export const useApp = create<AppState>()((set, get) => ({
   session: null,
@@ -45,6 +46,11 @@ export const useApp = create<AppState>()((set, get) => ({
   },
   go: (page, param = null) => set({ page, pageParam: param }),
   toast: (text, kind = 'info') => {
+    const key = `${kind}:${text}`
+    const now = Date.now()
+    if (now - (recentToasts.get(key) ?? 0) < 2500) return
+    recentToasts.set(key, now)
+    for (const [message, at] of recentToasts) if (now - at > 10_000) recentToasts.delete(message)
     const id = ++toastSeq
     set((s) => ({ toasts: [...s.toasts, { id, kind, text }] }))
     setTimeout(() => get().dismissToast(id), kind === 'error' ? 8000 : 4000)
