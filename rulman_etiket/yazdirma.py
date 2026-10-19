@@ -4,7 +4,6 @@ import ctypes
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -15,13 +14,21 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterator
 
+import numpy as np
+import pymupdf
+from PIL import Image
+
 from etiket_cizim import (
+    BOSLUK_UST_ADET,
+    BUYUK_HARF,
     BOYUTLAR,
     EtiketHatasi,
     EtiketVerisi,
+    PROFILLER,
     ciz,
     dogrula,
     logo_normalize,
+    yerlesim,
 )
 
 
@@ -348,18 +355,6 @@ def pdf_kaydet(
     return hedef
 
 
-def _sumatra() -> str | None:
-    adaylar = [
-        str(resource_path("SumatraPDF.exe")),
-        shutil.which("SumatraPDF"),
-    ]
-    for degisken in ("LOCALAPPDATA", "ProgramFiles", "ProgramFiles(x86)"):
-        kok = os.environ.get(degisken)
-        if kok:
-            adaylar.append(str(Path(kok) / "SumatraPDF" / "SumatraPDF.exe"))
-    return next((aday for aday in adaylar if aday and os.path.isfile(aday)), None)
-
-
 def _yazdirma_pdf_yolu() -> Path:
     if sys.platform == "win32":
         temel = Path(os.environ.get("LOCALAPPDATA") or Path.home() / "AppData" / "Local")
@@ -524,6 +519,186 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
                 pass
 
 
+def _logo_rectleri(y) -> list[tuple[float, float, float, float]]:
+    if y.logo_rect is None:
+        return []
+    x0, y0, x1, y1 = y.logo_rect
+    rects = [y.logo_rect]
+    if y.alt_y0 is not None:
+        p = PROFILLER[y.boyut]
+        kayma = y.alt_y0 + BOSLUK_UST_ADET + p.adet_pt * BUYUK_HARF - y.adet_taban
+        rects.append((x0, y0 + kayma, x1, y1 + kayma))
+    return rects
+
+
+def _sayfa_boyutu_eslesiyor(
+    sayfa: pymupdf.Page, fiziksel_genislik_mm: float, fiziksel_yukseklik_mm: float
+) -> bool:
+    sayfa_genislik = sayfa.rect.width / 72 * 25.4
+    sayfa_yukseklik = sayfa.rect.height / 72 * 25.4
+    duz = (
+        abs(fiziksel_genislik_mm - sayfa_genislik) <= 3
+        and abs(fiziksel_yukseklik_mm - sayfa_yukseklik) <= 3
+    )
+    if duz:
+        return False
+    donuk = (
+        abs(fiziksel_genislik_mm - sayfa_yukseklik) <= 3
+        and abs(fiziksel_yukseklik_mm - sayfa_genislik) <= 3
+    )
+    if donuk:
+        return True
+    raise YazdirmaHatasi(
+        "Yazıcının etiket boyu ayarı etiketle uyuşmuyor. Yazıcı ayarlarını kontrol edin."
+    )
+
+
+def _sayfayi_tek_bit_yap(
+    sayfa: pymupdf.Page,
+    dpi_x: int,
+    dpi_y: int,
+    logo_rectleri: list[tuple[float, float, float, float]],
+) -> Image.Image:
+    onceki_aa = pymupdf.mupdf.fz_aa_level()
+    try:
+        pymupdf.TOOLS.set_aa_level(0)
+        pix = sayfa.get_pixmap(
+            matrix=pymupdf.Matrix(dpi_x / 72, dpi_y / 72),
+            colorspace=pymupdf.csGRAY,
+            alpha=False,
+        )
+    finally:
+        pymupdf.TOOLS.set_aa_level(onceki_aa)
+
+    pixels = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.stride)
+    gri = Image.fromarray(pixels[:, :pix.width].copy())
+    ikili = Image.fromarray(
+        np.where(pixels[:, :pix.width] < 128, 0, 255).astype(np.uint8)
+    ).convert("1", dither=Image.Dither.NONE)
+    for rect in logo_rectleri:
+        x0 = round((rect[0] - sayfa.rect.x0) * dpi_x / 72)
+        y0 = round((rect[1] - sayfa.rect.y0) * dpi_y / 72)
+        x1 = round((rect[2] - sayfa.rect.x0) * dpi_x / 72)
+        y1 = round((rect[3] - sayfa.rect.y0) * dpi_y / 72)
+        x0, x1 = max(0, x0), min(pix.width, x1)
+        y0, y1 = max(0, y0), min(pix.height, y1)
+        if x1 <= x0 or y1 <= y0:
+            continue
+        logo = gri.crop((x0, y0, x1, y1)).convert(
+            "1", dither=Image.Dither.FLOYDSTEINBERG
+        )
+        ikili.paste(logo, (x0, y0))
+    boyut = (
+        round(sayfa.rect.width * dpi_x / 72),
+        round(sayfa.rect.height * dpi_y / 72),
+    )
+    if ikili.size != boyut:
+        ikili = ikili.crop((0, 0, *boyut))
+    return ikili
+
+
+def _boyutu_yazdir(
+    pdf: Path,
+    yazici: str,
+    logo_rectleri: list[tuple[float, float, float, float]],
+) -> None:
+    try:
+        import win32con
+        import win32ui
+        from PIL import ImageWin
+    except ImportError as hata:
+        raise YazdirmaHatasi(
+            "Yazdırma başlatılamadı. Program dosyaları eksik olabilir."
+        ) from hata
+
+    baslatma_hatasi = "Yazdırma başlatılamadı. Yazıcının açık ve bağlı olduğunu kontrol edin."
+    sayfa_hatasi = "Yazıcı etiketi kabul etmedi. Yazıcının açık ve bağlı olduğunu kontrol edin."
+    hdc = None
+    belge_acik = False
+    durum = "başlatma"
+    try:
+        hdc = win32ui.CreateDC()
+        hdc.CreatePrinterDC(yazici)
+        dpi_x = hdc.GetDeviceCaps(getattr(win32con, "LOGPIXELSX", 88))
+        dpi_y = hdc.GetDeviceCaps(getattr(win32con, "LOGPIXELSY", 90))
+        fiziksel_genislik = hdc.GetDeviceCaps(getattr(win32con, "PHYSICALWIDTH", 110))
+        fiziksel_yukseklik = hdc.GetDeviceCaps(getattr(win32con, "PHYSICALHEIGHT", 111))
+        ofset_x = hdc.GetDeviceCaps(getattr(win32con, "PHYSICALOFFSETX", 112))
+        ofset_y = hdc.GetDeviceCaps(getattr(win32con, "PHYSICALOFFSETY", 113))
+        if min(dpi_x, dpi_y, fiziksel_genislik, fiziksel_yukseklik) <= 0:
+            raise RuntimeError("Yazıcı çözünürlüğü okunamadı")
+
+        with pymupdf.open(pdf) as belge:
+            if not belge.page_count:
+                raise RuntimeError("Yazdırılacak etiket bulunamadı")
+            sonuc = hdc.StartDoc("Rulman Etiket")
+            if isinstance(sonuc, int) and sonuc <= 0:
+                raise RuntimeError("Yazdırma işi başlatılamadı")
+            belge_acik = True
+            durum = "sayfa"
+            for sayfa in belge:
+                donuk = _sayfa_boyutu_eslesiyor(
+                    sayfa,
+                    fiziksel_genislik / dpi_x * 25.4,
+                    fiziksel_yukseklik / dpi_y * 25.4,
+                )
+                goruntu = _sayfayi_tek_bit_yap(sayfa, dpi_x, dpi_y, logo_rectleri)
+                if donuk:
+                    goruntu = goruntu.rotate(270, expand=True)
+                    beklenen = (
+                        round(sayfa.rect.height / 72 * dpi_x),
+                        round(sayfa.rect.width / 72 * dpi_y),
+                    )
+                    if goruntu.size != beklenen:
+                        goruntu = goruntu.resize(
+                            beklenen, resample=Image.Resampling.NEAREST
+                        )
+                sonuc = hdc.StartPage()
+                if isinstance(sonuc, int) and sonuc <= 0:
+                    raise RuntimeError("Etiket sayfası başlatılamadı")
+                dib = ImageWin.Dib(goruntu)
+                sonuc = dib.draw(
+                    hdc.GetHandleOutput(),
+                    (
+                        -ofset_x,
+                        -ofset_y,
+                        -ofset_x + goruntu.width,
+                        -ofset_y + goruntu.height,
+                    ),
+                )
+                if isinstance(sonuc, int) and sonuc <= 0:
+                    raise RuntimeError("Etiket görüntüsü yazdırılamadı")
+                sonuc = hdc.EndPage()
+                if isinstance(sonuc, int) and sonuc <= 0:
+                    raise RuntimeError("Etiket sayfası tamamlanamadı")
+            sonuc = hdc.EndDoc()
+            if isinstance(sonuc, int) and sonuc <= 0:
+                raise RuntimeError("Yazdırma işi tamamlanamadı")
+            belge_acik = False
+    except YazdirmaHatasi:
+        if belge_acik:
+            try:
+                hdc.AbortDoc()
+            except Exception:
+                pass
+        raise
+    except Exception as hata:
+        if belge_acik:
+            try:
+                hdc.AbortDoc()
+            except Exception:
+                pass
+        raise YazdirmaHatasi(
+            baslatma_hatasi if durum == "başlatma" else sayfa_hatasi
+        ) from hata
+    finally:
+        if hdc is not None:
+            try:
+                hdc.DeleteDC()
+            except Exception:
+                pass
+
+
 def yazdir(
     veri: EtiketVerisi,
     boyut: str,
@@ -541,12 +716,6 @@ def yazdir(
         raise YazdirmaHatasi(
             f"'{yazici}' adlı yazıcı bulunamadı. Yazıcının açık ve bağlı olduğundan emin olun."
         )
-    sumatra = _sumatra()
-    if not sumatra:
-        raise YazdirmaHatasi(
-            "SumatraPDF bulunamadı. Programın dosyaları eksik olabilir; uygulamayı yeniden kurun."
-        )
-
     pdf_yolu = _yazdirma_pdf_yolu()
     try:
         pdf = pdf_kaydet(veri, boyut, kopya, yol=pdf_yolu, logo=logo)
@@ -558,33 +727,6 @@ def yazdir(
         )
         pdf = pdf_kaydet(veri, boyut, kopya, yol=zamanli_yol, logo=logo)
     with _kagit_ayari(yazici, boyut, pdf):
-        try:
-            sonuc = subprocess.run(
-                [
-                    sumatra,
-                    "-print-to",
-                    yazici,
-                    "-print-settings",
-                    "noscale",
-                    "-silent",
-                    "-exit-when-done",
-                    str(pdf),
-                ],
-                check=False,
-                timeout=120,
-                capture_output=True,
-                creationflags=0x08000000,
-            )
-        except subprocess.TimeoutExpired as hata:
-            raise YazdirmaHatasi(
-                "Yazıcı yanıt vermedi. Yazıcının açık, bağlı ve kâğıt takılı olduğunu kontrol edin."
-            ) from hata
-        except OSError as hata:
-            raise YazdirmaHatasi(
-                "Yazdırma başlatılamadı. Yazıcının açık ve bağlı olduğunu kontrol edin."
-            ) from hata
-    if sonuc.returncode != 0:
-        raise YazdirmaHatasi(
-            "Yazıcı etiketi kabul etmedi. Yazıcının açık ve bağlı olduğunu kontrol edin."
-        )
+        logo_rectleri = _logo_rectleri(yerlesim(veri, boyut, logo=logo))
+        _boyutu_yazdir(pdf, yazici, logo_rectleri)
     return pdf

@@ -494,9 +494,11 @@ class SonListe(tk.Frame):
             w.destroy()
         genislik = max(px(80), (self._genislik or px(200)) - px(24))
         if not self.kayitlar:
-            tk.Label(self.ic, text="Yazdırdığınız kodlar\nburada listelenir.", font=_f(9),
+            tk.Label(self.ic, text="Yazdırdığınız kodlar\nburada listelenir.",
+                     font=_f(8 if _KOMPAKT_DPI else 9),
                      fg="#9CA3AF", bg=KART, justify="left", anchor="w").grid(
-                row=0, column=0, sticky="w", padx=px(12), pady=px(4))
+                row=0, column=0, sticky="w", padx=px(12),
+                pady=px(2 if _KOMPAKT_DPI else 4))
             return
         for i, k in enumerate(self.kayitlar):
             satir = tk.Frame(self.ic, bg=KART, cursor="hand2", padx=px(12), pady=px(6))
@@ -713,15 +715,18 @@ class Uygulama(tk.Tk):
             dpi = float(self.winfo_fpixels("1i"))
         dpi = min(max(dpi, 96.0), 288.0)
         olcek = dpi / 96.0
+        tk_olcek = dpi / 72.0
         small_window = (
             self.winfo_screenwidth() <= 1400
             and self.winfo_screenheight() <= 800
         )
         _KOMPAKT_DPI = olcek > 1.3 and small_window
         if olcek > 1.0 and small_window:
-            olcek = 0.8 if _KOMPAKT_DPI else 1.0
+            olcek = 0.75 if _KOMPAKT_DPI else 0.8
+        if small_window:
+            tk_olcek = 96.0 * olcek / 72.0
         _OLCEK = olcek
-        self.tk.call("tk", "scaling", dpi / 72.0)
+        self.tk.call("tk", "scaling", tk_olcek)
 
     def _simge(self):
         try:
@@ -825,7 +830,7 @@ class Uygulama(tk.Tk):
         dugmeler = tk.Frame(kart, bg=KART)
         dugmeler.grid(row=21, column=0, sticky="sew", pady=(px(16), px(2)))
         dugmeler.columnconfigure(0, weight=1)
-        self.yazdir_btn = Buton(dugmeler, "Yazdır", self.yazdir, tur="ana", ipucu="Enter")
+        self.yazdir_btn = Buton(dugmeler, "Yazdır", self.yazdir, tur="ana")
         self.yazdir_btn.grid(row=0, column=0, sticky="ew")
         self.pdf_btn = Buton(dugmeler, "PDF olarak kaydet", self.pdf_kaydet)
         self.pdf_btn.grid(row=0, column=1, sticky="nsew", padx=(px(10), 0))

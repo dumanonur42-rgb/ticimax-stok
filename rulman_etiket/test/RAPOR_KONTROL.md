@@ -60,7 +60,7 @@ yarım nokta kayması yok. İçerik genişliği 660 nokta (sol/sağ 36 nokta) �
 8. Workflow test sürümü etiketi `rulman-etiket-test` (`rulman-etiket-exe.yml:99`) var olan etiketi yeni commit'e taşımıyor; exe güncellenir ama etiket eski commit'i gösterir. Öneri: yayından önce etiketi silip yeniden oluşturun.
 9. Workflow exe ile PDF üretiyor ama barkodu okumuyor. Öneri: derlemeden sonra `python test/kalite_kontrol.py --cli-yok` adımı ekleyin.
 10. `TASARIM.md` "her kenarda ~2 mm basılamaz" diyor; Brother'a göre yan 1,5 mm, uç 3 mm. Kenar 3,05 mm olduğundan sorun yok, belge düzeltilmeli.
-11. Hiçbir `subprocess` çağrısı kabuk kullanmıyor, kullanıcı metni hep argüman listesiyle gidiyor (`yazdirma.py:36-48, 404-422`, `arayuz.py:85-87, 1086`) — **komut enjeksiyonu yok**. Paketleme: font, SumatraPDF, zxing-cpp, win32print exe'ye giriyor ve `--kontrol` bunları denetliyor; eksik bulunmadı.
+11. Hiçbir `subprocess` çağrısı kabuk kullanmıyor, kullanıcı metni hep argüman listesiyle gidiyor (`yazdirma.py`, `arayuz.py`) — **komut enjeksiyonu yok**. Paketleme: font, zxing-cpp, win32print ve GDI modülleri exe'ye giriyor; `--kontrol` yazdırma modülünü denetliyor.
 
 ### Kullanılabilirlik (Xvfb ekranı)
 İlk açılışta ne yapılacağı belli: başlıkta "Kodu yazın, Enter'a basın", imleç kod alanında, önizleme canlı, yazıcı yoksa altta "Brother QL-550'yi açıp USB kablosunu takın, sonra Yenile'ye basın."

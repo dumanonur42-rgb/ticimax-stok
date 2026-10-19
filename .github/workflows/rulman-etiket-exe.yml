@@ -29,17 +29,8 @@ jobs:
         working-directory: rulman_etiket
         run: |
           python -m pip install --upgrade pip
-          pip install pymupdf python-barcode pillow pyinstaller pywin32
+          pip install pymupdf python-barcode pillow pyinstaller pywin32 zxing-cpp==3.0.0
           if (Test-Path requirements.txt) { pip install -r requirements.txt }
-
-      - name: SumatraPDF indir
-        working-directory: rulman_etiket
-        run: |
-          $v = "3.5.2"
-          Invoke-WebRequest -Uri "https://www.sumatrapdfreader.org/dl/rel/$v/SumatraPDF-$v-64.zip" -OutFile sumatra.zip
-          Expand-Archive sumatra.zip -DestinationPath sumatra -Force
-          Copy-Item (Get-ChildItem sumatra -Recurse -Filter "SumatraPDF*.exe" | Select-Object -First 1).FullName SumatraPDF.exe
-          if (-not (Test-Path SumatraPDF.exe)) { Write-Error "SumatraPDF bulunamadı"; exit 1 }
 
       - name: Derle
         working-directory: rulman_etiket
@@ -54,10 +45,13 @@ jobs:
             --icon assets\icon.ico `
             --add-data "fonts;fonts" `
             --add-data "assets;assets" `
-            --add-binary "SumatraPDF.exe;." `
-            --hidden-import win32print --hidden-import pywintypes `
+            --hidden-import win32print --hidden-import win32ui --hidden-import win32con --hidden-import pywintypes `
             --collect-all pymupdf --collect-all barcode @collectArgs `
             rulman_etiket.py
+
+      - name: GDI yazdırma birim testleri
+        working-directory: rulman_etiket
+        run: python test/yazdirma_gdi_test.py
 
       - name: Oluşturulan PDF'leri dene
         timeout-minutes: 5

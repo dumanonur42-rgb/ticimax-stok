@@ -40,11 +40,18 @@ def _yaz_hata(metin: str) -> None:
 
 
 def _kontrol() -> int:
-    sumatra_ok = resource_path("SumatraPDF.exe").is_file()
-    _satir(
-        "SumatraPDF dosyası",
-        "Başarılı" if sumatra_ok else "Başarısız",
-    )
+    yazdirma_ok = True
+    yazdirma_durumu = "Yalnız Windows'ta denetlenir"
+    if sys.platform == "win32":
+        try:
+            import win32con
+            import win32ui
+        except Exception:
+            yazdirma_ok = False
+            yazdirma_durumu = "Başarısız"
+        else:
+            yazdirma_durumu = "Başarılı"
+    _satir("Yazdırma (win32ui)", yazdirma_durumu)
 
     font_klasoru = resource_path("fonts")
     font_ok = font_klasoru.is_dir() and all(
@@ -73,7 +80,7 @@ def _kontrol() -> int:
             "Yazıcı ayar modülü",
             "Başarılı" if yazici_modulu_ok else "Başarısız",
         )
-    sonuc = 0 if sumatra_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
+    sonuc = 0 if yazdirma_ok and font_ok and cizim_ok and yazici_modulu_ok else 1
     _rapora_yaz(f"Sonuç: {'Başarılı' if sonuc == 0 else 'Başarısız'}")
     return sonuc
 
