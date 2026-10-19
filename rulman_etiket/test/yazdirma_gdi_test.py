@@ -201,6 +201,40 @@ class GdiYazdirmaTesti(unittest.TestCase):
             sonuc = yz.yazdir(veri, boyut, kopya, self.YAZICI, logo=logo)
         return sonuc, dc, yazici, y
 
+    def test_dict_formunda_cozunurluk_secimi(self):
+        win32print = types.SimpleNamespace(
+            DC_ENUMRESOLUTIONS=13,
+            DM_PRINTQUALITY=0x400,
+            DM_YRESOLUTION=0x2000,
+            DeviceCapabilities=lambda *_args: (
+                {"xdpi": 300, "ydpi": 600},
+            ),
+        )
+        devmode = types.SimpleNamespace(Fields=1, PrintQuality=200, YResolution=300)
+
+        self.assertTrue(yz._yuksek_baski_kalitesi(
+            self.YAZICI, "USB001", devmode, win32print
+        ))
+        self.assertEqual((devmode.PrintQuality, devmode.YResolution), (300, 600))
+        self.assertEqual(devmode.Fields, 1 | 0x400 | 0x2000)
+
+        standart = types.SimpleNamespace(
+            DC_ENUMRESOLUTIONS=13,
+            DM_PRINTQUALITY=0x400,
+            DM_YRESOLUTION=0x2000,
+            DeviceCapabilities=lambda *_args: (
+                {"xdpi": 300, "ydpi": 300},
+            ),
+        )
+        devmode = types.SimpleNamespace(Fields=7, PrintQuality=200, YResolution=300)
+        self.assertFalse(yz._yuksek_baski_kalitesi(
+            self.YAZICI, "USB001", devmode, standart
+        ))
+        self.assertEqual(
+            (devmode.Fields, devmode.PrintQuality, devmode.YResolution),
+            (7, 200, 300),
+        )
+
     def test_eslesen_boyutlar_300x600_ofset_ve_kagit_ayari(self):
         for boyut in ("62x25", "62x35", "62x62", "62x100", "62surekli"):
             with self.subTest(boyut=boyut):

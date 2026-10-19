@@ -399,10 +399,14 @@ def _yuksek_baski_kalitesi(yazici: str, port: str, devmode, win32print) -> bool:
         return False
     uygun = []
     for cozum in cozumler or []:
-        if not isinstance(cozum, (tuple, list)) or len(cozum) < 2:
+        if isinstance(cozum, dict):
+            x, y = cozum.get("xdpi"), cozum.get("ydpi")
+        elif isinstance(cozum, (tuple, list)) and len(cozum) >= 2:
+            x, y = cozum[0], cozum[1]
+        else:
             continue
         try:
-            x, y = int(cozum[0]), int(cozum[1])
+            x, y = int(x), int(y)
         except (TypeError, ValueError):
             continue
         if x > 0 and y > x:
