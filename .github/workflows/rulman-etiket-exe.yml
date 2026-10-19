@@ -36,6 +36,32 @@ jobs:
         working-directory: rulman_etiket
         shell: pwsh
         run: |
+          $win32uiDir = python -c "import os, win32ui; print(os.path.dirname(win32ui.__file__))"
+          $mfcDll = $null
+          if ($LASTEXITCODE -eq 0 -and $win32uiDir) {
+            foreach ($candidate in @(
+              (Join-Path $win32uiDir "pythonwin\mfc140u.dll"),
+              (Join-Path $win32uiDir "mfc140u.dll")
+            )) {
+              if (Test-Path $candidate -PathType Leaf) {
+                $mfcDll = $candidate
+                break
+              }
+            }
+          }
+          if (-not $mfcDll) {
+            $sitePackages = python -c "import site; print(site.getsitepackages()[0])"
+            if ($LASTEXITCODE -ne 0 -or -not $sitePackages) {
+              throw "Pywin32 site-packages dizini bulunamadı"
+            }
+            $mfcDll = Get-ChildItem -Path $sitePackages -Filter "mfc140u.dll" -Recurse -File -ErrorAction SilentlyContinue |
+              Select-Object -First 1 -ExpandProperty FullName
+          }
+          if (-not $mfcDll -or -not (Test-Path $mfcDll -PathType Leaf)) {
+            throw "Pywin32 kurulumunda mfc140u.dll bulunamadı"
+          }
+          Write-Host "PyInstaller'a eklenecek mfc140u.dll: $mfcDll"
+
           $collectArgs = @()
           foreach ($module in @("pylibdmtx", "ppf.datamatrix", "treepoem", "segno", "zxingcpp")) {
             python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec('$module') else 1)"
@@ -45,9 +71,20 @@ jobs:
             --icon assets\icon.ico `
             --add-data "fonts;fonts" `
             --add-data "assets;assets" `
+            --add-binary "$mfcDll;." `
             --hidden-import win32print --hidden-import win32ui --hidden-import win32con --hidden-import pywintypes `
             --collect-all pymupdf --collect-all barcode @collectArgs `
             rulman_etiket.py
+
+          $exe = Join-Path $PWD "dist\Rulman.Etiket.exe"
+          $archiveListing = python -m PyInstaller.utils.cliutils.archive_viewer -l $exe 2>&1 | Out-String
+          if ($LASTEXITCODE -ne 0) {
+            throw "PyInstaller EXE arşivi listelenemedi"
+          }
+          if ($archiveListing -notmatch "(?i)mfc140u\.dll") {
+            throw "Oluşturulan EXE içinde mfc140u.dll bulunamadı"
+          }
+          Write-Host "EXE içinde mfc140u.dll bulundu."
 
       - name: GDI yazdırma birim testleri
         working-directory: rulman_etiket
@@ -117,8 +154,13 @@ jobs:
           try {
             Invoke-RulmanEtiketSmoke -Arguments @("--kontrol", "--rapor", $kontrolRapor) -FailureMessage "Uygulama dosyaları denetimden geçemedi"
           } finally {
-            if (Test-Path $kontrolRapor) {
-              Get-Content $kontrolRapor -Encoding utf8 | Write-Host
+            if (-not (Test-Path $kontrolRapor)) {
+              throw "Dondurulmuş EXE kontrol raporu oluşturmadı"
+            }
+            $raporMetni = Get-Content $kontrolRapor -Raw -Encoding utf8
+            Write-Host $raporMetni
+            if ($raporMetni -notmatch "(?m)^Yazdırma \(win32ui\): Başarılı$") {
+              throw "Dondurulmuş EXE win32ui denetiminden geçemedi"
             }
           }
 
