@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import secrets
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -48,27 +48,34 @@ _FONTLAR: dict[str, pymupdf.Font] = {}
 
 
 def _font(kalin: bool) -> pymupdf.Font:
-    ad = "Hind-Bold.ttf" if kalin else "Hind-Medium.ttf"
+    ad = "Hind-SemiBold.ttf"
     if ad not in _FONTLAR:
         _FONTLAR[ad] = pymupdf.Font(fontfile=str(_font_yolu(ad)))
     return _FONTLAR[ad]
 
 
-BUYUK_HARF = 0.679        # Hind OS/2.sCapHeight (em)
-ALT_TASMA = 0.268         # Hind Bold'da en derin glif (ç/ş) (em)
-# Glif taşmaları Hind font konturlarından ölçülmüştür.
+BUYUK_HARF = 0.679        # Hind SemiBold OS/2.sCapHeight (em)
+ALT_TASMA = 0.262         # Hind SemiBold'da en derin glif (ç/ş) (em)
+# Glif taşmaları Hind SemiBold konturlarından ölçülmüştür.
 _UST_TASMALAR = {
-    "Ğ": 0.219, "İ": 0.212, "Ö": 0.212, "ğ": 0.052, "i": 0.060, "j": 0.060,
-    "f": 0.041, "b": 0.028, "d": 0.028, "h": 0.028, "l": 0.028, "ö": 0.047,
-    "ü": 0.045, "$": 0.112, "`": 0.119, "%": 0.044, "(": 0.028, ")": 0.028,
-    "/": 0.028, "[": 0.028, "\\": 0.028, "]": 0.028, "{": 0.037, "}": 0.037,
+    '"': 0.002, "$": 0.108, "%": 0.024, "&": 0.010, "'": 0.002, "(": 0.028,
+    ")": 0.028, "/": 0.028, "?": 0.003, "C": 0.004, "G": 0.007, "O": 0.007,
+    "Q": 0.007, "[": 0.028, "\\": 0.028, "]": 0.028, "`": 0.119, "b": 0.028,
+    "d": 0.028, "f": 0.039, "h": 0.028, "i": 0.052, "j": 0.052, "k": 0.016,
+    "l": 0.028, "{": 0.035, "|": 0.016, "}": 0.035, "Ç": 0.004, "ğ": 0.046,
+    "Ğ": 0.213, "İ": 0.199, "ö": 0.031, "Ö": 0.199, "ü": 0.031, "Ü": 0.198,
 }
 _ALT_TASMALAR = {
-    "ç": 0.268, "ş": 0.268, "Ç": 0.268, "Ş": 0.268, "g": 0.196, "y": 0.198,
-    "j": 0.198, "p": 0.194, "q": 0.194, "ğ": 0.196, "(": 0.196, ")": 0.196,
-    "[": 0.196, "]": 0.196, "{": 0.206, "}": 0.206, "|": 0.194, "@": 0.216,
-    ",": 0.127, ";": 0.127, "/": 0.103, "\\": 0.103, "_": 0.166, "$": 0.118,
-    "Q": 0.151,
+    "!": 0.008, "$": 0.115, "%": 0.008, "&": 0.008, "(": 0.196, ")": 0.196,
+    ",": 0.126, ".": 0.008, "/": 0.103, "0": 0.008, "3": 0.005, "5": 0.007,
+    "6": 0.016, "8": 0.009, "9": 0.008, ";": 0.126, "?": 0.008, "@": 0.198,
+    "C": 0.008, "G": 0.008, "O": 0.007, "Q": 0.147, "S": 0.008, "U": 0.009,
+    "[": 0.191, "\\": 0.103, "]": 0.191, "_": 0.141, "a": 0.004, "b": 0.007,
+    "c": 0.009, "d": 0.007, "e": 0.005, "g": 0.195, "j": 0.197, "o": 0.008,
+    "p": 0.191, "q": 0.191, "s": 0.005, "t": 0.005, "u": 0.005, "y": 0.189,
+    "{": 0.200, "|": 0.194, "}": 0.200, "ç": 0.262, "Ç": 0.262, "ğ": 0.195,
+    "Ğ": 0.008, "ö": 0.008, "Ö": 0.007, "ş": 0.262, "Ş": 0.262, "ü": 0.005,
+    "Ü": 0.009,
 }
 
 
@@ -98,7 +105,10 @@ class EtiketVerisi:
 
 
 BOYUTLAR: dict[str, str] = {
-    "62x100": "62 x 100 mm kesik etiket (DK-11202)",
+    "62x25": "Kare kutu / büyük dikdörtgen kutu (62 x 25)",
+    "62x35": "Ufak dikdörtgen kutu (62 x 35)",
+    "62x62": "Standart dikdörtgen kutu (62 x 62)",
+    "62x100": "62 x 100 kesik etiket (DK-11202)",
     "62surekli": "62 mm sürekli rulo (DK-22205)",
 }
 
@@ -181,9 +191,22 @@ class _Profil:
     cubuk_mm: float              # Code128 çubuk yüksekliği
     dm_hedef: int                # DataMatrix hedef genişliği (nokta)
     min_uzunluk_mm: float = 0    # sürekli rulo: alt tekrar açıkken en kısa boy
+    kod_min_pt: float = 12
+    kod_iki_min_pt: float = 9
+    bilgi_min_pt: float = 6
+    dm_min_modul: int = 5
 
 
 PROFILLER = {
+    "62x25": _Profil(25, kod_pt=9, adet_pt=6.5, bilgi_pt=5.5, rakam_pt=5.5,
+                     cubuk_mm=5, dm_hedef=100, kod_min_pt=5,
+                     kod_iki_min_pt=5, bilgi_min_pt=5),
+    "62x35": _Profil(35, kod_pt=9, adet_pt=6.5, bilgi_pt=5.5, rakam_pt=5.5,
+                     cubuk_mm=5, dm_hedef=100, kod_min_pt=5,
+                     kod_iki_min_pt=5, bilgi_min_pt=5, dm_min_modul=2),
+    "62x62": _Profil(62, kod_pt=10, adet_pt=7, bilgi_pt=6, rakam_pt=6,
+                     cubuk_mm=6, dm_hedef=120, kod_min_pt=5,
+                     kod_iki_min_pt=5, bilgi_min_pt=5),
     "62x100": _Profil(100, kod_pt=20, adet_pt=10, bilgi_pt=8, rakam_pt=7,
                       cubuk_mm=10, dm_hedef=168),
     "62surekli": _Profil(None, kod_pt=18, adet_pt=9, bilgi_pt=7.5, rakam_pt=7,
@@ -306,13 +329,6 @@ def dogrula(veri: EtiketVerisi) -> list[str]:
                       ("Bilgi satırı 1", veri.bilgi1), ("Bilgi satırı 2", veri.bilgi2)):
         if metin and ("\n" in metin or "\r" in metin or "\t" in metin):
             hatalar.append(f"{ad} tek satır olmalı.")
-    if not hatalar:
-        for boyut in BOYUTLAR:
-            try:
-                yerlesim(veri, boyut)
-            except EtiketHatasi as e:
-                if str(e) not in hatalar:
-                    hatalar.append(str(e))
     return hatalar
 
 
@@ -353,24 +369,34 @@ class Yerlesim:
     ean_rakam_taban: float = 0
     kod_genislik: float = 0
     logo_rect: tuple[float, float, float, float] | None = None
+    bilgi_x: float = 0
+    bilgi2_pt: float = 0
+    bilgi2_taban: float | None = None
+    bilgi2_text: str = ""
+    alt_tekrar_uygulanamadi: bool = False
 
 
-def _kod_sigdir(kod: str, nominal: float, w: float) -> tuple[float, list[str]]:
+def _kod_sigdir(
+    kod: str, nominal: float, w: float, min_tek: float, min_iki: float
+) -> tuple[float, list[str], bool]:
     pt = nominal
-    while pt >= KOD_MIN_TEK:
+    while pt >= min_tek:
         if _gen(kod, pt, True) <= w:
-            return pt, [kod]
+            return pt, [kod], False
         pt -= 0.5
     adaylar = [(kod[:i + 1], kod[i + 1:]) for i, c in enumerate(kod) if c == "-" and 0 < i < len(kod) - 1]
     if not adaylar:
         adaylar = [(kod[:i], kod[i:]) for i in range(1, len(kod))]
     a, b = min(adaylar, key=lambda p: max(_gen(p[0], 10, True), _gen(p[1], 10, True)))
     pt = nominal
-    while pt >= KOD_MIN_IKI:
+    while pt >= min_iki:
         if max(_gen(a, pt, True), _gen(b, pt, True)) <= w:
-            return pt, [a, b]
+            return pt, [a, b], False
         pt -= 0.5
-    raise EtiketHatasi("Rulman kodu etikete sığmıyor; daha kısa yazın.")
+    pt = min_iki
+    a = _tek_satir_sigdir(a, pt, pt, w, True)[1]
+    b = _tek_satir_sigdir(b, pt, pt, w, True)[1]
+    return pt, [a, b], True
 
 
 def _tek_satir_sigdir(s: str, nominal: float, en_kucuk: float, w: float, kalin: bool) -> tuple[float, str]:
@@ -385,21 +411,323 @@ def _tek_satir_sigdir(s: str, nominal: float, en_kucuk: float, w: float, kalin: 
     return pt, s.rstrip() + "…"
 
 
+def _kucuk_bilgi_satirlari(
+    metin: str, genislik: float, nominal: float, en_kucuk: float
+) -> tuple[float, list[str], bool]:
+    """Küçük etiket bilgi satırını en çok iki satıra sığdırır."""
+    metin = metin.strip()
+    if not metin:
+        return nominal, [], False
+    if _gen(metin, nominal, False) <= genislik:
+        return nominal, [metin], False
+
+    def bolmeler(pt: float, ayirac: str) -> list[tuple[str, str]]:
+        sonuc = []
+        for i, karakter in enumerate(metin):
+            if karakter != ayirac or i == 0 or i == len(metin) - 1:
+                continue
+            sol = metin[:i + 1].rstrip()
+            sag = metin[i + 1:].lstrip()
+            if _gen(sol, pt, False) <= genislik and _gen(sag, pt, False) <= genislik:
+                sonuc.append((sol, sag))
+        return sonuc
+
+    def en_dengeli(adaylar: list[tuple[str, str]], pt: float) -> tuple[str, str]:
+        return min(
+            adaylar,
+            key=lambda c: (
+                abs(_gen(c[0], pt, False) - _gen(c[1], pt, False)),
+                max(_gen(c[0], pt, False), _gen(c[1], pt, False)),
+            ),
+        )
+
+    for pt in [nominal, *(
+        nominal - 0.25 * i
+        for i in range(1, int(round((nominal - en_kucuk) / 0.25)) + 1)
+    )]:
+        slash = bolmeler(pt, "/")
+        if slash:
+            a, b = en_dengeli(slash, pt)
+            return pt, [a, b], False
+        wrapped = []
+        for i in range(1, len(metin)):
+            sol = metin[:i].rstrip()
+            sag = metin[i:].lstrip()
+            if not sol or not sag:
+                continue
+            if _gen(sol, pt, False) <= genislik and _gen(sag, pt, False) <= genislik:
+                wrapped.append((sol, sag))
+        if wrapped:
+            a, b = en_dengeli(wrapped, pt)
+            return pt, [a, b], False
+
+    pt = en_kucuk
+    bolum = min(
+        ((metin[:i].rstrip(), metin[i:].lstrip()) for i in range(1, len(metin))),
+        key=lambda c: max(_gen(c[0], pt, False), _gen(c[1], pt, False)),
+    )
+    ilk = _tek_satir_sigdir(bolum[0], pt, pt, genislik, False)[1]
+    ikinci = _tek_satir_sigdir(bolum[1], pt, pt, genislik, False)[1]
+    kisaldi = ilk != bolum[0] or ikinci != bolum[1]
+    return pt, [ilk, ikinci], kisaldi
+
+
+def _kucuk_kod_sigdir(
+    kod: str, nominal: float, genislik: float
+) -> tuple[float, list[str], bool]:
+    noktalar = [nominal - 0.5 * i for i in range(int((nominal - 5) / 0.5) + 1)]
+    for pt in noktalar:
+        if _gen(kod, pt, True) <= genislik:
+            return pt, [kod], False
+        ayrimlar = [
+            (kod[:i + 1], kod[i + 1:])
+            for i, karakter in enumerate(kod[:-1])
+            if karakter == "-"
+        ]
+        if not ayrimlar:
+            ayrimlar = [(kod[:i], kod[i:]) for i in range(1, len(kod))]
+        uygun = [
+            aday for aday in ayrimlar
+            if _gen(aday[0], pt, True) <= genislik
+            and _gen(aday[1], pt, True) <= genislik
+        ]
+        if uygun:
+            a, b = min(
+                uygun,
+                key=lambda c: (
+                    abs(_gen(c[0], pt, True) - _gen(c[1], pt, True)),
+                    max(_gen(c[0], pt, True), _gen(c[1], pt, True)),
+                ),
+            )
+            return pt, [a, b], False
+
+    pt = 5
+    ayrimlar = [
+        (kod[:i + 1], kod[i + 1:])
+        for i, karakter in enumerate(kod[:-1])
+        if karakter == "-"
+    ] or [(kod[:i], kod[i:]) for i in range(1, len(kod))]
+    a, b = min(
+        ayrimlar,
+        key=lambda c: max(_gen(c[0], pt, True), _gen(c[1], pt, True)),
+    )
+    ilk = _tek_satir_sigdir(a, pt, pt, genislik, True)[1]
+    ikinci = _tek_satir_sigdir(b, pt, pt, genislik, True)[1]
+    return pt, [ilk, ikinci], True
+
+
+def _kucuk_ust_sira(veri: EtiketVerisi):
+    uyarilar: list[str] = []
+    dm_metin = datamatrix_metni(veri)
+    dm = _datamatrix(dm_metin)
+    if len(dm) * 2 > 108 and _bilgiler(veri):
+        dm_metin = datamatrix_metni(veri, bilgili=False)
+        dm = _datamatrix(dm_metin)
+        uyarilar.append("Bilgi satırları çok uzun olduğu için kare koda eklenmedi.")
+    dm_modul = max(2, min(DM_MODUL_MAX, round(100 / len(dm))))
+    dm_x = SAG - len(dm) * dm_modul
+
+    if (veri.barkod_no or "").replace(" ", ""):
+        ean_kodu = ean13(veri.barkod_no)
+        bitler = EAN13(ean_kodu[:12]).build()[0]
+        for modul in (3, 2):
+            ean_x = KENAR + 9 * modul
+            sessiz_sag = ean_x + len(bitler) * modul + 7 * modul
+            if sessiz_sag - KENAR <= _nokta(29) and dm_x - sessiz_sag >= 0:
+                return "ean", modul, bitler, dm, dm_modul, dm_metin, uyarilar
+        raise EtiketHatasi("EAN-13 ve kare kod etikete sığmıyor.")
+
+    bitler = _code128(barkod_metni(veri))
+    sinir = _nokta(26)
+    for modul in CUBUK_MODUL:
+        if (len(bitler) + SESSIZ) * modul <= sinir:
+            return "yan", modul, bitler, dm, dm_modul, dm_metin, uyarilar
+    uyarilar.append("Kod çok uzun olduğu için çizgili barkod basılmadı; kare kod var.")
+    return "karekod", 0, "", dm, dm_modul, dm_metin, uyarilar
+
+
+def _kucuk_yerlesim(veri: EtiketVerisi, logo: bytes | None) -> Yerlesim:
+    p = PROFILLER["62x25"]
+    mod, modul, bitler, dm, dm_modul, dm_metin, uyarilar = _kucuk_ust_sira(veri)
+    n = len(dm)
+    yukseklik = p.yukseklik_mm * MM
+    cubuk_h = _nokta(p.cubuk_mm)
+    logo_bilgi = _logo_hazirla(logo)
+    logo_w = logo_h = 0.0
+    if logo_bilgi:
+        logo_h = 4 * MM
+        logo_w = logo_h * logo_bilgi.width / logo_bilgi.height
+        if logo_w > 18 * MM:
+            logo_w = 18 * MM
+            logo_h = logo_w * logo_bilgi.height / logo_bilgi.width
+    kod_genislik = _pt(ICERIK) - logo_w - (_pt(_nokta(2)) if logo_bilgi else 0)
+
+    ean_kodu = ean13(veri.barkod_no) if mod == "ean" else ""
+    ean_x = KENAR + 9 * modul if mod == "ean" else 0
+    ean_rakam_pt = p.rakam_pt if mod == "ean" else 0
+    ean_guard_ek = (
+        round((0.3 * MM + ean_rakam_pt * BUYUK_HARF) / NOKTA) if mod == "ean" else 0
+    )
+    rakam = barkod_metni(veri) if mod == "yan" else ""
+    rakam_pt = p.rakam_pt if rakam else 0
+    if rakam:
+        rakam_pt, rakam = _tek_satir_sigdir(
+            rakam, p.rakam_pt, 5, _pt(len(bitler) * modul), False
+        )
+    rakam_taban = (
+        _pt(KENAR + cubuk_h) + 0.7 * MM + rakam_pt * BUYUK_HARF if rakam else 0
+    )
+    ean_rakam_taban = (
+        _pt(KENAR + cubuk_h) + 0.3 * MM + ean_rakam_pt * BUYUK_HARF
+        if mod == "ean" else 0
+    )
+
+    if mod == "ean":
+        barkod_sag = ean_x + len(bitler) * modul + 7 * modul
+    elif bitler:
+        barkod_sag = KENAR + (len(bitler) + SESSIZ) * modul
+    else:
+        barkod_sag = KENAR + _nokta(26)
+    bilgi_x = barkod_sag + _nokta(0.6)
+    dm_x = SAG - n * dm_modul
+    bilgi_sag = dm_x - _nokta(0.6)
+    bilgi_w = _pt(max(0, bilgi_sag - bilgi_x))
+    bilgi_pt, bilgi_satirlari, bilgi_kisaldi = _kucuk_bilgi_satirlari(
+        veri.bilgi1, bilgi_w, p.bilgi_pt, 5
+    )
+    uy = list(uyarilar)
+    if bilgi_kisaldi:
+        uy.append("Bilgi satırı etikete sığmadığı için kısaltıldı.")
+    elif veri.bilgi1.strip() and not bilgi_satirlari:
+        uy.append("Bilgi satırı etikete sığmadığı için kısaltıldı.")
+
+    cubuk_alt = _pt(KENAR + cubuk_h)
+    bilgi_ust = cubuk_alt + (0.3 if mod == "ean" else 0.7) * MM
+    bilgi_tabanlari = []
+    if bilgi_satirlari:
+        ilk = bilgi_ust + bilgi_pt * (BUYUK_HARF + _ust_tasma(bilgi_satirlari[0]))
+        bilgi_tabanlari = [
+            ilk + i * bilgi_pt * 1.15 for i in range(len(bilgi_satirlari))
+        ]
+    bilgi_alt = (
+        bilgi_tabanlari[-1] + bilgi_pt * _alt_tasma(bilgi_satirlari[-1])
+        if bilgi_tabanlari else 0
+    )
+    dm_alt = _pt(KENAR + n * dm_modul)
+    barcode_text_alt = (
+        rakam_taban + rakam_pt * _alt_tasma(rakam) if rakam else 0
+    )
+    ean_text_alt = (
+        ean_rakam_taban + ean_rakam_pt * _alt_tasma(ean_kodu)
+        if ean_kodu else 0
+    )
+    ust_alt = max(dm_alt, bilgi_alt, barcode_text_alt, ean_text_alt)
+    adet = _adet_satiri(veri)
+    adet_taban = ust_alt + 0.25 * MM + p.adet_pt * (
+        BUYUK_HARF + _ust_tasma(adet)
+    )
+    bilgi2_ham = veri.bilgi2.strip()
+    bilgi2_pt = p.bilgi_pt
+    bilgi2_genislik = _pt(ICERIK)
+    ek_ham = veri.ek.strip()
+    son_secim = None
+    for kod_nominal in [p.kod_pt - 0.5 * i for i in range(9)]:
+        kod_pt, kod_satirlari, kod_kisaldi = _kucuk_kod_sigdir(
+            veri.kod.strip(), kod_nominal, kod_genislik
+        )
+        ek_pt, ek = (kod_pt, ek_ham)
+        if ek_ham:
+            ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, 5, kod_genislik, True)
+        bilgi2_pt, bilgi2 = _tek_satir_sigdir(
+            bilgi2_ham, p.bilgi_pt, 5, bilgi2_genislik, False
+        ) if bilgi2_ham else (p.bilgi_pt, "")
+        if logo_bilgi:
+            logo_x0 = _pt(SAG) - logo_w
+            bilgi2_genislik = max(0, logo_x0 - _pt(KENAR) - 0.5 * MM)
+            bilgi2_pt, bilgi2 = _tek_satir_sigdir(
+                bilgi2_ham, p.bilgi_pt, 5, bilgi2_genislik, False
+            ) if bilgi2_ham else (p.bilgi_pt, "")
+        bilgi2_taban = (
+            yukseklik - _pt(KENAR) - bilgi2_pt * _alt_tasma(bilgi2)
+            if bilgi2 else None
+        )
+        bilgi2_ust = (
+            bilgi2_taban - bilgi2_pt * (BUYUK_HARF + _ust_tasma(bilgi2))
+            if bilgi2_taban is not None else yukseklik - _pt(KENAR)
+        )
+        kod_ilk = (
+            adet_taban + p.adet_pt * _alt_tasma(adet) + 0.35 * MM
+            + kod_pt * BUYUK_HARF
+        )
+        kod_tabanlari = [
+            kod_ilk + i * kod_pt * KOD_ARALIK for i in range(len(kod_satirlari))
+        ]
+        ek_taban = (
+            kod_tabanlari[-1] + max(kod_pt, ek_pt) * KOD_ARALIK
+            if ek else None
+        )
+        son_taban = ek_taban if ek_taban is not None else kod_tabanlari[-1]
+        son_metin = ek if ek else kod_satirlari[-1]
+        son_pt = max(kod_pt, ek_pt) if ek else kod_pt
+        kod_alt = son_taban + son_pt * _alt_tasma(son_metin)
+        if not bilgi2 or kod_alt + 0.25 * MM <= bilgi2_ust:
+            son_secim = (
+                kod_pt, kod_satirlari, kod_kisaldi, ek_pt, ek, kod_tabanlari,
+                ek_taban, son_taban, son_metin, son_pt, bilgi2_pt, bilgi2,
+                bilgi2_taban, bilgi2_ust,
+            )
+            break
+    if son_secim is None:
+        raise EtiketHatasi("Yazılanlar 62 x 25 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın.")
+    (
+        kod_pt, kod_satirlari, kod_kisaldi, ek_pt, ek, kod_tabanlari, ek_taban,
+        son_taban, son_metin, son_pt, bilgi2_pt, bilgi2, bilgi2_taban, bilgi2_ust,
+    ) = son_secim
+    uy = list(uy)
+    if len(kod_satirlari) > 1 and not kod_kisaldi:
+        uy.append("Rulman kodu uzun olduğu için iki satıra bölündü.")
+    if kod_kisaldi:
+        uy.append("Rulman kodu etikete sığmadığı için kısaltıldı.")
+    if ek != ek_ham:
+        uy.append("Ek etikete sığmadığı için kısaltıldı.")
+    if bilgi2 != bilgi2_ham:
+        uy.append("Bilgi satırı etikete sığmadığı için kısaltıldı.")
+    logo_rect = None
+    if logo_bilgi:
+        logo_rect = (
+            _pt(SAG) - logo_w, son_taban - logo_h, _pt(SAG), son_taban
+        )
+    return Yerlesim(
+        boyut="62x25", genislik=SAYFA_GENISLIK, yukseklik=yukseklik, mod=mod,
+        cubuk_modul=modul, cubuk_bitler=bitler, cubuk_x=KENAR, cubuk_y=KENAR,
+        cubuk_h=cubuk_h, rakam_pt=rakam_pt, rakam_taban=rakam_taban,
+        dm=dm, dm_modul=dm_modul, dm_x=dm_x, dm_y=KENAR, dm_metin=dm_metin,
+        adet_taban=adet_taban, kod_pt=kod_pt, kod_satirlari=kod_satirlari,
+        kod_tabanlari=kod_tabanlari, ek_pt=ek_pt, ek_taban=ek_taban,
+        bilgi_pt=bilgi_pt, bilgi_satirlari=bilgi_satirlari,
+        bilgi_tabanlari=bilgi_tabanlari, alt_y0=None, uyarilar=uy,
+        ean_kodu=ean_kodu, ean_x=ean_x, ean_guard_ek=ean_guard_ek,
+        ean_rakam_pt=ean_rakam_pt, ean_rakam_taban=ean_rakam_taban,
+        kod_genislik=kod_genislik, logo_rect=logo_rect, bilgi_x=bilgi_x,
+        bilgi2_pt=bilgi2_pt, bilgi2_taban=bilgi2_taban, bilgi2_text=bilgi2,
+    )
+
+
 def _ust_sira(veri: EtiketVerisi, p: _Profil):
     """EAN-13/Code128 + DataMatrix yerleşimini seçer."""
     uyarilar: list[str] = []
     dm_metin = datamatrix_metni(veri)
     dm = _datamatrix(dm_metin)
-    if len(dm) * DM_MODUL_MIN > DM_EN_FAZLA and _bilgiler(veri):
+    if len(dm) * p.dm_min_modul > DM_EN_FAZLA and _bilgiler(veri):
         dm_metin = datamatrix_metni(veri, bilgili=False)
         dm = _datamatrix(dm_metin)
         uyarilar.append("Bilgi satırları çok uzun olduğu için kare koda eklenmedi.")
     n = len(dm)
-    en_iyi = max(DM_MODUL_MIN, min(DM_MODUL_MAX, p.dm_hedef // n))
+    en_iyi = max(p.dm_min_modul, min(DM_MODUL_MAX, p.dm_hedef // n))
     if (veri.barkod_no or "").replace(" ", ""):
         ean_kodu = ean13(veri.barkod_no)
         bitler = EAN13(ean_kodu[:12]).build()[0]
-        for dm_modul in range(en_iyi, DM_MODUL_MIN - 1, -1):
+        for dm_modul in range(en_iyi, p.dm_min_modul - 1, -1):
             dm_x = SAG - n * dm_modul
             for m in (4, 3):
                 ean_x = KENAR + 9 * m
@@ -409,7 +737,7 @@ def _ust_sira(veri: EtiketVerisi, p: _Profil):
         raise EtiketHatasi("EAN-13 ve kare kod etikete sığmıyor.")
 
     bitler = _code128(barkod_metni(veri))
-    for dm_modul in range(en_iyi, DM_MODUL_MIN - 1, -1):
+    for dm_modul in range(en_iyi, p.dm_min_modul - 1, -1):
         dm_x = SAG - n * dm_modul
         for m in CUBUK_MODUL:
             if KENAR + len(bitler) * m + SESSIZ * m <= dm_x:
@@ -417,7 +745,7 @@ def _ust_sira(veri: EtiketVerisi, p: _Profil):
     for m in CUBUK_MODUL:
         if len(bitler) * m <= ICERIK:
             uyarilar.append("Kod uzun olduğu için barkod tam genişlikte, kare kod aşağıda.")
-            return "genis", m, bitler, dm, DM_MODUL_MIN, dm_metin, uyarilar
+            return "genis", m, bitler, dm, p.dm_min_modul, dm_metin, uyarilar
     uyarilar.append("Kod çok uzun olduğu için çizgili barkod basılmadı; kare kod var.")
     return "karekod", 0, "", dm, en_iyi, dm_metin, uyarilar
 
@@ -427,6 +755,28 @@ def yerlesim(
 ) -> Yerlesim:
     if boyut not in PROFILLER:
         raise EtiketHatasi(f"Bilinmeyen etiket boyutu: {boyut}")
+    if boyut == "62x25":
+        return _kucuk_yerlesim(veri, logo)
+    if boyut == "62x35":
+        return _yerlesim_standart(replace(veri, alt_tekrar=False), boyut, logo)
+    if boyut == "62x62" and veri.alt_tekrar:
+        try:
+            return _yerlesim_standart(veri, boyut, logo)
+        except EtiketHatasi:
+            yer = _yerlesim_standart(
+                replace(veri, alt_tekrar=False), boyut, logo
+            )
+            yer.uyarilar.append(
+                "62x62 etikette alt tekrar sığmadığı için uygulanmadı."
+            )
+            yer.alt_tekrar_uygulanamadi = True
+            return yer
+    return _yerlesim_standart(veri, boyut, logo)
+
+
+def _yerlesim_standart(
+    veri: EtiketVerisi, boyut: str, logo: bytes | None
+) -> Yerlesim:
     p = PROFILLER[boyut]
     mod, m, bitler, dm, dm_modul, dm_metin, uyarilar = _ust_sira(veri, p)
     n = len(dm)
@@ -461,11 +811,20 @@ def yerlesim(
 
     ek_ham = veri.ek.strip()
     bilgiler = _bilgiler(veri)
-    for kod_nominal in [p.kod_pt - i for i in range(0, int(p.kod_pt - KOD_MIN_TEK) + 1)]:
-        kod_pt, kod_satir = _kod_sigdir(veri.kod.strip(), kod_nominal, kod_genislik)
+    kod_adim = 1 if p.kod_pt >= KOD_MIN_TEK else 0.5
+    kod_aralik = int(round((p.kod_pt - p.kod_min_pt) / kod_adim))
+    for kod_nominal in [
+        p.kod_pt - kod_adim * i for i in range(kod_aralik + 1)
+    ]:
+        kod_pt, kod_satir, kod_kisaldi = _kod_sigdir(
+            veri.kod.strip(), kod_nominal, kod_genislik,
+            p.kod_min_pt, p.kod_iki_min_pt,
+        )
         ek, ek_pt = ek_ham, kod_pt
         if ek_ham:
-            ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, KOD_MIN_IKI, kod_genislik, True)
+            ek_pt, ek = _tek_satir_sigdir(
+                ek_ham, kod_pt, p.kod_iki_min_pt, kod_genislik, True
+            )
 
         y = _pt(KENAR)
         if mod in ("yan", "ean"):
@@ -507,9 +866,17 @@ def yerlesim(
         bilgi_w = w if mod in ("yan", "ean") else w - _pt(dm_gen) - 2 * MM
         bilgi_pt, bilgi_satir = p.bilgi_pt, []
         if bilgiler:
-            sonuc = [_tek_satir_sigdir(b, p.bilgi_pt, BILGI_MIN, bilgi_w, False) for b in bilgiler]
+            sonuc = [
+                _tek_satir_sigdir(b, p.bilgi_pt, p.bilgi_min_pt, bilgi_w, False)
+                for b in bilgiler
+            ]
             bilgi_pt = min(s[0] for s in sonuc)
-            bilgi_satir = [_tek_satir_sigdir(b, bilgi_pt, BILGI_MIN, bilgi_w, False)[1] for b in bilgiler]
+            bilgi_satir = [
+                _tek_satir_sigdir(
+                    b, bilgi_pt, p.bilgi_min_pt, bilgi_w, False
+                )[1]
+                for b in bilgiler
+            ]
         bilgi_tabanlari = []
         orta_ust = y + BOSLUK_KOD_BILGI
         if bilgi_satir:
@@ -546,6 +913,12 @@ def yerlesim(
         cubuk_x = KENAR
         dm_x = SAG - dm_gen
         uy = list(uyarilar)
+        if len(kod_satir) > 1:
+            uy.append(
+                "Rulman kodu etikete sığmadığı için kısaltıldı."
+                if kod_kisaldi
+                else "Rulman kodu uzun olduğu için iki satıra bölündü."
+            )
         if ek != ek_ham:
             uy.append("Ek etikete sığmadığı için kısaltıldı.")
         if bilgi_satir != bilgiler:
@@ -585,7 +958,11 @@ def yerlesim(
             ean_rakam_pt=ean_rakam_pt, ean_rakam_taban=ean_rakam_taban,
             kod_genislik=kod_genislik, logo_rect=logo_rect,
         )
-    raise EtiketHatasi("Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın.")
+    yukseklik = p.yukseklik_mm
+    raise EtiketHatasi(
+        f"Yazılanlar 62 x {yukseklik:g} mm etikete sığmıyor; "
+        "kodu veya bilgi satırlarını kısaltın."
+    )
 
 
 def uyarilar(
@@ -678,6 +1055,25 @@ def _sayfa_ciz(
     adet = _adet_satiri(veri)
     p = PROFILLER[y.boyut]
     ek = veri.ek.strip()
+
+    if y.boyut == "62x25":
+        yaz(x, y.adet_taban, adet, p.adet_pt, kalin)
+        for satir, taban in zip(y.kod_satirlari, y.kod_tabanlari):
+            yaz(x, taban, satir, y.kod_pt, kalin)
+        if y.ek_taban is not None:
+            ek_s = _tek_satir_sigdir(ek, y.ek_pt, 5, y.kod_genislik, True)[1]
+            yaz(x, y.ek_taban, ek_s, y.ek_pt, kalin)
+        for satir, taban in zip(y.bilgi_satirlari, y.bilgi_tabanlari):
+            yaz(_pt(y.bilgi_x), taban, satir, y.bilgi_pt, normal)
+        if y.bilgi2_text and y.bilgi2_taban is not None:
+            yaz(x, y.bilgi2_taban, y.bilgi2_text, y.bilgi2_pt, normal)
+        tw.write_text(page, color=(0, 0, 0))
+        if logo and y.logo_rect:
+            page.insert_image(
+                pymupdf.Rect(*y.logo_rect), stream=logo, keep_proportion=False,
+                overlay=True,
+            )
+        return
 
     logo_yerleri: list[pymupdf.Rect] = []
 

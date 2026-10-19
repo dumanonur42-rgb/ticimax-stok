@@ -74,6 +74,21 @@ ORNEKLER: list[tuple[str, str, dict]] = [
     ("20_ean12_surekli", "62surekli", V("6308", barkod_no="869123456789")),
     ("21_uzun_kod_ean", "62x100", V("NNU4930-S-K-M-SP-XL-C3", "P6",
                                     barkod_no="8691234567890")),
+    ("22_kucuk_ean", "62x25", V(
+        "6318-2Z", "C3", bilgi1="0254X0511/0074647607/070684642-0030-10",
+        bilgi2="MADE IN TURKEY", barkod_no="8691234567890")),
+    ("23_kucuk_code128", "62x25", V(
+        "6318-2Z", "C3", bilgi1="LOT-123", bilgi2="MADE IN TURKEY")),
+    ("24_kucuk_uzun_kod", "62x25", V("NU2215-E-XL-TVP2-C3", "C3")),
+    ("25_ufak_kutu_ean", "62x35", V(
+        "6318-2Z", "C3", bilgi1="0254X0511/0074647607/070684642-0030-10",
+        bilgi2="MADE IN TURKEY", barkod_no="8691234567890")),
+    ("26_standart_kutu_tekrar", "62x62", V(
+        "6308-C-2HRS", "C3", bilgi1="0254X0511/0074647607/070684642-0030-10",
+        bilgi2="MADE IN TURKEY", barkod_no="8691234567890")),
+    ("27_standart_kutu_altsiz", "62x62", V(
+        "6308-C-2HRS", "C3", bilgi1="0254X0511/0074647607/070684642-0030-10",
+        bilgi2="MADE IN TURKEY", alt=False, barkod_no="8691234567890")),
 ]
 
 DOGRULA_HATALI = [
@@ -225,8 +240,13 @@ def sayfa_kontrol(
     s.olcum["sayfa_mm"] = f"{w_mm:.1f}x{h_mm:.1f}"
     if abs(w_mm - 62) > 0.3:
         s.hatalar.append(f"sayfa genişliği {w_mm:.2f} mm (62 olmalı)")
-    if boyut == "62x100" and abs(h_mm - 100) > 0.3:
-        s.hatalar.append(f"sayfa yüksekliği {h_mm:.2f} mm (100 olmalı)")
+    beklenen_yukseklik = {
+        "62x25": 25, "62x35": 35, "62x62": 62, "62x100": 100,
+    }.get(boyut)
+    if beklenen_yukseklik and abs(h_mm - beklenen_yukseklik) > 0.05:
+        s.hatalar.append(
+            f"sayfa yüksekliği {h_mm:.2f} mm ({beklenen_yukseklik} olmalı)"
+        )
     if boyut == "62surekli" and not (SUREKLI_MIN_MM <= h_mm <= SUREKLI_MAX_MM):
         s.hatalar.append(f"sürekli rulo uzunluğu {h_mm:.1f} mm (QL-550: 25-1000 mm)")
 
@@ -279,7 +299,16 @@ def sayfa_kontrol(
         s.olcum["ean_guard_cubuk"] = len(koruyucular)
     else:
         beklenen = beklenen_code128(v)
-        if coz["Code128"] != [beklenen]:
+        import etiket_cizim as ec
+        mod = ec.yerlesim(ec.EtiketVerisi(**v), boyut).mod
+        if mod == "karekod":
+            if coz["Code128"]:
+                s.hatalar.append(f"uzun kodda Code128 olmamalı: {coz['Code128']!r}")
+            if not any("çizgili barkod basılmadı" in u for u in ec.uyarilar(
+                ec.EtiketVerisi(**v), boyut
+            )):
+                s.hatalar.append("uzun kod için Code128 düşürme uyarısı yok")
+        elif coz["Code128"] != [beklenen]:
             s.hatalar.append(f"Code128 {coz['Code128']!r} != [{beklenen!r}]")
     if len(coz["DataMatrix"]) != 1:
         s.hatalar.append(f"DataMatrix sayısı {len(coz['DataMatrix'])}")
@@ -325,11 +354,8 @@ def sayfa_kontrol(
     font_aileleri = {
         f.casefold().replace(" ", "").replace("-", "") for f in fontlar
     }
-    if not any(f.startswith("hindbold") for f in font_aileleri):
-        s.hatalar.append(f"PDF'de Hind Bold yazı tipi yok: {sorted(fontlar)!r}")
-    medyum_gerekli = bool(v.get("barkod_no") or v.get("bilgi1") or v.get("bilgi2") or coz["Code128"])
-    if medyum_gerekli and not any(f.startswith("hindmedium") for f in font_aileleri):
-        s.hatalar.append(f"PDF'de Hind Medium yazı tipi yok: {sorted(fontlar)!r}")
+    if not any(f.startswith("hindsemibold") for f in font_aileleri):
+        s.hatalar.append(f"PDF'de Hind SemiBold yazı tipi yok: {sorted(fontlar)!r}")
     if any(not f.startswith("hind") for f in font_aileleri):
         s.hatalar.append(f"PDF'de Hind dışında yazı tipi var: {sorted(fontlar)!r}")
     metin_pdf = page.get_text()
@@ -432,9 +458,16 @@ def ciz_kontrol(ec, ad, boyut, v, cikti: Path) -> Sonuc:
         for k in kutu:
             if k[2] >= 0.8 * buyuk:
                 sayac[k[0]] = sayac.get(k[0], 0) + 1
-        if v["alt_tekrar"] and max(sayac.values()) < 2:
-            s.hatalar.append("alt tekrar açık ama kod bir kez yazılmış")
-        if not v["alt_tekrar"] and max(sayac.values()) > 1:
+        yer = ec.yerlesim(veri, boyut)
+        if boyut in ("62x25", "62x35"):
+            if max(sayac.values()) > 1:
+                s.hatalar.append(f"alt tekrar yok ama kod tekrar yazılmış: {sayac}")
+        elif v["alt_tekrar"]:
+            if yer.alt_y0 is not None and max(sayac.values()) < 2:
+                s.hatalar.append("alt tekrar açık ama kod bir kez yazılmış")
+            if yer.alt_tekrar_uygulanamadi and max(sayac.values()) > 1:
+                s.hatalar.append("62x62 tekrar sığmadı ama ikinci kod bloğu çizildi")
+        elif max(sayac.values()) > 1:
             s.hatalar.append(f"alt tekrar kapalı ama kod tekrar yazılmış: {sayac}")
         if hasattr(ec, "uyarilar"):
             for u in ec.uyarilar(veri, boyut):
@@ -580,6 +613,18 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
                 "6308-C-2HRS", "C3", barkod_no="8691234567890",
                 bilgi1="0254X0511/0074647607/070684642-0030-10",
                 bilgi2="MADE IN TURKEY"), trimmed, "62surekli"),
+            ("font_gap_62x62", V(
+                "6308-C-2HRS", "C3", barkod_no="8691234567890",
+                bilgi1="0254X0511/0074647607/070684642-0030-10",
+                bilgi2="MADE IN TURKEY"), trimmed, "62x62"),
+            ("logo_ufak_kutu", V(
+                "6308-C-2HRS", "C3", barkod_no="8691234567890",
+                bilgi1="LOT-123", bilgi2="MADE IN TURKEY", alt=True),
+                trimmed, "62x35"),
+            ("logo_kucuk", V(
+                "6318-2Z", "C3", barkod_no="8691234567890",
+                bilgi1="0254X0511/0074647607/070684642-0030-10",
+                bilgi2="MADE IN TURKEY", alt=True), trimmed, "62x25"),
         ]
         cli_logo = cikti / "sentetik_logo.png"
         cli_logo.write_bytes(trimmed)
@@ -590,7 +635,7 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
                 s.hatalar.append(f"{ad}: logo dikdörtgeni yok")
                 continue
             rect = pymupdf.Rect(*yer.logo_rect)
-            expected_h = 5.0
+            expected_h = 4.0 if boyut == "62x25" else 5.0
             if ad == "logo_uzun_kod":
                 expected_h = rect.height / MM
                 if abs(rect.width / MM - 20) > 0.05 or rect.height >= 5 * MM:
@@ -598,13 +643,26 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
             elif abs(rect.height / MM - expected_h) > 0.05:
                 s.hatalar.append(f"{ad}: logo yüksekliği {rect.height / MM:.2f} mm değil")
             beklenen_kod_genisligi = ec.ICERIK * ec.NOKTA - rect.width - 2 * MM
-            if abs(yer.kod_genislik - beklenen_kod_genisligi) > 0.05:
+            kod_sag = ec.KENAR * ec.NOKTA + yer.kod_genislik
+            if (yer.kod_genislik > beklenen_kod_genisligi + 0.05
+                    or rect.x0 - kod_sag < 2 * MM - 0.05):
                 s.hatalar.append(f"{ad}: kod/suffix genişliği logoya göre ayrılmadı")
+            if boyut in ("62x25", "62x35", "62x62"):
+                son_taban = (
+                    yer.ek_taban if yer.ek_taban is not None
+                    else yer.kod_tabanlari[-1]
+                )
+                if abs(rect.y1 - son_taban) > 0.05:
+                    s.hatalar.append(f"{ad}: logo ek/son kod satırına hizalı değil")
 
             doc = ec.ciz(veri, boyut, logo=logo)
             page = doc[0]
             rects = [pymupdf.Rect(i["bbox"]) for i in page.get_image_info()]
-            beklenen_sayi = 2 if giris["alt_tekrar"] else 1
+            beklenen_sayi = (
+                1 if boyut in ("62x25", "62x35")
+                else 2 if giris["alt_tekrar"] and yer.alt_y0 is not None
+                else 1
+            )
             sayfa_kontrol(
                 page, giris, boyut, s, cikti / f"{ad}.png", beklenen_sayi
             )
@@ -662,6 +720,12 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
             )
             s.hatalar.extend(s_cli.hatalar)
             s.uyarilar.extend(s_cli.uyarilar)
+            s_kucuk = cli_kontrol(
+                "kucuk_cli", "62x25",
+                V("6318-2Z", "C3", barkod_no="8691234567890"), cikti,
+            )
+            s.hatalar.extend(s_kucuk.hatalar)
+            s.uyarilar.extend(s_kucuk.uyarilar)
     except Exception as error:  # noqa: BLE001
         s.hatalar.append(f"logo kontrolü çöktü: {type(error).__name__}: {error}")
         traceback.print_exc()
@@ -702,7 +766,9 @@ def main() -> int:
     ):
         if not hasattr(ec, isim):
             sz.hatalar.append(f"etiket_cizim.{isim} yok")
-    if getattr(ec, "BOYUTLAR", None) is not None and set(ec.BOYUTLAR) != {"62x100", "62surekli"}:
+    if getattr(ec, "BOYUTLAR", None) is not None and list(ec.BOYUTLAR) != [
+        "62x25", "62x35", "62x62", "62x100", "62surekli"
+    ]:
         sz.hatalar.append(f"BOYUTLAR anahtarları {list(ec.BOYUTLAR)}")
     sonuclar.append(sz)
     if sz.hatalar:
@@ -711,6 +777,60 @@ def main() -> int:
 
     for ad, boyut, v in ORNEKLER:
         sonuclar.append(ciz_kontrol(ec, ad, boyut, v, a.cikti))
+
+    kucuk = Sonuc("sabit_yerlesim", "api", "62x25/35/62")
+    try:
+        tek = ec.yerlesim(
+            ec.EtiketVerisi(**V("6318-2Z", "C3", bilgi1="LOT-123")), "62x25"
+        )
+        bolunmus = ec.yerlesim(
+            ec.EtiketVerisi(**V(
+                "6318-2Z", "C3", bilgi1="ABC123/DEF456/GHI789",
+                barkod_no="8691234567890",
+            )), "62x25"
+        )
+        uzun = ec.EtiketVerisi(**V("NU2215-E-XL-TVP2-C3", "C3"))
+        uzun_yer = ec.yerlesim(uzun, "62x25")
+        if len(tek.bilgi_satirlari) != 1 or tek.bilgi_pt != 5.5:
+            kucuk.hatalar.append("kısa bilgi1 nominal boyutta tek satır değil")
+        if (len(bolunmus.bilgi_satirlari) != 2
+                or not bolunmus.bilgi_satirlari[0].endswith("/")):
+            kucuk.hatalar.append("bilgi1 dengeli eğik çizgiden bölünmedi")
+        if uzun_yer.mod != "karekod" or uzun_yer.cubuk_bitler:
+            kucuk.hatalar.append("uzun Code128 çizgili barkodu düşürmedi")
+        if not any("Kod çok uzun olduğu için çizgili barkod basılmadı" in u
+                   for u in ec.uyarilar(uzun, "62x25")):
+            kucuk.hatalar.append("uzun Code128 Türkçe yedek uyarısı yok")
+        for boyut in ("62x25", "62x35"):
+            tekrar = ec.yerlesim(
+                ec.EtiketVerisi(**V("6318-2Z", "C3", alt=True)), boyut
+            )
+            if tekrar.alt_y0 is not None:
+                kucuk.hatalar.append(f"{boyut} alt_tekrar değerini yok saymadı")
+        standart = ec.EtiketVerisi(**V(
+            "6308-C-2HRS", "C3",
+            bilgi1="0254X0511/0074647607/070684642-0030-10",
+            bilgi2="MADE IN TURKEY", barkod_no="8691234567890",
+        ))
+        tekrar = ec.yerlesim(standart, "62x62")
+        if tekrar.alt_y0 is not None:
+            kucuk.olcum["62x62 tekrar"] = "uygulandı"
+            if tekrar.alt_tekrar_uygulanamadi:
+                kucuk.hatalar.append("62x62 tekrar hem çizildi hem sığmadı sayıldı")
+        elif tekrar.alt_tekrar_uygulanamadi:
+            kucuk.olcum["62x62 tekrar"] = "62x35 düzenine düşürüldü"
+            if not any("alt tekrar sığmadığı" in u for u in tekrar.uyarilar):
+                kucuk.hatalar.append("62x62 tekrar fallback uyarısı yok")
+            kucuk.uyarilar.append("Standart 62x62 örneğinde alt tekrar sığmadı.")
+        else:
+            kucuk.hatalar.append("62x62 alt tekrar açıkken çizilmedi veya fallback olmadı")
+        standart.alt_tekrar = False
+        tekrar_kapali = ec.yerlesim(standart, "62x62")
+        if tekrar_kapali.alt_y0 is not None or tekrar_kapali.alt_tekrar_uygulanamadi:
+            kucuk.hatalar.append("62x62 alt_tekrar=False durumuna uymadı")
+    except Exception as error:  # noqa: BLE001
+        kucuk.hatalar.append(f"62x25 yerleşimi çöktü: {type(error).__name__}: {error}")
+    sonuclar.append(kucuk)
 
     sonuclar.append(logo_kontrol(ec, a.cikti, a.cli_yok))
 

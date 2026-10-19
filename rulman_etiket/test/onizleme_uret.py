@@ -64,7 +64,7 @@ def karsilastirma(png: bytes, referans: Path) -> Path:
     tuval.paste(biz, (2 * bosluk + ref.width, ust))
     d = ImageDraw.Draw(tuval)
     try:
-        f = ImageFont.truetype(str(KLASOR.parent / "fonts" / "Hind-Bold.ttf"), 30)
+        f = ImageFont.truetype(str(KLASOR.parent / "fonts" / "Hind-SemiBold.ttf"), 30)
     except OSError:
         f = ImageFont.load_default()
     d.text((bosluk, 20), "Referans (fotoğraf)", fill="black", font=f)
@@ -105,7 +105,11 @@ def main() -> int:
             b1 = ean13(veri.barkod_no) if veri.barkod_no else barkod_metni(veri)
             b2 = y.dm_metin
             o1, o2 = okunan.get(barkod_turu, "—"), okunan.get("DataMatrix", "—")
-            tamam = o1 == b1 and o2 == b2
+            tamam = (
+                "Code128" not in okunan and o2 == b2
+                if y.mod == "karekod" and not veri.barkod_no
+                else o1 == b1 and o2 == b2
+            )
             hata += not tamam
             g = lambda s: s.replace("\n", "⏎").replace("|", "\\|")  # noqa: E731
             satirlar.append(f"| {ad} | {boyut} | 62 x {y.yukseklik / MM:.1f} | `{g(b1)}` | `{g(o1)}` | "
@@ -135,13 +139,56 @@ def main() -> int:
                 okunan = oku(png)
                 barkod_turu = "EAN13" if veri.barkod_no else "Code128"
                 beklenen = ean13(veri.barkod_no) if veri.barkod_no else barkod_metni(veri)
-                tamam = okunan.get(barkod_turu) == beklenen
+                tamam = (
+                    "Code128" not in okunan
+                    if y.mod == "karekod" and not veri.barkod_no
+                    else okunan.get(barkod_turu) == beklenen
+                )
                 tamam = tamam and okunan.get("DataMatrix") == y.dm_metin
                 hata += not tamam
                 print(f"{dosya:32s} {'TAMAM' if tamam else 'HATA '}  logo "
                       f"{y.logo_rect} {y.uyarilar}")
     else:
         print("Logo örnekleri atlandı (--logo veya RULMAN_ETIKET_LOGO yok).")
+
+    logo_kucuk = args.logo.read_bytes() if args.logo else None
+    kucuk_ornekler = [
+        ("14_kucuk_ornek", EtiketVerisi(
+            "6318-2Z", "C3", 1, barkod_no="8691234567890",
+            bilgi1="0254X0511/0074647607/070684642-0030-10",
+            bilgi2="MADE IN TURKEY", alt_tekrar=True), logo_kucuk),
+        ("15_kucuk_uzun_kod", EtiketVerisi(
+            "NU2215-E-XL-TVP2-C3", "C3", 1, alt_tekrar=True), None),
+    ]
+    for ad, veri, logo in kucuk_ornekler:
+        boyutlar = ("62x25", "62x35", "62x62") if ad == "14_kucuk_ornek" else ("62x25",)
+        for boyut in boyutlar:
+            png = onizleme_png(veri, boyut, dpi=300, logo=logo)
+            (CIKTI / f"{ad}_{boyut}.png").write_bytes(png)
+            doc = ciz(veri, boyut, logo=logo)
+            doc.save(CIKTI / f"{ad}_{boyut}.pdf", garbage=4, deflate=True)
+            doc.close()
+            y = yerlesim(veri, boyut, logo=logo)
+            okunan = oku(png)
+            dm_ok = okunan.get("DataMatrix") == y.dm_metin
+            barkod_ok = (
+                okunan.get("EAN13") == ean13(veri.barkod_no)
+                if veri.barkod_no
+                else "Code128" not in okunan if y.mod == "karekod"
+                else okunan.get("Code128") == barkod_metni(veri)
+            )
+            tamam = barkod_ok and dm_ok
+            hata += not tamam
+            print(f"{ad + '_' + boyut:32s} {'TAMAM' if tamam else 'HATA '}  "
+                  f"{y.mod} logo={bool(logo)} repeat={y.alt_y0 is not None} "
+                  f"{y.logo_rect} {y.uyarilar}")
+            satirlar.append(
+                f"| {ad} | {boyut} | 62 x {y.yukseklik / MM:.1f} | `{y.dm_metin}` | "
+                f"`{okunan.get('EAN13') or okunan.get('Code128', '—')}` | "
+                f"`{y.dm_metin}` | `{okunan.get('DataMatrix', '—')}` | "
+                f"{'TAMAM' if tamam else 'HATA'} |"
+            )
+
     (CIKTI / "dogrulama.md").write_text("\n".join(satirlar) + "\n", encoding="utf-8")
     print("hata:", hata)
     return 1 if hata else 0

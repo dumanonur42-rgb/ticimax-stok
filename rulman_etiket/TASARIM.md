@@ -1,7 +1,8 @@
 # Rulman Etiket — etiket tasarımı
 
-Brother QL-550 (300 dpi, siyah-beyaz) için rulman kutusu etiketi. Düzen, verilen referans fotoğraftaki
-etiketle aynıdır; marka işareti, desen, EAN/GTIN alanı ve lot numarası **yoktur**. Zemin düz beyazdır.
+Brother QL-550 (300 dpi, siyah-beyaz) için rulman kutusu etiketi. Varsayılan düzen, verilen referans
+fotoğrafın yerleşimini izler; isteğe bağlı EAN-13, lot bilgileri ve kullanıcı logosu desteklenir.
+Zemin düz beyazdır.
 
 Bu belgedeki ölçüleri `etiket_cizim.py` uygular; geliştirici çizimi kendisi yapmaz, bu modülü çağırır:
 
@@ -27,8 +28,8 @@ Ek yardımcılar (sözleşme dışı, isteğe bağlı): `yerlesim(veri, boyut)` 
 | İçerik alanı | x = 3.05 … 58.93 mm, genişlik **55.88 mm (660 nokta)** |
 | Hizalama | Her şey sola hizalı. Barkod sol üstte, kare kod sağ üstte (sağ kenara dayalı). |
 | Renk | Yalnız siyah (0,0,0) dolgu, beyaz zemin; gri/ince çizgi yok. |
-| Yazı tipi | **Hind** Medium ve Bold (`fonts/`, SIL Open Font License 1.1, `fonts/LICENSE`). Bilgi satırları ve barkod rakamları Medium; Qty, kod ve ek Bold olarak PDF'e alt küme halinde gömülür. Türkçe harfler dahildir. |
-| Ölçüler | Hind büyük harf yüksekliği = 0.679 × punto (`OS/2.sCapHeight`); en derin glif taşması = 0.268 × punto (Bold `ç`/`ş` konturu). Aşağıdaki "taban" değerleri yazı taban çizgisinin sayfa üstünden uzaklığıdır. |
+| Yazı tipi | **Hind SemiBold** (`fonts/`, SIL Open Font License 1.1, `fonts/LICENSE`) tüm metinlerde kullanılır ve PDF'e alt küme halinde gömülür. Türkçe harfler dahildir. |
+| Ölçüler | Hind SemiBold büyük harf yüksekliği = 0.679 × punto (`OS/2.sCapHeight`); en derin glif taşması = 0.262 × punto (`ç`/`ş` konturu). Üst/alt glif taşmaları aynı fontun konturlarından ölçülmüştür. Aşağıdaki "taban" değerleri yazı taban çizgisinin sayfa üstünden uzaklığıdır. |
 
 ## 2. İçerik
 
@@ -51,12 +52,12 @@ Sayfa 62 x 100 mm. Değerler `6308-C-2HRS / C3 / 1` içindir (bilgi satırlı ha
 | Öğe | x (mm) | y / taban (mm) | genişlik x yükseklik (mm) | Yazı |
 |---|---|---|---|---|
 | Code128 çubuklar | 3.05 | üst 3.05 | 30.14 x 9.99 (modül 2 nokta = 0.169 mm, 178 modül) | — |
-| Barkod altı yazı | çubukların ortasına | taban 15.42 (çubuk altı + 0.7 mm + büyük harf) | çubuk genişliğini geçmez | Medium 7 pt (en az 5 pt) |
+| Barkod altı yazı | çubukların ortasına | taban 15.42 (çubuk altı + 0.7 mm + büyük harf) | çubuk genişliğini geçmez | Hind SemiBold 7 pt (en az 5 pt) |
 | DataMatrix | sağa dayalı, sağ kenar 58.93 | üst 3.05 | 12.19 x 12.19 (18x18 modül, 8 nokta = 0.68 mm) (24x24 x 7 nokta = 14.22 mm) | — |
-| Adet "1 Qty" | 3.05 | taban 20.21 (22.07, bilgili) — üst sıranın altından 2.4 mm boşluk | — | Bold 10 pt |
-| Kod "6308-C-2HRS" | 3.05 | taban 26.60 (28.46, bilgili) — adet tabanından 1.6 mm + büyük harf | 40.6 mm | Bold 20 pt |
-| Ek "C3" | 3.05 | taban 33.30 (35.16, bilgili) — satır aralığı 0.95 em | — | Bold 20 pt (kodla aynı) |
-| Bilgi 1 / 2 | 3.05 | taban 54.27 / 57.94 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | en fazla 55.88 | Medium 8 pt (en az 6 pt) |
+| Adet "1 Qty" | 3.05 | taban 20.21 (22.07, bilgili) — üst sıranın altından 2.4 mm boşluk | — | Hind SemiBold 10 pt |
+| Kod "6308-C-2HRS" | 3.05 | taban 26.60 (28.46, bilgili) — adet tabanından 1.6 mm + büyük harf | 40.6 mm | Hind SemiBold 20 pt |
+| Ek "C3" | 3.05 | taban 33.30 (35.16, bilgili) — satır aralığı 0.95 em | — | Hind SemiBold 20 pt (kodla aynı) |
+| Bilgi 1 / 2 | 3.05 | taban 54.27 / 57.94 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | en fazla 55.88 | Hind SemiBold 8 pt (en az 6 pt) |
 | Alt tekrar | 3.05 | blok sayfa altına dayalı; "1 Qty" tabanı 81.97 | — | üsttekiyle aynı |
 | Esnek boşluk | — | üst blok ile alt tekrar arası; en az 6 mm | — | — |
 
@@ -69,12 +70,12 @@ Alt tekrar kapalıysa uzunluk = içerik + 3.05 mm alt boşluk (ör. `51100` → 
 | Öğe | x (mm) | y / taban (mm) | genişlik x yükseklik (mm) | Yazı |
 |---|---|---|---|---|
 | Code128 çubuklar | 3.05 | üst 3.05 | 30.14 x 8.97 | — |
-| Barkod altı yazı | ortalı | taban 14.40 | — | Medium 7 pt |
+| Barkod altı yazı | ortalı | taban 14.40 | — | Hind SemiBold 7 pt |
 | DataMatrix | sağa dayalı | üst 3.05 | 12.19 (18x18 x 8 nokta) (bilgili: 24x24 x 6 nokta = 12.19) | — |
-| Adet | 3.05 | taban 19.80 | — | Bold 9 pt |
-| Kod | 3.05 | taban 25.71 | 36.5 mm | Bold 18 pt |
-| Ek | 3.05 | taban 31.74 | — | Bold 18 pt |
-| Bilgi 1 / 2 | 3.05 | taban 44.16 / 47.60 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | ≤ 55.88 | Medium 7.5 pt (en az 6 pt) |
+| Adet | 3.05 | taban 19.80 | — | Hind SemiBold 9 pt |
+| Kod | 3.05 | taban 25.71 | 36.5 mm | Hind SemiBold 18 pt |
+| Ek | 3.05 | taban 31.74 | — | Hind SemiBold 18 pt |
+| Bilgi 1 / 2 | 3.05 | taban 44.16 / 47.60 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | ≤ 55.88 | Hind SemiBold 7.5 pt (en az 6 pt) |
 | Alt tekrar | 3.05 | sayfa altına dayalı; "1 Qty" tabanı 63.32 | — | üsttekiyle aynı |
 | Uzunluk | — | 80.01 mm | — | — |
 
@@ -82,6 +83,31 @@ Referansla oran: referansta kod yazısı genişliğin ~%51'i, büyük harf yüks
 Burada kod yazısı daha büyük tutuldu (62x100'de genişliğin %71'i, 62 sürekli'de %64'ü; kod/adet = 2.0, kod/bilgi = 2.5)
 çünkü raftan okunacak asıl bilgi koddur. Bilgi satırları alt tekrar açıkken iki kod bloğu arasındaki boşluğun %45 noktasında ortalanır; kapalıyken ekten 3.5 mm sonra başlar.
 Kod puntosu bilinçli olarak sabit bir üst sınırdır (62x100: 20 pt, sürekli: 18 pt) ve kısa kodlar (`608-2Z`, `51100`) da bu puntoda basılır: referans etikette de punto koddan koda değişmez, bu puntoda kod zaten referanstan büyüktür ve böylece raftaki bütün kutularda kod aynı boyda görünür.
+
+### 3c. Kare kutu / büyük dikdörtgen kutu (62 x 25) — `"62x25"`
+
+62 mm genişlikte sürekli rulo üzerinde sabit 25 mm uzunluk. Üst solda EAN-13 (numara verilmişse)
+veya Code128, üst sağda sağ kenara hizalı DataMatrix bulunur. `bilgi1`, barkodun sağında en çok iki
+satırdır; ilk satırdaki `/` korunur. Barkodun altında `Qty`, rulman kodu ve ayrı satırda ek yer alır.
+`bilgi2` sol alt kenara, isteğe bağlı logo sağ alt köşeye hizalanır; logo en çok 4 mm yüksekliğinde ve
+18 mm genişliğindedir. Kod ve ek, logoyla çakışmaması için daraltılır. Bu boyutta `alt_tekrar` yok
+sayılır; arayüzde anahtarı devre dışı kalır, saklanan değeri değişmez.
+
+### 3d. Ufak dikdörtgen kutu (62 x 35) — `"62x35"`
+
+62 mm sürekli ruloda sabit 35 mm uzunluk. Üst blok, 62x100 düzenindeki gibi barkod/EAN-13 ve
+DataMatrix'i; altında adet, kod, ek ve sağa hizalı logoyu içerir. Bilgi satırları kod bloğunun
+altında yer alır. `alt_tekrar` yok sayılır ve arayüz anahtarı devre dışı bırakılır; saklanan
+değer korunur. Yazılar gerektiğinde küçültülür veya bölünür, en küçük punto 5'tir; bilgi/kod
+kısaltma ve çizgili barkod yedek uyarıları geçerlidir.
+
+### 3e. Standart dikdörtgen kutu (62 x 62) — `"62x62"`
+
+62 mm sürekli ruloda sabit 62 mm uzunluk ve 62x35 ile aynı üst blok. Alt tekrar açıkken, yeterli
+alan varsa ikinci kod bloğu çizilir; bilgi satırları üst ve alt blok arasındaki boşluğun
+üstten %45 noktasına taşınır. Yeterli alan yoksa etiket 62x35 benzeri tekrarsız düzende basılır,
+tekrar anahtarı devre dışı kalır ve "62x62 etikette alt tekrar sığmadığı için uygulanmadı."
+uyarısı verilir. En küçük punto 5'tir.
 
 ## 4. Barkod kuralları
 
@@ -113,6 +139,7 @@ Kod puntosu bilinçli olarak sabit bir üst sınırdır (62x100: 20 pt, sürekli
 | Bilgi satırı boş | Satır kalkar; ikisi de boşsa bilgi bloğu ve önündeki 3.5 mm boşluk da kalkar. |
 | Uzun bilgi satırı | İki satır aynı puntoda kalır: 8/7.5 pt'den 0.25 pt adımla **en az 6 pt**'ye kadar küçülür; yine sığmazsa sonu "…" ile kesilir (bütün yerleşim modlarında); uyarı: "Bilgi satırı etikete sığmadığı için kısaltıldı." Satır kaydırma yapılmaz (en fazla 60 karakter). |
 | 62x100'e sığmama | Kod puntosu 1 pt adımlarla 12 pt'ye kadar düşürülür; yine sığmazsa `dogrula` hata döner: "Yazılanlar 62 x 100 mm etikete sığmıyor; kodu veya bilgi satırlarını kısaltın." |
+| 62x35 / 62x62 | Sabit sayfaya sığdırmak için yazı en az 5 pt'ye düşürülür; kod ve bilgi satırları mevcut bölme/kısaltma uyarılarıyla sığdırılır. 62x35 tekrar çizmez; 62x62 tekrar sığmazsa tekrarsız düzene döner. |
 | Sürekli rulo | Hiç sığmama yok; uzunluk büyür. |
 | Alt tekrar | `alt_tekrar` (varsayılan **açık**). Kapalıysa alt blok çizilmez; 62x100'de alt kısım boş kalır, süreklide etiket kısalır. |
 
@@ -125,7 +152,7 @@ Boş liste = basılabilir. Hata metinleri (Türkçe, kullanıcıya aynen göster
 - "Adet tam sayı olmalı." · "Adet 1 ile 99999 arasında olmalı."
 - "Adet yazısı en fazla 12 karakter olabilir." · "Bilgi satırı N en fazla 60 karakter olabilir."
 - "… tek satır olmalı." (alanlarda satır sonu/sekme)
-- Her iki boyutta yerleşim denenir; sığmazsa yukarıdaki sığmama metni.
+- Seçilen boyutun yerleşimi `ciz` sırasında denenir; sığmazsa boyuta özgü sığmama metni.
 `ciz` ayrıca kopya 1–999 ve boyut adını denetler, hata varsa `EtiketHatasi` fırlatır.
 
 ## 7. Kütüphane seçimi
@@ -143,6 +170,7 @@ PyInstaller notu: `fonts/` klasörü exe'ye `fonts/` adıyla eklenmeli (`--add-d
 ## 8. Önizlemeler
 
 `python test/onizleme_uret.py` (rulman_etiket klasöründen) → `test/onizleme/`:
+`NN_ad_62x25.png/.pdf`, `NN_ad_62x35.png/.pdf`, `NN_ad_62x62.png/.pdf`,
 `NN_ad_62x100.png/.pdf`, `NN_ad_62surekli.png/.pdf` (300 dpi) ve
 `dogrulama.md` (aşağıdaki tablo). Çıkış kodu 0 = bütün barkodlar doğru okundu.
 Referans fotoğraf (marka deseni, EAN ve lot numarası içerdiği için) repoda tutulmaz; karşılaştırma için

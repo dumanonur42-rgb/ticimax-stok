@@ -447,7 +447,7 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
                 except Exception:
                     kagit_boyutu = 256
                 kagit_genisligi, kagit_uzunlugu = 620, 1000
-            elif boyut == "62surekli":
+            elif boyut in ("62surekli", "62x25", "62x35", "62x62"):
                 import pymupdf
 
                 with pymupdf.open(pdf) as belge:
