@@ -393,6 +393,37 @@ def _kullanici_ayarini_sil(yazici_kolu: Any) -> None:
         winspool.SetPrinterW(int(yazici_kolu), 9, None, 0)
 
 
+def _yuksek_baski_kalitesi(yazici: str, port: str, devmode, win32print) -> bool:
+    if "brother" not in yazici.casefold() and "ql" not in yazici.casefold():
+        return False
+    try:
+        cozumler = win32print.DeviceCapabilities(
+            yazici, port, getattr(win32print, "DC_ENUMRESOLUTIONS", 13)
+        )
+    except Exception:
+        return False
+    uygun = []
+    for cozum in cozumler or []:
+        if not isinstance(cozum, (tuple, list)) or len(cozum) < 2:
+            continue
+        try:
+            x, y = int(cozum[0]), int(cozum[1])
+        except (TypeError, ValueError):
+            continue
+        if x > 0 and y > x:
+            uygun.append((x, y))
+    if not uygun:
+        return False
+    x, y = max(uygun, key=lambda c: (c[1], c[0]))
+    devmode.PrintQuality = x
+    devmode.YResolution = y
+    devmode.Fields |= (
+        getattr(win32print, "DM_PRINTQUALITY", 0x400)
+        | getattr(win32print, "DM_YRESOLUTION", 0x2000)
+    )
+    return True
+
+
 @contextmanager
 def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
     if "brother" not in yazici.casefold() and "ql" not in yazici.casefold():
@@ -421,8 +452,9 @@ def _kagit_ayari(yazici: str, boyut: str, pdf: Path) -> Iterator[None]:
                 yeni = win32print.GetPrinter(yazici_kolu, 9)["pDevMode"]
             if yeni is None:
                 raise RuntimeError
+            port = win32print.GetPrinter(yazici_kolu, 2)["pPortName"]
+            _yuksek_baski_kalitesi(yazici, port, yeni, win32print)
             if boyut == "62x100":
-                port = win32print.GetPrinter(yazici_kolu, 2)["pPortName"]
                 kagit_boyutu = 256
                 try:
                     kodlar = win32print.DeviceCapabilities(yazici, port, 2)

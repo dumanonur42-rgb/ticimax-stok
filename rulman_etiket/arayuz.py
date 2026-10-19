@@ -40,6 +40,7 @@ SARI = "#B45309"
 YAZI_TIPI = "Segoe UI" if sys.platform == "win32" else "DejaVu Sans"
 
 _OLCEK = 1.0  # ekran ölçeği (100% = 1.0, 150% = 1.5)
+_KOMPAKT_DPI = False
 
 
 def px(n: float) -> int:
@@ -330,7 +331,7 @@ class Onizleme(tk.Frame):
             row=0, column=0, sticky="w")
         self.olcu = tk.Label(ust, text="", font=_f(8), fg=SOLUK, bg=KART)
         self.olcu.grid(row=0, column=1, sticky="e")
-        self.tuval = tk.Canvas(self, width=px(250), height=px(330), bg=BG,
+        self.tuval = tk.Canvas(self, width=px(180), height=px(330), bg=BG,
                                highlightthickness=0)
         self.tuval.grid(row=1, column=0, sticky="nsew", pady=(px(8), 0))
         self.uyari = tk.Label(self, text="", font=_f(9), fg=SARI, bg="#FEF3C7", anchor="w",
@@ -634,6 +635,7 @@ class Uygulama(tk.Tk):
         boyutlar = list(ec.BOYUTLAR)
         boyut = self.ayar.get("boyut")
         self.boyut_var = tk.StringVar(value=boyut if boyut in ec.BOYUTLAR else boyutlar[0])
+        self.boyut_goster_var = tk.StringVar()
         self.kopya_var = tk.StringVar(value="1")
         self.yazici_var = tk.StringVar()
 
@@ -657,7 +659,9 @@ class Uygulama(tk.Tk):
 
         sag = tk.Frame(govde, bg=BG)
         sag.grid(row=0, column=2, sticky="ns", padx=(px(14), 0))
-        sag.columnconfigure(0, weight=1, minsize=px(250))
+        boyut_font = tkfont.Font(root=self, font=_f(8))
+        boyut_genislik = boyut_font.measure(BOYUT_ADLARI["62x25"][0]) + px(72)
+        sag.columnconfigure(0, weight=1, minsize=max(px(350), boyut_genislik))
         sag.rowconfigure(2, weight=1)
         self._baski(sag)
         self.logo_kilit_var = tk.BooleanVar(value=bool(self.ayar.get("logo_kilitli", False)))
@@ -676,6 +680,7 @@ class Uygulama(tk.Tk):
             v.trace_add("write", lambda *_: self._degisti())
         for v in (self.alt_var, self.boyut_var, self.yazici_var):
             v.trace_add("write", lambda *_: self._ayar_kaydet_sonra())
+        self.boyut_var.trace_add("write", lambda *_: self._boyut_gosterimini_guncelle())
         self.boyut_var.trace_add("write", lambda *_: self._alt_tekrar_durum())
         self.kod_var.trace_add("write", lambda *_: self._normallestir(self.kod_var, self.kod))
         self.ek_var.trace_add("write", lambda *_: self._normallestir(self.ek_var, self.ek))
@@ -696,7 +701,7 @@ class Uygulama(tk.Tk):
 
     # -- kurulum
     def _olcek_ayarla(self):
-        global _OLCEK
+        global _OLCEK, _KOMPAKT_DPI
         dpi = 0.0
         if sys.platform == "win32":
             try:
@@ -707,7 +712,15 @@ class Uygulama(tk.Tk):
         if not dpi:
             dpi = float(self.winfo_fpixels("1i"))
         dpi = min(max(dpi, 96.0), 288.0)
-        _OLCEK = dpi / 96.0
+        olcek = dpi / 96.0
+        small_window = (
+            self.winfo_screenwidth() <= 1400
+            and self.winfo_screenheight() <= 800
+        )
+        _KOMPAKT_DPI = olcek > 1.3 and small_window
+        if olcek > 1.0 and small_window:
+            olcek = 0.8 if _KOMPAKT_DPI else 1.0
+        _OLCEK = olcek
         self.tk.call("tk", "scaling", dpi / 72.0)
 
     def _simge(self):
@@ -792,7 +805,8 @@ class Uygulama(tk.Tk):
         self.barkod_ipucu = tk.Label(
             kart,
             text='13 hane. Boş bırakılırsa barkod rulman kodundan yapılır.\n"Rastgele" yeni numara üretir.',
-            font=_f(8), fg=SOLUK, bg=KART, anchor="w", justify="left", width=1)
+            font=_f(6 if _KOMPAKT_DPI else 8),
+            fg=SOLUK, bg=KART, anchor="w", justify="left", width=1)
         self.barkod_ipucu.bind(
             "<Configure>",
             lambda e: self.barkod_ipucu.config(wraplength=max(px(80), e.width)))
@@ -820,23 +834,47 @@ class Uygulama(tk.Tk):
         kart = _kart(sag, "BASKI")
         kart.grid(row=0, column=0, sticky="ew")
         secenekler = [(k, *BOYUT_ADLARI.get(k, (k, v))) for k, v in ec.BOYUTLAR.items()]
+        self.boyut_kodlari = {ad: kod for kod, ad, _ in secenekler}
         tk.Label(kart, text="Etiket boyutu", font=_f(8), fg=SOLUK, bg=KART,
                  anchor="w").grid(row=1, column=0, sticky="w", pady=(px(6), px(3)))
-        Bolmeli(kart, self.boyut_var, secenekler, dikey=True).grid(row=2, column=0,
-                                                                   sticky="ew")
+        self.boyut_kutu = ttk.Combobox(
+            kart, textvariable=self.boyut_goster_var,
+            values=[ad for _, ad, _ in secenekler], state="readonly",
+            font=_f(8), width=1,
+        )
+        self.boyut_kutu.grid(row=2, column=0, sticky="ew")
+        self.boyut_kutu.bind("<<ComboboxSelected>>", self._boyut_secildi)
+        _boyut, aciklama = BOYUT_ADLARI[self.boyut_var.get()]
+        self.boyut_alt_yazi = tk.Label(
+            kart, text=aciklama, font=_f(8), fg=SOLUK, bg=KART, anchor="w"
+        )
+        self.boyut_alt_yazi.grid(row=3, column=0, sticky="w", pady=(px(3), px(5)))
+        self._boyut_gosterimini_guncelle()
         satir = tk.Frame(kart, bg=KART)
-        satir.grid(row=3, column=0, sticky="ew")
+        satir.grid(row=4, column=0, sticky="ew")
         satir.columnconfigure(0, weight=1)
         self.yazici_kutu = ttk.Combobox(satir, textvariable=self.yazici_var, state="readonly",
-                                        font=_f(10), width=1)
+                                        font=_f(8), width=1)
         _alan(satir, "Yazıcı", self.yazici_kutu, 0, ipady=0)
         Buton(satir, "Yenile", lambda: self.yazicilari_yenile(), tur="kucuk").grid(
             row=1, column=1, sticky="ns", padx=(px(8), 0))
         satir2 = tk.Frame(kart, bg=KART)
-        satir2.grid(row=4, column=0, sticky="w")
+        satir2.grid(row=5, column=0, sticky="w")
         self.kopya = Sayac(satir2, self.kopya_var, 1, 999)
         satir2.columnconfigure(0, minsize=px(120))
         _alan(satir2, "Kopya", self.kopya, 0, ipady=0)
+
+    def _boyut_secildi(self, _event=None):
+        kod = self.boyut_kodlari.get(self.boyut_goster_var.get())
+        if kod:
+            self.boyut_var.set(kod)
+
+    def _boyut_gosterimini_guncelle(self):
+        kod = self.boyut_var.get()
+        ad, aciklama = BOYUT_ADLARI.get(kod, (kod, ""))
+        self.boyut_goster_var.set(ad)
+        if hasattr(self, "boyut_alt_yazi"):
+            self.boyut_alt_yazi.config(text=aciklama)
 
     def _logo_karti(self, sag: tk.Frame):
         kart = _kart(sag, "LOGO")
