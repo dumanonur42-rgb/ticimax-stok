@@ -41,7 +41,7 @@ jobs:
             python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec('$module') else 1)"
             if ($LASTEXITCODE -eq 0) { $collectArgs += @("--collect-all", $module) }
           }
-          pyinstaller --noconfirm --onefile --windowed --name "Rulman Etiket" `
+          pyinstaller --noconfirm --onefile --windowed --name "Rulman.Etiket" `
             --icon assets\icon.ico `
             --add-data "fonts;fonts" `
             --add-data "assets;assets" `
@@ -64,7 +64,14 @@ jobs:
               [string]$FailureMessage
             )
 
-            $p = Start-Process -FilePath ".\dist\Rulman Etiket.exe" -ArgumentList $Arguments -PassThru -NoNewWindow
+            $startInfo = [System.Diagnostics.ProcessStartInfo]::new()
+            $startInfo.FileName = Join-Path $PWD "dist\Rulman.Etiket.exe"
+            $startInfo.WorkingDirectory = $PWD.Path
+            $startInfo.UseShellExecute = $false
+            foreach ($argument in $Arguments) {
+              $null = $startInfo.ArgumentList.Add($argument)
+            }
+            $p = [System.Diagnostics.Process]::Start($startInfo)
             $null = $p.Handle
             if (-not $p.WaitForExit(60000)) {
               Get-CimInstance Win32_Process | Format-Table ProcessId, ParentProcessId, Name, CommandLine -AutoSize | Out-String -Width 400 | Write-Host
@@ -82,33 +89,33 @@ jobs:
           }
 
           $etiket = "$PWD\test_cikti.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--adet", "1", "--pdf", ('"' + $etiket + '"')) -FailureMessage "PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--adet", "1", "--pdf", $etiket) -FailureMessage "PDF oluşturma başarısız"
           if (-not (Test-Path $etiket) -or (Get-Item $etiket).Length -le 0) { Write-Error "PDF dosyası oluşmadı"; exit 1 }
 
           $surekli = "$PWD\test_surekli.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", $surekli) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
           $kucuk = "$PWD\test_kucuk.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x25", "--pdf", ('"' + $kucuk + '"')) -FailureMessage "62x25 etiket PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x25", "--pdf", $kucuk) -FailureMessage "62x25 etiket PDF oluşturma başarısız"
           if (-not (Test-Path $kucuk) -or (Get-Item $kucuk).Length -le 0) { Write-Error "62x25 etiket PDF dosyası oluşmadı"; exit 1 }
 
           $kucuk35 = "$PWD\test_kucuk35.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x35", "--pdf", ('"' + $kucuk35 + '"')) -FailureMessage "62x35 etiket PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x35", "--pdf", $kucuk35) -FailureMessage "62x35 etiket PDF oluşturma başarısız"
           if (-not (Test-Path $kucuk35) -or (Get-Item $kucuk35).Length -le 0) { Write-Error "62x35 etiket PDF dosyası oluşmadı"; exit 1 }
 
           $kucuk62 = "$PWD\test_kucuk62.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--barkod", "8691234567890", "--bilgi1", "LOT-123", "--bilgi2", "MADE IN TURKEY", "--boyut", "62x62", "--pdf", ('"' + $kucuk62 + '"')) -FailureMessage "62x62 etiket PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--barkod", "8691234567890", "--bilgi1", "LOT-123", "--bilgi2", "MADE IN TURKEY", "--boyut", "62x62", "--pdf", $kucuk62) -FailureMessage "62x62 etiket PDF oluşturma başarısız"
           if (-not (Test-Path $kucuk62) -or (Get-Item $kucuk62).Length -le 0) { Write-Error "62x62 etiket PDF dosyası oluşmadı"; exit 1 }
 
           $ean = "$PWD\test_ean.pdf"
-          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6205-2RS", "--barkod", "8691234567890", "--pdf", ('"' + $ean + '"')) -FailureMessage "EAN-13 PDF oluşturma başarısız"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6205-2RS", "--barkod", "8691234567890", "--pdf", $ean) -FailureMessage "EAN-13 PDF oluşturma başarısız"
           if (-not (Test-Path $ean) -or (Get-Item $ean).Length -le 0) { Write-Error "EAN-13 PDF dosyası oluşmadı"; exit 1 }
 
           $kontrolRapor = Join-Path $PWD "kontrol.txt"
           Remove-Item $kontrolRapor -ErrorAction SilentlyContinue
           try {
-            Invoke-RulmanEtiketSmoke -Arguments @("--kontrol", "--rapor", ('"' + $kontrolRapor + '"')) -FailureMessage "Uygulama dosyaları denetimden geçemedi"
+            Invoke-RulmanEtiketSmoke -Arguments @("--kontrol", "--rapor", $kontrolRapor) -FailureMessage "Uygulama dosyaları denetimden geçemedi"
           } finally {
             if (Test-Path $kontrolRapor) {
               Get-Content $kontrolRapor -Encoding utf8 | Write-Host
@@ -119,7 +126,7 @@ jobs:
         with:
           name: Rulman Etiket
           path: |
-            rulman_etiket/dist/Rulman Etiket.exe
+            rulman_etiket/dist/Rulman.Etiket.exe
             rulman_etiket/test_cikti.pdf
             rulman_etiket/test_surekli.pdf
             rulman_etiket/kontrol.txt
@@ -138,7 +145,7 @@ jobs:
           name: Rulman Etiket QL-550
           body: "Brother QL-550 rulman kutu etiketi uygulaması."
           prerelease: false
-          files: "rulman_etiket/dist/Rulman Etiket.exe"
+          files: "rulman_etiket/dist/Rulman.Etiket.exe"
 
       - name: Deneme sürümü etiketini güncelle
         if: github.ref != 'refs/heads/main'
@@ -155,4 +162,4 @@ jobs:
           name: Rulman Etiket QL-550 (test sürümü)
           body: "Henüz yayımlanmamış deneme sürümü. Commit: ${{ github.sha }}"
           prerelease: true
-          files: "rulman_etiket/dist/Rulman Etiket.exe"
+          files: "rulman_etiket/dist/Rulman.Etiket.exe"
