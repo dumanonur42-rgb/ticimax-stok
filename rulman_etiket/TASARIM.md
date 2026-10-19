@@ -27,8 +27,8 @@ Ek yardımcılar (sözleşme dışı, isteğe bağlı): `yerlesim(veri, boyut)` 
 | İçerik alanı | x = 3.05 … 58.93 mm, genişlik **55.88 mm (660 nokta)** |
 | Hizalama | Her şey sola hizalı. Barkod sol üstte, kare kod sağ üstte (sağ kenara dayalı). |
 | Renk | Yalnız siyah (0,0,0) dolgu, beyaz zemin; gri/ince çizgi yok. |
-| Yazı tipi | **Liberation Sans 2.1.5** Regular ve Bold (`fonts/`, SIL Open Font License 1.1, `fonts/LICENSE`). Arial ile aynı harf genişliklerine sahiptir; PDF'e alt küme olarak gömülür. Türkçe harflerin (İ ı Ş ş Ğ ğ Ü ü Ö ö Ç ç) hepsi var. |
-| Ölçüler | Büyük harf yüksekliği = 0.716 × punto, alt taşma = 0.212 × punto (Liberation/Arial). Aşağıdaki "taban" değerleri yazı taban çizgisinin sayfa üstünden uzaklığıdır. |
+| Yazı tipi | **Hind** Medium ve Bold (`fonts/`, SIL Open Font License 1.1, `fonts/LICENSE`). Bilgi satırları ve barkod rakamları Medium; Qty, kod ve ek Bold olarak PDF'e alt küme halinde gömülür. Türkçe harfler dahildir. |
+| Ölçüler | Hind büyük harf yüksekliği = 0.679 × punto (`OS/2.sCapHeight`); en derin glif taşması = 0.268 × punto (Bold `ç`/`ş` konturu). Aşağıdaki "taban" değerleri yazı taban çizgisinin sayfa üstünden uzaklığıdır. |
 
 ## 2. İçerik
 
@@ -51,13 +51,13 @@ Sayfa 62 x 100 mm. Değerler `6308-C-2HRS / C3 / 1` içindir (bilgi satırlı ha
 | Öğe | x (mm) | y / taban (mm) | genişlik x yükseklik (mm) | Yazı |
 |---|---|---|---|---|
 | Code128 çubuklar | 3.05 | üst 3.05 | 30.14 x 9.99 (modül 2 nokta = 0.169 mm, 178 modül) | — |
-| Barkod altı yazı | çubukların ortasına | taban 15.51 (çubuk altı + 0.7 mm + büyük harf) | çubuk genişliğini geçmez | Regular 7 pt (en az 5 pt) |
+| Barkod altı yazı | çubukların ortasına | taban 15.42 (çubuk altı + 0.7 mm + büyük harf) | çubuk genişliğini geçmez | Medium 7 pt (en az 5 pt) |
 | DataMatrix | sağa dayalı, sağ kenar 58.93 | üst 3.05 | 12.19 x 12.19 (18x18 modül, 8 nokta = 0.68 mm) (24x24 x 7 nokta = 14.22 mm) | — |
-| Adet "1 Qty" | 3.05 | taban 20.43 (22.20) — üst sıranın altından 2.4 mm boşluk | — | Bold 10 pt |
-| Kod "6308-C-2HRS" | 3.05 | taban 27.08 (28.85) — adet tabanından 1.6 mm + büyük harf | 44.3 mm | Bold 20 pt |
-| Ek "C3" | 3.05 | taban 33.79 (35.55) — satır aralığı 0.95 em | — | Bold 20 pt (kodla aynı) |
-| Bilgi 1 / 2 | 3.05 | taban (41.07 / 44.74) — ekten 3.5 mm sonra, satır aralığı 1.3 em | en fazla 55.88 | Regular 8 pt (en az 6 pt) |
-| Alt tekrar | 3.05 | blok sayfa altına dayalı: son satır alt taşması 100 − 3.05 mm'de; "1 Qty" tabanı 82.1 | — | üsttekiyle aynı |
+| Adet "1 Qty" | 3.05 | taban 20.21 (22.07, bilgili) — üst sıranın altından 2.4 mm boşluk | — | Bold 10 pt |
+| Kod "6308-C-2HRS" | 3.05 | taban 26.60 (28.46, bilgili) — adet tabanından 1.6 mm + büyük harf | 40.6 mm | Bold 20 pt |
+| Ek "C3" | 3.05 | taban 33.30 (35.16, bilgili) — satır aralığı 0.95 em | — | Bold 20 pt (kodla aynı) |
+| Bilgi 1 / 2 | 3.05 | taban 54.27 / 57.94 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | en fazla 55.88 | Medium 8 pt (en az 6 pt) |
+| Alt tekrar | 3.05 | blok sayfa altına dayalı; "1 Qty" tabanı 81.97 | — | üsttekiyle aynı |
 | Esnek boşluk | — | üst blok ile alt tekrar arası; en az 6 mm | — | — |
 
 ### 3b. 62 mm sürekli rulo (DK-22205) — `"62surekli"`
@@ -69,18 +69,18 @@ Alt tekrar kapalıysa uzunluk = içerik + 3.05 mm alt boşluk (ör. `51100` → 
 | Öğe | x (mm) | y / taban (mm) | genişlik x yükseklik (mm) | Yazı |
 |---|---|---|---|---|
 | Code128 çubuklar | 3.05 | üst 3.05 | 30.14 x 8.97 | — |
-| Barkod altı yazı | ortalı | taban 14.49 | — | Regular 7 pt |
+| Barkod altı yazı | ortalı | taban 14.40 | — | Medium 7 pt |
 | DataMatrix | sağa dayalı | üst 3.05 | 12.19 (18x18 x 8 nokta) (bilgili: 24x24 x 6 nokta = 12.19) | — |
-| Adet | 3.05 | taban 19.91 | — | Bold 9 pt |
-| Kod | 3.05 | taban 26.06 | 39.9 mm | Bold 18 pt |
-| Ek | 3.05 | taban 32.09 | — | Bold 18 pt |
-| Bilgi 1 / 2 | 3.05 | taban (37.49 / 40.93) | ≤ 55.88 | Regular 7.5 pt (en az 6 pt) |
-| Alt tekrar | 3.05 | sayfa altına dayalı; "1 Qty" tabanı 63.4 | — | üsttekiyle aynı |
-| Uzunluk | — | 80.0 mm | — | — |
+| Adet | 3.05 | taban 19.80 | — | Bold 9 pt |
+| Kod | 3.05 | taban 25.71 | 36.5 mm | Bold 18 pt |
+| Ek | 3.05 | taban 31.74 | — | Bold 18 pt |
+| Bilgi 1 / 2 | 3.05 | taban 44.16 / 47.60 (alt tekrar açık); kapalıysa ekten 3.5 mm sonra | ≤ 55.88 | Medium 7.5 pt (en az 6 pt) |
+| Alt tekrar | 3.05 | sayfa altına dayalı; "1 Qty" tabanı 63.32 | — | üsttekiyle aynı |
+| Uzunluk | — | 80.01 mm | — | — |
 
 Referansla oran: referansta kod yazısı genişliğin ~%51'i, büyük harf yüksekliği / adet yazısı ≈ 1.4, kod / bilgi ≈ 1.5.
 Burada kod yazısı daha büyük tutuldu (62x100'de genişliğin %71'i, 62 sürekli'de %64'ü; kod/adet = 2.0, kod/bilgi = 2.5)
-çünkü raftan okunacak asıl bilgi koddur. Dikey sıra ve boşluk mantığı referansla aynıdır.
+çünkü raftan okunacak asıl bilgi koddur. Bilgi satırları alt tekrar açıkken iki kod bloğu arasındaki boşluğun %45 noktasında ortalanır; kapalıyken ekten 3.5 mm sonra başlar.
 Kod puntosu bilinçli olarak sabit bir üst sınırdır (62x100: 20 pt, sürekli: 18 pt) ve kısa kodlar (`608-2Z`, `51100`) da bu puntoda basılır: referans etikette de punto koddan koda değişmez, bu puntoda kod zaten referanstan büyüktür ve böylece raftaki bütün kutularda kod aynı boyda görünür.
 
 ## 4. Barkod kuralları
