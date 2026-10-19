@@ -51,8 +51,11 @@ def _f(boy: int, kalin: bool = False) -> tuple:
 
 
 BOYUT_ADLARI = {
-    "62x100": ("62 × 100 mm", "Kesik etiket · DK-11202"),
-    "62surekli": ("62 mm sürekli", "Sürekli rulo · DK-22205"),
+    "62x25": ("Kare kutu / büyük dikdörtgen kutu (62 x 25)", "Sürekli rulo · DK-22205"),
+    "62x35": ("Ufak dikdörtgen kutu (62 x 35)", "Sürekli rulo · DK-22205"),
+    "62x62": ("Standart dikdörtgen kutu (62 x 62)", "Sürekli rulo · DK-22205"),
+    "62x100": ("62 x 100 kesik etiket (DK-11202)", "Kesik · DK-11202"),
+    "62surekli": ("62 mm sürekli rulo (DK-22205)", "Sürekli rulo · DK-22205"),
 }
 
 _HARF = str.maketrans({"i": "I", "ı": "I", "İ": "I"})
@@ -167,9 +170,11 @@ class Bolmeli(tk.Frame):
             else:
                 hucre.grid(row=0, column=i, sticky="nsew", padx=(0 if i == 0 else 1, 0))
                 self.columnconfigure(i, weight=1, uniform="bolme")
-            b = tk.Label(hucre, text=baslik, font=_f(10, True), bg=KART, anchor="w")
+            b = tk.Label(hucre, text=baslik, font=_f(10, True), bg=KART, anchor="w",
+                         justify="left", wraplength=px(225))
             b.pack(fill="x")
-            a = tk.Label(hucre, text=alt, font=_f(8), bg=KART, anchor="w")
+            a = tk.Label(hucre, text=alt, font=_f(8), bg=KART, anchor="w",
+                         justify="left", wraplength=px(225))
             a.pack(fill="x")
             for w in (hucre, b, a):
                 w.bind("<Button-1>", lambda _e, k=anahtar: self.var.set(k))
@@ -193,30 +198,48 @@ class Anahtar(tk.Frame):
     def __init__(self, master, degisken: tk.BooleanVar, metin: str, alt: str = ""):
         super().__init__(master, bg=KART, cursor="hand2")
         self.var = degisken
+        self.acik = True
         self.w, self.h = px(40), px(22)
         self.sw = tk.Canvas(self, width=self.w, height=self.h, bg=KART, highlightthickness=0)
         self.sw.grid(row=0, column=0, rowspan=2, padx=(0, px(12)))
-        tk.Label(self, text=metin, font=_f(10), fg=YAZI, bg=KART,
-                 anchor="w").grid(row=0, column=1, sticky="w")
+        self.baslik = tk.Label(self, text=metin, font=_f(10), fg=YAZI, bg=KART,
+                               anchor="w")
+        self.baslik.grid(row=0, column=1, sticky="w")
+        self.aciklama = None
         if alt:
-            tk.Label(self, text=alt, font=_f(8), fg=SOLUK, bg=KART,
-                     anchor="w").grid(row=1, column=1, sticky="w")
+            self.aciklama = tk.Label(self, text=alt, font=_f(8), fg=SOLUK, bg=KART,
+                                     anchor="w")
+            self.aciklama.grid(row=1, column=1, sticky="w")
         for w in (self, *self.winfo_children()):
-            w.bind("<Button-1>", lambda _e: self.var.set(not self.var.get()))
+            w.bind("<Button-1>", self._tikla)
         self.var.trace_add("write", lambda *_: self._boya())
+        self._boya()
+
+    def _tikla(self, _e):
+        if self.acik:
+            self.var.set(not self.var.get())
+
+    def durum(self, acik: bool):
+        self.acik = bool(acik)
+        self.config(cursor="hand2" if self.acik else "arrow")
+        for w in (self.sw, self.baslik, *([self.aciklama] if self.aciklama else [])):
+            w.config(cursor="hand2" if self.acik else "arrow")
         self._boya()
 
     def _boya(self):
         on = self.var.get()
         c, w, h = self.sw, self.w, self.h
         c.delete("all")
-        renk = KOYU if on else "#CBD0D6"
+        renk = KOYU if on and self.acik else "#CBD0D6"
         c.create_oval(0, 0, h, h, fill=renk, outline="")
         c.create_oval(w - h, 0, w, h, fill=renk, outline="")
         c.create_rectangle(h / 2, 0, w - h / 2, h, fill=renk, outline="")
         b = px(3)
         x = w - h + b if on else b
         c.create_oval(x, b, x + h - 2 * b, h - b, fill="white", outline="")
+        self.baslik.config(fg=YAZI if self.acik else SOLUK)
+        if self.aciklama:
+            self.aciklama.config(fg=SOLUK)
 
 
 def _giris(master, font=None, **kw) -> tk.Entry:
@@ -653,6 +676,7 @@ class Uygulama(tk.Tk):
             v.trace_add("write", lambda *_: self._degisti())
         for v in (self.alt_var, self.boyut_var, self.yazici_var):
             v.trace_add("write", lambda *_: self._ayar_kaydet_sonra())
+        self.boyut_var.trace_add("write", lambda *_: self._alt_tekrar_durum())
         self.kod_var.trace_add("write", lambda *_: self._normallestir(self.kod_var, self.kod))
         self.ek_var.trace_add("write", lambda *_: self._normallestir(self.ek_var, self.ek))
         self.barkod_var.trace_add("write", lambda *_: self._barkod_bosluklarini_kaldir())
@@ -780,8 +804,9 @@ class Uygulama(tk.Tk):
         self.bilgi1.grid(row=9, column=0, sticky="ew", ipady=px(3))
         self.bilgi2 = _giris(kart, font=_f(10), textvariable=self.bilgi2_var)
         self.bilgi2.grid(row=10, column=0, sticky="ew", ipady=px(3), pady=(px(5), 0))
-        Anahtar(kart, self.alt_var, "Altta tekrar yazsın").grid(row=11, column=0, sticky="w",
-                                                                pady=(px(10), 0))
+        self.alt_anahtar = Anahtar(kart, self.alt_var, "Altta tekrar yazsın")
+        self.alt_anahtar.grid(row=11, column=0, sticky="w", pady=(px(10), 0))
+        self._alt_tekrar_durum()
 
         dugmeler = tk.Frame(kart, bg=KART)
         dugmeler.grid(row=21, column=0, sticky="sew", pady=(px(16), px(2)))
@@ -1050,9 +1075,24 @@ class Uygulama(tk.Tk):
         return v, boyut, self.logo
 
     def _degisti(self):
+        if hasattr(self, "alt_anahtar"):
+            self._alt_tekrar_durum()
         if self._onizleme_zamani:
             self.after_cancel(self._onizleme_zamani)
         self._onizleme_zamani = self.after(200, self._onizleme_guncelle)
+
+    def _alt_tekrar_durum(self):
+        boyut = self.boyut_var.get()
+        acik = boyut not in ("62x25", "62x35")
+        if boyut == "62x62":
+            try:
+                veri = self.veri()
+                veri.alt_tekrar = True
+                yer = ec.yerlesim(veri, boyut, logo=self.logo)
+                acik = yer.alt_y0 is not None and not yer.alt_tekrar_uygulanamadi
+            except ec.EtiketHatasi:
+                acik = False
+        self.alt_anahtar.durum(acik)
 
     def _onizleme_guncelle(self):
         self._onizleme_zamani = None

@@ -95,6 +95,18 @@ jobs:
           Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--boyut", "62surekli", "--pdf", ('"' + $surekli + '"')) -FailureMessage "Sürekli etiket PDF oluşturma başarısız"
           if (-not (Test-Path $surekli) -or (Get-Item $surekli).Length -le 0) { Write-Error "Sürekli etiket PDF dosyası oluşmadı"; exit 1 }
 
+          $kucuk = "$PWD\test_kucuk.pdf"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x25", "--pdf", ('"' + $kucuk + '"')) -FailureMessage "62x25 etiket PDF oluşturma başarısız"
+          if (-not (Test-Path $kucuk) -or (Get-Item $kucuk).Length -le 0) { Write-Error "62x25 etiket PDF dosyası oluşmadı"; exit 1 }
+
+          $kucuk35 = "$PWD\test_kucuk35.pdf"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6318-2Z", "--ek", "C3", "--boyut", "62x35", "--pdf", ('"' + $kucuk35 + '"')) -FailureMessage "62x35 etiket PDF oluşturma başarısız"
+          if (-not (Test-Path $kucuk35) -or (Get-Item $kucuk35).Length -le 0) { Write-Error "62x35 etiket PDF dosyası oluşmadı"; exit 1 }
+
+          $kucuk62 = "$PWD\test_kucuk62.pdf"
+          Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6308-C-2HRS", "--ek", "C3", "--barkod", "8691234567890", "--bilgi1", "LOT-123", "--bilgi2", "MADE IN TURKEY", "--boyut", "62x62", "--pdf", ('"' + $kucuk62 + '"')) -FailureMessage "62x62 etiket PDF oluşturma başarısız"
+          if (-not (Test-Path $kucuk62) -or (Get-Item $kucuk62).Length -le 0) { Write-Error "62x62 etiket PDF dosyası oluşmadı"; exit 1 }
+
           $ean = "$PWD\test_ean.pdf"
           Invoke-RulmanEtiketSmoke -Arguments @("--kod", "6205-2RS", "--barkod", "8691234567890", "--pdf", ('"' + $ean + '"')) -FailureMessage "EAN-13 PDF oluşturma başarısız"
           if (-not (Test-Path $ean) -or (Get-Item $ean).Length -le 0) { Write-Error "EAN-13 PDF dosyası oluşmadı"; exit 1 }
