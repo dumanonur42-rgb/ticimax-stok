@@ -23,7 +23,7 @@ Ek yardımcılar (sözleşme dışı, isteğe bağlı): `yerlesim(veri, boyut)` 
 | Konu | Değer |
 |---|---|
 | Birim | 1 nokta = 1/300 inç = 0.0847 mm = 0.24 pt. Barkod ve kare kod modülleri tam noktaya oturur (sayfa sol üstünden tam sayı nokta). |
-| Sayfa genişliği | 62 mm (175.75 pt). PDF ölçeklemesiz basılmalı (SumatraPDF `noscale`). |
+| Sayfa genişliği | 62 mm (175.75 pt). PDF, yazıcı çözünürlüğünde 1:1 GDI raster olarak basılır. |
 | Kenar boşluğu | Sol / sağ / üst / alt **36 nokta = 3.05 mm**. QL-550 62 mm ruloda ~58 mm basabilir (her kenarda ~2 mm basılamaz) + ~1 mm güvenlik. |
 | İçerik alanı | x = 3.05 … 58.93 mm, genişlik **55.88 mm (660 nokta)** |
 | Hizalama | Her şey sola hizalı. Barkod sol üstte, kare kod sağ üstte (sağ kenara dayalı). |

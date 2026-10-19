@@ -1084,7 +1084,7 @@ def main() -> int:
                                capture_output=True, text=True, timeout=60)
             kk = Sonuc("--kontrol", "cli", "-")
             kk.olcum["cikis"] = p.returncode
-            kk.uyarilar.append(f"çıkış {p.returncode} (Linux'ta SumatraPDF yok, bilgi amaçlı): "
+            kk.uyarilar.append(f"çıkış {p.returncode}: "
                                f"{(p.stdout + p.stderr).strip()[-200:]}")
             sonuclar.append(kk)
         else:
