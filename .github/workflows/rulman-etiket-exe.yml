@@ -159,9 +159,10 @@ jobs:
             }
             $raporMetni = Get-Content $kontrolRapor -Raw -Encoding utf8
             Write-Host $raporMetni
-            if ($raporMetni -notmatch "(?m)^Yazdırma \(win32ui\): Başarılı$") {
-              throw "Dondurulmuş EXE win32ui denetiminden geçemedi"
-            }
+          $win32uiRaporSatiri = "Yazd$([char]0x0131)rma (win32ui): Ba$([char]0x015F)ar$([char]0x0131)l$([char]0x0131)"
+          if (-not $raporMetni.Contains($win32uiRaporSatiri)) {
+            throw "Dondurulmuş EXE win32ui denetiminden geçemedi"
+          }
           }
 
       - uses: actions/upload-artifact@v4
