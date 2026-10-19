@@ -421,55 +421,76 @@ def _kucuk_bilgi_satirlari(
     if _gen(metin, nominal, False) <= genislik:
         return nominal, [metin], False
 
-    def bolmeler(pt: float, ayirac: str) -> list[tuple[str, str]]:
-        sonuc = []
-        for i, karakter in enumerate(metin):
-            if karakter != ayirac or i == 0 or i == len(metin) - 1:
-                continue
-            sol = metin[:i + 1].rstrip()
-            sag = metin[i + 1:].lstrip()
-            if _gen(sol, pt, False) <= genislik and _gen(sag, pt, False) <= genislik:
-                sonuc.append((sol, sag))
-        return sonuc
+    noktalar = [
+        nominal - 0.25 * i
+        for i in range(int(round((nominal - en_kucuk) / 0.25)) + 1)
+    ]
 
-    def en_dengeli(adaylar: list[tuple[str, str]], pt: float) -> tuple[str, str]:
+    def bolmeler(ayirac: str) -> list[tuple[str, str]]:
+        return [
+            (metin[:i + 1], metin[i + 1:])
+            for i, karakter in enumerate(metin)
+            if karakter == ayirac and i > 0 and i < len(metin) - 1
+        ]
+
+    def en_dengeli(
+        adaylar: list[tuple[str, str]], pt: float
+    ) -> tuple[str, str]:
         return min(
             adaylar,
             key=lambda c: (
-                abs(_gen(c[0], pt, False) - _gen(c[1], pt, False)),
                 max(_gen(c[0], pt, False), _gen(c[1], pt, False)),
+                abs(_gen(c[0], pt, False) - _gen(c[1], pt, False)),
             ),
         )
 
-    for pt in [nominal, *(
-        nominal - 0.25 * i
-        for i in range(1, int(round((nominal - en_kucuk) / 0.25)) + 1)
-    )]:
-        slash = bolmeler(pt, "/")
-        if slash:
-            a, b = en_dengeli(slash, pt)
-            return pt, [a, b], False
-        wrapped = []
-        for i in range(1, len(metin)):
-            sol = metin[:i].rstrip()
-            sag = metin[i:].lstrip()
-            if not sol or not sag:
-                continue
-            if _gen(sol, pt, False) <= genislik and _gen(sag, pt, False) <= genislik:
-                wrapped.append((sol, sag))
-        if wrapped:
-            a, b = en_dengeli(wrapped, pt)
-            return pt, [a, b], False
+    slash = bolmeler("/")
+    has_slash = "/" in metin
+    for pt in noktalar:
+        if has_slash and slash:
+            fitting = [
+                (a, b) for a, b in slash
+                if _gen(a, pt, False) <= genislik
+                and _gen(b, pt, False) <= genislik
+            ]
+            if fitting:
+                a, b = en_dengeli(fitting, pt)
+                return pt, [a, b], False
+
+    if not has_slash:
+        for pt in noktalar:
+            wrapped = []
+            for i in range(1, len(metin)):
+                sol = metin[:i].rstrip()
+                sag = metin[i:].lstrip()
+                if not sol or not sag:
+                    continue
+                if _gen(sol, pt, False) <= genislik and _gen(sag, pt, False) <= genislik:
+                    wrapped.append((sol, sag))
+            if wrapped:
+                a, b = en_dengeli(wrapped, pt)
+                return pt, [a, b], False
 
     pt = en_kucuk
-    bolum = min(
-        ((metin[:i].rstrip(), metin[i:].lstrip()) for i in range(1, len(metin))),
-        key=lambda c: max(_gen(c[0], pt, False), _gen(c[1], pt, False)),
-    )
-    ilk = _tek_satir_sigdir(bolum[0], pt, pt, genislik, False)[1]
-    ikinci = _tek_satir_sigdir(bolum[1], pt, pt, genislik, False)[1]
-    kisaldi = ilk != bolum[0] or ikinci != bolum[1]
-    return pt, [ilk, ikinci], kisaldi
+    if has_slash and not slash:
+        return pt, [_tek_satir_sigdir(metin, pt, pt, genislik, False)[1]], True
+    adaylar = slash or [
+        (metin[:i].rstrip(), metin[i:].lstrip())
+        for i in range(1, len(metin))
+    ]
+    a, b = en_dengeli(adaylar, pt)
+
+    def kisalt(s: str, slash_sonu: bool = False) -> str:
+        if not slash_sonu or _gen(s, pt, False) <= genislik:
+            return _tek_satir_sigdir(s, pt, pt, genislik, False)[1]
+        govde = s[:-1]
+        while govde and _gen(govde.rstrip() + "…/", pt, False) > genislik:
+            govde = govde[:-1]
+        return govde.rstrip() + "…/"
+
+    ilk = kisalt(a, bool(slash))
+    ikinci = _tek_satir_sigdir(b, pt, pt, genislik, False)[1]
+    return pt, [ilk, ikinci], True
 
 
 def _kucuk_kod_sigdir(
@@ -590,7 +611,7 @@ def _kucuk_yerlesim(veri: EtiketVerisi, logo: bytes | None) -> Yerlesim:
         barkod_sag = KENAR + _nokta(26)
     bilgi_x = barkod_sag + _nokta(0.6)
     dm_x = SAG - n * dm_modul
-    bilgi_sag = dm_x - _nokta(0.6)
+    bilgi_sag = dm_x - _nokta(0.2)
     bilgi_w = _pt(max(0, bilgi_sag - bilgi_x))
     bilgi_pt, bilgi_satirlari, bilgi_kisaldi = _kucuk_bilgi_satirlari(
         veri.bilgi1, bilgi_w, p.bilgi_pt, 5
@@ -627,7 +648,8 @@ def _kucuk_yerlesim(veri: EtiketVerisi, logo: bytes | None) -> Yerlesim:
         BUYUK_HARF + _ust_tasma(adet)
     )
     bilgi2_ham = veri.bilgi2.strip()
-    bilgi2_pt = p.bilgi_pt
+    bilgi2_nominal = max(5, min(p.bilgi_pt, p.adet_pt - 0.5))
+    bilgi2_pt = bilgi2_nominal
     bilgi2_genislik = _pt(ICERIK)
     ek_ham = veri.ek.strip()
     son_secim = None
@@ -639,13 +661,13 @@ def _kucuk_yerlesim(veri: EtiketVerisi, logo: bytes | None) -> Yerlesim:
         if ek_ham:
             ek_pt, ek = _tek_satir_sigdir(ek_ham, kod_pt, 5, kod_genislik, True)
         bilgi2_pt, bilgi2 = _tek_satir_sigdir(
-            bilgi2_ham, p.bilgi_pt, 5, bilgi2_genislik, False
+            bilgi2_ham, bilgi2_nominal, 5, bilgi2_genislik, False
         ) if bilgi2_ham else (p.bilgi_pt, "")
         if logo_bilgi:
             logo_x0 = _pt(SAG) - logo_w
             bilgi2_genislik = max(0, logo_x0 - _pt(KENAR) - 0.5 * MM)
             bilgi2_pt, bilgi2 = _tek_satir_sigdir(
-                bilgi2_ham, p.bilgi_pt, 5, bilgi2_genislik, False
+                bilgi2_ham, bilgi2_nominal, 5, bilgi2_genislik, False
             ) if bilgi2_ham else (p.bilgi_pt, "")
         bilgi2_taban = (
             yukseklik - _pt(KENAR) - bilgi2_pt * _alt_tasma(bilgi2)
@@ -808,6 +830,12 @@ def _yerlesim_standart(
         rakam_pt, rakam = _tek_satir_sigdir(rakam, p.rakam_pt, RAKAM_MIN,
                                             _pt(cubuk_gen), False)
         cubuk_blok = _pt(cubuk_h) + rakam_bosluk + rakam_pt * BUYUK_HARF
+    if boyut in ("62x35", "62x62"):
+        dm_modul = min(
+            dm_modul,
+            max(1, int(cubuk_blok // (NOKTA * n))),
+        )
+        dm_gen = n * dm_modul
 
     ek_ham = veri.ek.strip()
     bilgiler = _bilgiler(veri)

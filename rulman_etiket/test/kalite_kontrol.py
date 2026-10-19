@@ -19,6 +19,7 @@ import tempfile
 import traceback
 from dataclasses import dataclass, field
 from pathlib import Path
+from types import SimpleNamespace
 
 import pymupdf
 import zxingcpp
@@ -783,9 +784,10 @@ def main() -> int:
         tek = ec.yerlesim(
             ec.EtiketVerisi(**V("6318-2Z", "C3", bilgi1="LOT-123")), "62x25"
         )
+        sample_info = "0254X0511/0074647607/070684642-0030-10"
         bolunmus = ec.yerlesim(
             ec.EtiketVerisi(**V(
-                "6318-2Z", "C3", bilgi1="ABC123/DEF456/GHI789",
+                "6318-2Z", "C3", bilgi1=sample_info,
                 barkod_no="8691234567890",
             )), "62x25"
         )
@@ -795,7 +797,9 @@ def main() -> int:
             kucuk.hatalar.append("kısa bilgi1 nominal boyutta tek satır değil")
         if (len(bolunmus.bilgi_satirlari) != 2
                 or not bolunmus.bilgi_satirlari[0].endswith("/")):
-            kucuk.hatalar.append("bilgi1 dengeli eğik çizgiden bölünmedi")
+            kucuk.hatalar.append("örnek bilgi1 eğik çizgiden bölünmedi")
+        if "".join(bolunmus.bilgi_satirlari) != sample_info:
+            kucuk.hatalar.append("örnek bilgi1 bölünürken karakter kayboldu veya eklendi")
         if uzun_yer.mod != "karekod" or uzun_yer.cubuk_bitler:
             kucuk.hatalar.append("uzun Code128 çizgili barkodu düşürmedi")
         if not any("Kod çok uzun olduğu için çizgili barkod basılmadı" in u
@@ -824,6 +828,46 @@ def main() -> int:
             kucuk.uyarilar.append("Standart 62x62 örneğinde alt tekrar sığmadı.")
         else:
             kucuk.hatalar.append("62x62 alt tekrar açıkken çizilmedi veya fallback olmadı")
+        for boyut in ("62x35", "62x62"):
+            ust = ec.yerlesim(standart, boyut)
+            dm_h = ec._pt(len(ust.dm) * ust.dm_modul)
+            barkod_h = (
+                ec._pt(ust.cubuk_h) + 0.3 * ec.MM
+                + ust.ean_rakam_pt * (ec.BUYUK_HARF + ec.ALT_TASMA)
+                if ust.ean_kodu else
+                ec._pt(ust.cubuk_h) + 0.7 * ec.MM
+                + ust.rakam_pt * ec.BUYUK_HARF
+            )
+            if dm_h > barkod_h + 0.01:
+                kucuk.hatalar.append(
+                    f"{boyut} kare kod barkod satırından daha yüksek"
+                )
+        kompakt = ec.yerlesim(standart, "62x25")
+        if kompakt.bilgi2_text:
+            if kompakt.bilgi2_pt >= ec.PROFILLER["62x25"].adet_pt:
+                kucuk.hatalar.append("62x25 bilgi2 Qty yazısından küçük değil")
+            bilgi2_alt = (
+                kompakt.bilgi2_taban
+                + kompakt.bilgi2_pt * ec._alt_tasma(kompakt.bilgi2_text)
+            )
+            alt_kenar = kompakt.yukseklik - ec._pt(ec.KENAR)
+            if abs(bilgi2_alt - alt_kenar) > 0.01:
+                kucuk.hatalar.append("62x25 bilgi2 alt kenar boşluğunda değil")
+            son_taban = kompakt.ek_taban or kompakt.kod_tabanlari[-1]
+            son_metin = (
+                standart.ek.strip()
+                if kompakt.ek_taban is not None else kompakt.kod_satirlari[-1]
+            )
+            son_pt = kompakt.ek_pt if kompakt.ek_taban is not None else kompakt.kod_pt
+            kod_alt = son_taban + son_pt * ec._alt_tasma(son_metin)
+            bilgi2_ust = (
+                kompakt.bilgi2_taban
+                - kompakt.bilgi2_pt * (
+                    ec.BUYUK_HARF + ec._ust_tasma(kompakt.bilgi2_text)
+                )
+            )
+            if kod_alt + 0.25 * ec.MM > bilgi2_ust:
+                kucuk.hatalar.append("62x25 C3 ile bilgi2 arasında boşluk yok")
         standart.alt_tekrar = False
         tekrar_kapali = ec.yerlesim(standart, "62x62")
         if tekrar_kapali.alt_y0 is not None or tekrar_kapali.alt_tekrar_uygulanamadi:
@@ -831,6 +875,53 @@ def main() -> int:
     except Exception as error:  # noqa: BLE001
         kucuk.hatalar.append(f"62x25 yerleşimi çöktü: {type(error).__name__}: {error}")
     sonuclar.append(kucuk)
+
+    baski_kalite = Sonuc("baski_kalitesi", "api", "-")
+    try:
+        import yazdirma as yz
+
+        class SahteWin32Print:
+            DC_ENUMRESOLUTIONS = 13
+            DM_PRINTQUALITY = 0x400
+            DM_YRESOLUTION = 0x2000
+
+            def __init__(self, cozumler):
+                self.cozumler = cozumler
+                self.cagri = 0
+
+            def DeviceCapabilities(self, yazici, port, tur):
+                self.cagri += 1
+                if (yazici, port, tur) != ("Brother QL-550", "USB001", 13):
+                    raise AssertionError("DeviceCapabilities argümanları yanlış")
+                return self.cozumler
+
+        kaliteli = SahteWin32Print([(300, 300), (300, 600)])
+        dm = SimpleNamespace(Fields=1, PrintQuality=200, YResolution=300)
+        if not yz._yuksek_baski_kalitesi("Brother QL-550", "USB001", dm, kaliteli):
+            baski_kalite.hatalar.append("300x600 çözünürlük seçilmedi")
+        if (dm.PrintQuality, dm.YResolution) != (300, 600):
+            baski_kalite.hatalar.append("DEVMODE çözünürlüğü 300x600 olmadı")
+        if dm.Fields != 1 | kaliteli.DM_PRINTQUALITY | kaliteli.DM_YRESOLUTION:
+            baski_kalite.hatalar.append("DEVMODE çözünürlük alan bayrakları eksik")
+
+        standart = SahteWin32Print([(300, 300)])
+        dm = SimpleNamespace(Fields=7, PrintQuality=200, YResolution=300)
+        if yz._yuksek_baski_kalitesi("Brother QL-550", "USB001", dm, standart):
+            baski_kalite.hatalar.append("yalnız 300x300 varken çözünürlük değişti")
+        if (dm.Fields, dm.PrintQuality, dm.YResolution) != (7, 200, 300):
+            baski_kalite.hatalar.append("çözünürlük bulunmadığında DEVMODE değişti")
+
+        diger = SahteWin32Print([(300, 600)])
+        dm = SimpleNamespace(Fields=7, PrintQuality=200, YResolution=300)
+        if yz._yuksek_baski_kalitesi("HP LaserJet", "USB001", dm, diger):
+            baski_kalite.hatalar.append("Brother olmayan yazıcı ayarı değişti")
+        if diger.cagri or (dm.Fields, dm.PrintQuality, dm.YResolution) != (7, 200, 300):
+            baski_kalite.hatalar.append("Brother olmayan yazıcıya çözünürlük uygulandı")
+    except Exception as error:  # noqa: BLE001
+        baski_kalite.hatalar.append(
+            f"yazdırma çözünürlüğü kontrolü çöktü: {type(error).__name__}: {error}"
+        )
+    sonuclar.append(baski_kalite)
 
     sonuclar.append(logo_kontrol(ec, a.cikti, a.cli_yok))
 
