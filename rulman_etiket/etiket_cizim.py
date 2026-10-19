@@ -48,14 +48,36 @@ _FONTLAR: dict[str, pymupdf.Font] = {}
 
 
 def _font(kalin: bool) -> pymupdf.Font:
-    ad = "LiberationSans-Bold.ttf" if kalin else "LiberationSans-Regular.ttf"
+    ad = "Hind-Bold.ttf" if kalin else "Hind-Medium.ttf"
     if ad not in _FONTLAR:
         _FONTLAR[ad] = pymupdf.Font(fontfile=str(_font_yolu(ad)))
     return _FONTLAR[ad]
 
 
-BUYUK_HARF = 0.716        # Liberation Sans büyük harf yüksekliği (em)
-ALT_TASMA = 0.212         # alt taşma (g, y, ç, ş) (em)
+BUYUK_HARF = 0.679        # Hind OS/2.sCapHeight (em)
+ALT_TASMA = 0.268         # Hind Bold'da en derin glif (ç/ş) (em)
+# Glif taşmaları Hind font konturlarından ölçülmüştür.
+_UST_TASMALAR = {
+    "Ğ": 0.219, "İ": 0.212, "Ö": 0.212, "ğ": 0.052, "i": 0.060, "j": 0.060,
+    "f": 0.041, "b": 0.028, "d": 0.028, "h": 0.028, "l": 0.028, "ö": 0.047,
+    "ü": 0.045, "$": 0.112, "`": 0.119, "%": 0.044, "(": 0.028, ")": 0.028,
+    "/": 0.028, "[": 0.028, "\\": 0.028, "]": 0.028, "{": 0.037, "}": 0.037,
+}
+_ALT_TASMALAR = {
+    "ç": 0.268, "ş": 0.268, "Ç": 0.268, "Ş": 0.268, "g": 0.196, "y": 0.198,
+    "j": 0.198, "p": 0.194, "q": 0.194, "ğ": 0.196, "(": 0.196, ")": 0.196,
+    "[": 0.196, "]": 0.196, "{": 0.206, "}": 0.206, "|": 0.194, "@": 0.216,
+    ",": 0.127, ";": 0.127, "/": 0.103, "\\": 0.103, "_": 0.166, "$": 0.118,
+    "Q": 0.151,
+}
+
+
+def _ust_tasma(metin: str) -> float:
+    return max((_UST_TASMALAR.get(c, 0.0) for c in metin), default=0.0)
+
+
+def _alt_tasma(metin: str) -> float:
+    return max((_ALT_TASMALAR.get(c, 0.0) for c in metin), default=0.0)
 
 
 def _gen(s: str, pt: float, kalin: bool) -> float:
@@ -478,6 +500,8 @@ def yerlesim(
             return adet_taban, tabanlar, ek_taban, y
 
         adet_taban, kod_tabanlari, ek_taban, y = blok(y)
+        son_satir = ek if ek else kod_satir[-1]
+        son_pt = max(kod_pt, ek_pt) if ek else kod_pt
         alt_blok_h = blok(0)[3] - BOSLUK_UST_ADET + ALT_TASMA * kod_pt
 
         bilgi_w = w if mod in ("yan", "ean") else w - _pt(dm_gen) - 2 * MM
@@ -489,7 +513,7 @@ def yerlesim(
         bilgi_tabanlari = []
         orta_ust = y + BOSLUK_KOD_BILGI
         if bilgi_satir:
-            by = orta_ust + bilgi_pt * BUYUK_HARF
+            by = orta_ust + bilgi_pt * (BUYUK_HARF + _ust_tasma(bilgi_satir[0]))
             for _ in bilgi_satir:
                 bilgi_tabanlari.append(by)
                 by += bilgi_pt * BILGI_ARALIK
@@ -530,6 +554,24 @@ def yerlesim(
         if logo_bilgi:
             son_taban = ek_taban if ek_taban is not None else kod_tabanlari[-1]
             logo_rect = (_pt(SAG) - logo_w, son_taban - logo_h, _pt(SAG), son_taban)
+        if alt_y0 is not None and bilgi_tabanlari:
+            son_taban = ek_taban if ek_taban is not None else kod_tabanlari[-1]
+            ust_alt = son_taban + _alt_tasma(son_satir) * son_pt
+            if logo_rect:
+                ust_alt = max(ust_alt, logo_rect[3])
+            alt_ust = alt_y0 + BOSLUK_UST_ADET
+            bilgi_ust = bilgi_tabanlari[0] - bilgi_pt * (
+                BUYUK_HARF + _ust_tasma(bilgi_satir[0])
+            )
+            bilgi_alt = bilgi_tabanlari[-1] + bilgi_pt * _alt_tasma(bilgi_satir[-1])
+            bosluk = alt_ust - ust_alt
+            mevcut_aralik = max(0, y + BOSLUK_KOD_BILGI - ust_alt) + bilgi_alt - bilgi_ust
+            if bosluk >= mevcut_aralik:
+                hedef_orta = ust_alt + 0.45 * bosluk
+                mevcut_orta = (bilgi_ust + bilgi_alt) / 2
+                kayma = hedef_orta - mevcut_orta
+                if bilgi_ust + kayma >= ust_alt and bilgi_alt + kayma <= alt_ust:
+                    bilgi_tabanlari = [taban + kayma for taban in bilgi_tabanlari]
         return Yerlesim(
             boyut=boyut, genislik=SAYFA_GENISLIK, yukseklik=yukseklik, mod=mod,
             cubuk_modul=m, cubuk_bitler=bitler, cubuk_x=cubuk_x, cubuk_y=cubuk_y, cubuk_h=cubuk_h,

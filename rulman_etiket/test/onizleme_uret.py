@@ -64,7 +64,7 @@ def karsilastirma(png: bytes, referans: Path) -> Path:
     tuval.paste(biz, (2 * bosluk + ref.width, ust))
     d = ImageDraw.Draw(tuval)
     try:
-        f = ImageFont.truetype(str(KLASOR.parent / "fonts" / "LiberationSans-Bold.ttf"), 30)
+        f = ImageFont.truetype(str(KLASOR.parent / "fonts" / "Hind-Bold.ttf"), 30)
     except OSError:
         f = ImageFont.load_default()
     d.text((bosluk, 20), "Referans (fotoğraf)", fill="black", font=f)

@@ -158,6 +158,8 @@ def _coz(img: Image.Image) -> dict[str, list[str]]:
 
 def _metin_kutulari(page: pymupdf.Page) -> list[tuple[str, pymupdf.Rect, float, str]]:
     """Her satır için (metin, sıkı glif kutusu, punto, font)."""
+    import etiket_cizim as ec
+
     kutular = []
     for blok in page.get_text("rawdict")["blocks"]:
         for satir in blok.get("lines", []):
@@ -170,9 +172,10 @@ def _metin_kutulari(page: pymupdf.Page) -> list[tuple[str, pymupdf.Rect, float, 
                 x0 = min(c["bbox"][0] for c in chars)
                 x1 = max(c["bbox"][2] for c in chars)
                 metin = "".join(c["c"] for c in span["chars"])
-                inen = 0.21 * s if any(c in "gjpqyşçğ,;()/" for c in metin) else 0.0
-                kutular.append((metin, pymupdf.Rect(x0, oy - 0.72 * s, x1, oy + inen), s,
-                                span["font"]))
+                ust = ec.BUYUK_HARF + ec._ust_tasma(metin)
+                inen = ec._alt_tasma(metin)
+                kutular.append((metin, pymupdf.Rect(x0, oy - ust * s, x1, oy + inen * s),
+                                s, span["font"]))
     return kutular
 
 
@@ -312,6 +315,30 @@ def sayfa_kontrol(
     for f in page.get_fonts():
         if f[1] in ("n/a", "") or (f[2] in ("Type1", "TrueType") and not f[0]):
             s.uyarilar.append(f"font gömülü değil olabilir: {f[3]}")
+    fontlar = {
+        span["font"]
+        for blok in page.get_text("dict")["blocks"]
+        for satir in blok.get("lines", [])
+        for span in satir["spans"]
+    }
+    s.olcum["fontlar"] = ", ".join(sorted(fontlar))
+    font_aileleri = {
+        f.casefold().replace(" ", "").replace("-", "") for f in fontlar
+    }
+    if not any(f.startswith("hindbold") for f in font_aileleri):
+        s.hatalar.append(f"PDF'de Hind Bold yazı tipi yok: {sorted(fontlar)!r}")
+    medyum_gerekli = bool(v.get("barkod_no") or v.get("bilgi1") or v.get("bilgi2") or coz["Code128"])
+    if medyum_gerekli and not any(f.startswith("hindmedium") for f in font_aileleri):
+        s.hatalar.append(f"PDF'de Hind Medium yazı tipi yok: {sorted(fontlar)!r}")
+    if any(not f.startswith("hind") for f in font_aileleri):
+        s.hatalar.append(f"PDF'de Hind dışında yazı tipi var: {sorted(fontlar)!r}")
+    metin_pdf = page.get_text()
+    turkce_harfler = set("ğşıİçöüĞŞİÖÇ")
+    for alan in ("bilgi1", "bilgi2"):
+        metin = v.get(alan, "")
+        if (metin and any(harf in turkce_harfler for harf in metin)
+                and metin not in metin_pdf and "…" not in metin_pdf):
+            s.hatalar.append(f"PDF'den Türkçe {alan} metni çıkarılamadı: {metin!r}")
 
     # metin taşması / üst üste binme
     kutular = _metin_kutulari(page)
@@ -545,6 +572,14 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
             ("logo_kodsuz_tekrar", V("6308", "C3", alt=False), trimmed_alpha, "62x100"),
             ("logo_uzun_kod", V("NNU4930-S-K-M-SP-XL-C3", "P6",
                                 barkod_no="8691234567890"), wide, "62surekli"),
+            ("font_gap_62x100", V(
+                "6308-C-2HRS", "C3", barkod_no="8691234567890",
+                bilgi1="0254X0511/0074647607/070684642-0030-10",
+                bilgi2="MADE IN TURKEY"), trimmed, "62x100"),
+            ("font_gap_surekli", V(
+                "6308-C-2HRS", "C3", barkod_no="8691234567890",
+                bilgi1="0254X0511/0074647607/070684642-0030-10",
+                bilgi2="MADE IN TURKEY"), trimmed, "62surekli"),
         ]
         cli_logo = cikti / "sentetik_logo.png"
         cli_logo.write_bytes(trimmed)
@@ -573,6 +608,27 @@ def logo_kontrol(ec, cikti: Path, cli_yok: bool) -> Sonuc:
             sayfa_kontrol(
                 page, giris, boyut, s, cikti / f"{ad}.png", beklenen_sayi
             )
+            if ad.startswith("font_gap") and yer.bilgi_tabanlari and yer.alt_y0 is not None:
+                son_taban = yer.ek_taban if yer.ek_taban is not None else yer.kod_tabanlari[-1]
+                son_satir = giris["ek"] or yer.kod_satirlari[-1]
+                son_pt = max(yer.kod_pt, yer.ek_pt) if giris["ek"] else yer.kod_pt
+                ust_alt = son_taban + ec._alt_tasma(son_satir) * son_pt
+                if yer.logo_rect:
+                    ust_alt = max(ust_alt, yer.logo_rect[3])
+                alt_ust = yer.alt_y0 + ec.BOSLUK_UST_ADET
+                bilgi_ust = yer.bilgi_tabanlari[0] - yer.bilgi_pt * (
+                    ec.BUYUK_HARF + ec._ust_tasma(yer.bilgi_satirlari[0])
+                )
+                bilgi_alt = yer.bilgi_tabanlari[-1] + yer.bilgi_pt * (
+                    ec._alt_tasma(yer.bilgi_satirlari[-1])
+                )
+                aralik = alt_ust - ust_alt
+                oran = ((bilgi_ust + bilgi_alt) / 2 - ust_alt) / aralik if aralik else 0
+                s.olcum[f"{ad}_bilgi_merkez_orani"] = round(oran, 3)
+                if abs(oran - 0.45) > 0.001:
+                    s.hatalar.append(
+                        f"{ad}: bilgi merkezi boşluğun %{oran * 100:.1f}'inde, %45 olmalı"
+                    )
             if len(rects) != beklenen_sayi:
                 s.hatalar.append(f"{ad}: {len(rects)} logo görüntüsü, {beklenen_sayi} olmalı")
             for image_rect in rects:

@@ -49,7 +49,7 @@ def _kontrol() -> int:
     font_klasoru = resource_path("fonts")
     font_ok = font_klasoru.is_dir() and all(
         (font_klasoru / ad).is_file()
-        for ad in ("LiberationSans-Bold.ttf", "LiberationSans-Regular.ttf")
+        for ad in ("Hind-Bold.ttf", "Hind-Medium.ttf")
     )
     _satir("Yazı tipleri", "Başarılı" if font_ok else "Başarısız")
 
