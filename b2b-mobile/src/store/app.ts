@@ -86,10 +86,27 @@ export const useCart = create<CartState>()(persist((set) => ({
   setCustomer: (customerId) => set({ customerId }),
   refresh: (products) => set((state) => {
     const byId = new Map(products.map((product) => [product.id, product]))
+    const bySkuAndBrand = new Map(products.map((product) => [`${product.sku}\u0000${product.brand}`, product]))
+    const bySku = new Map(products.map((product) => [product.sku, product]))
     return {
       lines: state.lines.map((line) => {
-        const product = byId.get(line.product_id)
-        return product ? { ...line, name: product.name, brand: product.brand, stock: product.stock, unit_price: product.price, card_price: product.card_price, shelf: product.shelf, box: product.box, description: product.description } : line
+        const product = byId.get(line.product_id) ?? bySkuAndBrand.get(`${line.sku}\u0000${line.brand}`) ?? bySku.get(line.sku)
+        return product
+          ? {
+              ...line,
+              product_id: product.id,
+              sku: product.sku,
+              name: product.name,
+              brand: product.brand,
+              stock: product.stock,
+              unit_price: product.price,
+              card_price: product.card_price,
+              currency: product.currency,
+              shelf: product.shelf,
+              box: product.box,
+              description: product.description
+            }
+          : line
       })
     }
   }),
