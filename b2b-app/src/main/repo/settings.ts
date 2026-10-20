@@ -24,6 +24,7 @@ export const DEFAULT_SETTINGS: Settings = {
 
 /** Per-device preferences; everything else is shared company-wide through the cloud `settings` table. */
 const LOCAL_KEYS: ReadonlySet<keyof Settings> = new Set<keyof Settings>([
+  'default_currency',
   'theme',
   'font_scale',
   'reduce_motion',

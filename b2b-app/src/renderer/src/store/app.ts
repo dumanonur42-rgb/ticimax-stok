@@ -129,12 +129,19 @@ export const useCart = create<CartState>()(
       setNote: (note) => set({ note }),
       setPayment: (payment) => set({ payment }),
       refreshFrom: (products) =>
-        set((s) => ({
-          lines: s.lines.map((l) => {
-            const p = products.find((x) => x.id === l.product_id)
-            return p ? { ...l, unit_price: p.price ?? 0, card_price: p.card_price, currency: p.currency, stock: p.stock, name: p.name, sku: p.sku } : l
-          })
-        }))
+        set((s) => {
+          const byId = new Map(products.map((product) => [product.id, product]))
+          const bySkuAndBrand = new Map(products.map((product) => [`${product.sku}\u0000${product.brand}`, product]))
+          const bySku = new Map(products.map((product) => [product.sku, product]))
+          return {
+            lines: s.lines.map((line) => {
+              const product = byId.get(line.product_id) ?? bySkuAndBrand.get(`${line.sku}\u0000${line.brand}`) ?? bySku.get(line.sku)
+              return product
+                ? { ...line, product_id: product.id, unit_price: product.price ?? 0, card_price: product.card_price, currency: product.currency, stock: product.stock, name: product.name, sku: product.sku }
+                : line
+            })
+          }
+        })
     }),
     { name: 'yamansa-cart' }
   )

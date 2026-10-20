@@ -466,6 +466,7 @@ export interface ImportPreview {
   totalRows: number
   suggestedMapping: Partial<Record<keyof ProductInput, string>>
   suggestedCurrency: Currency | null
+  priceCurrencyHints?: Record<string, Currency | null>
   token: string
 }
 

@@ -1,7 +1,7 @@
 import type { Currency, ImportLog, ImportPreview, ImportResult, ProductInput } from '@shared/types'
 import { FileSpreadsheet, FileDown, Upload } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
-import { Field, LoadError, Spinner } from '@/components/ui'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { Confirm, Field, LoadError, Spinner } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, num } from '@/lib/format'
 import { useApp } from '@/store/app'
@@ -32,16 +32,19 @@ const FIELDS: { key: MapKey; label: string; required?: boolean }[] = [
 ]
 
 export function Import(): ReactNode {
-  const { toast, settings } = useApp()
+  const { toast, settings, updateSettings } = useApp()
   const [preview, setPreview] = useState<ImportPreview | null>(null)
   const [mapping, setMapping] = useState<Partial<Record<MapKey, string>>>({})
   const [mode, setMode] = useState<'upsert' | 'replace' | 'stock_only'>('upsert')
   const [deactivateMissing, setDeactivateMissing] = useState(false)
   const [defaultCurrency, setDefaultCurrency] = useState<Currency>(settings?.default_currency ?? 'TRY')
+  const [currencyChosenByUser, setCurrencyChosenByUser] = useState(false)
   const [defaultBrand, setDefaultBrand] = useState('')
   const [defaultCategory, setDefaultCategory] = useState('')
   const [busy, setBusy] = useState(false)
   const [dryRunBusy, setDryRunBusy] = useState(false)
+  const [replaceConfirmOpen, setReplaceConfirmOpen] = useState(false)
+  const replaceImportButton = useRef<HTMLButtonElement | null>(null)
   const [logs, setLogs] = useState<ImportLog[]>([])
   const [logsLoading, setLogsLoading] = useState(true)
   const [logsError, setLogsError] = useState('')
@@ -77,7 +80,8 @@ export function Import(): ReactNode {
       if (p) {
         setPreview(p)
         setMapping(p.suggestedMapping)
-        if (p.suggestedCurrency) setDefaultCurrency(p.suggestedCurrency)
+        setCurrencyChosenByUser(false)
+        setDefaultCurrency(p.suggestedCurrency ?? settings?.default_currency ?? 'TRY')
         setErrors([])
         setTrial(null)
       }
@@ -89,20 +93,12 @@ export function Import(): ReactNode {
     }
   }
 
-  const run = async (dryRun = false): Promise<void> => {
+  const performImport = async (dryRun = false): Promise<void> => {
     if (!preview) return
-    if (!mapping.sku) return toast('Ürün kodu kolonu eşlenmeli.', 'error')
-    if (
-      !dryRun &&
-      mode === 'replace' &&
-      !window.confirm(
-        'Buluttaki mevcut ürün listesinin tamamı kalıcı olarak silinecek ve yerine dosyadaki ürünler yüklenecek. Tüm bilgisayarlardaki listeler otomatik yenilenir; sipariş geçmişi korunur. Devam edilsin mi?'
-      )
-    )
-      return
     setBusy(true)
     setDryRunBusy(dryRun)
     try {
+      if (!dryRun) await updateSettings({ default_currency: defaultCurrency })
       const r = await api('import:run', { token: preview.token, mapping, mode, deactivateMissing, defaultCurrency, defaultBrand, defaultCategory, dryRun })
       if (dryRun) {
         setTrial(r)
@@ -120,6 +116,22 @@ export function Import(): ReactNode {
       setBusy(false)
       setDryRunBusy(false)
     }
+  }
+
+  const run = async (dryRun = false): Promise<void> => {
+    if (!preview) return
+    if (!mapping.sku) return toast('Ürün kodu kolonu eşlenmeli.', 'error')
+    if (!dryRun && mode === 'replace') {
+      if (document.activeElement instanceof HTMLButtonElement) replaceImportButton.current = document.activeElement
+      setReplaceConfirmOpen(true)
+      return
+    }
+    await performImport(dryRun)
+  }
+
+  const cancelReplace = (): void => {
+    setReplaceConfirmOpen(false)
+    requestAnimationFrame(() => replaceImportButton.current?.focus())
   }
 
   const used = new Set(Object.values(mapping).filter(Boolean))
@@ -174,13 +186,22 @@ export function Import(): ReactNode {
                 </select>
               )}
             </Field>
-            <Field label="Varsayılan para birimi" hint="Dosyada kolon yoksa kullanılır">
+            <Field label="Fiyatların para birimi" hint="Dosyada para birimi kolonu yoksa bu kullanılır">
               {(id) => (
-                <select id={id} className="select" value={defaultCurrency} onChange={(e) => { clearTrial(); setDefaultCurrency(e.target.value as Currency) }}>
-                  <option value="TRY">TRY</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                </select>
+                <>
+                  <select id={id} className="select" value={defaultCurrency} onChange={(e) => {
+                    clearTrial()
+                    setCurrencyChosenByUser(true)
+                    setDefaultCurrency(e.target.value as Currency)
+                  }}>
+                    <option value="TRY">TRY</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                  </select>
+                  <span className="hint" role="status" aria-live="polite">
+                    {mapping.currency ? 'Para birimi dosyadaki kolondan alınacak' : <>Fiyatlar <b>{defaultCurrency}</b> olarak yüklenecek</>}
+                  </span>
+                </>
               )}
             </Field>
             <label className="check" style={{ alignSelf: 'end' }}>
@@ -211,7 +232,15 @@ export function Import(): ReactNode {
                   value={mapping[f.key] ?? ''}
                   aria-required={f.required}
                   aria-invalid={f.key === 'sku' && !mapping.sku}
-                  onChange={(e) => { clearTrial(); setMapping((m) => ({ ...m, [f.key]: e.target.value || undefined })) }}
+                  onChange={(e) => {
+                    clearTrial()
+                    const nextMapping = { ...mapping, [f.key]: e.target.value || undefined }
+                    setMapping(nextMapping)
+                    if (!currencyChosenByUser && !nextMapping.currency && nextMapping.price) {
+                      const suggested = preview.priceCurrencyHints?.[nextMapping.price]
+                      if (suggested) setDefaultCurrency(suggested)
+                    }
+                  }}
                 >
                   <option value="">— eşlenmedi —</option>
                   {preview.headers.map((h) => (
@@ -261,13 +290,14 @@ export function Import(): ReactNode {
             <button className="btn" onClick={() => run(true)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={importDisabledReason || 'Hiçbir şey yazmadan sonucu hesaplar'} aria-describedby={importDisabledReason ? 'import-action-reason' : undefined}>
               {dryRunBusy ? 'Deneme hesaplanıyor…' : 'Önce dene'}
             </button>
-            <button className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={importDisabledReason || undefined} aria-describedby={importDisabledReason ? 'import-action-reason' : undefined}>
+            <button ref={replaceImportButton} className="btn primary" onClick={() => run(false)} disabled={busy || !mapping.sku || preview.totalRows === 0} title={importDisabledReason || undefined} aria-describedby={importDisabledReason ? 'import-action-reason' : undefined}>
               <Upload size={16} aria-hidden /> {num(preview.totalRows)} satırı içe aktar
             </button>
           </div>
           {trial && (
             <div className="row wrap" role="status" aria-live="polite">
               <span className="badge info">Deneme sonucu</span>
+              <span className="badge neutral">{mapping.currency ? 'Para birimi: dosyadaki kolon' : `Para birimi: ${defaultCurrency}`}</span>
               <span className="badge ok">{num(trial.inserted)} yeni</span>
               <span className="badge neutral">{num(trial.updated)} güncellenecek</span>
               <span className="badge neutral">{num(trial.unchanged)} değişmeyecek</span>
@@ -347,6 +377,18 @@ export function Import(): ReactNode {
           </table>
         )}
       </section>
+      <Confirm
+        open={replaceConfirmOpen}
+        title="Eski listeyi sil?"
+        text="Buluttaki mevcut ürün listesinin tamamı kalıcı olarak silinecek ve yerine dosyadaki ürünler yüklenecek. Tüm bilgisayarlardaki listeler otomatik yenilenir; sipariş geçmişi korunur. Devam edilsin mi?"
+        danger
+        confirmLabel="Listeyi sil ve yükle"
+        onCancel={cancelReplace}
+        onConfirm={() => {
+          setReplaceConfirmOpen(false)
+          void performImport(false)
+        }}
+      />
     </div>
   )
 }

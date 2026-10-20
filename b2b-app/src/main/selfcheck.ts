@@ -1,14 +1,15 @@
 import type { ProductRow } from './cloud/database.types'
 import Database from 'better-sqlite3-multiple-ciphers'
 import { app } from 'electron'
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { pullProducts, upsertLocal } from './cloud/sync'
 import { dbPath, getDb, normalize, normalizeText, openDatabaseForSelfCheck, productKey, wipeProducts } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { brandCountsFromRows, parseBox, suggestMapping } from './repo/importer'
+import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, suggestMapping } from './repo/importer'
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
+import { isLocalSetting } from './repo/settings'
 import { boxMentions, canonBrand } from '@shared/identity'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
@@ -206,6 +207,28 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`card price visibility: ${cardPricingOk ? 'ok' : 'failed'}`)
+
+  const currencyFixture = join(app.getPath('temp'), `selfcheck-import-${Date.now()}.csv`)
+  let previewCurrencyOk = false
+  try {
+    writeFileSync(currencyFixture, 'Stok Kodu;Adet;Fiyat\nSKU-1;1;15,00 €\nSKU-2;1;€15.00\nSKU-3;1;12,5 EUR\nSKU-4;1;15 EUR\nSKU-5;1;15\n')
+    const preview = previewFile(currencyFixture)
+    previewCurrencyOk = preview.suggestedCurrency === 'EUR' && preview.priceCurrencyHints?.Fiyat === 'EUR'
+  } finally {
+    if (existsSync(currencyFixture)) unlinkSync(currencyFixture)
+  }
+  const numberCases: [string, number][] = [['15,00 €', 15], ['€15.00', 15], ['12,5 EUR', 12.5], ['$3', 3], ['10 TL', 10]]
+  const currencyParsingOk =
+    previewCurrencyOk &&
+    numberCases.every(([value, want]) => parseNumber(value) === want) &&
+    inferCurrencyFromValues(['15,00 €', '€15.00', '12,5 EUR', '15 EUR', '15']) === 'EUR' &&
+    inferCurrencyFromValues(['15,00 €', '€15.00', '$3', '10 TL', '15']) === null &&
+    isLocalSetting('default_currency')
+  if (!currencyParsingOk) {
+    console.error('import currency detection, price parsing, or local preference failed')
+    ok = false
+  }
+  console.log(`import currency detection and parsing: ${currencyParsingOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {

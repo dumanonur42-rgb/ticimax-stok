@@ -15,7 +15,7 @@ import { Login } from '@/pages/Login'
 import { Orders } from '@/pages/Orders'
 import { SettingsPage } from '@/pages/Settings'
 import { Stock } from '@/pages/Stock'
-import { useApp } from '@/store/app'
+import { useApp, useCart } from '@/store/app'
 
 function useApplySettings(): void {
   const settings = useApp((s) => s.settings)
@@ -103,6 +103,13 @@ export function App(): ReactNode {
     const offSettings = onEvent('settings:changed', () => {
       loadSettings().catch(() => undefined)
     })
+    const offProducts = onEvent('products:changed', () => {
+      const lines = useCart.getState().lines
+      if (!lines.length) return
+      api('products:bySkus', lines.map((line) => line.sku))
+        .then((products) => useCart.getState().refreshFrom(products))
+        .catch(() => undefined)
+    })
     // Focus given while the window was still hidden behind the splash does not reach the keyboard; redo it once visible.
     const offShown = onEvent('window:shown', () => {
       const active = document.activeElement
@@ -119,6 +126,7 @@ export function App(): ReactNode {
     return () => {
       offSession()
       offSettings()
+      offProducts()
       offShown()
     }
   }, [])
