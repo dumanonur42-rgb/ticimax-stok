@@ -17,6 +17,7 @@ Kural: çizimdeki her sayı ürünün kendi sayfasından (Ürün Özellikleri / 
 - **Silindirik makaralı NU/NJ/NUP/N/NN**: Kodda çizimleri var (flanş farkları ayrı), fakat sitede bu ailede ürün sayfası bulunamadı (aşağıya bakın).
 
 Her çizim: ön görünüş + kesit A-A, 45° tarama, eksen çizgisi (çizgi-nokta), ok uçlu ölçü çizgileri, `data-k` ile vurgulanan ölçü grupları.
+Kesit A-A kendi ölçeğinde çizilir (yüksekliği çizim alanının ~%80’i, RAX’ta üstte iki ölçü olduğu için ~%72); ön görünüş ayrı ölçekte. Yazan ölçü değerleri yine ürünün gerçek ölçüleridir. Ölçü yazısı 17 birim: 360px ekranda (çizim ~308px genişlik) ~11,4px.
 
 ## Kullanılan ölçü etiketleri (sayfadan)
 

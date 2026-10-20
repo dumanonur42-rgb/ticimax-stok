@@ -41,19 +41,21 @@ function subtype(ctx){
  return null}
 
 /* --- SVG yardımcıları --- */
-function mk(opt,H){
- var id=(opt&&opt.id)||'mk',dim=(opt&&opt.dim)||'#0a2350',g=[],ex=[];
+function mk(opt,H,kf){
+ var id=(opt&&opt.id)||'mk',dim=(opt&&opt.dim)||'#0a2350',g=[],ex=[],F=null;
  function a(x){return Math.round(x*100)/100}
- var o={id:id,dim:dim,H:H,
+ function M(x,y){return F?[F.x+(x-F.x)*F.k,F.y+(y-F.y)*F.k]:[x,y]}
+ var o={id:id,dim:dim,H:H,kf:kf||1,
+  fon:function(x,y){F={x:x,y:y,k:o.kf}},foff:function(){F=null},
   add:function(s){g.push(s)},
-  poly:function(pts,fill,sw,extra){var d='M'+pts.map(function(p){return a(p[0])+','+a(p[1])}).join('L')+'Z';g.push('<path d="'+d+'" fill="'+fill+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'" stroke-linejoin="round"'+(extra||'')+'/>')},
-  line:function(x1,y1,x2,y2,sw,extra){g.push('<line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'"'+(extra||'')+'/>')},
-  circ:function(cx,cy,r,fill,sw,extra){g.push('<circle cx="'+a(cx)+'" cy="'+a(cy)+'" r="'+a(r)+'" fill="'+(fill||'none')+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'"'+(extra||'')+'/>')},
-  axis:function(x1,y1,x2,y2){g.push('<line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+C+'" stroke-width=".7" stroke-dasharray="12 3 2 3" opacity=".65"/>')},
+  poly:function(pts,fill,sw,extra){pts=pts.map(function(p){return M(p[0],p[1])});var d='M'+pts.map(function(p){return a(p[0])+','+a(p[1])}).join('L')+'Z';g.push('<path d="'+d+'" fill="'+fill+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'" stroke-linejoin="round"'+(extra||'')+'/>')},
+  line:function(x1,y1,x2,y2,sw,extra){var q1=M(x1,y1),q2=M(x2,y2);x1=q1[0];y1=q1[1];x2=q2[0];y2=q2[1];g.push('<line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'"'+(extra||'')+'/>')},
+  circ:function(cx,cy,r,fill,sw,extra){var q=M(cx,cy);cx=q[0];cy=q[1];if(F)r*=F.k;g.push('<circle cx="'+a(cx)+'" cy="'+a(cy)+'" r="'+a(r)+'" fill="'+(fill||'none')+'" stroke="'+C+'" stroke-width="'+(sw||1.3)+'"'+(extra||'')+'/>')},
+  axis:function(x1,y1,x2,y2){var q1=M(x1,y1),q2=M(x2,y2);x1=q1[0];y1=q1[1];x2=q2[0];y2=q2[1];g.push('<line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+C+'" stroke-width=".7" stroke-dasharray="12 3 2 3" opacity=".65"/>')},
   ext:function(x1,y1,x2,y2){ex.push('<line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+dim+'" stroke-width=".6" opacity=".55"/>')},
   /* ölçü çizgisi: oklar iki uçta; yazı (lx,ly) */
   dimn:function(k,x1,y1,x2,y2,txt,lx,ly,rot,anchor){
-   var t='<text x="'+a(lx)+'" y="'+a(ly)+'" fill="'+dim+'" font-size="12" font-weight="700" text-anchor="'+(anchor||'middle')+'" stroke="#fbfcfe" stroke-width="3" paint-order="stroke" stroke-linejoin="round"'+(rot?' transform="rotate(-90 '+a(lx)+' '+a(ly)+')"':'')+'>'+txt+'</text>';
+   var t='<text x="'+a(lx)+'" y="'+a(ly)+'" fill="'+dim+'" font-size="17" font-weight="700" text-anchor="'+(anchor||'middle')+'" stroke="#fbfcfe" stroke-width="3" paint-order="stroke" stroke-linejoin="round"'+(rot?' transform="rotate(-90 '+a(lx)+' '+a(ly)+')"':'')+'>'+txt+'</text>';
    g.push('<g class="hl '+k+'" data-k="'+k+'"><line x1="'+a(x1)+'" y1="'+a(y1)+'" x2="'+a(x2)+'" y2="'+a(y2)+'" stroke="'+dim+'" stroke-width="1.1" marker-start="url(#'+id+'a)" marker-end="url(#'+id+'a)"/>'+t+'</g>')},
   title:function(x,y,t){g.push('<text x="'+a(x)+'" y="'+a(y)+'" fill="'+dim+'" font-size="10" font-weight="700" letter-spacing="1.5" text-anchor="middle" opacity=".7">'+t+'</text>')},
   note:function(x,y,t,anc){g.push('<text x="'+a(x)+'" y="'+a(y)+'" fill="#5a6481" font-size="9.5" font-weight="600" text-anchor="'+(anc||'middle')+'" stroke="#fbfcfe" stroke-width="3" paint-order="stroke">'+t+'</text>')},
@@ -68,27 +70,27 @@ function chamfIn(x0,r0,x1,r1,c){c=Math.min(c,(x1-x0)/3,(r1-r0)/3);return [[x0,r0
 
 /* --- ön görünüş: halkalar + yuvarlanma elemanı uçları --- */
 function front(S,fx,cy,R,rings,rollR,rollPitch,n,opt){
+ S.fon(fx,cy);
  rings.forEach(function(r){S.circ(fx,cy,r[0],r[1]||'none',r[2]||1.4,r[3])});
  for(var i=0;i<n;i++){var t=2*Math.PI*i/n-Math.PI/2;S.circ(fx+rollPitch*Math.cos(t),cy+rollPitch*Math.sin(t),rollR,ROLL,1)}
- S.axis(fx-R-12,cy,fx+R+12,cy);S.axis(fx,cy-R-12,fx,cy+R+12)}
+ S.axis(fx-R-12/S.kf,cy,fx+R+12/S.kf,cy);S.axis(fx,cy-R-12/S.kf,fx,cy+R+12/S.kf);S.foff()}
 
 /* ortak yerleşim: ön görünüş solda, kesit sağda, sağda dikey ölçüler */
-function layout(Dmax,W,nRight,mR){
- var H=244,cy=126,maxR=mR||84;
- var avail=460-206-14-nRight*24-8;           /* kesit için yatay alan */
- var s=Math.min(2*maxR/Dmax,avail/W,2*maxR/Dmax);
- var R=Dmax/2*s,w=W*s;var fx=108;var sx=206+(avail-w)/2+4;
- if(sx<214)sx=214;
- return {s:s,H:H,cy:cy,R:R,w:w,fx:fx,sx:sx}}
+function layout(Dmax,W,nRight,mR,o){
+ o=o||{};var H=260,cy=o.cy||136,hS=o.hS||200,maxR=mR||84;
+ var avail=460-206-14-nRight*24-8;            /* kesit kendi ölçeğinde: yükseklik ~%80 */
+ var s=Math.min(hS/Dmax,avail/W),sF=2*maxR/Dmax;
+ var R=Dmax/2*s,w=W*s,fx=108,sx=206+(avail-w)/2+4;if(sx<214)sx=214;
+ return {s:s,sF:sF,kf:sF/s,H:H,cy:cy,R:R,w:w,fx:fx,sx:sx}}
 
 /* standart ölçü seti: ön görünüşte d ve D, kesitte B üstte, D ve d sağda */
 function stdDims(S,L,k,v,Rt){
  var cy=L.cy,fx=L.fx,sx=L.sx,w=L.w,R=v.D/2*L.s,r=v.d/2*L.s,dim=S.dim,Rt=Rt||R;
  /* ön görünüş */
- var yd=cy+Math.min(r*0.55,r-8);if(r<16)yd=cy;
- S.dimn('d',fx-r,yd,fx+r,yd,'ø'+fmt(v.d),fx,yd-5);
- S.ext(fx-R,cy+4,fx-R,cy+R+20);S.ext(fx+R,cy+4,fx+R,cy+R+20);
- S.dimn('D',fx-R,cy+R+15,fx+R,cy+R+15,'ø'+fmt(v.D),fx,cy+R+30>L.H-3?cy+R+11:cy+R+30);
+ var RF=v.D/2*L.sF,rF=v.d/2*L.sF,yd=cy+Math.min(rF*0.55,rF-8);if(rF<16)yd=cy;
+ S.dimn('d',fx-rF,yd,fx+rF,yd,'ø'+fmt(v.d),fx,yd-5);
+ S.ext(fx-RF,cy+4,fx-RF,cy+RF+20);S.ext(fx+RF,cy+4,fx+RF,cy+RF+20);
+ S.dimn('D',fx-RF,cy+RF+15,fx+RF,cy+RF+15,'ø'+fmt(v.D),fx,cy+RF+30>L.H-3?cy+RF+11:cy+RF+30);
  /* kesit */
  var xr=sx+w;
  S.ext(sx,cy-Rt-20,sx,cy-Rt-2);S.ext(xr,cy-Rt-20,xr,cy-R-2);
@@ -104,7 +106,7 @@ function titles(S,L,secTitle){S.title(L.fx,13,'ÖN GÖRÜNÜŞ');S.title(L.sx+L.
 /* ========== İğneli: NK / RNA (iç bileziksiz), NKI / NA / NKIS (iç bilezikli), HK / BK (kovan) ========== */
 function needle(ctx,opt,kind){
  var v=basic(ctx);if(!v)return null;
- var L=layout(v.D,v.B,2),S=mk(opt,L.H),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
+ var L=layout(v.D,v.B,2),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
  var inner=kind=='ir',cup=kind=='hk'||kind=='bk';
  var ti=inner?T*0.30:0, ri=r+ti;
  var ts=cup?Math.max(1.6,T*0.2):0;
@@ -141,7 +143,7 @@ function needle(ctx,opt,kind){
  var rings=cup?[[R,'none',1.5],[R-ts,'none',1]]:[[R,'none',1.5],[rb,'none',1.1]];
  if(inner)rings.push([ri,'none',1.1],[r,'none',1.5]);else rings.push([r,'none',0.8,' stroke-dasharray="3 2"']);
  front(S,fx,cy,R,rings,rr,pitch,n);
- if(cup)S.circ(fx,cy,R-ts*0.5,'none',ts*0.9,' stroke="#2b3550" opacity=".35"');
+ if(cup){S.fon(fx,cy);S.circ(fx,cy,R-ts*0.5,'none',ts*0.9*S.kf,' stroke="#2b3550" opacity=".35"');S.foff()}
  stdDims(S,L,ctx,v);titles(S,L);
  var lD=lab(ctx,RE_D,'Dış Çap (D)'),ld=lab(ctx,RE_d,inner?'İç Çap (d)':'Mil Çapı (Fw)'),lB=lab(ctx,RE_B,'Genişlik (B)');
  return {svg:S.out(),keys:[{k:'d',l:ld,v:fmt(v.d)+' mm'},{k:'D',l:lD,v:fmt(v.D)+' mm'},{k:'B',l:lB,v:fmt(v.B)+' mm'}]}}
@@ -156,57 +158,62 @@ function barrel(cx,cy,L2,R2,ang,bul){ /* fıçı makara: merkez, yarı uzunluk, 
  pts.push(T(-L2,R2*(1-bul)*0.9),T(-L2,-R2*(1-bul)*0.9));return pts}
 function spherical(ctx,opt){
  var v=basic(ctx);if(!v)return null;
- var L=layout(v.D,v.B,2),S=mk(opt,L.H),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,sx=L.sx,m=w/2;
+ var L=layout(v.D,v.B,2),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,sx=L.sx,m=w/2,c=Math.max(0.8,T*0.03);
  var tag=up(ctx.title)+' '+model(ctx),taper=/\b(2[234]\d{3}|2[34][01]\d{2})\s?-?[A-Z0-9.]*K\b/.test(tag)||/\b(CCK|CAK|EK|CK|K30)\b/.test(tag)||/\d(CCK|CAK|EK)/.test(tag);
- var w33=/W33/.test(tag);
- var To=T*0.26,Rs=R-To;          /* küresel dış yuvarlanma yolu yarıçapı (merkez yatağın ortası) */
- if(Rs<=m*1.02)Rs=m*1.05;
- var dr=T*0.36,Rm=Rs-dr/2;       /* makara merkezi yarıçapı */
- var phi=Math.asin(Math.min(0.9,(w*0.235)/Rm));
- var lr2=Math.min(w*0.2,dr*1.35);
+ var w33=/W33/.test(tag),ca=/\b2[234]\d{3}\s?-?CA/.test(tag);
+ var To=T*0.24,Rs=R-To;if(Rs<=m*1.05)Rs=m*1.1;          /* dış bilezik: tek küresel yol, merkez eksende (m,0) */
+ var dr=T*0.38,Rm=Rs-dr/2,g0=Math.max(1.6,w*0.045);
+ var L2=Math.min(dr*1.25,(m-0.8-g0)/2);
+ var a=g0+L2,th=Math.asin(Math.min(0.6,a/Rm)),rho=Math.min(Rs,L2*2.3);
+ function hh(u){return Math.sqrt(rho*rho-u*u)-(rho-dr/2)}
+ var cxL=m-Rm*Math.sin(th),crL=Rm*Math.cos(th),Ux=Math.cos(th),Ur=Math.sin(th),Vx=-Math.sin(th),Vr=Math.cos(th);
+ function rp(u,k,cl){var q=hh(u)*k+(cl||0)*k;return [cxL+u*Ux+q*Vx,crL+u*Ur+q*Vr]}
  function arcR(x){var dx=x-m;return Math.sqrt(Math.max(0,Rs*Rs-dx*dx))}
- var gw=w33?Math.max(4,w*0.14):0,gd=w33?Math.max(1.2,To*0.18):0,hw=w33?Math.max(1.4,gw*0.28):0;
- var ti=T*0.24;
+ var gw=Math.max(3,w*0.16),gd=Math.max(1.2,To*0.26),hw=Math.max(1.1,gw*0.3);
+ var N=12,i,ue=L2*1.05,race=[];for(i=0;i<=N;i++){race.push(rp(-ue+2*ue*i/N,-1,0.3))}  /* sol yol: dış uçtan iç uca */
+ var xo=Math.max(0.6,race[0][0]),rIn=race[N][1],ribR=race[0][1]+dr*(ca?0.16:0.06);
+ var bore1=taper?r+w/24:r,rf=rIn+dr*0.34;
  both(function(g){
   function P(pts){return pts.map(function(p){return [sx+p[0],cy-g*p[1]]})}
-  /* dış bilezik (W33: yağlama kanalı + delik) */
-  var i,N=14,left=[[0,R-1],[1,R]],right;
-  if(w33){left.push([m-gw/2,R],[m-gw/2,R-gd],[m-hw,R-gd],[m-hw,arcR(m-hw)])}else{left.push([m,R],[m,arcR(m)])}
-  var xe=w33?m-hw:m;for(i=0;i<=N;i++){var x=xe-(xe)*i/N;left.push([x,arcR(x)])}
-  if(w33){S.poly(P(left),S.hat);right=left.map(function(p){return [w-p[0],p[1]]});S.poly(P(right),S.hat)}
-  else{var one=[[0,R-1],[1,R],[w-1,R],[w,R-1]];for(i=0;i<=2*N;i++){var xa=w-w*i/(2*N);one.push([xa,arcR(xa)])}S.poly(P(one),S.hat)}
-  /* iç bilezik: iki eğik yol + kenar omuzları */
-  var cxL=m-Rm*Math.sin(phi),crL=Rm*Math.cos(phi);
-  var nx=-Math.sin(phi),nr=Math.cos(phi); /* makara merkezinden dışa doğru normal (sol sıra) */
-  var bx=cxL-nx*dr/2*1.02,br=crL-nr*dr/2*1.02; /* makara alt temas noktası */
-  var ux=Math.cos(phi),ur=Math.sin(phi);       /* sol makara ekseni yönü (merkeze doğru yükselir) */
-  var e1=[bx-ux*lr2*1.05,br-ur*lr2*1.05],e2=[bx+ux*lr2*1.05,br+ur*lr2*1.05];
-  var rib=Math.min(e1[1]+dr*0.16,(e1[1]+r)/2+dr*0.5);
-  var bore0=r,bore1=taper?r+Math.max(2,w*0.06):r;
-  var inn=[[0,bore0+0.8],[0.8,bore0],[w-0.8,bore1],[w,bore1+0.8],[w,rib],[w-Math.max(1,e1[0]),rib],[w-e1[0],e1[1]],[w-e2[0],e2[1]],[w-m+0.01,e2[1]+0.2],[m,e2[1]+0.2],[e2[0],e2[1]],[e1[0],e1[1]],[Math.max(1,e1[0]),rib],[0,rib]];
+  function Mx(pts){return pts.map(function(p){return [w-p[0],p[1]]})}
+  /* dış bilezik */
+  var o=[];
+  if(w33){o=[[0,R-c],[c,R],[m-gw/2,R],[m-gw/2,R-gd],[m-hw,R-gd]];for(i=0;i<=N;i++){var x=(m-hw)*(1-i/N);o.push([x,arcR(x)])}
+   S.poly(P(o),S.hat);S.poly(P(Mx(o)),S.hat);
+   S.line(sx+m,cy-g*(R-gd+0.5),sx+m,cy-g*(arcR(m)-0.5),0.6,' stroke-dasharray="2 1.5" opacity=".7"')}
+  else{o=[[0,R-c],[c,R],[w-c,R],[w,R-c]];for(i=0;i<=2*N;i++){var xa=w*(1-i/(2*N));o.push([xa,arcR(xa)])}S.poly(P(o),S.hat)}
+  /* iç bilezik: iki yollu */
+  var inn=[[0,r+c],[c,r],[w-c,bore1],[w,bore1+c],[w,ribR],[w-xo,ribR]].concat(Mx(race));
+  if(ca)inn.push([m+g0*0.8,rIn],[m+g0*0.8,rf],[m-g0*0.8,rf],[m-g0*0.8,rIn]);
+  inn=inn.concat(race.slice().reverse());inn.push([xo,ribR],[0,ribR]);
   S.poly(P(inn),S.hat);
-  /* makaralar */
-  var bL=barrel(sx+cxL,cy-g*crL,lr2,dr/2,-g*phi,0.12);S.poly(bL,ROLL,1.1);
-  var bR=barrel(sx+w-cxL,cy-g*crL,lr2,dr/2,g*phi,0.12);S.poly(bR,ROLL,1.1);
-  /* kafes: makaralar arası köprü */
-  var kr=crL+dr*0.05;S.poly(P([[m-1.3,kr-dr*0.28],[m+1.3,kr-dr*0.28],[m+1.3,kr+dr*0.28],[m-1.3,kr+dr*0.28]]),'#5b6680',0.8);
+  /* ara halka (CC/E) */
+  var top=rf;
+  if(!ca){top=rIn+dr*0.42;S.poly(P([[m-g0+0.35,rIn+0.3],[m+g0-0.35,rIn+0.3],[m+g0-0.35,top],[m-g0+0.35,top]]),'#dde2ec',0.9)}
+  /* fıçı makaralar (bombeli, simetrik açılı) */
+  var rl=[];for(i=0;i<=N;i++)rl.push(rp(-L2+2*L2*i/N,1));for(i=N;i>=0;i--)rl.push(rp(-L2+2*L2*i/N,-1));
+  S.poly(P(rl),ROLL,1.25);S.poly(P(Mx(rl)),ROLL,1.25);
+  /* makara eksenleri */
+  var e0=rp(-L2*1.15,0),e1=rp(L2*1.15,0);
+  S.line(sx+e0[0],cy-g*e0[1],sx+e1[0],cy-g*e1[1],0.5,' stroke-dasharray="6 2 1.5 2" opacity=".55"');
+  S.line(sx+w-e0[0],cy-g*e0[1],sx+w-e1[0],cy-g*e1[1],0.5,' stroke-dasharray="6 2 1.5 2" opacity=".55"');
+  /* kafes köprüsü */
+  var kt=crL+dr*0.22;if(kt>top+1.4)S.poly(P([[m-g0*0.55,top+0.5],[m+g0*0.55,top+0.5],[m+g0*0.55,kt],[m-g0*0.55,kt]]),'#5b6680',0.7);
  });
- S.axis(sx-12,cy,sx+w+12,cy);
- /* küresellik merkezi + yay izi */
- S.add('<circle cx="'+(sx+m)+'" cy="'+cy+'" r="1.6" fill="'+C+'"/>');
+ S.axis(sx-12,cy,sx+w+12,cy);S.axis(sx+m,cy-R-8,sx+m,cy+R+8);
+ S.add('<circle cx="'+(sx+m)+'" cy="'+cy+'" r="1.8" fill="'+C+'"/>');
  /* ön görünüş */
- var fx=L.fx,pitch=Rm*Math.cos(phi),n=Math.max(10,Math.min(30,Math.floor(2*Math.PI*pitch/(dr*1.25))));
- front(S,fx,cy,R,[[R,'none',1.5],[Rs*Math.cos(Math.asin(Math.min(.99,m/Rs)))+0.5,'none',1],[r+ti,'none',1],[r,'none',1.5]],dr/2*0.95,pitch,n);
+ var fx=L.fx,pitch=crL,n=Math.max(10,Math.min(30,Math.floor(2*Math.PI*pitch/(dr*1.25))));
+ front(S,fx,cy,R,[[R,'none',1.5],[arcR(0)+0.5,'none',1],[ribR,'none',1],[r,'none',1.5]],dr/2*0.95,pitch,n);
  stdDims(S,L,ctx,v);titles(S,L);
- if(taper)S.note(sx+w/2,cy+R+17,'Konik delik (K)');
- if(w33)S.note(sx+w/2,cy-R-30<16?cy-R-30:cy-R-30,'');
+ if(taper)S.note(sx+w/2,cy+R+14,'Konik delik 1:12');
  var lD=lab(ctx,RE_D,'Dış Çap (D)'),ld=lab(ctx,RE_d,'İç Çap (d)'),lB=lab(ctx,RE_B,'Genişlik (B)');
  return {svg:S.out(),keys:[{k:'d',l:ld,v:fmt(v.d)+' mm'},{k:'D',l:lD,v:fmt(v.D)+' mm'},{k:'B',l:lB,v:fmt(v.B)+' mm'}]}}
 
 /* ========== Silindirik makaralı: NU / NJ / NUP / N (tek sıra), NN (çift sıra) ========== */
 function cylindrical(ctx,opt,t){
  var v=basic(ctx);if(!v)return null;
- var L=layout(v.D,v.B,2),S=mk(opt,L.H),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
+ var L=layout(v.D,v.B,2),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
  var to=T*0.30,ti=T*0.30,dr=T-to-ti,ro=R-to,ri=r+ti,fh=dr*0.42,fw=Math.max(2,w*0.12),c=1;
  var rows=t=='nn'?2:1;
  both(function(g){
@@ -241,7 +248,7 @@ function rax(ctx,opt){
  var Ci=dget(ctx,'Ci'),D1=dget(ctx,'D1'),D2=dget(ctx,'D2'),L0=dget(ctx,'L'),h=dget(ctx,'h'),d1=dget(ctx,'d1'),d2=dget(ctx,'d2');
  if(!ok(Ci)||!ok(D1)||!ok(D2)||!ok(L0)||!ok(h)||!ok(d1)||!ok(d2))return null;
  if(!(D1>Ci&&D2>D1&&L0>h&&d1>Ci&&d2>d1&&D2>d2))return null;
- var L=layout(D2,L0,3,76),S=mk(opt,L.H),s=L.s,cy=L.cy,sx=L.sx,X=sec(S,sx,cy);
+ var L=layout(D2,L0,3,76,{hS:188,cy:146}),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,sx=L.sx,X=sec(S,sx,cy);
  var rC=Ci/2*s,r1=D1/2*s,r2=D2/2*s,a1=d1/2*s,a2=d2/2*s,w=L0*s,hp=h*s;
  var ts=Math.max(1.3,Math.min((r1-rC)*0.16,2.4)),dw=r1-ts-rC,tw=Math.max(1.4,hp*0.3),fl=Math.min(a2+ts,r2-1.5);
  both(function(g){
@@ -265,19 +272,19 @@ function rax(ctx,opt){
  /* ön görünüş (eksenel taraftan, pul çıkarılmış): eksenel iğneler ışınsal */
  var fx=L.fx,R=r2,n=Math.max(14,Math.min(48,Math.floor(2*Math.PI*(a1+a2)/2/Math.max(2.4,gx1w()*1.6))));
  function gx1w(){return Math.max(2,(hp-ts-tw-1)*0.9)}
- S.circ(fx,cy,r2,'none',1.5);S.circ(fx,cy,fl,'none',0.9,' stroke-dasharray="4 2"');
+ S.fon(fx,cy);S.circ(fx,cy,r2,'none',1.5);S.circ(fx,cy,fl,'none',0.9,' stroke-dasharray="4 2"');
  S.circ(fx,cy,a2,'none',1);S.circ(fx,cy,a1,'none',1);
  var nw=Math.max(0.9,Math.min(gx1w()*0.42,(a1+a2)/2*Math.PI/n*0.32)),i;
  for(i=0;i<n;i++){var t=2*Math.PI*i/n,ct=Math.cos(t),st=Math.sin(t),ra=a1+(a2-a1)*0.12,rb=a2-(a2-a1)*0.12;
   S.poly([[fx+ra*ct-nw*st,cy+ra*st+nw*ct],[fx+rb*ct-nw*st,cy+rb*st+nw*ct],[fx+rb*ct+nw*st,cy+rb*st-nw*ct],[fx+ra*ct+nw*st,cy+ra*st-nw*ct]],ROLL,0.8)}
  S.circ(fx,cy,rC+dw*0.5,'none',1.2);
  S.circ(fx,cy,rC,'none',0.8,' stroke-dasharray="3 2"');
- S.axis(fx-R-12,cy,fx+R+12,cy);S.axis(fx,cy-R-12,fx,cy+R+12);
+ S.axis(fx-R-12/S.kf,cy,fx+R+12/S.kf,cy);S.axis(fx,cy-R-12/S.kf,fx,cy+R+12/S.kf);S.foff();
  /* ölçüler */
- var yd=rC<16?cy:cy+Math.min(rC*0.55,rC-8);
- S.dimn('d',fx-rC,yd,fx+rC,yd,'ø'+fmt(Ci),fx,yd-5);
- S.ext(fx-R,cy+4,fx-R,cy+R+20);S.ext(fx+R,cy+4,fx+R,cy+R+20);
- S.dimn('D2',fx-R,cy+R+15,fx+R,cy+R+15,'ø'+fmt(D2),fx,cy+R+30>L.H-3?cy+R+11:cy+R+30);
+ var rCF=rC*L.kf,RF=R*L.kf,yd=rCF<16?cy:cy+Math.min(rCF*0.55,rCF-8);
+ S.dimn('d',fx-rCF,yd,fx+rCF,yd,'ø'+fmt(Ci),fx,yd-5);
+ S.ext(fx-RF,cy+4,fx-RF,cy+RF+20);S.ext(fx+RF,cy+4,fx+RF,cy+RF+20);
+ S.dimn('D2',fx-RF,cy+RF+15,fx+RF,cy+RF+15,'ø'+fmt(D2),fx,cy+RF+30>L.H-3?cy+RF+11:cy+RF+30);
  var xr=sx+w,top=cy-r2;
  S.ext(sx,top-36,sx,top-2);S.ext(xr,cy-r1-36+(r2-r1),xr,cy-r1-2);S.ext(sx+hp,top-16,sx+hp,cy-fl-2);
  S.dimn('h',sx,top-10,sx+hp,top-10,fmt(h),sx+hp+4,top-14,0,'start');
@@ -296,7 +303,7 @@ function arcP(cx,cr,rad,a0,a1,n,down){var o=[],i;for(i=0;i<=n;i++){var t=a0+(a1-
 function clamp1(x){return Math.max(-1,Math.min(1,x))}
 function nkia(ctx,opt,kind){
  var v=basic(ctx);if(!v)return null;
- var L=layout(v.D,v.B,2),S=mk(opt,L.H),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
+ var L=layout(v.D,v.B,2),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy);
  var to=T*0.27,ti=T*0.27,ro=R-to,ri=r+ti,g=ro-ri,cr=(ri+ro)/2,c=1,q=Math.PI/4;
  var rb=Math.min(g*0.74,T*0.37,w*0.17),rg=rb*1.03,cx=w-Math.max(rb*1.3,rb+1.8);
  var t1=Math.acos(clamp1((ro-cr)/rg)),u2=Math.acos(clamp1((cr-ri)/rg));
@@ -330,7 +337,7 @@ function nkia(ctx,opt,kind){
 function grooveV(bx,rc,rg,xf,toRight){var dx=Math.abs(xf-bx);if(dx>=rg)return [];var t0=Math.acos(dx/rg),o=[],i,N=10;for(i=0;i<=N;i++){var t=-t0+2*t0*i/N;o.push([toRight?bx+rg*Math.cos(t):bx-rg*Math.cos(t),rc+rg*Math.sin(t)])}return o}
 function nkx(ctx,opt,kind){
  var v=basic(ctx);if(!v)return null;
- var k2=1.24,L=layout(v.D*k2,v.B,2,80),S=mk(opt,L.H),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy),sx=L.sx,c=1;
+ var k2=1.24,L=layout(v.D*k2,v.B,2,80),S=mk(opt,L.H,L.kf),s=L.s,cy=L.cy,R=v.D/2*s,r=v.d/2*s,w=L.w,T=R-r,X=sec(S,L.sx,cy),sx=L.sx,c=1;
  var R2=R*k2,to=Math.max(1.8,T*0.3),ro=R-to,dw=ro-r,cov=kind!='nx'||/\bZ\b/.test(up(ctx.title)+' '+model(ctx)),rol=kind=='nkxr';
  var ax=Math.min(w*0.44,Math.max(w*0.3,(R2-r)*0.62)),ts=cov?Math.max(0.9,Math.min(1.4,ax*0.08)):0;
  var tw=Math.max(1.6,ax*0.24),tf=Math.max(1.6,ax*0.2),xw0=cov?ts+0.6:0,xw1=xw0+tw,xf0=ax-tf,xf1=ax;
@@ -361,7 +368,7 @@ function nkx(ctx,opt,kind){
  S.axis(sx-12,cy,sx+w+12,cy);
  /* ön görünüş (iğneli taraftan) */
  var fx=L.fx,pitch=r+dw/2,n=Math.max(8,Math.min(48,Math.floor(2*Math.PI*pitch/(dw*1.18))));
- S.circ(fx,cy,R2,'none',1);
+ S.fon(fx,cy);S.circ(fx,cy,R2,'none',1);S.foff();
  front(S,fx,cy,R2,[[R,'none',1.5],[ro,'none',1.1],[r,'none',0.8,' stroke-dasharray="3 2"']],dw/2*0.92,pitch,n);
  stdDims(S,L,ctx,v,R2);titles(S,L);
  return {svg:S.out(),keys:[{k:'d',l:lab(ctx,RE_d,'İç Çap (d)'),v:fmt(v.d)+' mm'},{k:'D',l:lab(ctx,RE_D,'Dış Çap (D)'),v:fmt(v.D)+' mm'},{k:'B',l:lab(ctx,RE_B,'Genişlik (B)'),v:fmt(v.B)+' mm'}]}}
