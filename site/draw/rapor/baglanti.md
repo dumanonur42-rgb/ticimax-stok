@@ -6,13 +6,13 @@ Modül: `site/draw/baglanti.js` (`window.YDRAW.baglanti`). Fotoğraftan ölçü 
 
 | Alt tip | Tanıma (breadcrumb) | Sayfa etiketi → çizim anahtarı | Çizim |
 |---|---|---|---|
-| Manşon somunu KM | `MANŞON SOMUN VE PUL > SOMUN` | `İç Diş` (M..x..) → G, `Dış Çap` → D, `Genişlik` → B | Ön görünüş (4 kanal; iç diş: diş üstü kalın daire, diş dibi ince 3/4 yay) + KESİT A-A (düzlem üst/alt kanaldan geçer, kanal işaretli; diş dibi ince çizgi) |
+| Manşon somunu KM | `MANŞON SOMUN VE PUL > SOMUN` | `İç Diş` (M..x..) → G, `Dış Çap` → D, `Genişlik` → B | Ön görünüş (4 kanal; iç diş: diş üstü kalın daire, diş dibi ince 3/4 yay) + KESİT A-A (düzlem üst/alt kanaldan geçer, kanal işaretli; diş dibi ince çizgi + diş işaret çizgileri) |
 | Manşon pulu MB | `MANŞON SOMUN VE PUL > PUL` | `İç Çap` → d, `Dış Çap` → D, `Genişlik (Kalınlık)` → s | Ön görünüş (iç tırnak + dış tırnaklar) + KESİT A-A |
 | Dış segman DIN 471 | `SEGMAN > 471 DIŞ SEGMAN` | `Ebat` → d1 (mil çapı); `Ebat` "AxB" ise B → s | Açık halka, dışa dönük delikli kulaklar + KESİT A-A (büyütülmüş): segman mil yuvasında, mil ince çift noktalı çizgi; s sayfada varsa ölçülü |
 | İç segman DIN 472 | `SEGMAN > 472 İÇ SEGMAN` | `Ebat` → d1 (delik çapı); "AxB" ise B → s | Açık halka, içe dönük delikli kulaklar + KESİT A-A (büyütülmüş): segman delik yuvasında, gövde ince çift noktalı çizgi; s sayfada varsa ölçülü |
 | Konik burç (taper lock) | `KAFES VE BURÇLAR > KONİK BURÇLAR` | ön yazı `Mil Çapı` → d (seri: `Burç Tipi`) | Ön görünüş (kama kanalı, yarık, yarım vida delikleri) + konik KESİT A-A |
 | Kama DIN 6885 | `KAMA` | ön yazı `Kama Ölçüsü` b*h*L → b, h, L | Üst görünüş (yuvarlak uçlu; çok uzunsa kırık gösterim) + KESİT A-A |
-| Rulman manşonu H | `MANŞON SOMUN VE PUL > MANŞON` | `İç Çap (Mil Çapı)` → d1, `Dış Çap (Rulman Deliği)` → d (seri: `Model` H2xx/H3xx/H23xx/H30xx/H31xx) | Ön görünüş (somun kanalları, manşon yarığı, dış diş) + birleşik KESİT A-A (konik manşon + somun + pul) |
+| Rulman manşonu H | `MANŞON SOMUN VE PUL > MANŞON` | `İç Çap (Mil Çapı)` → d1, `Dış Çap (Rulman Deliği)` → d (`Model` H…) | Ön görünüş (somun kanalları, manşon yarığı, dış diş, arkada pul ve rulman) + birleşik KESİT A-A: yarıklı konik manşon (iç silindirik Ød1, dış konik 1:12), ince uçta dişli bölüm üzerinde MB pul + KM somun, rulman konik kısımda çift noktalı çizgi; oranlar şematik |
 | Konik kilit | `KONİK KİLİTLER` | — | **Çizim yok (draw → null)**, aşağıya bakın |
 
 Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden farklıysa ya da özellikler ile ön yazı farklı sayı verirse `draw` null döner.
@@ -44,7 +44,7 @@ Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden fa
   - `/konik-kilit-301-fb1-tipi-02047-17532` → https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85,format=webp/79038/uploads/urunresimleri/buyuk/konik-kilit-301-fb1-tipi-02047--bc3a-.png
 - **Konik burç:** sayfada sadece mil çapı var. Dış çap / boy yazılmıyor; çizimin oranı burç serisinin (1008, 1210, 1610 …) standart dış çap/boy değerlerinden alınır (sayı gösterilmez). Tabloda olmayan seri (ör. 6050) → null.
 - **Segman:** kulak şekli, halka genişliği ve delik boyutu DIN 471/472 biçimine göre orantılı çizilir, sayı yazılmaz. Sadece çapı olan ürünlerde kalınlık sayfada yok → kesitte kalınlık ölçüsü yok. Büyütülmüş kesitte bu ürünlerde kalınlık orantılı çizilir. `Ebat 20x1.75` gibi ürünlerde ikinci sayı DIN gösterimine (d1×s) göre kalınlık kabul edildi.
-- **Rulman manşonu H:** sayfada sadece d1 (mil çapı) ve d (rulman deliği) var; 2. fotoğraf tüm H ürünlerinde aynı genel ürün fotoğrafı, ölçü tablosu yok (ör. https://static.ticimax.cloud/79038/uploads/urunresimleri/buyuk/rulman-mansonu-h-205-135430.png). Manşon boyu (B1), somun ve pul ölçüleri yazılmıyor; şekil seri biçimine göre orantılı çizilir, sayı gösterilmez. Model seri tablosunda yoksa → null.
+- **Rulman manşonu H:** sayfada sadece d1 (mil çapı) ve d (rulman deliği) var; 2. fotoğraf tüm H ürünlerinde aynı genel ürün fotoğrafı, ölçü tablosu yok (ör. https://static.ticimax.cloud/79038/uploads/urunresimleri/buyuk/rulman-mansonu-h-205-135430.png). Manşon boyu (B1), somun ve pul ölçüleri yazılmıyor; **oranlar şematik**: manşon boyu, konik kısım, pul, somun ve rulman (ince çift noktalı çizgi) gerçek ölçüde değil, üzerlerinde sayı yok. Sadece Ød1 (manşon iç çapı) ve Ød (konik yüzeyin büyük ucu = rulman deliği) sayfadaki değerle yazılır.
 - **KM / MB:** kanal ve tırnak ölçüleri sayfada yok; şekil orantılı, sayı yazılmaz. MB `Diş Aralığı` çizimde kullanılmadı.
 - Fotoğraftan ölçü okunmadı (KM/MB/segman/kama fotoğrafları ürün fotoğrafı, ölçü tablosu yok).
 
