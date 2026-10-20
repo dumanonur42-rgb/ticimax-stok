@@ -6,7 +6,7 @@ Modül: `site/draw/yatakli.js` · veri: `site/draw/data/yatakli.json` · fixture
 
 | Seri | Çizim | Gerekli ölçüler (hepsi yoksa null) | Ekstra |
 |---|---|---|---|
-| UCP | Ayaklı yatak: ön görünüş (taban, cıvata delikleri gizli çizgi, gövde, gres nipeli) + kesit A-A | d, H, H2, L, J, A, N, B | — |
+| UCP | Ayaklı yatak (S: vida-bilezik ucu da yazılır): ön görünüş (taban, cıvata delikleri gizli çizgi, gövde, gres nipeli) + kesit A-A | d, H, H2, L, J, A, N, B | — |
 | KP (minyatür) | Ayaklı (zamak) yatak: ön görünüş + kesit | d, H, L, J | — |
 | UCF | 4 delikli kare flanş: ön görünüş + kesit (flanş levhası + göbek) | d, L, J, A, B | 4 × M (cıvata) |
 | UCFL | 2 delikli oval flanş: ön görünüş + kesit | d, H, L, J, A, B | 2 × M |
@@ -50,7 +50,8 @@ Rulman insert küre dış çapı, levha kalınlığı gibi tabloda olmayan şeki
 - SNH / SN / SNL yatak setleri (40 ürün): sayfalarda tek fotoğraf var, ölçü tablosu yok, özelliklerde ölçü yok → çizim yok (null). SN split yatak çizimi bu yüzden eklenmedi; veri gelince eklenebilir.
 - UCPA, UCPH, UCFA, UCFB, UCHA, SBPF/SBPFL/SBPFT/SBPP (sac), SSKFL/SSKP, UC (yalnız insert): ikinci fotoğraf ya yok ya da ürün resmi/ölçüsüz FAG şeması → null. UKP/UKF sitede bulunamadı.
 - UCT 218: tabloda satır boş (–) → null. Tablosu olmayan birkaç UCP/UCF/UCFC/UCFL/UCT ürünü (yalnız 1 fotoğraf) → null.
-- Tablolardaki A1, A2, S sütunları veri dosyasında var ama anlamları tablodan kesin anlaşılmadığı için çizimde yazılmıyor. KFL/KP tablosundaki B sütunu da yazılmıyor.
+- S (sıkma vidası ekseni – iç bilezik ucu): tablodaki yan görünüşte bu şekilde gösteriliyor; UCP/UCT/UCF/UCFL/UCFC kesitlerinde vida bu konumda çizilip S yazılıyor. A1, A2 sütunları (yan görünüşteki toplamları A ile tutmuyor) ve KFL/KP tablosundaki B, S sütunları anlamı kesin olmadığı için yazılmıyor; KFL/KP kesitinde insert genişliği sadece şekil oranıdır.
+- Kesit A-A, tablodaki yan görünüş gibi çizilir: gövde (taban/flanş dahil) tek parça taralı, insert küresel yuvaya oturmuş (dış bilezik, bilyeler, B genişliğinde iç bilezik, vida). Gövde genişliği, flanş kalınlığı gibi tabloda olmayan oranlar ekrana sayı olarak yazılmaz.
 - FAG ürünlerinin tablo fotoğrafları YMN tablolarıyla piksel olarak aynı (fark yalnız sıkıştırma) — aynı değerler kullanıldı.
 
 ## Fotoğraftan okunan ölçüler — kaynak fotoğraf
@@ -310,10 +311,10 @@ Rulman insert küre dış çapı, levha kalınlığı gibi tabloda olmayan şeki
 | /ymn-yatakli-rulman-uc-205-fk-16725 | YATAKLI RULMAN UC 205 (FK) | true | yok (null) |  |
 | /ymn-yatakli-rulman-uc-206-fk-16726 | YATAKLI RULMAN UC 206 (FK) | true | yok (null) |  |
 | /ymn-yatakli-rulman-uc-209-fk-kutusuz-16727 | YATAKLI RULMAN UC 209 (FK - KUTUSUZ) | true | yok (null) |  |
-| /ucf-201-fag-yatakli-rulman-17907 | UCF 201 FAG YATAKLI RULMAN | true | var | d,L,J,A,B,M |
-| /ymn-yatakli-rulman-ucf-206-16736 | YATAKLI RULMAN UCF 206 | true | var | d,L,J,A,B,M |
-| /ymn-yatakli-rulman-ucf-212-16742 | YATAKLI RULMAN UCF 212 | true | var | d,L,J,A,B,M |
-| /ymn-yatakli-rulman-ucf-218-16748 | YATAKLI RULMAN UCF 218 | true | var | d,L,J,A,B,M |
+| /ucf-201-fag-yatakli-rulman-17907 | UCF 201 FAG YATAKLI RULMAN | true | var | d,L,J,A,B,S,M |
+| /ymn-yatakli-rulman-ucf-206-16736 | YATAKLI RULMAN UCF 206 | true | var | d,L,J,A,B,S,M |
+| /ymn-yatakli-rulman-ucf-212-16742 | YATAKLI RULMAN UCF 212 | true | var | d,L,J,A,B,S,M |
+| /ymn-yatakli-rulman-ucf-218-16748 | YATAKLI RULMAN UCF 218 | true | var | d,L,J,A,B,S,M |
 | /ucf-218-fag-yatakli-rulman-17924 | UCF 218 FAG YATAKLI RULMAN | true | yok (null) |  |
 | /ucfa-204-fag-yatakli-rulman-17827 | UCFA 204 FAG YATAKLI RULMAN | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucfa-204-16617 | YATAKLI RULMAN UCFA 204 | true | yok (null) |  |
@@ -321,23 +322,23 @@ Rulman insert küre dış çapı, levha kalınlığı gibi tabloda olmayan şeki
 | /ymn-yatakli-rulman-ucfb-204-16624 | YATAKLI RULMAN UCFB 204 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucfb-205-16625 | YATAKLI RULMAN UCFB 205 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucfb-206-16626 | YATAKLI RULMAN UCFB 206 | true | yok (null) |  |
-| /ucfc-204-fag-yatakli-rulman-17834 | UCFC 204 FAG YATAKLI RULMAN | true | var | d,L,J,H3,B,M |
-| /ucfc-209-fag-yatakli-rulman-17839 | UCFC 209 FAG YATAKLI RULMAN | true | var | d,L,J,H3,B,M |
-| /ymn-yatakli-rulman-ucfc-213-16640 | YATAKLI RULMAN UCFC 213 | true | var | d,L,J,H3,B,M |
-| /ymn-yatakli-rulman-ucfc-218-16645 | YATAKLI RULMAN UCFC 218 | true | var | d,L,J,H3,B,M |
+| /ucfc-204-fag-yatakli-rulman-17834 | UCFC 204 FAG YATAKLI RULMAN | true | var | d,L,J,H3,B,S,M |
+| /ucfc-209-fag-yatakli-rulman-17839 | UCFC 209 FAG YATAKLI RULMAN | true | var | d,L,J,H3,B,S,M |
+| /ymn-yatakli-rulman-ucfc-213-16640 | YATAKLI RULMAN UCFC 213 | true | var | d,L,J,H3,B,S,M |
+| /ymn-yatakli-rulman-ucfc-218-16645 | YATAKLI RULMAN UCFC 218 | true | var | d,L,J,H3,B,S,M |
 | /ucfc-205-fag-yatakli-rulman-17835 | UCFC 205 FAG YATAKLI RULMAN | true | yok (null) |  |
-| /ucfl-201-fag-yatakli-rulman-17849 | UCFL 201 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,M |
-| /ucfl-207-fag-yatakli-rulman-17855 | UCFL 207 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,M |
-| /ymn-yatakli-rulman-ucfl-210-16659 | YATAKLI RULMAN UCFL 210 | true | var | d,H,L,J,A,B,M |
-| /ucfl-218-fag-yatakli-rulman-17866 | UCFL 218 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,M |
+| /ucfl-201-fag-yatakli-rulman-17849 | UCFL 201 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,S,M |
+| /ucfl-207-fag-yatakli-rulman-17855 | UCFL 207 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,S,M |
+| /ymn-yatakli-rulman-ucfl-210-16659 | YATAKLI RULMAN UCFL 210 | true | var | d,H,L,J,A,B,S,M |
+| /ucfl-218-fag-yatakli-rulman-17866 | UCFL 218 FAG YATAKLI RULMAN | true | var | d,H,L,J,A,B,S,M |
 | /ucfl-206-fag-yatakli-rulman-17854 | UCFL 206 FAG YATAKLI RULMAN | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucha-204-16667 | YATAKLI RULMAN UCHA 204 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucha-205-16668 | YATAKLI RULMAN UCHA 205 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucha-206-16669 | YATAKLI RULMAN UCHA 206 | true | yok (null) |  |
-| /ucp-201-fag-yatakli-rulman-17867 | UCP 201 FAG YATAKLI RULMAN | true | var | d,H,H2,L,J,A,N,B |
-| /ymn-yatakli-rulman-ucp-206-16681 | YATAKLI RULMAN UCP 206 | true | var | d,H,H2,L,J,A,N,B |
-| /ucp-212-fag-yatakli-rulman-17878 | UCP 212 FAG YATAKLI RULMAN | true | var | d,H,H2,L,J,A,N,B |
-| /ymn-yatakli-rulman-ucp-218-16693 | YATAKLI RULMAN UCP 218 | true | var | d,H,H2,L,J,A,N,B |
+| /ucp-201-fag-yatakli-rulman-17867 | UCP 201 FAG YATAKLI RULMAN | true | var | d,H,H2,L,J,A,N,B,S |
+| /ymn-yatakli-rulman-ucp-206-16681 | YATAKLI RULMAN UCP 206 | true | var | d,H,H2,L,J,A,N,B,S |
+| /ucp-212-fag-yatakli-rulman-17878 | UCP 212 FAG YATAKLI RULMAN | true | var | d,H,H2,L,J,A,N,B,S |
+| /ymn-yatakli-rulman-ucp-218-16693 | YATAKLI RULMAN UCP 218 | true | var | d,H,H2,L,J,A,N,B,S |
 | /ucp-218-fag-yatakli-rulman-17884 | UCP 218 FAG YATAKLI RULMAN | true | yok (null) |  |
 | /ucpa-204-fag-yatakli-rulman-17885 | UCPA 204 FAG YATAKLI RULMAN | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucpa-204-16696 | YATAKLI RULMAN UCPA 204 | true | yok (null) |  |
@@ -345,8 +346,8 @@ Rulman insert küre dış çapı, levha kalınlığı gibi tabloda olmayan şeki
 | /ymn-yatakli-rulman-ucph-204-16703 | YATAKLI RULMAN UCPH 204 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucph-205-16704 | YATAKLI RULMAN UCPH 205 | true | yok (null) |  |
 | /ymn-yatakli-rulman-ucph-206-16705 | YATAKLI RULMAN UCPH 206 | true | yok (null) |  |
-| /uct-204-fag-yatakli-rulman-17892 | UCT 204 FAG YATAKLI RULMAN | true | var | d,H,H2,L,L1,A,N,B |
-| /uct-208-fag-yatakli-rulman-17896 | UCT 208 FAG YATAKLI RULMAN | true | var | d,H,H2,L,L1,A,N,B |
-| /ymn-yatakli-rulman-uct-212-16718 | YATAKLI RULMAN UCT 212 | true | var | d,H,H2,L,L1,A,N,B |
-| /ymn-yatakli-rulman-uct-217-16723 | YATAKLI RULMAN UCT 217 | true | var | d,H,H2,L,L1,A,N,B |
+| /uct-204-fag-yatakli-rulman-17892 | UCT 204 FAG YATAKLI RULMAN | true | var | d,H,H2,L,L1,A,N,B,S |
+| /uct-208-fag-yatakli-rulman-17896 | UCT 208 FAG YATAKLI RULMAN | true | var | d,H,H2,L,L1,A,N,B,S |
+| /ymn-yatakli-rulman-uct-212-16718 | YATAKLI RULMAN UCT 212 | true | var | d,H,H2,L,L1,A,N,B,S |
+| /ymn-yatakli-rulman-uct-217-16723 | YATAKLI RULMAN UCT 217 | true | var | d,H,H2,L,L1,A,N,B,S |
 | /uct-218-fag-yatakli-rulman-17906 | UCT 218 FAG YATAKLI RULMAN | true | yok (null) |  |
