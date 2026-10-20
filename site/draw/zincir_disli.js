@@ -34,6 +34,8 @@ function dimL(id,dim,x1,y1,x2,y2){var L=Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1
 function svg(h,id,dim,g){return '<svg viewBox="0 0 460 '+h+'" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;font-family:inherit">'+defs(id,dim)+g+'</svg>'}
 
 /* ---------- zincir dişli ---------- */
+/* B serisi makaralı zincir [b1, b2] mm — ürün fotoğrafındaki DIN ISO tablosundan (04b-1-14-1-zincir 2. foto); sadece kesit oranı için, yazılmaz */
+var BTAB={'0.375':[5.72,8.53],'0.5':[7.75,11.3],'0.625':[9.65,13.28],'0.75':[11.68,15.62],'1':[17.02,25.42],'1.25':[19.56,29.01],'1.5':[25.4,37.92]};
 function pitch(v){ // '3/8*1', '(24B) 1"1/2*2', '1*2', '1"1/4*1'
   if(!v)return null;var s=String(v).replace(/\s+/g,' ').trim(),code=null,m=s.match(/^\(([0-9]{2}[AB])\)\s*/i);
   if(m){code=m[1].toUpperCase();s=s.slice(m[0].length)}
@@ -50,8 +52,10 @@ function sprocket(ctx,o,ty){
   var dim=o.dim||'#0a2350',id=o.id||'zd',n=pc.rows;
   /* oranlar ISO 606 profil oranlarıyla (hatve birimi); ekrana yazılmaz */
   var Rp=.5/Math.sin(PI/z),rr=.335,ri=.34,Ra=Rp+.27,Rf=Rp-ri,al=(70-45/z)*PI/180;
-  var Rh=Math.min(Rf-.36,2.5),Rb=Rh*.42,bf=.56,pt=1.1,Lh=n>1?1.3:1.45,Wt=Lh+(n-1)*pt+bf;
-  var s=Math.min(84/Ra,150/Wt),fx=128,cy=134,g='';
+  /* diş genişliği: aynı hatvedeki B serisi zincirin b1 (iç genişlik) değerinin %90'ı; sıralar arası adım şematik (tabloda yok) */
+  var CT=BTAB[String(pc.inch)],pmm=pc.inch*25.4,bf=CT?.9*CT[0]/pmm:.55,pt=CT?1.22*CT[1]/pmm:1.25;
+  var Rh=Math.min(Rf-.36,2.5),Rb=Rh*.42,Lh=n>1?.9:1.05,Wt=Lh+(n-1)*pt+bf;
+  var s=84/Ra,fx=128,cy=134,g='';
   function X(r,t){return fx+r*s*Math.cos(t)}function Y(r,t){return cy-r*s*Math.sin(t)}
   /* diş profili */
   var t0=PI/2+PI/z,st=2*PI/z,d='',dl=.06/Ra;
@@ -75,22 +79,38 @@ function sprocket(ctx,o,ty){
   var xa=fx-s/2,xb=fx+s/2,yr=cy-Rp*s*Math.cos(PI/z),yd=cy-Ra*s-12,rp=rr*s;
   g+='<g class="hl" data-k="p"><g fill="none" stroke="'+dim+'" stroke-width=".8" stroke-dasharray="3 2"><circle cx="'+xa.toFixed(1)+'" cy="'+yr.toFixed(1)+'" r="'+rp.toFixed(1)+'"/><circle cx="'+xb.toFixed(1)+'" cy="'+yr.toFixed(1)+'" r="'+rp.toFixed(1)+'"/></g>'+
    EXT(xa,yr,xa,yd-4,dim)+EXT(xb,yr,xb,yd-4,dim)+dimL(id,dim,xa,yd,xb,yd)+txt(fx,yd-6,'p = '+pc.lab+(pc.code?' ('+pc.code+')':''),dim)+'</g>';
-  g+=ttl(fx,13,'ÖN GÖRÜNÜŞ',dim);
-  /* kesit */
-  var W=Wt*s,xs=352-W/2,poly=function(sg){var a=[[0,Rb+.06],[0,Rh-.08],[.08,Rh],[Lh,Rh]],k;
-    for(k=0;k<n;k++){var x0=Lh+k*pt;if(k>0)a.push([x0,Rf-.08]);a.push([x0,Rp-.05]);a.push([x0+.13,Ra]);a.push([x0+bf-.13,Ra]);a.push([x0+bf,Rp-.05]);if(k<n-1)a.push([x0+bf,Rf-.08])}
-    a.push([Wt,Rb+.06]);a.push([Wt-.06,Rb]);a.push([.06,Rb]);
-    return a.map(function(q,i){return (i?'L':'M')+P(xs+q[0]*s,cy-sg*q[1]*s)}).join('')+'Z'};
-  g+='<path d="'+poly(1)+poly(-1)+'" fill="url(#'+id+'h)" stroke="'+C+'" stroke-width="1.4" stroke-linejoin="round"/>';
-  g+=ln(xs,cy-Rb*s,xs+W,cy-Rb*s,'stroke="'+C+'" stroke-width="1.4"')+ln(xs,cy+Rb*s,xs+W,cy+Rb*s,'stroke="'+C+'" stroke-width="1.4"');
-  for(var k=0;k<n;k++){var x0=xs+(Lh+k*pt)*s;g+=CL(x0-4,cy-Rp*s,x0+bf*s+4,cy-Rp*s)+CL(x0-4,cy+Rp*s,x0+bf*s+4,cy+Rp*s)+CL(x0+bf*s/2,cy-Ra*s-4,x0+bf*s/2,cy-Rp*s+4)}
-  g+=CL(xs-10,cy,xs+W+10,cy);
-  /* sıra etiketi */
-  var yl=cy-Ra*s-12,xm=[],lab=n==1?'TEK SIRA':n==2?'ÇİFT SIRA':n+' SIRA';
-  for(k=0;k<n;k++)xm.push(xs+(Lh+k*pt+bf/2)*s);
-  g+='<g class="hl" data-k="n">';xm.forEach(function(x){g+=ln(x,cy-Ra*s-2,x,yl,'stroke="'+dim+'" stroke-width=".9"')+'<circle cx="'+x.toFixed(1)+'" cy="'+(cy-Ra*s-2).toFixed(1)+'" r="1.6" fill="'+dim+'"/>'});
-  var xc=(xm[0]+xm[n-1])/2;if(n>1)g+=ln(xm[0],yl,xm[n-1],yl,'stroke="'+dim+'" stroke-width=".9"');
-  g+=txt(xc,yl-5,lab,dim)+'</g>'+ttl(352,13,'KESİT A-A',dim);
+  g+=ttl(fx,12,'ÖN GÖRÜNÜŞ',dim);
+  /* kesit A-A: B tipi (tek taraflı göbek), gövde + göbek tek parça */
+  var full=bf*s>=18&&Wt*s<=150,Ss=s,yA=cy,brk=false,rb1=0,rb2=0,G=14,H=168;
+  if(!full){yA=cy+84;Ss=Math.min(150/Wt,Math.max(110/Wt,.75*H/Ra));
+    if(Ra*Ss>H){rb1=Rh+.3;rb2=Rf-.5;if(rb2-rb1>.6){brk=true;Ss=Math.min(Ss,(H-G)/(rb1+Ra-rb2))}else Ss=H/Ra}}
+  function M(r){return !brk||r<=rb1?r*Ss:rb1*Ss+G+(r-rb2)*Ss}
+  var W=Wt*Ss,xs=352-W/2,c=.06;
+  function SX(x){return xs+x*Ss}function SY(r,sg){return yA-sg*M(r)}
+  function wave(x1,x2,r,sg){var y=SY(r,sg),w=x2-x1;return 'C'+P(SX(x1+w/3),y-4)+' '+P(SX(x1+2*w/3),y+4)+' '+P(SX(x2),y)}
+  function teeth(){var a=[],k;for(k=0;k<n;k++){var x0=Lh+k*pt,ch=Math.min(.13,bf*.22);if(k>0)a.push([x0,Rf-.08]);a.push([x0,Rp-.05]);a.push([x0+ch,Ra]);a.push([x0+bf-ch,Ra]);a.push([x0+bf,Rp-.05]);if(k<n-1)a.push([x0+bf,Rf-.08])}return a}
+  function pl(a,sg){return a.map(function(q,i){return (i?'L':'M')+P(SX(q[0]),SY(q[1],sg))}).join('')}
+  var sec='',sgs=full?[1,-1]:[1];
+  sgs.forEach(function(sg){
+    var hub=[[0,Rb+c],[0,Rh-c],[c,Rh],[Lh,Rh]];
+    if(!brk)sec+=pl(hub.concat(teeth(),[[Wt,Rb+c],[Wt-c,Rb],[c,Rb]]),sg)+'Z';
+    else{sec+=pl(hub.concat([[Lh,rb1]]),sg)+wave(Lh,Wt,rb1,sg)+pl([[Wt,Rb+c],[Wt-c,Rb],[c,Rb]],sg).replace('M','L')+'Z';
+      sec+=pl([[Lh,rb2]].concat(teeth(),[[Wt,rb2]]),sg)+wave(Wt,Lh,rb2,sg)+'Z';}
+  });
+  g+='<path d="'+sec+'" fill="url(#'+id+'h)" stroke="'+C+'" stroke-width="1.4" stroke-linejoin="round"/>';
+  if(brk)g+='<g fill="none" stroke="'+C+'" stroke-width=".8"><path d="M'+P(SX(Lh-.04),SY(rb1,1))+wave(Lh-.04,Wt+.04,rb1,1)+'"/><path d="M'+P(SX(Lh-.04),SY(rb2,1))+wave(Lh-.04,Wt+.04,rb2,1)+'"/></g>';
+  /* delik (eksen boyunca) + eksen çizgileri */
+  g+=ln(SX(0),SY(Rb,1),SX(Wt),SY(Rb,1),'stroke="'+C+'" stroke-width="1.4"');
+  if(full)g+=ln(SX(0),SY(Rb,-1),SX(Wt),SY(Rb,-1),'stroke="'+C+'" stroke-width="1.4"');
+  for(var k=0;k<n;k++){var x0=Lh+k*pt;sgs.forEach(function(sg){g+=CL(SX(x0)-4,SY(Rp,sg),SX(x0+bf)+4,SY(Rp,sg))});
+    g+=CL(SX(x0+bf/2),SY(Ra,1)-4,SX(x0+bf/2),SY(full?Rf:(brk?rb2:Rf),1)+6);if(full)g+=CL(SX(x0+bf/2),SY(Ra,-1)+4,SX(x0+bf/2),SY(Rf,-1)-6)}
+  g+=CL(xs-10,yA,xs+W+10,yA);
+  /* sıra etiketi: kısa kılavuz çizgileri ile */
+  var yT=SY(Ra,1),xm=[],lab=n==1?'TEK SIRA':n==2?'ÇİFT SIRA':n+' SIRA';
+  for(k=0;k<n;k++)xm.push(SX(Lh+k*pt+bf/2));
+  var xc=n>1?(xm[0]+xm[n-1])/2:xm[0]+26,yl=yT-15;
+  g+='<g class="hl" data-k="n">';xm.forEach(function(x){g+=ln(n>1?xc:xm[0]+8,yl,x,yT-2,'stroke="'+dim+'" stroke-width=".9"')+'<circle cx="'+x.toFixed(1)+'" cy="'+(yT-2).toFixed(1)+'" r="1.8" fill="'+dim+'"/>'});
+  g+=txt(xc,yl-4,lab,dim)+'</g>'+ttl(352,12,'KESİT A-A'+(Ss>s*1.05?' (BÜYÜTÜLMÜŞ)':''),dim);
   var keys=[{k:'z',l:'Diş Sayısı (z)',v:String(z)},{k:'p',l:'Zincir Hatvesi (p)',v:pc.lab+(pc.code?' ('+pc.code+')':'')},{k:'n',l:'Sıra Sayısı',v:n+(n==1?' (Tek sıra)':n==2?' (Çift sıra)':'')}];
   return {svg:svg(250,id,dim,g),keys:keys};
 }

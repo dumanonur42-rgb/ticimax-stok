@@ -6,8 +6,8 @@ Modül: `site/draw/zincir_disli.js` · Fixture: `site/draw/fixtures/zincir_disli
 
 | Alt tip | Tanıma (crumbs + başlık) | Çizim |
 |---|---|---|
-| Tek sıra zincir dişli (3/8″, 1/2″, 5/8″, 3/4″, 1″, 1 1/4″) | başlıkta "ZİNCİR DİŞLİ", Ürün Tipi "TEK SIRA", kategori "ZİNCİR DİŞLİLERİ" | Ön görünüş: z adet gerçek zincir dişi profili (makara oturma yayı + diş yanağı), bölüm dairesi (eksen çizgisi), iki makara yerinde kesik çizgiyle, göbek + delik; hatve ölçüsü iki makara merkezi arasında. Kesit A-A: tek diş sıralı gövde + göbek, 45° tarama, eksen çizgisi, diş ucu pahları. |
-| Çift sıra zincir dişli | Ürün Tipi "ÇİFT SIRA" | Aynı ön görünüş; kesit A-A'da iki diş sırası (aralarında zincir iç plakası boşluğu) ayrı çizilir. |
+| Tek sıra zincir dişli (3/8″, 1/2″, 5/8″, 3/4″, 1″, 1 1/4″) | başlıkta "ZİNCİR DİŞLİ", Ürün Tipi "TEK SIRA", kategori "ZİNCİR DİŞLİLERİ" | Ön görünüş: z adet gerçek zincir dişi profili (makara oturma yayı + diş yanağı), bölüm dairesi (eksen çizgisi), iki makara yerinde kesik çizgiyle, göbek + delik; hatve ölçüsü iki makara merkezi arasında. Kesit A-A: B tipi (tek taraflı göbek) gövde + göbek tek parça taralı, delik ve eksen çizgisi, diş ucu pahları; sıra etiketi kılavuz çizgili. Diş genişliği aynı hatvedeki B serisi zincirin b1 değerinin %90'ı. Büyük dişlilerde kesit büyütülmüş yarım kesit, gövde kırık çizgiyle kısaltılmış (KESİT A-A (BÜYÜTÜLMÜŞ)). |
+| Çift sıra zincir dişli | Ürün Tipi "ÇİFT SIRA" | Aynı ön görünüş; kesit A-A'da iki diş sırası ayrı çizilir; iki sıra arası enine adım (pt) tablo/fotoğrafta olmadığı için şematik (1,22 × b2). |
 | 24B (1 1/2″) tek / çift sıra | Zincir Ölçüsü "(24B) 1″1/2*1 / *2" | Hatve etiketi "1 1/2″ (24B)" ile, tek/çift sıra kesitiyle. |
 | Makaralı zincir (DIN ISO B-1 serisi, 04B-1 … 72B-1) | başlık "... ZİNCİR", kategori "ZİNCİRLER" | Yan görünüş: 4 makara/3 hatve, dış ve iç plakalar (bel profilli), pim + makara (kesik), h ve p ölçüleri. Kesit A-A: pim, burç, makara, iç/dış plakalar ayrı taramalı; b1, d1, d3, F1 ölçüleri. |
 
@@ -119,6 +119,7 @@ Tablo bir kez büyütülerek satır satır okundu (18 satır; 081-1 satırının
 ## Emin olunamayanlar / bilerek çizilmeyenler
 
 - **Zincir dişli göbek çapı, göbek boyu, diş genişliği, delik çapı:** taranan zincir dişli sayfalarının hiçbirinde (Ürün Özellikleri, ön yazı) bu ölçüler yok; 2. fotoğrafı olan dişlilerde (116 ürün) 2. fotoğraf da ölçüsüz ürün resmi (ölçü tablosu yok). Bu yüzden çizimde bu ölçülere **sayı yazılmadı**. Şekil, ölçüsüz olarak genel oranlarla (göbek, delik, diş genişliği) gösterilir; sadece z, p ve sıra sayısı yazılır.
+- **Kesit oranları:** diş genişliği = 0,9 × b1 (zincir fotoğraf tablosundan, hatveye göre: 3/8″→06B, 1/2″→08B, 5/8″→10B, 3/4″→12B, 1″→16B, 1 1/4″→20B, 1 1/2″→24B; dişli sayfasında A/B serisi yazmadığı için B serisi kabul edildi). Çift sırada sıralar arası adım şematik. Göbek çapı/boyu şematik. Bunların hiçbiri sayı olarak yazılmaz.
 - **Dış çap / bölüm dairesi çapı** p ve z'den hesaplanabilir ama sayfada yazmadığı için **sayı olarak yazılmadı**; sadece çizimin ölçeği (dişlerin ve bölüm dairesinin oranı) bu formülle (Dp = p / sin(180°/z)) doğru çizildi.
 - **Ham / göbekli ayrımı:** sitedeki ürünlerde böyle bir özellik yok; ayrı alt tip yapılmadı (veri gelirse eklenebilir).
 - **Zincir tablosundaki min/max:** b1 "min", diğerleri "max" değer; çizimde tablodaki değer aynen yazıldı.
