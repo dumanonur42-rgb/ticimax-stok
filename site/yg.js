@@ -6,6 +6,7 @@ function Q2(r){[].forEach.call(r.querySelectorAll('button'),function(b){b.type='
 // --- görseller
 var photos=[];[].forEach.call(document.querySelectorAll('#divThumbList img'),function(i){var c=J(i.getAttribute('data-cloudzoom'));var src=c.image||i.src,z=c.zoomImage||src;if(photos.every(function(p){return p.src!=src}))photos.push({src:src,zoom:z});});
 if(!photos.length){var m=document.querySelector('#imgUrunResim');if(m){var c=J(m.getAttribute('data-cloudzoom'));photos.push({src:m.src,zoom:c.zoomImage||m.src});}}
+if(!photos.length){[].forEach.call(document.querySelectorAll('#divMobileImageList a.lightItem'),function(a){if(a.closest('.owl-item.cloned'))return;var i=a.querySelector('img'),src=a.getAttribute('href')?a.href:'',raw=i&&(i.getAttribute('data-src')||i.getAttribute('src'));if(!src&&raw){var r=document.createElement('a');r.href=raw;src=r.href}if(src&&photos.every(function(p){return p.src!=src}))photos.push({src:src,zoom:src});});}
 if(window.YG_PHOTOS)photos=window.YG_PHOTOS;
 var title=(document.querySelector('.ProductName h1, h1')||{}).textContent||'';title=title.trim();
 // --- özellikler (sayfadaki Ürün Özellikleri listesinden; tahmin yok)

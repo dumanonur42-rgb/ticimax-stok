@@ -18,8 +18,10 @@ yg=read('yg.js'); d=read('desc.js'); o=read('onyazi.js')+'\n'+read('fiyat.js')
 d=d.replace("(function(){\nvar A=document.querySelector('#divTabOzellikler .urunTabAlt');","function YD(){\nvar A=document.querySelector('.urunTabAlt');",1)
 d=d.rstrip()[:-5]+'}'
 d=d.replace("if(!A||A.__yd)return;A.__yd=1;","if(!A||A.__yd)return false;A.__yd=1;")
-out="/* Yamansa urun sayfasi: galeri + teknik cizim + aciklama duzeni. Sag kolon/Sepete Ekle degismez. */\n(function(){\nfunction YG(){\n"+yg+"\n}\n"+d+"\n"+o+"\n"+"""var t0=Date.now();(function w(){if(document.querySelector('.leftImage #imgUrunResim, .leftImage #divThumbList img')){try{YG()}catch(e){}}else if(Date.now()-t0<15000)return setTimeout(w,300)})();
-function tryD(){try{YD()}catch(e){}try{YO()}catch(e){}try{YF()}catch(e){}}tryD();var mo=new MutationObserver(tryD);mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},60000);
+out="/* Yamansa urun sayfasi: galeri + teknik cizim + aciklama duzeni. Sag kolon/Sepete Ekle degismez. */\n(function(){\nfunction YG(){\n"+yg+"\n}\n"+d+"\n"+o+"\n"+"""var t0=Date.now(),ygDone=false;
+function tryD(){if(ygDone){try{YD()}catch(e){}}try{YO()}catch(e){}try{YF()}catch(e){}}
+(function w(){if(document.querySelector('.leftImage #imgUrunResim, .leftImage #divThumbList img, .leftImage #divMobileImageList a.lightItem')){try{YG()}catch(e){}ygDone=true;tryD()}else if(Date.now()-t0<15000)return setTimeout(w,300);else{ygDone=true;tryD()}})();
+if(!ygDone)tryD();var mo=new MutationObserver(tryD);mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},60000);
 })();
 """
 (ROOT/'yamansa-urun.js').write_text(draw_prefix+out)

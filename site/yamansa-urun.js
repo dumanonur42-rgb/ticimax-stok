@@ -1956,6 +1956,7 @@ function Q2(r){[].forEach.call(r.querySelectorAll('button'),function(b){b.type='
 // --- görseller
 var photos=[];[].forEach.call(document.querySelectorAll('#divThumbList img'),function(i){var c=J(i.getAttribute('data-cloudzoom'));var src=c.image||i.src,z=c.zoomImage||src;if(photos.every(function(p){return p.src!=src}))photos.push({src:src,zoom:z});});
 if(!photos.length){var m=document.querySelector('#imgUrunResim');if(m){var c=J(m.getAttribute('data-cloudzoom'));photos.push({src:m.src,zoom:c.zoomImage||m.src});}}
+if(!photos.length){[].forEach.call(document.querySelectorAll('#divMobileImageList a.lightItem'),function(a){if(a.closest('.owl-item.cloned'))return;var i=a.querySelector('img'),src=a.getAttribute('href')?a.href:'',raw=i&&(i.getAttribute('data-src')||i.getAttribute('src'));if(!src&&raw){var r=document.createElement('a');r.href=raw;src=r.href}if(src&&photos.every(function(p){return p.src!=src}))photos.push({src:src,zoom:src});});}
 if(window.YG_PHOTOS)photos=window.YG_PHOTOS;
 var title=(document.querySelector('.ProductName h1, h1')||{}).textContent||'';title=title.trim();
 // --- özellikler (sayfadaki Ürün Özellikleri listesinden; tahmin yok)
@@ -2248,6 +2249,8 @@ document.head.appendChild(st);
 var io=document.getElementById('ltrIndirimOrani'),di=document.getElementById('divIndirimOrani');if(io&&di&&/\d/.test(io.textContent)){var bb=document.createElement('span');bb.className='yfB';bb.innerHTML='%'+io.textContent.trim().replace(/[<>&]/g,'')+'<i style="font-style:normal"> indirim</i>';di.appendChild(bb)}
 }
 
-var t0=Date.now();(function w(){if(document.querySelector('.leftImage #imgUrunResim, .leftImage #divThumbList img')){try{YG()}catch(e){}}else if(Date.now()-t0<15000)return setTimeout(w,300)})();
-function tryD(){try{YD()}catch(e){}try{YO()}catch(e){}try{YF()}catch(e){}}tryD();var mo=new MutationObserver(tryD);mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},60000);
+var t0=Date.now(),ygDone=false;
+function tryD(){if(ygDone){try{YD()}catch(e){}}try{YO()}catch(e){}try{YF()}catch(e){}}
+(function w(){if(document.querySelector('.leftImage #imgUrunResim, .leftImage #divThumbList img, .leftImage #divMobileImageList a.lightItem')){try{YG()}catch(e){}ygDone=true;tryD()}else if(Date.now()-t0<15000)return setTimeout(w,300);else{ygDone=true;tryD()}})();
+if(!ygDone)tryD();var mo=new MutationObserver(tryD);mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},60000);
 })();
