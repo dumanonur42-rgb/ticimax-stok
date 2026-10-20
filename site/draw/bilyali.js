@@ -66,12 +66,13 @@ var TIT={sabit:'Sabit bilyalı',miny:'Minyatür bilyalı',flans:'Flanşlı bilya
 var CVT={acik:'Açık',zz:'ZZ metal kapak',z:'Z tek metal kapak','2rs':'2RS kauçuk keçe',rs:'RS tek keçe'};
 
 function render(t,v,cv,opt){
- var id=(opt&&opt.id)||('yb'+Math.random().toString(36).slice(2,7)),dim=(opt&&opt.dim)||'#0a2350',L='#16203a',HT='#9aa6bd',W=460,H=250,cy=114;
+ var id=(opt&&opt.id)||('yb'+Math.random().toString(36).slice(2,7)),dim=(opt&&opt.dim)||'#0a2350',L='#16203a',HT='#9aa6bd',W=460,H=260;
  var fl=t=='flans',Dm=fl?v.Df:v.D;
- var s=Math.min(150/Dm,(fl?118:132)/v.B,24);
+ var sF=Math.min(150/Dm,(fl?118:132)/v.B,24),lwF=Dm*sF+24,leftS=fl?44:16,hS=fl?198:208;
+ var s=Math.min(hS/Dm,(W-12-lwF-26-leftS-70)/v.B),cy=28+hS/2;
  var R=v.D/2*s,r=v.d/2*s,w=v.B*s,Rf=fl?v.Df/2*s:R,C=fl?v.C*s:0,g=R-r,pr=(R+r)/2;
  // yerleşim: ön görünüş + kesit ortalanır
- var lw=2*Rf+24,leftS=fl?44:16,rw=leftS+w+70,gap=Math.max(26,40-Math.max(0,lw+rw+40-W)/2),tot=lw+gap+rw,ox=Math.max(6,(W-tot)/2);
+ var lw=lwF,rw=leftS+w+70,gap=Math.max(26,40-Math.max(0,lw+rw+40-W)/2),tot=lw+gap+rw,ox=Math.max(6,(W-tot)/2);
  var FX=ox+lw/2,X0=ox+lw+gap+leftS,X1=X0+w,XC=X0+w/2;
  var out=[];function P(a){out.push(a)}
  function pt(x,rad,k){return fx(x)+','+fx(cy+k*rad)}
@@ -150,7 +151,8 @@ function render(t,v,cv,opt){
  if(fl){dS+=dimV('Df',X0-26,cy-Rf,cy+Rf,'ø'+f(v.Df),ext(X0-2,cy-Rf,X0-32,cy-Rf)+ext(X0-2,cy+Rf,X0-32,cy+Rf));
   dS+='<g class="hl" data-k="C">'+ext(X0,bot+2,X0,bot+18)+ext(X0+C,bot+2,X0+C,bot+18)+ln(X0-14,bot+13,X0,bot+13,{w:1.1})+ln(X0+C,bot+13,X0+C+16,bot+13,{w:1.1})+ln(X0-7,bot+13,X0,bot+13,{w:1.1,m:1}).replace('marker-start="url(#'+id+'a)" ','')+ln(X0+C+7,bot+13,X0+C,bot+13,{w:1.1,m:1}).replace('marker-start="url(#'+id+'a)" ','')+T(X0+C+20,bot+17,f(v.C),{a:'start'})+'</g>'}
  // ---------- ÖN GÖRÜNÜŞ
- var F=[],fy=cy;
+ var kf=sF/s;R*=kf;r*=kf;Rf*=kf;w*=kf;pr*=kf;br*=kf;g*=kf;
+ var F=[],fy=119;
  function circ(rr,o){o=o||{};return '<circle cx="'+fx(FX)+'" cy="'+fx(fy)+'" r="'+fx(rr)+'" fill="'+(o.f||'none')+'" stroke="'+(o.c||L)+'" stroke-width="'+(o.w||1.4)+'"'+(o.da?' stroke-dasharray="'+o.da+'"':'')+(o.op?' opacity="'+o.op+'"':'')+'/>'}
  var oLf=oyn?R-g*.16:pr+br*eL,iLf2=pr-br*eL;
  if(fl)F.push(circ(Rf),circ(R,{w:.9,da:'4 2.5',op:.8}));

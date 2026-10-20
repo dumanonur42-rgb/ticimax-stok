@@ -108,6 +108,6 @@ Yok. Açılan aile ürünlerinin hiçbirinde 2./3. fotoğraf yok (ailede birden 
 ## Emin olunamayanlar / notlar
 
 - Açısal, oynak bilyalı ve çift sıralı alt tipler sitede olmadığı için gerçek ürün sayfasıyla doğrulanamadı; ileride bu kategoriler açılırsa breadcrumb adları kontrol edilmeli (`match` şu an `OYNAK BİLYALI`, `AÇISAL TEMASLI`, `ÇİFT SIRA` kelimelerini arıyor).
-- Kesitteki iç geometri (bilye çapı, oluk, omuz yüksekliği, kalkan/keçe biçimi) ölçü değil, d/D/B’den orantılı çizilen şematik ayrıntıdır; ekranda sayı olarak yazılmaz.
+- Kesit, çizim yüksekliğinin ~%80’ini kaplayacak ölçekte (ön görünüşten büyük ölçek) çizilir. Kesitteki iç geometri (bilye çapı, oluk, omuz yüksekliği, kalkan/keçe biçimi) ölçü değil, d/D/B’den orantılı çizilen şematik ayrıntıdır; ekranda sayı olarak yazılmaz.
 - Motosiklet/scooter sayfalarında kapak tipi `Rulman Kodu` alanından okunur; kod alanı olmayan ve başlığında birden fazla rulman kodu olan sayfalar ilk koda göre sınıflanır.
 - `OYNAK MAKARALI`, `KONİK`, `YATAKLI`, `İĞNELİ`, `EKSENEL`, `TEK YÖNLÜ`, `KAM MAKARALARI`, keçe, bilya, zincir dişli, lineer, segman, manşon, burç, mafsal sayfaları reddedilir; motosiklet sayfasında iğneli kod (HK, NK, NA… + rakam) varsa reddedilir.
