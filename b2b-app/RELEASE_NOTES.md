@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.28
+
+- Ürün listesi yüklendikten sonra ürün araması kullanılabilir.
+- Excel fiyatlarındaki €/$/TL işaretlerinden para birimi otomatik algılanır; seçilen para birimi hatırlanır ve yükleme öncesinde açıkça gösterilir.
+
 ## 1.0.27
 
 - Üst menü dar pencerelerde ve büyük yazı boyutlarında simgelerle gösterilir; tüm sayfalara erişim korunur.

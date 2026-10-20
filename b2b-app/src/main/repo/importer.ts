@@ -75,6 +75,26 @@ export function headerCurrency(h: string | undefined): Currency | null {
   return null
 }
 
+function cellCurrency(value: string): Currency | null {
+  const s = value.toUpperCase()
+  if (/€|\bEUR\b|\bEURO\b/.test(s)) return 'EUR'
+  if (/\$|\bUSD\b|\bDOLAR\b/.test(s)) return 'USD'
+  if (/₺|\bTL\b|\bTRY\b/.test(s)) return 'TRY'
+  return null
+}
+
+export function inferCurrencyFromValues(values: string[]): Currency | null {
+  const nonEmpty = values.map((value) => value.trim()).filter(Boolean)
+  if (!nonEmpty.length) return null
+  const counts = new Map<Currency, number>()
+  for (const value of nonEmpty) {
+    const currency = cellCurrency(value)
+    if (currency) counts.set(currency, (counts.get(currency) ?? 0) + 1)
+  }
+  const [currency, count] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0] ?? []
+  return currency && count * 5 >= nonEmpty.length * 4 ? currency : null
+}
+
 export function suggestMapping(headers: string[]): Partial<Record<Field, string>> {
   const map: Partial<Record<Field, string>> = {}
   const used = new Set<string>()
@@ -163,13 +183,18 @@ export function previewFile(path: string): ImportPreview {
   const token = randomUUID()
   pending.set(token, parsed)
   const suggestedMapping = suggestMapping(parsed.headers)
+  const priceCurrencyHints = Object.fromEntries(parsed.headers.map((header, index) => [
+    header,
+    headerCurrency(header) ?? inferCurrencyFromValues(parsed.rows.map((row) => row[index] ?? ''))
+  ]))
   return {
     filename: parsed.filename,
     headers: parsed.headers,
     rows: parsed.rows.slice(0, 15),
     totalRows: parsed.rows.length,
     suggestedMapping,
-    suggestedCurrency: suggestedMapping.currency ? null : headerCurrency(suggestedMapping.price),
+    suggestedCurrency: suggestedMapping.currency ? null : suggestedMapping.price ? priceCurrencyHints[suggestedMapping.price] ?? null : null,
+    priceCurrencyHints,
     token
   }
 }
