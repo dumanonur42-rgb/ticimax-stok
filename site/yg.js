@@ -11,10 +11,14 @@ var title=(document.querySelector('.ProductName h1, h1')||{}).textContent||'';ti
 // --- özellikler (sayfadaki Ürün Özellikleri listesinden; tahmin yok)
 var specs=[];[].forEach.call(document.querySelectorAll('#divTabOzellikler li'),function(li){var st=li.querySelector('strong');if(!st)return;var l=st.textContent.replace(/:\s*$/,'').trim();var v=li.textContent.replace(st.textContent,'').trim();if(l&&v)specs.push({l:l,v:v});});
 if(window.YG_SPECS)specs=window.YG_SPECS;
+var rawSpecs=specs.map(function(s){return{l:s.l,v:s.v}});
+var onyazi=[];[].forEach.call(document.querySelectorAll('#divOnyazi table td'),function(td){var st=td.querySelector('strong');if(!st)return;var l=st.textContent.replace(/:\s*$/,'').trim(),v=td.textContent.replace(st.textContent,'').trim();if(l&&v)onyazi.push({l:l,v:v})});
+var crumbs=[];[].forEach.call(document.querySelectorAll('.breadcrumb li [itemprop="name"]'),function(e){var s=e.textContent.trim();if(s&&s.toLowerCase()!='anasayfa')crumbs.push(s)});
 function num(v){var m=String(v).replace(',','.').match(/[\d.]+/);return m?parseFloat(m[0]):NaN}
+var path=location.pathname,ctx={path:path,title:title,crumbs:crumbs,specs:rawSpecs,onyazi:onyazi,num:num,data:(window.YDRAW_DATA||{})[path]||null};
 var K={d:/^[İiI]ç\s*çap/i,D:/^dış\s*çap/i,B:/^(genişlik|yükseklik|kalınlık)/i},dims={};
 specs.forEach(function(s){for(var k in K)if(K[k].test(s.l)&&!dims[k]&&!isNaN(num(s.v))){dims[k]=num(s.v);s.k=k;s.n=num(s.v);s.u=/mm/i.test(s.v)?'mm':''}});
-var hasDraw=!specs.some(function(s){return s.k=='B'&&/^kalınlık/i.test(s.l)})&&dims.d>0&&dims.D>dims.d&&dims.B>0;
+var genericHasDraw=!specs.some(function(s){return s.k=='B'&&/^kalınlık/i.test(s.l)})&&dims.d>0&&dims.D>dims.d&&dims.B>0,hasDraw=genericHasDraw,ydrawMod=null,ydrawResult=null,ydrawBig='';
 var TECH=/\d\s*(mm|cm|kg|gr?|kn|n|rpm|d\/dk|°c|bar|nm)\b/i;specs=specs.filter(function(s){return s.k||(TECH.test(s.v)&&!(hasDims()&&/^ölçü(\s|$)|dxdx/i.test(s.l)))});function hasDims(){return dims.d&&dims.D&&dims.B}
 var order=specs.filter(function(s){return s.k}).sort(function(a,b){return 'dDB'.indexOf(a.k)-'dDB'.indexOf(b.k)}).concat(specs.filter(function(s){return !s.k}));
 function f(n){return String(n).replace('.',',')}
@@ -31,6 +35,15 @@ function draw(o){var D=dims.D,d=dims.d,B=dims.B,s=Math.min(160/D,95/B),c='#16203
   g+='<rect x="'+sx+'" y="'+yo+'" width="'+w+'" height="'+t+'" fill="url(#'+id+')" stroke="'+c+'" stroke-width="1.5"/><rect x="'+sx+'" y="'+yi+'" width="'+w+'" height="'+bt+'" fill="url(#'+id+')" stroke="'+c+'" stroke-width="1.5"/><circle class="ln" cx="'+(sx+w/2)+'" cy="'+yb+'" r="'+br+'" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="'+(sx+2)+'" y1="'+ys+'" x2="'+(sx+2)+'" y2="'+ye+'" stroke="'+c+'" stroke-width="2.4"/><line x1="'+(sx+w-2)+'" y1="'+ys+'" x2="'+(sx+w-2)+'" y2="'+ye+'" stroke="'+c+'" stroke-width="2.4"/>'});
   g+='<line x1="'+(sx-12)+'" y1="'+cy+'" x2="'+(sx+w+12)+'" y2="'+cy+'" stroke="'+c+'" stroke-width=".7" stroke-dasharray="10 3 2 3" opacity=".6"/>'+ext(sx,cy-R-18,sx,cy-R)+ext(sx+w,cy-R-18,sx+w,cy-R)+ext(sx+w,cy-R,sx+w+50,cy-R)+ext(sx+w,cy+R,sx+w+50,cy+R)+ext(sx+w,cy-r,sx+w+26,cy-r)+ext(sx+w,cy+r,sx+w+26,cy+r)+ar(sx,cy-R-12,sx+w,cy-R-12,'B',lB,sx+w/2,cy-R-17)+ar(sx+w+44,cy-R,sx+w+44,cy+R,'D',lD,sx+w+58,cy,1)+ar(sx+w+20,cy-r,sx+w+20,cy+r,'d',ld,sx+w+34,cy,1)+'<text x="'+(sx+w/2)+'" y="'+(cy+R+29)+'" fill="'+dim+'" font-size="10" letter-spacing="1.5" text-anchor="middle" opacity=".75">KESİT A-A</text>'}
  return '<svg viewBox="0 0 '+vw+' 225" width="100%" style="display:block"><defs><pattern id="'+id+'" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="'+hat+'" stroke-width="1.1"/></pattern><marker id="a'+id+'" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9z" fill="'+dim+'"/></marker></defs>'+g+'</svg>'}
+var drawModules=window.YDRAW||{},moduleMatched=false;
+Object.keys(drawModules).sort().some(function(k){var m=drawModules[k];if(!m||typeof m.match!='function')return false;try{if(m.match(ctx)){ydrawMod=m;moduleMatched=true;return true}}catch(e){}return false});
+if(moduleMatched){hasDraw=false;try{ydrawResult=ydrawMod.draw(ctx,{dim:'#0a2350',id:'yd1'});if(ydrawResult&&ydrawResult.svg){var red=ydrawMod.draw(ctx,{dim:'#d0101e',id:'yd2'});if(red&&red.svg){ydrawBig=red.svg;hasDraw=true}}}catch(e){ydrawResult=null;hasDraw=false}
+ if(!hasDraw)ydrawResult=null;
+ if(ydrawResult){var keyLabels={};var moduleKeys=(ydrawResult.keys||[]).filter(function(s){return s&&s.k&&s.l&&s.v!=null}).map(function(s){keyLabels[String(s.l).trim().toLowerCase()]=true;var n=num(s.v);return{k:s.k,l:s.l,v:s.v,n:n,u:/mm/i.test(String(s.v))?'mm':'',moduleKey:true}});
+  var extraSpecs=specs.filter(function(s){return !s.k&&!keyLabels[String(s.l).trim().toLowerCase()]});
+  order=moduleKeys.concat(extraSpecs);
+ }else if(moduleMatched){order=specs.filter(function(s){return !s.k})}
+}else{ydrawMod=null;hasDraw=genericHasDraw}
 // --- ikonlar
 function S(p,w){w=w||40;return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 40 40" fill="none" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'}
 var IC={d:S('<circle cx="20" cy="20" r="16" stroke="#c9d1df" stroke-width="2"/><circle cx="20" cy="20" r="7.5" stroke="#d0101e" stroke-width="2.4"/><path d="M14.5 20h11" stroke="#0a2350" stroke-width="1.6"/><path d="m16.5 18-2 2 2 2M23.5 18l2 2-2 2" stroke="#0a2350" stroke-width="1.6"/>'),
@@ -43,7 +56,7 @@ bosluk:S('<circle cx="20" cy="20" r="15" stroke="#0a2350" stroke-width="2"/><cir
 model:S('<path d="M6 20.5V8a2 2 0 0 1 2-2h12.5l13 13-14.5 14.5z" stroke="#0a2350" stroke-width="2"/><circle cx="13" cy="13" r="2.4" stroke="#d0101e" stroke-width="2.2"/>'),
 olcu:S('<rect x="5" y="13" width="30" height="14" rx="2" stroke="#0a2350" stroke-width="2"/><path d="M11 13v5M17 13v7M23 13v5M29 13v7" stroke="#d0101e" stroke-width="1.8"/>'),
 gen:S('<circle cx="20" cy="20" r="14" stroke="#0a2350" stroke-width="2"/><path d="M20 13v8l5 3" stroke="#d0101e" stroke-width="2.2"/>')};
-function icon(s){if(s.k)return IC[s.k];var l=s.l.toLowerCase();if(/marka/.test(l))return IC.marka;if(/tip|tür/.test(l))return IC.tip;if(/zz|2rs|rs|kapak|conta/.test(l))return IC.kapak;if(/^c\d|boşluk/.test(l))return IC.bosluk;if(/model|seri|kod/.test(l))return IC.model;if(/ölçü|mm/.test(l))return IC.olcu;return IC.gen}
+function icon(s){if(s.k)return IC[s.k]||IC.olcu;var l=s.l.toLowerCase();if(/marka/.test(l))return IC.marka;if(/tip|tür/.test(l))return IC.tip;if(/zz|2rs|rs|kapak|conta/.test(l))return IC.kapak;if(/^c\d|boşluk/.test(l))return IC.bosluk;if(/model|seri|kod/.test(l))return IC.model;if(/ölçü|mm/.test(l))return IC.olcu;return IC.gen}
 var I=function(p,w){return '<svg width="'+(w||19)+'" height="'+(w||19)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'};
 var miniDraw='<svg viewBox="0 0 54 54" fill="none" stroke-linecap="round"><rect width="54" height="54" fill="#f4f7fc"/><g stroke="#0a2350" stroke-width="1.8"><circle cx="22" cy="27" r="14"/><circle cx="22" cy="27" r="6"/></g><circle cx="22" cy="27" r="10" stroke="#0a2350" stroke-width="1" stroke-dasharray="2 2"/><rect x="41" y="13" width="6" height="28" stroke="#0a2350" stroke-width="1.8"/><path d="M16 27h12" stroke="#d0101e" stroke-width="1.8"/></svg>';
 // --- CSS
@@ -71,7 +84,9 @@ var css='.ymg{--n:#0a2350;--r:#d0101e;font-family:inherit;color:#16203a;position
 '.ymg .sp{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:14px;background:#f6f8fc;border:1.5px solid transparent;min-width:0}.ymg .sp svg{flex:none;width:30px;height:30px}'+
 '.ymg .sp small{display:block;font-size:9.5px;color:#8a93a6;font-weight:700;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ymg .sp:not(.k) small{white-space:normal}.ymg .sp b{display:block;font-size:13px;color:var(--n);line-height:1.2}.ymg .sp b em{font-style:normal;font-size:10px;color:#8a93a6;margin-left:2px}'+
 '.ymg .sp.k{cursor:pointer}.ymg .sp.k b{font-size:18px}.ymg .sp.k:hover,.ymg .sp.on{background:#fff;border-color:var(--r);box-shadow:0 8px 18px rgba(208,16,30,.1)}'+
-'.ymg .hl{transition:opacity .25s}.ymg [data-h] .hl{opacity:.15}.ymg [data-h=d] .hl.d,.ymg [data-h=D] .hl.D,.ymg [data-h=B] .hl.B,.yglb [data-h=d] .hl.d,.yglb [data-h=D] .hl.D,.yglb [data-h=B] .hl.B{opacity:1}.yglb [data-h] .hl{opacity:.15}'+
+'.ymg .hl{transition:opacity .25s}.ymg [data-h] .hl{opacity:.15}.ymg [data-h=d] .hl.d,.ymg [data-h=D] .hl.D,.ymg [data-h=B] .hl.B,.yglb [data-h=d] .hl.d,.yglb [data-h=D] .hl.D,.yglb [data-h=B] .hl.B{opacity:1}.yglb [data-h] .hl{opacity:.15}.ymg [data-h] .hl.on,.yglb [data-h] .hl.on{opacity:1}'+
+'.hl.on line,.hl.on path,.hl.on polyline{stroke:#d0101e!important}.hl.on text{fill:#d0101e!important}'+
+'.ymg.ydmod .seg{display:none}'+
 '.ymg [data-h=d] .hl.d line,.ymg [data-h=D] .hl.D line,.ymg [data-h=B] .hl.B line,.yglb [data-h=d] .hl.d line,.yglb [data-h=D] .hl.D line,.yglb [data-h=B] .hl.B line{stroke:#d0101e!important;stroke-width:2;marker-start:url(#ygRed);marker-end:url(#ygRed)}'+
 '.ymg [data-h=d] .hl.d text,.ymg [data-h=D] .hl.D text,.ymg [data-h=B] .hl.B text,.yglb [data-h=d] .hl.d text,.yglb [data-h=D] .hl.D text,.yglb [data-h=B] .hl.B text{fill:#d0101e!important;font-size:14px}'+
 '.ymg .anim .ln{stroke-dasharray:900;animation:ygd 2.2s ease forwards}@keyframes ygd{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}'+
@@ -113,17 +128,19 @@ if(multi){h+='<div class="thumbs">'+photos.map(function(p,i){return '<button dat
 h+='</div>';
 if(hasDraw){h+='<div class="msw" id="ygMsw"><span class="ind"></span><button data-t="0"><span class="pv" style="background-image:url(\''+photos[0].src+'\')"></span><span><b>Fotoğraf'+(multi?' ('+photos.length+')':'')+'</b><small>Ürünün görünümü</small></span></button><button class="nudge" data-t="1"><span class="pv">'+miniDraw+'</span><span><b>Teknik Çizim</b><small>Ölçülü çizim</small></span></button></div>';
  h+='<div class="seam"></div><div class="tech"><div class="th"><h3><span class="ic">'+I('<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/>',17)+'</span><span>Teknik Çizim <small style="display:inline;margin-left:4px">(mm)</small></span></h3><div class="seg"><button class="on" data-m="all">İkisi</button><button data-m="f">Ön</button><button data-m="s">Kesit</button></div></div><div class="draw anim" id="ygDraw"></div></div>';}
-if(order.length){var extra=order.length-3;var kc=order.filter(function(s){return s.k}).length;h+='<div class="specs v2 kc'+kc+(extra>0?' hasx':'')+'" id="ygSpecs">'+order.map(function(s,i){return '<div class="sp'+(!s.k&&i==order.length-1&&(order.length-kc)%2?' wl':'')+(s.k?' k" data-k="'+s.k:'')+'" title="'+s.l+': '+s.v+'">'+icon(s)+'<div style="min-width:0"><small>'+s.l+'</small><b>'+(s.k?f(s.n)+(s.u?'<em>'+s.u+'</em>':''):s.v)+'</b></div></div>'}).join('')+(extra>0?'<button class="more" id="ygMore">+'+extra+I('<path d="m6 9 6 6 6-6"/>',11)+'</button>':'')+'</div>'+(extra>0?'<div class="xtra" id="ygX2">'+order.slice(3).map(function(s){return '<span><small>'+s.l+'</small>'+s.v+'</span>'}).join('')+'</div>':'');
+if(order.length){var extra=order.length-3;var kc=order.filter(function(s){return s.k}).length;h+='<div class="specs v2 kc'+kc+(extra>0?' hasx':'')+'" id="ygSpecs">'+order.map(function(s,i){var val=s.moduleKey?(isNaN(s.n)?s.v:f(s.n)+(s.u?'<em>'+s.u+'</em>':'')):s.k?f(s.n)+(s.u?'<em>'+s.u+'</em>':''):s.v;return '<div class="sp'+(!s.k&&i==order.length-1&&(order.length-kc)%2?' wl':'')+(s.k?' k" data-k="'+s.k:'')+'" title="'+s.l+': '+s.v+'">'+icon(s)+'<div style="min-width:0"><small>'+s.l+'</small><b>'+val+'</b></div></div>'}).join('')+(extra>0?'<button class="more" id="ygMore">+'+extra+I('<path d="m6 9 6 6 6-6"/>',11)+'</button>':'')+'</div>'+(extra>0?'<div class="xtra" id="ygX2">'+order.slice(3).map(function(s){return '<span><small>'+s.l+'</small>'+s.v+'</span>'}).join('')+'</div>':'');
  if(0)h+='<div class="mfoot">'+(hasDraw?'<span>'+I('<path d="M9 11V5a2 2 0 0 1 4 0v5l4.5 1a2 2 0 0 1 1.5 2.3L18 19a3 3 0 0 1-3 2h-3.5a3 3 0 0 1-2.4-1.2L5.5 15a1.6 1.6 0 0 1 2.4-2.1L9 14"/>',12)+'Ölçüye dokun, çizimde göster</span>':'<span></span>')+(extra>0?'<button class="more" id="ygMore">+'+extra+' özellik '+I('<path d="m6 9 6 6 6-6"/>',10)+'</button>':'')+'</div>';}
 h+='</div>';
-var box=document.createElement('div');box.className='ymg';box.innerHTML=h;
+var box=document.createElement('div');box.className='ymg'+(ydrawResult?' ydmod':'');box.innerHTML=h;
 [].forEach.call(L.children,function(c){c.style.setProperty('display','none','important')});st.textContent+='.leftImage>:not(.ymg){display:none!important}';L.appendChild(box);L.style.width=L.style.width||'';
 Q2(box);var mk=document.createElement('div');mk.innerHTML='<svg width="0" height="0" style="position:absolute"><defs><marker id="ygRed" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9z" fill="#d0101e"/></marker></defs></svg>';document.body.appendChild(mk.firstChild);
 // --- davranış
 function $(i){return document.getElementById(i)}function Q(s,r){return [].slice.call((r||box).querySelectorAll(s))}
 var card=$('ygCard'),photo=$('ygPhoto'),cur=0,drawOn=false;
 function isMob(){return window.innerWidth<=767}
-if(hasDraw){$('ygDraw').innerHTML=draw({});$('ygBig').innerHTML=draw({dim:'#d0101e'});}
+function marker(line,name,on){var d='data-yd-'+name;if(on){if(line.hasAttribute(name)&&!line.hasAttribute(d))line.setAttribute(d,line.getAttribute(name));if(line.hasAttribute(d))line.setAttribute(name,'url(#ygRed)')}else if(line.hasAttribute(d)){line.setAttribute(name,line.getAttribute(d));line.removeAttribute(d)}}
+function syncModuleHighlights(root,k){if(!root)return;[].forEach.call(root.querySelectorAll('.hl[data-k]'),function(g){var on=k!=null&&g.getAttribute('data-k')===String(k);g.classList.toggle('on',on);[].forEach.call(g.querySelectorAll('line'),function(line){marker(line,'marker-start',on);marker(line,'marker-end',on)})})}
+if(hasDraw){$('ygDraw').innerHTML=ydrawResult?ydrawResult.svg:draw({});$('ygBig').innerHTML=ydrawResult?ydrawBig:draw({dim:'#d0101e'});}
 function render(){Q('.view.ph').forEach(function(v){v.classList.toggle('off',drawOn||+v.dataset.i!=cur)});if(hasDraw){$('ygBig').classList.toggle('off',!drawOn);$('ygMsw').classList.toggle('t1',drawOn);box.classList.toggle('dr',drawOn);if(drawOn){var n=box.querySelector('.msw .nudge');n&&n.classList.remove('nudge')}}
  Q('.thumbs button').forEach(function(b){b.classList.toggle('on',+b.dataset.i==cur)});Q('.dots i').forEach(function(d,i){d.classList.toggle('on',i==cur&&!drawOn)});var c=$('ygCnt');if(c)c.textContent=(cur+1)+' / '+photos.length;}
 function go(i){cur=(i+photos.length)%photos.length;drawOn=false;render()}
@@ -131,8 +148,8 @@ function setDraw(t){drawOn=!!t&&hasDraw&&isMob();render()}
 Q('.thumbs button').forEach(function(b){b.onclick=function(e){e.stopPropagation();go(+b.dataset.i)}});
 Q('[data-nav]').forEach(function(b){b.onclick=function(e){e.stopPropagation();go(cur+ +b.dataset.nav)}});
 Q('.msw button').forEach(function(b){b.onclick=function(){setDraw(b.dataset.t=='1')}});
-Q('.seg button').forEach(function(b){b.onclick=function(){Q('.seg button').forEach(function(x){x.classList.toggle('on',x==b)});$('ygDraw').innerHTML=draw({m:b.dataset.m})}});
-Q('.sp.k').forEach(function(c){c.onclick=function(){var same=card.dataset.h==c.dataset.k;if(same)delete card.dataset.h;else card.dataset.h=c.dataset.k;Q('.sp').forEach(function(x){x.classList.toggle('on',!same&&x==c)});if(isMob()&&!same)setDraw(true)}});
+Q('.seg button').forEach(function(b){b.onclick=function(){if(ydrawResult)return;Q('.seg button').forEach(function(x){x.classList.toggle('on',x==b)});$('ygDraw').innerHTML=draw({m:b.dataset.m})}});
+Q('.sp.k').forEach(function(c){c.onclick=function(){var same=card.dataset.h==c.dataset.k;if(same)delete card.dataset.h;else card.dataset.h=c.dataset.k;Q('.sp').forEach(function(x){x.classList.toggle('on',!same&&x==c)});if(ydrawResult){syncModuleHighlights(box,same?null:c.dataset.k);if(lbT){if(same)delete cnt.dataset.h;else cnt.dataset.h=c.dataset.k;syncModuleHighlights(cnt,same?null:c.dataset.k)}}else if(lbT){if(same)delete cnt.dataset.h;else cnt.dataset.h=c.dataset.k}if(isMob()&&!same)setDraw(true)}});
 var more=$('ygMore');if(more)more.onclick=function(e){e.stopPropagation();box.classList.toggle('xopen');more.classList.toggle('open')};
 window.addEventListener('resize',function(){if(!isMob()&&drawOn){drawOn=false;render()}});
 // kaydırma (mobil): fotoğraflar arasında, sonuncudan sonra teknik çizim
@@ -154,7 +171,7 @@ function apply(an){var b=size();if(Sc<=1){Sc=1;TX=TY=0}else{var mx=Math.max(0,(b
  cnt.style.transition=an?'transform .25s ease':'none';cnt.style.left=b.x+'px';cnt.style.top=b.y+'px';cnt.style.transform='translate('+TX+'px,'+TY+'px) scale('+Sc+')';$('ygZp').textContent=Math.round(Sc*100)+'%'}
 function zoomAt(ns,px,py,an){ns=Math.min(5,Math.max(1,ns));var b=size(),lx=px-b.r.left-b.x,ly=py-b.r.top-b.y;TX=lx-(lx-TX)*ns/Sc;TY=ly-(ly-TY)*ns/Sc;Sc=ns;apply(an)}
 function ctr(){var r=stg.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]}
-function fill(t,i){lbT=t&&hasDraw;if(i!=null)lbI=(i+photos.length)%photos.length;cnt.innerHTML=lbT?draw({}):'<img src="'+photos[lbI].zoom+'" alt="">';if(lbT&&card.dataset.h)cnt.dataset.h=card.dataset.h;else delete cnt.dataset.h;
+function fill(t,i){lbT=t&&hasDraw;if(i!=null)lbI=(i+photos.length)%photos.length;cnt.innerHTML=lbT?(ydrawResult?ydrawResult.svg:draw({})):'<img src="'+photos[lbI].zoom+'" alt="">';if(lbT&&card.dataset.h)cnt.dataset.h=card.dataset.h;else delete cnt.dataset.h;if(ydrawResult)syncModuleHighlights(cnt,lbT?card.dataset.h:null);
  Q('.sw button',lb).forEach(function(b){b.classList.toggle('on',(b.dataset.lt=='1')==lbT)});Q('.ar',lb).forEach(function(a){a.style.display=lbT?'none':''});Sc=1;apply()}
 function open(t){$('ygHint').textContent=isMob()?'İki parmakla büyüt · çift dokun':'Fare tekerleğiyle büyüt · sürükleyerek gez · çift tıkla';lb.classList.add('on');document.documentElement.style.overflow='hidden';fill(t,cur)}
 function close(){lb.classList.remove('on');document.documentElement.style.overflow=''}
