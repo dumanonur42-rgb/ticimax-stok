@@ -1,4 +1,4 @@
-/* Bağlantı ve tutucu parçalar: manşon somunu (KM), manşon pulu (MB), segman (DIN 471 / 472), konik burç (taper lock), kama (DIN 6885), konik kilit (çizim yok: veri çelişkili) */
+/* Bağlantı ve tutucu parçalar: manşon somunu (KM), manşon pulu (MB), rulman manşonu (H), segman (DIN 471 / 472), konik burç (taper lock), kama (DIN 6885), konik kilit (çizim yok: veri çelişkili) */
 (function(){
 var LC='#16203a',HC='#9aa6bd',FACE='rgba(154,166,189,.13)',PI=Math.PI;
 var TR={'İ':'i','I':'i','ı':'i','Ş':'s','ş':'s','Ğ':'g','ğ':'g','Ü':'u','ü':'u','Ö':'o','ö':'o','Ç':'c','ç':'c'};
@@ -22,6 +22,7 @@ function sub(ctx){var t=fold(ctx.title),cr=(ctx.crumbs||[]).map(fold),mid=cr.sli
  var msp=cj.indexOf('|manson somun ve pul|')>=0;
  if(msp&&cj.indexOf('|somun|')>=0)return 'km';
  if(msp&&cj.indexOf('|pul|')>=0)return 'mb';
+ if(msp&&cj.indexOf('|manson|')>=0)return 'h';
  if(cj.indexOf('|471 dis segman|')>=0)return 's471';
  if(cj.indexOf('|472 ic segman|')>=0)return 's472';
  if(cj.indexOf('|konik burclar|')>=0)return 'burc';
@@ -30,6 +31,7 @@ function sub(ctx){var t=fold(ctx.title),cr=(ctx.crumbs||[]).map(fold),mid=cr.sli
  if(mid.length>1)return null; /* belirli bir kategorideyse sadece breadcrumb'a güven */
  if(/\bmanson somunu\b/.test(t))return 'km';
  if(/\bmanson pulu\b/.test(t))return 'mb';
+ if(/\brulman mansonu\b/.test(t))return 'h';
  if(/\b471\b.*\bdis segman\b/.test(t))return 's471';
  if(/\b472\b.*\bic segman\b/.test(t))return 's472';
  if(/\bkonik burc\b/.test(t))return 'burc';
@@ -44,6 +46,7 @@ P.add=function(s){this.o+=s;return this};
 P.svg=function(h){var id=this.id,dm=this.dim;
  return '<svg viewBox="0 0 460 '+h+'" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;font-family:inherit" font-family="inherit"><defs>'+
  '<pattern id="'+id+'h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="'+HC+'" stroke-width="1.1"/></pattern>'+
+ '<pattern id="'+id+'k" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><line x1="0" y1="0" x2="0" y2="5" stroke="'+HC+'" stroke-width="1.1"/></pattern>'+
  '<marker id="'+id+'a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1.2 L10,5 L0,8.8z" fill="'+dm+'"/></marker>'+
  '</defs>'+this.o+'</svg>'};
 function n1(v){return Math.round(v*100)/100}
@@ -77,6 +80,7 @@ P.dimV=function(x,y1,y2,lab,k,side){var L=y2-y1,s='',sd=side||-1;
 P.dimD=function(cx,cy,r,ang,lab,k,t){var a=ang*PI/180,c=Math.cos(a),sn=Math.sin(a),x1=cx-r*c,y1=cy+r*sn,x2=cx+r*c,y2=cy-r*sn,p=t==null?.5:t;
  var tx=cx+r*p*c-4*sn,ty=cy-r*p*sn-4*c;
  return this.grp(k,this.arrow2(x1,y1,x2,y2)+this.txt(tx,ty,lab,{rot:-ang}))};
+P.cutH=function(y,xl,xr){var s=this;[[xl-12,xl],[xr,xr+12]].forEach(function(q){var x=q[0]==xl-12?q[0]:q[1];s.ln(q[0],y,q[1],y,'cut');s.add(s.arrow(x,y,x,y-13));s.add(s.txt(x,y-17,'A',{size:11,fill:LC}))});return this};
 P.ext=function(x1,y1,x2,y2){return this.ln(x1,y1,x2,y2,'x')};
 /* kesit düzlemi işareti (dikey düzlem, bakış sağa) */
 P.cutV=function(x,yt,yb){var s=this;[[yt-16,yt-5,yt-16],[yb+5,yb+16,yb+16]].forEach(function(q){s.ln(x,q[0],x,q[1],'cut');s.add(s.arrow(x,q[2],x+13,q[2]));s.add(s.txt(x+19,q[2]+(q[2]<yt?3:4),'A',{size:11,a:'start',fill:LC}))});return this};
@@ -88,33 +92,68 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 function keyv(k,l,v){return {k:k,l:l,v:v}}
 
 /* ---------- KM manşon somunu ---------- */
+function rotp(fx,cy,a,x,y){var t=a*PI/180;return [fx+x*Math.cos(t)-y*Math.sin(t),cy+x*Math.sin(t)+y*Math.cos(t)]}
+/* 4 kanallı dış kontur; a0: ilk kanalın açısı (0 = üst) */
+function slotted(fx,cy,R,bw,hd,a0){var hw=bw/2,yo=-Math.sqrt(R*R-hw*hw),d='';
+ for(var i=0;i<4;i++){var a=a0+i*90;
+  d+=(i?' L':'M')+P2(rotp(fx,cy,a,-hw,yo))+' L'+P2(rotp(fx,cy,a,-hw,-(R-hd)))+' L'+P2(rotp(fx,cy,a,hw,-(R-hd)))+' L'+P2(rotp(fx,cy,a,hw,yo));
+  d+=arc(R,rotp(fx,cy,a+90,-hw,yo),0,1)}
+ return d+'z'}
 function drawKM(ctx,opt){
  var th=sval(ctx,/^ic dis$/),D=val(ctx,/^dis cap( \(d\))?$/,'D'),B=val(ctx,/^genislik( \(b\))?$/,'B');
  if(!th||!D||!B)return null;var m=th.match(/^M(\d+(?:[.,]\d+)?)[x×*](\d+(?:[.,]\d+)?)$/i);if(!m)return null;
  var G=parseFloat(m[1].replace(',','.')),Pt=parseFloat(m[2].replace(',','.'));if(!(G<D&&Pt>0))return null;
- var g=new Pen(opt),sc=Math.min(150/D,100/B),R=D/2*sc,rM=G/2*sc,r1=(G-1.0825*Pt)/2*sc,w=B*sc,fx=120,cy=108;
- var lab='M'+f(G)+'×'+f(Pt);
- /* ön görünüş: 4 kanallı dış kontur (45°'lerde) + diş */
- var bw=.12*D*sc,hd=Math.max(.05*D*sc,2.5),hw=bw/2,d='';
- for(var i=0;i<4;i++){var a=45+i*90,rot=function(x,y){var t=a*PI/180;return [fx+x*Math.cos(t)-y*Math.sin(t),cy+x*Math.sin(t)+y*Math.cos(t)]};
-  var yo=-Math.sqrt(R*R-hw*hw),p1=rot(-hw,yo),p2=rot(-hw,-(R-hd)),p3=rot(hw,-(R-hd)),p4=rot(hw,yo);
-  d+=(i?' L':'M')+P2(p1)+' L'+P2(p2)+' L'+P2(p3)+' L'+P2(p4);
-  var nx=(a+90)*PI/180,q=[fx+(-hw)*Math.cos(nx)-yo*Math.sin(nx),cy+(-hw)*Math.sin(nx)+yo*Math.cos(nx)];d+=arc(R,q,0,1)}
- d+='z '+circleD(fx,cy,r1);
- g.path(d,FACE);
- g.add('<path d="M'+n1(fx+rM)+','+n1(cy)+' A'+n1(rM)+','+n1(rM)+' 0 1 1 '+n1(fx)+','+n1(cy-rM)+'" fill="none" stroke="'+LC+'" stroke-width=".8"/>');
+ var g=new Pen(opt),sc=Math.min(150/D,100/B),R=D/2*sc,rM=G/2*sc,r1=Math.min((G-1.0825*Pt)/2*sc,rM-3.5),w=B*sc,fx=120,cy=108,
+  bw=.12*D*sc,hd=Math.max(.05*D*sc,2.5),lab='M'+f(G)+'×'+f(Pt);
+ /* ön görünüş: kanallar 0/90/180/270°; iç diş: diş üstü (küçük çap) kalın daire, diş dibi ince 3/4 yay */
+ g.path(slotted(fx,cy,R,bw,hd,0)+' '+circleD(fx,cy,r1),FACE);
+ g.add('<path d="M'+P2(pt(fx,cy,rM,95))+arc(rM,pt(fx,cy,rM,5),1,1)+'" fill="none" stroke="'+LC+'" stroke-width=".8"/>');
  g.cross(fx,cy,R+9);g.cutV(fx,cy-R,cy+R);
  g.ext(fx,cy-R,fx-R-20,cy-R);g.ext(fx,cy+R,fx-R-20,cy+R);g.dimV(fx-R-14,cy-R,cy+R,'Ø'+f(D),'D',-1);
- /* kesit */
+ /* kesit A-A: düzlem üst ve alt kanaldan geçer */
  var sx=clamp(318-w/2,248,392-w);
- g.hatch('M'+n1(sx)+','+n1(cy-R)+'h'+n1(w)+'V'+n1(cy-r1)+'H'+n1(sx)+'z M'+n1(sx)+','+n1(cy+r1)+'h'+n1(w)+'V'+n1(cy+R)+'H'+n1(sx)+'z');
+ g.hatch('M'+n1(sx)+','+n1(cy-R+hd)+'h'+n1(w)+'V'+n1(cy-r1)+'H'+n1(sx)+'z M'+n1(sx)+','+n1(cy+r1)+'h'+n1(w)+'V'+n1(cy+R-hd)+'H'+n1(sx)+'z');
+ g.path('M'+n1(sx)+','+n1(cy-R+hd)+'V'+n1(cy-R)+'H'+n1(sx+w)+'V'+n1(cy-R+hd)+' M'+n1(sx)+','+n1(cy+R-hd)+'V'+n1(cy+R)+'H'+n1(sx+w)+'V'+n1(cy+R-hd),'none',1.6);
  g.ln(sx,cy-rM,sx+w,cy-rM,'t');g.ln(sx,cy+rM,sx+w,cy+rM,'t');
+ g.add(g.txt(sx-5,cy-R+hd/2+3.5,'kanal',{size:10,w:600,a:'end',fill:LC,op:.75}));
  g.ln(sx-10,cy,sx+w+10,cy,'c');
  g.ext(sx,cy-R-3,sx,cy-R-19);g.ext(sx+w,cy-R-3,sx+w,cy-R-19);g.dimH(sx,sx+w,cy-R-13,f(B),'B',1);
  g.ext(sx-3,cy-rM,sx-22,cy-rM);g.ext(sx-3,cy+rM,sx-22,cy+rM);g.dimV(sx-16,cy-rM,cy+rM,lab,'G',-1);
  g.ext(sx+w+3,cy-R,sx+w+46,cy-R);g.ext(sx+w+3,cy+R,sx+w+46,cy+R);g.dimV(sx+w+40,cy-R,cy+R,'Ø'+f(D),'D',1);
  g.title(fx,234,'ÖN GÖRÜNÜŞ');g.title(sx+w/2,234,'KESİT A-A');
  return {svg:g.svg(244),keys:[keyv('G','İç Diş',lab),keyv('D','Dış Çap (D)',f(D)+' mm'),keyv('B','Genişlik (B)',f(B)+' mm')]}}
+
+/* ---------- H rulman manşonu (konik manşon + KM somun + MB pul birleşik) ---------- */
+/* Sayfada sadece d1 ve d var; boy, somun ve pul oranları seri biçimine göre çizilir, sayı yazılmaz */
+var HSER={'2':[.45,14],'3':[.62,14],'23':[.83,14],'30':[.45,18],'31':[.6,16]};
+function drawH(ctx,opt){
+ var d1=val(ctx,/^ic cap( \(mil capi\))?$/,'d1'),d=val(ctx,/^dis cap( \(rulman deligi\))?$/,'d');
+ if(!d1||!d||!(d1<d))return null;
+ var mo=fold(sval(ctx,/^model$/)||ctx.title).match(/\bh ?(\d{3,4})\b/);if(!mo)return null;
+ var n=mo[1],F=HSER[n.length==4?n.slice(0,2):n.charAt(0)];if(!F)return null;
+ var B1=F[0]*d+F[1],Dn=1.3*d+8,Bn=.17*d+3,sw=.02*d+1;
+ var g=new Pen(opt),sc=Math.min(140/Dn,200/B1),fx=100,cy=108,Rn=Dn/2*sc,rT=d/2*sc,r1=d1/2*sc,
+  rTm=Math.max(r1+(rT-r1)*.45,rT-Math.max(.03*d*sc,3)),w=B1*sc;
+ /* ön görünüş (dişli uçtan) */
+ g.path(slotted(fx,cy,Rn,.12*Dn*sc,Math.max(.05*Dn*sc,2.5),45)+' '+circleD(fx,cy,rT),FACE);
+ var ga=300,gs=Math.max(1.6,.04*d*sc),aT=Math.asin(gs/rT)*180/PI,a1=Math.asin(gs/r1)*180/PI;
+ g.path('M'+P2(pt(fx,cy,rT,ga+aT))+arc(rT,pt(fx,cy,rT,ga-aT),1,1)+' L'+P2(pt(fx,cy,r1,ga-a1))+arc(r1,pt(fx,cy,r1,ga+a1),1,0)+'z',FACE);
+ g.add('<path d="M'+P2(pt(fx,cy,rTm,95))+arc(rTm,pt(fx,cy,rTm,5),1,1)+'" fill="none" stroke="'+LC+'" stroke-width=".8"/>');
+ g.cross(fx,cy,Rn+9);g.cutV(fx,cy-Rn,cy+Rn);
+ g.dimD(fx,cy,r1,-35,'Ø'+f(d1),'d1',.45);
+ /* kesit A-A */
+ var sx=clamp(318-w/2,205,392-w),xe=sx+w,nx=sx+Math.max(2,.03*d*sc),wx=nx+Bn*sc,swv=Math.max(sw*sc,2.5),tx=wx+swv+Math.max(1.5,.03*d*sc),rE=rT+(xe-tx)/24,Rw=Rn*.97;
+ function half(k){return 'M'+n1(sx)+','+n1(cy+k*r1)+'V'+n1(cy+k*rT)+'H'+n1(tx)+'L'+n1(xe)+','+n1(cy+k*rE)+'V'+n1(cy+k*r1)+'z'}
+ g.hatch(half(-1)+' '+half(1));
+ g.ln(sx,cy-rTm,wx+swv,cy-rTm,'t');g.ln(sx,cy+rTm,wx+swv,cy+rTm,'t');
+ g.path('M'+n1(nx)+','+n1(cy-Rn)+'H'+n1(wx)+'V'+n1(cy-rT)+'H'+n1(nx)+'z M'+n1(nx)+','+n1(cy+rT)+'H'+n1(wx)+'V'+n1(cy+Rn)+'H'+n1(nx)+'z','url(#'+g.id+'k)',1.6);
+ g.path('M'+n1(wx)+','+n1(cy-Rw)+'h'+n1(swv)+'V'+n1(cy-rT)+'H'+n1(wx)+'z M'+n1(wx)+','+n1(cy+rT)+'h'+n1(swv)+'V'+n1(cy+Rw)+'H'+n1(wx)+'z',LC,1);
+ g.ln(sx-10,cy,xe+10,cy,'c');
+ g.ext(xe+3,cy-r1,xe+28,cy-r1);g.ext(xe+3,cy+r1,xe+28,cy+r1);g.dimV(xe+22,cy-r1,cy+r1,'Ø'+f(d1),'d1',1);
+ g.dimV(tx+Math.min(10,(xe-tx)/2),cy-rT,cy+rT,'Ø'+f(d),'d',-1);
+ var lx=(nx+wx)/2;g.add(g.txt(lx,cy-Rn-6,'somun',{size:10,w:600,fill:LC,op:.75}));g.add(g.txt(wx+swv+4,cy+rE+14,'manşon',{size:10,w:600,a:'start',fill:LC,op:.75}));
+ g.title(fx,234,'ÖN GÖRÜNÜŞ');g.title(sx+w/2,234,'KESİT A-A');
+ return {svg:g.svg(244),keys:[keyv('d1','İç Çap (Mil Çapı)',f(d1)+' mm'),keyv('d','Dış Çap (Rulman Deliği)',f(d)+' mm')]}}
 
 /* ---------- MB manşon pulu ---------- */
 function drawMB(ctx,opt){
@@ -168,22 +207,26 @@ function drawSeg(ctx,opt,ext){
  }
  g.circ(fx,cy,rs,'p');
  g.path(o,FACE);
- g.cross(fx,cy,Math.max(ro,rs)+9);
- g.cutV(fx,cy-Math.max(ro,rs),cy+Math.max(ro,rs));
- var lab='Ø'+f(E);
+ var Rm=Math.max(ro,rs),lab='Ø'+f(E);
+ g.cross(fx,cy,Rm+4);g.cutH(cy,fx-Rm-4,fx+Rm+4);
  g.dimD(fx,cy,rs,-28,lab,'d1',ext?.08:.15);
  g.add(g.txt(fx,cy+rs*(ext?.35:.42)+14,ext?'MİL':'DELİK',{size:9,w:700,fill:LC,op:.6,ls:1.2}));
- /* kesit: alt taraf (arkadaki genişlik), üstte kulaklar */
- var t=S?S*sc:Math.max(E*.06*sc,3),sx=clamp(330-t/2,270,400-t);
- var yb1=ext?cy+ri:cy+ro-b,yb2=ext?cy+ri+b:cy+ro;
- g.hatch('M'+n1(sx)+','+n1(yb1)+'h'+n1(t)+'V'+n1(yb2)+'H'+n1(sx)+'z');
- var ya1=ext?cy-ri*Math.cos(gm*PI/180):cy-ro*Math.cos(gm*PI/180),ya2=ext?cy-(ri+a)*Math.cos((gm)*PI/180):cy-(ro-a)*Math.cos(gm*PI/180);
- g.path('M'+n1(sx)+','+n1(Math.min(ya1,ya2))+'h'+n1(t)+'V'+n1(Math.max(ya1,ya2))+'H'+n1(sx)+'z','none',1.6);
- g.ln(sx-30,cy-rs,sx+t+30,cy-rs,'p');g.ln(sx-30,cy+rs,sx+t+30,cy+rs,'p');
- g.ln(sx-14,cy,sx+t+14,cy,'c');
- if(S){g.ext(sx,yb2+3,sx,yb2+19);g.ext(sx+t,yb2+3,sx+t,yb2+19);g.dimH(sx,sx+t,yb2+13,f(S),'s',1)}
- g.ext(sx+t+33,cy-rs,sx+t+56,cy-rs);g.ext(sx+t+33,cy+rs,sx+t+56,cy+rs);g.dimV(sx+t+50,cy-rs,cy+rs,lab,'d1',1);
- g.title(fx,234,'ÖN GÖRÜNÜŞ');g.title(sx+t/2,234,'KESİT A-A');
+ /* kesit A-A (büyütülmüş): segman yuvasında; mil / delik ince çift noktalı çizgi */
+ var k2=50/(.13*E),b2=50,g2=.0375*E*k2,t2=clamp((S||E*.06)*k2,12,46),scx=338,hl=72,gw=t2+7,y0=ext?150:100,yg=ext?y0+g2:y0-g2,yb=ext?y0+40:y0-40,ry1,ry2;
+ if(ext){ry1=y0+g2-b2;ry2=y0+g2}else{ry1=y0-g2;ry2=y0-g2+b2}
+ var top='M'+n1(scx-hl)+','+y0+'H'+n1(scx-gw/2)+'V'+n1(yg)+'H'+n1(scx+gw/2)+'V'+y0+'H'+n1(scx+hl),wv='';
+ for(var q=0;q<8;q++)wv+=' q-9,'+(q%2?-4:4)+' -18,0';
+ g.add('<path d="'+top+'L'+n1(scx+hl)+','+yb+wv+'z" fill="'+LC+'" fill-opacity=".05" stroke="none"/>');
+ g.add('<path d="M'+n1(scx+hl)+','+yb+wv+'" fill="none" stroke="'+LC+'" stroke-width=".7" opacity=".7"/>');
+ g.add('<path d="'+top+'" fill="none" stroke="'+LC+'" stroke-width="1" stroke-dasharray="12 3 2 3 2 3" opacity=".8"/>');
+ g.hatch('M'+n1(scx-t2/2)+','+n1(ry1)+'h'+n1(t2)+'V'+n1(ry2)+'H'+n1(scx-t2/2)+'z');
+ g.ln(scx,ry1-24,scx,ry2+8,'c');
+ var lo={size:9,w:700,fill:LC,op:.6,ls:1.2};
+ g.add(g.txt(scx-hl/2-4,ext?y0+24:y0+26,ext?'MİL':'DELİK',lo));
+ if(!ext)g.add(g.txt(scx-hl/2-4,y0-18,'GÖVDE',lo));
+ g.add(g.txt(scx+t2/2+8,(ry1+ry2)/2+3,'SEGMAN',{size:9,w:700,fill:LC,op:.6,ls:1.2,a:'start'}));
+ if(S){g.ext(scx-t2/2,ry1-3,scx-t2/2,ry1-21);g.ext(scx+t2/2,ry1-3,scx+t2/2,ry1-21);g.dimH(scx-t2/2,scx+t2/2,ry1-14,f(S),'s',1)}
+ g.title(fx,234,'ÖN GÖRÜNÜŞ');g.title(scx,234,'KESİT A-A (BÜYÜTÜLMÜŞ)');
  var keys=[keyv('d1',ext?'Mil Çapı (d1)':'Delik Çapı (d1)',f(E)+' mm')];if(S)keys.push(keyv('s','Kalınlık (s)',f(S)+' mm'));
  return {svg:g.svg(244),keys:keys}}
 
@@ -237,7 +280,7 @@ function drawKama(ctx,opt){
  g.title(ox+Lp/2,192,'ÜST GÖRÜNÜŞ');g.title(sx+hp/2,192,'KESİT A-A');
  return {svg:g.svg(204),keys:[keyv('b','Genişlik (b)',f(b)+' mm'),keyv('h','Yükseklik (h)',f(h)+' mm'),keyv('L','Boy (L)',f(L)+' mm')]}}
 
-var DR={km:drawKM,mb:drawMB,s471:function(c,o){return drawSeg(c,o,true)},s472:function(c,o){return drawSeg(c,o,false)},burc:drawBurc,kama:drawKama,
+var DR={km:drawKM,mb:drawMB,h:drawH,s471:function(c,o){return drawSeg(c,o,true)},s472:function(c,o){return drawSeg(c,o,false)},burc:drawBurc,kama:drawKama,
  kilit:function(){return null} /* sayfadaki "Dış Çap (D)" ile 2. fotoğraftaki "L (Boy)" aynı sayı: hangisi doğru belli değil */};
 (window.YDRAW=window.YDRAW||{})['baglanti']={
  match:function(ctx){return !!sub(ctx||{})},

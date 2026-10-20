@@ -6,19 +6,20 @@ Modül: `site/draw/baglanti.js` (`window.YDRAW.baglanti`). Fotoğraftan ölçü 
 
 | Alt tip | Tanıma (breadcrumb) | Sayfa etiketi → çizim anahtarı | Çizim |
 |---|---|---|---|
-| Manşon somunu KM | `MANŞON SOMUN VE PUL > SOMUN` | `İç Diş` (M..x..) → G, `Dış Çap` → D, `Genişlik` → B | Ön görünüş (4 kanal, dişli delik: kalın diş dibi + ince 3/4 diş üstü yayı) + KESİT A-A |
+| Manşon somunu KM | `MANŞON SOMUN VE PUL > SOMUN` | `İç Diş` (M..x..) → G, `Dış Çap` → D, `Genişlik` → B | Ön görünüş (4 kanal; iç diş: diş üstü kalın daire, diş dibi ince 3/4 yay) + KESİT A-A (düzlem üst/alt kanaldan geçer, kanal işaretli; diş dibi ince çizgi) |
 | Manşon pulu MB | `MANŞON SOMUN VE PUL > PUL` | `İç Çap` → d, `Dış Çap` → D, `Genişlik (Kalınlık)` → s | Ön görünüş (iç tırnak + dış tırnaklar) + KESİT A-A |
-| Dış segman DIN 471 | `SEGMAN > 471 DIŞ SEGMAN` | `Ebat` → d1 (mil çapı); `Ebat` "AxB" ise B → s | Açık halka, dışa dönük delikli kulaklar, mil çizgisi + KESİT A-A |
-| İç segman DIN 472 | `SEGMAN > 472 İÇ SEGMAN` | `Ebat` → d1 (delik çapı); "AxB" ise B → s | Açık halka, içe dönük delikli kulaklar, delik çizgisi + KESİT A-A |
+| Dış segman DIN 471 | `SEGMAN > 471 DIŞ SEGMAN` | `Ebat` → d1 (mil çapı); `Ebat` "AxB" ise B → s | Açık halka, dışa dönük delikli kulaklar + KESİT A-A (büyütülmüş): segman mil yuvasında, mil ince çift noktalı çizgi; s sayfada varsa ölçülü |
+| İç segman DIN 472 | `SEGMAN > 472 İÇ SEGMAN` | `Ebat` → d1 (delik çapı); "AxB" ise B → s | Açık halka, içe dönük delikli kulaklar + KESİT A-A (büyütülmüş): segman delik yuvasında, gövde ince çift noktalı çizgi; s sayfada varsa ölçülü |
 | Konik burç (taper lock) | `KAFES VE BURÇLAR > KONİK BURÇLAR` | ön yazı `Mil Çapı` → d (seri: `Burç Tipi`) | Ön görünüş (kama kanalı, yarık, yarım vida delikleri) + konik KESİT A-A |
 | Kama DIN 6885 | `KAMA` | ön yazı `Kama Ölçüsü` b*h*L → b, h, L | Üst görünüş (yuvarlak uçlu; çok uzunsa kırık gösterim) + KESİT A-A |
+| Rulman manşonu H | `MANŞON SOMUN VE PUL > MANŞON` | `İç Çap (Mil Çapı)` → d1, `Dış Çap (Rulman Deliği)` → d (seri: `Model` H2xx/H3xx/H23xx/H30xx/H31xx) | Ön görünüş (somun kanalları, manşon yarığı, dış diş) + birleşik KESİT A-A (konik manşon + somun + pul) |
 | Konik kilit | `KONİK KİLİTLER` | — | **Çizim yok (draw → null)**, aşağıya bakın |
 
 Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden farklıysa ya da özellikler ile ön yazı farklı sayı verirse `draw` null döner.
 
 ## Kapsam sayıları (ölçülen)
 
-`products.json` URL deseni + Chrome ile açılan sayfalar (curl Cloudflare'e takıldı; ~1 sayfa/sn). 1031 aday sayfadan 414 tanesi açıldı (süre nedeniyle tarama yarıda bırakıldı; açılmayanlar sayılmadı).
+`products.json` URL deseni + Chrome ile açılan sayfalar (curl Cloudflare'e takıldı; ~1 sayfa/sn). 1031 aday sayfadan 446 tanesi açıldı (süre nedeniyle tarama yarıda bırakıldı; açılmayanlar sayılmadı).
 
 | Alt tip | products.json URL | Açılan sayfa | Gerekli ölçü sayfada var (çizim çıkıyor) |
 |---|---|---|---|
@@ -29,9 +30,10 @@ Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden fa
 | Konik burç (taper lock) | 193 | 53 | 53 |
 | Kama DIN 6885 | 170 | 53 | 53 |
 | Konik kilit | 253 | 67 | 0 |
+| Rulman manşonu H | 86 | 86 | 86 |
 
 - Emniyet pulu: products.json içinde "emniyet" geçen ürün yok; emniyet pulu olarak MB manşon pulları var.
-- Rulman manşonu (H 2xx / H 23xx, `MANŞON SOMUN VE PUL > MANŞON`): aile tanımında yok, sayfada boy ölçüsü yok → match false. Açılan sayfalardan 55 tanesi match=false (H manşonları + kaldırılıp anasayfaya yönlenen ürünler).
+- Rulman manşonu H: products.json içinde 86 URL; hepsi açıldı. Açılan sayfalardan 1 tanesi hiçbir alt tipe uymadı (match=false; kaldırılıp anasayfaya yönlenen ürünler vb.).
 
 ## Emin olunamayanlar
 
@@ -41,11 +43,12 @@ Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden fa
   - `/konik-kilit-401-de-tipi-02455-17490` → https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85,format=webp/79038/uploads/urunresimleri/buyuk/konik-kilit-401-de-tipi-02455-cdefa9.png
   - `/konik-kilit-301-fb1-tipi-02047-17532` → https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85,format=webp/79038/uploads/urunresimleri/buyuk/konik-kilit-301-fb1-tipi-02047--bc3a-.png
 - **Konik burç:** sayfada sadece mil çapı var. Dış çap / boy yazılmıyor; çizimin oranı burç serisinin (1008, 1210, 1610 …) standart dış çap/boy değerlerinden alınır (sayı gösterilmez). Tabloda olmayan seri (ör. 6050) → null.
-- **Segman:** kulak şekli, halka genişliği ve delik boyutu DIN 471/472 biçimine göre orantılı çizilir, sayı yazılmaz. Sadece çapı olan ürünlerde kalınlık sayfada yok → kesitte kalınlık ölçüsü yok. `Ebat 20x1.75` gibi ürünlerde ikinci sayı DIN gösterimine (d1×s) göre kalınlık kabul edildi.
+- **Segman:** kulak şekli, halka genişliği ve delik boyutu DIN 471/472 biçimine göre orantılı çizilir, sayı yazılmaz. Sadece çapı olan ürünlerde kalınlık sayfada yok → kesitte kalınlık ölçüsü yok. Büyütülmüş kesitte bu ürünlerde kalınlık orantılı çizilir. `Ebat 20x1.75` gibi ürünlerde ikinci sayı DIN gösterimine (d1×s) göre kalınlık kabul edildi.
+- **Rulman manşonu H:** sayfada sadece d1 (mil çapı) ve d (rulman deliği) var; 2. fotoğraf tüm H ürünlerinde aynı genel ürün fotoğrafı, ölçü tablosu yok (ör. https://static.ticimax.cloud/79038/uploads/urunresimleri/buyuk/rulman-mansonu-h-205-135430.png). Manşon boyu (B1), somun ve pul ölçüleri yazılmıyor; şekil seri biçimine göre orantılı çizilir, sayı gösterilmez. Model seri tablosunda yoksa → null.
 - **KM / MB:** kanal ve tırnak ölçüleri sayfada yok; şekil orantılı, sayı yazılmaz. MB `Diş Aralığı` çizimde kullanılmadı.
 - Fotoğraftan ölçü okunmadı (KM/MB/segman/kama fotoğrafları ürün fotoğrafı, ölçü tablosu yok).
 
-## Fixture match sonuçları (35 ürün)
+## Fixture match sonuçları (36 ürün)
 
 | Ürün | Alt tip | match | draw | Gösterilen ölçüler |
 |---|---|---|---|---|
@@ -81,9 +84,10 @@ Kontrol: başlıktaki ölçü (ör. `1008*9`, `471 20x1.75`) sayfa verisinden fa
 | `/konik-kilit-300-fa1-tipi-02047-17456` | kilit | true | null | - |
 | `/konik-kilit-401-de-tipi-02455-17490` | kilit | true | null | - |
 | `/konik-kilit-301-fb1-tipi-02047-17532` | kilit | true | null | - |
-| `/ymn-rulman-mansonu-h-205-15780` | - | false | null | - |
-| `/ymn-rulman-mansonu-h-206-15781` | - | false | null | - |
-| `/ymn-rulman-mansonu-h-207-15782` | - | false | null | - |
+| `/ymn-rulman-mansonu-h-205-15780` | h | true | svg | d1=20 mm; d=25 mm |
+| `/ymn-rulman-mansonu-h-305-15832` | h | true | svg | d1=20 mm; d=25 mm |
+| `/ymn-rulman-mansonu-h-2310-15800` | h | true | svg | d1=45 mm; d=50 mm |
+| `/ymn-rulman-mansonu-h-3052-15833` | h | true | svg | d1=240 mm; d=260 mm |
 
 ## Önizleme
 `site/draw/preview/baglanti.html` (fixture kartları; ölçü etiketine tıklayınca ölçü çizgisi kırmızı). Ekran görüntüleri: `site/draw/preview/baglanti/NN-<ürün>-460.png` / `-360.png` (2x).
