@@ -35,7 +35,7 @@ Kurallar: d, D, H zorunlu (yoksa `null`). Aynı ölçü sayfada iki farklı değ
 
 ## Fotoğraftan okunan ölçüler
 
-Yok. Tüm ürünlerde gerekli ölçüler sayfada olduğu için `site/draw/data/eksenel.json` oluşturulmadı. (AKL 2. fotoğrafındaki üretici tablosu kontrol edildi, sayfa değerleriyle aynı; ayrıca veri yazılmadı.)
+Yok. Tüm ürünlerde gerekli ölçüler sayfada olduğu için `site/draw/data/eksenel.json` oluşturulmadı. (AKL 03’ün 2. fotoğrafında üretici ölçü tablosu var; sayfada ölçüler zaten olduğu için fotoğraftan veri alınmadı.)
 
 ## Emin olunamayanlar
 
