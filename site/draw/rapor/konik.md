@@ -26,15 +26,17 @@ Her seri kendi geometri parametresiyle çizilir (temas açısı, makara çapı/k
 | 322, 323 | geniş (B büyük) | ~9–10° |
 | 331, 332 | ekstra geniş (B = F) | ~8–8.5° |
 
-Çizim: solda ön görünüş (dış bilezik, iç bilezik büyük omuzu, makaralar), sağda A-A kesiti: dış bilezik (cup), iç bilezik (cone, büyük ve küçük omuz), konik makaralar + kafes, zıt yönlü 45° tarama, eksen çizgisi, makara eksenleri, temas (yük) çizgisi, oklu ölçü çizgileri.
+Çizim (yerleşim: ön görünüş ~%40, kesit ~%60): solda ön görünüş (dış bilezik, iç bilezik büyük omuzu, makaralar), sağda A-A kesiti: dış bilezik (cup), iç bilezik (cone, büyük ve küçük omuz), yamuk (trapez) konik makaralar (ekseni temas açısında), ince çizgi kafes, zıt yönlü 45° tarama, eksen çizgisi, makara eksenleri, oklu ölçü çizgileri. Ölçü yazıları 14 birim (360 px'de ~11 px).
+
+Kesitin okunur olması için iki yarım kesit arasındaki delik boşluğu gerektiğinde kısaltılarak çizilir (kısaltılmış gösterim); bu durumda Ød ve ØD ölçü çizgilerinde kırık işareti (//) vardır. Yarım kesitlerin kendi oranları ve yazılan değerler gerçektir.
 
 ## Kullanılan ölçü etiketleri (sayfadaki adıyla)
 
 | Anahtar | Sayfa etiketi | Çizimde yeri |
 |---|---|---|
-| d | İç Çap (d) | Kesitte delik çapı (Ø), ön görünüşte iç çap |
+| d | İç Çap (d) | Kesitte üst yarı delik yüzü ↔ alt yarı delik yüzü (Ø), ön görünüşte iç çap |
 | D | Dış Çap (D) | Kesitte ve ön görünüşte dış çap (Ø) |
-| B | Kalınlık (B) | İç bilezik (cone) genişliği — kesitin altında |
+| B | Kalınlık (B) | İç bilezik (cone) genişliği — alt yarım kesitin altında, cone yüzlerinden uzatma çizgileriyle |
 | E | E Ölçüsü | Dış bilezik (cup) genişliği (katalogda C) — kesitin üstünde, cup üzerinde |
 | F | F Ölçüsü | Toplam montaj genişliği (katalogda T) — en üstte, cone arka yüzünden cup arka yüzüne |
 
