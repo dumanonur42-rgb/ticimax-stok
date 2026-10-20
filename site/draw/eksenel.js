@@ -44,8 +44,8 @@ function render(st,v,opt){
  var rp=st=='cift'?(K+D)/4:(d+D)/4,room=Math.min(rp-(st=='cift'?K:Math.max(d,K))/2,(st=='cift'?D:Math.min(M,D))/2-rp);
  var hs=st=='cift'?(H-B)/2:H,rb=Math.min(0.3*hs,0.8*room);if(st=='cift')rb=Math.min(rb,(hs-0.3*hs)/1.48);
  var g=1.48*rb,t=st=='cift'?(hs-g):(H-g)/2,rS=D/2-0.02*D;
- var nt=st=='cift'?2:(v.M?2:1),nb=st=='tek'&&v.K?2:1;
- var s=Math.min(144/D,(st=='cift'?96:84)/H),fx=100,sx=316;
+ var mEq=!!(v.M&&Math.abs(v.M.n-D)<1e-6),nt=st=='cift'?2:(v.M&&!mEq?2:1),nb=st=='tek'&&v.K?2:1;
+ var s=Math.min((st=='cift'?128:144)/D,(st=='cift'?96:84)/H),fx=100,sx=316;
  var y0=30+nt*19+8,h=H*s,y1=y0+h,RD=D/2*s,cy=Math.max((y0+y1)/2,RD+28);
  var vbH=Math.max(cy+RD+34,y1+nb*19+26)+6;vbH=Math.max(200,Math.min(260,Math.ceil(vbH)));
  var o=[];function A(x){o.push(x)}
@@ -107,11 +107,15 @@ function render(st,v,opt){
  if(st=='cift'){var yA2=y0+tP,yB2=yA2+gP,yC2=yB2+B*s;
   A(dimX('d',sx-rd,sx+rd,rowT(0),yB2,yB2,'ø'+F(d)));A(dimX('K',sx-rK,sx+rK,rowT(1),y0,y0,'ø'+F(v.K.n)));
   A(dimX('D',sx-RD,sx+RD,rowB(0),y1,y1,'ø'+F(D),true));
-  A(dimY('B',sx-RD-14,yB2,yC2,sx-rSp,F(B),true))}
- else{A(dimX('d',sx-rd,sx+rd,rowT(0),y0,y0,'ø'+F(d)));if(v.M)A(dimX('M',sx-rM,sx+rM,rowT(1),y0,y0,'ø'+F(M)));
-  if(v.K){A(dimX('K',sx-rK,sx+rK,rowB(0),y1,y1,'ø'+F(K),true));A(dimX('D',sx-RD,sx+RD,rowB(1),y1,y1,'ø'+F(D),true))}
-  else A(dimX('D',sx-RD,sx+RD,rowB(0),y1,y1,'ø'+F(D),true))}
- A(dimY('H',sx+RD+16,y0,y1,sx+RD,F(H)));
+  A(dimY('B',sx-RD-12,yB2,yC2,sx-rSp,F(B),true))}
+ else{A(dimX('d',sx-rd,sx+rd,rowT(0),y0,y0,'ø'+F(d)));if(v.M&&!mEq)A(dimX('M',sx-rM,sx+rM,rowT(1),y0,y0,'ø'+F(M)));
+  if(v.K){A(dimX('K',sx-rK,sx+rK,rowB(0),y1,y1,'ø'+F(K),true));var dD=dimX('D',sx-RD,sx+RD,rowB(1),y1,y1,'ø'+F(D),true);A(mEq?grp('M',dD):dD)}
+  else{var dD2=dimX('D',sx-RD,sx+RD,rowB(0),y1,y1,'ø'+F(D),true);A(mEq?grp('M',dD2):dD2)}}
+ if(st=='mini')A(dimY('H',sx+RD+16,y0,y1,sx+RD,F(H)));else A(dimY('H',sx-RD-(st=='cift'?40:16),y0,y1,sx-RD,F(H),true));
+ var lb=[];if(st=='tek')lb=[{y:y0+tP/2,x:sx+rM,t:'mil bil.'},{y:y1-tP/2,x:sx+RD,t:'yuva bil.'}];
+ if(st=='cift'){var yD2=yC2+gP;lb=[{y:y0+tP/2,x:sx+RD,t:'yuva bil.'},{y:(yB2+yC2)/2,x:sx+rSp,t:'mil bil.'},{y:(yD2+y1)/2,x:sx+RD,t:'yuva bil.'}]}
+ var lx=sx+RD+9,LS='font-size="10.5" font-weight="600" font-family="inherit" fill="'+dim+'" opacity=".85"',prev=-1e9;
+ lb.forEach(function(q){var ty=Math.max(q.y+3.5,prev+12);prev=ty;A(L(q.x+1.5,q.y,lx-2.5,ty-3.5,0.6,dim)+'<circle cx="'+R(q.x+1.5)+'" cy="'+R(q.y)+'" r="1.1" fill="'+dim+'"/><text x="'+R(lx)+'" y="'+R(ty)+'" '+LS+'>'+q.t+'</text>')});
  var TT='font-size="10" font-weight="700" letter-spacing="1.5" font-family="inherit" fill="'+dim+'" opacity=".75" text-anchor="middle"';
  A('<text x="'+fx+'" y="14" '+TT+'>ÖN GÖRÜNÜŞ</text><text x="'+sx+'" y="14" '+TT+'>KESİT A-A</text>');
  var defs='<defs><pattern id="'+id+'h1" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="'+HAT+'" stroke-width="1.1"/></pattern>'+

@@ -24,6 +24,8 @@ Oranlar ürün ölçülerinden: d, D, H, K, M, B aynı ölçekle çiziliyor (ön
 | M | M | Mil Bileziği Dış Çapı (M) | 93 |
 | B | B | Mil Bileziği Yüksekliği (B) | 9 |
 
+Kesitte bilezikler küçük etiketle belirtilir: tek yönlüde üst “mil bil.”, alt “yuva bil.”; çift yönlüde orta “mil bil.”, üst/alt “yuva bil.”. Minyatür AKL’de iki bilezik sayfa verisinde ayrılmadığı için etiket konmadı. M = D olan üründe kesitte M ölçü çizgisi çizilmez (aynı sayı iki kez yazmasın); M kartta kalır ve vurgulanınca D çizgisi yanar.
+
 Kurallar: d, D, H zorunlu (yoksa `null`). Aynı ölçü sayfada iki farklı değerle geçerse `null`. Başlıkta `d x D x H` varsa sayfa değeriyle birebir aynı değilse `null`. Çift yönlüde B ve K zorunlu. K yalnızca d < K < D, M yalnızca K < M ≤ D ise çizilir.
 
 ## Kapsam sayıları (ölçülen)
