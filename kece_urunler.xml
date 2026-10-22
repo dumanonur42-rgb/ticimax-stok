@@ -34,6 +34,7 @@
         <StokAdedi>329</StokAdedi>
         <SatisFiyati>111.51</SatisFiyati>
         <IndirimliFiyat>111.51</IndirimliFiyat>
+        <IndirimliFiyatTL>111.51</IndirimliFiyatTL>
         <KDVDahil>false</KDVDahil>
         <KdvOrani>20</KdvOrani>
         <ParaBirimi>TL</ParaBirimi>
