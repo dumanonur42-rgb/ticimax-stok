@@ -30,11 +30,13 @@ jobs:
           TALHA_B2B_USER: ${{ secrets.TALHA_B2B }}
           TALHA_B2B_PASS: ${{ secrets.TALHA_B2B_PASS }}
         run: python3 sync.py
+      - name: Yeni urun gorselleri
+        run: python3 make_images.py
       - name: Ciktilari kaydet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output state.json
+          git add output state.json gorseller
           if git diff --cached --quiet; then
             echo "Degisiklik yok"
           else
