@@ -1,0 +1,264 @@
+import type { Product } from '@shared/types'
+import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { api } from '@/lib/api'
+import { date, mm, money, num, stockLevel } from '@/lib/format'
+import { useApp, useCart } from '@/store/app'
+import { cardPrice } from '@shared/price'
+
+export function ProductDrawer({
+  product,
+  onClose,
+  onEdit,
+  showPrices,
+  threshold
+}: {
+  product: Product
+  onClose: () => void
+  onEdit?: () => void
+  showPrices: boolean
+  threshold: number
+}): ReactNode {
+  const add = useCart((s) => s.add)
+  const toast = useApp((s) => s.toast)
+  const cardPct = useApp((s) => s.settings?.card_price_pct ?? 0)
+  const cp = cardPrice(product.price, product.card_price, cardPct)
+  const [qty, setQty] = useState(String(Math.max(1, product.min_order || 1)))
+  const [equivalents, setEquivalents] = useState<Product[]>([])
+  const ref = useRef<HTMLDivElement>(null)
+  const lvl = stockLevel(product.stock, threshold)
+
+  useEffect(() => {
+    const active = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const grid = document.querySelector<HTMLElement>('[role="grid"]')
+    const row = grid?.querySelector<HTMLElement>('[aria-selected="true"]') ?? document.querySelector<HTMLElement>('[role="button"][tabindex="0"]')
+    const activeContext = active && active !== document.body && (active.closest('[role="grid"]') || active.closest('[role="button"]'))
+    const target = activeContext ? active : row ?? grid
+    return () => {
+      if (target?.isConnected) target.focus()
+      else if (row?.isConnected) row.focus()
+      else if (grid?.isConnected) grid.focus()
+    }
+  }, [])
+
+  useEffect(() => {
+    void api('activity:log', {
+      kind: 'product_view',
+      product_id: product.id,
+      sku: product.sku,
+      brand: product.brand
+    }).catch(() => undefined)
+    setQty(String(Math.max(1, product.min_order || 1)))
+    const skus = product.equivalents
+      .split(/[,;\n]/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+    if (skus.length) api('products:bySkus', skus).then(setEquivalents).catch(() => setEquivalents([]))
+    else setEquivalents([])
+    ref.current?.querySelector<HTMLElement>('h2')?.focus()
+  }, [product])
+
+  useEffect(() => {
+    const drawer = ref.current
+    if (!drawer) return
+    const onKey = (e: KeyboardEvent): void => {
+      if (document.querySelector('dialog[open]')) return
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const focusable = [...drawer.querySelectorAll<HTMLElement>('a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')].filter((element) => element.offsetParent !== null)
+      if (focusable.length === 0) {
+        e.preventDefault()
+        drawer.focus()
+        return
+      }
+      const activeIndex = focusable.indexOf(document.activeElement as HTMLElement)
+      if (e.shiftKey && (activeIndex === 0 || activeIndex === -1)) {
+        e.preventDefault()
+        focusable[focusable.length - 1].focus()
+      } else if (!e.shiftKey && (activeIndex === focusable.length - 1 || (activeIndex === -1 && !drawer.contains(document.activeElement)))) {
+        e.preventDefault()
+        focusable[0].focus()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  const addNow = (): void => {
+    if (product.price == null || product.price <= 0) {
+      toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+      return
+    }
+    const quantity = Math.max(1, Math.floor(Number(qty) || 1))
+    setQty(String(quantity))
+    add(product, quantity)
+    toast(`${product.sku} × ${quantity} sepete eklendi.`, 'success')
+  }
+
+  return (
+    <>
+      <div className="backdrop" onClick={onClose} aria-hidden />
+      <aside ref={ref} className="drawer" role="dialog" aria-modal="true" aria-labelledby="pd-title" tabIndex={-1}>
+        <div className="drawer-head">
+          <h2 id="pd-title" tabIndex={-1} className="mono">
+            {product.sku}
+          </h2>
+          {onEdit && (
+            <button className="btn sm" onClick={onEdit}>
+              <Pencil size={14} aria-hidden /> Düzenle
+            </button>
+          )}
+          <button className="btn ghost icon sm" onClick={onClose} aria-label="Ayrıntı panelini kapat">
+            <X size={18} aria-hidden />
+          </button>
+        </div>
+        <div className="drawer-body grid" style={{ gap: 18, alignContent: 'start' }}>
+          <div>
+            <h3 style={{ marginBottom: 4 }}>{product.name}</h3>
+            <div className="row wrap small">
+              {product.brand && <span className="badge info">{product.brand}</span>}
+              {product.box && <span className="badge neutral">{product.box}</span>}
+              {product.category && <span className="badge neutral">{product.category}</span>}
+              {product.type && <span className="badge neutral">{product.type}</span>}
+              {product.seal && <span className="badge neutral">{product.seal}</span>}
+              {!product.active && <span className="badge out">Pasif</span>}
+            </div>
+          </div>
+
+          {product.shelf && (
+            <div className="shelf-card" role="group" aria-label="Raf konumu">
+              <MapPin size={22} aria-hidden />
+              <div>
+                <span className="shelf-card-label">Raf</span>
+                <b className="shelf-card-value mono">{product.shelf}</b>
+              </div>
+            </div>
+          )}
+
+          {(product.d_inner != null || product.d_outer != null || product.width != null) && (
+            <div className="dims" role="group" aria-label="Ölçüler">
+              <div className="dim">
+                <b>{num(product.d_inner)}</b>
+                <span>İç çap d (mm)</span>
+              </div>
+              <div className="dim">
+                <b>{num(product.d_outer)}</b>
+                <span>Dış çap D (mm)</span>
+              </div>
+              <div className="dim">
+                <b>{num(product.width)}</b>
+                <span>Genişlik B (mm)</span>
+              </div>
+            </div>
+          )}
+
+          <dl className="dl">
+            <dt>Stok</dt>
+            <dd>
+              <span className={`badge ${lvl.cls}`}>{lvl.label}</span> <span className="muted small">{product.unit}</span>
+            </dd>
+            {showPrices && (
+              <>
+                <dt>Fiyat</dt>
+                <dd>
+                  <strong>{product.price != null && product.price > 0 ? money(product.price, product.currency) : 'Fiyat sorunuz'}</strong>
+                  {product.list_price != null && product.price != null && product.list_price > product.price && (
+                    <span className="muted small">
+                      {' '}
+                      · liste <s>{money(product.list_price, product.currency)}</s>
+                    </span>
+                  )}
+                </dd>
+                {cp != null && (
+                  <>
+                    <dt>Kredi Kartı Fiyatı</dt>
+                    <dd>
+                      <strong>{money(cp, product.currency)}</strong>
+                    </dd>
+                  </>
+                )}
+              </>
+            )}
+            {product.min_order > 1 && (
+              <>
+                <dt>Min. sipariş</dt>
+                <dd>{num(product.min_order)}</dd>
+              </>
+            )}
+            {product.barcode && (
+              <>
+                <dt>Barkod</dt>
+                <dd className="mono">{product.barcode}</dd>
+              </>
+            )}
+            {(product.d_inner != null || product.d_outer != null || product.width != null) && (
+              <>
+                <dt>Ölçü</dt>
+                <dd>
+                  {mm(product.d_inner)} × {mm(product.d_outer)} × {mm(product.width)}
+                </dd>
+              </>
+            )}
+            <dt>Güncelleme</dt>
+            <dd className="small">{date(product.updated_at)}</dd>
+          </dl>
+
+          {product.description && <p>{product.description}</p>}
+
+          {product.equivalents && (
+            <section aria-labelledby="eq-title">
+              <h3 id="eq-title">Muadiller</h3>
+              <div className="chips">
+                {product.equivalents
+                  .split(/[,;\n]/)
+                  .map((s) => s.trim())
+                  .filter(Boolean)
+                  .map((s) => {
+                    const found = equivalents.find((e) => e.sku.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === s.replace(/[^A-Za-z0-9]/g, '').toUpperCase())
+                    return (
+                      <span key={s} className={`chip ${found ? '' : 'faint'}`} style={{ padding: '3px 10px' }} title={found ? `Stokta: ${num(found.stock)}` : 'Stok listesinde yok'}>
+                        {s}
+                        {found && <span className={`badge ${stockLevel(found.stock, threshold).cls}`}>{num(found.stock)}</span>}
+                      </span>
+                    )
+                  })}
+              </div>
+            </section>
+          )}
+        </div>
+        <div className="drawer-foot">
+          <div className="row" style={{ gap: 4 }} role="group" aria-label="Miktar">
+            <button className="btn icon sm" onClick={() => setQty(String(Math.max(1, (Number(qty) || 1) - (product.min_order || 1))))} aria-label="Azalt">
+              <Minus size={14} aria-hidden />
+            </button>
+            <input
+              className="qty-input"
+              inputMode="numeric"
+              aria-label="Miktar"
+              value={qty}
+              onChange={(e) => setQty(e.target.value.replace(/\D/g, ''))}
+              onBlur={() => setQty(String(Math.max(1, Math.floor(Number(qty) || 1))))}
+              onKeyDown={(e) => e.key === 'Enter' && addNow()}
+            />
+            <button className="btn icon sm" onClick={() => setQty(String((Number(qty) || 1) + (product.min_order || 1)))} aria-label="Artır">
+              <Plus size={14} aria-hidden />
+            </button>
+          </div>
+          <span className="spacer" />
+          {showPrices && (
+            <span aria-live="polite" className="nowrap drawer-price">
+              <strong>{product.price != null && product.price > 0 ? money(product.price * (Number(qty) || 1), product.currency) : 'Fiyat sorunuz'}</strong>
+              {cp != null && <span className="muted small"> · kart {money(cp * (Number(qty) || 1), product.currency)}</span>}
+            </span>
+          )}
+          <button className="btn primary" onClick={addNow} disabled={product.price == null || product.price <= 0}>
+            <ShoppingCart size={16} aria-hidden /> Sepete ekle
+          </button>
+        </div>
+      </aside>
+    </>
+  )
+}

@@ -1,0 +1,487 @@
+export type Currency = 'TRY' | 'USD' | 'EUR'
+
+export interface Product {
+  id: number
+  sku: string
+  name: string
+  brand: string
+  category: string
+  type: string
+  seal: string
+  d_inner: number | null
+  d_outer: number | null
+  width: number | null
+  stock: number
+  unit: string
+  price: number | null
+  currency: Currency
+  list_price: number | null
+  card_price: number | null
+  min_order: number
+  shelf: string
+  /** Packaging state ("Kutulu", "Kutusuz"…). Part of the product identity together with code and brand. */
+  box: string
+  barcode: string
+  image: string
+  description: string
+  equivalents: string
+  active: number
+  updated_at: string
+}
+
+export type ProductInput = Omit<Product, 'id' | 'updated_at'>
+
+export interface ProductFilter {
+  q?: string
+  brand?: string[]
+  category?: string[]
+  type?: string[]
+  seal?: string[]
+  inStock?: boolean
+  dInner?: [number | null, number | null]
+  dOuter?: [number | null, number | null]
+  width?: [number | null, number | null]
+  sort?: 'relevance' | 'sku' | 'name' | 'stock' | 'price' | 'updated' | 'shelf'
+  sortDir?: 'asc' | 'desc'
+  offset?: number
+  limit?: number
+  /** Admin stock screen: list passive products too. */
+  includeInactive?: boolean
+}
+
+/** One line typed into the spreadsheet-style quick entry grid. */
+export interface QuickEntryRow {
+  shelf: string
+  sku: string
+  brand: string
+  box: string
+  stock: number
+  price: number | null
+  description: string
+  /** What to do when the same code + brand + box already exists: add the quantity to its stock (default) or overwrite the stock. */
+  existing: 'add' | 'set'
+}
+
+export interface QuickEntryResult {
+  created: number
+  updated: number
+  errors: { key: string; message: string }[]
+  /** No connection: the batch is saved on this computer and will be sent when the cloud is reachable again. */
+  queued: boolean
+}
+
+/** One row of an inline/bulk edit on the stock screen; omitted fields stay unchanged. */
+export interface BulkProductPatch {
+  id: number
+  stock?: number
+  shelf?: string
+  price?: number
+  card_price?: number | null
+  active?: boolean
+}
+
+/**
+ * Products with the same designation and brand. `exact` groups also share the packaging state (certain duplicates);
+ * `box` groups differ only in packaging (Kutulu / Kutusuz …) and are offered for merging as an option.
+ */
+export interface DuplicateGroup {
+  key: string
+  kind: 'exact' | 'box'
+  designation: string
+  brand: string
+  /** Distinct packaging labels in the group (display order). */
+  boxes: string[]
+  items: Product[]
+}
+
+/** Fields the survivor of a merge may take over; anything omitted keeps the target's value. */
+export type MergePatch = Partial<
+  Pick<
+    Product,
+    | 'sku'
+    | 'name'
+    | 'brand'
+    | 'category'
+    | 'type'
+    | 'seal'
+    | 'd_inner'
+    | 'd_outer'
+    | 'width'
+    | 'stock'
+    | 'price'
+    | 'card_price'
+    | 'list_price'
+    | 'shelf'
+    | 'box'
+    | 'barcode'
+    | 'equivalents'
+    | 'description'
+  >
+>
+
+export interface MergeInput {
+  targetId: number
+  sourceIds: number[]
+  patch: MergePatch
+}
+
+export interface ProductPage {
+  items: Product[]
+  total: number
+}
+
+export interface FacetValue {
+  value: string
+  count: number
+}
+
+export interface Facets {
+  brand: FacetValue[]
+  category: FacetValue[]
+  type: FacetValue[]
+  seal: FacetValue[]
+}
+
+export interface Customer {
+  id: number
+  code: string
+  name: string
+  contact: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  tax_no: string
+  tax_office: string
+  discount_pct: number
+  currency: Currency
+  notes: string
+  active: number
+  created_at: string
+}
+export type CustomerInput = Omit<Customer, 'id' | 'created_at'>
+/** Login handed to a dealer by an administrator together with their company card. */
+export interface DealerLogin {
+  username: string
+  password: string
+  display_name: string
+}
+/** Fields a dealer may fill in for their own company card after approval. */
+export type CustomerProfile = Pick<Customer, 'name' | 'contact' | 'phone' | 'email' | 'address' | 'city' | 'tax_no' | 'tax_office'>
+
+export type PaymentType = 'pesin' | 'kart'
+
+export type OrderStatus = 'taslak' | 'beklemede' | 'onaylandi' | 'hazirlaniyor' | 'teslim' | 'iptal'
+
+export interface OrderItem {
+  id: number
+  order_id: number
+  product_id: number | null
+  sku: string
+  name: string
+  qty: number
+  unit_price: number
+  discount_pct: number
+  line_total: number
+}
+
+export interface Order {
+  id: number
+  order_no: string
+  customer_id: number | null
+  customer_name: string
+  status: OrderStatus
+  note: string
+  payment: PaymentType
+  currency: Currency
+  subtotal: number
+  discount: number
+  vat_pct: number
+  vat: number
+  total: number
+  created_by: string
+  created_at: string
+  updated_at: string
+  items?: OrderItem[]
+}
+
+export interface OrderInput {
+  customer_id: number | null
+  note: string
+  payment: PaymentType
+  currency: Currency
+  vat_pct: number
+  items: { product_id: number | null; sku: string; name: string; qty: number; unit_price: number; discount_pct: number }[]
+}
+
+export type UserRole = 'admin' | 'ara' | 'bayi'
+
+/** Extra abilities an administrator can grant to a non-admin account. */
+export const PERMS = ['shelf', 'prices', 'all_orders', 'export'] as const
+export type Perm = (typeof PERMS)[number]
+
+export interface User {
+  /** Supabase Auth user id (uuid). */
+  id: string
+  username: string
+  display_name: string
+  role: UserRole
+  perms: Perm[]
+  customer_id: number | null
+  active: number
+  approved: number
+  created_at: string
+}
+
+export interface Session {
+  user: User
+  customer: Customer | null
+}
+
+export type ActivityKind = 'login' | 'search' | 'product_view' | 'cart_add' | 'order'
+export type ActivityPlatform = 'windows' | 'android' | 'ios' | 'web'
+
+export type TrafficSite = 'yamansarulman' | 'rulmansitesi' | 'teknikkesici'
+export type TrafficSource = 'all' | 'app' | TrafficSite
+export type SiteActivityKind = 'visit' | 'search' | 'product_view' | 'cart_add' | 'order'
+export interface SiteActivityRow {
+  id: number
+  at: string
+  site: TrafficSite
+  visitor: string
+  kind: SiteActivityKind
+  sku: string
+  name: string
+  path: string
+  query: string
+  results: number | null
+  qty: number | null
+  device: '' | 'mobile' | 'tablet' | 'desktop'
+  city: string
+  org: string
+  referrer: string
+}
+export interface TrafficRecentQuery {
+  site?: TrafficSite
+  offset: number
+  city?: string
+  org?: string
+}
+export interface TrafficRecentPage {
+  rows: SiteActivityRow[]
+  hasMore: boolean
+}
+export interface TrafficSummaryQuery {
+  source: TrafficSource
+  from: string
+  to: string
+}
+export interface TrafficCounts {
+  visitors: number
+  visits: number
+  searches: number
+  product_views: number
+  cart_adds: number
+  orders: number
+}
+export interface TrafficSummary {
+  totals: TrafficCounts
+  bySource: (TrafficCounts & { src: string })[]
+  topSearches: { term: string; count: number; people: number; sources: string[] }[]
+  zeroResults: { term: string; count: number; sources: string[] }[]
+  topProducts: { sku: string; label: string; count: number; people: number; sources: string[] }[]
+  topCart: { sku: string; label: string; count: number; qty: number; sources: string[] }[]
+  daily: { day: string; visitors: number; searches: number; product_views: number; cart_adds: number; orders: number }[]
+  devices: { device: string; visitors: number }[]
+  cities: { city: string; visitors: number; product_views: number; searches: number }[]
+  companies: { org: string; visitors: number; product_views: number; searches: number; last_at: string; sources: string[] }[]
+}
+
+export interface ActivityEvent {
+  kind: ActivityKind
+  product_id?: number | null
+  sku?: string
+  brand?: string
+  query?: string
+  qty?: number | null
+  order_id?: number | null
+  detail?: Record<string, unknown>
+}
+
+export interface ActivityPerson {
+  display_name: string
+  username: string
+  company: string
+}
+
+export interface ActivityRow extends ActivityEvent {
+  id: number
+  at: string
+  user_id: string
+  platform: ActivityPlatform
+  person: ActivityPerson
+}
+
+export interface ActivityListQuery {
+  userId?: string
+  kind?: ActivityKind
+  platform?: ActivityPlatform
+  from?: string
+  to?: string
+  text?: string
+  offset: number
+  limit: number
+}
+
+export interface ActivityPage {
+  rows: ActivityRow[]
+  hasMore: boolean
+}
+
+export interface ActivitySummary {
+  lastLogin: string | null
+  lastActivity: string | null
+  kindCounts: Record<ActivityKind, number>
+  platforms: ActivityPlatform[]
+  topViewedProducts: { product_id: number | null; sku: string; brand: string; views: number }[]
+  topSearchTerms: { query: string; searches: number }[]
+}
+
+export interface StockLogRow {
+  id: number
+  at: string
+  product_id: number | null
+  sku: string
+  brand: string
+  box: string
+  old_stock: number | null
+  new_stock: number
+  delta: number
+  user_id: string | null
+  source: string
+  person: ActivityPerson
+}
+
+export interface StockLogQuery {
+  sku?: string
+  userId?: string
+  source?: string
+  from?: string
+  to?: string
+  offset: number
+  limit: number
+}
+
+export interface StockLogPage {
+  rows: StockLogRow[]
+  hasMore: boolean
+}
+
+export interface SyncStatus {
+  online: boolean
+  checked?: boolean
+  lastSync: string | null
+  productCount: number
+  /** Catalogue writes saved on this computer that still have to reach the cloud. */
+  pending: number
+  /** Writes the cloud rejected (kept so the user can see and discard them). */
+  failed: number
+  message?: string
+}
+
+export interface UpdateState {
+  status: 'idle' | 'checking' | 'available' | 'downloading' | 'downloaded' | 'installing' | 'error'
+  current: string
+  version?: string
+  notes?: string
+  percent?: number
+  message?: string
+  required?: boolean
+  storeBuild?: boolean
+  minimumVersion?: string
+}
+
+/** Sales contacts shown on the dashboard (WhatsApp + direct call). */
+export const SUPPORT_CONTACTS: ReadonlyArray<{ name: string; phone: string }> = [
+  { name: 'Ahmet Yaman', phone: '+90 552 610 93 63' },
+  { name: 'Arif Yaman', phone: '+90 533 474 87 40' }
+]
+
+export const SUPPORT_PHONE = SUPPORT_CONTACTS[0].phone
+
+export interface Settings {
+  company_name: string
+  company_phone: string
+  company_email: string
+  company_address: string
+  company_web: string
+  default_currency: Currency
+  rate_usd: number
+  rate_eur: number
+  vat_pct: number
+  low_stock_threshold: number
+  show_prices_to_dealers: boolean
+  card_price_pct: number
+  theme: 'system' | 'light' | 'dark' | 'contrast'
+  font_scale: number
+  reduce_motion: boolean
+  density: 'comfortable' | 'compact'
+  /** Admin devices: keep running in the tray after the window closes and show a Windows notification on new orders. */
+  background_notifications: boolean
+  min_version_android?: string
+  min_version_ios?: string
+  min_version_windows?: string
+}
+
+export interface DashboardStats {
+  productCount: number
+  inStockCount: number
+  lowStockCount: number
+  outOfStockCount: number
+  customerCount: number
+  pendingUsers: number
+  openOrders: number
+  ordersToday: number
+  brands: FacetValue[]
+  recentOrders: Order[]
+  lowStock: Product[]
+  lastImport: ImportLog | null
+}
+
+export interface ImportLog {
+  id: number
+  filename: string
+  created_at: string
+  inserted: number
+  updated: number
+  unchanged: number
+  deactivated: number
+  mode: string
+}
+
+export interface ImportPreview {
+  filename: string
+  headers: string[]
+  rows: string[][]
+  totalRows: number
+  suggestedMapping: Partial<Record<keyof ProductInput, string>>
+  suggestedCurrency: Currency | null
+  priceCurrencyHints?: Record<string, Currency | null>
+  token: string
+}
+
+export interface ImportOptions {
+  token: string
+  mapping: Partial<Record<keyof ProductInput, string>>
+  mode: 'upsert' | 'replace' | 'stock_only'
+  deactivateMissing: boolean
+  defaultCurrency: Currency
+  defaultBrand: string
+  defaultCategory: string
+  /** Compute the outcome and warnings without writing anything. */
+  dryRun?: boolean
+}
+
+export interface ImportResult extends ImportLog {
+  errors: string[]
+}
