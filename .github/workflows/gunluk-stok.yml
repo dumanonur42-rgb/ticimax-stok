@@ -27,7 +27,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Talha B2B senkron
         env:
-          TALHA_B2B_USER: ${{ secrets.TALHA_B2B_USER }}
+          TALHA_B2B_USER: ${{ secrets.TALHA_B2B }}
           TALHA_B2B_PASS: ${{ secrets.TALHA_B2B_PASS }}
         run: python3 sync.py
       - name: Ciktilari kaydet
