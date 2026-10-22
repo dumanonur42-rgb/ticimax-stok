@@ -19,6 +19,7 @@ veya ayni klasordeki .env dosyasina yazin:
 """
 
 import csv
+import gzip
 import json
 import os
 import re
@@ -377,6 +378,22 @@ def fetch_category(session: requests.Session, cat_id: int):
     return products
 
 
+EKLER_DIR = Path(__file__).parent / "ekler"
+
+
+def ek_urunleri_ekle(xml):
+    """ekler/*.xml.gz icindeki hazir <Urun> kayitlarini Talha XML'inin sonuna ekler."""
+    ekler = []
+    for f in sorted(EKLER_DIR.glob("*.xml.gz")):
+        with gzip.open(f, "rt", encoding="utf-8") as fh:
+            ekler += re.findall(r"  <Urun>.*?</Urun>", fh.read(), re.S)
+    if not ekler:
+        return xml
+    print(f"Ek urun: {len(ekler)}")
+    i = xml.rindex("</Urunler>")
+    return xml[:i] + "\n".join(ekler) + "\n" + xml[i:]
+
+
 def build_xml(rows):
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', "<Urunler>"]
     for r in rows:
@@ -508,7 +525,7 @@ def main():
     print(f"Toplam {len(rows)} benzersiz urun cekildi.")
 
     # XML
-    (OUT / "ticimax_urunler.xml").write_text(build_xml(rows), encoding="utf-8")
+    (OUT / "ticimax_urunler.xml").write_text(ek_urunleri_ekle(build_xml(rows)), encoding="utf-8")
 
     # Ticimax ornek sablonuna uygun Excel
     build_excel(rows, OUT / "ticimax_urunler.xlsx")
