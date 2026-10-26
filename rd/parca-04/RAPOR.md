@@ -193,3 +193,8 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Sabit bilyalı ..-MA (dış bilezik kılavuzlu pirinç kafes): 9 ürün. Sabit bilyalı ..-M (pirinç kafes): 3 ürün. Görseller aynı Alman FAG bayisinin filigransız fotoğrafları.
 - Reddedilen: 532/533 ve 542/543xx eksenel bilyalı (küresel yataklı pullu). Bayi bu kodlarda düz pullu genel görseli kullanıyor (54307 görseli 52210 ile birebir aynı), küresel pul görünmüyor. Bu 19 ürün görselsiz kaldı.
 - Görselsiz ürün: 244 → 232.
+
+## Çok derin arama – 8. ilerleme
+- Çift sıralı eğik bilyalı 32/33..-M (açık, pirinç kafes): 12 ürün. Görsel aynı Alman FAG bayisinin filigransız fotoğrafı.
+- Reddedilen: 2344xx-M-SP, 32/33xx açık (çelik kafes) ve 23180-BEA-MB1 görsellerinde "SAMPLE" yazısı var. 22256-BEA-XL-MB1 ve 23936-S-MB görselleri aynı genel resim ve kafes pirinç görünmüyor. 3312-B-2RSR-TVH görselinde mavi conta var, renk doğrulanamadı.
+- Görselsiz ürün: 232 → 220.
