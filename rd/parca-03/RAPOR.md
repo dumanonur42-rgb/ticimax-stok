@@ -4,13 +4,13 @@ Toplam ürün: **2906**
 
 ## Görseller
 - birebir: **739**
-- ayni_tip: **653**
-- resimsiz: **1514**
-- farklı görsel dosyası: 329
+- ayni_tip: **682**
+- resimsiz: **1485**
+- farklı görsel dosyası: 341
 
 | Ürün grubu | adet | birebir | ayni_tip | resimsiz |
 |---|---|---|---|---|
-| Komple teker | 1283 | 694 | 210 | 379 |
+| Komple teker | 1283 | 694 | 239 | 350 |
 | Montaj borusu | 73 | 0 | 0 | 73 |
 | Yedek teker | 415 | 44 | 231 | 140 |
 | Teker maşası | 917 | 0 | 0 | 917 |
@@ -81,9 +81,9 @@ Not: Girdi önerilerinden SEGMANLAR (3), GRES VE YAĞLAR (5), OTO RULMANLARI>Dİ
 | Üretici sitesinde bu kodun kendi sayfası yok; teknik bilgi ürün adındaki ölçülerle sınırlı | 1049 |
 | Ürün tipi (tekersiz maşa) kod yapısından çıkarıldı; üretici sitesinde ayrı maşa sayfası yo | 917 |
 | Görsel yok | 917 |
-| Görsel aynı tip temsili | 653 |
+| Görsel aynı tip temsili | 682 |
 | Ürün adındaki ek ifade(ler) üretici kaynağında açıklanmıyor | 620 |
-| Görsel bulunamadı (bu kod/varyant için üretici görseli yok) | 519 |
+| Görsel bulunamadı (bu kod/varyant için üretici görseli yok) | 490 |
 | Görsel kaynağı satış sitesindeki filigransız üretici fotoğrafı | 232 |
 | Tamir takımının içeriği ve uyduğu modeller doğrulanamadı | 213 |
 | Görsel bulunamadı | 78 |
