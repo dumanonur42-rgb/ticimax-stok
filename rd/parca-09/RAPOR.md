@@ -4,19 +4,21 @@ Toplam ürün: **2977** (tamamı BANDO markası)
 
 ## Görsel durumu
 
-- birebir: 2
-- ayni_tip: 2967
-- resimsiz: 8
-- farklı görsel dosyası: 25
+- birebir: 3
+- ayni_tip: 2974
+- resimsiz: 0
+- farklı görsel dosyası: 27
 
 Aynı tip görseller Bando Avrupa resmi sitesindeki seri fotoğraflarıdır (kayış profili/yapısı ürünle aynı). Birebir görseller kodun kendisinin göründüğü temiz ürün fotoğraflarıdır.
 
 ### Resimsiz ürünler (neden)
 
-- DPK kanallı: 4
-- Sunrope kilit: 4
 
 Bu gruplarda renk/görünüş ya da tip üretici kaynağında doğrulanamadığı için yanlış görsel koymak yerine boş bırakıldı.
+
+### 2. tur görsel araştırması
+
+Önce: birebir 2, ayni_tip 2225, kesit 0, yok 750. Kaynaklar: bando.de, bandousa.com, products.bandogrp.com (arşiv kopyası), Bando Japonya ürün sayfaları, Amazon (Bando USA ambalaj fotoğrafı), Avrupa bayi sayfası (Sunrope bağlantı elemanı). Teknik çizimler, filigranlı ve başka firma logolu fotoğraflar kullanılmadı.
 
 ## Kategori dağılımı (tüm atamalar)
 
@@ -44,7 +46,7 @@ Bu gruplarda renk/görünüş ya da tip üretici kaynağında doğrulanamadığ�
 
 Boş kategori: **0**
 
-Bayraklı ürün: **1041**
+Bayraklı ürün: **1040**
 
 ### Bayrak türleri
 
@@ -66,8 +68,8 @@ Bayraklı ürün: **1041**
 - Etkin uzunluk üretici tablosunda bulunamadı (5)
 - Bu uzunluk üretici ölçü tablosunda bulunamadı (5)
 - KAYIŞ>KAYIŞ AKSESUARLARI yeni kategori önerisi (5)
-- DPK kodunun (çift taraflı olup olmadığı) üretici kaynağında doğrulanamadı; görsel konmadı (4)
-- Bağlantı elemanının üretici fotoğrafı bulunamadı; görsel konmadı (4)
+- Görsel Sunrope plaka bağlantı elemanının satıcı fotoğrafıdır; profil boyu farklı olabilir (4)
+- Görsel aynı seri Bando …DPK… çift taraflı kanallı kayışın ambalajlı fotoğrafıdır (3)
 - Koddaki … ibaresinin anlamı ve kayışın malzemesi doğrulanamadı (3)
 - Dış uzunluk üretici tablosunda bulunamadı (3)
 - HDPF-J serisi üretici sitesinde bulunamadı; ölçüler tedarikçi notundan alındı (3)
