@@ -4,18 +4,26 @@
 | | adet |
 |---|---|
 | Toplam ürün | 3628 |
-| Görsel birebir (üretici görseli, aynı kod) | 3126 |
-| Görsel aynı tip (aynı ana kod + aynı conta/kapak, delik ve kafes tipi) | 342 |
-| Görselsiz | 160 |
-| Farklı görsel dosyası | 77 |
+| Görsel birebir (üretici görseli, aynı kod) | 2422 |
+| Görsel aynı tip (aynı ana kod + aynı conta/kapak, delik ve kafes tipi) | 381 |
+| Görselsiz | 825 |
+| Farklı görsel dosyası | 61 |
 | Boş kategori | 54 |
-| Bayraklı ürün | 502 |
+| Bayraklı ürün (tümü) | 3628 |
+| Bayraklı ürün ("kesit gorsel" dışında bayrağı olan) | 1164 |
 
 Kaynak: teknik veriler ve görseller medias.schaeffler.com üretici kataloğundan. 3126 kod katalogda birebir bulundu (ölçü, yük değerleri, ağırlık, yapı özellikleri). 439 kod katalogda birebir yok; bunlarda yalnızca aynı ana kodlu tüm katalog kayıtlarında ortak olan ana ölçüler (d, D, B/T) yazıldı, yük değerleri yazılmadı, bayrak eklendi. 63 kod için katalogda hiçbir kayıt yok: teknik bilgi yok, kategori boş, görsel yok, bayraklı.
 
 Aynı tip görsel kuralı: kod eklerinden conta/kapak (2RS/2RSR/2HRS → lastik conta, 2Z → metal kapak, açık), konik delik (K/K30) ve kafes (pirinç M/MB, poliamid TVH/TVP, standart) birebir aynı olan kardeş kayıtların resmi kullanıldı; uyan yoksa görsel konmadı.
 
-Tüm farklı görseller (77 adet) temas sayfalarında tek tek kontrol edildi. `ornek_1.jpg`, `ornek_2.jpg` (* = aynı tip görsel).
+## Fotoğraf gerçekliği düzeltmesi
+Önceki 77 farklı görselin hepsi tek tek sınıflandırıldı:
+- Çizim tipi: **16** görsel. 12 tanesinde ölçü çizgisi/harfleri var (D, d, B, T): 234406-M-SP, 53203, 54305, 108-TVH, 11204-TVH, 2200-2RS-TVH, 4200-BB-TVH, 20318-K-MB-C3, 23230-E1A-XL-M-H40-C3, 23936-S-K-MB, 22308-E1-XL-T41A, 21307-E1-XL-K-TVPB. 4 tanesi düz, mavi-yeşil CAD görünümlü: 20204-TVP, 51130-MP, 51100, 52202.
+- Bu 16 görselin hepsi çıkarıldı. Bunları kullanan ürünlerden 42'sine aynı ana kod, aynı tip ve aynı conta/kafes yapısındaki kardeş ürünün fotoğraf gibi görünen resmi kondu (ayni_tip). Uygun görsel bulunamayan 662 ürün görselsiz bırakıldı ve "yalnızca çizim tipi görseli var" bayrağı eklendi.
+- Kalan **61** görselin hepsi gerçekçi metal görünümlü üretici render'ı. Ancak hepsi çeyreği kesilmiş kesit görünüşte. Schaeffler katalog araması ürün başına tek görsel veriyor ve ürün sayfalarında başka medya alınamıyor (sayfa verisi hata döndürüyor). Bu yüzden kesitsiz tam görünüş bulunamadı. Kesit görsel kullanılan tüm ürünlere "kesit gorsel" bayrağı eklendi (2803 ürün).
+- Sayılar: ölçü çizgili görsel kaldırıldı: 12; CAD görünümlü görsel kaldırıldı: 4; kesit görselin yerine tam görünüş konan: 0; bayrakla tutulan kesit görsel: 61 (farklı dosya).
+
+`ornek_1.jpg` ve `ornek_2.jpg` düzeltme sonrası **tüm 61 farklı görseli** gösteriyor (* = aynı tip görsel).
 
 ## Ana kategori dağılımı
 | kategori | adet |
@@ -55,16 +63,12 @@ Tüm farklı görseller (77 adet) temas sayfalarında tek tek kontrol edildi. `o
 ## Bayrak türleri
 | bayrak | adet |
 |---|---|
+| kesit gorsel | 2803 |
+| Üreticinin bu ürün için yalnızca çizim tipi görseli var | 662 |
 | Bu kod üretici kataloğunda birebir bulunamadı | 439 |
-| Aynı conta/kapak/kafes tipinde doğru görsel bulunamadı | 97 |
+| Aynı conta/kapak/kafes tipinde doğru görsel bulunamadı | 100 |
 | Üretici kataloğunda kayıt bulunamadı | 63 |
 | Doğru görsel bulunamadı | 63 |
 | Kategori belirlenemedi | 53 |
 | Tip yalnızca tedarikçi notundaki koddan belirlendi | 9 |
-| Kategori önerisi: RULMAN MONTAJ ALETLERİ (mevcut değil) | 1 |
-
-## Kategorisi boş ürünler
-BETEX IMPACT-33, FAG 11211-TVH, FAG 1302, FAG 1302-C3, FAG 234405-M-SP, FAG 26-1003, FAG 26-1058-B, FAG 26-1308-A, FAG 26-1442, FAG 26-1670-B, FAG 26-1672, FAG 26-440-B, FAG 30/6-B-2Z-TVH-HLC, FAG 30209-XL, FAG 30212-A, FAG 30220-A-DF-A220-270, FAG 30240-A, FAG 31308-XL-DF-A50-90, FAG 31310-XL, FAG 31330-X, FAG 32017-X, FAG 32017XL-P5DF-A80-100, FAG 32032-X, FAG 3219-M, FAG 3219-M-C3, FAG 3221-M-C3, FAG 3222-M-C3, FAG 32228-XL-DF-A250-300, FAG 32244-A, FAG 3301, FAG 3312, FAG 3312-B-2RSR-TVH, FAG 3312-B-2RSR-TVH-C3, FAG 3312-B-TVH, FAG 3312-B-TVH-C3, FAG 3315, FAG 3315-C3, FAG 3318, FAG 3318-BD-XL, FAG 3318-C3, FAG 3318-M, FAG 3318-M-C3, FAG 3322-M, FAG 3322-M-C3, FAG 3802-B-2RSR-TVH-HLC, FAG 3802-B-2Z-TVH-HLC, FAG 548564A, FAG 559/552A, FAG 563468, FAG 605-2Z-CO7-C3, FAG 623, FAG 623-2Z, FAG 623-2Z-CO7, FAG 630/8-2RSR
-
-## Görselsiz ürünler
-BETEX IMPACT-33, FAG 10-2, FAG 10-3733, FAG 10-639, FAG 10-6777, FAG 11211-TVH, FAG 1302, FAG 1302-C3, FAG 1303, FAG 1303-C3, FAG 16100-A, FAG 16101-A, FAG 16101-A-2RSR, FAG 22240-BEA-XL-MB1, FAG 22240-BEA-XL-MB1-C3, FAG 22244-BEA-XL-K-MB1, FAG 22244-BEA-XL-MB1, FAG 22244-BEA-XL-MB1-C3, FAG 22248-BEA-XL-K-MB1, FAG 22248-BEA-XL-MB1, FAG 22248-BEA-XL-MB1-C3, FAG 22332-BEA-XL-K-MB1, FAG 22332-BEA-XL-MB1, FAG 22332-BEA-XL-MB1-C3, FAG 22334-BEA-XL-MB1, FAG 22334-BEA-XL-MB1-C3, FAG 22336-BEA-XL-MB1-C3, FAG 22338-BEA-XL-MB1, FAG 22338-BEA-XL-MB1-C3, FAG 22338-K-MB-C3, FAG 22340-BEA-XL-K-MB1, FAG 22340-BEA-XL-MB1, FAG 22340-BEA-XL-MB1-C3, FAG 22344-BEA-XL-K-MB1, FAG 22344-BEA-XL-MB1, FAG 22344-BEA-XL-MB1-C3, FAG 2303, FAG 2303-C3, FAG 2304, FAG 2304-C3, FAG 23160-BE-XL, FAG 23252-BE-XL, FAG 23338-A-MA-T41A, FAG 234405-M-SP, FAG 24020-S-MB, FAG 24020-S-MB-C3, FAG 24022-S-MB, FAG 24022-S-MB-C3, FAG 24060-B-MB-C3, FAG 26-1003, FAG 26-1058-B, FAG 26-1308-A, FAG 26-1442, FAG 26-1670-B, FAG 26-1672, FAG 26-440-B, FAG 30/6-B-2Z-TVH-HLC, FAG 30209-XL, FAG 30212-A, FAG 30220-A-DF-A220-270, FAG 30240-A, FAG 308-14, FAG 310-3432, FAG 310-3538, FAG 310-5905, FAG 310-6499B, FAG 31308-XL-DF-A50-90, FAG 31310-XL, FAG 31330-X, FAG 3200-BB-2RSR-TVH, FAG 32017-X, FAG 32017XL-P5DF-A80-100, FAG 32032-X, FAG 3217, FAG 3217-C3, FAG 3218, FAG 3218-C3, FAG 3218-M, FAG 3219-M, FAG 3219-M-C3, FAG 3220, FAG 3220-C3, FAG 3220-M, FAG 3221-M-C3, FAG 3222-M-C3, FAG 32228-XL-DF-A250-300, FAG 32244-A, FAG 3301, FAG 3312, FAG 3312-B-2RSR-TVH, FAG 3312-B-2RSR-TVH-C3, FAG 3312-B-TVH, FAG 3312-B-TVH-C3, FAG 3315, FAG 3315-C3, FAG 3316, FAG 3316-BD-XL, FAG 3316-C3, FAG 3318, FAG 3318-BD-XL, FAG 3318-C3, FAG 3318-M, FAG 3318-M-C3, FAG 3319-M, FAG 3319-M-C3, FAG 3322-M, FAG 3322-M-C3, FAG 3801-B-2RSR-TVH-HLC, FAG 3801-B-2Z-TVH-HLC, FAG 3802-B-2RSR-TVH-HLC, FAG 3802-B-2Z-TVH-HLC, FAG 3803-B-2RS-TVH-HLC, FAG 3804-B-2RSR-TVH-HLC, FAG 548564A, FAG 559/552A, FAG 563468, FAG 6005-MA-C3, FAG 6006-MA-C3, FAG 6007-M-C3, FAG 6008-MA, FAG 6008-MA-C3, FAG 6009-MA-C3, FAG 605-2Z-CO7-C3, FAG 607, FAG 608-RS, FAG 609-2RS-HLC, FAG 609-2RS-HLC-C3, FAG 609-HLC, FAG 61801-2Z-HLC, FAG 61801-2Z-L417/50, FAG 61805-2Z-HLC, FAG 61808-2Z-HLC, FAG 61808-HLC, FAG 61836-MB-C3, FAG 61848-HLU, FAG 61852-HLU, FAG 61856-HLU, FAG 61906-2Z-HLC, FAG 6205-MA-C3, FAG 6206-M, FAG 6206-M-C3, FAG 6207-E-TVH, FAG 6209-MA-C3, FAG 623, FAG 623-2Z, FAG 623-2Z-CO7, FAG 624, FAG 624-2Z, FAG 624-2Z-C3, FAG 624-2Z-CO7-C3, FAG 625, FAG 626, FAG 627, FAG 627-2RS, FAG 630/8-2RSR, FAG 63006-2RSR-TVH, FAG 6304-MA-C3, FAG 6305-M, FAG 6305-M-C3, FAG 6305-MA-C3
+| Kategori önerisi | 1 |
