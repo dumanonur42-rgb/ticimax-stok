@@ -227,3 +227,12 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
   - 3213/3218: yalnızca benzer görünen tek sıralı sabit bilyalı ve SAMPLE yazılı görseller çıktı.
   - 51164/51418-MP: yalnızca çelik sac kafesli, markasız genel eksenel rulman fotoğrafları çıktı. Pirinç kafes yok; kullanılmadı.
 - Yeni görsel: 0. Görselsiz ürün 218.
+
+## Çok derin arama – 12. ilerleme
+- Tmall/JD: resmi Schaeffler mağazalarında yalnızca otomotiv (teker göbeği vb.) ürünleri çıktı; bu parçadaki endüstriyel kodlar yok.
+- Schaeffler Japonya, Hindistan, Kore ve Brezilya: ürün sayfaları aynı medias kataloğuna yönleniyor; aynı tek görsel var, ek fotoğraf yok. Kore pazar yeri (imarket) FAG listesinde kalan kodlarımız yok.
+- Yeni görsel: 0. Görselsiz ürün 218.
+
+## Yakın tip listesi güncellendi (uygulanmadı)
+- Görselsiz kalan 162 üründen 106'sı listeye eklendi; toplam 162 satır. Her satırda önerilen görsel, görselin ait olduğu ürün ve fark yazıyor (ölçü, kafes, conta, iç tasarım ya da ek kod farkı; DF çiftlerde görsel tek rulman).
+- Listeye girmeyen 56 ürün: 2344xx-M-SP 27, INA/FAG 38xx 6, 23338-A-MA-T41A 1, 308-14/310-xxxx/563468 6 (aynı seride FAG görseli yok); 10-xxx, 26-xxx, 30/6, 548564A, 559/552A, 630/8 ve BETEX 16 (kod katalogda yok, tip bilinmiyor).
