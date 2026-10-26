@@ -172,3 +172,7 @@ Not: Girdi önerilerinden SEGMANLAR (3), GRES VE YAĞLAR (5), OTO RULMANLARI>Dİ
 Taranan kaynaklar: emesteker.com (TR/EN/IT/RU/AR, ~7.200 ürün sayfası), güncel ürün kataloğu (454 sayfa, gömülü fotoğraflar OCR ile koda eşlendi), Ekstra Ağır Sanayi kataloğu, Özel Müşteri Talepleri, eğitim kitapçığı, broşürler, web.archive.org (emesteker.com eski görselleri), e-tekerlek.com (3.692 ürün), ulvibaba, e-nalburcu, smksealonline, rulmanticaret (erişilemedi), Rusya/Malta satıcıları, genel web araması.
 
 Mevcut aynı tip görseller yeni kurala göre tekrar kontrol edildi (okunabilir farklı kod, kadraj, renk): düzeltme gerekmedi (0).
+
+## Yakın tip önerileri (uygulanmadı, sahip onayı bekliyor)
+
+`yakin_tip_onerileri.jsonl`: yay rengi farklı (EAY/EVY) ve T/TF ekli ürünler için aynı modelin fotoğrafı önerisi. Her satırda önerilen görsel (`yakin_tip/`), kaynak, fotoğraftaki model ve fark yazılı. 189 öneri (74 farklı görsel). 44 üründe temel modelin de fotoğrafı yok, öneri yapılamadı. `urunler.jsonl` değiştirilmedi.
