@@ -72,3 +72,9 @@ Aynı tip görsel kuralı: kod eklerinden conta/kapak (2RS/2RSR/2HRS → lastik 
 | Kategori belirlenemedi | 53 |
 | Tip yalnızca tedarikçi notundaki koddan belirlendi | 9 |
 | Kategori önerisi | 1 |
+
+## Birebir gerçek fotoğraf araması
+- Schaeffler görsel sunucusunda her ürün görselinin farklı boyutları (_a … _f) denendi. Hepsi aynı kesit render çıktı, başka açı ya da fotoğraf yok.
+- Schaeffler ürün sayfaları sunucu hatası veriyor. Medya arşivindeki fotoğraflar seri/tip tanıtım fotoğrafı; belirli bir koda bağlı değil, bu yüzden birebir sayılmadı.
+- Bayi sayfalarındaki fotoğraflar ya üreticinin aynı render'ı, ya filigranlı ya da kopyalanması yasak (ör. "copying prohibited" notu). Kullanılmadı.
+- Sonuç: gerçek fotoğrafla değiştirilen kesit görsel 0, birebire yükseltilen aynı tip görsel 0. Kesit görseller "kesit gorsel" bayrağıyla kaldı.
