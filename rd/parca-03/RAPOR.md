@@ -3,18 +3,18 @@
 Toplam ürün: **2906**
 
 ## Görseller
-- birebir: **642**
-- ayni_tip: **357**
-- resimsiz: **1907**
-- farklı görsel dosyası: 275
+- birebir: **712**
+- ayni_tip: **653**
+- resimsiz: **1541**
+- farklı görsel dosyası: 317
 
 | Ürün grubu | adet | birebir | ayni_tip | resimsiz |
 |---|---|---|---|---|
-| Komple teker | 1283 | 598 | 166 | 519 |
+| Komple teker | 1283 | 667 | 210 | 406 |
 | Montaj borusu | 73 | 0 | 0 | 73 |
-| Yedek teker | 415 | 44 | 191 | 180 |
+| Yedek teker | 415 | 44 | 231 | 140 |
 | Teker maşası | 917 | 0 | 0 | 917 |
-| Tamir/soket takımı | 218 | 0 | 0 | 218 |
+| Tamir/soket takımı | 218 | 1 | 212 | 5 |
 
 Görsel kaynağı: emesteker.com resmi ürün sayfaları (arka plan beyaza çevrildi, Yamansa üst bant + EMES alt bant). Tüm farklı görseller tek tek kontak sayfalarında incelendi.
 Resimsiz kalanlar: tekersiz maşalar, montaj boruları, tamir/soket takımları (üretici fotoğrafı yok) ve görünümü farklı olabilecek varyantlar (renk harfi M/K/S/Y, T/TF, perçin/civata, rulmansız, kapaklı, yön kilitli vb.). Yanlış görsel koymamak için boş bırakıldı.
@@ -53,7 +53,7 @@ Tüm atamalar (ürün birden çok kategoride olabilir):
 | TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER | 13 |
 
 - Boş kategori: **0** 
-- Bayraklı ürün: **2264**
+- Bayraklı ürün: **2261**
 
 Not: Girdi önerilerinden SEGMANLAR (3), GRES VE YAĞLAR (5), OTO RULMANLARI>DİĞER OTO RULMANLARI (8) yanlıştı (ürünler teker/maşa); düzeltildi. Kategori yapısı parça 01-02 ile ortak: ana kategori yük grubu (doğrulanabildiyse), sonra işlev kategorileri (döner/sabit/frenli/INOX/yedek/maşa/yedek parça), en sonda TEKERLEKLER. Yük grubu yalnız komple tekerlere uygulanır; yedek teker, maşa ve parçalarda ana kategori işlev kategorisidir. Bu parçada şişme teker/lastik yok.
 
@@ -81,11 +81,12 @@ Not: Girdi önerilerinden SEGMANLAR (3), GRES VE YAĞLAR (5), OTO RULMANLARI>Dİ
 | Üretici sitesinde bu kodun kendi sayfası yok; teknik bilgi ürün adındaki ölçülerle sınırlı | 1049 |
 | Ürün tipi (tekersiz maşa) kod yapısından çıkarıldı; üretici sitesinde ayrı maşa sayfası yo | 917 |
 | Görsel yok | 917 |
-| Görsel bulunamadı (bu kod/varyant için üretici görseli yok) | 699 |
+| Görsel aynı tip temsili | 653 |
 | Ürün adındaki ek ifade(ler) üretici kaynağında açıklanmıyor | 620 |
-| Görsel aynı tip temsili | 357 |
-| Görsel bulunamadı | 291 |
+| Görsel bulunamadı (bu kod/varyant için üretici görseli yok) | 546 |
+| Görsel kaynağı satış sitesindeki filigransız üretici fotoğrafı | 232 |
 | Tamir takımının içeriği ve uyduğu modeller doğrulanamadı | 213 |
+| Görsel bulunamadı | 78 |
 | Ölçülerin açılımı (çap/et/boy) ve kısaltmalar üretici kaynağında yok; adı tedarikçi tanımı | 73 |
 | Döner/sabit olduğu üretici kaynağında doğrulanamadı | 5 |
 | Soket ölçüsünün tam karşılığı (boru iç/dış ölçüsü) üretici kaynağında doğrulanamadı | 5 |
