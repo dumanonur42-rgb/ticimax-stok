@@ -12,7 +12,7 @@ Kullanılan görseller (hepsi bando.de resmi ürün fotoğraflarından, Yamansa 
 | Dosya | Ürün sayısı |
 |---|---|
 | bando-rib-ace-pk.jpg | 1323 |
-| bando-power-ace.jpg | 818 |
+| bando-klasik-v-kayisi.jpg | 818 |
 | bando-rpf.jpg | 311 |
 | bando-trapez-zaman.jpg | 162 |
 | bando-banflex-scrum.jpg | 109 |
@@ -21,10 +21,11 @@ Kullanılan görseller (hepsi bando.de resmi ürün fotoğraflarından, Yamansa 
 | bando-hp-hts-8m.jpg | 32 |
 | bando-neopren-cift-zaman.jpg | 32 |
 | bando-hts.jpg | 26 |
-| bando-bancollan-pu-zaman.jpg | 15 |
+| bando-bancollan-genel.jpg | 12 |
 | bando-ohc-kesit.jpg | 5 |
 | bando-kanalli-pl.jpg | 3 |
 | bando-bancollan-tn.jpg | 3 |
+| bando-bancollan-pu-zaman.jpg | 3 |
 | bando-trapez-cift-zaman.jpg | 3 |
 | bando-bancollan-lsb.jpg | 1 |
 | bando-6dpk1195.jpg | 1 |
@@ -42,6 +43,7 @@ Hâlâ resimsiz: 6 DPK 1195/1841/2290 (Bando sitelerinde çift taraflı kanallı
 Birebir: 6 DPK 1195 ve 6 DPK 1841, Bando ABD ambalajında kendi kodu okunan temiz ürün fotoğrafı.
 Denetimde düzeltilen (946 ürün, 4 görsel): W/P 818 ürün eski görselde "A-" kesit harfi okunuyordu, Bando Power Ace (kodsuz baskı) fotoğrafına geçildi; XL 90 + H 32 ürün eski görselde "L" profil yazısı okunuyordu, yazısız Bando neopren trapez dişli kayışa geçildi; OHC 5 ürün kayış kutudan çıktığı için kadraj dışına taşıyordu, Bando resmi oto triger kesit render’ı kondu (kesit); 4 PK 0970F kayış kadraj dışına taşıyordu ve ambalajda başka kod vardı, Rib Ace PK görseline geçildi.
 Tur 4: 6 DPK 2290 için kodu okunmayan Bando DPK fotoğrafı arandı; eBay sonuçlarında yalnız 6DPK1195/1841 ambalajlı fotoğrafları ve başka marka (D&D PowerDrive) kayışlar çıktı, bandousa.com oto sayfasında DPK yok. 268 SL için Bando JP (bandogrp.com, monotaro, misumi) arandı; oradaki SL kodları Sunline konveyör bantları, farklı ürün. W/P: Power Ace kumaş kaplı (W/P ile aynı yapı) ama dar kesit; W/P genişlikleri (10/13/17/22/32) klasik kesit. Klasik kesitli Bando fotoğraflarında (red marking, RED-S II, W800) "A-"/"SA-" kodu okunduğu için kullanılamıyor; Power Ace kaldı, bayrak güncellendi.
+Tur 5: W/P 818 ürün Power Ace (dar SP kesit) yerine Bando kumaş kaplı klasik V kayışı görseline geçti (bando.de red-marking, kesit harfi ve uzunluk okunmayacak şekilde kadrajlı; parça 09 ile aynı kaynak). Genişliğe göre: 10 mm 28, 12,5 mm 85, 13 mm 139, 17 mm 216, 22 mm 194, 25 mm 49, 32 mm 107 ürün, hepsi aynı görsel (görselde harf olmadığı için kesitle çelişmiyor). Bancollan PU MXL 4 + L 8 ürün Bando Türkiye resmi Bancollan fotoğrafına geçti; XL 3 ürün bando.de XL PU görselinde kaldı. Örnek: ornek_wp.jpg.
 Hâlâ resimsiz: 6 DPK 2290 (Bando kodlu fotoğraf bulunamadı; bulunan DK060901 görseli başka marka ambalajında), 268 SL 400 MM (268SL dikiş makinesi triger kayışı kodu; Bando ürün fotoğrafı yok, mağaza görselleri logolu).
 Denenen kaynaklar: bando.de (tüm ürün/sayfa site haritası görselleri), bandousa.com, products.bandogrp.com (bakımda), bandogrp.com PDF, eBay, Amazon, NAPA, FinditParts, Texas Belting (genel seri görseli), autopartsandstuff, RockAuto, Autodoc, newparts, beltpalace, diamondneedle/jacksew, DuckDuckGo/Bing.
 
@@ -70,7 +72,7 @@ Yok – tüm ürünler mevcut kategorilere yerleşti.
 
 | Adet | Not |
 |---|---|
-| 818 | W/P yapısı üretici sayfasında ayrıca anlatılmıyor; görsel Bando kumaş kaplı Power Ace dar V kayışından; kumaş kaplı yapı aynı ama bu ürünün genişliği klasik kesite uyuyor, kayış yüksekliği görselden farklı olabilir |
+| 818 | W/P yapısı üretici sayfasında ayrıca anlatılmıyor; görsel Bando kumaş kaplı klasik V kayışından (aynı tip); görselde kesit harfi ve uzunluk okunmuyor |
 | 213 | koddaki "400 MM" ölçüsünün ne olduğu (genişlik/manşon) doğrulanamadı |
 | 122 | görsel Bando neopren trapez dişli kayıştan (aynı profil tipi, farklı ölçü) |
 | 43 | malzeme doğrulanamadı; görsel Bando neopren trapez dişli kayıştan (aynı profil tipi) |
@@ -96,7 +98,7 @@ Yok – tüm ürünler mevcut kategorilere yerleşti.
 | 1 | görsel aynı seri TN kayıştan, halat tipi farklı olabilir |
 | 1 | koddaki "196" ve "120" değerlerinin karşılığı (uzunluk/genişlik) doğrulanamadı |
 | 1 | UG ekinin (halat tipi) anlamı doğrulanamadı |
-| 1 | görsel Bancollan XL PU kayıştan, halat tipi farklı olabilir |
+| 1 | görsel Bancollan PU zaman kayışından, halat tipi farklı olabilir |
 | 1 | SL profili Bando sayfalarında bulunamadı; profil ölçüleri yazılmadı |
 | 1 | 400 MM ölçüsü doğrulanamadı |
 | 1 | görsel eklenmedi |
