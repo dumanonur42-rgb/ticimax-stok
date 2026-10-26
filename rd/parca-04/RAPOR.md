@@ -215,3 +215,12 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
   - 3312-B-2RSR-TVH: 2 ürün (conta rengi doğrulanamadı)
   - 532/533/542/543xx: 19 ürün (görselde küresel pul görünmüyor)
   - 222/223xx-BEA-XL-MB1: 22 ürün ve 239/240xx-S-MB: 8 ürün (görselde pirinç kafes belirgin değil)
+
+## Çok derin arama – 11. ilerleme (seri bazında bakılan kaynaklar)
+- 511–514xx-MP: Amazon (51120 çelik kafes, MP değil), Rus bayi sayfası (görsel yok), Kanada/İngiltere bayileri (rulman kutu üstünde, aynı genel fotoğraf). Uygun görsel yok.
+- 2344xx-M-SP: İngiltere bayisinin genel fotoğrafı gerçek ve pirinç kafesli, ama halka üzerinde "234487..-SP" yazısı okunuyor. Kod çeliştiği için kullanılmadı. Diğer görsel ölçü çizgili ve filigranlı çizim. İspanya bayisi ve Çin bayi sayfalarında görsel yok ya da filigranlı.
+- 32/33xx: Amazon/neeep "3310-BD-XL" fotoğrafında siyah poliamid kafes görünüyor, BD serisi ise çelik sac kafesli. Başlık ile görsel çeliştiği ve FAG markası görselde görünmediği için kullanılmadı. MRO ve ap.cool sayfalarında görsel çekilemedi.
+- 222/223xx-MB1 ve 239/240xx-S-MB: Misumi, Alman FAG mağazası (BE-XL çelik kafes render'ı), Çin bayi sayfaları, Gürcistan ve Hong Kong bayileri. Pirinç kafesi görünen FAG fotoğrafı bulunamadı.
+- 532/533/543xx: Kanada/ABD bayileri, SKF sayfası (marka farklı, kullanılamaz), Çin görsel sitesi. Küresel pulu görünen FAG fotoğrafı yok.
+- Tersine görsel arama: SAMPLE yazılı görseller bayinin kendi çekimi. Bulunan kopyalar yine aynı bayiden geliyor, temiz asıl bulunamadı.
+- Yeni görsel: 0. Görselsiz ürün 218.
