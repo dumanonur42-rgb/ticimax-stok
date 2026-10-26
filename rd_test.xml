@@ -63,4 +63,43 @@
       <Resim>https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/rd-yayin/g/269588fa750ed4c1.jpg</Resim>
     </Resimler>
   </Urun>
+  <Urun>
+    <UrunKartiID>RD333818</UrunKartiID>
+    <UrunAdi>SPR 250X50 EMES Yedek Teker</UrunAdi>
+    <Aciklama>&lt;h2&gt;SPR 250X50 EMES Yedek Teker&lt;/h2&gt;&lt;p&gt;SPR 250X50, EMES tekerleklerde kullanılan maşasız yedek tekerdir. Mevcut maşanızı koruyup yalnızca tekeri yenilemeniz gerektiğinde işinizi görür.&lt;/p&gt;&lt;h3&gt;Ölçü ve seçim&lt;/h3&gt;&lt;p&gt;Değişim yapacaksanız eski parçanın kodunu ve bağlantı ölçüsünü not alıp bu ürünle karşılaştırın.&lt;/p&gt;&lt;h3&gt;Montaj ve bakım&lt;/h3&gt;&lt;p&gt;Montajdan sonra cıvata ve somunları tekrar kontrol edin; dönmede zorlanma varsa aks ve yatak yerini temizleyin.&lt;/p&gt;&lt;h3&gt;Sık sorulan sorular&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Doğru ürünü nasıl seçerim?&lt;/strong&gt;&lt;br&gt;Mevcut parçanızın üzerindeki kodu bu ürünün koduyla karşılaştırın; emin olamazsanız ölçü bilgisiyle bize ulaşın.&lt;/p&gt;</Aciklama>
+    <SeoSayfaBaslik>SPR 250X50 EMES Yedek Teker</SeoSayfaBaslik>
+    <SeoAnahtarKelime>SPR 250X50, emes spr 250x50, emes teker, yedek teker, maşasız teker</SeoAnahtarKelime>
+    <SeoSayfaAciklama>SPR 250X50 EMES yedek teker. Ürün kodunu mevcut parçanızla karşılaştırın. Yamansa Rulman güvencesiyle. Montaj ve bakım önerileri ürün sayfasında.</SeoSayfaAciklama>
+    <Desi>1</Desi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <TeknikDetaylar>
+    </TeknikDetaylar>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;YEDEK TEKERLER</KategoriYolu>
+    <Kategori>YEDEK TEKERLER</Kategori>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD333818</VaryasyonID>
+        <StokKodu>EMS 100-0001P</StokKodu>
+        <Barkod>EMS 100-0001P</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>916.44</SatisFiyati>
+        <IndirimliFiyat>916.44</IndirimliFiyat>
+        <IndirimliFiyatTL>916.44</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>916.44</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+    <Resimler>
+      <Resim>https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/rd-yayin/g/c7905c16c29a2b5d.jpg</Resim>
+    </Resimler>
+  </Urun>
 </Urunler>
