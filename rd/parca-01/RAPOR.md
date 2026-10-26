@@ -211,10 +211,11 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
   - EMS 01 maşaları, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için, iç lastiklerin hepsinde bayideki temiz (yazısız) fotoğraf aynı tip olarak kullanıldı.
 
 ## yakin_tip önerisi (UYGULANMADI)
-- `yakin_tip_onerisi.jsonl`: görselsiz 1008 üründen 694'ü için, yalnızca küçük bir detayı farklı olan aynı seri üretici görseli önerisi (id, stok_kodu, urun_adi, onerilen_gorsel, gorsel_kodu, fark).
+- `yakin_tip_onerisi.jsonl`: görselsiz 1008 üründen 658'i için, yalnızca küçük bir detayı farklı olan aynı seri üretici görseli önerisi (id, stok_kodu, urun_adi, onerilen_gorsel, gorsel_kodu, fark).
   - Kare soketli görsel / ürün yuvarlak soketli: 277
-  - Çinko kaplı maşa görseli / ürün INOX: 201
+  - Çinko kaplı maşa görseli / ürün INOX: 197
   - Standart versiyon görseli / üründe renk veya özel ek farkı: 117
-  - Standart yedek teker görseli / üründe renk veya ek farkı: 99
-- Onay gelirse bu ürünlere 'yakin_tip' türüyle ve bayrakla eklenecek. Kalan 314 üründe (EMS 01 maşaları, jant kapağı, jant yanak takımı, üreticide hiç olmayan seri+teker tipleri) yakın tip görsel de yok.
-- Ek arama: archive.org'daki tüm emesteker.com görselleri (1252 dosya). Eski sitedeki ürün görselleri sadece 85x125 piksel küçük resimler, kullanılamıyor.
+  - Standart yedek teker görseli / üründe renk veya ek farkı: 67
+- Teker çapı görseldekiyle aynı olmayanlar çıkarıldı. Görselde rulman takılı olduğu için RULMANSIZ yedek tekerler de çıkarıldı.
+- Onay gelirse bu ürünlere 'yakin_tip' türüyle ve bayrakla eklenecek. Kalan 350 üründe yakın tip görsel de yok: maşalar, sac jant kapakları, jant yanak takımları, bazı dış lastikler, rulmansız yedek tekerler ve üreticide hiç olmayan seri + teker tipleri.
+- Ek arama: archive.org'daki tüm emesteker.com görselleri (1252 dosya) tarandı. Eski sitedeki ürün görselleri sadece 85x125 piksel; sitedeki jant kapağı ve maşa görselleri sadece 96x96 piksel simge. Kullanılamıyor.
