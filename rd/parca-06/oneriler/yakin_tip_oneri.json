@@ -1,0 +1,416 @@
+{
+ "23143": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): JP3,M1",
+  "stok_kodu": "FAG NU213-E-XL-JP3",
+  "kaynak_urun": "FAG NU211-E-XL-M1",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['JP3']; görselde var, bu üründe yok: ['M1']"
+ },
+ "333062": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): MPAX,M1",
+  "stok_kodu": "FAG NU2215-E-XL-MPAX-C4",
+  "kaynak_urun": "FAG NU2324-E-XL-M1-C4",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['MPAX']; görselde var, bu üründe yok: ['M1']"
+ },
+ "23248": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): N",
+  "stok_kodu": "FAG NU2220-E-XL-N-M1A-C3",
+  "kaynak_urun": "FAG NU330-E-XL-M1A-C3",
+  "gorsel": "625bb6bc1909.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['N']; görselde var, bu üründe yok: -"
+ },
+ "326935": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "FAG NU222E-XL-M1-J20AAC3",
+  "kaynak_urun": "FAG NU211-E-XL-M1",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['J20AAC3']; görselde var, bu üründe yok: -"
+ },
+ "329477": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): EX,E",
+  "stok_kodu": "FAG NU2244-EX-M1A-C3",
+  "kaynak_urun": "FAG NU240-E-M1A-C3",
+  "gorsel": "625bb6bc1909.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['EX']; görselde var, bu üründe yok: ['E']"
+ },
+ "332224": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): J20A",
+  "stok_kodu": "FAG NU232-E-XL-M1-J20A-C3",
+  "kaynak_urun": "FAG NU211-E-XL-M1-C3",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['J20A']; görselde var, bu üründe yok: -"
+ },
+ "333242": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): MPAX,M1",
+  "stok_kodu": "FAG NU240-E-XL-MPAX-C3",
+  "kaynak_urun": "FAG NU211-E-XL-M1-C3",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['MPAX']; görselde var, bu üründe yok: ['M1']"
+ },
+ "331320": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): JP3,M1",
+  "stok_kodu": "FAG NU315-E-XL-JP3",
+  "kaynak_urun": "FAG NU211-E-XL-M1",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['JP3']; görselde var, bu üründe yok: ['M1']"
+ },
+ "331321": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): JP3,M1",
+  "stok_kodu": "FAG NU315-E-XL-JP3-C3",
+  "kaynak_urun": "FAG NU211-E-XL-M1-C3",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['JP3']; görselde var, bu üründe yok: ['M1']"
+ },
+ "23457": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "FAG NU317-XL-M1-R75-95NA",
+  "kaynak_urun": "FAG NU406-XL-M1",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['R75', '95NA']; görselde var, bu üründe yok: -"
+ },
+ "23476": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): E,M1",
+  "stok_kodu": "FAG NU324-C3",
+  "kaynak_urun": "FAG NU2238-E-M1-C3",
+  "gorsel": "c8a3c018bbac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['E', 'M1']"
+ },
+ "336737": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): E",
+  "stok_kodu": "FAG NUP1030-XL-M1-C3",
+  "kaynak_urun": "FAG NUP206-E-XL-M1-C3",
+  "gorsel": "f002fb3f931e.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['E']"
+ },
+ "23827": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ208-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23830": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ209-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23831": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ209-XL-TVP-C3",
+  "kaynak_urun": "FAG QJ205-XL-MPA-C3",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23836": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ211-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23837": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ211-XL-TVP-C3",
+  "kaynak_urun": "FAG QJ205-XL-MPA-C3",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23840": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ212-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23845": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ214-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23846": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ214-XL-TVP-C3",
+  "kaynak_urun": "FAG QJ205-XL-MPA-C3",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23849": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ215-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23855": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ218-XL-N2-TVP",
+  "kaynak_urun": "FAG QJ215-XL-N2-MPA",
+  "gorsel": "e2682444b823.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23882": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ305-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23885": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ306-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23886": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ306-XL-TVP-C3",
+  "kaynak_urun": "FAG QJ205-XL-MPA-C3",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23889": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ307-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23891": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ308-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23895": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ309-XL-TVP",
+  "kaynak_urun": "FAG QJ205-XL-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "23896": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TVP,MPA",
+  "stok_kodu": "FAG QJ309-XL-TVP-C3",
+  "kaynak_urun": "FAG QJ205-XL-MPA-C3",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TVP']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "340529": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): XLMPAT11,MPA",
+  "stok_kodu": "FAG QJ315XLMPAT11",
+  "kaynak_urun": "FAG QJ1048-MPA",
+  "gorsel": "c455eb79c7b8.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['XLMPAT11']; görselde var, bu üründe yok: ['MPA']"
+ },
+ "336747": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): H83,W60C",
+  "stok_kodu": "FAG T7FC085-XL-H83-W60C",
+  "kaynak_urun": "FAG T7FC085-XL",
+  "gorsel": "2998e6728035.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['H83', 'W60C']; görselde var, bu üründe yok: -"
+ },
+ "340825": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): ZW",
+  "stok_kodu": "INA BK2538-ZW-A",
+  "kaynak_urun": "INA BK3026",
+  "gorsel": "e5f255e38610.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['ZW', 'A']; görselde var, bu üründe yok: -"
+ },
+ "331385": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): ZO,DO",
+  "stok_kodu": "INA GE22-ZO-HLN",
+  "kaynak_urun": "INA GE100-DO-HLN",
+  "gorsel": "29e4c0ef69b2.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['ZO']; görselde var, bu üründe yok: ['DO']"
+ },
+ "330452": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): ZO,DO",
+  "stok_kodu": "INA GE31-ZO-HLN",
+  "kaynak_urun": "INA GE100-DO-HLN",
+  "gorsel": "29e4c0ef69b2.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['ZO']; görselde var, bu üründe yok: ['DO']"
+ },
+ "27667": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
+  "stok_kodu": "INA GLCTE20-TV-FA125.5",
+  "kaynak_urun": "INA GLCTE20-FA125",
+  "gorsel": "dc675b934ba2.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TV', '5']; görselde var, bu üründe yok: -"
+ },
+ "27670": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
+  "stok_kodu": "INA GLCTE25-TV-FA125.5",
+  "kaynak_urun": "INA GLCTE20-FA125",
+  "gorsel": "dc675b934ba2.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TV', '5']; görselde var, bu üründe yok: -"
+ },
+ "27673": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
+  "stok_kodu": "INA GLCTE30-TV-FA125.5",
+  "kaynak_urun": "INA GLCTE20-FA125",
+  "gorsel": "dc675b934ba2.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TV', '5']; görselde var, bu üründe yok: -"
+ },
+ "27675": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
+  "stok_kodu": "INA GLCTE35-TV-FA125.5",
+  "kaynak_urun": "INA GLCTE20-FA125",
+  "gorsel": "dc675b934ba2.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TV', '5']; görselde var, bu üründe yok: -"
+ },
+ "27677": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
+  "stok_kodu": "INA GLCTE40-TV-FA125.5",
+  "kaynak_urun": "INA GLCTE20-FA125",
+  "gorsel": "dc675b934ba2.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['TV', '5']; görselde var, bu üründe yok: -"
+ },
+ "27963": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV",
+  "stok_kodu": "INA HK0306-TV-A",
+  "kaynak_urun": "INA HK2526",
+  "gorsel": "126e8b95127c.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['TV', 'A']; görselde var, bu üründe yok: -"
+ },
+ "27971": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): FPM",
+  "stok_kodu": "INA HK0810-RS-FPM-B-L271",
+  "kaynak_urun": "INA HK1214-RS-L271",
+  "gorsel": "b6882587d7ac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['FPM', 'B']; görselde var, bu üründe yok: -"
+ },
+ "27977": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): FPM",
+  "stok_kodu": "INA HK1012-RS-FPM-B-L271",
+  "kaynak_urun": "INA HK1214-RS-L271",
+  "gorsel": "b6882587d7ac.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['FPM', 'B']; görselde var, bu üründe yok: -"
+ },
+ "27978": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): FPMB",
+  "stok_kodu": "INA HK1014-2RS-FPMB-L271",
+  "kaynak_urun": "INA HK2020-2RS-L271",
+  "gorsel": "ef8e16835bd3.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['FPMB']; görselde var, bu üründe yok: -"
+ },
+ "336759": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): H+30+20",
+  "stok_kodu": "INA HK1312-B-H+30+20",
+  "kaynak_urun": "INA HK0408-B",
+  "gorsel": "126e8b95127c.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['H+30+20']; görselde var, bu üründe yok: -"
+ },
+ "28001": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA HK2216-C",
+  "kaynak_urun": "INA HK2526",
+  "gorsel": "126e8b95127c.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['C']; görselde var, bu üründe yok: -"
+ },
+ "336761": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): H+36+24,L271",
+  "stok_kodu": "INA HK3020-2RS-H+36+24",
+  "kaynak_urun": "INA HK2020-2RS-L271",
+  "gorsel": "ef8e16835bd3.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['H+36+24']; görselde var, bu üründe yok: ['L271']"
+ }
+}

@@ -136,3 +136,11 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - FAG SP pullar: 19, STR/PULLER aletler: 16 — katalogda görsel yok.
 - Diğer küçük seriler (NU özel ekli, GIHRK..-2RS, HK, FLAN, AKL, FF, KXN4, G52..): kalan 84.
 Denenen kaynaklar: medias.schaeffler.com arama servisi (kod ve seri öneki, 69 seri sorgusu), Schaeffler görsel sunucusu varyantları, ürün grubu görselleri, parça 04/05/07 dalları, genel web araması (satıcı/dağıtıcı sayfaları).
+
+### Temizlenen görsellerin yeniden kontrolü
+- 15 temizlenmiş render %100 büyütmede tek tek incelendi. İlk temizlikte birkaç görselde (örn. 00006BCD, 00006BDF) bilezik kenarından ince parçalar silinmişti.
+- Temizlik yeniden yapıldı: yalnızca ürün gövdesine bağlı olmayan ölçü çizgisi/harf parçaları siliniyor, gövdeye bitişik ince kenar çizgileri geri konuyor. Yeni hallerinde kenar kesiği yok (`temizlenen_once_sonra.jpg`, 15 görselin hepsi).
+
+### Sahibin onayına hazırlanan, UYGULANMAYAN listeler (`oneriler/`)
+- `yakin_tip_oneri.json`: aynı seride yalnızca küçük farkı olan ürünün görseli önerisi; her satırda fark ve "görünür / görünmez fark" notu var.
+- `fz_temel_tip.json`: F-/Z- özel çizim numaraları için web listelerinden bulunan temel tip (üretici katalogunda kayıtları yok).
