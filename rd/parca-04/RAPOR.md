@@ -169,3 +169,8 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Oynak bilyalı ..-K-TVH (açık, konik delik, poliamid kafes): 51 ürün. Avusturyalı FAG/INA bayisinin bu ürünlerde kullandığı filigransız resmi kesit görseli. Konik delik görselde ayırt edilmiyor; aynı tip + kesit bayraklı.
 - Reddedilen: aynı bayinin "konik" görselleri (ölçü çizgili çizim). Oynak makaralı E1-K görseli çelik kafesli; görselsiz kalan E1-XL-K-TVPB ürünleri poliamid kafesli olduğu için kullanılmadı.
 - Görselsiz ürün: 489 → 438.
+
+## Aynı tip görsel denetimi (ürün üzerinde farklı kod/ölçü, kadraj, renk/malzeme)
+- 41 farklı aynı tip görsel tek tek incelendi. Hiçbirinde ürün üzerinde okunabilir kod veya ölçü yok. Hepsi kadrajın içinde ve ortalı.
+- Düzeltilen: 1 görsel / 60 ürün. Oynak makaralı E1 görseli çelik sac kafesli, ama kullanıldığı 230/231/232..-E1-XL-TVPB ürünleri poliamid kafesli. Görsel kaldırıldı; bu ürünler görselsiz bırakıldı ve bayraklandı.
+- Görselsiz ürün: 438 → 498.
