@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Urunler>
+  <Urun>
+    <UrunKartiID>6497</UrunKartiID>
+    <UrunAdi>M1,8*4,2*2,4 Torx Vida ERİC</UrunAdi>
+    <OnYazi>&lt;div style="display:flex;flex-wrap:nowrap;gap:4px;width:100%;max-width:100%;font-family:inherit;margin-bottom:10px;box-sizing:border-box;"&gt;&lt;div style="flex:1 1 0;min-width:0;border:1px solid #e0e0e0;padding:5px 3px;text-align:center;overflow:hidden;"&gt;&lt;div style="font-weight:bold;font-size:11px;margin-bottom:3px;white-space:nowrap;"&gt;Marka&lt;/div&gt;&lt;div style="font-size:12px;"&gt;ERİC&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</OnYazi>
+    <Aciklama>&lt;p&gt;&lt;strong&gt;Belirtilen fiyat 1 adet elmas uç fiyatıdır.&lt;/strong&gt; Minimum sipariş adedi 10 adettir; sipariş 10 ve katları şeklinde verilir.&lt;/p&gt;&lt;h2&gt;M1,8*4,2*2,4 Torx Vida ERİC&lt;/h2&gt;&lt;p&gt;Atölye ve sanayi kullanımı için tasarlanan ERİC altlık vidası, insert uç ve altlıkların katere sabitlenmesinde kullanılır.&lt;/p&gt;&lt;h3&gt;Teknik Özellikler&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Marka: ERİC&lt;/li&gt;&lt;li&gt;Stok kodu: KU91001&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Kullanım Alanları&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Kater bakım ve yedek parça ihtiyacı&lt;/li&gt;&lt;li&gt;Torx başlı sıkma vidası uygulamaları&lt;/li&gt;&lt;li&gt;İnsert uçların katere sabitlenmesi&lt;/li&gt;&lt;li&gt;Altlık ve mekanizma vidalarının yenilenmesi&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Hangi Malzemelerde Kullanılır?&lt;/h3&gt;&lt;p&gt;Yapı çeliği, alaşımsız ve düşük alaşımlı çelikler, dökme demir, pirinç, bakır, alüminyum ve sert plastiklerde güvenle kullanılır.&lt;/p&gt;&lt;h3&gt;Neden ERİC Altlık vidası?&lt;/h3&gt;&lt;p&gt;Endüstriyel kesici takımlarda marka ve malzeme kalitesi belirleyicidir. ERİC imzalı bu altlık vidası, ölçü kararlılığı ve dayanımı ile tekrarlı işlerde güvenilir sonuç verir. Isıl işlem görmüş gövdesi yüksek devirlerde dahi form bozulmasına karşı direnç gösterir.&lt;/p&gt;&lt;h3&gt;Sık Sorulan Soru&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Hangi devirde kullanılmalı?&lt;/strong&gt; Delinecek malzemeye ve çapa göre devir seçilmelidir: çap büyüdükçe devir düşürülür, sert malzemelerde düşük devir ve bol soğutma sıvısı önerilir.&lt;/p&gt;</Aciklama>
+    <SeoSayfaBaslik>M1,8*4,2*2,4 Torx Vida ERİC | KU91001</SeoSayfaBaslik>
+    <SeoAnahtarKelime>altlık vidası, eri̇c altlık vidası, altlık vidası fiyatları</SeoAnahtarKelime>
+    <SeoSayfaAciklama>M1,8*4,2*2,4 Torx Vida ERİC - Altlık vidası. Kapıda teslimat seçeneği ve stoktan hızlı gönderim.</SeoSayfaAciklama>
+    <GtipKodu>8466.10.38.00.00</GtipKodu>
+    <Desi>1</Desi>
+    <KargoAgirligi>1</KargoAgirligi>
+    <UrunAgirligi>0.07</UrunAgirligi>
+    <MinSiparisAdedi>10</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>10</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>10</UrunAdediVarsayilanDeger>
+    <UrunAdediArtisKademesi>10</UrunAdediArtisKademesi>
+    <UyeAlisMin>10</UyeAlisMin>
+    <BayiAlisMin>10</BayiAlisMin>
+    <TeknikDetaylar>
+    </TeknikDetaylar>
+    <Marka>ERİC</Marka>
+    <Etiketler>altlik vidasi,insert vidasi,kater vidasi,altlık vidası,m1.8,m 1.8,m1.8 altlik vidasi,KU91001</Etiketler>
+    <Tedarikci>Talha</Tedarikci>
+    <KategoriYolu>ELMAS UÇLAR&gt;ALTLIK VE VİDALAR&gt;Altlık Vidaları</KategoriYolu>
+    <Kategori>Altlık Vidaları</Kategori>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>6497</VaryasyonID>
+        <StokKodu>KU91001</StokKodu>
+        <Barkod>KU91001</Barkod>
+        <StokAdedi>2830</StokAdedi>
+        <SatisFiyati>0.23</SatisFiyati>
+        <IndirimliFiyat>0.23</IndirimliFiyat>
+        <IndirimliFiyatTL>11.56</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>USD</ParaBirimi>
+        <ParaBirimiKodu>USD</ParaBirimiKodu>
+        <FiyatTL>11.56</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+    <Resimler>
+      <Resim>https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/main/gorseller/M1%2C84%2C22%2C4%20Torx%20Vida%20ER%C4%B0C%20-%20KU91001.jpg?v=2</Resim>
+    </Resimler>
+  </Urun>
+  <Urun>
+    <UrunKartiID>6498</UrunKartiID>
+    <UrunAdi>M2*4*2,85 Torx Vida ERİC</UrunAdi>
+    <OnYazi>&lt;div style="display:flex;flex-wrap:nowrap;gap:4px;width:100%;max-width:100%;font-family:inherit;margin-bottom:10px;box-sizing:border-box;"&gt;&lt;div style="flex:1 1 0;min-width:0;border:1px solid #e0e0e0;padding:5px 3px;text-align:center;overflow:hidden;"&gt;&lt;div style="font-weight:bold;font-size:11px;margin-bottom:3px;white-space:nowrap;"&gt;Marka&lt;/div&gt;&lt;div style="font-size:12px;"&gt;ERİC&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</OnYazi>
+    <Aciklama>&lt;p&gt;&lt;strong&gt;Belirtilen fiyat 1 adet elmas uç fiyatıdır.&lt;/strong&gt; Minimum sipariş adedi 10 adettir; sipariş 10 ve katları şeklinde verilir.&lt;/p&gt;&lt;h2&gt;M2*4*2,85 Torx Vida ERİC&lt;/h2&gt;&lt;p&gt;ERİC imzalı bu altlık vidası ile insert uç ve altlıkların katere sabitlenmesinde kullanılır.&lt;/p&gt;&lt;h3&gt;Teknik Özellikler&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Marka: ERİC&lt;/li&gt;&lt;li&gt;Stok kodu: KU91002&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Kullanım Alanları&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Torx başlı sıkma vidası uygulamaları&lt;/li&gt;&lt;li&gt;İnsert uçların katere sabitlenmesi&lt;/li&gt;&lt;li&gt;Altlık ve mekanizma vidalarının yenilenmesi&lt;/li&gt;&lt;li&gt;Kater bakım ve yedek parça ihtiyacı&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Hangi Malzemelerde Kullanılır?&lt;/h3&gt;&lt;p&gt;Yapı çeliği, alaşımsız ve düşük alaşımlı çelikler, dökme demir, pirinç, bakır, alüminyum ve sert plastiklerde güvenle kullanılır.&lt;/p&gt;&lt;h3&gt;Neden ERİC Altlık vidası?&lt;/h3&gt;&lt;p&gt;Doğru altlık vidası seçimi; delik kalitesini, takım ömrünü ve işçilik süresini doğrudan etkiler. ERİC kalitesindeki bu ürün, hem hobi kullanıcısının hem profesyonel atölyelerin beklentisini karşılar. Dengeli sertlik ve tokluk oranı ile kırılmaya karşı yüksek dayanım sunar.&lt;/p&gt;&lt;h3&gt;Sık Sorulan Soru&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Hangi devirde kullanılmalı?&lt;/strong&gt; Delinecek malzemeye ve çapa göre devir seçilmelidir: çap büyüdükçe devir düşürülür, sert malzemelerde düşük devir ve bol soğutma sıvısı önerilir.&lt;/p&gt;</Aciklama>
+    <SeoSayfaBaslik>M2*4*2,85 Torx Vida ERİC | KU91002</SeoSayfaBaslik>
+    <SeoAnahtarKelime>altlık vidası, eri̇c altlık vidası, altlık vidası fiyatları</SeoAnahtarKelime>
+    <SeoSayfaAciklama>M2*4*2,85 Torx Vida ERİC en uygun fiyatla YAMANSA'da. Altlık vidası. Stoktan aynı gün kargo.</SeoSayfaAciklama>
+    <GtipKodu>8466.10.38.00.00</GtipKodu>
+    <Desi>1</Desi>
+    <KargoAgirligi>1</KargoAgirligi>
+    <UrunAgirligi>0.07</UrunAgirligi>
+    <MinSiparisAdedi>10</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>10</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>10</UrunAdediVarsayilanDeger>
+    <UrunAdediArtisKademesi>10</UrunAdediArtisKademesi>
+    <UyeAlisMin>10</UyeAlisMin>
+    <BayiAlisMin>10</BayiAlisMin>
+    <TeknikDetaylar>
+    </TeknikDetaylar>
+    <Marka>ERİC</Marka>
+    <Etiketler>altlik vidasi,insert vidasi,kater vidasi,altlık vidası,m 2,m2 altlik vidasi,KU91002</Etiketler>
+    <Tedarikci>Talha</Tedarikci>
+    <KategoriYolu>ELMAS UÇLAR&gt;ALTLIK VE VİDALAR&gt;Altlık Vidaları</KategoriYolu>
+    <Kategori>Altlık Vidaları</Kategori>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>6498</VaryasyonID>
+        <StokKodu>KU91002</StokKodu>
+        <Barkod>KU91002</Barkod>
+        <StokAdedi>3950</StokAdedi>
+        <SatisFiyati>0.23</SatisFiyati>
+        <IndirimliFiyat>0.23</IndirimliFiyat>
+        <IndirimliFiyatTL>11.56</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>USD</ParaBirimi>
+        <ParaBirimiKodu>USD</ParaBirimiKodu>
+        <FiyatTL>11.56</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+    <Resimler>
+      <Resim>https://raw.githubusercontent.com/dumanonur42-rgb/ticimax-stok/main/gorseller/M242%2C85%20Torx%20Vida%20ER%C4%B0C%20-%20KU91002.jpg?v=2</Resim>
+    </Resimler>
+  </Urun>
+</Urunler>
