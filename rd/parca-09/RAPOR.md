@@ -5,26 +5,16 @@ Toplam ürün: **2977** (tamamı BANDO markası)
 ## Görsel durumu
 
 - birebir: 2
-- ayni_tip: 2225
-- resimsiz: 750
-- farklı görsel dosyası: 15
+- ayni_tip: 2967
+- resimsiz: 8
+- farklı görsel dosyası: 25
 
 Aynı tip görseller Bando Avrupa resmi sitesindeki seri fotoğraflarıdır (kayış profili/yapısı ürünle aynı). Birebir görseller kodun kendisinin göründüğü temiz ürün fotoğraflarıdır.
 
 ### Resimsiz ürünler (neden)
 
-- Poliüretan T/DT zaman kayışı: 270
-- STS / çift dişli STS (DS, S1,5M-S3M): 201
-- (W/P) düz V kayışı: 154
-- HP-STS S5M: 94
-- XS8M Ceptor: 9
-- Bancord yuvarlak: 6
 - DPK kanallı: 4
 - Sunrope kilit: 4
-- XL UW: 3
-- Smooth Coupler alternatör kasnağı: 2
-- HDPF-J2: 2
-- Gergi ölçer: 1
 
 Bu gruplarda renk/görünüş ya da tip üretici kaynağında doğrulanamadığı için yanlış görsel koymak yerine boş bırakıldı.
 
@@ -60,32 +50,36 @@ Bayraklı ürün: **1041**
 
 - Koddaki … değerinin kayış genişliği mi kovan (manşon) genişliği mi olduğu üretici kaynağında doğrulanamadı (760)
 - Koddaki … harflerinin (halat tipi) bu kayış için karşılığı üretici kaynağında doğrulanamadı (270)
-- Renk ve görünüş doğrulanamadığı için görsel konmadı (270)
 - Ölçü kodundaki … ve … değerlerinin hangi ölçüyü (üst genişlik / uzunluk türü) gösterdiği üretici kaynağında doğrulanamadı (240)
-- (W/P) tipinin görünüşü doğrulanamadığı için görsel konmadı (154)
-- Çift dişli STS için uygun üretici fotoğrafı bulunamadı; görsel konmadı (102)
-- S…M tipte temiz kumaş kullanıldığı için görünüşü farklı olabilir; görsel konmadı (99)
-- HP-S…M sadece temiz (clean) tip üretildiği için görünüşü farklı olabilir; görsel konmadı (94)
+- Görsel Bando Bancollan PU zaman kayışlarının resmi fotoğrafıdır; ürün rengi farklı olabilir (225)
+- Görsel Bando standart (kumaş kaplı) V kayışının resmi fotoğrafıdır; (W/P) tanımı doğrulanamadı (154)
+- Görsel aynı seri çift dişli STS kayışın resmi Bando fotoğrafıdır; birebir kod fotoğrafı bulunamadı (102)
+- S…M tipte temiz kumaş kullanıldığı için görünüşü farklı olabilir (99)
+- Görsel aynı seri STS kauçuk kayışların resmi Bando fotoğrafıdır; küçük hatveli tipte diş kumaşı görünümü farklı olabilir (99)
+- HP-S…M sadece temiz (clean) tip üretildiği için görünüşü farklı olabilir (94)
+- Görsel HP-STS serisinin resmi Bando fotoğrafıdır; S…M tipin görünümü farklı olabilir (94)
+- Görsel Bando Bancollan çift dişli PU kayışların resmi fotoğrafıdır; ürün rengi farklı olabilir (48)
 - …V profil SP serisinde olmadığı için DÜZ V KAYIŞI kategorisine kondu; kategori onayı iyi olur (9)
 - XS…M kodlu Ceptor serisi üretici kaynağında doğrulanamadı; teknik bilgiler sınırlı tutuldu (9)
-- Görünüş doğrulanamadığı için görsel konmadı (9)
-- Bancord için uygun üretici ürün fotoğrafı bulunamadı; görsel konmadı (6)
+- Görsel Ceptor-X serisine aittir; XS…M kodunun hangi Ceptor tipi olduğu doğrulanamadı (9)
+- Görsel Bancord yuvarlak kayış ailesinin resmi fotoğrafıdır; ürün rengi farklı olabilir (6)
 - Etkin uzunluk üretici tablosunda bulunamadı (5)
 - Bu uzunluk üretici ölçü tablosunda bulunamadı (5)
 - KAYIŞ>KAYIŞ AKSESUARLARI yeni kategori önerisi (5)
 - DPK kodunun (çift taraflı olup olmadığı) üretici kaynağında doğrulanamadı; görsel konmadı (4)
 - Bağlantı elemanının üretici fotoğrafı bulunamadı; görsel konmadı (4)
-- Koddaki … ibaresinin anlamı ve kayışın malzemesi doğrulanamadı; görsel konmadı (3)
+- Koddaki … ibaresinin anlamı ve kayışın malzemesi doğrulanamadı (3)
 - Dış uzunluk üretici tablosunda bulunamadı (3)
 - HDPF-J serisi üretici sitesinde bulunamadı; ölçüler tedarikçi notundan alındı (3)
 - Koddaki … ve …-… değerlerinin hangi ölçüleri gösterdiği üretici kaynağında doğrulanamadı (2)
 - Koddaki … ibaresinin anlamı doğrulanamadı; tedarikçi tanımında genişlik … mm yazıyor (2)
 - Tedarikçi notunda farklı ölçü yazıyor (… X …); stok kodu ile not birbirini tutmuyor, kontrol edilmeli (2)
-- Bu modelin üretici fotoğrafı bulunamadı; görsel konmadı (2)
 - KASNAKLAR>ALTERNATÖR KASNAKLARI yeni kategori önerisi (2)
-- … sıralı tip için fotoğraf yok; görsel konmadı (2)
+- Görsel Bando Smooth Coupler serisinin resmi fotoğrafıdır; bu modelin kanal sayısı farklı olabilir (2)
+- Görsel aynı seri … sıralı HDPF-J… kayışın fotoğrafıdır (2)
 - Görsel, aynı seri …VC kayışın fotoğrafıdır (1)
-- Gergi ölçerin modeli ve teknik özellikleri üretici kaynağında doğrulanamadı; görsel konmadı (1)
+- Gergi ölçerin modeli ve teknik özellikleri üretici kaynağında doğrulanamadı (1)
+- Görsel Bando V kayış gergi ölçerinin resmi fotoğrafıdır; model (…) doğrulanamadı (1)
 
 ## yeni_kategori_onerileri
 
