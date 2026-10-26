@@ -7,7 +7,7 @@
 - Aynı tip görsel: 676
 - Resimsiz: 214
 - Bayraklı ürün: 2319
-- Boş kategorili: 75
+- Boş kategorili: 7
 
 ## Kategori dağılımı
 
@@ -20,13 +20,14 @@
 - RULMAN>DÖNER TABLA VE ÇAPRAZ MAKARALI RULMANLAR: 9
 - RULMAN>EKSENEL MAKARALI VE İĞNELİ RULMANLAR: 192
 - RULMAN>KAFES VE BURÇLAR>KAYMALI BURÇLAR: 1
-- RULMAN>KAM MAKARALARI VE RULMANLARI: 664
+- RULMAN>KAM MAKARALARI VE RULMANLARI: 697
+- RULMAN>RULMAN AKSESUARLARI: 7
 - RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ: 40
-- RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 743
+- RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 749
 - RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 52
 - RULMAN>YATAKLI RULMAN>SAÇ YATAKLI RULMANLAR: 61
 - RULMAN>YATAKLI RULMAN>YATAKLI RULMANLAR: 645
-- RULMAN>İĞNELİ RULMANLAR: 940
+- RULMAN>İĞNELİ RULMANLAR: 962
 - RULMAN>İĞNELİ RULMANLAR>KOMBİNE İĞNELİ RULMANLAR: 130
 - ZİNCİR - ZİNCİR DİŞLİSİ>ZİNCİR GERGİ DİŞLİLERİ: 33
 
@@ -39,13 +40,14 @@
 - RULMAN>DÖNER TABLA VE ÇAPRAZ MAKARALI RULMANLAR: 9
 - RULMAN>EKSENEL MAKARALI VE İĞNELİ RULMANLAR: 192
 - RULMAN>KAFES VE BURÇLAR>KAYMALI BURÇLAR: 1
-- RULMAN>KAM MAKARALARI VE RULMANLARI: 664
+- RULMAN>KAM MAKARALARI VE RULMANLARI: 697
+- RULMAN>RULMAN AKSESUARLARI: 7
 - RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ: 40
-- RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 743
+- RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 749
 - RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 52
 - RULMAN>YATAKLI RULMAN>SAÇ YATAKLI RULMANLAR: 61
 - RULMAN>YATAKLI RULMAN>YATAKLI RULMANLAR: 706
-- RULMAN>İĞNELİ RULMANLAR: 940
+- RULMAN>İĞNELİ RULMANLAR: 962
 - RULMAN>İĞNELİ RULMANLAR>KOMBİNE İĞNELİ RULMANLAR: 130
 - ZİNCİR - ZİNCİR DİŞLİSİ>ZİNCİR GERGİ DİŞLİLERİ: 33
 
@@ -57,10 +59,18 @@
 - `RULMAN>DÖNER TABLA VE ÇAPRAZ MAKARALI RULMANLAR` — 9 ürün. Crossed roller bearing, Slewing ring, 4 point contact bearing, internal gear teeth, Slewing ring, 4 point contact bearing, without gear teeth, Slewing ring, Crossed roller bearing, without gear teeth ürün tipleri için mevcut listede uygun bir kategori yaprağı bulunmuyor.
 - `RULMAN>EKSENEL MAKARALI VE İĞNELİ RULMANLAR` — 192 ürün. Axial cyl roller and cage assy -LS, Bearing washer, Shaft locating washer ürün tipleri için mevcut listede uygun bir kategori yaprağı bulunmuyor.
 - `RULMAN>KAFES VE BURÇLAR>KAYMALI BURÇLAR` — 1 ürün. Schaeffler ürün tipi Bush için mevcut listede uygun bir kategori yaprağı bulunmuyor.
+- `RULMAN>RULMAN AKSESUARLARI` — 7 ürün. Schaeffler kapak/aksesuar ürünleri, mevcut ağaçta karşılığı yok
 - `RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ` — 40 ürün. Schaeffler ürün tipi Radial rotary shaft seal için mevcut listede uygun bir kategori yaprağı bulunmuyor.
-- `RULMAN>SİLİNDİRİK MAKARALI RULMANLAR` — 743 ürün. Schaeffler ürün tipi Cylindrical roller bearing için mevcut listede uygun bir kategori yaprağı bulunmuyor.
+- `RULMAN>SİLİNDİRİK MAKARALI RULMANLAR` — 749 ürün. Schaeffler ürün tipi Cylindrical roller bearing için mevcut listede uygun bir kategori yaprağı bulunmuyor.
 - `RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT` — 52 ürün. Schaeffler ürün tipi Radial insert ball bearing için mevcut listede uygun bir kategori yaprağı bulunmuyor.
 - `ZİNCİR - ZİNCİR DİŞLİSİ>ZİNCİR GERGİ DİŞLİLERİ` — 33 ürün. Schaeffler ürün tipi Roller chain idler sprocket unit için mevcut listede uygun bir kategori yaprağı bulunmuyor.
+
+## Kategorisiz ürünlerin sınıflandırılması
+
+- Önceden kategorisiz 75 kaydın 68'i sınıflandırıldı: 7 KASK için medias “End cap” eşleşmesi Kapak tipini verdi; kalan 61'e seri/kod eşlemesiyle tip ve kategori atandı. LFE12-1 ve LFZ12 için medias “Journal track roller” URL'leri kaynak olarak kullanıldı.
+- Seri/kod eşlemesiyle tipi belirlenenler: 33 Kam Makarası, 4 İğneli Rulman, 18 Ayarlı İğneli Rulman ve 6 Silindirik Makaralı Rulman.
+- `RULMAN>RULMAN AKSESUARLARI` yeni kategori önerisi 7 KASK kapağını içerir; `RULMAN>SİLİNDİRİK MAKARALI RULMANLAR` önerisi 6 ZSL ürünüyle 749'a yükseldi.
+- Kategorisiz bırakılan 7 kod: WRE130, WRE150, WRE180, RLBSR71-C-0100, SKR3080-306-KRR, SPL10.20ASR1 ve TWD1423-HLA. Güvenilir medias eşleşmesi veya bu gruplara uygulanmış seri tipi eşlemesi olmadığı için kategorileri boş ve belirsizlik bayrakları korunmuştur.
 
 ## Görsel denetimi
 
@@ -79,7 +89,7 @@
 
 - Önce: birebir 2749, aynı_tip 256, yok 620; kesit görselli ürün 1661.
 - Sonra: birebir 2735, aynı_tip 676, kesit bayraklı 1988, yok 214.
-- Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 75.
+- Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 7.
 - Ölçü çizgisi temizlenerek eklenen yeni görsel: 0. Kalan ürünlerin üretici kaynaklarında yalnızca düz teknik çizim veya yer tutucu var; gerçekçi ölçülü render yok.
 - Diğer parçalardan (04–06) alınan görsel: 0; bu dallarda aynı seri INA ürünü yok.
 - Kesit görselden ürüne özgü gerçek fotoğrafa geçiş: 0.

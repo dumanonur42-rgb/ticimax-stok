@@ -30,13 +30,18 @@
     "reason": "Schaeffler ürün tipi Bush için mevcut listede uygun bir kategori yaprağı bulunmuyor."
   },
   {
+    "path": "RULMAN>RULMAN AKSESUARLARI",
+    "product_count": 7,
+    "reason": "Schaeffler kapak/aksesuar ürünleri, mevcut ağaçta karşılığı yok"
+  },
+  {
     "path": "RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ",
     "product_count": 40,
     "reason": "Schaeffler ürün tipi Radial rotary shaft seal için mevcut listede uygun bir kategori yaprağı bulunmuyor."
   },
   {
     "path": "RULMAN>SİLİNDİRİK MAKARALI RULMANLAR",
-    "product_count": 743,
+    "product_count": 749,
     "reason": "Schaeffler ürün tipi Cylindrical roller bearing için mevcut listede uygun bir kategori yaprağı bulunmuyor."
   },
   {
