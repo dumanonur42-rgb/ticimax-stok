@@ -201,11 +201,11 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 
 ## 2. ve 3. görsel turu
 - Başlangıç: birebir 1091 / ayni_tip 15 / kesit 0 / yok 1800
-- Şu an: birebir 1208 / ayni_tip 685 / kesit 0 / yok 1013
+- Şu an: birebir 1208 / ayni_tip 690 / kesit 0 / yok 1008
 - Kaynaklar: emesteker.com ürün sayfaları (standart, INOX-… ve "Birlikte Ürettiklerimiz" sayfaları), EMES katalog / eğitim kitapçığı / genel broşür / özel talepler PDF'leri, web.archive.org (eski görsel dosyaları), EMES bayi siteleri (tekermarket, tekercc, smksealonline, e-tekerlek, sizdevarmi), Google arama.
 - Aynı tip görseller: aynı seri + bağlantı + fren + teker tipindeki üretici görseli (çap farkı en fazla 50 mm) ya da üreticinin eğitim kitapçığındaki yedek teker / şişme teker fotoğrafı. Göbeğinde çap yazan VBV görseli yalnızca 100 mm'lik ürünlerde kullanıldı.
 - T / TF / Ö.F. ekli ürünlerde standart versiyonun görseli kullanıldı (bu ekler üreticinin kodlama sisteminde yok); bayrakla işaretli.
 - Hâlâ görselsiz kalanlar:
   - Yuvarlak soketli EM07: üreticinin ve bayilerin tüm soketli görselleri kare soketli.
   - INOX'un bulunmadığı seri/bağlantı kombinasyonları, üreticide hiç olmayan seri+teker tipleri (EM MKM, ZBZ, ZBRM, MMM, SBR vb.), renk ve özel versiyonlar.
-  - EMS 01 maşaları, iç lastikler, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için bayi görseli kullanıldı (aynı tip).
+  - EMS 01 maşaları, iç lastikler, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için, iç lastiklerin hepsinde bayideki temiz (yazısız) fotoğraf aynı tip olarak kullanıldı.
