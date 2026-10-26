@@ -5,10 +5,10 @@
 | tür | adet |
 |---|---|
 | birebir | 762 |
-| ayni_tip | 936 |
-| resimsiz | 1965 |
+| ayni_tip | 1360 |
+| resimsiz | 1541 |
 
-Farklı görsel dosyası: 784. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
+Farklı görsel dosyası: 799. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
 - birebir: WANDA ürünlerinin kendi temiz ürün fotoğrafları (arka plan temizlendi).
 - ayni_tip: NTN/SNR için ntnamericas.com resmi tip fotoğrafları; yalnızca kapak/keçe ve yapı tipi aynı olan kodlara (ör. sadece ZZ sabit bilyalı, açık açısal, NU/NJ/NUP/N silindirik, açık oynak makaralı çelik/pirinç kafes ayrı, koni+kep takımı konik).
 - NTN/SNR'de keçeli (LLU/LLB/2RS/EE), yataklı ünite, iğneli (iç bilezikli), slewing vb. için doğru görsel bulunamadı → resimsiz + bayrak.
@@ -46,11 +46,12 @@ Bayraklı ürün: 3663
 
 | bayrak | adet |
 |---|---|
-| Doğru görsel bulunamadı | 1965 |
 | Ölçüler teyit edilmedi | 1902 |
 | Ölçü dizisi tedarikçi notundaki haliyle; d/D/B sırası ayrıştırılmadı | 1574 |
+| Doğru görsel bulunamadı | 1541 |
 | Görsel aynı tipteki üretici fotoğrafıdır; kafes ve detaylar farklı olabilir | 567 |
 | Alt tip (direk/zincir/kombine) teyit edilmedi | 485 |
+| Görsel aynı tipteki üretici görselidir; kafes ve detaylar farklı olabilir | 424 |
 | Kategori teyit edilemedi | 227 |
 | Görsel aynı ölçü serisindeki (MG45A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 20 |
 | Görsel aynı ölçü serisindeki (MG35A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 19 |
@@ -168,36 +169,10 @@ Bayraklı ürün: 3663
 ## Örnek sayfalar
 `ornek_1.jpg`, `ornek_2.jpg` (40'ar görsel, kodlu).
 
-## 2. tur görsel araştırması
-| | önce | sonra |
-|---|---|---|
-| birebir | 762 | 762 |
-| ayni_tip | 885 | 936 |
-| kesit | 0 | 0 |
-| resimsiz | 2016 | 1965 |
+## 3-4. tur görsel araştırması
+- bearingfinder.ntnamericas.com sayfalarında 200 px görünen tip görsellerinin büyük hâli `/Asset/` yolunda bulundu (resmi NTN, tek ürün, kod okunmuyor). 424 resimsiz NTN/SNR ürününe aynı tip görsel eklendi: açık sabit bilyalı 74, LLU keçeli 81, hassas açısal UADG/UCG/CG 111, oynak bilyalı 5, oynak makaralı EA (sac kafes) 113, oynak makaralı EM/CAM (pirinç kafes) 22, SNR EX ekzantrik bilezikli yatak rulmanı 18.
+- Kullanılamayanlar: eBay (403), Amazon/RS/Zoro/Grainger (bot engeli), Tmall/JD/1688 (giriş zorunlu), Made-in-China "Wanda" sonuçları başka firma (Xuzhou Wanda), wandabearings.com ve dil siteleri (görseller filigranlı ya da CAD/ölçü çizimi), WANDA Alibaba (404), archive.org (NTN kataloğu yok), Bing görsel aramasındaki bayi/pazaryeri fotoğrafları (çoğu filigranlı, dükkân logolu ya da kutu üstünde farklı kod).
+- Atlananlar (yapı farkı): SNR EE(2RS) (keçe rengi belirsiz), EF800, 10X...EE, ZZ(KAP), 7MC, L1 (pirinç kafes), segman yuvalı (N/NR).
 
-- kesit → birebir: 0, ayni_tip → birebir: 0.
-- Aynı tip görsel kontrolü (üstünde farklı kod/ölçü okunan, birden fazla ürün gösteren, başka marka yazılı): 534 ürün düzeltildi (211 konik görseli temiz fotoğrafla değişti, 323 ürünün görseli kaldırıldı: oynak bilyalı, oynak makaralı çelik/pirinç, tek sıra açısal).
-- Eklenen: WANDA aynı ölçü serisi görselleri 369 (356 kod kökünden + 13 OEM notundaki seri kodundan), NTN iç bilezikli iğneli (NA48/NA49/NA69/NKI) 5.
-- Tüm farklı görseller: tum_gorseller_1.jpg, tum_gorseller_2.jpg (774 görsel).
-
-### Hâlâ resimsiz kalanlar ve nedenleri
-- WANDA forklift/OEM numaralı (~520): kod kökü yok ya da aynı kökte temiz fotoğraf yok; resmi sitede bu kodlar için çoğunlukla ölçü çizimi + gri CAD görseli var.
-- WANDA slewing (67): resmi görseller ölçü çizimi.
-- NTN sabit bilyalı açık / LLU / EE (~200): ntnamericas, ntnglobal, ntn-snr.com'da açık ve keçeli tek ürün fotoğrafı yok; ntnglobal görselleri 200 px ve kesitli.
-- NTN/SNR oynak makaralı EA/EAD/EAKW (~165): mevcut fotoğraflarda birden fazla ürün ya da farklı kod okunuyor; ntn-snr.com görselleri çok küçük render.
-- NTN hassas açısal UADG/UCG/CG GNP (~110): temiz tek ürün fotoğrafı yok.
-- SNR yataklı üniteler ve insertler (~200): ntn-snr.com'da sadece çok ürünlü sahne görselleri; ntnglobal ünite fotoğrafları 200x150 px ve NTN döküm yazılı.
-- NTN iğneli (HK, HMK, B-, IR, NA..R, NA59) (~110): tip fotoğrafı yok ya da yapı farkı teyit edilemedi.
-Denenen kaynaklar: ntnamericas.com, ntnglobal.com (tarayıcıyla), ntn-snr.com (tarayıcıyla), wandabearing.com, ürün notlarındaki eşdeğer kodlar.
-
-## 3. tur görsel araştırması
-Sayılar değişmedi (birebir 762, ayni_tip 936, kesit 0, resimsiz 1965). Taranan ve kullanılamayan kaynaklar:
-- bearingfinder.ntnamericas.com (NTN kod bazlı katalog): her kodun sayfası var ama görsel tip bazında ve en büyük boyutu 200 px; büyüğü sunucuda yok.
-- ntn.co.jp, ntnglobal.com, ntnbearing.in, ntn.com.br, ntn-china.com: kod bazlı ürün fotoğrafı yok; tip görselleri 200 px ve kesitli.
-- ntnamericas.com oynak makaralı fotoğrafları: tek rulman ama üstünde "NTN 22224EMKD1C3 JAPAN" okunuyor; başka kodlara konamaz.
-- wandabearings.com (İngilizce) ve es/it/jp/ru alt siteleri: 61 ürün sayfasındaki 170 görselin tamamı kırmızı WANDA filigranlı, kesitli CAD ya da ölçü çizimi.
-- WANDA Alibaba mağazası: sayfa yok (404).
-
-## Yakın tip önerileri (uygulanmadı, sahibinin kararı bekleniyor)
-`yakin_tip_onerileri.jsonl`: 756 resimsiz ürün için öneri var, farkları yazılı. 323 ürün: fotoğrafta başka kod okunuyor. 255 ürün: görseldeki rulman ZZ kapaklı, ürün keçeli ya da açık. 165 ürün: WANDA aynı ailenin başka ölçüsü. 13 ürün: fotoğrafta iki rulman var. 1209 ürün için öneri yok.
+## Yakın tip önerileri (uygulanmadı)
+`yakin_tip_onerileri.jsonl`: 359 öneri. Uygun (sadece ölçü farkı): 173. Uygun değil: 186 (başka kod okunuyor ya da keçe/kapak tipi farklı; `uygun_degil_nedeni` alanında yazılı).
