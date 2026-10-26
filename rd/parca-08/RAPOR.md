@@ -41,6 +41,7 @@ Hâlâ resimsiz: 6 DPK 1195/1841/2290 (Bando sitelerinde çift taraflı kanallı
 Önce: birebir 0 / ayni_tip 2973 / kesit 0 / yok 4. Sonra: birebir 2 / ayni_tip 2968 / kesit 5 / yok 2.
 Birebir: 6 DPK 1195 ve 6 DPK 1841, Bando ABD ambalajında kendi kodu okunan temiz ürün fotoğrafı.
 Denetimde düzeltilen (946 ürün, 4 görsel): W/P 818 ürün eski görselde "A-" kesit harfi okunuyordu, Bando Power Ace (kodsuz baskı) fotoğrafına geçildi; XL 90 + H 32 ürün eski görselde "L" profil yazısı okunuyordu, yazısız Bando neopren trapez dişli kayışa geçildi; OHC 5 ürün kayış kutudan çıktığı için kadraj dışına taşıyordu, Bando resmi oto triger kesit render’ı kondu (kesit); 4 PK 0970F kayış kadraj dışına taşıyordu ve ambalajda başka kod vardı, Rib Ace PK görseline geçildi.
+Tur 4: 6 DPK 2290 için kodu okunmayan Bando DPK fotoğrafı arandı; eBay sonuçlarında yalnız 6DPK1195/1841 ambalajlı fotoğrafları ve başka marka (D&D PowerDrive) kayışlar çıktı, bandousa.com oto sayfasında DPK yok. 268 SL için Bando JP (bandogrp.com, monotaro, misumi) arandı; oradaki SL kodları Sunline konveyör bantları, farklı ürün. W/P: Power Ace kumaş kaplı (W/P ile aynı yapı) ama dar kesit; W/P genişlikleri (10/13/17/22/32) klasik kesit. Klasik kesitli Bando fotoğraflarında (red marking, RED-S II, W800) "A-"/"SA-" kodu okunduğu için kullanılamıyor; Power Ace kaldı, bayrak güncellendi.
 Hâlâ resimsiz: 6 DPK 2290 (Bando kodlu fotoğraf bulunamadı; bulunan DK060901 görseli başka marka ambalajında), 268 SL 400 MM (268SL dikiş makinesi triger kayışı kodu; Bando ürün fotoğrafı yok, mağaza görselleri logolu).
 Denenen kaynaklar: bando.de (tüm ürün/sayfa site haritası görselleri), bandousa.com, products.bandogrp.com (bakımda), bandogrp.com PDF, eBay, Amazon, NAPA, FinditParts, Texas Belting (genel seri görseli), autopartsandstuff, RockAuto, Autodoc, newparts, beltpalace, diamondneedle/jacksew, DuckDuckGo/Bing.
 
@@ -69,7 +70,7 @@ Yok – tüm ürünler mevcut kategorilere yerleşti.
 
 | Adet | Not |
 |---|---|
-| 818 | W/P yapısı üretici sayfasında ayrıca anlatılmıyor; görsel Bando kumaş kaplı Power Ace V kayışından (aynı yapı), baskı rengi farklı olabilir |
+| 818 | W/P yapısı üretici sayfasında ayrıca anlatılmıyor; görsel Bando kumaş kaplı Power Ace dar V kayışından; kumaş kaplı yapı aynı ama bu ürünün genişliği klasik kesite uyuyor, kayış yüksekliği görselden farklı olabilir |
 | 213 | koddaki "400 MM" ölçüsünün ne olduğu (genişlik/manşon) doğrulanamadı |
 | 122 | görsel Bando neopren trapez dişli kayıştan (aynı profil tipi, farklı ölçü) |
 | 43 | malzeme doğrulanamadı; görsel Bando neopren trapez dişli kayıştan (aynı profil tipi) |
