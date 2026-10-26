@@ -99,10 +99,17 @@ def validate():
         if not 140 <= len(product["seo_aciklama"]) <= 160:
             fail(f"seo_aciklama uzunluğu 140-160 dışında: {source['id']} ({len(product['seo_aciklama'])})")
         keywords = product["seo_kelimeler"]
-        if isinstance(keywords, str):
-            keywords = [word.strip() for word in keywords.split(",") if word.strip()]
-        if not 5 <= len(keywords) <= 10:
-            fail(f"anahtar kelime sayısı 5-10 dışında: {source['id']} ({len(keywords)})")
+        if not isinstance(keywords, str):
+            fail(f"seo_kelimeler metin değil: {source['id']}")
+        keyword_items = [word.strip() for word in keywords.split(", ")]
+        if any(not word for word in keyword_items) or keywords != ", ".join(keyword_items):
+            fail(f"seo_kelimeler biçimi geçersiz: {source['id']}")
+        if not 2 <= len(re.findall(r"<strong>S:</strong>", product["aciklama_html"])) <= 3:
+            fail(f"SSS sayısı 2-3 dışında: {source['id']}")
+        if "Hangi kategoriye girer?" in product["aciklama_html"] or "Muadil var mı?" in product["aciklama_html"]:
+            fail(f"Desteklenmeyen SSS bulundu: {source['id']}")
+        if not 5 <= len(keyword_items) <= 10:
+            fail(f"anahtar kelime sayısı 5-10 dışında: {source['id']} ({len(keyword_items)})")
         if not re.fullmatch(r"[a-z0-9-]+", product["url"]):
             fail(f"url biçimi geçersiz: {source['id']}")
         code = source["stok_kodu"].split(" ", 1)[-1]
