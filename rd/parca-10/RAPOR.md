@@ -1,24 +1,32 @@
 # Parça 10 – SUPTEX (5620 ürün)
 
 - Ürün sayısı: 5620
-- Birebir görsel: 0
-- Aynı tip görsel: 844
-- Görselsiz: 4776
+- Birebir görsel: 3
+- Aynı tip görsel: 77
+- Resmi kesit görseli: 3032
+- Görselsiz: 2508
 - Kategorisi boş: 26
-- Bayraklı ürün: 5310
-- Farklı görsel dosyası: 6
+- Bayraklı ürün: 5565
+- Farklı görsel dosyası: 12
 
 ## Görseller
 Ürün koduyla birebir eşleşen resmi fotoğraf bulunamadı (input'ta tedarikçi görseli yok, üreticinin ürün arama sayfası robots.txt ile kapalı). Üreticinin kendi sitesindeki beyaz zeminli ürün grubu fotoğrafları, yalnızca görünüşü aynı olan ürünlere 'ayni_tip' olarak atandı:
 
 | Dosya | Kaynak | Atandığı ürünler | Adet |
 |---|---|---|---|
-| dmk_kk_siyah.jpg | https://www.suptex.com/img/products/endustriyel-mil.jpg | DMK, siyah NBR (NB01/02/07/09/13/19), dış kauçuk, tip KK / KK-T / KK-TT / KK-T1 / KK-B / KK-B.T | 255 |
-| hru_mavi.jpg | https://www.suptex.com/img/products/bogaz.jpg | HRU, PU01 (mavi) – fotoğrafta HRU yazılı | 477 |
-| pmy_mavi.jpg | https://www.suptex.com/img/products/pyataklama.jpg | PMY, PU01 (mavi) – fotoğrafta PMY-0117 yazılı | 17 |
-| pnm_siyah.jpg | https://www.suptex.com/img/products/ppiston.jpg | PNM, NB13 (siyah) pnömatik kompakt piston | 27 |
+| dmk_kk_siyah.jpg | https://www.suptex.com/img/products/endustriyel-mil.jpg | DMK, siyah NBR (NB01/02/07/09/13/19), dış kauçuk, tip KK / KK-T / KK-TT / KK-T1 / KK-B / KK-B.T | 0 |
+| hru_mavi.jpg | https://www.suptex.com/img/products/bogaz.jpg | HRU, PU01 (mavi) – fotoğrafta HRU yazılı | 1 |
+| pmy_mavi.jpg | https://www.suptex.com/img/products/pyataklama.jpg | PMY, PU01 (mavi) – fotoğrafta PMY-0117 yazılı | 1 |
+| pnm_siyah.jpg | https://www.suptex.com/img/products/ppiston.jpg | PNM, NB13 (siyah) pnömatik kompakt piston | 1 |
 | hry_siyah.jpg | https://www.suptex.com/img/products/yataklama.jpg | HRY, OM02 (siyah POM) yataklama | 13 |
 | sdt_siyah.jpg | https://www.suptex.com/img/products/tapa.jpg | SDT, NB01/NB02 (siyah), tip T.4 | 55 |
+| pmu_mavi.jpg | https://www.suptex.com/img/products/pbogaz.jpg | PMU, PU01 (mavi) – fotoğrafta SUPTEX PMU yazılı | 9 |
+| dmk_kesit_kk.jpg | https://www.suptex.com/img/tasarim2b/KK.jpg | KESİT – DMK, tip KK (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 1103 |
+| dmk_kesit_kk_t.jpg | https://www.suptex.com/img/tasarim2b/KK-T.jpg | KESİT – DMK, tip KK-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 1338 |
+| dmk_kesit_sl.jpg | https://www.suptex.com/img/tasarim2b/SL.jpg | KESİT – DMK, tip SL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 186 |
+| dmk_kesit_sl_t.jpg | https://www.suptex.com/img/tasarim2b/SL-T.jpg | KESİT – DMK, tip SL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 192 |
+| dmk_kesit_skl.jpg | https://www.suptex.com/img/tasarim2b/SKL.jpg | KESİT – DMK, tip SKL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 125 |
+| dmk_kesit_skl_t.jpg | https://www.suptex.com/img/tasarim2b/SKL-T.jpg | KESİT – DMK, tip SKL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 88 |
 
 Görselsiz kalanların başlıcaları: mavi NBR (NB17) yağ keçeleri, kahverengi FKM yağ keçeleri, metal dışlı (SL/SKL/SLK) keçeler, tırtıllı/özel tipler, HST/HST2/HSU sıyırıcılar, HMU2, PPD, PPU, PMK, PMU. Bu renk/tiplerde üreticinin temiz ürün fotoğrafı bulunamadı; yanlış görsel yerine boş bırakıldı.
 
@@ -95,7 +103,8 @@ Görselsiz kalanların başlıcaları: mavi NBR (NB17) yağ keçeleri, kahvereng
 
 | Bayrak | Ürün |
 |---|---|
-| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 4776 |
+| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi kesit görseli kullanıldı | 3032 |
+| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 2508 |
 | Yeni kategori önerisi | 1118 |
 | Ürün adındaki tip/malzeme yazımı standart değil; tip kodu teknik bilgiye eklenmedi | 34 |
 | Tip kodunda açıklaması bulunamayan kısım | 33 |
