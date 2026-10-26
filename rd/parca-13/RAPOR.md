@@ -8,7 +8,7 @@
 | ayni_tip | 898 |
 | resimsiz | 2003 |
 
-Farklı görsel dosyası: 782. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
+Farklı görsel dosyası: 778. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
 - birebir: WANDA ürünlerinin kendi temiz ürün fotoğrafları (arka plan temizlendi).
 - ayni_tip: NTN/SNR için ntnamericas.com resmi tip fotoğrafları; yalnızca kapak/keçe ve yapı tipi aynı olan kodlara (ör. sadece ZZ sabit bilyalı, açık açısal, NU/NJ/NUP/N silindirik, açık oynak makaralı çelik/pirinç kafes ayrı, koni+kep takımı konik).
 - NTN/SNR'de keçeli (LLU/LLB/2RS/EE), yataklı ünite, iğneli (iç bilezikli), slewing vb. için doğru görsel bulunamadı → resimsiz + bayrak.
