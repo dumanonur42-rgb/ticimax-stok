@@ -1,7 +1,9 @@
 # Parça 14 ürün kataloğu
 
 - Ürün kaydı: **3,592**
-- Görsel: birebir **327**, aynı tip **12**, resimsiz **3253**; kesit görsel bayrağı **12**.
+- Görsel: birebir **327**, aynı tip **0**, resimsiz **3265**.
+- çizim/ölçü çizgili görsel: kullanılmadı (ART resmi görselleri teknik çizim olduğu için alınmadı)
+- kesit görsel: **0**
 - Düzeltilmiş, tam kodla eşleşen BMS katalog fotoğrafı: **52**.
 - Kaynak görsel incelemesi: temiz **254**, filigran **891**, logo/etiket **3**, kötü **1**; temizden düşürülen **1**.
 - ART ölçü eşleşmesi: **21/478**; eşleşmeyen **457**.
