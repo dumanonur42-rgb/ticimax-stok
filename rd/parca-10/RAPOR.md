@@ -3,11 +3,11 @@
 - Ürün sayısı: 5620
 - Birebir görsel: 3
 - Aynı tip görsel: 77
-- Resmi kesit görseli: 3032
-- Görselsiz: 2508
+- Resmi kesit görseli: 3498
+- Görselsiz: 2042
 - Kategorisi boş: 26
 - Bayraklı ürün: 5565
-- Farklı görsel dosyası: 12
+- Farklı görsel dosyası: 40
 
 ## Görseller
 Ürün koduyla birebir eşleşen resmi fotoğraf bulunamadı (input'ta tedarikçi görseli yok, üreticinin ürün arama sayfası robots.txt ile kapalı). Üreticinin kendi sitesindeki beyaz zeminli ürün grubu fotoğrafları, yalnızca görünüşü aynı olan ürünlere 'ayni_tip' olarak atandı:
@@ -21,12 +21,12 @@
 | hry_siyah.jpg | https://www.suptex.com/img/products/yataklama.jpg | HRY, OM02 (siyah POM) yataklama | 13 |
 | sdt_siyah.jpg | https://www.suptex.com/img/products/tapa.jpg | SDT, NB01/NB02 (siyah), tip T.4 | 55 |
 | pmu_mavi.jpg | https://www.suptex.com/img/products/pbogaz.jpg | PMU, PU01 (mavi) – fotoğrafta SUPTEX PMU yazılı | 9 |
-| dmk_kesit_kk.jpg | https://www.suptex.com/img/tasarim2b/KK.jpg | KESİT – DMK, tip KK (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 1103 |
-| dmk_kesit_kk_t.jpg | https://www.suptex.com/img/tasarim2b/KK-T.jpg | KESİT – DMK, tip KK-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 1338 |
-| dmk_kesit_sl.jpg | https://www.suptex.com/img/tasarim2b/SL.jpg | KESİT – DMK, tip SL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 186 |
-| dmk_kesit_sl_t.jpg | https://www.suptex.com/img/tasarim2b/SL-T.jpg | KESİT – DMK, tip SL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 192 |
-| dmk_kesit_skl.jpg | https://www.suptex.com/img/tasarim2b/SKL.jpg | KESİT – DMK, tip SKL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 125 |
-| dmk_kesit_skl_t.jpg | https://www.suptex.com/img/tasarim2b/SKL-T.jpg | KESİT – DMK, tip SKL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 88 |
+| dmk_kesit_kk.jpg | https://www.suptex.com/img/tasarim2b/KK.jpg | KESİT – DMK, tip KK (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 262 |
+| dmk_kesit_kk_t.jpg | https://www.suptex.com/img/tasarim2b/KK-T.jpg | KESİT – DMK, tip KK-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 490 |
+| dmk_kesit_sl.jpg | https://www.suptex.com/img/tasarim2b/SL.jpg | KESİT – DMK, tip SL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 35 |
+| dmk_kesit_sl_t.jpg | https://www.suptex.com/img/tasarim2b/SL-T.jpg | KESİT – DMK, tip SL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 24 |
+| dmk_kesit_skl.jpg | https://www.suptex.com/img/tasarim2b/SKL.jpg | KESİT – DMK, tip SKL (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 35 |
+| dmk_kesit_skl_t.jpg | https://www.suptex.com/img/tasarim2b/SKL-T.jpg | KESİT – DMK, tip SKL-T (tüm malzemeler); gerçek fotoğraf bulunamayanlar | 16 |
 
 Görselsiz kalanların başlıcaları: mavi NBR (NB17) yağ keçeleri, kahverengi FKM yağ keçeleri, metal dışlı (SL/SKL/SLK) keçeler, tırtıllı/özel tipler, HST/HST2/HSU sıyırıcılar, HMU2, PPD, PPU, PMK, PMU. Bu renk/tiplerde üreticinin temiz ürün fotoğrafı bulunamadı; yanlış görsel yerine boş bırakıldı.
 
@@ -103,9 +103,10 @@ Görselsiz kalanların başlıcaları: mavi NBR (NB17) yağ keçeleri, kahvereng
 
 | Bayrak | Ürün |
 |---|---|
-| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi kesit görseli kullanıldı | 3032 |
-| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 2508 |
+| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi 3D ürün görseli kullanıldı | 2636 |
+| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 2042 |
 | Yeni kategori önerisi | 1118 |
+| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi kesit görseli kullanıldı | 862 |
 | Ürün adındaki tip/malzeme yazımı standart değil; tip kodu teknik bilgiye eklenmedi | 34 |
 | Tip kodunda açıklaması bulunamayan kısım | 33 |
 | Kombine malzemeli yağ keçesi için uygun kategori yok; kategori boş bırakıldı | 9 |
