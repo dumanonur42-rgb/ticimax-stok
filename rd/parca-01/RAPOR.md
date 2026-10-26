@@ -210,10 +210,14 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
   - INOX'un bulunmadığı seri/bağlantı kombinasyonları, üreticide hiç olmayan seri+teker tipleri (EM MKM, ZBZ, ZBRM, MMM, SBR vb.), renk ve özel versiyonlar.
   - EMS 01 maşaları, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için, iç lastiklerin hepsinde bayideki temiz (yazısız) fotoğraf aynı tip olarak kullanıldı.
 
+## 5. tur görsel araştırması
+- EMES'in Rusya distribütörünün sitesinde, aynı kodlu ürün sayfalarındaki EMES görselleriyle 37 INOX ürüne birebir görsel eklendi. Görselin farklı bir teker tipinin sayfasında da kullanıldığı 20 eşleşme şüpheli olduğu için kullanılmadı.
+- Güncel görsel sayıları: birebir 1245, aynı tip 690, kesit 0, görselsiz 971.
+
 ## yakin_tip önerisi (UYGULANMADI)
-- `yakin_tip_onerisi.jsonl`: görselsiz 1008 üründen 658'i için, yalnızca küçük bir detayı farklı olan aynı seri üretici görseli önerisi (id, stok_kodu, urun_adi, onerilen_gorsel, gorsel_kodu, fark).
+- `yakin_tip_onerisi.jsonl`: görselsiz 971 üründen 621'i için, yalnızca küçük bir detayı farklı olan aynı seri üretici görseli önerisi (id, stok_kodu, urun_adi, onerilen_gorsel, gorsel_kodu, fark).
   - Kare soketli görsel / ürün yuvarlak soketli: 277
-  - Çinko kaplı maşa görseli / ürün INOX: 197
+  - Çinko kaplı maşa görseli / ürün INOX: 160
   - Standart versiyon görseli / üründe renk veya özel ek farkı: 117
   - Standart yedek teker görseli / üründe renk veya ek farkı: 67
 - Teker çapı görseldekiyle aynı olmayanlar çıkarıldı. Görselde rulman takılı olduğu için RULMANSIZ yedek tekerler de çıkarıldı.
