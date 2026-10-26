@@ -4,19 +4,30 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 
 ## Görseller
 
-- Birebir (aynı kodun üretici görseli): **1697**
-- Aynı tip (aynı seri/ek, ölçü farkı veya ek farkı): **1343**
-- Görselsiz: **588**
-- Farklı görsel dosyası: **136** (`gorseller/`, md5 ile tekilleştirildi)
+- Birebir: **979**
+- Aynı tip: **1498**
+- Görselsiz: **1151**
+- Farklı görsel dosyası: **107** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
 
-- Kaynak: Schaeffler medias ürün görselleri (beyaz zemin). Üst bant Yamansa (sablon.png), alt bant gerçek marka logosu (INA: sahibin gönderdiği resmi logo, FAG: kırmızı FAG yazısı).
-- Tedarikçi fotoğrafları kullanılmadı: çoğu yalnızca kutu/sandık gösteriyor ya da başka logo içeriyor.
-- Üreticinin "görsel yakında" yer tutucusu olan kayıtlar görselsiz bırakıldı. Bazı üretici görsellerinde ölçü harfleri (d, D, C, Fw) bulunan teknik çizim var.
+- Kaynak: Schaeffler medias ürün görselleri. Üst bant Yamansa (sablon.png), alt bant marka logosu (INA: gönderilen resmi yeşil karo logo, FAG: kırmızı FAG yazısı).
+- Tedarikçi fotoğrafları kullanılmadı (çoğu kutu/sandık gösteriyor ya da başka logo içeriyor).
+
+
+### Gerçekçi fotoğraf kontrolü
+
+- İncelenen farklı üretici görseli: 135
+- Çizim benzeri görsel: **23** (ölçü çizgili/harfli 17, düz teknik çizim 6) → hepsi kaldırıldı; bu görselleri kullanan **563** ürün görselsiz ve bayraklı. Fotoğraf benzeri yerine geçecek aynı seri görseli bulunamadı (iğneli kovan, iç bilezik, eksenel iğne kafesi, pul vb.).
+
+- Kesit (çeyreği kesik) görsel: 84 → **8** tanesi aynı serinin tam görünüş görseliyle değiştirildi (382 ürün, `ayni_tip`), **76** tanesi için tam görünüş bulunamadı ve kaldı; bu **1409** ürün "kesit gorsel" bayraklı.
+
+- Değiştirilenler: 001E0935→0018F411, 001E1F17→0019C314, 001E0941→001920E6, 001E2AA2→0019C314, 001E2AA5→001A0D1B, 001E1EEF→000BA557, 001B4AF7→0018D9A3, 001B4B37→000996E5
+
+- Üreticinin "görsel yakında" yer tutucusu kullanılmadı.
 
 ## Kategoriler
 
 - Boş kategori (`[]`, bayraklı): **418**
-- Bayraklı ürün: **1945**
+- Bayraklı ürün: **3435**
 - Birden fazla kategorideki ürün: **170**
 
 
@@ -77,10 +88,13 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 ## Bayrak türleri
 
 
+- kesit gorsel: 1409
 - kategori aynı seri ürününden: 1347
 - tip ve görsel … katalog ürününden (aynı seri); bu kodun ölçüleri katalogda bulunamadı, yazılmadı: 1095
+- üreticide bu ürün için yalnızca ölçülü/teknik çizim görseli var; görsel eklenmedi: 563
 - kod üretici katalogunda bulunamadı; ölçü ve tip yazılmadı, görsel yok: 558
 - kategori doğrulanamadı: 418
+- üreticinin kesit görseli yerine aynı serinin tam görünüş görseli kullanıldı: 382
 - ölçüler … katalog kaydından alındı (fark yalnızca boşluk/hassasiyet/X-life eki); yük değerleri ve ağırlık yazılmadı: 252
 - manşon dahil bilgisi tedarikçi kaydından: 78
 - kategori tedarikçi ürün tanımına göre: 72
@@ -93,4 +107,4 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 
 ## Yöntem
 - Teknik değerler yalnızca üretici katalogundaki birebir kod kaydından (ya da yalnızca boşluk/hassasiyet/X-life eki farklı kayıttan, sadece mm ölçüler) ve tedarikçi notundan alındı. Bulunamayan değer yazılmadı.
-- Örnek sayfalar: `ornek_1.jpg`, `ornek_2.jpg` (80 farklı görsel, kodlarıyla).
+- Örnek sayfalar: `ornek_1.jpg`, `ornek_2.jpg`; tüm görseller: `tum_gorseller.jpg`.
