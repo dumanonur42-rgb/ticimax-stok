@@ -5,9 +5,9 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 ## Görseller
 
 - Birebir: **1337**
-- Aynı tip: **2010**
-- Görselsiz: **281**
-- Farklı görsel dosyası: **157** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
+- Aynı tip: **2020**
+- Görselsiz: **271**
+- Farklı görsel dosyası: **158** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
 
 - Kaynak: Schaeffler medias ürün görselleri. Üst bant Yamansa (sablon.png), alt bant marka logosu (INA: gönderilen resmi yeşil karo logo, FAG: kırmızı FAG yazısı).
 - Tedarikçi fotoğrafları kullanılmadı (çoğu kutu/sandık gösteriyor ya da başka logo içeriyor).
@@ -18,7 +18,7 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - İncelenen farklı üretici görseli: 135
 - Çizim benzeri görsel: **23** (ölçü çizgili/harfli 17, düz teknik çizim 6) → hepsi kaldırıldı; bu görselleri kullanan **26** ürün görselsiz ve bayraklı. Fotoğraf benzeri yerine geçecek aynı seri görseli bulunamadı (iğneli kovan, iç bilezik, eksenel iğne kafesi, pul vb.).
 
-- Kesit (çeyreği kesik) görsel: 84 → **8** tanesi aynı serinin tam görünüş görseliyle değiştirildi (382 ürün, `ayni_tip`), **76** tanesi için tam görünüş bulunamadı ve kaldı; bu **1919** ürün "kesit gorsel" bayraklı.
+- Kesit (çeyreği kesik) görsel: 84 → **8** tanesi aynı serinin tam görünüş görseliyle değiştirildi (382 ürün, `ayni_tip`), **76** tanesi için tam görünüş bulunamadı ve kaldı; bu **1929** ürün "kesit gorsel" bayraklı.
 
 - Değiştirilenler: 001E0935→0018F411, 001E1F17→0019C314, 001E0941→001920E6, 001E2AA2→0019C314, 001E2AA5→001A0D1B, 001E1EEF→000BA557, 001B4AF7→0018D9A3, 001B4B37→000996E5
 
@@ -88,7 +88,7 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 ## Bayrak türleri
 
 
-- kesit gorsel: 1919
+- kesit gorsel: 1929
 - kategori aynı seri ürününden: 1347
 - tip ve görsel … katalog ürününden (aynı seri); bu kodun ölçüleri katalogda bulunamadı, yazılmadı: 1095
 - kod üretici katalogunda bulunamadı; ölçü ve tip yazılmadı, görsel yok: 558
@@ -120,8 +120,8 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 |---|---|---|
 | birebir (gerçek görünüş) | 193 | 225 |
 | aynı tip | 875 | 1203 |
-| kesit (bayraklı) | 1409 | 1919 |
-| görselsiz | 1151 | 281 |
+| kesit (bayraklı) | 1409 | 1929 |
+| görselsiz | 1151 | 271 |
 
 - Ölçü çizgileri ürünün dışından temizlenen 15 render: 405 ürün. Hepsi %100 büyütmede yeniden kontrol edildi; ilk temizlikte kenarı kesilenler (örn. 00006BCD, 00006BDF) kenar kaybı olmadan yeniden üretildi (`temizlenen_once_sonra.jpg`).
 - Satıcı/dağıtıcı sayfalarından alınan, filigransız ve logosuz gerçek fotoğraflar: 219 ürün (INA GG./GEH. dökme gövdeler, FAG TSV labirent keçeler). Aynı kodun fotoğrafı varsa birebir, yoksa aynı serinin fotoğrafı (üzerinde okunan farklı kod yok) kullanıldı.
@@ -133,7 +133,6 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - FAG QJ: 19
 - FAG SP: 19
 - FAG NU: 13
-- INA GIHRK: 13
 - FAG ZRB: 12
 - INA GG.ME: 10
 - FAG STR: 9
@@ -150,6 +149,7 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - FAG ZRO.: 4
 - INA GG.SFT: 4
 - INA GEHLCTE: 3
+- INA GIHRK: 3
 - FAG PULLERTRISECTION: 2
 - INA GE: 2
 - INA GRG.RABR: 2

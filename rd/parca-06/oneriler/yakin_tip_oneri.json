@@ -539,6 +539,42 @@
   "kesit": false,
   "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['N']"
  },
+ "27575": {
+  "uygun": true,
+  "kafes": "",
+  "uygun_degil_nedeni": "",
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GIHRK25-UK-2RS-C",
+  "kaynak_urun": "INA GIHRK120-UK-2RS",
+  "gorsel": "5604da5c9a54.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['C']; görselde var, bu üründe yok: -"
+ },
+ "27581": {
+  "uygun": true,
+  "kafes": "",
+  "uygun_degil_nedeni": "",
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GIHRK40-UK-2RS-C",
+  "kaynak_urun": "INA GIHRK120-UK-2RS",
+  "gorsel": "5604da5c9a54.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['C']; görselde var, bu üründe yok: -"
+ },
+ "27583": {
+  "uygun": true,
+  "kafes": "",
+  "uygun_degil_nedeni": "",
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GIHRK50-UK-2RS-C",
+  "kaynak_urun": "INA GIHRK120-UK-2RS",
+  "gorsel": "5604da5c9a54.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": true,
+  "fark": "bu üründe var, görselde yok: ['C']; görselde var, bu üründe yok: -"
+ },
  "27667": {
   "uygun": true,
   "kafes": "bu ürün plastik / görsel ?",
