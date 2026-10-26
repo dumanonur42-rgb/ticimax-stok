@@ -12,6 +12,7 @@ Teknik bilgiler ve görseller Schaeffler resmi ürün kayıtlarından (medias.sc
 - Kaldırılan (görsel boşaltıldı, bayraklandı): **14** görsel, **1567** ürün
 - Kesit görsel yerine tam görünüş konan: **0** (aynı ürün/seri için tam görünüş görseli yok)
 - Kesit görsel bırakılan (bayrak: "kesit gorsel"): **31** görsel, **998** ürün
+- Birebir gerçek fotoğraf araması: Schaeffler ürün kayıtları, Schaeffler medya kütüphanesi (yalnız ürün ailesi basın fotoğrafları, kod bazlı değil) ve FAG satıcı sayfaları kontrol edildi. Satıcı sayfalarındaki fotoğraflar ya satıcının kendi telifli/işaretli fotoğrafı ya da aynı Schaeffler render görseli; kodu doğrulanabilen, filigransız resmi gerçek fotoğraf bulunamadı. Kesit → birebir gerçek fotoğraf: **0**, ayni_tip → birebir: **0**.
 Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları), yalnız çizgi çizimi olan görseller (bazı HCS, HM, KM kodları), gri fonlu LASER-SMARTY2 fotoğrafı.
 ## Ana kategori dağılımı
 | Kategori | Ürün |
