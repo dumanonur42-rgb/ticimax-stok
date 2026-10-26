@@ -1,0 +1,218 @@
+# Parça 01 – EMES TEKER (2906 ürün)
+
+## Görsel
+- birebir (üreticinin kendi ürün sayfasındaki görsel): 1091
+- ayni_tip (aynı seri/tip, görsel olarak aynı): 15
+- resimsiz: 1800
+- farklı görsel dosyası: 259
+
+## Kategori dağılımı (ana kategori)
+- TEKERLEKLER>DÖNER TEKERLEKLER: 2255
+- TEKERLEKLER>YEDEK TEKERLER: 262
+- TEKERLEKLER>SABİT TEKERLEKLER: 208
+- TEKERLEKLER: 75
+- TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER: 72
+- TEKERLEKLER>TEKER AKSESUARLARI: 34
+
+## Kategori dağılımı (tüm atamalar)
+- TEKERLEKLER: 2906
+- TEKERLEKLER>DÖNER TEKERLEKLER: 2255
+- TEKERLEKLER>FRENLİ TEKERLEKLER: 1114
+- TEKERLEKLER>PASLANMAZ (INOX) TEKERLEKLER: 363
+- TEKERLEKLER>YEDEK TEKERLER: 262
+- TEKERLEKLER>SABİT TEKERLEKLER: 208
+- TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER: 72
+- TEKERLEKLER>TEKER AKSESUARLARI: 34
+
+- boş kategori: 0
+- bayraklı ürün: 1815
+
+## yeni_kategori_onerileri
+Dosyada tekerlek için sadece `TEKERLEKLER` var. Ürünler ayrıca aşağıdaki alt kategorilere konuldu; onaylanmazsa sadece `TEKERLEKLER` kalabilir.
+- `TEKERLEKLER>DÖNER TEKERLEKLER` – 2255 ürün – Döner tablalı, pim, delik, cıvata ve soket bağlantılı (yön değiştiren) tekerlekler
+- `TEKERLEKLER>SABİT TEKERLEKLER` – 208 ürün – Sabit maşalı (yön değiştirmeyen) tekerlekler
+- `TEKERLEKLER>FRENLİ TEKERLEKLER` – 1114 ürün – Kodunda F olan frenli tekerlekler; ana kategorisine ek olarak
+- `TEKERLEKLER>PASLANMAZ (INOX) TEKERLEKLER` – 363 ürün – INOX ekli paslanmaz versiyonlar; ana kategorisine ek olarak
+- `TEKERLEKLER>YEDEK TEKERLER` – 262 ürün – Maşasız tek teker (yedek teker) ürünleri
+- `TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER` – 72 ürün – Şişme (havalı) tekerler, iç/dış lastik ve jant yanak takımları
+- `TEKERLEKLER>TEKER AKSESUARLARI` – 34 ürün – Sac jant kapakları
+
+## Bayraklar (adet)
+- doğru görsel bulunamadı: 1412
+- koddaki 'T' ekinin anlamı üretici kaynağında bulunamadı; teknik bilgi eklenmedi: 509
+- INOX (paslanmaz) versiyon üretici sitesinde EM kodu ile bulunamadı: 363
+- üretici görseli kare soketli; yuvarlak soketli görsel bulunamadı: 293
+- '(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 226
+- üretici sitesinde bu ürünün sayfası bulunamadı; teknik bilgi eklenmedi: 181
+- üretici sitesinde bu kod bulunamadı; teknik bilgi eklenmedi: 179
+- üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 95
+- rulmansız versiyon; rulman ölçüsü üründe yazan koddan alındı: 95
+- mevcut ürün fotoğrafı farklı teker tiplerinde ortak kullanılmış; kullanılmadı: 74
+- ürünün tekersiz maşa mı komple teker mi olduğu teyit edilmeli: 73
+- bu yedek teker üretici sitesinde tek başına bulunamadı; teknik bilgi eklenmedi: 47
+- '5/8 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 39
+- 'M16 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 27
+- üretici sayfasındaki teker genişliği koddakinden farklı; teknik bilgi eklenmedi: 23
+- '(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 21
+- koddaki '(SİYAH)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 12
+- 'M16 (Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 11
+- '(20-25 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 11
+- '(ER)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
+- '5/8 (Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
+- '(26-30 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
+- 'M12' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 9
+- '(MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 8
+- '(STATİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 8
+- koddaki '(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 6
+- '(SİYAH)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
+- '(INOX)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
+- '(KIRMIZI KAPL.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
+- '(I.D.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
+- koddaki '(6204-Ø20/6005-Ø25)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 5
+- '(INOX)(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- '(K.KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- 'I.D. (METAL TOZLUK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- '(BAĞLANTI BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- koddaki '(KIRMIZI KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 4
+- '(ER TEKER)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
+- '(UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
+- '(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
+- 'M10' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
+- 'M.16 (INOX)(ANTİSTATİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
+- koddaki '(KIRMIZI)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
+- koddaki '(GRİ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
+- koddaki '(ANTS)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
+- koddaki '(SİYAH KAS.-SİYAH KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
+- koddaki '(SİYAH KAS.-GRİ KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
+- '(KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
+- '(ED)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
+- '(MAVİ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
+- 'M12 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
+- '(20-25 YUVARLAK SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
+- koddaki '(Ø20)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(Ø6)(EP-ET-EB)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(EP-ET)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(6305-Ø25/6206-Ø30) (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(6206-Ø30/6305-Ø25)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(6206-30/6305-25/6007-35)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(6305-Ø25/6206-Ø30)  (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(BEYAZ/Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(BEYAZ/Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(GRİ KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(ES-ER)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(SİYAH KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(MAVİ KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- koddaki '(SARI)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- '(4MM TABLA KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(TURUNCU KAS.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(KIRMIZI KAS.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(INOX) (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(KIRMIZI KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(22X40PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(27X27 KARE PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- 'M10X30 (SİYAH KAPL.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '5/8 (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(M12X30)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '5/8 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- 'M16 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(35-40 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(20-25 KARE SOKET TAKIM) (UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- '(26-30 KARE SOKET TAKIM) (UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- koddaki '(Ø25)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(Ø8) EP-ET-EB' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(MAVİ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(EP-ET)(SİYAH)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6002-Ø15/6201-Ø12)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(Ø8) (EP-ET-EB)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(EP-ET)(Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki 'NATURAL' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki 'SİYAH' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(KATAFOREZ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6305-Ø25/6206-Ø30)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-Ø30/6008-Ø40)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6205-Ø25/6304-Ø20)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-30/6305-25)(DLKSZ)FS (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-30/6305-25)(DLKSZ) (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-30/6305-25)(DLKSZ)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206/6305/6007)(DLKSZ)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-Ø30/6007-Ø35)FS (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-30/6007-35)(DLKSZ)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6206-Ø30/6305-Ø25) (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6305-Ø25/6206-Ø30)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(6205-Ø25/6304-Ø20)  (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(BEYAZ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH/Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH/Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(NATL KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(BEYAZ KAS.-AÇIK GRİ KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(TIRTILSIZ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(EP / Ø6)(SİYAH KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(EP / Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(EP / Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(ES-EP)(SİYAH KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki 'EM' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(Ø8)  (ANTS)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(KOYU KIRMIZI KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(TIRTILSIZ)(SİYAH)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(Ø8)(TIRTILSIZ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(TURUNCU KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH KAS.-SİYAH KAPL.)(Ø12)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH KAS.-GRİ KAPL.)(Ø12)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH KAS.-SİYAH KAPL.)(Ø15)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH KAS.-GRİ KAPL.)(Ø15)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(80 SHORE)(SİYAH KAS.-SİYAH KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(PİMLİ)(DELİK AÇIK)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(PİMLİ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH)(Ø22)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SİYAH)(Ø17)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SARI)(Ø22)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(SARI)(Ø17)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(KIRMIZI)(Ø22)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(608-Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(NATUREL)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(KIRMIZI)(608-Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(YEŞİL)(608-Ø8)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- koddaki '(LACİVERT) 82 SH' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- '(KAPAKSIZ)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(SOĞ. DAY.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(105X110 TABLA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(GK)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '( K.KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(I.D. METAL TOZLUKLU)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(TURUNCU KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(22X80 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(26 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(INOX)(17 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(INOX)(19 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(10 DELİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- 'INOX (BAĞLANTI BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(AKUPLE M.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(AKUPLE M.)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- 'M10 (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(Ø10)(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(Ø10)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(INOX)(AKUPLE M.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '5/8(KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(INOX) 5/8' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(INOX) M16' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '5/8 (INOX)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(M12)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '5/8 (I.D.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- 'M16 (SİYAH)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(M16)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(5/8)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- 'M16 (INOX) ALTTAN SIK.' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- 'M12 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+- '(20-25 KARE SOKET) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
+
+## Notlar
+- Teknik bilgiler yalnızca emesteker.com ürün sayfalarından alındı (kaynak her üründe `teknik_kaynak`). Üretici sitesinde birebir karşılığı olmayan versiyonlarda (T eki, INOX, Ö.F., renk vb.) ölçü/kapasite yazılmadı, bayrak eklendi.
+- EMES aynı serideki farklı ölçüler için çoğu zaman aynı ürün görselini kullanıyor; görseller yine de ürünün kendi sayfasından alındı.
+- Bazı EM kodlarında üreticinin kendi sayfasındaki görselde maşa paslanmaz görünümlü; görsel yine o kodun resmi sayfasından alındı, istenirse kontrol edilebilir.
+- Yuvarlak soketli ürünlerde üretici görseli kare soketli olduğu için görsel konmadı.
+- Örnek görseller: `ornek_1.jpg`, `ornek_2.jpg`.
