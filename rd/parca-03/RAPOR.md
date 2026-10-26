@@ -57,14 +57,11 @@ Not: Girdi önerilerinden SEGMANLAR (3), GRES VE YAĞLAR (5), OTO RULMANLARI>Dİ
 
 | Kategori | adet | gerekçe |
 |---|---|---|
-| TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER | 13 | Üretici (emesteker.com) teker sınıflandırması: Hafi̇f Sanayi̇ Ti̇pi̇ Tekerlekler |
-| TEKERLEKLER>ORTA SANAYİ TİPİ TEKERLEKLER | 557 | Üretici (emesteker.com) teker sınıflandırması: Orta Sanayi̇ Ti̇pi̇ Tekerlekler |
-| TEKERLEKLER>AĞIR SANAYİ TİPİ TEKERLEKLER | 31 | Üretici (emesteker.com) teker sınıflandırması: Ağir Sanayi̇ Ti̇pi̇ Tekerlekler |
-| TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER | 473 | Üretici (emesteker.com) teker sınıflandırması: Ekstra Ağir Sanayi̇ Ti̇pi̇ Tekerlekler |
-| TEKERLEKLER>SERVİS VE MOBİLYA TEKERLEKLERİ | 206 | Üretici (emesteker.com) teker sınıflandırması: Servi̇s Ve Mobi̇lya Tekerlekleri̇ |
-| TEKERLEKLER>HASTANE VE SERVİS EKİPMANI TEKERLEKLERİ | 0 | Üretici (emesteker.com) teker sınıflandırması: Hastane Ve Servi̇s Eki̇pmani Tekerlekleri̇ |
-| TEKERLEKLER>SÜPERMARKET EKİPMANI TEKERLEKLERİ | 0 | Üretici (emesteker.com) teker sınıflandırması: Süpermarket Eki̇pmani Tekerlekleri̇ |
-| TEKERLEKLER>İSTİF TEKERLEKLERİ | 0 | Üretici (emesteker.com) teker sınıflandırması: İsti̇f Tekerlekleri̇ |
+| TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER | 13 | Üretici sitesinde (emesteker.com) bu adla ayrı bir teker grubu var; ürünler o gruba göre yerleştirildi |
+| TEKERLEKLER>ORTA SANAYİ TİPİ TEKERLEKLER | 557 | Üretici sitesinde (emesteker.com) bu adla ayrı bir teker grubu var; ürünler o gruba göre yerleştirildi |
+| TEKERLEKLER>AĞIR SANAYİ TİPİ TEKERLEKLER | 31 | Üretici sitesinde (emesteker.com) bu adla ayrı bir teker grubu var; ürünler o gruba göre yerleştirildi |
+| TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER | 473 | Üretici sitesinde (emesteker.com) bu adla ayrı bir teker grubu var; ürünler o gruba göre yerleştirildi |
+| TEKERLEKLER>SERVİS VE MOBİLYA TEKERLEKLERİ | 206 | Üretici sitesinde (emesteker.com) bu adla ayrı bir teker grubu var; ürünler o gruba göre yerleştirildi |
 | TEKERLEKLER>YEDEK TEKERLER | 415 | Maşasız satılan yedek tekerler; üretici sitesinde ayrı "Yedek Tekerler" grubu var |
 | TEKERLEKLER>TEKER MAŞALARI | 917 | Tekersiz maşalar (kodda teker tipi yok); müşteriler maşayı ayrı arıyor |
 | TEKERLEKLER>TEKER YEDEK PARÇALARI | 78 | Teker montaj boruları ve soket takımları |
