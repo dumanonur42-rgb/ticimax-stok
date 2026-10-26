@@ -4,10 +4,10 @@ Toplam ürün: **2723**
 
 ## Görsel
 
-- Birebir ürün görseli: **19**
-- Aynı tip görsel: **740**
-- Görselsiz (bayraklı): **1964**
-- Farklı görsel dosyası: **99** (`gorseller/`)
+- Birebir ürün görseli: **23**
+- Aynı tip görsel: **719**
+- Görselsiz (bayraklı): **1981**
+- Farklı görsel dosyası: **110** (`gorseller/`)
 
 Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundaki ürünlere verildi (açık / lastik keçeli / metal kapaklı ayrı). Segman yuvalı (NR/N) rulmanlara, keçe, kayış, zincir, mekanik salmastra, kam makarası gibi doğru görseli bulunamayan ürünlere görsel konmadı. Alt bantta logosu bulunamayan markalarda alt bant boş bırakıldı ve bayrak eklendi.
 
@@ -15,15 +15,15 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 
 ### Marka logosu kontrolü
 
-- Logo eklenen marka: ARB, DASLAGER, CNJDB, GRW, NKE, EZO, ILJIN (139 ürün)
-- Resmî logosu doğrulanamadığı için görseli kaldırılan: 485 ürün
+- Logo eklenen marka: ARB, DASLAGER, CNJDB, GRW, NKE, EZO, ILJIN (101 ürün)
+- Resmî logosu doğrulanamadığı için görseli kaldırılan: 381 ürün
 - Alt bandı boş görsel: 0
 
 ### Gerçekçi görsel kontrolü
 
 - Ölçü çizgili / teknik çizim görsel: 0 (kaldırılan: 0)
-- Kesit görsel yerine tam görünüm konan: 1 farklı görsel (3 ürün)
-- Tam görünüm bulunamadığı için kesit görsel bırakılan (bayrak: "kesit görsel"): 59 farklı görsel (457 ürün)
+- Kesit görsel yerine tam görünüm konan: 1 farklı görsel (1 ürün)
+- Tam görünüm bulunamadığı için kesit görsel bırakılan (bayrak: "kesit görsel"): 65 farklı görsel (435 ürün)
 
 ## Kategori
 
@@ -149,10 +149,11 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 |---|---|
 | ölçüler doğrulanamadı, yazılmadı | 1637 |
 | doğru görsel bulunamadı | 1479 |
-| marka logosu doğrulanamadı, görsel kaldırıldı | 485 |
-| kesit görsel | 457 |
+| kesit görsel | 435 |
+| marka logosu doğrulanamadı, görsel kaldırıldı | 381 |
 | ürün tipi kaynakla doğrulanamadı, kategori boş bırakıldı | 279 |
 | marka koddan net anlaşılamadı | 190 |
+| kafes malzemesi aynı görsel bulunamadı, görsel kaldırıldı | 121 |
 | uygun mevcut kategori yok, yeni kategori önerildi | 29 |
 | keçe malzemesi belirtilmemiş | 12 |
 
