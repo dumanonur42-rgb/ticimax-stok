@@ -188,3 +188,8 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 ## Çok derin arama – 6. ilerleme
 - Çift sıralı sabit bilyalı 42/43..-BB-TVH: 17 ürün. Oynak bilyalı ..-M (pirinç kafes): 40 ürün. Oynak bilyalı ..-K-2RS-TVH: 9 ürün. Üçü de aynı Alman FAG bayisinin filigransız tam görünüş fotoğrafı; ürün üzerinde kod okunmuyor.
 - Görselsiz ürün: 310 → 244.
+
+## Çok derin arama – 7. ilerleme
+- Sabit bilyalı ..-MA (dış bilezik kılavuzlu pirinç kafes): 9 ürün. Sabit bilyalı ..-M (pirinç kafes): 3 ürün. Görseller aynı Alman FAG bayisinin filigransız fotoğrafları.
+- Reddedilen: 532/533 ve 542/543xx eksenel bilyalı (küresel yataklı pullu). Bayi bu kodlarda düz pullu genel görseli kullanıyor (54307 görseli 52210 ile birebir aynı), küresel pul görünmüyor. Bu 19 ürün görselsiz kaldı.
+- Görselsiz ürün: 244 → 232.
