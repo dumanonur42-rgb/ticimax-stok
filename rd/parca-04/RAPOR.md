@@ -174,3 +174,7 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - 41 farklı aynı tip görsel tek tek incelendi. Hiçbirinde ürün üzerinde okunabilir kod veya ölçü yok. Hepsi kadrajın içinde ve ortalı.
 - Düzeltilen: 1 görsel / 60 ürün. Oynak makaralı E1 görseli çelik sac kafesli, ama kullanıldığı 230/231/232..-E1-XL-TVPB ürünleri poliamid kafesli. Görsel kaldırıldı; bu ürünler görselsiz bırakıldı ve bayraklandı.
 - Görselsiz ürün: 438 → 498.
+
+## Çok derin arama – 4. ilerleme
+- Oynak makaralı ..-E1-XL-TVPB ve ..-E1-XL-K-TVPB (açık, siyah poliamid kafes): 119 ürün (59'u konik delikli). Görsel, bir Alman FAG bayisinin filigransız tam görünüş fotoğrafı. Ürün üzerinde kod okunmuyor. Hepsi aynı tip olarak bayraklı; konik delikli ürünlerin bayrağına konik deliğin görselde ayırt edilmediği yazıldı.
+- Görselsiz ürün: 498 → 379.
