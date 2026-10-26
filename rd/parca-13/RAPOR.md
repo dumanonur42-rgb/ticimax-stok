@@ -5,10 +5,10 @@
 | tür | adet |
 |---|---|
 | birebir | 762 |
-| ayni_tip | 885 |
-| resimsiz | 2016 |
+| ayni_tip | 936 |
+| resimsiz | 1965 |
 
-Farklı görsel dosyası: 777. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
+Farklı görsel dosyası: 784. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
 - birebir: WANDA ürünlerinin kendi temiz ürün fotoğrafları (arka plan temizlendi).
 - ayni_tip: NTN/SNR için ntnamericas.com resmi tip fotoğrafları; yalnızca kapak/keçe ve yapı tipi aynı olan kodlara (ör. sadece ZZ sabit bilyalı, açık açısal, NU/NJ/NUP/N silindirik, açık oynak makaralı çelik/pirinç kafes ayrı, koni+kep takımı konik).
 - NTN/SNR'de keçeli (LLU/LLB/2RS/EE), yataklı ünite, iğneli (iç bilezikli), slewing vb. için doğru görsel bulunamadı → resimsiz + bayrak.
@@ -46,17 +46,147 @@ Bayraklı ürün: 3663
 
 | bayrak | adet |
 |---|---|
-| Doğru görsel bulunamadı | 2016 |
+| Doğru görsel bulunamadı | 1965 |
 | Ölçüler teyit edilmedi | 1902 |
 | Ölçü dizisi tedarikçi notundaki haliyle; d/D/B sırası ayrıştırılmadı | 1574 |
-| Görsel aynı tipteki üretici fotoğrafıdır; kafes ve detaylar farklı olabilir | 885 |
+| Görsel aynı tipteki üretici fotoğrafıdır; kafes ve detaylar farklı olabilir | 567 |
 | Alt tip (direk/zincir/kombine) teyit edilmedi | 485 |
 | Kategori teyit edilemedi | 227 |
+| Görsel aynı ölçü serisindeki (MG45A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 20 |
+| Görsel aynı ölçü serisindeki (MG35A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 19 |
+| Görsel aynı ölçü serisindeki (MG35A7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 15 |
+| Görsel aynı ölçü serisindeki (MG40A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 15 |
 | İğneli rulman iç bileziği (tek başına bilezik) | 12 |
+| Görsel aynı ölçü serisindeki (MG55A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 12 |
+| Görsel aynı ölçü serisindeki (MG40A7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 11 |
 | Özel seri (ısıl stabilize/özel tolerans) – detay teyit edilmedi | 10 |
+| Görsel aynı ölçü serisindeki (MG30R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 10 |
+| Görsel aynı ölçü serisindeki (MG35R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 10 |
+| Görsel aynı ölçü serisindeki (MG45B7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 10 |
+| Görsel aynı ölçü serisindeki (MG40R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 9 |
+| Görsel aynı ölçü serisindeki (MG45A7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 9 |
+| Görsel aynı ölçü serisindeki (MG55A3) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 7 |
+| Görsel aynı ölçü serisindeki (MG75R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 7 |
+| Görsel aynı ölçü serisindeki (MG25R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 6 |
+| Görsel aynı ölçü serisindeki (CG40A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 6 |
+| Görsel aynı ölçü serisindeki (MG45R6) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 6 |
+| Görsel aynı ölçü serisindeki (MG25A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG28A7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG40R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG50A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG50A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG50R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG55R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG60R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 5 |
+| Görsel aynı ölçü serisindeki (MG55A4) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (CG35R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG42R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG28B7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG30B7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG35A5) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG35R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG35R6) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG35R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (MG55R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 4 |
+| Görsel aynı ölçü serisindeki (CG25B1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (CG30B1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (CG40R3) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (CG50B1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG30A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG30R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG40A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG45R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG60A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (MG65R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 3 |
+| Görsel aynı ölçü serisindeki (CG35A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (CG45A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (CG45N1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (CG45R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (CG50R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (CG55A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG100A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG25R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG28A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG35A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG35A9) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG35C1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG35E2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG40R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG40R6) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG45A4) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG45R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG50A8) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG60R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG62R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG65E2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG65R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG70R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (MG70X109) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 2 |
+| Görsel aynı ölçü serisindeki (C25X72) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (C58X80) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG25R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG30R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG35B1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG40A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG40A3) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG40C1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG40R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG45B1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG50A1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (CG60R1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (D28RO) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG140R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG25R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG28A2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG28R3) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG28R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG30N2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG33R6) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG35B7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG35R3) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG40A5) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG40A6) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG40C1) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG50B7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG50R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG55A7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG60E2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG65R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG70R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG75R7) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (MG90R2) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR16N33) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR60B41) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR60B42) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR60B52) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR65A67) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
+| Görsel aynı ölçü serisindeki (SR68N58) başka bir varyantın fotoğrafıdır; ayrıntılar farklı olabilir | 1 |
 
 ## yeni_kategori_onerileri
 - `RULMAN>DÖNER TABLA (SLEWING) RULMANLARI` — 108 ürün. WANDA döner tabla (slewing ring) rulmanları; mevcut ağaçta karşılığı yok, forklift kategorisine ait değiller.
 
 ## Örnek sayfalar
 `ornek_1.jpg`, `ornek_2.jpg` (40'ar görsel, kodlu).
+
+## 2. tur görsel araştırması
+| | önce | sonra |
+|---|---|---|
+| birebir | 762 | 762 |
+| ayni_tip | 885 | 936 |
+| kesit | 0 | 0 |
+| resimsiz | 2016 | 1965 |
+
+- kesit → birebir: 0, ayni_tip → birebir: 0.
+- Aynı tip görsel kontrolü (üstünde farklı kod/ölçü okunan, birden fazla ürün gösteren, başka marka yazılı): 534 ürün düzeltildi (211 konik görseli temiz fotoğrafla değişti, 323 ürünün görseli kaldırıldı: oynak bilyalı, oynak makaralı çelik/pirinç, tek sıra açısal).
+- Eklenen: WANDA aynı ölçü serisi görselleri 369 (356 kod kökünden + 13 OEM notundaki seri kodundan), NTN iç bilezikli iğneli (NA48/NA49/NA69/NKI) 5.
+- Tüm farklı görseller: tum_gorseller_1.jpg, tum_gorseller_2.jpg (774 görsel).
+
+### Hâlâ resimsiz kalanlar ve nedenleri
+- WANDA forklift/OEM numaralı (~520): kod kökü yok ya da aynı kökte temiz fotoğraf yok; resmi sitede bu kodlar için çoğunlukla ölçü çizimi + gri CAD görseli var.
+- WANDA slewing (67): resmi görseller ölçü çizimi.
+- NTN sabit bilyalı açık / LLU / EE (~200): ntnamericas, ntnglobal, ntn-snr.com'da açık ve keçeli tek ürün fotoğrafı yok; ntnglobal görselleri 200 px ve kesitli.
+- NTN/SNR oynak makaralı EA/EAD/EAKW (~165): mevcut fotoğraflarda birden fazla ürün ya da farklı kod okunuyor; ntn-snr.com görselleri çok küçük render.
+- NTN hassas açısal UADG/UCG/CG GNP (~110): temiz tek ürün fotoğrafı yok.
+- SNR yataklı üniteler ve insertler (~200): ntn-snr.com'da sadece çok ürünlü sahne görselleri; ntnglobal ünite fotoğrafları 200x150 px ve NTN döküm yazılı.
+- NTN iğneli (HK, HMK, B-, IR, NA..R, NA59) (~110): tip fotoğrafı yok ya da yapı farkı teyit edilemedi.
+Denenen kaynaklar: ntnamericas.com, ntnglobal.com (tarayıcıyla), ntn-snr.com (tarayıcıyla), wandabearing.com, ürün notlarındaki eşdeğer kodlar.
