@@ -157,3 +157,10 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Oynak makaralı ..-E1 (açık, silindirik delik, çelik kafes): 60 ürün. Kaynak: filigransız resmi kesit render'ı. Aynı tip + kesit bayraklı.
 - Reddedilenler: filigranlı Alman bayi fotoğrafı (22210-E1); kutusu görünen fotoğraf; markası belli olmayan oynak bilyalı fotoğrafı.
 - Görselsiz ürün: 823 → 570.
+
+## Çok derin arama – 2. ilerleme
+- Oynak bilyalı ..-2RS-TVH (iki tarafı contalı, poliamid kafes): 30 ürün. Avusturyalı FAG/INA bayisinin filigransız resmi kesit görseli. Aynı tip + kesit bayraklı.
+- Çift sıralı sabit bilyalı 42/43..-B-TVH: 15 ürün. Aynı bayinin filigransız resmi kesit görseli. Aynı tip + kesit bayraklı.
+- Fıçı makaralı 202/203..-TVP (poliamid kafes): 36 ürün. Alman bayide "FAG" adıyla yayınlanan gerçek ürün fotoğrafı; arka plan beyazlatıldı. Aynı tip bayraklı.
+- Reddedilen: aynı bayideki eksenel bilyalı görseli (ölçü çizgili çizim); başka bayide 20210-TVP için konan farklı (contalı) rulman görseli.
+- Görselsiz ürün: 570 → 489.
