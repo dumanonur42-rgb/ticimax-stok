@@ -3,10 +3,10 @@
 ## Ürün sayıları
 
 - Ürün sayısı: 3625
-- Birebir görsel: 2735
-- Aynı tip görsel: 676
-- Resimsiz: 214
-- Bayraklı ürün: 2319
+- Birebir görsel: 2740
+- Aynı tip görsel: 709
+- Resimsiz: 176
+- Bayraklı ürün: 2315
 - Boş kategorili: 7
 
 ## Kategori dağılımı
@@ -81,14 +81,14 @@
 - Kesit görselden ürüne özgü gerçek fotoğrafa geçiş: 0.
 - Aynı tip görselden birebir görsele yükseltilen ürün: 0.
 - Nihai ürün verisinde kesit görselli ürün: 1988; tam görselli ürün: 1423.
-- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 147.
+- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 153.
 - FAG görsel dosyası: 1.
-- Kullanılan farklı bitmiş görsel dosyası: 148; örnek sayfalarında: 80.
+- Kullanılan farklı bitmiş görsel dosyası: 154; örnek sayfalarında: 80.
 
 ## İkinci görsel turu
 
 - Önce: birebir 2749, aynı_tip 256, yok 620; kesit görselli ürün 1661.
-- Sonra: birebir 2735, aynı_tip 676, kesit bayraklı 1988, yok 214.
+- Sonra: birebir 2740, aynı_tip 709, kesit bayraklı 1988, yok 176.
 - Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 7.
 - Ölçü çizgisi temizlenerek eklenen yeni görsel: 0. Kalan ürünlerin üretici kaynaklarında yalnızca düz teknik çizim veya yer tutucu var; gerçekçi ölçülü render yok.
 - Diğer parçalardan (04–06) alınan görsel: 0; bu dallarda aynı seri INA ürünü yok.
@@ -101,20 +101,33 @@
 - Aynı tip görsel kontrolü: 48 farklı görsel incelendi; ürün üzerinde farklı kod/ölçü yazan görsel yok; 3 görsel renkli çizim benzeri olduğu için kaldırıldı (42 ürün).
 - Her kalan seri için denenen kaynaklar: Schaeffler medias (tüm bölgeler aynı veri; `_a`/`_b`/`_d`/`_f` görselleri), 04–06 parça dalları, yetkili bayi/pazar yeri sayfaları (abf.store, ekugellager.de, bearingoffice.com, simplybearings.co.uk, blueperry.co.uk, acorn-ind.co.uk, ashleybearings.co.uk, eurobearing.de, misumi-ec.com, coolenbearings.com, motion.com, nodeshk.com, bearingmodel.com, sunrisebearingsfl.com).
 - Reddedilen kaynaklar: filigran (ABF, ekugellager SAMPLE, bearingoffice, acorn); kutu+bayi etiketi (sunrise); markasız genel fotoğraf (Ashley NKIA, simplybearings PCJT-TV); farklı yapı (simplybearings PBY eksantrik bilezikli; RCJY45-TV-VA paslanmaz/vidalı).
-- Renkli/çizim benzeri görsel nedeniyle kaldırılan ürün sayısı: 42; kalan-yok toplamı: 214.
+- Renkli/çizim benzeri görsel nedeniyle kaldırılan ürün sayısı: 42; kalan-yok toplamı: 176.
 
 ### Derin arama 2
 
 - Schaeffler bölge siteleri (cn/jp/kr/in/br/us) denendi: 251 kodun 74'ünde ürün sayfası var; 22 yeni görsel çıktı, hepsi ölçülü teknik çizim olduğu için kullanılmadı.
 - Bayinin seri görselleri (cmt.gmbh): 36 ürün aynı tip, 1 ürün birebir; hepsi kesit (`kesit gorsel` bayraklı), 5 farklı JPG.
 
+### Derin arama 3
+
+- archive.org katalog aramasında INA/FAG kataloğu bulunmadı. Schaeffler görsel sunucusunun archive.org CDX taramasında 28.695 URL incelendi; bu seriler için ürün fotoğrafı çıkmadı.
+- Tmall/JD/1688 aramaları giriş/captcha gerektirdiği için erişilemedi; Amazon'da sonuç bulunmadı.
+- eBay'den kabul edilen 5 fotoğraf:
+  - `PCJ20_TV_1.jpg` ([eBay](https://www.ebay.com/itm/126694834659)): PCJ20-TV-FA125.5 birebir; PCJ25/30/35/40/45/50-TV-FA125.5 aynı tip.
+  - `PCJT20_TV_0.jpg` ([eBay](https://www.ebay.com/itm/126694835091)): PCJT20-TV-FA125.5 birebir; PCJT25/30/35/40/45/50-TV-FA125.5 aynı tip.
+  - `RASEA20_XL_N_0.jpg` ([eBay](https://www.ebay.com/itm/185394223767)): RASEA20-XL-N birebir; RASEA25/30/35/40/50-XL-N aynı tip.
+  - `KASK05_3.jpg` ([eBay](https://www.ebay.com/itm/296696484195)): tam fotoğraf KASK05 birebir; etiketsiz kapak kırpımı KASK04/06/07/08/10/12 aynı tip.
+  - `K89310_TV_2.jpg` ([eBay](https://www.ebay.com/itm/126694835344)): K89310-TV/0-8 birebir; K89306/07/08/09/11/12/13/14/15/16-TV/0-8 aynı tip.
+- Reddedilen PNA20/42-XL görselleri: yalnızca kutu fotoğrafları, SW-HDSM filigranlı görsel ve teknik çizim.
+
 ### Yakın tip önerisi (uygulanmadı)
 
-- 214 görselsiz ürün için öneri dosyaları: 8 önerilebilir (aynı ölçü, sadece keçe/ek farkı), 74 önerilmez (farklı seri/ölçü grubu, termoplastik gövde, ZW çift sıra), 132 aynı seride görselli aday yok.
+- 176 görselsiz ürün için öneri dosyaları: 8 önerilebilir (aynı ölçü, sadece keçe/ek farkı), 49 önerilmez (farklı seri/ölçü grubu, termoplastik gövde, ZW çift sıra), 119 aynı seride görselli aday yok.
 - Öneriler yalnızca öneri olarak dışa aktarıldı; ürün verisine uygulanmadı.
 - Dosyalar: `yakin_tip_oneri.json` ve `yakin_tip_oneri.csv`.
 
-- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (40 farklı kaynak görseli).
+- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (46 farklı kaynak görseli).
+- Yeni pazaryeri görselleri inceleme sayfası: `pazaryeri_yeni.jpg` (6 farklı JPG).
 
 ### Kalan görselsiz ürünler
 
@@ -123,17 +136,12 @@
 | NKIA | 30 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | KRVE PP-A | 10 | Tam dolu eksantrik kam makarası; üreticide fotoğraf yok, kafesli KRE görseli yapı olarak farklı |
 | KRV B | 2 | B tasarımlı tam dolu kam makarası; aynı yapıda görsel bulunamadı |
-| K TV | 11 | K893 eksenel makara kafesi; elimizdeki K811/K812 görseli farklı seri |
 | SL E | 11 | SL05/SL06 çift sıra makara rulmanı; elimizdeki tek sıra SL1818 görseli farklı yapı |
 | PNA | 9 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RPNA | 9 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | SL A | 9 | SL11/12/13/16 serisi; elimizdeki SL0248/0249 görseli farklı yapı |
-| KASK | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | KRE B | 1 | B tasarımlı eksantrik kam makarası; aynı yapıda görsel bulunamadı |
-| PCJ TV-FA125.5 | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| PCJT TV-FA125.5 | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | PBY | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| RASEA N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | RASEL N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | ZSL | 5 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | NAO TV | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
@@ -192,13 +200,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>K TV — 11 kod</summary>
-
-`K89306-TV/0-8`, `K89307-TV/0-8`, `K89308-TV/0-8`, `K89309-TV/0-8`, `K89310-TV/0-8`, `K89311-TV/0-8`, `K89312-TV/0-8`, `K89313-TV/0-8`, `K89314-TV/0-8`, `K89315-TV/0-8`, `K89316-TV/0-8`
-
-</details>
-
-<details>
 <summary>SL E — 11 kod</summary>
 
 `SL05016-E-C3`, `SL05020-E-C3`, `SL05024-E-C3`, `SL05028-E`, `SL05030-E`, `SL05032-E`, `SL06020-E-C3`, `SL06024-E-C3`, `SL06026-E`, `SL06028-E`, `SL06032-E`
@@ -227,13 +228,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>KASK — 7 kod</summary>
-
-`KASK04`, `KASK05`, `KASK06`, `KASK07`, `KASK08`, `KASK10`, `KASK12`
-
-</details>
-
-<details>
 <summary>KRE B — 1 kod</summary>
 
 `KRE26-B-NMT`
@@ -241,30 +235,9 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>PCJ TV-FA125.5 — 7 kod</summary>
-
-`PCJ20-TV-FA125.5`, `PCJ25-TV-FA125.5`, `PCJ30-TV-FA125.5`, `PCJ35-TV-FA125.5`, `PCJ40-TV-FA125.5`, `PCJ45-TV-FA125.5`, `PCJ50-TV-FA125.5`
-
-</details>
-
-<details>
-<summary>PCJT TV-FA125.5 — 7 kod</summary>
-
-`PCJT20-TV-FA125.5`, `PCJT25-TV-FA125.5`, `PCJT30-TV-FA125.5`, `PCJT35-TV-FA125.5`, `PCJT40-TV-FA125.5`, `PCJT45-TV-FA125.5`, `PCJT50-TV-FA125.5`
-
-</details>
-
-<details>
 <summary>PBY — 6 kod</summary>
 
 `PBY12-XL`, `PBY15-XL`, `PBY17-XL`, `PBY20-XL`, `PBY25-XL`, `PBY30-XL`
-
-</details>
-
-<details>
-<summary>RASEA N — 6 kod</summary>
-
-`RASEA20-XL-N`, `RASEA25-XL-N`, `RASEA30-XL-N`, `RASEA35-XL-N`, `RASEA40-XL-N`, `RASEA50-XL-N`
 
 </details>
 
