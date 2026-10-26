@@ -305,6 +305,105 @@
   "kesit": false,
   "fark": "bu üründe var, görselde yok: ['ZO']; görselde var, bu üründe yok: ['DO']"
  },
+ "27485": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): FA125,1",
+  "stok_kodu": "INA GG.CJT05-N-FA125.1",
+  "kaynak_urun": "INA GG.CJT04-N",
+  "gorsel": "54972378ac52.jpg",
+  "gorsel_tur_kaynak": "birebir",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: ['FA125', '1']; görselde var, bu üründe yok: -"
+ },
+ "27521": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME04-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27522": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME05-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27524": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME07-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27525": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME08-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27526": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): N",
+  "stok_kodu": "INA GG.ME09",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['N']"
+ },
+ "27527": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME10-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27528": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): N",
+  "stok_kodu": "INA GG.ME11",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['N']"
+ },
+ "27529": {
+  "risk": "görünmez fark (boşluk/hassasiyet/X-life)",
+  "stok_kodu": "INA GG.ME12-N",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: -"
+ },
+ "27530": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): N",
+  "stok_kodu": "INA GG.ME14",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['N']"
+ },
+ "27531": {
+  "risk": "görünür fark olabilir (kafes/keçe/tasarım): N",
+  "stok_kodu": "INA GG.ME16",
+  "kaynak_urun": "INA GG.ME06-N",
+  "gorsel": "c1f7b327ebca.jpg",
+  "gorsel_tur_kaynak": "ayni_tip",
+  "kesit": false,
+  "fark": "bu üründe var, görselde yok: -; görselde var, bu üründe yok: ['N']"
+ },
  "27667": {
   "risk": "görünür fark olabilir (kafes/keçe/tasarım): TV,5",
   "stok_kodu": "INA GLCTE20-TV-FA125.5",

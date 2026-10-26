@@ -4,10 +4,10 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 
 ## Görseller
 
-- Birebir: **1305**
-- Aynı tip: **1823**
-- Görselsiz: **500**
-- Farklı görsel dosyası: **129** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
+- Birebir: **1336**
+- Aynı tip: **1970**
+- Görselsiz: **322**
+- Farklı görsel dosyası: **156** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
 
 - Kaynak: Schaeffler medias ürün görselleri. Üst bant Yamansa (sablon.png), alt bant marka logosu (INA: gönderilen resmi yeşil karo logo, FAG: kırmızı FAG yazısı).
 - Tedarikçi fotoğrafları kullanılmadı (çoğu kutu/sandık gösteriyor ya da başka logo içeriyor).
@@ -102,11 +102,12 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - kategori tedarikçi ürün tanımına göre: 72
 - kategori seri önekine göre: 68
 - üreticide bu ürün için yalnızca ölçülü/teknik çizim görseli var; görsel eklenmedi: 67
+- aynı seri gerçek fotoğraf (… labirent keçe): 54
+- satıcı sayfasındaki temiz ürün fotoğrafı (aynı gövde): 24
+- aynı seri gerçek fotoğraf (GG.CJ dökme gövde, …): 15
+- aynı seri gerçek fotoğraf (GG.CFT dökme gövde, …): 11
+- aynı seri gerçek fotoğraf (GG.ASE dökme gövde, …): 10
 - üretici katalogunda bu ürün için gerçek görsel yok; görsel eklenmedi: 10
-- üretici katalogunda ürün FAG markalı görünüyor: 8
-- üretici katalogunda ürün INA markalı görünüyor: 3
-- stok kodundaki marka (INA) ile üretici grubu (FAG) farklı: 2
-- üreticinin HFL serisi ürün grubu fotoğrafı: 1
 
 
 ## Yöntem
@@ -114,33 +115,66 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - Örnek sayfalar: `ornek_1.jpg`, `ornek_2.jpg`; tüm görseller: `tum_gorseller.jpg`.
 
 
-## İkinci tur görsel araştırması (güncel)
-| | önce | sonra |
+## Görsel araştırması — güncel durum
+| | ilk teslim | şimdi |
 |---|---|---|
-| birebir (gerçek görünüş) | 193 | 193 |
-| aynı tip | 875 | 1016 |
+| birebir (gerçek görünüş) | 193 | 224 |
+| aynı tip | 875 | 1163 |
 | kesit (bayraklı) | 1409 | 1919 |
-| görselsiz | 1151 | 500 |
+| görselsiz | 1151 | 322 |
 
-- Ölçü çizgileri ürünün dışından temizlenen gerçekçi render: 15 görsel, 405 ürün (`temizlenen_once_sonra.jpg`, 10 örnek). Çizgisi gövdeye değen QJ görselleri kullanılmadı.
-- Aynı tip görsellerin hepsi (72 farklı görsel) büyütülerek kontrol edildi: üzerinde okunan farklı kod/ölçü yok, kadrajdan taşan yok, renk/malzeme uyumsuzluğu yok → düzeltilen 0.
-- Parça 04/05/07 dallarında kalan seriler için aynı yapıda görsel bulunamadı.
+- Ölçü çizgileri ürünün dışından temizlenen 15 render: 405 ürün. Hepsi %100 büyütmede yeniden kontrol edildi; ilk temizlikte kenarı kesilenler (örn. 00006BCD, 00006BDF) kenar kaybı olmadan yeniden üretildi (`temizlenen_once_sonra.jpg`).
+- Satıcı/dağıtıcı sayfalarından alınan, filigransız ve logosuz gerçek fotoğraflar: 178 ürün (INA GG./GEH. dökme gövdeler, FAG TSV labirent keçeler). Aynı kodun fotoğrafı varsa birebir, yoksa aynı serinin fotoğrafı (üzerinde okunan farklı kod yok) kullanıldı.
+- Aynı tip görsellerin hepsi büyütülerek kontrol edildi: farklı kod/ölçü okunan, kadrajdan taşan, renk/malzemesi uymayan görsel yok.
 
-### Kalan görselsiz ürünler (seri → adet)
-- INA GG./GEH./GRG. dökme yatak gövdeleri (rulmansız, eski seri): 155 — üretici e-katalogunda artık yok; bulunan satıcı fotoğrafları logolu/filigranlı ya da rulmanlı gövde.
-- INA F-xxxxxx özel kodlar: 64 — üreticiye özel çizim numaraları, katalogda kaydı yok, tipi doğrulanamadı.
-- FAG TSV (SNV gövde labirent keçesi): 55 — üretici katalogunda görsel yok.
-- FAG U2 oturma pulları: 41 — üreticinin tek görseli düz turkuaz çizim tarzı, kural gereği kullanılmadı.
-- FAG Z-xxxxxx özel kodlar: 31, ZRB/ZRO. masuralar: 16 — katalogda kaydı yok.
-- FAG QJ..-XL-TVP: 19 — tek resmi görselde ölçü çizgisi gövdenin üstünden geçiyor.
-- FAG SP pullar: 19, STR/PULLER aletler: 16 — katalogda görsel yok.
-- Diğer küçük seriler (NU özel ekli, GIHRK..-2RS, HK, FLAN, AKL, FF, KXN4, G52..): kalan 84.
-Denenen kaynaklar: medias.schaeffler.com arama servisi (kod ve seri öneki, 69 seri sorgusu), Schaeffler görsel sunucusu varyantları, ürün grubu görselleri, parça 04/05/07 dalları, genel web araması (satıcı/dağıtıcı sayfaları).
+### Kalan görselsiz ürünler (seri → adet, neden)
+- INA F: 64
+- FAG U: 41
+- FAG Z: 31
+- FAG QJ: 19
+- FAG SP: 19
+- FAG NU: 13
+- INA GIHRK: 13
+- FAG ZRB: 12
+- INA GG.ME: 10
+- FAG STR: 9
+- INA : 7
+- INA GG.CF: 7
+- INA HK: 7
+- INA FLAN: 6
+- FAG PULLER: 5
+- INA AKL: 5
+- INA FF: 5
+- INA G: 5
+- INA GEHCF: 5
+- INA GLCTE: 5
+- FAG ZRO.: 4
+- INA GG.SFT: 4
+- INA GEHLCTE: 3
+- FAG PULLERTRISECTION: 2
+- INA GE: 2
+- INA GRG.RABR: 2
+- FAG NUP: 1
+- FAG R: 1
+- FAG RG: 1
+- FAG RNAO: 1
+- FAG SD: 1
+- FAG T: 1
+- INA AB.RUS: 1
+- INA AYN: 1
+- INA BCH: 1
+- INA BF: 1
+- INA BK: 1
+- INA GG.CJT: 1
+- INA GG: 1
+- INA GGSHE: 1
+- INA GRA: 1
+- INA HFLZ: 1
+- INA HV: 1
 
-### Temizlenen görsellerin yeniden kontrolü
-- 15 temizlenmiş render %100 büyütmede tek tek incelendi. İlk temizlikte birkaç görselde (örn. 00006BCD, 00006BDF) bilezik kenarından ince parçalar silinmişti.
-- Temizlik yeniden yapıldı: yalnızca ürün gövdesine bağlı olmayan ölçü çizgisi/harf parçaları siliniyor, gövdeye bitişik ince kenar çizgileri geri konuyor. Yeni hallerinde kenar kesiği yok (`temizlenen_once_sonra.jpg`, 15 görselin hepsi).
+Nedenler (özet): INA F- / FAG Z- özel çizim numaraları üretici katalogunda yok; FAG U2 pullarında yalnızca düz turkuaz çizim ya da filigranlı satıcı fotoğrafı var; FAG QJ..-XL-TVP görselinde ölçü çizgisi gövdenin üstünden geçiyor; FAG SP, STR, PULLER, ZRB/ZRO ve INA GG.CF/ME/SFT/LCTE için temiz fotoğraf bulunamadı.
+Denenen kaynaklar: Schaeffler arama servisi ve görsel sunucusu (tüm varyantlar), Schaeffler/INA eski katalog PDF'leri (gömülü görseller), web.archive.org eski medias sayfaları, parça 04/05/07 dalları, Kramp, BearingBoys, ABF/247industries (filigranlı), Misumi, Acorn, Amazon, Çin/Rus satıcı siteleri.
 
 ### Sahibin onayına hazırlanan, UYGULANMAYAN listeler (`oneriler/`)
-- `yakin_tip_oneri.json`: aynı seride yalnızca küçük farkı olan ürünün görseli önerisi; her satırda fark ve "görünür / görünmez fark" notu var.
-- `fz_temel_tip.json`: F-/Z- özel çizim numaraları için web listelerinden bulunan temel tip (üretici katalogunda kayıtları yok).
+- `yakin_tip_oneri.json`: aynı seride yalnızca küçük farkı olan ürünün görseli; her satırda fark ve "görünür / görünmez fark" notu.
+- `fz_temel_tip.json`: F-/Z- özel numaralar için web listelerinden bulunan temel tip.
