@@ -222,5 +222,5 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - 32/33xx: Amazon/neeep "3310-BD-XL" fotoğrafında siyah poliamid kafes görünüyor, BD serisi ise çelik sac kafesli. Başlık ile görsel çeliştiği ve FAG markası görselde görünmediği için kullanılmadı. MRO ve ap.cool sayfalarında görsel çekilemedi.
 - 222/223xx-MB1 ve 239/240xx-S-MB: Misumi, Alman FAG mağazası (BE-XL çelik kafes render'ı), Çin bayi sayfaları, Gürcistan ve Hong Kong bayileri. Pirinç kafesi görünen FAG fotoğrafı bulunamadı.
 - 532/533/543xx: Kanada/ABD bayileri, SKF sayfası (marka farklı, kullanılamaz), Çin görsel sitesi. Küresel pulu görünen FAG fotoğrafı yok.
-- Tersine görsel arama: SAMPLE yazılı görseller bayinin kendi çekimi. Bulunan kopyalar yine aynı bayiden geliyor, temiz asıl bulunamadı.
+- Tersine görsel arama (Lens/Bing/Yandex/TinEye) bu turda yapılamadı. Bunun yerine kod ve başlıkla metin araması yapıldı.
 - Yeni görsel: 0. Görselsiz ürün 218.
