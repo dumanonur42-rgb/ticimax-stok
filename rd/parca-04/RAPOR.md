@@ -78,3 +78,61 @@ Aynı tip görsel kuralı: kod eklerinden conta/kapak (2RS/2RSR/2HRS → lastik 
 - Schaeffler ürün sayfaları sunucu hatası veriyor. Medya arşivindeki fotoğraflar seri/tip tanıtım fotoğrafı; belirli bir koda bağlı değil, bu yüzden birebir sayılmadı.
 - Bayi sayfalarındaki fotoğraflar ya üreticinin aynı render'ı, ya filigranlı ya da kopyalanması yasak (ör. "copying prohibited" notu). Kullanılmadı.
 - Sonuç: gerçek fotoğrafla değiştirilen kesit görsel 0, birebire yükseltilen aynı tip görsel 0. Kesit görseller "kesit gorsel" bayrağıyla kaldı.
+
+## İkinci görsel turu (derin arama)
+- Taranan kaynaklar: Schaeffler katalog araması, görsel sunucusunun bütün boyut varyantları, Schaeffler bölge sitesi ürün sayfaları (galeri ve TECH görselleri), Schaeffler medya arşivi, resmi Schaeffler distribütörü ve bayi sayfaları, Wikimedia Commons.
+- Bulgular: Schaeffler'de ürün başına tek galeri görseli var. Ek TECH görselleri ölçü çizgili çizim. Resmi distribütörün gerçek fotoğraflarında distribütör filigranı var; bayilerde ya aynı render, ya filigranlı görsel, ya da farklı ürün görseli var. Commons'ta aynı yapıda (aynı kafes/conta) FAG fotoğrafı yok.
+- Sonuç: birebir gerçek fotoğrafa yükseltilen 0, yeni aynı tip görsel 0, kesit görselle doldurulan 0.
+
+Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
+
+| sebep | seri/tip | adet |
+|---|---|---|
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Self-aligning ball bearing #..-TVH, plastic cage | 125 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial deep groove ball bearing #, single direction, steel sheet metal cage | 68 |
+| Kod üretici kataloğunda yok (eski/eksik kod); tip doğrulanamadığı için görsel konamadı |  | 63 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Spherical roller bearings #..-E#, main dimensions to DIN #-# | 60 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Self-aligning ball bearing #..-K-TVH, tapered bore taper #:#, plastic cage | 51 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Barrel roller bearings #, main dimensions to DIN #-# | 49 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Self-aligning ball bearing #..-M, solid brass cage | 40 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial deep groove ball bearing #, double direction, steel sheet metal cage | 36 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial deep groove ball bearing #..-MP, single direction, solid brass cage | 35 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Spherical roller bearings #..-E#-K, main dimensions to DIN #-#, with tapered bore, taper # | 30 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Self-aligning ball bearing #..-#RS-TVH, seals, plastic cage | 30 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial angular contact ball bearings #, double direction, separable, restricted tolerances | 26 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Barrel roller bearing #..-MB | 18 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Deep groove ball bearing #..-BB-TVH, double row, plastic cage | 17 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 223xx | 15 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Deep groove ball bearing #..-B-TVH, double row, plastic cage | 15 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 230xx | 13 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial deep groove ball bearing #, single direction, with spherical housing washer, steel s | 12 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 231xx | 11 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 232xx | 11 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Self-aligning ball bearing #..-K-#RS-TVH, tapered bore taper #:#, seals, plastic cage | 9 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 618xx | 9 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 222xx | 8 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Axial deep groove ball bearing #, double direction, with spherical housing washer, steel s | 7 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 600xx | 6 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 240xx | 5 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 321xx | 5 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 331xx | 5 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 620xx | 5 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 630xx | 5 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Spherical roller bearings #..-K, main dimensions to DIN #-#, with tapered bore, taper #:# | 4 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 380xx | 4 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 624xx | 4 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 161xx | 3 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 322xx | 3 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 609xx | 3 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 130xx | 2 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 203xx | 2 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 627xx | 2 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 108xx | 1 |
+| Üreticide bu seri/tip için yalnızca ölçü çizgili çizim veya CAD görseli var; fotoğraf gibi görünen resmi görsel yok | Barrel roller bearing #..-K-MB | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 233xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 320xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 607xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 608xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 619xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 625xx | 1 |
+| Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 626xx | 1 |
