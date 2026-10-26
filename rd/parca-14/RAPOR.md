@@ -1,7 +1,7 @@
 # Parça 14 ürün kataloğu
 
 - Ürün kaydı: **3,592**
-- Görsel: birebir **327**, aynı tip **0**, resimsiz **3265**.
+- Görsel: birebir **327**, aynı tip **5**, resimsiz **3260**.
 - çizim/ölçü çizgili görsel: kullanılmadı (ART resmi görselleri teknik çizim olduğu için alınmadı)
 - kesit görsel: **0**
 - Düzeltilmiş, tam kodla eşleşen BMS katalog fotoğrafı: **52**.
@@ -34,3 +34,4 @@
 ## Görsel örnekleri
 
 - `ornek_1.jpg` ve `ornek_2.jpg`: nihai görsellerden 40’ar örnek, stok kodu etiketli.
+- Aynı tip görseller: sabit 60 serisi açık ve sabit 62 serisi açık; farklı seri veya kapak tiplerine uygulanmadı.
