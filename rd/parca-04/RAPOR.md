@@ -184,3 +184,7 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Fıçı makaralı 202/203xx-MB ve -K-MB (pirinç kafes): 33 ürün. Kaynak aynı bayinin filigransız fotoğrafı.
 - Reddedilenler: üzerinde "SAMPLE" yazan görseller (MP pirinç kafesli eksenel, 2344xx, 20217-MB). 2305-M sayfasındaki farklı ürün (geniş iç bilezikli) görseli. Pirinç kafesi olduğu halde görselde pirinç görünmeyen MB1 görseli. 532/533xx için küresel yataklı pul görselde ayırt edilemediği için o görsel de kullanılmadı.
 - Görselsiz ürün: 379 → 310.
+
+## Çok derin arama – 6. ilerleme
+- Çift sıralı sabit bilyalı 42/43..-BB-TVH: 17 ürün. Oynak bilyalı ..-M (pirinç kafes): 40 ürün. Oynak bilyalı ..-K-2RS-TVH: 9 ürün. Üçü de aynı Alman FAG bayisinin filigransız tam görünüş fotoğrafı; ürün üzerinde kod okunmuyor.
+- Görselsiz ürün: 310 → 244.
