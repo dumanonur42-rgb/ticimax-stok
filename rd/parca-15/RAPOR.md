@@ -11,12 +11,18 @@ Toplam ürün: **2723**
 
 Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundaki ürünlere verildi (açık / lastik keçeli / metal kapaklı ayrı). Segman yuvalı (NR/N) rulmanlara, keçe, kayış, zincir, mekanik salmastra, kam makarası gibi doğru görseli bulunamayan ürünlere görsel konmadı. Alt bantta logosu bulunamayan markalarda alt bant boş bırakıldı ve bayrak eklendi.
 
-Örnek sayfalar: `ornek_1.jpg`, `ornek_2.jpg`
+Örnek sayfalar: `ornek_1.jpg`, `ornek_2.jpg`; tüm farklı görseller: `tum_gorseller.jpg`
+
+### Gerçekçi görsel kontrolü
+
+- Ölçü çizgili / teknik çizim görsel: 0 (kaldırılan: 0)
+- Kesit görsel yerine tam görünüm konan: 1 farklı görsel (3 ürün)
+- Tam görünüm bulunamadığı için kesit görsel bırakılan (bayrak: "kesit görsel"): 60 farklı görsel (827 ürün)
 
 ## Kategori
 
 - Kategorisi boş (bayraklı): **191**
-- En az bir bayrağı olan ürün: **2711**
+- En az bir bayrağı olan ürün: **2717**
 
 ### Ana kategori dağılımı
 
@@ -138,6 +144,7 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 | ölçüler doğrulanamadı, yazılmadı | 1637 |
 | doğru görsel bulunamadı | 1479 |
 | marka logosu bulunamadı, görselin alt bandı boş | 830 |
+| kesit görsel | 827 |
 | ürün tipi kaynakla doğrulanamadı, kategori boş bırakıldı | 279 |
 | marka koddan net anlaşılamadı | 190 |
 | uygun mevcut kategori yok, yeni kategori önerildi | 29 |
