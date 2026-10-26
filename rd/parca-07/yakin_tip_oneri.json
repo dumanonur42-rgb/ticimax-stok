@@ -44,13 +44,6 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "336457",
-  "stok_kodu": "INA KGSNG40-PP-AS",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "28830",
   "stok_kodu": "INA KRE26-B-NMT",
   "aday": "KRE26-PP-A-NMT",
@@ -91,76 +84,6 @@
   "durum": "önerilebilir"
  },
  {
-  "id": "28926",
-  "stok_kodu": "INA KRVE16-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28931",
-  "stok_kodu": "INA KRVE30-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28933",
-  "stok_kodu": "INA KRVE32-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28935",
-  "stok_kodu": "INA KRVE35-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28937",
-  "stok_kodu": "INA KRVE40-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28940",
-  "stok_kodu": "INA KRVE52-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28942",
-  "stok_kodu": "INA KRVE62-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28944",
-  "stok_kodu": "INA KRVE72-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28946",
-  "stok_kodu": "INA KRVE80-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "28948",
-  "stok_kodu": "INA KRVE90-PP-A-NMT",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "336767",
   "stok_kodu": "INA KWVE20-B-EC-V1-G4",
   "aday": "",
@@ -175,16 +98,6 @@
   "aday_gorsel": "c17ad279e088.jpg",
   "aday_kesit": false,
   "fark": "üründe var, adayda yok: NPP, U; ölçü kodu 202 / 50X55X20,5; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "29024",
-  "stok_kodu": "INA LR204-NPP-U",
-  "aday": "LR50X55X20,5",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "c17ad279e088.jpg",
-  "aday_kesit": false,
-  "fark": "üründe var, adayda yok: NPP, U; ölçü kodu 204 / 50X55X20,5; farklı seri/ölçü grubu",
   "durum": "önerilmez"
  },
  {
@@ -205,16 +118,6 @@
   "aday_gorsel": "897f8db66279.jpg",
   "aday_kesit": true,
   "fark": "ölçü kodu 6002 / 50/7; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "333073",
-  "stok_kodu": "INA LR606-2Z-HLC",
-  "aday": "LR5200-2Z",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "897f8db66279.jpg",
-  "aday_kesit": true,
-  "fark": "üründe var, adayda yok: HLC; ölçü kodu 606 / 5200; farklı seri/ölçü grubu",
   "durum": "önerilmez"
  },
  {
@@ -439,13 +342,6 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "29655",
-  "stok_kodu": "INA NKIA5911-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "29656",
   "stok_kodu": "INA NKIA5912",
   "aday": "",
@@ -516,20 +412,6 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "29666",
-  "stok_kodu": "INA NKIB5902",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29667",
-  "stok_kodu": "INA NKIB5902-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "29668",
   "stok_kodu": "INA NKIB5903",
   "aday": "",
@@ -586,20 +468,6 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "29676",
-  "stok_kodu": "INA NKIB5907",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29677",
-  "stok_kodu": "INA NKIB5907-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "29678",
   "stok_kodu": "INA NKIB5908",
   "aday": "",
@@ -616,13 +484,6 @@
  {
   "id": "29680",
   "stok_kodu": "INA NKIB5909",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29681",
-  "stok_kodu": "INA NKIB5909-XL",
   "aday": "",
   "durum": "aday yok",
   "neden": "aynı seride görselli ürün yok"
@@ -663,13 +524,6 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "29687",
-  "stok_kodu": "INA NKIB5912-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "29688",
   "stok_kodu": "INA NKIB5913",
   "aday": "",
@@ -677,22 +531,8 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "29689",
-  "stok_kodu": "INA NKIB5913-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "29690",
   "stok_kodu": "INA NKIB5914",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29691",
-  "stok_kodu": "INA NKIB5914-XL",
   "aday": "",
   "durum": "aday yok",
   "neden": "aynı seride görselli ürün yok"
@@ -716,48 +556,6 @@
   "aday_kesit": true,
   "fark": "üründe var, adayda yok: A; ölçü kodu 75 / 80; farklı seri/ölçü grubu",
   "durum": "önerilmez"
- },
- {
-  "id": "29950",
-  "stok_kodu": "INA PBY12-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29951",
-  "stok_kodu": "INA PBY15-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29952",
-  "stok_kodu": "INA PBY17-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29953",
-  "stok_kodu": "INA PBY20-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29954",
-  "stok_kodu": "INA PBY25-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "29955",
-  "stok_kodu": "INA PBY30-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
  },
  {
   "id": "49459",
@@ -823,57 +621,8 @@
   "neden": "aynı seride görselli ürün yok"
  },
  {
-  "id": "30263",
-  "stok_kodu": "INA RASEL20-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30264",
-  "stok_kodu": "INA RASEL25-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30265",
-  "stok_kodu": "INA RASEL30-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30266",
-  "stok_kodu": "INA RASEL40-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "30267",
   "stok_kodu": "INA RASEL45-XL",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30268",
-  "stok_kodu": "INA RASEL50-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30269",
-  "stok_kodu": "INA RASEL60-XL-N",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
-  "id": "30270",
-  "stok_kodu": "INA RASEL70-XL",
   "aday": "",
   "durum": "aday yok",
   "neden": "aynı seride görselli ürün yok"
@@ -1089,13 +838,6 @@
   "durum": "önerilebilir"
  },
  {
-  "id": "329866",
-  "stok_kodu": "INA SKR3080-306-KRR",
-  "aday": "",
-  "durum": "aday yok",
-  "neden": "aynı seride görselli ürün yok"
- },
- {
   "id": "31124",
   "stok_kodu": "INA SL045008-D-P",
   "aday": "SL045004-D-PP",
@@ -1103,26 +845,6 @@
   "aday_gorsel": "bc3831ea895e.jpg",
   "aday_kesit": true,
   "fark": "üründe var, adayda yok: P; adayda var, üründe yok: PP; ölçü kodu 045008 / 045004; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "31128",
-  "stok_kodu": "INA SL045008-S3-C4",
-  "aday": "SL185008-S3-A-C4",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "d206440a10b7.jpg",
-  "aday_kesit": true,
-  "fark": "adayda var, üründe yok: A; ölçü kodu 045008 / 185008; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "335965",
-  "stok_kodu": "INA SL05016-E-C3",
-  "aday": "SL181848-E-C3",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "4548c156de80.jpg",
-  "aday_kesit": false,
-  "fark": "ölçü kodu 05016 / 181848; farklı seri/ölçü grubu",
   "durum": "önerilmez"
  },
  {
@@ -1176,26 +898,6 @@
   "durum": "önerilmez"
  },
  {
-  "id": "335967",
-  "stok_kodu": "INA SL06020-E-C3",
-  "aday": "SL181848-E-C3",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "4548c156de80.jpg",
-  "aday_kesit": false,
-  "fark": "ölçü kodu 06020 / 181848; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "331918",
-  "stok_kodu": "INA SL06024-E-C3",
-  "aday": "SL181848-E-C3",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "4548c156de80.jpg",
-  "aday_kesit": false,
-  "fark": "ölçü kodu 06024 / 181848; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
   "id": "335968",
   "stok_kodu": "INA SL06026-E",
   "aday": "SL181848-E",
@@ -1213,16 +915,6 @@
   "aday_gorsel": "4548c156de80.jpg",
   "aday_kesit": false,
   "fark": "ölçü kodu 06028 / 181848; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "326335",
-  "stok_kodu": "INA SL06032-E",
-  "aday": "SL181848-E",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "4548c156de80.jpg",
-  "aday_kesit": false,
-  "fark": "ölçü kodu 06032 / 181848; farklı seri/ölçü grubu",
   "durum": "önerilmez"
  },
  {
@@ -1263,16 +955,6 @@
   "aday_gorsel": "a07479dc50db.jpg",
   "aday_kesit": true,
   "fark": "ölçü kodu 11922 / 014830; farklı seri/ölçü grubu",
-  "durum": "önerilmez"
- },
- {
-  "id": "31201",
-  "stok_kodu": "INA SL12922-A",
-  "aday": "SL014830-A",
-  "aday_dal": "rd/parca-07",
-  "aday_gorsel": "a07479dc50db.jpg",
-  "aday_kesit": true,
-  "fark": "ölçü kodu 12922 / 014830; farklı seri/ölçü grubu",
   "durum": "önerilmez"
  },
  {

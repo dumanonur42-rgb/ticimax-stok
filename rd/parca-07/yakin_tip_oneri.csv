@@ -4,27 +4,14 @@
 49234,INA K81228-M-A/+6-8,K81230-M/+6-8,rd/parca-07,5b7669a3ca51.jpg,"üründe var, adayda yok: A; ölçü kodu 81228 / 81230; farklı seri/ölçü grubu",önerilmez
 336674,INA KGHK40-B-PP-AS,,,,,aday yok
 336456,INA KGSNG30-PP-AS,,,,,aday yok
-336457,INA KGSNG40-PP-AS,,,,,aday yok
 28830,INA KRE26-B-NMT,KRE26-PP-A-NMT,rd/parca-07,c445ba3a8473.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
 28872,INA KRV22-X-B,KRV22-X-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
 28879,INA KRV26-X-B,KRV26-X-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
 336766,INA KRV35-B-L077,KRV35-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B, L077; adayda var, üründe yok: A, PP",önerilebilir
-28926,INA KRVE16-PP-A-NMT,,,,,aday yok
-28931,INA KRVE30-PP-A-NMT,,,,,aday yok
-28933,INA KRVE32-PP-A-NMT,,,,,aday yok
-28935,INA KRVE35-PP-A-NMT,,,,,aday yok
-28937,INA KRVE40-PP-A-NMT,,,,,aday yok
-28940,INA KRVE52-PP-A-NMT,,,,,aday yok
-28942,INA KRVE62-PP-A-NMT,,,,,aday yok
-28944,INA KRVE72-PP-A-NMT,,,,,aday yok
-28946,INA KRVE80-PP-A-NMT,,,,,aday yok
-28948,INA KRVE90-PP-A-NMT,,,,,aday yok
 336767,INA KWVE20-B-EC-V1-G4,,,,,aday yok
 29014,INA LR202-NPP-U,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: NPP, U; ölçü kodu 202 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
-29024,INA LR204-NPP-U,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: NPP, U; ölçü kodu 204 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
 339512,INA LR5002-NPPU-AH04,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: AH04, NPPU; ölçü kodu 5002 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
 29170,INA LR6002-2RS-HLC,LR50/7-2RS-HLC,rd/parca-07,897f8db66279.jpg,ölçü kodu 6002 / 50/7; farklı seri/ölçü grubu,önerilmez
-333073,INA LR606-2Z-HLC,LR5200-2Z,rd/parca-07,897f8db66279.jpg,"üründe var, adayda yok: HLC; ölçü kodu 606 / 5200; farklı seri/ölçü grubu",önerilmez
 330488,INA LR607-2RSR-HLC-D-010,LR607-2RSR-HLC,rd/parca-07,59e33d2c0f42.jpg,"üründe var, adayda yok: 010, D",önerilebilir
 29179,INA LR61812AH01,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: AH01; ölçü kodu 61812 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
 29379,INA NAO6X17X10-TV,NAO12X24X13,rd/parca-07,0218dd321f89.jpg,"üründe var, adayda yok: TV; ölçü kodu 6X17X10 / 12X24X13; farklı seri/ölçü grubu",önerilmez
@@ -54,7 +41,6 @@
 29652,INA NKIA5910,,,,,aday yok
 29653,INA NKIA5910-XL,,,,,aday yok
 29654,INA NKIA5911,,,,,aday yok
-29655,INA NKIA5911-XL,,,,,aday yok
 29656,INA NKIA5912,,,,,aday yok
 29657,INA NKIA5912-XL,,,,,aday yok
 29658,INA NKIA5913,,,,,aday yok
@@ -65,8 +51,6 @@
 49458,INA NKIB59/22-XL,,,,,aday yok
 29664,INA NKIB5901,,,,,aday yok
 29665,INA NKIB5901-XL,,,,,aday yok
-29666,INA NKIB5902,,,,,aday yok
-29667,INA NKIB5902-XL,,,,,aday yok
 29668,INA NKIB5903,,,,,aday yok
 29669,INA NKIB5903-XL,,,,,aday yok
 29670,INA NKIB5904,,,,,aday yok
@@ -75,30 +59,18 @@
 29673,INA NKIB5905-XL,,,,,aday yok
 29674,INA NKIB5906,,,,,aday yok
 29675,INA NKIB5906-XL,,,,,aday yok
-29676,INA NKIB5907,,,,,aday yok
-29677,INA NKIB5907-XL,,,,,aday yok
 29678,INA NKIB5908,,,,,aday yok
 29679,INA NKIB5908-XL,,,,,aday yok
 29680,INA NKIB5909,,,,,aday yok
-29681,INA NKIB5909-XL,,,,,aday yok
 29682,INA NKIB5910,,,,,aday yok
 29683,INA NKIB5910-XL,,,,,aday yok
 29684,INA NKIB5911,,,,,aday yok
 29685,INA NKIB5911-XL,,,,,aday yok
 29686,INA NKIB5912,,,,,aday yok
-29687,INA NKIB5912-XL,,,,,aday yok
 29688,INA NKIB5913,,,,,aday yok
-29689,INA NKIB5913-XL,,,,,aday yok
 29690,INA NKIB5914,,,,,aday yok
-29691,INA NKIB5914-XL,,,,,aday yok
 29711,INA NKIS65-A,NKIS70,rd/parca-07,268acf4e41a7.jpg,"üründe var, adayda yok: A; ölçü kodu 65 / 70; farklı seri/ölçü grubu",önerilmez
 29742,INA NKS75-A,NKS80,rd/parca-07,e51c668edc6a.jpg,"üründe var, adayda yok: A; ölçü kodu 75 / 80; farklı seri/ölçü grubu",önerilmez
-29950,INA PBY12-XL,,,,,aday yok
-29951,INA PBY15-XL,,,,,aday yok
-29952,INA PBY17-XL,,,,,aday yok
-29953,INA PBY20-XL,,,,,aday yok
-29954,INA PBY25-XL,,,,,aday yok
-29955,INA PBY30-XL,,,,,aday yok
 49459,INA PNA12/28-XL,,,,,aday yok
 49460,INA PNA15/32-XL,,,,,aday yok
 49461,INA PNA17/35-XL,,,,,aday yok
@@ -108,14 +80,7 @@
 49465,INA PNA30/52-XL,,,,,aday yok
 49466,INA PNA35/55-XL,,,,,aday yok
 49467,INA PNA40/62-XL,,,,,aday yok
-30263,INA RASEL20-XL-N,,,,,aday yok
-30264,INA RASEL25-XL-N,,,,,aday yok
-30265,INA RASEL30-XL-N,,,,,aday yok
-30266,INA RASEL40-XL-N,,,,,aday yok
 30267,INA RASEL45-XL,,,,,aday yok
-30268,INA RASEL50-XL-N,,,,,aday yok
-30269,INA RASEL60-XL-N,,,,,aday yok
-30270,INA RASEL70-XL,,,,,aday yok
 49484,INA RCSMB3/4-65-FA106,RCSMB15/65-XL-FA106,rd/parca-07,ddd1877d5404.jpg,"üründe var, adayda yok: 65; adayda var, üründe yok: XL; ölçü kodu 3/4 / 15/65; farklı seri/ölçü grubu",önerilmez
 30475,INA RLBSR71-C-0100,,,,,aday yok
 336776,INA RNA4916-XL-H+44+36,RNA4916-XL,rd/parca-07,e51c668edc6a.jpg,"üründe var, adayda yok: H+44+36",önerilebilir
@@ -140,25 +105,18 @@
 49503,INA RPNA45/62-XL,,,,,aday yok
 49505,INA SCE48-P-L271/STD,SCE146,rd/parca-07,69fd64367dd1.jpg,"üründe var, adayda yok: L271, P, STD; ölçü kodu 48 / 146; farklı seri/ölçü grubu",önerilmez
 30900,INA SD19X27X4-B,SD19X27X4-A,rd/parca-07,794f8097d1ff.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A",önerilebilir
-329866,INA SKR3080-306-KRR,,,,,aday yok
 31124,INA SL045008-D-P,SL045004-D-PP,rd/parca-07,bc3831ea895e.jpg,"üründe var, adayda yok: P; adayda var, üründe yok: PP; ölçü kodu 045008 / 045004; farklı seri/ölçü grubu",önerilmez
-31128,INA SL045008-S3-C4,SL185008-S3-A-C4,rd/parca-07,d206440a10b7.jpg,"adayda var, üründe yok: A; ölçü kodu 045008 / 185008; farklı seri/ölçü grubu",önerilmez
-335965,INA SL05016-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05016 / 181848; farklı seri/ölçü grubu,önerilmez
 335966,INA SL05020-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05020 / 181848; farklı seri/ölçü grubu,önerilmez
 331917,INA SL05024-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05024 / 181848; farklı seri/ölçü grubu,önerilmez
 332698,INA SL05028-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05028 / 181848; farklı seri/ölçü grubu,önerilmez
 31198,INA SL05030-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05030 / 181848; farklı seri/ölçü grubu,önerilmez
 326334,INA SL05032-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05032 / 181848; farklı seri/ölçü grubu,önerilmez
-335967,INA SL06020-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 06020 / 181848; farklı seri/ölçü grubu,önerilmez
-331918,INA SL06024-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 06024 / 181848; farklı seri/ölçü grubu,önerilmez
 335968,INA SL06026-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06026 / 181848; farklı seri/ölçü grubu,önerilmez
 332699,INA SL06028-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06028 / 181848; farklı seri/ölçü grubu,önerilmez
-326335,INA SL06032-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06032 / 181848; farklı seri/ölçü grubu,önerilmez
 327169,INA SL07048-S1B-C5,SL04140-PP-C5,rd/parca-07,bc3831ea895e.jpg,"üründe var, adayda yok: S1B; adayda var, üründe yok: PP; ölçü kodu 07048 / 04140; farklı seri/ölçü grubu",önerilmez
 31200,INA SL11914-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11914 / 014830; farklı seri/ölçü grubu,önerilmez
 340300,INA SL11918-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11918 / 014830; farklı seri/ölçü grubu,önerilmez
 341081,INA SL11922-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11922 / 014830; farklı seri/ölçü grubu,önerilmez
-31201,INA SL12922-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 12922 / 014830; farklı seri/ölçü grubu,önerilmez
 31202,INA SL13916-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13916 / 014830; farklı seri/ölçü grubu,önerilmez
 31203,INA SL13918-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13918 / 014830; farklı seri/ölçü grubu,önerilmez
 31204,INA SL13920-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13920 / 014830; farklı seri/ölçü grubu,önerilmez
