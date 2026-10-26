@@ -4,10 +4,10 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 
 ## Görseller
 
-- Birebir: **1336**
-- Aynı tip: **1970**
-- Görselsiz: **322**
-- Farklı görsel dosyası: **156** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
+- Birebir: **1337**
+- Aynı tip: **2010**
+- Görselsiz: **281**
+- Farklı görsel dosyası: **157** (md5 ile tekilleştirildi, hepsi `tum_gorseller.jpg` içinde)
 
 - Kaynak: Schaeffler medias ürün görselleri. Üst bant Yamansa (sablon.png), alt bant marka logosu (INA: gönderilen resmi yeşil karo logo, FAG: kırmızı FAG yazısı).
 - Tedarikçi fotoğrafları kullanılmadı (çoğu kutu/sandık gösteriyor ya da başka logo içeriyor).
@@ -16,7 +16,7 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 ### Gerçekçi fotoğraf kontrolü
 
 - İncelenen farklı üretici görseli: 135
-- Çizim benzeri görsel: **23** (ölçü çizgili/harfli 17, düz teknik çizim 6) → hepsi kaldırıldı; bu görselleri kullanan **67** ürün görselsiz ve bayraklı. Fotoğraf benzeri yerine geçecek aynı seri görseli bulunamadı (iğneli kovan, iç bilezik, eksenel iğne kafesi, pul vb.).
+- Çizim benzeri görsel: **23** (ölçü çizgili/harfli 17, düz teknik çizim 6) → hepsi kaldırıldı; bu görselleri kullanan **26** ürün görselsiz ve bayraklı. Fotoğraf benzeri yerine geçecek aynı seri görseli bulunamadı (iğneli kovan, iç bilezik, eksenel iğne kafesi, pul vb.).
 
 - Kesit (çeyreği kesik) görsel: 84 → **8** tanesi aynı serinin tam görünüş görseliyle değiştirildi (382 ürün, `ayni_tip`), **76** tanesi için tam görünüş bulunamadı ve kaldı; bu **1919** ürün "kesit gorsel" bayraklı.
 
@@ -101,13 +101,13 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 - manşon dahil bilgisi tedarikçi kaydından: 78
 - kategori tedarikçi ürün tanımına göre: 72
 - kategori seri önekine göre: 68
-- üreticide bu ürün için yalnızca ölçülü/teknik çizim görseli var; görsel eklenmedi: 67
 - aynı seri gerçek fotoğraf (… labirent keçe): 54
+- aynı seri gerçek fotoğraf (… oturma pulu): 40
+- üreticide bu ürün için yalnızca ölçülü/teknik çizim görseli var; görsel eklenmedi: 26
 - satıcı sayfasındaki temiz ürün fotoğrafı (aynı gövde): 24
 - aynı seri gerçek fotoğraf (GG.CJ dökme gövde, …): 15
 - aynı seri gerçek fotoğraf (GG.CFT dökme gövde, …): 11
 - aynı seri gerçek fotoğraf (GG.ASE dökme gövde, …): 10
-- üretici katalogunda bu ürün için gerçek görsel yok; görsel eklenmedi: 10
 
 
 ## Yöntem
@@ -118,18 +118,17 @@ Toplam ürün: **3628** (FAG 1432, INA 2196)
 ## Görsel araştırması — güncel durum
 | | ilk teslim | şimdi |
 |---|---|---|
-| birebir (gerçek görünüş) | 193 | 224 |
-| aynı tip | 875 | 1163 |
+| birebir (gerçek görünüş) | 193 | 225 |
+| aynı tip | 875 | 1203 |
 | kesit (bayraklı) | 1409 | 1919 |
-| görselsiz | 1151 | 322 |
+| görselsiz | 1151 | 281 |
 
 - Ölçü çizgileri ürünün dışından temizlenen 15 render: 405 ürün. Hepsi %100 büyütmede yeniden kontrol edildi; ilk temizlikte kenarı kesilenler (örn. 00006BCD, 00006BDF) kenar kaybı olmadan yeniden üretildi (`temizlenen_once_sonra.jpg`).
-- Satıcı/dağıtıcı sayfalarından alınan, filigransız ve logosuz gerçek fotoğraflar: 178 ürün (INA GG./GEH. dökme gövdeler, FAG TSV labirent keçeler). Aynı kodun fotoğrafı varsa birebir, yoksa aynı serinin fotoğrafı (üzerinde okunan farklı kod yok) kullanıldı.
+- Satıcı/dağıtıcı sayfalarından alınan, filigransız ve logosuz gerçek fotoğraflar: 219 ürün (INA GG./GEH. dökme gövdeler, FAG TSV labirent keçeler). Aynı kodun fotoğrafı varsa birebir, yoksa aynı serinin fotoğrafı (üzerinde okunan farklı kod yok) kullanıldı.
 - Aynı tip görsellerin hepsi büyütülerek kontrol edildi: farklı kod/ölçü okunan, kadrajdan taşan, renk/malzemesi uymayan görsel yok.
 
 ### Kalan görselsiz ürünler (seri → adet, neden)
 - INA F: 64
-- FAG U: 41
 - FAG Z: 31
 - FAG QJ: 19
 - FAG SP: 19
