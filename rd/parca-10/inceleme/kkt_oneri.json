@@ -1,0 +1,872 @@
+{
+ "aciklama": "ONERI - UYGULANMADI. inceleme/suptex_siyah_kece_retus.png bu urunlere ayni_tip olarak konabilir (siyah NBR, tip KK-T). Onay bekleniyor.",
+ "gorsel": "inceleme/suptex_siyah_kece_retus.png",
+ "sart": "Tip kodu = KK-T ve Renk = Siyah ve Malzeme NBR",
+ "adet": 95,
+ "mevcut_durum": {
+  "yok": 95
+ },
+ "malzeme_kodlari": {
+  "NB01": 94,
+  "NB02": 1
+ },
+ "rd_id_listesi": [
+  "39818",
+  "39820",
+  "39840",
+  "39859",
+  "39879",
+  "39880",
+  "39915",
+  "39918",
+  "39926",
+  "39928",
+  "39950",
+  "327218",
+  "330397",
+  "333298",
+  "337581",
+  "335971",
+  "332530",
+  "40726",
+  "40889",
+  "40892",
+  "40897",
+  "40899",
+  "40900",
+  "40903",
+  "40904",
+  "40906",
+  "40908",
+  "40912",
+  "40914",
+  "40916",
+  "40917",
+  "40934",
+  "40945",
+  "41105",
+  "41143",
+  "41281",
+  "41292",
+  "41341",
+  "41370",
+  "41384",
+  "41393",
+  "41397",
+  "41429",
+  "41448",
+  "41465",
+  "41505",
+  "41640",
+  "41773",
+  "41903",
+  "41975",
+  "42004",
+  "42007",
+  "42137",
+  "42166",
+  "42188",
+  "42189",
+  "42193",
+  "42196",
+  "42307",
+  "42433",
+  "42439",
+  "42546",
+  "42587",
+  "332596",
+  "42716",
+  "42767",
+  "42769",
+  "43087",
+  "43236",
+  "43428",
+  "43453",
+  "43478",
+  "43480",
+  "43574",
+  "43641",
+  "43642",
+  "43699",
+  "43812",
+  "43837",
+  "43941",
+  "43971",
+  "44049",
+  "44059",
+  "44078",
+  "44079",
+  "44081",
+  "44107",
+  "44110",
+  "44125",
+  "44134",
+  "44152",
+  "44160",
+  "44200",
+  "44212",
+  "44238"
+ ],
+ "urunler": [
+  {
+   "rd_id": "39818",
+   "stok_kodu": "SUP DMK-1005-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "295x325x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39820",
+   "stok_kodu": "SUP DMK-1007-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "525x555x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39840",
+   "stok_kodu": "SUP DMK-1036-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "550x600x22",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39859",
+   "stok_kodu": "SUP DMK-1061-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "235x265x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39879",
+   "stok_kodu": "SUP DMK-1097-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "780x845x25",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39880",
+   "stok_kodu": "SUP DMK-1101-NB02-1",
+   "malzeme_kodu": "NB02",
+   "olcu": "620x660x20",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39915",
+   "stok_kodu": "SUP DMK-1183-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "259x281x11",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39918",
+   "stok_kodu": "SUP DMK-1190-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "350x400x12",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39926",
+   "stok_kodu": "SUP DMK-1206-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "165x188x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39928",
+   "stok_kodu": "SUP DMK-1210-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "337x361x12",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "39950",
+   "stok_kodu": "SUP DMK-1392-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "150x190x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "327218",
+   "stok_kodu": "SUP DMK-1412-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "320x364x20",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "330397",
+   "stok_kodu": "SUP DMK-1429-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x215x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "333298",
+   "stok_kodu": "SUP DMK-6114-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "10x20x7",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "337581",
+   "stok_kodu": "SUP DMK-6118-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "10x30x7",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "335971",
+   "stok_kodu": "SUP DMK-6213-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "22x40x10",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "332530",
+   "stok_kodu": "SUP DMK-6595-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "50x80x8",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40726",
+   "stok_kodu": "SUP DMK-6705-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "190x225x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40889",
+   "stok_kodu": "SUP DMK-6825-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x190x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40892",
+   "stok_kodu": "SUP DMK-6827-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "165x190x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40897",
+   "stok_kodu": "SUP DMK-6830-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "175x200x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40899",
+   "stok_kodu": "SUP DMK-6832-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x215x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40900",
+   "stok_kodu": "SUP DMK-6833-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x220x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40903",
+   "stok_kodu": "SUP DMK-6835-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "190x220x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40904",
+   "stok_kodu": "SUP DMK-6836-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "190x230x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40906",
+   "stok_kodu": "SUP DMK-6837-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "195x230x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40908",
+   "stok_kodu": "SUP DMK-6838-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "220x250x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40912",
+   "stok_kodu": "SUP DMK-6842-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "240x280x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40914",
+   "stok_kodu": "SUP DMK-6843-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "250x280x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40916",
+   "stok_kodu": "SUP DMK-6844-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x190x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40917",
+   "stok_kodu": "SUP DMK-6845-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "203x254x20",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40934",
+   "stok_kodu": "SUP DMK-6860-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "158,75x182,4x15,87",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "40945",
+   "stok_kodu": "SUP DMK-6870-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "200x230x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41105",
+   "stok_kodu": "SUP DMK-7016-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "165x200x14",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41143",
+   "stok_kodu": "SUP DMK-7051-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "360x400x20",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41281",
+   "stok_kodu": "SUP DMK-7177-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "230x270x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41292",
+   "stok_kodu": "SUP DMK-7186-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x210x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41341",
+   "stok_kodu": "SUP DMK-7232-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "200x235x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41370",
+   "stok_kodu": "SUP DMK-7259-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "170x210x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41384",
+   "stok_kodu": "SUP DMK-7271-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "200x240x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41393",
+   "stok_kodu": "SUP DMK-7279-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "200x230x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41397",
+   "stok_kodu": "SUP DMK-7282-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "185x210x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41429",
+   "stok_kodu": "SUP DMK-7313-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "170x190x8,5",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41448",
+   "stok_kodu": "SUP DMK-7328-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "210x250x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41465",
+   "stok_kodu": "SUP DMK-7341-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "280x320x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41505",
+   "stok_kodu": "SUP DMK-7375-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "240x270x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41640",
+   "stok_kodu": "SUP DMK-7495-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x220x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41773",
+   "stok_kodu": "SUP DMK-7611-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "30x55x10",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41903",
+   "stok_kodu": "SUP DMK-7726-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "170x190x10",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "41975",
+   "stok_kodu": "SUP DMK-7794-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "345x400x25",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42004",
+   "stok_kodu": "SUP DMK-7821-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x200x12",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42007",
+   "stok_kodu": "SUP DMK-7824-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "220x260x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42137",
+   "stok_kodu": "SUP DMK-7937-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "140x230x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42166",
+   "stok_kodu": "SUP DMK-7961-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "220x250x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42188",
+   "stok_kodu": "SUP DMK-7979-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "175x210x14",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42189",
+   "stok_kodu": "SUP DMK-7980-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "185x200x14",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42193",
+   "stok_kodu": "SUP DMK-7983-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "190x215x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42196",
+   "stok_kodu": "SUP DMK-7986-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "230x260x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42307",
+   "stok_kodu": "SUP DMK-8083-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "155x200x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42433",
+   "stok_kodu": "SUP DMK-8193-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x185x10",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42439",
+   "stok_kodu": "SUP DMK-8199-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "170x190x7,8",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42546",
+   "stok_kodu": "SUP DMK-8297-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "127x190x31",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42587",
+   "stok_kodu": "SUP DMK-8333-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "290x330x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "332596",
+   "stok_kodu": "SUP DMK-8436-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "110x160x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42716",
+   "stok_kodu": "SUP DMK-8445-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "230x260x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42767",
+   "stok_kodu": "SUP DMK-8489-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x200x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "42769",
+   "stok_kodu": "SUP DMK-8490-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "170x200x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43087",
+   "stok_kodu": "SUP DMK-8781-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "390x430x18",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43236",
+   "stok_kodu": "SUP DMK-8925-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "200x225x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43428",
+   "stok_kodu": "SUP DMK-9112-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "445x480x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43453",
+   "stok_kodu": "SUP DMK-9136-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "165x190x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43478",
+   "stok_kodu": "SUP DMK-9160-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "220x260x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43480",
+   "stok_kodu": "SUP DMK-9162-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "260x290x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43574",
+   "stok_kodu": "SUP DMK-9256-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "340x372x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43641",
+   "stok_kodu": "SUP DMK-9322-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "250x265x8",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43642",
+   "stok_kodu": "SUP DMK-9323-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "250x280x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43699",
+   "stok_kodu": "SUP DMK-9375-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "500x540x22",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43812",
+   "stok_kodu": "SUP DMK-9479-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "330,2x381x20,63",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43837",
+   "stok_kodu": "SUP DMK-9503-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "260x310x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43941",
+   "stok_kodu": "SUP DMK-9611-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "590x628x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "43971",
+   "stok_kodu": "SUP DMK-9637-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "180x220x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44049",
+   "stok_kodu": "SUP DMK-9715-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "310x370x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44059",
+   "stok_kodu": "SUP DMK-9724-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "100x190x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44078",
+   "stok_kodu": "SUP DMK-9743-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "212x232x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44079",
+   "stok_kodu": "SUP DMK-9743-NB01-2",
+   "malzeme_kodu": "NB01",
+   "olcu": "212x232x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44081",
+   "stok_kodu": "SUP DMK-9745-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "150x225x15",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44107",
+   "stok_kodu": "SUP DMK-9770-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "145x230x17",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44110",
+   "stok_kodu": "SUP DMK-9772-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "130x200x15/13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44125",
+   "stok_kodu": "SUP DMK-9786-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "670x710x20",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44134",
+   "stok_kodu": "SUP DMK-9794-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "240x270x19",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44152",
+   "stok_kodu": "SUP DMK-9811-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "280x310x16",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44160",
+   "stok_kodu": "SUP DMK-9820-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "160x220x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44200",
+   "stok_kodu": "SUP DMK-9876-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "190x216x13",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44212",
+   "stok_kodu": "SUP DMK-9897-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "360x400x14",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  },
+  {
+   "rd_id": "44238",
+   "stok_kodu": "SUP DMK-9941-NB01-1",
+   "malzeme_kodu": "NB01",
+   "olcu": "387,35x425,47x17,46",
+   "mevcut_gorsel_tur": "yok",
+   "mevcut_gorsel": ""
+  }
+ ]
+}
