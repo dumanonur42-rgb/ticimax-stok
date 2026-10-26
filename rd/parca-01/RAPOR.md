@@ -212,6 +212,7 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 
 ## 5. tur görsel araştırması
 - EMES'in Rusya distribütörünün sitesinde, aynı kodlu ürün sayfalarındaki EMES görselleriyle 37 INOX ürüne birebir görsel eklendi. Görselin farklı bir teker tipinin sayfasında da kullanıldığı 20 eşleşme şüpheli olduğu için kullanılmadı.
+- Önerisi olmayan ürünler için bakılan kaynaklar: EMES'in resmi bayi listesindeki 8 bayi sitesi, EMES haber/fuar sayfaları, Rusya distribütörleri, Google (maşa, jant kapağı, jant yanak takımı, dış lastik). Jant yanak takımı için bulunan bayi fotoğraflarının bir kısmında bayi filigranı var. Filigransız olanlarda göbek çapı ya da rulman durumu bizim ürünlerden farklı, bu yüzden kullanılmadı. Maşa ve sac jant kapağı için filigransız fotoğraf bulunamadı.
 - Güncel görsel sayıları: birebir 1245, aynı tip 690, kesit 0, görselsiz 971.
 
 ## yakin_tip önerisi (UYGULANMADI)
