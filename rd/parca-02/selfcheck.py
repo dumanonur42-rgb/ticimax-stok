@@ -152,10 +152,14 @@ def main():
         if not 140 <= len(record["seo_aciklama"]) <= 160:
             fail(f"line {index}: seo_aciklama length is {len(record['seo_aciklama'])}")
         keywords = record.get("seo_kelimeler")
-        if not isinstance(keywords, list) or not 5 <= len(keywords) <= 10:
-            fail(f"line {index}: seo_kelimeler must contain 5-10 values")
-        if not all(isinstance(word, str) and word.strip() for word in keywords):
-            fail(f"line {index}: seo_kelimeler contains an empty/non-string value")
+        if not isinstance(keywords, str):
+            fail(f"line {index}: seo_kelimeler must be a comma-separated string")
+        else:
+            keyword_items = [word.strip() for word in keywords.split(",")]
+            if not 5 <= len(keyword_items) <= 10:
+                fail(f"line {index}: seo_kelimeler must contain 5-10 comma-separated items")
+            if not all(keyword_items):
+                fail(f"line {index}: seo_kelimeler contains an empty item")
 
         url = record["url"]
         if not url.isascii() or url != url.lower() or not URL_PATTERN.fullmatch(url):
