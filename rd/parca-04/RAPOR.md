@@ -136,3 +136,10 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 | Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 619xx | 1 |
 | Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 625xx | 1 |
 | Katalogda birebir yok; aynı ana kodda aynı conta/kafes tipinde görsel yok | 626xx | 1 |
+
+## Ölçü çizgisi temizleme denemesi
+- 12 ölçü çizgili görselin büyük boyutlu (1200 px) halleri indirildi. 21307/22308 tipi iki görsel turkuaz/CAD görünümlü olduğu için baştan dışarıda bırakıldı; kalan 10 görsel temizlendi.
+- Gövde dışındaki çizgiler, oklar ve harfler (D, d, B, T) temiz silindi. Ancak bu görsellerin hepsinde d/D ölçü uzatma çizgileri rulman gövdesinin üzerinden geçiyor, T/B çizgileri de halka kenarına teğet gidiyor.
+- Büyütülmüş kontrolde gövde üzerinde çizgi kalıntıları ve silinen kenar çizgileri (beyaz yırtıklar) görüldü (`temizleme_yakin.png`, `temizleme_denemesi.jpg`). Kural gereği ("ürüne zarar vermeden temizlenemiyorsa kullanma") hiçbiri kullanılmadı.
+- Aynı seri ve birebir aynı yapıda gerçekçi görsel (B adımı): bu tiplerde Schaeffler'in bütün kayıtları aynı çizim görselini kullanıyor; parçada ya da resmi kaynaklarda uygun görsel yok. Yeni aynı tip görsel: 0.
+- Sonuç: temizlenip kullanılan 0, kapsanan ürün 0, görselsiz ürün 825 (dağılım yukarıdaki tabloda).
