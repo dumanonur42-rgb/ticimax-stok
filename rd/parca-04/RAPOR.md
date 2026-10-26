@@ -143,3 +143,10 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Büyütülmüş kontrolde gövde üzerinde çizgi kalıntıları ve silinen kenar çizgileri (beyaz yırtıklar) görüldü (`temizleme_yakin.png`, `temizleme_denemesi.jpg`). Kural gereği ("ürüne zarar vermeden temizlenemiyorsa kullanma") hiçbiri kullanılmadı.
 - Aynı seri ve birebir aynı yapıda gerçekçi görsel (B adımı): bu tiplerde Schaeffler'in bütün kayıtları aynı çizim görselini kullanıyor; parçada ya da resmi kaynaklarda uygun görsel yok. Yeni aynı tip görsel: 0.
 - Sonuç: temizlenip kullanılan 0, kapsanan ürün 0, görselsiz ürün 825 (dağılım yukarıdaki tabloda).
+
+## Ortak görsel havuzu (parça 04–07)
+- 05, 06 ve 07 dallarındaki görselli 7425 ürün (FAG 3151, INA 4274) tarandı. Görselsiz her ürün için aynı marka, aynı seri, aynı ek (conta/kapak, kafes, delik) arandı; sadece boşluk (C3/C4) farkı kabul edildi.
+- Eşleşen: FAG 6305-M ve 6305-M-C3 → 6307-M görseli (aynı 63 serisi, açık, masif pirinç kafes). Aynı tip + kesit bayraklı.
+- Reddedilen: 607 ve 623–627 (açık ve -2Z) minyatürleri için sadece 634/635 görseli var. Bunlar 63 serisi, bizimkiler 60/62 serisi; seri aynı olmadığı için kullanılmadı (9 ürün).
+- Diğer parçalarda oynak bilyalı, eksenel bilyalı, oynak makaralı, fıçı makaralı, eksenel açısal temaslı ve çift sıralı sabit bilyalı serilerinin hiçbirinde görsel yok.
+- Görselsiz ürün: 825 → 823.
