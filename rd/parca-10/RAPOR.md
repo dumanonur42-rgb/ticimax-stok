@@ -3,11 +3,11 @@
 - Ürün sayısı: 5620
 - Birebir görsel: 3
 - Aynı tip görsel: 22
-- Resmi kesit / 3D görsel: 4612
-- Görselsiz: 983
+- Resmi kesit / 3D görsel: 3750
+- Görselsiz: 1845
 - Kategorisi boş: 26
 - Bayraklı ürün: 5620
-- Farklı görsel dosyası: 57
+- Farklı görsel dosyası: 51
 
 ## Görsel turu 2 – önce / sonra
 
@@ -15,10 +15,10 @@
 |---|---|---|
 | birebir | 0 | 3 |
 | ayni_tip | 844 | 22 |
-| kesit (resmi kesit/3D) | 0 | 4612 |
-| yok | 4776 | 983 |
+| kesit (resmi kesit/3D) | 0 | 3750 |
+| yok | 4776 | 1845 |
 
-Ürün üzerinde farklı kod/ölçü okunduğu için değiştirilen aynı tip görsel: **828 ürün** (HRU, PMY, PNM fotoğraflarında yazan kod; siyah yağ keçesi fotoğrafında okunan ölçü; tapa fotoğrafında kenarda okunan ölçü). Bu fotoğraflar yalnızca üzerinde yazan kodun kendisine birebir olarak bırakıldı, diğer ürünlerde üreticinin kendi 3D görseli kullanıldı.
+Ürün üzerinde farklı kod/ölçü okunduğu için değiştirilen aynı tip görsel: **828 ürün** (HRU, PMY, PNM fotoğraflarında yazan kod; siyah yağ keçesi fotoğrafında okunan ölçü; tapa fotoğrafında kenarda okunan ölçü). Bu fotoğraflar yalnızca üzerinde yazan kodun kendisine birebir olarak bırakıldı; diğer ürünlerde renk tutuyorsa üreticinin kendi 3D görseli kullanıldı, tutmuyorsa görselsiz bırakıldı. Daha önce kullanılan düz 2D profil kesit çizimleri (dmk_kesit_*, 862 ürün) teknik çizim sayıldığı için tamamen kaldırıldı; bu ürünlerin hepsi mavi olmayan malzemede olduğundan ve üreticinin 3D görselleri mavi olduğundan görselsiz kaldı.
 
 Öncelik sırası: aynı kodun gerçek fotoğrafı > aynı tip gerçek fotoğraf (farklı kod okunmayan) > üreticinin resmi 3D/kesit görseli. 3D görsel yalnızca ürünün malzeme rengi görseldeki renkle aynıysa kullanıldı. DMK ürünlerinde önce üreticinin o koda ait ürün sayfasında gösterdiği 3D görsel (suptex.com/urun-arama/?&productid=KOD) alındı.
 
@@ -26,9 +26,7 @@
 |---|---|---|---|
 | r3b_kk_t.jpg | kesit | https://www.suptex.com/img/3B/KK-T/KK-T_0003.jpg | 876 |
 | r3b_kk.jpg | kesit | https://www.suptex.com/img/3B/KK/KK_0003.jpg | 854 |
-| dmk_kesit_kk_t.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 490 |
 | r3s_hru.jpg | kesit | https://www.suptex.com/img/3B/HRU/HRU_0003.jpg | 476 |
-| dmk_kesit_kk.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 262 |
 | r3b_sl_t.jpg | kesit | https://www.suptex.com/img/3B/SL-T/SL-T_0003.jpg | 212 |
 | r3b_sl.jpg | kesit | https://www.suptex.com/img/3B/SL/SL_0003.jpg | 194 |
 | r3b_slk_tf.jpg | kesit | https://www.suptex.com/img/3B/SLK-Tf/SLK-Tf_0003.jpg | 117 |
@@ -44,15 +42,11 @@
 | r3b_kk_ct.jpg | kesit | https://www.suptex.com/img/3B/KK-CT/KK-CT_0003.jpg | 46 |
 | r3b_kk_o.jpg | kesit | https://www.suptex.com/img/3B/KK-O/KK-O_0003.jpg | 41 |
 | r3s_hsu2.jpg | kesit | https://www.suptex.com/img/3B/HSU2/HSU2_0003.jpg | 38 |
-| dmk_kesit_sl.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 35 |
-| dmk_kesit_skl.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 35 |
 | r3s_hst2.jpg | kesit | https://www.suptex.com/img/3B/HST2/HST2_0003.jpg | 29 |
 | r3s_pnm.jpg | kesit | https://www.suptex.com/img/3B/PNM/PNM_0003.jpg | 26 |
-| dmk_kesit_sl_t.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 24 |
 | r3b_kk_t_3_4.jpg | kesit | https://www.suptex.com/img/3B/KK-T.3.4/KK-T.3.4_0003.jpg | 21 |
 | r3s_hsu.jpg | kesit | https://www.suptex.com/img/3B/HSU/HSU_0003.jpg | 18 |
 | r3b_kk_t_5.jpg | kesit | https://www.suptex.com/img/3B/KK-T.5/KK-T.5_0003.jpg | 17 |
-| dmk_kesit_skl_t.jpg | kesit | https://www.suptex.com/teknik/tasarim.html | 16 |
 | r3s_pmy.jpg | kesit | https://www.suptex.com/img/3B/PMY/PMY_0003.jpg | 16 |
 | hry_siyah.jpg | ayni_tip | https://www.suptex.com/img/products/yataklama.jpg | 13 |
 | r3b_kk_dc.jpg | kesit | https://www.suptex.com/img/3B/KK-DC/KK-DC_0003.jpg | 12 |
@@ -86,21 +80,25 @@
 
 | Seri | Malzeme | Renk | Sebep | Ürün |
 |---|---|---|---|---|
+| DMK | FK01 | Kahverengi | üreticinin bu tipteki 3D görseli mavi, ürün kahverengi; 2D kesit çizimi de yasak | 567 |
+| DMK | NB01 | Siyah | üreticinin bu tipteki 3D görseli mavi, ürün siyah; 2D kesit çizimi de yasak | 329 |
 | DMK | NB17 | Mavi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 247 |
-| DMK | FK01 | Kahverengi | üreticinin bu koda ait 3D görseli mavi, ürün kahverengi; renk tutmuyor | 150 |
-| DMK | NB02 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 77 |
-| DMK | NB01 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 55 |
-| DMK | FK01 | Kahverengi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 55 |
+| DMK | FK01 | Kahverengi | üreticinin bu koda ait 3D görseli mavi, ürün kahverengi; renk tutmuyor | 115 |
+| DMK | NB02 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 78 |
+| DMK | FK01 | Kahverengi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 56 |
 | HST | NB02 | Siyah | üreticinin HST görseli mavi PU; ürün siyah NBR | 50 |
-| DMK | NB01 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 44 |
+| DMK | NB01 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 47 |
 | DMK | NB17 | Mavi | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 35 |
-| DMK | VQ01 | Turuncu | üreticinin bu koda ait 3D görseli mavi, ürün turuncu; renk tutmuyor | 33 |
-| DMK | AC01 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 30 |
+| DMK | VQ01 | Turuncu | üreticinin bu tipteki 3D görseli mavi, ürün turuncu; 2D kesit çizimi de yasak | 33 |
+| DMK | NB01 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 30 |
 | DMK | NB02 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 29 |
 | DMK | AC01 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 25 |
 | DMK | TF03 | Beyaz | üreticinin bu koda ait 3D görseli mavi, ürün beyaz; renk tutmuyor | 22 |
+| DMK | AC01 | Siyah | üreticinin bu tipteki 3D görseli mavi, ürün siyah; 2D kesit çizimi de yasak | 20 |
 | PPD | NB53 | - | NB53 malzemesinin rengi üretici kaynaklarında yok; 3D görsel siyah, renk doğrulanamadı | 18 |
+| DMK | VQ01 | Turuncu | üreticinin bu koda ait 3D görseli mavi, ürün turuncu; renk tutmuyor | 14 |
 | PPD3 | NB53 | - | NB53 malzemesinin rengi üretici kaynaklarında yok; 3D görsel siyah, renk doğrulanamadı | 14 |
+| DMK | AC01 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 13 |
 | PPD2 | NB53 | - | NB53 malzemesinin rengi üretici kaynaklarında yok; 3D görsel siyah, renk doğrulanamadı | 11 |
 | DMK | VQ01 | Turuncu | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 10 |
 | DMK | FK01 | Kahverengi | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 5 |
@@ -109,28 +107,30 @@
 | DMK | NB17 | Mavi | üreticinin bu koda ait görseli renk/yapı olarak uyuşmuyor | 4 |
 | DMK | TF03 | Beyaz | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 4 |
 | DMK | YN01 | Beyaz | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 4 |
+| DMK | FK08 | Kahverengi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 3 |
 | DMK | FK03 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 3 |
 | DMK | PU01 | Mavi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 3 |
 | DMK | CM08 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 3 |
 | DMK | VQ01 | Turuncu | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 3 |
 | DMK | AC01 | Siyah | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 3 |
-| DMK | FK08 | Kahverengi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 2 |
+| DMK | FK21 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 2 |
 | DMK | NB61 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 2 |
 | DMK | NB04 | Yeşil | üreticinin bu koda ait 3D görseli mavi, ürün yeşil; renk tutmuyor | 2 |
 | DMK | PU07 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 2 |
 | DMK | CM07 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 2 |
-| DMK | AE01 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 2 |
+| DMK | AE01 | Siyah | üreticinin bu tipteki 3D görseli mavi, ürün siyah; 2D kesit çizimi de yasak | 2 |
 | DMK | DR01 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 2 |
 | HSU3 | NB17 | Mavi | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 2 |
-| DMK | FK12 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 1 |
-| DMK | FK21 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
+| DMK | FK12 | - | üreticinin bu tipteki 3D görseli mavi, ürün rengi belirsiz; 2D kesit çizimi de yasak | 1 |
 | DMK | NB01 | Siyah | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 1 |
 | DMK | FK13 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
 | DMK | FK301 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
+| DMK | NB07 | Siyah | üretici sayfası KK-4 görselini gösteriyor ama dosya sunucuda yok | 1 |
+| FKM | - | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
 | DMK | FK202 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 1 |
 | DMK | AE01 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
 | DMK | CM11 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
-| DMK | FK02 | Siyah | üreticinin bu koda ait 3D görseli mavi, ürün siyah; renk tutmuyor | 1 |
+| DMK | FK02 | Siyah | üreticinin bu tipteki 3D görseli mavi, ürün siyah; 2D kesit çizimi de yasak | 1 |
 | DMK | FK02 | Siyah | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
 | DMK | CM09 | - | üretici ürün sayfasında görsel yok; bu tipin resmi kesit çizimi de yok | 1 |
 | DMK | DR01 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 1 |
@@ -143,7 +143,7 @@
 | SDT | FK01 | Kahverengi | üreticinin bu koda ait 3D görseli mavi, ürün kahverengi; renk tutmuyor | 1 |
 | SDT | NB12 | - | üreticinin bu koda ait 3D görseli mavi, ürün rengi belirsiz; renk tutmuyor | 1 |
 
-Denenen kaynaklar: suptex.com tüm ürün/teknik sayfaları ve 5620 kodun her birinin üretici ürün sayfası; suptex.com 3D görsel sunucusu (img/3B, ~550 tip/seri adı denendi); img/products ve img/tasarim2b; uploads/KesitRenk (renkli kesitler, koda bağlanamadığı için kullanılmadı); web.archive.org (suptex.com, suptex.com.tr, suptex.de arşivleri, eski /images/ klasörleri); 2010 ve 2024 SUPTEX katalog PDF'leri (gömülü fotoğraflar çıkarıldı: kapak/montaj fotoğrafları, üzerinde yazı var veya renkli zeminde); bayi siteleri (filigranlı veya bayi logolu, kullanılmadı); Bing ve DuckDuckGo'da tam kod araması (sonuç yok).
+Denenen kaynaklar: suptex.com tüm ürün/teknik sayfaları ve 5620 kodun her birinin üretici ürün sayfası; suptex.com 3D görsel sunucusu (img/3B, ~550 tip/seri adı denendi); img/products ve img/tasarim2b; uploads/KesitRenk (renkli kesitler, koda bağlanamadığı için kullanılmadı); web.archive.org (suptex.com, suptex.com.tr, suptex.de arşivleri, eski /images/ klasörleri); 2010 ve 2024 SUPTEX katalog PDF'leri (gömülü fotoğraflar çıkarıldı: kapak/montaj fotoğrafları, üzerinde yazı var veya renkli zeminde); bayi siteleri (filigranlı veya bayi logolu, kullanılmadı); Bing ve DuckDuckGo'da tam kod araması (sonuç yok); üreticinin Instagram/Facebook/LinkedIn hesaplarının arşiv kayıtları (ürün fotoğrafı yok) ve YouTube tanıtım videosu (fabrika görüntüsü, temiz ürün fotoğrafı yok); Wikimedia Commons markasız yağ keçesi fotoğrafları (üzerinde farklı ölçü okunuyor veya tipi kesin anlaşılmıyor, kullanılmadı).
 
 
 ## Ana kategori dağılımı
@@ -220,10 +220,9 @@ Denenen kaynaklar: suptex.com tüm ürün/teknik sayfaları ve 5620 kodun her bi
 | Bayrak | Ürün |
 |---|---|
 | Gerçek ürün fotoğrafı bulunamadı; üreticinin bu koda ait resmi 3D ürün görseli kullanıldı | 2874 |
+| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 1845 |
 | Yeni kategori önerisi | 1118 |
-| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 983 |
 | Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi 3D ürün görseli kullanıldı | 876 |
-| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi kesit görseli kullanıldı | 862 |
 | Ürün adındaki tip/malzeme yazımı standart değil; tip kodu teknik bilgiye eklenmedi | 34 |
 | Tip kodunda açıklaması bulunamayan kısım | 33 |
 | Kombine malzemeli yağ keçesi için uygun kategori yok; kategori boş bırakıldı | 9 |
