@@ -3,9 +3,9 @@ Toplam ürün: **3628** (girdi ile aynı sıra, tüm id'ler mevcut).
 Teknik bilgiler ve görseller Schaeffler resmi ürün kayıtlarından (medias.schaeffler.com) alındı. Resmi kaydı bulunmayan kodlarda bilgi uydurulmadı; ilgili ürünler bayraklandı.
 ## Görsel durumu
 - birebir (kodun kendi resmi görseli): **1548**
-- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **395**
-- resimsiz: **1685**
-- Farklı görsel dosyası: **64** (500x500 JPG, üstte Yamansa, altta FAG logosu)
+- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **425**
+- resimsiz: **1655**
+- Farklı görsel dosyası: **66** (500x500 JPG, üstte Yamansa, altta FAG logosu)
 ### Fotoğraf gerçekliği kontrolü
 - Önceki 71 farklı görselden çizim görünümlü (ölçü çizgili/harfli): **7**. İlk turda CAD sanılan 7 görsel, üreticinin 1200 px sürümünde fotoğraf gerçekliğinde kesit render olduğu için geri alındı (kesit bayraklı).
 - Fotoğraf görünümlü görselle değiştirilen: **0** — Schaeffler her seri için tek görsel yayınlıyor; bu serilerde fotoğraf görünümlü alternatif yok (ek aramalarla kontrol edildi).
@@ -58,7 +58,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 ## Bayrak türleri
 | Bayrak | Ürün |
 |---|---|
-| Doğru ürün görseli bulunamadı | 1685 |
+| Doğru ürün görseli bulunamadı | 1655 |
 | kesit gorsel | 1474 |
 | Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 1184 |
 | Takım | 390 |
@@ -69,6 +69,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Ürün tipi kod serisinden belirlendi | 82 |
 | Kategori belirlenemedi | 65 |
 | Ürün tipi tedarikçi kısa adından alındı | 62 |
+| Görsel aynı seri | 30 |
 | Tek rulman değerleri B7006-E-T-P4S-UL resmi kaydından alındı | 7 |
 | Tek rulman değerleri B7008-E-T-P4S-UL resmi kaydından alındı | 6 |
 | Tek rulman değerleri B7206-C-T-P4S-UL resmi kaydından alındı | 6 |
