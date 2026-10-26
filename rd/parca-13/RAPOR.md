@@ -5,10 +5,10 @@
 | tür | adet |
 |---|---|
 | birebir | 762 |
-| ayni_tip | 898 |
-| resimsiz | 2003 |
+| ayni_tip | 885 |
+| resimsiz | 2016 |
 
-Farklı görsel dosyası: 778. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
+Farklı görsel dosyası: 777. Tüm görseller kontakt sayfalarında tek tek kontrol edildi; filigranlı, başka firma etiketli, kutu/ambalaj, teknik çizim ve ölçü oklu görseller kullanılmadı. Kesitli (çeyreği kesik) görsel yok.
 - birebir: WANDA ürünlerinin kendi temiz ürün fotoğrafları (arka plan temizlendi).
 - ayni_tip: NTN/SNR için ntnamericas.com resmi tip fotoğrafları; yalnızca kapak/keçe ve yapı tipi aynı olan kodlara (ör. sadece ZZ sabit bilyalı, açık açısal, NU/NJ/NUP/N silindirik, açık oynak makaralı çelik/pirinç kafes ayrı, koni+kep takımı konik).
 - NTN/SNR'de keçeli (LLU/LLB/2RS/EE), yataklı ünite, iğneli (iç bilezikli), slewing vb. için doğru görsel bulunamadı → resimsiz + bayrak.
@@ -46,10 +46,10 @@ Bayraklı ürün: 3663
 
 | bayrak | adet |
 |---|---|
-| Doğru görsel bulunamadı | 2003 |
+| Doğru görsel bulunamadı | 2016 |
 | Ölçüler teyit edilmedi | 1902 |
 | Ölçü dizisi tedarikçi notundaki haliyle; d/D/B sırası ayrıştırılmadı | 1574 |
-| Görsel aynı tipteki üretici fotoğrafıdır; kafes ve detaylar farklı olabilir | 898 |
+| Görsel aynı tipteki üretici fotoğrafıdır; kafes ve detaylar farklı olabilir | 885 |
 | Alt tip (direk/zincir/kombine) teyit edilmedi | 485 |
 | Kategori teyit edilemedi | 227 |
 | İğneli rulman iç bileziği (tek başına bilezik) | 12 |
