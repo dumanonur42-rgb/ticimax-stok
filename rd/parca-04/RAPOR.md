@@ -164,3 +164,8 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Fıçı makaralı 202/203..-TVP (poliamid kafes): 36 ürün. Alman bayide "FAG" adıyla yayınlanan gerçek ürün fotoğrafı; arka plan beyazlatıldı. Aynı tip bayraklı.
 - Reddedilen: aynı bayideki eksenel bilyalı görseli (ölçü çizgili çizim); başka bayide 20210-TVP için konan farklı (contalı) rulman görseli.
 - Görselsiz ürün: 570 → 489.
+
+## Çok derin arama – 3. ilerleme
+- Oynak bilyalı ..-K-TVH (açık, konik delik, poliamid kafes): 51 ürün. Avusturyalı FAG/INA bayisinin bu ürünlerde kullandığı filigransız resmi kesit görseli. Konik delik görselde ayırt edilmiyor; aynı tip + kesit bayraklı.
+- Reddedilen: aynı bayinin "konik" görselleri (ölçü çizgili çizim). Oynak makaralı E1-K görseli çelik kafesli; görselsiz kalan E1-XL-K-TVPB ürünleri poliamid kafesli olduğu için kullanılmadı.
+- Görselsiz ürün: 489 → 438.
