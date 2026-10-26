@@ -5,9 +5,9 @@ Toplam ürün: **2723**
 ## Görsel
 
 - Birebir ürün görseli: **18**
-- Aynı tip görsel: **535**
-- Görselsiz (bayraklı): **2170**
-- Farklı görsel dosyası: **89** (`gorseller/`)
+- Aynı tip görsel: **741**
+- Görselsiz (bayraklı): **1964**
+- Farklı görsel dosyası: **100** (`gorseller/`)
 
 Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundaki ürünlere verildi (açık / lastik keçeli / metal kapaklı ayrı). Segman yuvalı (NR/N) rulmanlara, keçe, kayış, zincir, mekanik salmastra, kam makarası gibi doğru görseli bulunamayan ürünlere görsel konmadı. Alt bantta logosu bulunamayan markalarda alt bant boş bırakıldı ve bayrak eklendi.
 
@@ -16,14 +16,14 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 ### Marka logosu kontrolü
 
 - Logo eklenen marka: ARB, DASLAGER, CNJDB, GRW, NKE, EZO, ILJIN (139 ürün)
-- Resmî logosu doğrulanamadığı için görseli kaldırılan: 691 ürün
+- Resmî logosu doğrulanamadığı için görseli kaldırılan: 485 ürün
 - Alt bandı boş görsel: 0
 
 ### Gerçekçi görsel kontrolü
 
 - Ölçü çizgili / teknik çizim görsel: 0 (kaldırılan: 0)
 - Kesit görsel yerine tam görünüm konan: 1 farklı görsel (3 ürün)
-- Tam görünüm bulunamadığı için kesit görsel bırakılan (bayrak: "kesit görsel"): 53 farklı görsel (363 ürün)
+- Tam görünüm bulunamadığı için kesit görsel bırakılan (bayrak: "kesit görsel"): 59 farklı görsel (409 ürün)
 
 ## Kategori
 
@@ -149,8 +149,8 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 |---|---|
 | ölçüler doğrulanamadı, yazılmadı | 1637 |
 | doğru görsel bulunamadı | 1479 |
-| marka logosu doğrulanamadı, görsel kaldırıldı | 691 |
-| kesit görsel | 363 |
+| marka logosu doğrulanamadı, görsel kaldırıldı | 485 |
+| kesit görsel | 409 |
 | ürün tipi kaynakla doğrulanamadı, kategori boş bırakıldı | 279 |
 | marka koddan net anlaşılamadı | 190 |
 | uygun mevcut kategori yok, yeni kategori önerildi | 29 |
