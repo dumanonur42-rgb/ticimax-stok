@@ -2249,8 +2249,24 @@ document.head.appendChild(st);
 var io=document.getElementById('ltrIndirimOrani'),di=document.getElementById('divIndirimOrani');if(io&&di&&/\d/.test(io.textContent)){var bb=document.createElement('span');bb.className='yfB';bb.innerHTML='%'+io.textContent.trim().replace(/[<>&]/g,'')+'<i style="font-style:normal"> indirim</i>';di.appendChild(bb)}
 }
 
+function YM(){
+var p=window.productDetailModel&&productDetailModel.product,i=document.getElementById('txtbxurunSiparisAdedi');
+if(!p||!i)return;
+var m=Math.max(+p.uyeAlimMin||0,+p.urunAdediMinimumDeger||0);
+if(m<=1)return;
+if(!(p.urunAdediMinimumDeger>=m))p.urunAdediMinimumDeger=m;
+if(!(p.urunAdediVarsayilanDeger>=m))p.urunAdediVarsayilanDeger=m;
+i.setAttribute('min',m);
+function c(){if(!((parseFloat(String(i.value).replace(',','.'))||0)>=m)){i.value=m;}}
+c();
+if(i.__ym)return;i.__ym=1;
+['change','blur','keyup'].forEach(function(e){i.addEventListener(e,c)});
+var w=i.closest('.RadInput')||i.parentNode;
+w.addEventListener('click',function(){setTimeout(c,0)});
+}
+
 var t0=Date.now(),ygDone=false;
-function tryD(){if(ygDone){try{YD()}catch(e){}}try{YO()}catch(e){}try{YF()}catch(e){}}
+function tryD(){if(ygDone){try{YD()}catch(e){}}try{YO()}catch(e){}try{YF()}catch(e){}try{YM()}catch(e){}}
 (function w(){if(document.querySelector('.leftImage #imgUrunResim, .leftImage #divThumbList img, .leftImage #divMobileImageList a.lightItem')){try{YG()}catch(e){}ygDone=true;tryD()}else if(Date.now()-t0<15000)return setTimeout(w,300);else{ygDone=true;tryD()}})();
 if(!ygDone)tryD();var mo=new MutationObserver(tryD);mo.observe(document.documentElement,{childList:true,subtree:true});setTimeout(function(){mo.disconnect()},60000);
 })();
