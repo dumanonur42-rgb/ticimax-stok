@@ -213,7 +213,7 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 ## 5. tur görsel araştırması
 - EMES'in Rusya distribütörünün sitesinde, aynı kodlu ürün sayfalarındaki EMES görselleriyle 37 INOX ürüne birebir görsel eklendi. Görselin farklı bir teker tipinin sayfasında da kullanıldığı 20 eşleşme şüpheli olduğu için kullanılmadı.
 - Önerisi olmayan ürünler için bakılan kaynaklar: EMES'in resmi bayi listesindeki 8 bayi sitesi, EMES haber/fuar sayfaları, Rusya distribütörleri, Google (maşa, jant kapağı, jant yanak takımı, dış lastik). Jant yanak takımı için bulunan bayi fotoğraflarının bir kısmında bayi filigranı var. Filigransız olanlarda göbek çapı ya da rulman durumu bizim ürünlerden farklı, bu yüzden kullanılmadı. Maşa ve sac jant kapağı için filigransız fotoğraf bulunamadı.
-- Güncel görsel sayıları: birebir 1245, aynı tip 690, kesit 0, görselsiz 971.
+- Güncel görsel sayıları: birebir 1245, aynı tip 694, kesit 0, görselsiz 967.
 
 ## yakin_tip önerisi (UYGULANMADI)
 - `yakin_tip_onerisi.jsonl`: görselsiz 971 üründen 621'i için, yalnızca küçük bir detayı farklı olan aynı seri üretici görseli önerisi (id, stok_kodu, urun_adi, onerilen_gorsel, gorsel_kodu, fark).
@@ -224,3 +224,9 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - Teker çapı görseldekiyle aynı olmayanlar çıkarıldı. Görselde rulman takılı olduğu için RULMANSIZ yedek tekerler de çıkarıldı.
 - Onay gelirse bu ürünlere 'yakin_tip' türüyle ve bayrakla eklenecek. Kalan 350 üründe yakın tip görsel de yok: maşalar, sac jant kapakları, jant yanak takımları, bazı dış lastikler, rulmansız yedek tekerler ve üreticide hiç olmayan seri + teker tipleri.
 - Ek arama: archive.org'daki tüm emesteker.com görselleri (1252 dosya) tarandı. Eski sitedeki ürün görselleri sadece 85x125 piksel; sitedeki jant kapağı ve maşa görselleri sadece 96x96 piksel simge. Kullanılamıyor.
+
+## 6. tur görsel araştırması
+- Bir EMES bayisi kendi sitesinde EMES dış lastiklerinin 6 ölçüsünü (3.00-4, 3.50-7, 3.50-8 4PR/6PR, 4.00-8 4PR/6PR) aynı filigransız fotoğrafla listeliyor. Bu fotoğrafta ölçü okunmuyor. Fotoğraf daha önce 2 ölçüde kullanılmıştı; şimdi 3.50-7 4PR, 3.50-8 4PR, 4.00-8 4PR ve 4.00-8 6PR ürünlerine de aynı tip olarak eklendi. TR desenli, 10PR, 6.50/80 ve gri lastiklere eklenmedi, çünkü desen ya da renk farklı olabilir.
+- emes.com.tr adresinin arşivi başka bir şirkete ait çıktı (denizcilik), teker görseli yok.
+- Katalogda ve eğitim kitapçığında tekersiz maşa fotoğrafı yok; maşalar komple teker olarak gösteriliyor.
+- Bakılan diğer kaynaklar: n11, Trendyol, Hepsiburada; Almanya, Romanya, Malta ve Orta Asya'daki EMES bayileri için Google aramaları. Maşa, sac jant kapağı ve jant yanak takımı için filigransız ve ürünü tutan fotoğraf bulunamadı.
