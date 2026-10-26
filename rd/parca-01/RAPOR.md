@@ -7,44 +7,52 @@
 - farklı görsel dosyası: 259
 
 ## Kategori dağılımı (ana kategori)
-- TEKERLEKLER>DÖNER TEKERLEKLER: 2255
+- TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER: 2311
 - TEKERLEKLER>YEDEK TEKERLER: 262
-- TEKERLEKLER>SABİT TEKERLEKLER: 208
+- TEKERLEKLER>DÖNER TEKERLEKLER: 128
 - TEKERLEKLER: 75
 - TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER: 72
-- TEKERLEKLER>TEKER AKSESUARLARI: 34
+- TEKERLEKLER>TEKER YEDEK PARÇALARI VE AKSESUARLARI: 34
+- TEKERLEKLER>SABİT TEKERLEKLER: 21
+- TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER: 3
 
 ## Kategori dağılımı (tüm atamalar)
 - TEKERLEKLER: 2906
+- TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER: 2311
 - TEKERLEKLER>DÖNER TEKERLEKLER: 2255
 - TEKERLEKLER>FRENLİ TEKERLEKLER: 1114
 - TEKERLEKLER>PASLANMAZ (INOX) TEKERLEKLER: 363
 - TEKERLEKLER>YEDEK TEKERLER: 262
 - TEKERLEKLER>SABİT TEKERLEKLER: 208
 - TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER: 72
-- TEKERLEKLER>TEKER AKSESUARLARI: 34
+- TEKERLEKLER>TEKER YEDEK PARÇALARI VE AKSESUARLARI: 66
+- TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER: 3
 
 - boş kategori: 0
-- bayraklı ürün: 1815
+- bayraklı ürün: 1852
 
 ## yeni_kategori_onerileri
-Dosyada tekerlek için sadece `TEKERLEKLER` var. Ürünler ayrıca aşağıdaki alt kategorilere konuldu; onaylanmazsa sadece `TEKERLEKLER` kalabilir.
+Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) için ortak ağaç kullanıldı: üreticinin yük grubu ana kategori (doğrulanabildiyse), ardından görev kategorileri, en sonda `TEKERLEKLER`.
+- `TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER` – 2311 ürün – Üreticinin hafif sanayi tipi grubu (ana kategori)
+- `TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER` – 3 ürün – Üreticinin ekstra ağır sanayi tipi grubu (ana kategori)
 - `TEKERLEKLER>DÖNER TEKERLEKLER` – 2255 ürün – Döner tablalı, pim, delik, cıvata ve soket bağlantılı (yön değiştiren) tekerlekler
 - `TEKERLEKLER>SABİT TEKERLEKLER` – 208 ürün – Sabit maşalı (yön değiştirmeyen) tekerlekler
 - `TEKERLEKLER>FRENLİ TEKERLEKLER` – 1114 ürün – Kodunda F olan frenli tekerlekler; ana kategorisine ek olarak
 - `TEKERLEKLER>PASLANMAZ (INOX) TEKERLEKLER` – 363 ürün – INOX ekli paslanmaz versiyonlar; ana kategorisine ek olarak
 - `TEKERLEKLER>YEDEK TEKERLER` – 262 ürün – Maşasız tek teker (yedek teker) ürünleri
-- `TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER` – 72 ürün – Şişme (havalı) tekerler, iç/dış lastik ve jant yanak takımları
-- `TEKERLEKLER>TEKER AKSESUARLARI` – 34 ürün – Sac jant kapakları
+- `TEKERLEKLER>ŞİŞME TEKERLER VE LASTİKLER` – 72 ürün – Şişme (havalı) tekerler, iç/dış lastikler ve jant yanak takımları
+- `TEKERLEKLER>TEKER YEDEK PARÇALARI VE AKSESUARLARI` – 66 ürün – Sac jant kapakları, iç/dış lastikler ve jant yanak takımları
 
 ## Bayraklar (adet)
 - doğru görsel bulunamadı: 1412
+- yük grubu aynı seri ve teker tipindeki üretici ürünlerinden alındı: 1131
 - koddaki 'T' ekinin anlamı üretici kaynağında bulunamadı; teknik bilgi eklenmedi: 509
 - INOX (paslanmaz) versiyon üretici sitesinde EM kodu ile bulunamadı: 363
 - üretici görseli kare soketli; yuvarlak soketli görsel bulunamadı: 293
 - '(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 226
 - üretici sitesinde bu ürünün sayfası bulunamadı; teknik bilgi eklenmedi: 181
 - üretici sitesinde bu kod bulunamadı; teknik bilgi eklenmedi: 179
+- üreticinin yük grubu (hafif/orta/ağır sanayi) doğrulanamadı; kategoriye eklenmedi: 149
 - üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 95
 - rulmansız versiyon; rulman ölçüsü üründe yazan koddan alındı: 95
 - mevcut ürün fotoğrafı farklı teker tiplerinde ortak kullanılmış; kullanılmadı: 74
