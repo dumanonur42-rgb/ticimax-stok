@@ -3,8 +3,8 @@
 ## Ürün sayıları
 
 - Ürün sayısı: 3625
-- Birebir görsel: 2771
-- Aynı tip görsel: 640
+- Birebir görsel: 2735
+- Aynı tip görsel: 676
 - Resimsiz: 214
 - Bayraklı ürün: 2319
 - Boş kategorili: 75
@@ -78,7 +78,7 @@
 ## İkinci görsel turu
 
 - Önce: birebir 2749, aynı_tip 256, yok 620; kesit görselli ürün 1661.
-- Sonra: birebir 2771, aynı_tip 640, kesit bayraklı 1988, yok 214.
+- Sonra: birebir 2735, aynı_tip 676, kesit bayraklı 1988, yok 214.
 - Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 75.
 - Ölçü çizgisi temizlenerek eklenen yeni görsel: 0. Kalan ürünlerin üretici kaynaklarında yalnızca düz teknik çizim veya yer tutucu var; gerçekçi ölçülü render yok.
 - Diğer parçalardan (04–06) alınan görsel: 0; bu dallarda aynı seri INA ürünü yok.
@@ -96,7 +96,7 @@
 ### Derin arama 2
 
 - Schaeffler bölge siteleri (cn/jp/kr/in/br/us) denendi: 251 kodun 74'ünde ürün sayfası var; 22 yeni görsel çıktı, hepsi ölçülü teknik çizim olduğu için kullanılmadı.
-- Almanya'daki yetkili bayi cmt.gmbh'den tam koda ait gerçekçi kesit görselleri: 37 ürün, 5 farklı JPG; görsel türü birebir ve `kesit gorsel` bayraklı.
+- Bayinin seri görselleri (cmt.gmbh): 36 ürün aynı tip, 1 ürün birebir; hepsi kesit (`kesit gorsel` bayraklı), 5 farklı JPG.
 
 ### Yakın tip önerisi (uygulanmadı)
 
