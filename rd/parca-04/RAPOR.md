@@ -198,3 +198,8 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Çift sıralı eğik bilyalı 32/33..-M (açık, pirinç kafes): 12 ürün. Görsel aynı Alman FAG bayisinin filigransız fotoğrafı.
 - Reddedilen: 2344xx-M-SP, 32/33xx açık (çelik kafes) ve 23180-BEA-MB1 görsellerinde "SAMPLE" yazısı var. 22256-BEA-XL-MB1 ve 23936-S-MB görselleri aynı genel resim ve kafes pirinç görünmüyor. 3312-B-2RSR-TVH görselinde mavi conta var, renk doğrulanamadı.
 - Görselsiz ürün: 232 → 220.
+
+## Çok derin arama – 9. ilerleme
+- Sabit bilyalı 607 ve 609-HLC (açık, çelik sac kafes): 2 ürün. Görsel aynı bayinin 607 sayfasındaki filigransız fotoğraf; bayi aynı tipte genel resim kullandığı için "aynı tip" olarak işaretlendi.
+- 623–627 açık minyatürler 62 serisinden. Seri farkı yüzünden bu görsel onlara verilmedi.
+- Görselsiz ürün: 220 → 218.
