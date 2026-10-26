@@ -3,11 +3,11 @@
 ## Ürün sayıları
 
 - Ürün sayısı: 3625
-- Birebir görsel: 2749
-- Aynı tip görsel: 639
-- Resimsiz: 237
+- Birebir görsel: 2734
+- Aynı tip görsel: 640
+- Resimsiz: 251
 - Bayraklı ürün: 2319
-- Boş kategorili: 171
+- Boş kategorili: 75
 
 ## Kategori dağılımı
 
@@ -20,13 +20,13 @@
 - RULMAN>DÖNER TABLA VE ÇAPRAZ MAKARALI RULMANLAR: 9
 - RULMAN>EKSENEL MAKARALI VE İĞNELİ RULMANLAR: 192
 - RULMAN>KAFES VE BURÇLAR>KAYMALI BURÇLAR: 1
-- RULMAN>KAM MAKARALARI VE RULMANLARI: 580
+- RULMAN>KAM MAKARALARI VE RULMANLARI: 664
 - RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ: 40
 - RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 743
 - RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 52
 - RULMAN>YATAKLI RULMAN>SAÇ YATAKLI RULMANLAR: 61
 - RULMAN>YATAKLI RULMAN>YATAKLI RULMANLAR: 645
-- RULMAN>İĞNELİ RULMANLAR: 928
+- RULMAN>İĞNELİ RULMANLAR: 940
 - RULMAN>İĞNELİ RULMANLAR>KOMBİNE İĞNELİ RULMANLAR: 130
 - ZİNCİR - ZİNCİR DİŞLİSİ>ZİNCİR GERGİ DİŞLİLERİ: 33
 
@@ -39,13 +39,13 @@
 - RULMAN>DÖNER TABLA VE ÇAPRAZ MAKARALI RULMANLAR: 9
 - RULMAN>EKSENEL MAKARALI VE İĞNELİ RULMANLAR: 192
 - RULMAN>KAFES VE BURÇLAR>KAYMALI BURÇLAR: 1
-- RULMAN>KAM MAKARALARI VE RULMANLARI: 580
+- RULMAN>KAM MAKARALARI VE RULMANLARI: 664
 - RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ: 40
 - RULMAN>SİLİNDİRİK MAKARALI RULMANLAR: 743
 - RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 52
 - RULMAN>YATAKLI RULMAN>SAÇ YATAKLI RULMANLAR: 61
 - RULMAN>YATAKLI RULMAN>YATAKLI RULMANLAR: 706
-- RULMAN>İĞNELİ RULMANLAR: 928
+- RULMAN>İĞNELİ RULMANLAR: 940
 - RULMAN>İĞNELİ RULMANLAR>KOMBİNE İĞNELİ RULMANLAR: 130
 - ZİNCİR - ZİNCİR DİŞLİSİ>ZİNCİR GERGİ DİŞLİLERİ: 33
 
@@ -64,26 +64,36 @@
 
 ## Görsel denetimi
 
-- 138 farklı kaynak görsel: 55 tam görünüm, 82 kesit, 1 Schaeffler “görsel yok” yer tutucusu.
+- İlk görsel envanterinde 138 farklı kaynak: 55 tam görünüm, 82 kesit, 1 Schaeffler “görsel yok” yer tutucusu.
 - 000B3A6B yer tutucusu kaldırıldı; bu kayda bağlı ürünler resimsiz bırakıldı.
-- 82 kesit görseli korundu ve `kesit gorsel` bayrağı eklendi. Kardeş seri ve ürün sayfası galerileri tarandı; tam görünüm alternatifi bulunmadı, yalnızca kesit veya ölçü çizimleri mevcuttu.
-- Son görseller arasında çizgi/ölçü çizimi yok; kaynakların tamamı Schaeffler `_a` görselleridir.
+- İlk denetimde 82 kesit görseli tutulup `kesit gorsel` bayrağı eklenmişti. Kardeş seri ve ürün sayfası galerileri tarandı; tam görünüm alternatifi bulunmadı, yalnızca kesit veya ölçü çizimleri mevcuttu.
+- İlk turda çizgi/ölçü çizimi bulunmadı; o turdaki kaynakların tamamı Schaeffler `_a` görselleriydi.
 - Kesit görselden ürüne özgü gerçek fotoğrafa geçiş: 0.
 - Aynı tip görselden birebir görsele yükseltilen ürün: 0.
-- Nihai ürün verisinde kesit görselli ürün: 1993; tam görselli ürün: 1395.
-- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 139.
+- Nihai ürün verisinde kesit görselli ürün: 1951; tam görselli ürün: 1423.
+- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 142.
 - FAG görsel dosyası: 1.
-- Kullanılan farklı bitmiş görsel dosyası: 140; örnek sayfalarında: 80.
+- Kullanılan farklı bitmiş görsel dosyası: 143; örnek sayfalarında: 80.
 
 ## İkinci görsel turu
 
 - Önce: birebir 2749, aynı_tip 256, yok 620; kesit görselli ürün 1661.
-- Sonra: birebir 2749, aynı_tip 639, kesit bayraklı 1993, yok 237.
+- Sonra: birebir 2734, aynı_tip 640, kesit bayraklı 1951, yok 251.
+- Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 75.
 - Ölçü çizgisi temizlenerek eklenen yeni görsel: 0. Kalan ürünlerin üretici kaynaklarında yalnızca düz teknik çizim veya yer tutucu var; gerçekçi ölçülü render yok.
 - Diğer parçalardan (04–06) alınan görsel: 0; bu dallarda aynı seri INA ürünü yok.
 - Kesit görselden ürüne özgü gerçek fotoğrafa geçiş: 0.
 - Aynı tip görselden birebire yükseltilen ürün: 0.
-- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (32 farklı kaynak görseli).
+
+### Derin arama
+
+- Schaeffler `_d` fotoğraflarıyla -I gresörlük dişli yataklı ünitelerden 28 ürün görselleştirildi.
+- Aynı tip görsel kontrolü: 48 farklı görsel incelendi; ürün üzerinde farklı kod/ölçü yazan görsel yok; 3 görsel renkli çizim benzeri olduğu için kaldırıldı (42 ürün).
+- Her kalan seri için denenen kaynaklar: Schaeffler medias (tüm bölgeler aynı veri; `_a`/`_b`/`_d`/`_f` görselleri), 04–06 parça dalları, yetkili bayi/pazar yeri sayfaları (abf.store, ekugellager.de, bearingoffice.com, simplybearings.co.uk, blueperry.co.uk, acorn-ind.co.uk, ashleybearings.co.uk, eurobearing.de, misumi-ec.com, coolenbearings.com, motion.com, nodeshk.com, bearingmodel.com, sunrisebearingsfl.com).
+- Reddedilen kaynaklar: filigran (ABF, ekugellager SAMPLE, bearingoffice, acorn); kutu+bayi etiketi (sunrise); markasız genel fotoğraf (Ashley NKIA, simplybearings PCJT-TV); farklı yapı (simplybearings PBY eksantrik bilezikli; RCJY45-TV-VA paslanmaz/vidalı).
+- Renkli/çizim benzeri görsel nedeniyle kaldırılan ürün sayısı: 42; kalan-yok toplamı: 251.
+
+- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (35 farklı kaynak görseli).
 
 ### Kalan görselsiz ürünler
 
@@ -104,22 +114,15 @@
 | PBY | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | RASEA N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | RASEL N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| RCJY I | 5 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | ZSL | 5 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KRV | 3 | Keçesiz tam dolu kam makarası; mevcut görseller keçeli |
 | NAO TV | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RMEO I | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | WRE | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | K TV-A | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KGSNG PP-AS | 2 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | KRE | 2 | Keçesiz eksantrik kam makarası; mevcut görseller keçeli |
 | LR NPP-U | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RASE N-I | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RASE I | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RASEL | 2 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| RME I | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RMEY I | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RTUE I | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | K M-A | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KGHK B-PP-AS | 1 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | KRE PP-SK-A | 1 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
@@ -133,18 +136,8 @@
 | NATV PP-A-L476 | 1 | Keçeli tip; üreticideki NATV8 görseli keçesiz |
 | NKIS A | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | NKS A | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| PASE N-I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| PCJ I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| PCJ N-I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| PCJT I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| PCJT N-I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RASEY I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RCJ I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RCJTZ I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RCSMB 65-FA106 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RLBSR C-0100 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RME 214-I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| RMEY 214-I | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RNA H+44+36 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | SCE P-L271 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | SD B | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
@@ -153,6 +146,9 @@
 | SPL | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | TWD HLA | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | ZSL BIR3 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
+| NKIB | 30 | üreticide yalnızca renkli/çizim benzeri görsel var |
+| RNAO | 10 | üreticide yalnızca renkli/çizim benzeri görsel var |
+| SL | 2 | üreticide yalnızca renkli/çizim benzeri görsel var |
 
 Kod listeleri:
 
@@ -262,13 +258,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>RCJY I — 5 kod</summary>
-
-`RCJY45-XL-I`, `RCJY55-XL-I`, `RCJY70-XL-I`, `RCJY80-XL-I`, `RCJY90-XL-I`
-
-</details>
-
-<details>
 <summary>ZSL — 5 kod</summary>
 
 `ZSL192305`, `ZSL192308-C3`, `ZSL192313-C3`, `ZSL192317-C3`, `ZSL192322-C3`
@@ -286,13 +275,6 @@ Kod listeleri:
 <summary>NAO TV — 3 kod</summary>
 
 `NAO6X17X10-TV`, `NAO9X22X12-TV`, `NAO9X22X12-TV-XL`
-
-</details>
-
-<details>
-<summary>RMEO I — 3 kod</summary>
-
-`RMEO60-XL-I`, `RMEO80-XL-I`, `RMEO90-XL-I`
 
 </details>
 
@@ -332,44 +314,9 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>RASE N-I — 2 kod</summary>
-
-`RASE50-XL-N-I`, `RASE60-XL-N-I`
-
-</details>
-
-<details>
-<summary>RASE I — 2 kod</summary>
-
-`RASE70-XL-I`, `RASE80-XL-I`
-
-</details>
-
-<details>
 <summary>RASEL — 2 kod</summary>
 
 `RASEL45-XL`, `RASEL70-XL`
-
-</details>
-
-<details>
-<summary>RME I — 2 kod</summary>
-
-`RME70-XL-I`, `RME90-XL-I`
-
-</details>
-
-<details>
-<summary>RMEY I — 2 kod</summary>
-
-`RMEY70-XL-I`, `RMEY90-XL-I`
-
-</details>
-
-<details>
-<summary>RTUE I — 2 kod</summary>
-
-`RTUE120-XL-I`, `RTUE90-XL-I`
 
 </details>
 
@@ -465,62 +412,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>PASE N-I — 1 kod</summary>
-
-`PASE50-XL-N-I`
-
-</details>
-
-<details>
-<summary>PCJ I — 1 kod</summary>
-
-`PCJ55-XL-I`
-
-</details>
-
-<details>
-<summary>PCJ N-I — 1 kod</summary>
-
-`PCJ60-XL-N-I`
-
-</details>
-
-<details>
-<summary>PCJT I — 1 kod</summary>
-
-`PCJT45-XL-I`
-
-</details>
-
-<details>
-<summary>PCJT N-I — 1 kod</summary>
-
-`PCJT50-XL-N-I`
-
-</details>
-
-<details>
-<summary>RASEY I — 1 kod</summary>
-
-`RASEY80-XL-I`
-
-</details>
-
-<details>
-<summary>RCJ I — 1 kod</summary>
-
-`RCJ70-XL-I`
-
-</details>
-
-<details>
-<summary>RCJTZ I — 1 kod</summary>
-
-`RCJTZ60-XL-I`
-
-</details>
-
-<details>
 <summary>RCSMB 65-FA106 — 1 kod</summary>
 
 `RCSMB3/4-65-FA106`
@@ -531,20 +422,6 @@ Kod listeleri:
 <summary>RLBSR C-0100 — 1 kod</summary>
 
 `RLBSR71-C-0100`
-
-</details>
-
-<details>
-<summary>RME 214-I — 1 kod</summary>
-
-`RME65-214-XL-I`
-
-</details>
-
-<details>
-<summary>RMEY 214-I — 1 kod</summary>
-
-`RMEY65-214-XL-I`
 
 </details>
 
@@ -601,5 +478,26 @@ Kod listeleri:
 <summary>ZSL BIR3 — 1 kod</summary>
 
 `ZSL192311-BIR3-C4`
+
+</details>
+
+<details>
+<summary>NKIB — 30 kod</summary>
+
+`NKIB59/22`, `NKIB59/22-XL`, `NKIB5901`, `NKIB5901-XL`, `NKIB5902`, `NKIB5902-XL`, `NKIB5903`, `NKIB5903-XL`, `NKIB5904`, `NKIB5904-XL`, `NKIB5905`, `NKIB5905-XL`, `NKIB5906`, `NKIB5906-XL`, `NKIB5907`, `NKIB5907-XL`, `NKIB5908`, `NKIB5908-XL`, `NKIB5909`, `NKIB5909-XL`, `NKIB5910`, `NKIB5910-XL`, `NKIB5911`, `NKIB5911-XL`, `NKIB5912`, `NKIB5912-XL`, `NKIB5913`, `NKIB5913-XL`, `NKIB5914`, `NKIB5914-XL`
+
+</details>
+
+<details>
+<summary>RNAO — 10 kod</summary>
+
+`RNAO20X28X26-ZW-ASR1`, `RNAO25X35X26-ZW-ASR1`, `RNAO30X42X32-ZW-ASR1`, `RNAO35X45X26-ZW-ASR1`, `RNAO35X47X32-ZW-ASR1`, `RNAO40X50X34-ZW-ASR1`, `RNAO40X55X40-ZW-ASR1`, `RNAO45X62X40-ZW-ASR1`, `RNAO50X65X40-ZW-ASR1`, `RNAO60X78X40-ZW-ASR1`
+
+</details>
+
+<details>
+<summary>SL — 2 kod</summary>
+
+`SL045008-D-P`, `SL045008-S3-C4`
 
 </details>
