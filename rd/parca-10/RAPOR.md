@@ -3,11 +3,11 @@
 - Ürün sayısı: 5620
 - Birebir görsel: 3
 - Aynı tip görsel: 77
-- Resmi kesit görseli: 3498
-- Görselsiz: 2042
+- Resmi kesit görseli: 4225
+- Görselsiz: 1315
 - Kategorisi boş: 26
 - Bayraklı ürün: 5565
-- Farklı görsel dosyası: 40
+- Farklı görsel dosyası: 50
 
 ## Görseller
 Ürün koduyla birebir eşleşen resmi fotoğraf bulunamadı (input'ta tedarikçi görseli yok, üreticinin ürün arama sayfası robots.txt ile kapalı). Üreticinin kendi sitesindeki beyaz zeminli ürün grubu fotoğrafları, yalnızca görünüşü aynı olan ürünlere 'ayni_tip' olarak atandı:
@@ -103,8 +103,8 @@ Görselsiz kalanların başlıcaları: mavi NBR (NB17) yağ keçeleri, kahvereng
 
 | Bayrak | Ürün |
 |---|---|
-| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi 3D ürün görseli kullanıldı | 2636 |
-| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 2042 |
+| Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi 3D ürün görseli kullanıldı | 3363 |
+| Bu tipe uygun üretici görseli bulunamadı; görsel eklenmedi | 1315 |
 | Yeni kategori önerisi | 1118 |
 | Gerçek ürün fotoğrafı bulunamadı; üreticinin resmi kesit görseli kullanıldı | 862 |
 | Ürün adındaki tip/malzeme yazımı standart değil; tip kodu teknik bilgiye eklenmedi | 34 |
