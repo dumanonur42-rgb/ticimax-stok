@@ -230,3 +230,10 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - emes.com.tr adresinin arşivi başka bir şirkete ait çıktı (denizcilik), teker görseli yok.
 - Katalogda ve eğitim kitapçığında tekersiz maşa fotoğrafı yok; maşalar komple teker olarak gösteriliyor.
 - Bakılan diğer kaynaklar: n11, Trendyol, Hepsiburada; Almanya, Romanya, Malta ve Orta Asya'daki EMES bayileri için Google aramaları. Maşa, sac jant kapağı ve jant yanak takımı için filigransız ve ürünü tutan fotoğraf bulunamadı.
+
+## 7. tur: emesteker.com arşivi ve eski PDF'ler
+- archive.org'da emesteker.com için 2918 sayfa ve 102 PDF kaydı tarandı. 2009 sitesindeki kategorilerde maşa ya da aksesuar bölümü yok, sadece havalı ve yedek tekerler var.
+- Bakılan PDF'ler: 2015 kataloğu, 2022 TR kataloğu, 2026 İngilizce katalog, 2011 ve 2017 fiyat listeleri, EM serisi broşürü. Kataloglarda tekersiz maşa, jant kapağı ya da yanak takımı sayfası yok.
+- 2017 fiyat listesinin 131. sayfasında EMES'in kendi jant kapağı fotoğrafı var (EM, ED, ER, EK-EG serileri için aynı fotoğraf). 130. sayfada da yanak (jant yarısı) fotoğrafı var. Ancak bu fotoğraflar sadece 148x148 piksel, yani 500x500 görselde bulanık çıkıyor. Yanak fotoğrafında ölçü ve rulman yuvası da belli değil.
+- Bu yüzden uygulanmadı. Örnek görünüm: `oneri_dusuk_cozunurluk.jpg`. Sahibi bulanıklığı kabul ederse jant kapağı fotoğrafı 34 sac jant kapağına aynı tip olarak eklenebilir.
+- Sitedeki "jant-kapagi.png" ve "masa-kalinligi.png" dosyaları 96x96 boyutunda simge çizimler, ürün fotoğrafı değil.
