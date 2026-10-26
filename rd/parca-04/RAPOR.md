@@ -150,3 +150,10 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Reddedilen: 607 ve 623–627 (açık ve -2Z) minyatürleri için sadece 634/635 görseli var. Bunlar 63 serisi, bizimkiler 60/62 serisi; seri aynı olmadığı için kullanılmadı (9 ürün).
 - Diğer parçalarda oynak bilyalı, eksenel bilyalı, oynak makaralı, fıçı makaralı, eksenel açısal temaslı ve çift sıralı sabit bilyalı serilerinin hiçbirinde görsel yok.
 - Görselsiz ürün: 825 → 823.
+
+## Çok derin arama – 1. ilerleme
+- Oynak bilyalı ..-TVH (açık, silindirik delik, poliamid kafes): 125 ürün. Kaynak: Alman FAG bayisinin filigransız gerçekçi kesit görseli. Aynı tip + kesit bayraklı.
+- Tek yönlü eksenel bilyalı 511–514xx (düz pullar, sac çelik kafes): 68 ürün. Kaynak: Alman bayide "FAG" adıyla yayınlanan filigransız gerçek ürün fotoğrafı; arka planı beyazlatıldı. Aynı tip bayraklı.
+- Oynak makaralı ..-E1 (açık, silindirik delik, çelik kafes): 60 ürün. Kaynak: filigransız resmi kesit render'ı. Aynı tip + kesit bayraklı.
+- Reddedilenler: filigranlı Alman bayi fotoğrafı (22210-E1); kutusu görünen fotoğraf; markası belli olmayan oynak bilyalı fotoğrafı.
+- Görselsiz ürün: 823 → 570.
