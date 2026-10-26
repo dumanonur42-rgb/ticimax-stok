@@ -208,4 +208,4 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - Hâlâ görselsiz kalanlar:
   - Yuvarlak soketli EM07: üreticinin ve bayilerin tüm soketli görselleri kare soketli.
   - INOX'un bulunmadığı seri/bağlantı kombinasyonları, üreticide hiç olmayan seri+teker tipleri (EM MKM, ZBZ, ZBRM, MMM, SBR vb.), renk ve özel versiyonlar.
-  - EMS 01 maşaları, iç lastikler, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için, iç lastiklerin hepsinde bayideki temiz (yazısız) fotoğraf aynı tip olarak kullanıldı.
+  - EMS 01 maşaları, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için, iç lastiklerin hepsinde bayideki temiz (yazısız) fotoğraf aynı tip olarak kullanıldı.
