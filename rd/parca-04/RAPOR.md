@@ -203,3 +203,15 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 - Sabit bilyalı 607 ve 609-HLC (açık, çelik sac kafes): 2 ürün. Görsel aynı bayinin 607 sayfasındaki filigransız fotoğraf; bayi aynı tipte genel resim kullandığı için "aynı tip" olarak işaretlendi.
 - 623–627 açık minyatürler 62 serisinden. Seri farkı yüzünden bu görsel onlara verilmedi.
 - Görselsiz ürün: 220 → 218.
+
+## Çok derin arama – 10. ilerleme
+- Taranan ek kaynaklar: Çin pazaryeri ve bayi sayfaları (234420-M-SP), Kanada/ABD bayileri (51130-MP), Alman çevrim içi FAG mağazası ve Misumi (22240-BEA-XL-MB1).
+- Reddedilenler: 51130/51148-MP fotoğrafları rulmanı kutunun üstünde gösteriyor ve iki kodda da aynı genel fotoğraf kullanılmış. 22238-BE-XL render'ında kafes çelik, MB1 (pirinç) ürünlere uymuyor. Çin sitelerinde ya görsel yok ya da sitenin filigranı var.
+- Yeni görsel: 0. Görselsiz ürün 218.
+
+## Yakın tip önerileri (uygulanmadı, sahibin onayını bekliyor)
+- Dosya: `yakin_tip_onerileri.jsonl`, 56 ürün. Her satırda id, stok_kodu, önerilen görsel/kaynak ve farkın kısa açıklaması var.
+  - 623–627 açık minyatür: 5 ürün (607 görseli, seri farkı)
+  - 3312-B-2RSR-TVH: 2 ürün (conta rengi doğrulanamadı)
+  - 532/533/542/543xx: 19 ürün (görselde küresel pul görünmüyor)
+  - 222/223xx-BEA-XL-MB1: 22 ürün ve 239/240xx-S-MB: 8 ürün (görselde pirinç kafes belirgin değil)
