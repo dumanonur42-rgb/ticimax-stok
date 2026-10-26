@@ -1,12 +1,13 @@
 # Parça 14 ürün kataloğu
 
-- Ürün kaydı: **3592**
-- Görsel: birebir **328**, aynı tip **12**, resimsiz **3252**
-- Kesit görsel bayrağı: **12**
-- Kaynak görsel incelemesi: temiz 255, filigran 891, logo/etiket 3
-- ART ölçü eşleşmesi: **0**; kaynak bağlantıları gizlilik kuralına uygun biçimde saklanamadığından ürün ölçülerine eklenmedi.
-- Boş kategori: **62**; bayraklı ürün: **3541**
-- SSS: `tip_bilgi.py` içindeki mevcut yanıtlar kullanıldı; bazı tiplerde üçten az kayıt bulunduğundan yeni yanıt eklenmedi.
+- Ürün kaydı: **3,592**
+- Görsel: birebir **327**, aynı tip **12**, resimsiz **3253**; kesit görsel bayrağı **12**.
+- Düzeltilmiş, tam kodla eşleşen BMS katalog fotoğrafı: **52**.
+- Kaynak görsel incelemesi: temiz **254**, filigran **891**, logo/etiket **3**, kötü **1**; temizden düşürülen **1**.
+- ART ölçü eşleşmesi: **21/478**; eşleşmeyen **457**.
+- Ürün bbox eşiği (genişlik ≥400 veya yükseklik ≥225 px): **0 istisna**.
+- Boş kategori: **62**; bayraklı ürün: **3544**.
+- Her ürün açıklamasında 3 döndürülmüş SSS; bakım listesinde 4 veya eldeki tüm öğeler, kullanım listesinde döndürülmüş tam liste.
 
 ## Ana kategori dağılımı
 
@@ -30,4 +31,4 @@
 
 ## Görsel örnekleri
 
-- `ornek_1.jpg` ve `ornek_2.jpg`: farklı nihai görsellerden yaklaşık 40’ar örnek.
+- `ornek_1.jpg` ve `ornek_2.jpg`: nihai görsellerden 40’ar örnek, stok kodu etiketli.
