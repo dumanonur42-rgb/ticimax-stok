@@ -3,9 +3,9 @@
 ## Ürün sayıları
 
 - Ürün sayısı: 3625
-- Birebir görsel: 2734
+- Birebir görsel: 2771
 - Aynı tip görsel: 640
-- Resimsiz: 251
+- Resimsiz: 214
 - Bayraklı ürün: 2319
 - Boş kategorili: 75
 
@@ -70,15 +70,15 @@
 - İlk turda çizgi/ölçü çizimi bulunmadı; o turdaki kaynakların tamamı Schaeffler `_a` görselleriydi.
 - Kesit görselden ürüne özgü gerçek fotoğrafa geçiş: 0.
 - Aynı tip görselden birebir görsele yükseltilen ürün: 0.
-- Nihai ürün verisinde kesit görselli ürün: 1951; tam görselli ürün: 1423.
-- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 142.
+- Nihai ürün verisinde kesit görselli ürün: 1988; tam görselli ürün: 1423.
+- INA yeşil elmas logosu uygulanmış farklı INA görsel dosyası: 147.
 - FAG görsel dosyası: 1.
-- Kullanılan farklı bitmiş görsel dosyası: 143; örnek sayfalarında: 80.
+- Kullanılan farklı bitmiş görsel dosyası: 148; örnek sayfalarında: 80.
 
 ## İkinci görsel turu
 
 - Önce: birebir 2749, aynı_tip 256, yok 620; kesit görselli ürün 1661.
-- Sonra: birebir 2734, aynı_tip 640, kesit bayraklı 1951, yok 251.
+- Sonra: birebir 2771, aynı_tip 640, kesit bayraklı 1988, yok 214.
 - Aynı seri donöründen tip/kategori bilgisi alınan ürün: 96; nihai kategorisiz: 75.
 - Ölçü çizgisi temizlenerek eklenen yeni görsel: 0. Kalan ürünlerin üretici kaynaklarında yalnızca düz teknik çizim veya yer tutucu var; gerçekçi ölçülü render yok.
 - Diğer parçalardan (04–06) alınan görsel: 0; bu dallarda aynı seri INA ürünü yok.
@@ -91,41 +91,49 @@
 - Aynı tip görsel kontrolü: 48 farklı görsel incelendi; ürün üzerinde farklı kod/ölçü yazan görsel yok; 3 görsel renkli çizim benzeri olduğu için kaldırıldı (42 ürün).
 - Her kalan seri için denenen kaynaklar: Schaeffler medias (tüm bölgeler aynı veri; `_a`/`_b`/`_d`/`_f` görselleri), 04–06 parça dalları, yetkili bayi/pazar yeri sayfaları (abf.store, ekugellager.de, bearingoffice.com, simplybearings.co.uk, blueperry.co.uk, acorn-ind.co.uk, ashleybearings.co.uk, eurobearing.de, misumi-ec.com, coolenbearings.com, motion.com, nodeshk.com, bearingmodel.com, sunrisebearingsfl.com).
 - Reddedilen kaynaklar: filigran (ABF, ekugellager SAMPLE, bearingoffice, acorn); kutu+bayi etiketi (sunrise); markasız genel fotoğraf (Ashley NKIA, simplybearings PCJT-TV); farklı yapı (simplybearings PBY eksantrik bilezikli; RCJY45-TV-VA paslanmaz/vidalı).
-- Renkli/çizim benzeri görsel nedeniyle kaldırılan ürün sayısı: 42; kalan-yok toplamı: 251.
+- Renkli/çizim benzeri görsel nedeniyle kaldırılan ürün sayısı: 42; kalan-yok toplamı: 214.
 
-- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (35 farklı kaynak görseli).
+### Derin arama 2
+
+- Schaeffler bölge siteleri (cn/jp/kr/in/br/us) denendi: 251 kodun 74'ünde ürün sayfası var; 22 yeni görsel çıktı, hepsi ölçülü teknik çizim olduğu için kullanılmadı.
+- Almanya'daki yetkili bayi cmt.gmbh'den tam koda ait gerçekçi kesit görselleri: 37 ürün, 5 farklı JPG; görsel türü birebir ve `kesit gorsel` bayraklı.
+
+### Yakın tip önerisi (uygulanmadı)
+
+- 214 görselsiz ürün için öneri dosyaları: 8 önerilebilir (aynı ölçü, sadece keçe/ek farkı), 74 önerilmez (farklı seri/ölçü grubu, termoplastik gövde, ZW çift sıra), 132 aynı seride görselli aday yok.
+- Öneriler yalnızca öneri olarak dışa aktarıldı; ürün verisine uygulanmadı.
+- Dosyalar: `yakin_tip_oneri.json` ve `yakin_tip_oneri.csv`.
+
+- İkinci tur iletişim sayfası: `ikinci_tur.jpg` (40 farklı kaynak görseli).
 
 ### Kalan görselsiz ürünler
 
 | Seri | Adet | Neden |
 | --- | ---: | --- |
 | NKIA | 30 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| KRVE PP-A | 24 | Tam dolu eksantrik kam makarası; üreticide fotoğraf yok, kafesli KRE görseli yapı olarak farklı |
-| KRV B | 13 | B tasarımlı tam dolu kam makarası; aynı yapıda görsel bulunamadı |
+| KRVE PP-A | 10 | Tam dolu eksantrik kam makarası; üreticide fotoğraf yok, kafesli KRE görseli yapı olarak farklı |
+| KRV B | 2 | B tasarımlı tam dolu kam makarası; aynı yapıda görsel bulunamadı |
 | K TV | 11 | K893 eksenel makara kafesi; elimizdeki K811/K812 görseli farklı seri |
 | SL E | 11 | SL05/SL06 çift sıra makara rulmanı; elimizdeki tek sıra SL1818 görseli farklı yapı |
 | PNA | 9 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RPNA | 9 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | SL A | 9 | SL11/12/13/16 serisi; elimizdeki SL0248/0249 görseli farklı yapı |
 | KASK | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| KRE B | 7 | B tasarımlı eksantrik kam makarası; aynı yapıda görsel bulunamadı |
+| KRE B | 1 | B tasarımlı eksantrik kam makarası; aynı yapıda görsel bulunamadı |
 | PCJ TV-FA125.5 | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | PCJT TV-FA125.5 | 7 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | PBY | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | RASEA N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | RASEL N | 6 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | ZSL | 5 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
-| KRV | 3 | Keçesiz tam dolu kam makarası; mevcut görseller keçeli |
 | NAO TV | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | WRE | 3 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | K TV-A | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KGSNG PP-AS | 2 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| KRE | 2 | Keçesiz eksantrik kam makarası; mevcut görseller keçeli |
 | LR NPP-U | 2 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | RASEL | 2 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | K M-A | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KGHK B-PP-AS | 1 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
-| KRE PP-SK-A | 1 | Üretici sayfasında fotoğraf yok (sadece teknik çizim/yer tutucu) |
 | KRV B-L077 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | KWVE B-EC-V1-G4 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
 | LR NPPU-AH04 | 1 | Kod üretici kataloğunda bulunamadı; aynı yapıda görsel yok |
@@ -160,16 +168,16 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>KRVE PP-A — 24 kod</summary>
+<summary>KRVE PP-A — 10 kod</summary>
 
-`KRVE16-PP-A`, `KRVE16-PP-A-NMT`, `KRVE19-PP-A`, `KRVE22-PP-A`, `KRVE26-PP-A`, `KRVE30-PP-A`, `KRVE30-PP-A-NMT`, `KRVE32-PP-A`, `KRVE32-PP-A-NMT`, `KRVE35-PP-A`, `KRVE35-PP-A-NMT`, `KRVE40-PP-A`, `KRVE40-PP-A-NMT`, `KRVE47-PP-A`, `KRVE52-PP-A`, `KRVE52-PP-A-NMT`, `KRVE62-PP-A`, `KRVE62-PP-A-NMT`, `KRVE72-PP-A`, `KRVE72-PP-A-NMT`, `KRVE80-PP-A`, `KRVE80-PP-A-NMT`, `KRVE90-PP-A`, `KRVE90-PP-A-NMT`
+`KRVE16-PP-A-NMT`, `KRVE30-PP-A-NMT`, `KRVE32-PP-A-NMT`, `KRVE35-PP-A-NMT`, `KRVE40-PP-A-NMT`, `KRVE52-PP-A-NMT`, `KRVE62-PP-A-NMT`, `KRVE72-PP-A-NMT`, `KRVE80-PP-A-NMT`, `KRVE90-PP-A-NMT`
 
 </details>
 
 <details>
-<summary>KRV B — 13 kod</summary>
+<summary>KRV B — 2 kod</summary>
 
-`KRV22-B`, `KRV22-B-NMT`, `KRV22-X-B`, `KRV26-B`, `KRV26-B-NMT`, `KRV26-X-B`, `KRV30-B`, `KRV30-B-NMT`, `KRV32-B`, `KRV32-B-NMT`, `KRV35-B`, `KRV35-B-NMT`, `KRV40-B`
+`KRV22-X-B`, `KRV26-X-B`
 
 </details>
 
@@ -216,9 +224,9 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>KRE B — 7 kod</summary>
+<summary>KRE B — 1 kod</summary>
 
-`KRE22-B`, `KRE26-B`, `KRE26-B-NMT`, `KRE30-B`, `KRE32-B`, `KRE35-B`, `KRE40-B`
+`KRE26-B-NMT`
 
 </details>
 
@@ -265,13 +273,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>KRV — 3 kod</summary>
-
-`KRV16`, `KRV19`, `KRV19-NMT`
-
-</details>
-
-<details>
 <summary>NAO TV — 3 kod</summary>
 
 `NAO6X17X10-TV`, `NAO9X22X12-TV`, `NAO9X22X12-TV-XL`
@@ -300,13 +301,6 @@ Kod listeleri:
 </details>
 
 <details>
-<summary>KRE — 2 kod</summary>
-
-`KRE16`, `KRE19`
-
-</details>
-
-<details>
 <summary>LR NPP-U — 2 kod</summary>
 
 `LR202-NPP-U`, `LR204-NPP-U`
@@ -331,13 +325,6 @@ Kod listeleri:
 <summary>KGHK B-PP-AS — 1 kod</summary>
 
 `KGHK40-B-PP-AS`
-
-</details>
-
-<details>
-<summary>KRE PP-SK-A — 1 kod</summary>
-
-`KRE19-PP-SK-A`
 
 </details>
 

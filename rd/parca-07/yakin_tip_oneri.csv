@@ -1,0 +1,215 @@
+﻿id,stok_kodu,aday,aday_dal,aday_gorsel,fark,durum
+49220,INA K81209-TV-A/0-8,K81117-TV-A/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 81209 / 81117; farklı seri/ölçü grubu,önerilmez
+49222,INA K81211-TV-A/0-8,K81117-TV-A/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 81211 / 81117; farklı seri/ölçü grubu,önerilmez
+49234,INA K81228-M-A/+6-8,K81230-M/+6-8,rd/parca-07,5b7669a3ca51.jpg,"üründe var, adayda yok: A; ölçü kodu 81228 / 81230; farklı seri/ölçü grubu",önerilmez
+49247,INA K89306-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89306 / 81226; farklı seri/ölçü grubu,önerilmez
+49248,INA K89307-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89307 / 81226; farklı seri/ölçü grubu,önerilmez
+49249,INA K89308-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89308 / 81226; farklı seri/ölçü grubu,önerilmez
+49250,INA K89309-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89309 / 81226; farklı seri/ölçü grubu,önerilmez
+49251,INA K89310-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89310 / 81226; farklı seri/ölçü grubu,önerilmez
+49252,INA K89311-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89311 / 81226; farklı seri/ölçü grubu,önerilmez
+49253,INA K89312-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89312 / 81226; farklı seri/ölçü grubu,önerilmez
+49254,INA K89313-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89313 / 81226; farklı seri/ölçü grubu,önerilmez
+49255,INA K89314-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89314 / 81226; farklı seri/ölçü grubu,önerilmez
+49256,INA K89315-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89315 / 81226; farklı seri/ölçü grubu,önerilmez
+49257,INA K89316-TV/0-8,K81226-TV/0-8,rd/parca-07,5b7669a3ca51.jpg,ölçü kodu 89316 / 81226; farklı seri/ölçü grubu,önerilmez
+28712,INA KASK04,,,,,aday yok
+28713,INA KASK05,,,,,aday yok
+28714,INA KASK06,,,,,aday yok
+28715,INA KASK07,,,,,aday yok
+28716,INA KASK08,,,,,aday yok
+28717,INA KASK10,,,,,aday yok
+28718,INA KASK12,,,,,aday yok
+336674,INA KGHK40-B-PP-AS,,,,,aday yok
+336456,INA KGSNG30-PP-AS,,,,,aday yok
+336457,INA KGSNG40-PP-AS,,,,,aday yok
+28830,INA KRE26-B-NMT,KRE26-PP-A-NMT,rd/parca-07,c445ba3a8473.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
+28872,INA KRV22-X-B,KRV22-X-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
+28879,INA KRV26-X-B,KRV26-X-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A, PP",önerilebilir
+336766,INA KRV35-B-L077,KRV35-PP-A,rd/parca-07,161841b77090.jpg,"üründe var, adayda yok: B, L077; adayda var, üründe yok: A, PP",önerilebilir
+28926,INA KRVE16-PP-A-NMT,,,,,aday yok
+28931,INA KRVE30-PP-A-NMT,,,,,aday yok
+28933,INA KRVE32-PP-A-NMT,,,,,aday yok
+28935,INA KRVE35-PP-A-NMT,,,,,aday yok
+28937,INA KRVE40-PP-A-NMT,,,,,aday yok
+28940,INA KRVE52-PP-A-NMT,,,,,aday yok
+28942,INA KRVE62-PP-A-NMT,,,,,aday yok
+28944,INA KRVE72-PP-A-NMT,,,,,aday yok
+28946,INA KRVE80-PP-A-NMT,,,,,aday yok
+28948,INA KRVE90-PP-A-NMT,,,,,aday yok
+336767,INA KWVE20-B-EC-V1-G4,,,,,aday yok
+29014,INA LR202-NPP-U,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: NPP, U; ölçü kodu 202 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
+29024,INA LR204-NPP-U,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: NPP, U; ölçü kodu 204 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
+339512,INA LR5002-NPPU-AH04,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: AH04, NPPU; ölçü kodu 5002 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
+29170,INA LR6002-2RS-HLC,LR50/7-2RS-HLC,rd/parca-07,897f8db66279.jpg,ölçü kodu 6002 / 50/7; farklı seri/ölçü grubu,önerilmez
+333073,INA LR606-2Z-HLC,LR5200-2Z,rd/parca-07,897f8db66279.jpg,"üründe var, adayda yok: HLC; ölçü kodu 606 / 5200; farklı seri/ölçü grubu",önerilmez
+330488,INA LR607-2RSR-HLC-D-010,LR607-2RSR-HLC,rd/parca-07,59e33d2c0f42.jpg,"üründe var, adayda yok: 010, D",önerilebilir
+29179,INA LR61812AH01,"LR50X55X20,5",rd/parca-07,c17ad279e088.jpg,"üründe var, adayda yok: AH01; ölçü kodu 61812 / 50X55X20,5; farklı seri/ölçü grubu",önerilmez
+29379,INA NAO6X17X10-TV,NAO12X24X13,rd/parca-07,0218dd321f89.jpg,"üründe var, adayda yok: TV; ölçü kodu 6X17X10 / 12X24X13; farklı seri/ölçü grubu",önerilmez
+29387,INA NAO9X22X12-TV,NAO12X24X13,rd/parca-07,0218dd321f89.jpg,"üründe var, adayda yok: TV; ölçü kodu 9X22X12 / 12X24X13; farklı seri/ölçü grubu",önerilmez
+29388,INA NAO9X22X12-TV-XL,NAO12X24X13-XL,rd/parca-07,0218dd321f89.jpg,"üründe var, adayda yok: TV; ölçü kodu 9X22X12 / 12X24X13; farklı seri/ölçü grubu",önerilmez
+333075,INA NATV8-X-PP-A-L476,NATV8-X-PP-A,rd/parca-07,1178b914f73d.jpg,"üründe var, adayda yok: L476",önerilebilir
+49455,INA NKIA59/22,,,,,aday yok
+49456,INA NKIA59/22-XL,,,,,aday yok
+29634,INA NKIA5901,,,,,aday yok
+29635,INA NKIA5901-XL,,,,,aday yok
+29636,INA NKIA5902,,,,,aday yok
+29637,INA NKIA5902-XL,,,,,aday yok
+29638,INA NKIA5903,,,,,aday yok
+29639,INA NKIA5903-XL,,,,,aday yok
+29640,INA NKIA5904,,,,,aday yok
+29641,INA NKIA5904-XL,,,,,aday yok
+29642,INA NKIA5905,,,,,aday yok
+29643,INA NKIA5905-XL,,,,,aday yok
+29644,INA NKIA5906,,,,,aday yok
+29645,INA NKIA5906-XL,,,,,aday yok
+29646,INA NKIA5907,,,,,aday yok
+29647,INA NKIA5907-XL,,,,,aday yok
+29648,INA NKIA5908,,,,,aday yok
+29649,INA NKIA5908-XL,,,,,aday yok
+29650,INA NKIA5909,,,,,aday yok
+29651,INA NKIA5909-XL,,,,,aday yok
+29652,INA NKIA5910,,,,,aday yok
+29653,INA NKIA5910-XL,,,,,aday yok
+29654,INA NKIA5911,,,,,aday yok
+29655,INA NKIA5911-XL,,,,,aday yok
+29656,INA NKIA5912,,,,,aday yok
+29657,INA NKIA5912-XL,,,,,aday yok
+29658,INA NKIA5913,,,,,aday yok
+29659,INA NKIA5913-XL,,,,,aday yok
+29660,INA NKIA5914,,,,,aday yok
+29661,INA NKIA5914-XL,,,,,aday yok
+49457,INA NKIB59/22,,,,,aday yok
+49458,INA NKIB59/22-XL,,,,,aday yok
+29664,INA NKIB5901,,,,,aday yok
+29665,INA NKIB5901-XL,,,,,aday yok
+29666,INA NKIB5902,,,,,aday yok
+29667,INA NKIB5902-XL,,,,,aday yok
+29668,INA NKIB5903,,,,,aday yok
+29669,INA NKIB5903-XL,,,,,aday yok
+29670,INA NKIB5904,,,,,aday yok
+29671,INA NKIB5904-XL,,,,,aday yok
+29672,INA NKIB5905,,,,,aday yok
+29673,INA NKIB5905-XL,,,,,aday yok
+29674,INA NKIB5906,,,,,aday yok
+29675,INA NKIB5906-XL,,,,,aday yok
+29676,INA NKIB5907,,,,,aday yok
+29677,INA NKIB5907-XL,,,,,aday yok
+29678,INA NKIB5908,,,,,aday yok
+29679,INA NKIB5908-XL,,,,,aday yok
+29680,INA NKIB5909,,,,,aday yok
+29681,INA NKIB5909-XL,,,,,aday yok
+29682,INA NKIB5910,,,,,aday yok
+29683,INA NKIB5910-XL,,,,,aday yok
+29684,INA NKIB5911,,,,,aday yok
+29685,INA NKIB5911-XL,,,,,aday yok
+29686,INA NKIB5912,,,,,aday yok
+29687,INA NKIB5912-XL,,,,,aday yok
+29688,INA NKIB5913,,,,,aday yok
+29689,INA NKIB5913-XL,,,,,aday yok
+29690,INA NKIB5914,,,,,aday yok
+29691,INA NKIB5914-XL,,,,,aday yok
+29711,INA NKIS65-A,NKIS70,rd/parca-07,268acf4e41a7.jpg,"üründe var, adayda yok: A; ölçü kodu 65 / 70; farklı seri/ölçü grubu",önerilmez
+29742,INA NKS75-A,NKS80,rd/parca-07,e51c668edc6a.jpg,"üründe var, adayda yok: A; ölçü kodu 75 / 80; farklı seri/ölçü grubu",önerilmez
+29950,INA PBY12-XL,,,,,aday yok
+29951,INA PBY15-XL,,,,,aday yok
+29952,INA PBY17-XL,,,,,aday yok
+29953,INA PBY20-XL,,,,,aday yok
+29954,INA PBY25-XL,,,,,aday yok
+29955,INA PBY30-XL,,,,,aday yok
+29989,INA PCJ20-TV-FA125.5,PCJ17-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 20 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+29992,INA PCJ25-TV-FA125.5,PCJ17-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 25 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+29995,INA PCJ30-TV-FA125.5,PCJ17-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 30 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+29998,INA PCJ35-TV-FA125.5,PCJ45-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 35 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30001,INA PCJ40-TV-FA125.5,PCJ45-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 40 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30004,INA PCJ45-TV-FA125.5,PCJ45-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; termoplastik gövde (aday dökme demir)",önerilmez
+30007,INA PCJ50-TV-FA125.5,PCJ45-XL,rd/parca-07,6467d8ce4520.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 50 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30015,INA PCJT20-TV-FA125.5,PCJT17-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 20 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30018,INA PCJT25-TV-FA125.5,PCJT17-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 25 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30021,INA PCJT30-TV-FA125.5,PCJT17-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 30 / 17; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30024,INA PCJT35-TV-FA125.5,PCJT45-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 35 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30027,INA PCJT40-TV-FA125.5,PCJT45-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 40 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+30030,INA PCJT45-TV-FA125.5,PCJT45-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; termoplastik gövde (aday dökme demir)",önerilmez
+30032,INA PCJT50-TV-FA125.5,PCJT45-XL,rd/parca-07,df2986c7cac5.jpg,"üründe var, adayda yok: FA125.5, TV; adayda var, üründe yok: XL; ölçü kodu 50 / 45; farklı seri/ölçü grubu; termoplastik gövde (aday dökme demir)",önerilmez
+49459,INA PNA12/28-XL,,,,,aday yok
+49460,INA PNA15/32-XL,,,,,aday yok
+49461,INA PNA17/35-XL,,,,,aday yok
+49462,INA PNA20/42-XL,,,,,aday yok
+49463,INA PNA22/44-XL,,,,,aday yok
+49464,INA PNA25/47-XL,,,,,aday yok
+49465,INA PNA30/52-XL,,,,,aday yok
+49466,INA PNA35/55-XL,,,,,aday yok
+49467,INA PNA40/62-XL,,,,,aday yok
+30257,INA RASEA20-XL-N,,,,,aday yok
+30258,INA RASEA25-XL-N,,,,,aday yok
+30259,INA RASEA30-XL-N,,,,,aday yok
+30260,INA RASEA35-XL-N,,,,,aday yok
+30261,INA RASEA40-XL-N,,,,,aday yok
+30262,INA RASEA50-XL-N,,,,,aday yok
+30263,INA RASEL20-XL-N,,,,,aday yok
+30264,INA RASEL25-XL-N,,,,,aday yok
+30265,INA RASEL30-XL-N,,,,,aday yok
+30266,INA RASEL40-XL-N,,,,,aday yok
+30267,INA RASEL45-XL,,,,,aday yok
+30268,INA RASEL50-XL-N,,,,,aday yok
+30269,INA RASEL60-XL-N,,,,,aday yok
+30270,INA RASEL70-XL,,,,,aday yok
+49484,INA RCSMB3/4-65-FA106,RCSMB15/65-XL-FA106,rd/parca-07,ddd1877d5404.jpg,"üründe var, adayda yok: 65; adayda var, üründe yok: XL; ölçü kodu 3/4 / 15/65; farklı seri/ölçü grubu",önerilmez
+30475,INA RLBSR71-C-0100,,,,,aday yok
+336776,INA RNA4916-XL-H+44+36,RNA4916-XL,rd/parca-07,e51c668edc6a.jpg,"üründe var, adayda yok: H+44+36",önerilebilir
+30638,INA RNAO20X28X26-ZW-ASR1,RNAO20X28X26,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30648,INA RNAO25X35X26-ZW-ASR1,RNAO25X35X26,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30656,INA RNAO30X42X32-ZW-ASR1,RNAO30X42X32,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30663,INA RNAO35X45X26-ZW-ASR1,RNAO35X45X26,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30669,INA RNAO35X47X32-ZW-ASR1,RNAO35X47X32,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30673,INA RNAO40X50X34-ZW-ASR1,RNAO40X50X34,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30677,INA RNAO40X55X40-ZW-ASR1,RNAO40X55X40,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30681,INA RNAO45X62X40-ZW-ASR1,RNAO45X62X40,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30687,INA RNAO50X65X40-ZW-ASR1,RNAO50X65X40,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+30695,INA RNAO60X78X40-ZW-ASR1,RNAO60X78X40,rd/parca-07,b9485db489e8.jpg,"üründe var, adayda yok: ASR1, ZW; ZW çift sıra, aday tek sıra",önerilmez
+49495,INA RPNA15/28-XL,,,,,aday yok
+49496,INA RPNA18/32-XL,,,,,aday yok
+49497,INA RPNA20/35-XL,,,,,aday yok
+49498,INA RPNA25/42-XL,,,,,aday yok
+49499,INA RPNA28/44-XL,,,,,aday yok
+49500,INA RPNA30/47-XL,,,,,aday yok
+49501,INA RPNA35/52-XL,,,,,aday yok
+49502,INA RPNA40/55-XL,,,,,aday yok
+49503,INA RPNA45/62-XL,,,,,aday yok
+49505,INA SCE48-P-L271/STD,SCE146,rd/parca-07,69fd64367dd1.jpg,"üründe var, adayda yok: L271, P, STD; ölçü kodu 48 / 146; farklı seri/ölçü grubu",önerilmez
+30900,INA SD19X27X4-B,SD19X27X4-A,rd/parca-07,794f8097d1ff.jpg,"üründe var, adayda yok: B; adayda var, üründe yok: A",önerilebilir
+329866,INA SKR3080-306-KRR,,,,,aday yok
+31124,INA SL045008-D-P,SL045004-D-PP,rd/parca-07,bc3831ea895e.jpg,"üründe var, adayda yok: P; adayda var, üründe yok: PP; ölçü kodu 045008 / 045004; farklı seri/ölçü grubu",önerilmez
+31128,INA SL045008-S3-C4,SL185008-S3-A-C4,rd/parca-07,d206440a10b7.jpg,"adayda var, üründe yok: A; ölçü kodu 045008 / 185008; farklı seri/ölçü grubu",önerilmez
+335965,INA SL05016-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05016 / 181848; farklı seri/ölçü grubu,önerilmez
+335966,INA SL05020-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05020 / 181848; farklı seri/ölçü grubu,önerilmez
+331917,INA SL05024-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 05024 / 181848; farklı seri/ölçü grubu,önerilmez
+332698,INA SL05028-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05028 / 181848; farklı seri/ölçü grubu,önerilmez
+31198,INA SL05030-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05030 / 181848; farklı seri/ölçü grubu,önerilmez
+326334,INA SL05032-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 05032 / 181848; farklı seri/ölçü grubu,önerilmez
+335967,INA SL06020-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 06020 / 181848; farklı seri/ölçü grubu,önerilmez
+331918,INA SL06024-E-C3,SL181848-E-C3,rd/parca-07,4548c156de80.jpg,ölçü kodu 06024 / 181848; farklı seri/ölçü grubu,önerilmez
+335968,INA SL06026-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06026 / 181848; farklı seri/ölçü grubu,önerilmez
+332699,INA SL06028-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06028 / 181848; farklı seri/ölçü grubu,önerilmez
+326335,INA SL06032-E,SL181848-E,rd/parca-07,4548c156de80.jpg,ölçü kodu 06032 / 181848; farklı seri/ölçü grubu,önerilmez
+327169,INA SL07048-S1B-C5,SL04140-PP-C5,rd/parca-07,bc3831ea895e.jpg,"üründe var, adayda yok: S1B; adayda var, üründe yok: PP; ölçü kodu 07048 / 04140; farklı seri/ölçü grubu",önerilmez
+31200,INA SL11914-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11914 / 014830; farklı seri/ölçü grubu,önerilmez
+340300,INA SL11918-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11918 / 014830; farklı seri/ölçü grubu,önerilmez
+341081,INA SL11922-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 11922 / 014830; farklı seri/ölçü grubu,önerilmez
+31201,INA SL12922-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 12922 / 014830; farklı seri/ölçü grubu,önerilmez
+31202,INA SL13916-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13916 / 014830; farklı seri/ölçü grubu,önerilmez
+31203,INA SL13918-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13918 / 014830; farklı seri/ölçü grubu,önerilmez
+31204,INA SL13920-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13920 / 014830; farklı seri/ölçü grubu,önerilmez
+31205,INA SL13922-A,SL014830-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 13922 / 014830; farklı seri/ölçü grubu,önerilmez
+340270,INA SL16922-A,SL014980-A,rd/parca-07,a07479dc50db.jpg,ölçü kodu 16922 / 014980; farklı seri/ölçü grubu,önerilmez
+331640,INA SPL10.20ASR1,,,,,aday yok
+331641,INA TWD1423-HLA,,,,,aday yok
+339441,INA WRE130,,,,,aday yok
+339442,INA WRE150,,,,,aday yok
+339443,INA WRE180,,,,,aday yok
+331369,INA ZSL192305,,,,,aday yok
+331370,INA ZSL192308-C3,,,,,aday yok
+31782,INA ZSL192311-BIR3-C4,,,,,aday yok
+331371,INA ZSL192313-C3,,,,,aday yok
+31783,INA ZSL192317-C3,,,,,aday yok
+331372,INA ZSL192322-C3,,,,,aday yok
