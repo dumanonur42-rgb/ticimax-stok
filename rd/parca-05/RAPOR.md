@@ -2,16 +2,16 @@
 Toplam ürün: **3628** (girdi ile aynı sıra, tüm id'ler mevcut).
 Teknik bilgiler ve görseller Schaeffler resmi ürün kayıtlarından (medias.schaeffler.com) alındı. Resmi kaydı bulunmayan kodlarda bilgi uydurulmadı; ilgili ürünler bayraklandı.
 ## Görsel durumu
-- birebir (kodun kendi resmi görseli): **1209**
-- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **256**
-- resimsiz: **2163**
-- Farklı görsel dosyası: **57** (500x500 JPG, üstte Yamansa, altta FAG logosu)
+- birebir (kodun kendi resmi görseli): **1548**
+- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **300**
+- resimsiz: **1780**
+- Farklı görsel dosyası: **64** (500x500 JPG, üstte Yamansa, altta FAG logosu)
 ### Fotoğraf gerçekliği kontrolü
-- Önceki 71 farklı görselden çizim görünümlü: **14** (ölçü çizgili/harfli: 7, düz CAD görünümlü turkuaz render: 7)
+- Önceki 71 farklı görselden çizim görünümlü (ölçü çizgili/harfli): **7**. İlk turda CAD sanılan 7 görsel, üreticinin 1200 px sürümünde fotoğraf gerçekliğinde kesit render olduğu için geri alındı (kesit bayraklı).
 - Fotoğraf görünümlü görselle değiştirilen: **0** — Schaeffler her seri için tek görsel yayınlıyor; bu serilerde fotoğraf görünümlü alternatif yok (ek aramalarla kontrol edildi).
-- Kaldırılan (görsel boşaltıldı, bayraklandı): **14** görsel, **1567** ürün
+- Kaldırılan (görsel boşaltıldı, bayraklandı): **7** görsel, **1184** ürün
 - Kesit görsel yerine tam görünüş konan: **0** (aynı ürün/seri için tam görünüş görseli yok)
-- Kesit görsel bırakılan (bayrak: "kesit gorsel"): **31** görsel, **998** ürün
+- Kesit görsel bırakılan (bayrak: "kesit gorsel"): **38** görsel, **1381** ürün
 - Birebir gerçek fotoğraf araması: Schaeffler ürün kayıtları, Schaeffler medya kütüphanesi (yalnız ürün ailesi basın fotoğrafları, kod bazlı değil) ve FAG satıcı sayfaları kontrol edildi. Satıcı sayfalarındaki fotoğraflar ya satıcının kendi telifli/işaretli fotoğrafı ya da aynı Schaeffler render görseli; kodu doğrulanabilen, filigransız resmi gerçek fotoğraf bulunamadı. Kesit → birebir gerçek fotoğraf: **0**, ayni_tip → birebir: **0**.
 Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları), yalnız çizgi çizimi olan görseller (bazı HCS, HM, KM kodları), gri fonlu LASER-SMARTY2 fotoğrafı.
 ## Ana kategori dağılımı
@@ -58,11 +58,10 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 ## Bayrak türleri
 | Bayrak | Ürün |
 |---|---|
-| Doğru ürün görseli bulunamadı | 2163 |
+| Doğru ürün görseli bulunamadı | 1780 |
+| kesit gorsel | 1381 |
 | Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 1184 |
-| kesit gorsel | 998 |
 | Takım | 390 |
-| Üretici görseli CAD/çizim görünümlü olduğu için kullanılmadı | 383 |
 | Bu kodun birebir resmi kaydı yok | 328 |
 | Boşluk sınıfı farklı kaydın | 272 |
 | Resmi üretici kaydı bulunamadı | 209 |
