@@ -5,9 +5,9 @@ Toplam ürün: **2723**
 ## Görsel
 
 - Birebir ürün görseli: **23**
-- Aynı tip görsel: **719**
-- Görselsiz (bayraklı): **1981**
-- Farklı görsel dosyası: **110** (`gorseller/`)
+- Aynı tip görsel: **759**
+- Görselsiz (bayraklı): **1941**
+- Farklı görsel dosyası: **117** (`gorseller/`)
 
 Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundaki ürünlere verildi (açık / lastik keçeli / metal kapaklı ayrı). Segman yuvalı (NR/N) rulmanlara, keçe, kayış, zincir, mekanik salmastra, kam makarası gibi doğru görseli bulunamayan ürünlere görsel konmadı. Alt bantta logosu bulunamayan markalarda alt bant boş bırakıldı ve bayrak eklendi.
 
@@ -15,8 +15,8 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 
 ### Marka logosu kontrolü
 
-- Logo eklenen marka: ARB, DASLAGER, CNJDB, GRW, NKE, EZO, ILJIN (101 ürün)
-- Resmî logosu doğrulanamadığı için görseli kaldırılan: 381 ürün
+- Logo eklenen marka: ARB, DASLAGER, CNJDB, GRW, NKE, EZO, ILJIN (115 ürün)
+- Resmî logosu doğrulanamadığı için görseli kaldırılan: 384 ürün
 - Alt bandı boş görsel: 0
 
 ### Gerçekçi görsel kontrolü
@@ -150,10 +150,10 @@ Aynı tip görseller yalnızca aynı rulman tipi ve aynı keçe/kapak durumundak
 | ölçüler doğrulanamadı, yazılmadı | 1637 |
 | doğru görsel bulunamadı | 1479 |
 | kesit görsel | 435 |
-| marka logosu doğrulanamadı, görsel kaldırıldı | 381 |
+| marka logosu doğrulanamadı, görsel kaldırıldı | 384 |
 | ürün tipi kaynakla doğrulanamadı, kategori boş bırakıldı | 279 |
 | marka koddan net anlaşılamadı | 190 |
-| kafes malzemesi aynı görsel bulunamadı, görsel kaldırıldı | 121 |
+| kafes malzemesi aynı görsel bulunamadı, görsel kaldırıldı | 78 |
 | uygun mevcut kategori yok, yeni kategori önerildi | 29 |
 | keçe malzemesi belirtilmemiş | 12 |
 
