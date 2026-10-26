@@ -3,13 +3,13 @@ Toplam ürün: **3628** (girdi ile aynı sıra, tüm id'ler mevcut).
 Teknik bilgiler ve görseller Schaeffler resmi ürün kayıtlarından (medias.schaeffler.com) alındı. Resmi kaydı bulunmayan kodlarda bilgi uydurulmadı; ilgili ürünler bayraklandı.
 ## Görsel durumu
 - birebir (kodun kendi resmi görseli): **1745**
-- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **563**
-- resimsiz: **1320**
+- ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **802**
+- resimsiz: **1081**
 - Farklı görsel dosyası: **267** (500x500 JPG, üstte Yamansa, altta FAG logosu)
 ### Fotoğraf gerçekliği kontrolü
 - Önceki 71 farklı görselden çizim görünümlü (ölçü çizgili/harfli): **7**. İlk turda CAD sanılan 7 görsel, üreticinin 1200 px sürümünde fotoğraf gerçekliğinde kesit render olduğu için geri alındı (kesit bayraklı).
 - Fotoğraf görünümlü görselle değiştirilen: **0** — Schaeffler her seri için tek görsel yayınlıyor; bu serilerde fotoğraf görünümlü alternatif yok (ek aramalarla kontrol edildi).
-- Kaldırılan (görsel boşaltıldı, bayraklandı): **7** görsel, **991** ürün
+- Kaldırılan (görsel boşaltıldı, bayraklandı): **7** görsel, **777** ürün
 - Kesit görsel yerine tam görünüş konan: **0** (aynı ürün/seri için tam görünüş görseli yok)
 - Kesit görsel bırakılan (bayrak: "kesit gorsel"): **38** görsel, **1474** ürün
 - Birebir gerçek fotoğraf araması: Schaeffler ürün kayıtları, Schaeffler medya kütüphanesi (yalnız ürün ailesi basın fotoğrafları, kod bazlı değil) ve FAG satıcı sayfaları kontrol edildi. Satıcı sayfalarındaki fotoğraflar ya satıcının kendi telifli/işaretli fotoğrafı ya da aynı Schaeffler render görseli; kodu doğrulanabilen, filigransız resmi gerçek fotoğraf bulunamadı. Kesit → birebir gerçek fotoğraf: **0**, ayni_tip → birebir: **0**.
@@ -24,6 +24,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 - Görselsiz 1036 iş mili kodu (B70/B719/B72/HS/HSS/HCB) tek tek eBay'de "<kod> FAG" ile arandı. İlan başlığında kodun birebir geçtiği, başka kodlarda tekrar kullanılmayan, beyaz fonlu, filigransız ve mağaza etiketsiz gerçek fotoğraflar alındı. 197 kod `birebir` oldu (rulman şeffaf FAG poşetinde olabilir; halka üzerindeki kod okunmuyor, eşleşme ilan başlığından).
 - Reddedilen: yalnız FAG kutusu görünenler, rulmanın kutunun önünde/üstünde durduğu ve kırpılınca kutu parçası kalanlar, ölçü çizgili çizimler, birden çok kodda aynı kullanılan genel fotoğraflar, renk/yapısı şüpheli (siyah kaplamalı görünen) ve bulanık olanlar.
 - Hazırlanan ama UYGULANMAYAN liste: `yakin_tip_onerileri.jsonl` (görseli hâlâ olmayan her ürün için en yakın görselli ürün, farklı ekler ve farkın dışarıdan görünüp görünmediği). Sahibin onayı bekleniyor.
+- Sahip onayıyla uygulanan yakın tip: dışarıdan farkı görünmeyen 567 öneri tek tek yeniden denetlendi; yalnız ön yük (UL/UM/UH), hassasiyet (P4S vb.) ve boşluk sınıfı farkı olan, seri, temas açısı (C/E), keçe, kafes, bilye malzemesi ve takım düzeni aynı olan 239 ürüne `ayni_tip` olarak uygulandı. Atlananlar: temas açısı C/E farkı 174, K5 eki farkı 131, A eki 18, seri/ilk parça farklı veya çözülemeyen 39 ve diğer küçük farklar. Farkı görünen 381 öneri uygulanmadı. `yakin_tip_onerileri.jsonl` kalan görselsiz ürünler için yeniden üretildi.
 - ayni_tip kontrolü (üzerinde farklı kod/ölçü okunan, çerçeveden taşan, renk/malzeme uymayan görsel): 18 farklı ayni_tip görselin hepsi incelendi; hepsi üzerinde yazı olmayan üretici renderı, ürün tam görünüyor, kafes/keçe/malzeme uyumlu. Düzeltilen: **0**.
 ## Ana kategori dağılımı
 | Kategori | Ürün |
@@ -70,8 +71,8 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Bayrak | Ürün |
 |---|---|
 | kesit gorsel | 1474 |
-| Doğru ürün görseli bulunamadı | 1320 |
-| Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 991 |
+| Doğru ürün görseli bulunamadı | 1081 |
+| Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 777 |
 | Takım | 390 |
 | Bu kodun birebir resmi kaydı yok | 328 |
 | Boşluk sınıfı farklı kaydın | 272 |
@@ -82,12 +83,24 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Ürün tipi kod serisinden belirlendi | 82 |
 | Kategori belirlenemedi | 65 |
 | Ürün tipi tedarikçi kısa adından alındı | 62 |
+| Görsel aynı seri ve aynı yapıdaki H308 ürününün görseli | 15 |
+| Görsel aynı seri ve aynı yapıdaki HS7007-C-T-P4S-UL ürününün görseli | 14 |
+| Görsel aynı seri ve aynı yapıdaki HS7008-E-T-P4S-UL ürününün görseli | 14 |
+| Görsel aynı seri ve aynı yapıdaki HS71908-C-T-P4S-UL ürününün görseli | 13 |
+| Görsel aynı seri ve aynı yapıdaki HS71906-E-T-P4S-UL ürününün görseli | 11 |
+| Görsel aynı seri ve aynı yapıdaki B71901-E-T-P4S-UM ürününün görseli | 9 |
+| Görsel aynı seri ve aynı yapıdaki B71902-E-T-P4S-UL ürününün görseli | 8 |
 | Tek rulman değerleri B7006-E-T-P4S-UL resmi kaydından alındı | 7 |
+| Görsel aynı seri ve aynı yapıdaki B71900-C-T-P4S-UL ürününün görseli | 7 |
 | Tek rulman değerleri B7008-E-T-P4S-UL resmi kaydından alındı | 6 |
+| Görsel aynı seri ve aynı yapıdaki B7205-C-T-P4S-UL ürününün görseli | 6 |
 | Tek rulman değerleri B7206-C-T-P4S-UL resmi kaydından alındı | 6 |
 | Tek rulman değerleri B7211-E-T-P4S-UL resmi kaydından alındı | 6 |
+| Görsel aynı seri ve aynı yapıdaki HS7009-C-T-P4S-DUL ürününün görseli | 6 |
+| Görsel aynı seri ve aynı yapıdaki B7001-E-T-P4S-UM ürününün görseli | 5 |
 | Tek rulman değerleri B7005-C-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7006-C-T-P4S-UL resmi kaydından alındı | 5 |
+| Görsel aynı seri ve aynı yapıdaki B7010-C-T-P4S-UL ürününün görseli | 5 |
 | Tek rulman değerleri B7010-E-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7011-C-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7011-E-T-P4S-UL resmi kaydından alındı | 5 |
@@ -100,6 +113,8 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7016-E-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7018-C-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7018-E-T-P4S-UL resmi kaydından alındı | 5 |
+| Görsel aynı seri ve aynı yapıdaki B71900-C-T-P4S-UM ürününün görseli | 5 |
+| Görsel aynı seri ve aynı yapıdaki B71909-E-T-P4S-DUL ürününün görseli | 5 |
 | Tek rulman değerleri B71912-E-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B71916-E-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B71918-C-T-P4S-UL resmi kaydından alındı | 5 |
@@ -109,11 +124,13 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7214-E-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7216-C-T-P4S-UL resmi kaydından alındı | 5 |
 | Tek rulman değerleri B7001-E-T-P4S-UL resmi kaydından alındı | 4 |
+| Görsel aynı seri ve aynı yapıdaki B7002-C-T-P4S-UM ürününün görseli | 4 |
 | Tek rulman değerleri B7003-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7003-E-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7004-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7005-E-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7007-E-T-P4S-UL resmi kaydından alındı | 4 |
+| Görsel aynı seri ve aynı yapıdaki B7009-E-T-P4S-UL ürününün görseli | 4 |
 | Tek rulman değerleri B7009-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7010-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7012-C-T-P4S-UL resmi kaydından alındı | 4 |
@@ -126,6 +143,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B71906-E-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71907-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71907-E-T-P4S-UL resmi kaydından alındı | 4 |
+| Görsel aynı seri ve aynı yapıdaki B71907-E-T-P4S-K5-UL ürününün görseli | 4 |
 | Tek rulman değerleri B71908-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71908-E-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71910-E-T-P4S-UL resmi kaydından alındı | 4 |
@@ -140,6 +158,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B71930-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71936-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B71938-C-T-P4S-UL resmi kaydından alındı | 4 |
+| Görsel aynı seri ve aynı yapıdaki B7203-E-T-P4S-UL ürününün görseli | 4 |
 | Tek rulman değerleri B7204-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7207-C-T-P4S-UL resmi kaydından alındı | 4 |
 | Tek rulman değerleri B7207-E-T-P4S-UL resmi kaydından alındı | 4 |
@@ -155,6 +174,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7002-C-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7004-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7007-C-T-P4S-UL resmi kaydından alındı | 3 |
+| Görsel aynı seri ve aynı yapıdaki B7001-C-T-P4S-DUL ürününün görseli | 3 |
 | Tek rulman değerleri B7008-C-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7009-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7017-E-T-P4S-UL resmi kaydından alındı | 3 |
@@ -193,7 +213,11 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B71938-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B71940-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B71944-E-T-P4S-UL resmi kaydından alındı | 3 |
+| Görsel aynı seri ve aynı yapıdaki B7202-C-T-P4S-DUL ürününün görseli | 3 |
+| Görsel aynı seri ve aynı yapıdaki B7203-E-T-P4S-UM ürününün görseli | 3 |
+| Görsel aynı seri ve aynı yapıdaki B7203-E-T-P4S-DUL ürününün görseli | 3 |
 | Tek rulman değerleri B7202-E-T-P4S-UL resmi kaydından alındı | 3 |
+| Görsel aynı seri ve aynı yapıdaki B7204-C-T-P4S-UM ürününün görseli | 3 |
 | Tek rulman değerleri B7204-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7205-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7212-E-T-P4S-UL resmi kaydından alındı | 3 |
@@ -201,10 +225,13 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7215-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7218-E-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7222-E-T-P4S-UL resmi kaydından alındı | 3 |
+| Görsel aynı seri ve aynı yapıdaki HS71911-E-T-P4S-UM ürününün görseli | 3 |
 | Tek rulman değerleri HS71920-C-T-P4S-UL resmi kaydından alındı | 3 |
 | Tek rulman değerleri B7000-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7000-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7002-E-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7009-E-T-P4S-K5-UL ürününün görseli | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7011-E-T-P4S-UL ürününün görseli | 2 |
 | Tek rulman değerleri B7019-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7021-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7024-C-T-P4S-UL resmi kaydından alındı | 2 |
@@ -221,11 +248,14 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B71902-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71903-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71911-C-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B71913-C-T-P4S-UM ürününün görseli | 2 |
 | Tek rulman değerleri B71915-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71918-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71919-C-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B71919-E-T-P4S-UL ürününün görseli | 2 |
 | Tek rulman değerleri B71922-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71924-E-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B71928-C-T-P4S-UL ürününün görseli | 2 |
 | Tek rulman değerleri B71934-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B71940-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7200-E-T-P4S-UL resmi kaydından alındı | 2 |
@@ -233,7 +263,10 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7203-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7206-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7209-C-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7209-E-T-P4S-UL ürününün görseli | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7210-C-T-P4S-UL ürününün görseli | 2 |
 | Tek rulman değerleri B7213-C-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7215-E-T-P4S-UL ürününün görseli | 2 |
 | Tek rulman değerleri B7217-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7217-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7218-C-T-P4S-UL resmi kaydından alındı | 2 |
@@ -245,6 +278,7 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri B7224-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri B7226-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tedarikçi notunda araç uyumu var | 2 |
+| Görsel aynı seri ve aynı yapıdaki F11204 ürününün görseli | 2 |
 | Tek rulman değerleri HS7009-C-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri HS7009-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri HS7011-C-T-P4S-UL resmi kaydından alındı | 2 |
@@ -252,28 +286,88 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri HS71916-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri HS71917-E-T-P4S-UL resmi kaydından alındı | 2 |
 | Tek rulman değerleri HS71920-E-T-P4S-UL resmi kaydından alındı | 2 |
+| Görsel aynı seri ve aynı yapıdaki B7002-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7004-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7006-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7003-C-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7008-C-T-P4S-K5-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7000-E-T-P4S-DUL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7009-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7010-C-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7011-C-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7013-E-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7014-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7014-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7015-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7018-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7019-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7020-C-T-P4S-UM ürününün görseli | 1 |
 | Tek rulman değerleri B7021-E-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7022-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7022-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7030-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7030-E-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri B7032-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7032-C-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri B7034-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri B71903-E-2RSD-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71903-E-T-P4S-UM ürününün görseli | 1 |
 | Tek rulman değerleri B71904-C-2RSD-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71906-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71906-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71908-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71909-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71910-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71910-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71912-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71913-E-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71914-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71914-E-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71915-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71916-C-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri B71916-E-2RSD-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71917-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71918-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71919-C-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71919-E-T-P4S-K5-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71909-C-T-P4S-K5-UL ürününün görseli | 1 |
 | Tek rulman değerleri B71921-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71921-E-T-P4S-UM ürününün görseli | 1 |
 | Tek rulman değerleri B71921-E-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71924-C-T-P4S-UM ürününün görseli | 1 |
 | Tek rulman değerleri B71928-E-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71912-E-T-P4S-K5-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71934-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71936-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B71940-C-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri B71944-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri B71948-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri B7200-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7207-E-T-P4S-DUM ürününün görseli | 1 |
 | Tek rulman değerleri B7201-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri B7201-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri B7202-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7205-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7207-E-T-P4S-UH ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7208-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7209-C-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7210-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7211-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7212-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7213-C-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7214-E-T-P4S-UL ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7208-E-T-P4S-K5-UL ürününün görseli | 1 |
 | Tek rulman değerleri B7219-E-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7220-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7222-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki B7224-C-T-P4S-UM ürününün görseli | 1 |
 | Tek rulman değerleri B7226-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HCS7016-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7001-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7002-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7004-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7005-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki HS7016-C-T-P4S-K5-UL ürününün görseli | 1 |
 | Tek rulman değerleri HS7006-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7007-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7010-C-T-P4S-UL resmi kaydından alındı | 1 |
@@ -284,8 +378,10 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri HS7016-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7016-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7018-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki HS7014-E-T-P4S-K5-UL ürününün görseli | 1 |
 | Tek rulman değerleri HS7018-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS7022-E-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki HS7022-E-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri HS7026-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS71903-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS71908-C-T-P4S-UL resmi kaydından alındı | 1 |
@@ -298,6 +394,8 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 | Tek rulman değerleri HS71913-C-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS71913-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS71914-C-T-P4S-UL resmi kaydından alındı | 1 |
+| Görsel aynı seri ve aynı yapıdaki HS71917-E-T-P4S-UM ürününün görseli | 1 |
+| Görsel aynı seri ve aynı yapıdaki HS71920-C-T-P4S-UL ürününün görseli | 1 |
 | Tek rulman değerleri HS71922-E-T-P4S-UL resmi kaydından alındı | 1 |
 | Tek rulman değerleri HS71926-E-T-P4S-UL resmi kaydından alındı | 1 |
 
