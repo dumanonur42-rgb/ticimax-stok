@@ -2,8 +2,8 @@
 
 ## Görsel
 - birebir (üreticinin kendi ürün sayfasındaki görsel): 1208
-- ayni_tip (aynı seri/tip, görsel olarak aynı): 689
-- resimsiz: 1009
+- ayni_tip (aynı seri/tip, görsel olarak aynı): 685
+- resimsiz: 1013
 - farklı görsel dosyası: 300
 
 ## Kategori dağılımı (ana kategori)
@@ -45,7 +45,7 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 
 ## Bayraklar (adet)
 - yük grubu aynı seri ve teker tipindeki üretici ürünlerinden alındı: 1004
-- doğru görsel bulunamadı: 685
+- doğru görsel bulunamadı: 683
 - koddaki 'T' ekinin anlamı üretici kaynağında bulunamadı; teknik bilgi eklenmedi: 505
 - üretici sitesinde bu kod bulunamadı; teknik bilgi eklenmedi: 458
 - görsel aynı serinin üretici ürününden (aynı tip); koddaki 'T' ekinin farkı görselde gösterilemiyor: 400
@@ -56,13 +56,13 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - rulmansız versiyon; rulman ölçüsü üründe yazan koddan alındı: 95
 - mevcut ürün fotoğrafı farklı teker tiplerinde ortak kullanılmış; kullanılmadı: 74
 - ürünün tekersiz maşa mı komple teker mi olduğu teyit edilmeli: 73
-- görsel aynı tip yedek tekerden; görseldeki tekerde rulman takılı, ürün rulmansız: 57
+- görsel aynı tip yedek tekerden; görseldeki tekerde rulman takılı, ürün rulmansız: 53
 - görsel aynı serinin üretici ürününden (aynı tip): 52
 - bu yedek teker üretici sitesinde tek başına bulunamadı; teknik bilgi eklenmedi: 47
 - görsel aynı serinin üretici ürününden (aynı tip); 'Ö.F.' ekinin farkı görselde gösterilemiyor: 47
 - görsel üreticinin aynı tip şişme teker fotoğrafı: 39
+- üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 37
 - üretici sayfasındaki teker genişliği koddakinden farklı; teknik bilgi eklenmedi: 34
-- üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 31
 - '(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 26
 - görsel aynı serinin farklı çaplı üretici ürününden (aynı tip): 26
 - görsel aynı tip yedek tekerden: 25
@@ -77,8 +77,8 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - '(STATİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 8
 - koddaki '(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 6
 - koddaki '(6204-Ø20/6005-Ø25)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 5
-- görsel aynı tip yedek tekerden (farklı çap); görseldeki tekerde rulman takılı, ürün rulmansız: 5
 - '(K.KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- görsel aynı tip yedek tekerden (farklı çap); görseldeki tekerde rulman takılı, ürün rulmansız: 4
 - koddaki '(KIRMIZI KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 4
 - '(UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
 - 'M10' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
@@ -91,7 +91,6 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - koddaki '(Ø20)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(Ø6)(EP-ET-EB)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(EP-ET)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
-- görsel üreticinin aynı tip yedek teker fotoğrafı; görseldeki tekerde rulman takılı, ürün rulmansız: 2
 - koddaki '(6305-Ø25/6206-Ø30) (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(6206-Ø30/6305-Ø25)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(6206-30/6305-25/6007-35)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
@@ -125,6 +124,7 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - koddaki '(MAVİ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
 - koddaki '(EP-ET)(SİYAH)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
 - koddaki '(6002-Ø15/6201-Ø12)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
+- görsel üreticinin aynı tip yedek teker fotoğrafı; görseldeki tekerde rulman takılı, ürün rulmansız: 1
 - koddaki '(Ø8) (EP-ET-EB)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
 - koddaki '(EP-ET)(Ø6)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
 - koddaki 'NATURAL' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
@@ -199,15 +199,13 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - Yuvarlak soketli ürünlerde üretici görseli kare soketli olduğu için görsel konmadı.
 - Örnek görseller: `ornek_1.jpg`, `ornek_2.jpg`.
 
-## 2. görsel turu (derin araştırma)
-- Önce: birebir 1091 / ayni_tip 15 / kesit 0 / yok 1800
-- Sonra: birebir 1208 / ayni_tip 689 / kesit 0 / yok 1009
-- Bulunanlar: üreticinin INOX sayfaları (INOX-EM...jpg) ve özel üretim sayfaları birebir olarak eşlendi; aynı seri/bağlantı/fren tipinde farklı çaplı üretici görselleri ve üreticinin eğitim kitapçığındaki yedek teker/şişme teker fotoğrafları aynı tip olarak kullanıldı (çap farkı en fazla 50 mm). Bunlar bayraklarda yazıyor.
-- T / TF ekli ve Ö.F. ekli ürünlerde standart versiyonun görseli kullanıldı (bu eklerin anlamı üretici kodlama sisteminde yok); bayrakla işaretli, istenirse kaldırılabilir.
-- Hâlâ görselsiz kalanlar ve nedeni:
-  - Yuvarlak soketli (EM07 ... YUVARLAK SOKET): üreticinin bütün soketli görselleri kare soketli; yuvarlak soketli fotoğraf hiçbir resmi kaynakta yok.
-  - INOX versiyonlar: bu seri/bağlantı/fren kombinasyonunun paslanmaz görseli üreticide yok; çinko kaplı görsel farklı görünür.
-  - Üreticide hiç bulunmayan seri+teker kombinasyonları (ör. EM MKM, EM ZBZ/ZBRM, EM MMM, EM SBR): aynı tip görsel de yok.
-  - Renk/özel versiyonlar ((ER), (ED), KIRMIZI KAPL., STATİK, KAPAKSIZ, MAŞA UÇ VUR., BORUSUZ, K.KASNAK, renkli yedek tekerler): görselde fark gözükeceği için standart görsel konmadı.
-  - EMS 01 grubu ("EM 02 80" gibi, maşa olduğu düşünülen ürünler): üreticide tekersiz maşa fotoğrafı yok.
-  - İç/dış lastik, jant yanak takımı, sac jant kapağı: üretici sitesinde ve kataloglarda ayrı fotoğrafı yok.
+## 2. ve 3. görsel turu
+- Başlangıç: birebir 1091 / ayni_tip 15 / kesit 0 / yok 1800
+- Şu an: birebir 1208 / ayni_tip 685 / kesit 0 / yok 1013
+- Kaynaklar: emesteker.com ürün sayfaları (standart, INOX-… ve "Birlikte Ürettiklerimiz" sayfaları), EMES katalog / eğitim kitapçığı / genel broşür / özel talepler PDF'leri, web.archive.org (eski görsel dosyaları), EMES bayi siteleri (tekermarket, tekercc, smksealonline, e-tekerlek, sizdevarmi), Google arama.
+- Aynı tip görseller: aynı seri + bağlantı + fren + teker tipindeki üretici görseli (çap farkı en fazla 50 mm) ya da üreticinin eğitim kitapçığındaki yedek teker / şişme teker fotoğrafı. Göbeğinde çap yazan VBV görseli yalnızca 100 mm'lik ürünlerde kullanıldı.
+- T / TF / Ö.F. ekli ürünlerde standart versiyonun görseli kullanıldı (bu ekler üreticinin kodlama sisteminde yok); bayrakla işaretli.
+- Hâlâ görselsiz kalanlar:
+  - Yuvarlak soketli EM07: üreticinin ve bayilerin tüm soketli görselleri kare soketli.
+  - INOX'un bulunmadığı seri/bağlantı kombinasyonları, üreticide hiç olmayan seri+teker tipleri (EM MKM, ZBZ, ZBRM, MMM, SBR vb.), renk ve özel versiyonlar.
+  - EMS 01 maşaları, iç lastikler, jant yanak takımları, sac jant kapakları: hiçbir resmi kaynakta veya filigransız bayi görselinde bulunamadı. Dış lastikte yalnızca 3.00-4 4PR ve 3.50-8 6PR için bayi görseli kullanıldı (aynı tip).
