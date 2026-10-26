@@ -178,3 +178,9 @@ Görseli hâlâ olmayan ürünler (yok), seri/tipe göre:
 ## Çok derin arama – 4. ilerleme
 - Oynak makaralı ..-E1-XL-TVPB ve ..-E1-XL-K-TVPB (açık, siyah poliamid kafes): 119 ürün (59'u konik delikli). Görsel, bir Alman FAG bayisinin filigransız tam görünüş fotoğrafı. Ürün üzerinde kod okunmuyor. Hepsi aynı tip olarak bayraklı; konik delikli ürünlerin bayrağına konik deliğin görselde ayırt edilmediği yazıldı.
 - Görselsiz ürün: 498 → 379.
+
+## Çok derin arama – 5. ilerleme
+- Çift yönlü eksenel bilyalı 522–524xx: 36 ürün. Kaynak bir Alman FAG bayisinin filigransız fotoğrafı (sökülmüş görünüş, kod okunmuyor).
+- Fıçı makaralı 202/203xx-MB ve -K-MB (pirinç kafes): 33 ürün. Kaynak aynı bayinin filigransız fotoğrafı.
+- Reddedilenler: üzerinde "SAMPLE" yazan görseller (MP pirinç kafesli eksenel, 2344xx, 20217-MB). 2305-M sayfasındaki farklı ürün (geniş iç bilezikli) görseli. Pirinç kafesi olduğu halde görselde pirinç görünmeyen MB1 görseli. 532/533xx için küresel yataklı pul görselde ayırt edilemediği için o görsel de kullanılmadı.
+- Görselsiz ürün: 379 → 310.
