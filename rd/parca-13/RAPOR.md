@@ -190,3 +190,14 @@ Bayraklı ürün: 3663
 - SNR yataklı üniteler ve insertler (~200): ntn-snr.com'da sadece çok ürünlü sahne görselleri; ntnglobal ünite fotoğrafları 200x150 px ve NTN döküm yazılı.
 - NTN iğneli (HK, HMK, B-, IR, NA..R, NA59) (~110): tip fotoğrafı yok ya da yapı farkı teyit edilemedi.
 Denenen kaynaklar: ntnamericas.com, ntnglobal.com (tarayıcıyla), ntn-snr.com (tarayıcıyla), wandabearing.com, ürün notlarındaki eşdeğer kodlar.
+
+## 3. tur görsel araştırması
+Sayılar değişmedi (birebir 762, ayni_tip 936, kesit 0, resimsiz 1965). Taranan ve kullanılamayan kaynaklar:
+- bearingfinder.ntnamericas.com (NTN kod bazlı katalog): her kodun sayfası var ama görsel tip bazında ve en büyük boyutu 200 px; büyüğü sunucuda yok.
+- ntn.co.jp, ntnglobal.com, ntnbearing.in, ntn.com.br, ntn-china.com: kod bazlı ürün fotoğrafı yok; tip görselleri 200 px ve kesitli.
+- ntnamericas.com oynak makaralı fotoğrafları: tek rulman ama üstünde "NTN 22224EMKD1C3 JAPAN" okunuyor; başka kodlara konamaz.
+- wandabearings.com (İngilizce) ve es/it/jp/ru alt siteleri: 61 ürün sayfasındaki 170 görselin tamamı kırmızı WANDA filigranlı, kesitli CAD ya da ölçü çizimi.
+- WANDA Alibaba mağazası: sayfa yok (404).
+
+## Yakın tip önerileri (uygulanmadı, sahibinin kararı bekleniyor)
+`yakin_tip_onerileri.jsonl`: 756 resimsiz ürün için öneri var, farkları yazılı. 323 ürün: fotoğrafta başka kod okunuyor. 255 ürün: görseldeki rulman ZZ kapaklı, ürün keçeli ya da açık. 165 ürün: WANDA aynı ailenin başka ölçüsü. 13 ürün: fotoğrafta iki rulman var. 1209 ürün için öneri yok.
