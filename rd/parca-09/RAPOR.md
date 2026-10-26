@@ -4,10 +4,10 @@ Toplam ürün: **2977** (tamamı BANDO markası)
 
 ## Görsel durumu
 
-- birebir: 3
-- ayni_tip: 2974
+- birebir: 5
+- ayni_tip: 2972
 - resimsiz: 0
-- farklı görsel dosyası: 27
+- farklı görsel dosyası: 31
 
 Aynı tip görseller Bando Avrupa resmi sitesindeki seri fotoğraflarıdır (kayış profili/yapısı ürünle aynı). Birebir görseller kodun kendisinin göründüğü temiz ürün fotoğraflarıdır.
 
@@ -19,6 +19,15 @@ Bu gruplarda renk/görünüş ya da tip üretici kaynağında doğrulanamadığ�
 ### 2. tur görsel araştırması
 
 Önce: birebir 2, ayni_tip 2225, kesit 0, yok 750. Kaynaklar: bando.de, bandousa.com, products.bandogrp.com (arşiv kopyası), Bando Japonya ürün sayfaları, Amazon (Bando USA ambalaj fotoğrafı), Avrupa bayi sayfası (Sunrope bağlantı elemanı). Teknik çizimler, filigranlı ve başka firma logolu fotoğraflar kullanılmadı.
+
+### 3. tur düzeltmeleri (görsel kontrolü)
+
+- Ürün üzerinde okunan kod/profil yazısı ürünle çelişen kaynaklar değiştirildi: (W/P) için A-30/A-38 yazılı fotoğraf kaldırıldı; SP render "A-", XP render "XPA", STS/HP-STS/KPS render "S8M", XL/H/L render "L", AA/BB render "BB" yazısı görünmeyecek şekilde kadrajlandı (yazı bulanıklaştırılmadı, görüntü kırpıldı).
+- PU T/DT kayışlarda siyah kauçuk görünümlü fotoğraf yerine Bando Türkiye resmi sitesindeki turuncu Bancollan PU fotoğrafları kullanıldı; XL UW için bando.de XL PU görseli.
+- Küçük hatveli STS (S1,5M-S3M) ve S4,5M/S14M: S14M 1806 yazılı fotoğraf yerine STS render, ürün kadrajı sıkı.
+- 900 VC: 875VC yazılı fotoğraf yerine bando.de VS görseli. HDPF-J2: J3 ölçü yazısı kırpıldı, sadece HDPF-J yazısı kaldı. DPK (1360 dışı): 7DPK1360 etiketi kırpıldı.
+- Yeni birebir: XPB 1575 ve 8 V 2600 (Bando Türkiye fotoğraflarında kod okunuyor).
+- Kaynak foto örnek sayfası: ornek_3tur.jpg (her kaynak fotoğraf bir kez, kullanan seri ve adet).
 
 ## Kategori dağılımı (tüm atamalar)
 
@@ -46,31 +55,31 @@ Bu gruplarda renk/görünüş ya da tip üretici kaynağında doğrulanamadığ�
 
 Boş kategori: **0**
 
-Bayraklı ürün: **1040**
+Bayraklı ürün: **1034**
 
 ### Bayrak türleri
 
 - Koddaki … değerinin kayış genişliği mi kovan (manşon) genişliği mi olduğu üretici kaynağında doğrulanamadı (760)
 - Koddaki … harflerinin (halat tipi) bu kayış için karşılığı üretici kaynağında doğrulanamadı (270)
 - Ölçü kodundaki … ve … değerlerinin hangi ölçüyü (üst genişlik / uzunluk türü) gösterdiği üretici kaynağında doğrulanamadı (240)
-- Görsel Bando Bancollan PU zaman kayışlarının resmi fotoğrafıdır; ürün rengi farklı olabilir (225)
-- Görsel Bando standart (kumaş kaplı) V kayışının resmi fotoğrafıdır; (W/P) tanımı doğrulanamadı (154)
+- Görsel Bando Bancollan poliüretan zaman kayışlarının resmi fotoğrafıdır; ürün rengi farklı olabilir (222)
+- Görsel Bando kumaş kaplı V kayışının resmi görselidir; (W/P) tanımı doğrulanamadı (154)
+- Görsel aynı seri Bando STS kayışın resmi görselidir; hatve (diş boyu) üründe farklıdır (107)
 - Görsel aynı seri çift dişli STS kayışın resmi Bando fotoğrafıdır; birebir kod fotoğrafı bulunamadı (102)
 - S…M tipte temiz kumaş kullanıldığı için görünüşü farklı olabilir (99)
-- Görsel aynı seri STS kauçuk kayışların resmi Bando fotoğrafıdır; küçük hatveli tipte diş kumaşı görünümü farklı olabilir (99)
 - HP-S…M sadece temiz (clean) tip üretildiği için görünüşü farklı olabilir (94)
 - Görsel HP-STS serisinin resmi Bando fotoğrafıdır; S…M tipin görünümü farklı olabilir (94)
-- Görsel Bando Bancollan çift dişli PU kayışların resmi fotoğrafıdır; ürün rengi farklı olabilir (48)
+- Görsel Bando Bancollan çift dişli poliüretan kayışın resmi fotoğrafıdır; ürün rengi farklı olabilir (48)
 - …V profil SP serisinde olmadığı için DÜZ V KAYIŞI kategorisine kondu; kategori onayı iyi olur (9)
 - XS…M kodlu Ceptor serisi üretici kaynağında doğrulanamadı; teknik bilgiler sınırlı tutuldu (9)
 - Görsel Ceptor-X serisine aittir; XS…M kodunun hangi Ceptor tipi olduğu doğrulanamadı (9)
-- Görsel Bancord yuvarlak kayış ailesinin resmi fotoğrafıdır; ürün rengi farklı olabilir (6)
 - Etkin uzunluk üretici tablosunda bulunamadı (5)
 - Bu uzunluk üretici ölçü tablosunda bulunamadı (5)
 - KAYIŞ>KAYIŞ AKSESUARLARI yeni kategori önerisi (5)
 - Görsel Sunrope plaka bağlantı elemanının satıcı fotoğrafıdır; profil boyu farklı olabilir (4)
-- Görsel aynı seri Bando …DPK… çift taraflı kanallı kayışın ambalajlı fotoğrafıdır (3)
+- Görsel aynı seri Bando DPK çift taraflı kanallı kayışın fotoğrafıdır; ürünün kodu farklıdır (3)
 - Koddaki … ibaresinin anlamı ve kayışın malzemesi doğrulanamadı (3)
+- Görsel Bando XL profil poliüretan zaman kayışının resmi görselidir; ürün rengi farklı olabilir (3)
 - Dış uzunluk üretici tablosunda bulunamadı (3)
 - HDPF-J serisi üretici sitesinde bulunamadı; ölçüler tedarikçi notundan alındı (3)
 - Koddaki … ve …-… değerlerinin hangi ölçüleri gösterdiği üretici kaynağında doğrulanamadı (2)
@@ -78,8 +87,9 @@ Bayraklı ürün: **1040**
 - Tedarikçi notunda farklı ölçü yazıyor (… X …); stok kodu ile not birbirini tutmuyor, kontrol edilmeli (2)
 - KASNAKLAR>ALTERNATÖR KASNAKLARI yeni kategori önerisi (2)
 - Görsel Bando Smooth Coupler serisinin resmi fotoğrafıdır; bu modelin kanal sayısı farklı olabilir (2)
-- Görsel aynı seri … sıralı HDPF-J… kayışın fotoğrafıdır (2)
+- Görsel aynı seri HDPF-J kayışın fotoğrafıdır; sıra sayısı farklı olabilir (2)
 - Görsel, aynı seri …VC kayışın fotoğrafıdır (1)
+- Görsel Bando VS varyatör kayışının resmi görselidir (1)
 - Gergi ölçerin modeli ve teknik özellikleri üretici kaynağında doğrulanamadı (1)
 - Görsel Bando V kayış gergi ölçerinin resmi fotoğrafıdır; model (…) doğrulanamadı (1)
 
@@ -105,3 +115,5 @@ Kontrol betiği çalıştırıldı: tüm id'ler var ve sıralı, tekrar yok, sto
 ![ornek_1](ornek_1.jpg)
 
 ![ornek_2](ornek_2.jpg)
+
+![ornek_3tur](ornek_3tur.jpg)
