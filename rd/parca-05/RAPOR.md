@@ -2,14 +2,14 @@
 Toplam ürün: **3628** (girdi ile aynı sıra, tüm id'ler mevcut).
 Teknik bilgiler ve görseller Schaeffler resmi ürün kayıtlarından (medias.schaeffler.com) alındı. Resmi kaydı bulunmayan kodlarda bilgi uydurulmadı; ilgili ürünler bayraklandı.
 ## Görsel durumu
-- birebir (kodun kendi resmi görseli): **1548**
+- birebir (kodun kendi resmi görseli): **1745**
 - ayni_tip (yalnız boşluk sınıfı / ön yük / takım farkı olan aynı rulmanın resmi görseli, FRM halkalarında aynı seri görseli): **563**
-- resimsiz: **1517**
-- Farklı görsel dosyası: **70** (500x500 JPG, üstte Yamansa, altta FAG logosu)
+- resimsiz: **1320**
+- Farklı görsel dosyası: **267** (500x500 JPG, üstte Yamansa, altta FAG logosu)
 ### Fotoğraf gerçekliği kontrolü
 - Önceki 71 farklı görselden çizim görünümlü (ölçü çizgili/harfli): **7**. İlk turda CAD sanılan 7 görsel, üreticinin 1200 px sürümünde fotoğraf gerçekliğinde kesit render olduğu için geri alındı (kesit bayraklı).
 - Fotoğraf görünümlü görselle değiştirilen: **0** — Schaeffler her seri için tek görsel yayınlıyor; bu serilerde fotoğraf görünümlü alternatif yok (ek aramalarla kontrol edildi).
-- Kaldırılan (görsel boşaltıldı, bayraklandı): **7** görsel, **1142** ürün
+- Kaldırılan (görsel boşaltıldı, bayraklandı): **7** görsel, **991** ürün
 - Kesit görsel yerine tam görünüş konan: **0** (aynı ürün/seri için tam görünüş görseli yok)
 - Kesit görsel bırakılan (bayrak: "kesit gorsel"): **38** görsel, **1474** ürün
 - Birebir gerçek fotoğraf araması: Schaeffler ürün kayıtları, Schaeffler medya kütüphanesi (yalnız ürün ailesi basın fotoğrafları, kod bazlı değil) ve FAG satıcı sayfaları kontrol edildi. Satıcı sayfalarındaki fotoğraflar ya satıcının kendi telifli/işaretli fotoğrafı ya da aynı Schaeffler render görseli; kodu doğrulanabilen, filigransız resmi gerçek fotoğraf bulunamadı. Kesit → birebir gerçek fotoğraf: **0**, ayni_tip → birebir: **0**.
@@ -20,7 +20,10 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 ### Derin görsel araması (4. tur, pazar yeri ilanları)
 - Eklenen (ayni_tip, gerçek fotoğraf, filigransız, üzerinde okunur farklı kod yok): KM standart kilit somunları 38 ürün ve MB emniyet pulları 42 ürün (eBay "FAG (Schaeffler)" ilanlarındaki ürün fotoğrafı); H308 1 ürün (eBay ilanı, somun üzerinde FAG ve KM8 yazısı okunuyor, H308 ile uyumlu).
 - Reddedilen: eBay iş mili ilanları (tüm kodlarda aynı 250 px genel foto, ya da baskılı poşet içinde, ya da AM_AUTOSTORE filigranı); RODAVICTORIA ve 247 INDUSTRIES filigranlı somun/pul/manşon fotoğrafları; AH/H manşon ilanları (aynı satıcı aynı fotoğrafı Neutral/SKF/RHP ürünlerinde de kullanıyor, FAG olduğu doğrulanamıyor); Bearing King (yalnız kutu); Eriks ve eski medias arşivi (yalnız ölçü çizgili çizim).
-- Hazırlanan ama UYGULANMAYAN liste: `yakin_tip.json` (yalnız kafes/ek farkı olan ürünler için önerilen görsel; görünür fark olanlar ayrıca işaretli). Sahibin onayı bekleniyor.
+### Derin görsel araması (5. tur, iş mili rulmanları)
+- Görselsiz 1036 iş mili kodu (B70/B719/B72/HS/HSS/HCB) tek tek eBay'de "<kod> FAG" ile arandı. İlan başlığında kodun birebir geçtiği, başka kodlarda tekrar kullanılmayan, beyaz fonlu, filigransız ve mağaza etiketsiz gerçek fotoğraflar alındı. 197 kod `birebir` oldu (rulman şeffaf FAG poşetinde olabilir; halka üzerindeki kod okunmuyor, eşleşme ilan başlığından).
+- Reddedilen: yalnız FAG kutusu görünenler, rulmanın kutunun önünde/üstünde durduğu ve kırpılınca kutu parçası kalanlar, ölçü çizgili çizimler, birden çok kodda aynı kullanılan genel fotoğraflar, renk/yapısı şüpheli (siyah kaplamalı görünen) ve bulanık olanlar.
+- Hazırlanan ama UYGULANMAYAN liste: `yakin_tip_onerileri.jsonl` (görseli hâlâ olmayan her ürün için en yakın görselli ürün, farklı ekler ve farkın dışarıdan görünüp görünmediği). Sahibin onayı bekleniyor.
 - ayni_tip kontrolü (üzerinde farklı kod/ölçü okunan, çerçeveden taşan, renk/malzeme uymayan görsel): 18 farklı ayni_tip görselin hepsi incelendi; hepsi üzerinde yazı olmayan üretici renderı, ürün tam görünüyor, kafes/keçe/malzeme uyumlu. Düzeltilen: **0**.
 ## Ana kategori dağılımı
 | Kategori | Ürün |
@@ -66,13 +69,14 @@ Hariç tutulan resmi görseller: "image coming soon" yer tutucusu (FE halkaları
 ## Bayrak türleri
 | Bayrak | Ürün |
 |---|---|
-| Doğru ürün görseli bulunamadı | 1517 |
 | kesit gorsel | 1474 |
-| Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 1142 |
+| Doğru ürün görseli bulunamadı | 1320 |
+| Üretici görseli ölçü çizgili teknik çizim olduğu için kullanılmadı | 991 |
 | Takım | 390 |
 | Bu kodun birebir resmi kaydı yok | 328 |
 | Boşluk sınıfı farklı kaydın | 272 |
 | Resmi üretici kaydı bulunamadı | 209 |
+| Görsel bu kodun satıcı ilanındaki gerçek ürün fotoğrafı | 197 |
 | Görsel aynı seri | 168 |
 | Görsel aynı yapıdaki | 95 |
 | Ürün tipi kod serisinden belirlendi | 82 |
