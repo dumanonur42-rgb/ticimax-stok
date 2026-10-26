@@ -1,10 +1,10 @@
 # Parça 01 – EMES TEKER (2906 ürün)
 
 ## Görsel
-- birebir (üreticinin kendi ürün sayfasındaki görsel): 1091
-- ayni_tip (aynı seri/tip, görsel olarak aynı): 15
-- resimsiz: 1800
-- farklı görsel dosyası: 259
+- birebir (üreticinin kendi ürün sayfasındaki görsel): 1208
+- ayni_tip (aynı seri/tip, görsel olarak aynı): 689
+- resimsiz: 1009
+- farklı görsel dosyası: 300
 
 ## Kategori dağılımı (ana kategori)
 - TEKERLEKLER>HAFİF SANAYİ TİPİ TEKERLEKLER: 2311
@@ -29,7 +29,7 @@
 - TEKERLEKLER>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER: 3
 
 - boş kategori: 0
-- bayraklı ürün: 1852
+- bayraklı ürün: 1725
 
 ## yeni_kategori_onerileri
 Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) için ortak ağaç kullanıldı: üreticinin yük grubu ana kategori (doğrulanabildiyse), ardından görev kategorileri, en sonda `TEKERLEKLER`.
@@ -44,62 +44,54 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - `TEKERLEKLER>TEKER YEDEK PARÇALARI VE AKSESUARLARI` – 66 ürün – Sac jant kapakları, iç/dış lastikler ve jant yanak takımları
 
 ## Bayraklar (adet)
-- doğru görsel bulunamadı: 1412
-- yük grubu aynı seri ve teker tipindeki üretici ürünlerinden alındı: 1131
-- koddaki 'T' ekinin anlamı üretici kaynağında bulunamadı; teknik bilgi eklenmedi: 509
-- INOX (paslanmaz) versiyon üretici sitesinde EM kodu ile bulunamadı: 363
+- yük grubu aynı seri ve teker tipindeki üretici ürünlerinden alındı: 1004
+- doğru görsel bulunamadı: 685
+- koddaki 'T' ekinin anlamı üretici kaynağında bulunamadı; teknik bilgi eklenmedi: 505
+- üretici sitesinde bu kod bulunamadı; teknik bilgi eklenmedi: 458
+- görsel aynı serinin üretici ürününden (aynı tip); koddaki 'T' ekinin farkı görselde gösterilemiyor: 400
 - üretici görseli kare soketli; yuvarlak soketli görsel bulunamadı: 293
-- '(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 226
+- INOX (paslanmaz) versiyon üretici sitesinde EM kodu ile bulunamadı: 235
 - üretici sitesinde bu ürünün sayfası bulunamadı; teknik bilgi eklenmedi: 181
-- üretici sitesinde bu kod bulunamadı; teknik bilgi eklenmedi: 179
 - üreticinin yük grubu (hafif/orta/ağır sanayi) doğrulanamadı; kategoriye eklenmedi: 149
-- üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 95
 - rulmansız versiyon; rulman ölçüsü üründe yazan koddan alındı: 95
 - mevcut ürün fotoğrafı farklı teker tiplerinde ortak kullanılmış; kullanılmadı: 74
 - ürünün tekersiz maşa mı komple teker mi olduğu teyit edilmeli: 73
+- görsel aynı tip yedek tekerden; görseldeki tekerde rulman takılı, ürün rulmansız: 57
+- görsel aynı serinin üretici ürününden (aynı tip): 52
 - bu yedek teker üretici sitesinde tek başına bulunamadı; teknik bilgi eklenmedi: 47
-- '5/8 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 39
-- 'M16 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 27
-- üretici sayfasındaki teker genişliği koddakinden farklı; teknik bilgi eklenmedi: 23
-- '(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 21
+- görsel aynı serinin üretici ürününden (aynı tip); 'Ö.F.' ekinin farkı görselde gösterilemiyor: 47
+- görsel üreticinin aynı tip şişme teker fotoğrafı: 39
+- üretici sayfasındaki teker genişliği koddakinden farklı; teknik bilgi eklenmedi: 34
+- üretici görselinde rulman takılı; rulmansız ürün için görsel konmadı: 31
+- '(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 26
+- görsel aynı serinin farklı çaplı üretici ürününden (aynı tip): 26
+- görsel aynı tip yedek tekerden: 25
 - koddaki '(SİYAH)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 12
+- görsel aynı tip yedek tekerden (farklı çap): 11
 - 'M16 (Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 11
-- '(20-25 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 11
-- '(ER)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
+- görsel aynı serinin farklı çaplı üretici ürününden (aynı tip); 'Ö.F.' ekinin farkı görselde gösterilemiyor: 10
 - '5/8 (Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
-- '(26-30 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 10
 - 'M12' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 9
 - '(MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 8
+- görsel aynı serinin üretici ürününden (aynı tip); koddaki 'T' ekinin farkı görselde gösterilemiyor; 'Ö.F.' ekinin farkı görselde gösterilemiyor: 8
 - '(STATİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 8
 - koddaki '(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 6
-- '(SİYAH)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
-- '(INOX)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
-- '(KIRMIZI KAPL.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
-- '(I.D.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 6
 - koddaki '(6204-Ø20/6005-Ø25)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 5
-- '(INOX)(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
+- görsel aynı tip yedek tekerden (farklı çap); görseldeki tekerde rulman takılı, ürün rulmansız: 5
 - '(K.KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
-- 'I.D. (METAL TOZLUK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
-- '(BAĞLANTI BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 5
 - koddaki '(KIRMIZI KAS.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 4
-- '(ER TEKER)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
 - '(UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
-- '(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
 - 'M10' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
-- 'M.16 (INOX)(ANTİSTATİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 4
 - koddaki '(KIRMIZI)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
 - koddaki '(GRİ)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
 - koddaki '(ANTS)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
 - koddaki '(SİYAH KAS.-SİYAH KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
 - koddaki '(SİYAH KAS.-GRİ KAPL.)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 3
 - '(KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
-- '(ED)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
-- '(MAVİ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
-- 'M12 (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
-- '(20-25 YUVARLAK SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 3
 - koddaki '(Ø20)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(Ø6)(EP-ET-EB)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(EP-ET)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
+- görsel üreticinin aynı tip yedek teker fotoğrafı; görseldeki tekerde rulman takılı, ürün rulmansız: 2
 - koddaki '(6305-Ø25/6206-Ø30) (KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(6206-Ø30/6305-Ø25)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
 - koddaki '(6206-30/6305-25/6007-35)(KOYU GRİ RAL 7013)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 2
@@ -116,17 +108,15 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - '(4MM TABLA KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(TURUNCU KAS.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(KIRMIZI KAS.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
-- '(INOX) (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(KIRMIZI KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(22X40PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(27X27 KARE PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
+- görsel aynı serinin farklı çaplı üretici ürününden (aynı tip); koddaki 'T' ekinin farkı görselde gösterilemiyor; 'Ö.F.' ekinin farkı görselde gösterilemiyor: 2
 - 'M10X30 (SİYAH KAPL.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
-- '5/8 (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(M12X30)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '5/8 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - 'M16 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
-- '(35-40 KARE SOKET TAKIM) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(20-25 KARE SOKET TAKIM) (UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - '(26-30 KARE SOKET TAKIM) (UÇ VURULMUŞ MAŞA)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 2
 - koddaki '(Ø25)' bilgisi (renk/özel versiyon) üretici kaynağında teyit edilemedi: 1
@@ -195,28 +185,12 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - '(TURUNCU KASNAK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(22X80 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(26 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(INOX)(17 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(INOX)(19 PİM)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(10 DELİK)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- 'INOX (BAĞLANTI BORUSUZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(AKUPLE M.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(AKUPLE M.)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- 'M10 (ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(Ø10)(ANTS)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(Ø10)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(INOX)(AKUPLE M.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '5/8(KAPAKSIZ)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(INOX) 5/8' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(INOX) M16' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '5/8 (INOX)(Ö.F.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - '(M12)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '5/8 (I.D.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- 'M16 (SİYAH)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(M16)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(5/8)(INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- 'M16 (INOX) ALTTAN SIK.' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 - 'M12 (MAŞA UÇ VUR.)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
-- '(20-25 KARE SOKET) (INOX)' ekli versiyon üretici sitesinde ayrı listelenmiyor; teknik bilgi eklenmedi: 1
 
 ## Notlar
 - Teknik bilgiler yalnızca emesteker.com ürün sayfalarından alındı (kaynak her üründe `teknik_kaynak`). Üretici sitesinde birebir karşılığı olmayan versiyonlarda (T eki, INOX, Ö.F., renk vb.) ölçü/kapasite yazılmadı, bayrak eklendi.
@@ -224,3 +198,16 @@ Dosyada tekerlek için sadece `TEKERLEKLER` var. EMES parçaları (01-02-03) iç
 - Bazı EM kodlarında üreticinin kendi sayfasındaki görselde maşa paslanmaz görünümlü; görsel yine o kodun resmi sayfasından alındı, istenirse kontrol edilebilir.
 - Yuvarlak soketli ürünlerde üretici görseli kare soketli olduğu için görsel konmadı.
 - Örnek görseller: `ornek_1.jpg`, `ornek_2.jpg`.
+
+## 2. görsel turu (derin araştırma)
+- Önce: birebir 1091 / ayni_tip 15 / kesit 0 / yok 1800
+- Sonra: birebir 1208 / ayni_tip 689 / kesit 0 / yok 1009
+- Bulunanlar: üreticinin INOX sayfaları (INOX-EM...jpg) ve özel üretim sayfaları birebir olarak eşlendi; aynı seri/bağlantı/fren tipinde farklı çaplı üretici görselleri ve üreticinin eğitim kitapçığındaki yedek teker/şişme teker fotoğrafları aynı tip olarak kullanıldı (çap farkı en fazla 50 mm). Bunlar bayraklarda yazıyor.
+- T / TF ekli ve Ö.F. ekli ürünlerde standart versiyonun görseli kullanıldı (bu eklerin anlamı üretici kodlama sisteminde yok); bayrakla işaretli, istenirse kaldırılabilir.
+- Hâlâ görselsiz kalanlar ve nedeni:
+  - Yuvarlak soketli (EM07 ... YUVARLAK SOKET): üreticinin bütün soketli görselleri kare soketli; yuvarlak soketli fotoğraf hiçbir resmi kaynakta yok.
+  - INOX versiyonlar: bu seri/bağlantı/fren kombinasyonunun paslanmaz görseli üreticide yok; çinko kaplı görsel farklı görünür.
+  - Üreticide hiç bulunmayan seri+teker kombinasyonları (ör. EM MKM, EM ZBZ/ZBRM, EM MMM, EM SBR): aynı tip görsel de yok.
+  - Renk/özel versiyonlar ((ER), (ED), KIRMIZI KAPL., STATİK, KAPAKSIZ, MAŞA UÇ VUR., BORUSUZ, K.KASNAK, renkli yedek tekerler): görselde fark gözükeceği için standart görsel konmadı.
+  - EMS 01 grubu ("EM 02 80" gibi, maşa olduğu düşünülen ürünler): üreticide tekersiz maşa fotoğrafı yok.
+  - İç/dış lastik, jant yanak takımı, sac jant kapağı: üretici sitesinde ve kataloglarda ayrı fotoğrafı yok.
