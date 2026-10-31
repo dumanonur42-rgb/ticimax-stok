@@ -15,6 +15,7 @@ const SPLASH_MIN_MS = 3000
 const SPLASH_LEAVE_MS = 450
 let splashShownAt = 0
 let mainWin: BrowserWindow | null = null
+let activeSplash: BrowserWindow | null = null
 
 interface WindowState {
   x: number
@@ -139,6 +140,12 @@ function createSplash(): BrowserWindow {
 
 function createWindow(showSplash = true): void {
   const splash = showSplash ? createSplash() : null
+  if (splash) {
+    activeSplash = splash
+    splash.on('closed', () => {
+      if (activeSplash === splash) activeSplash = null
+    })
+  }
   const restored = loadWindowState()
   const area = screen.getPrimaryDisplay().workArea
   const initial: WindowState = restored ?? {
@@ -201,22 +208,26 @@ function createWindow(showSplash = true): void {
 
   win.on('ready-to-show', () => {
     const hidden = process.argv.includes('--hidden')
-    const wait = splash ? Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now()))) : 0
+    const showMain = (): void => {
+      if (!(hidden && isBackgroundMode()) && !win.isDestroyed()) {
+        win.show()
+        win.focus()
+        win.webContents.focus()
+        win.webContents.send('window:shown')
+      }
+    }
+    if (!splash) {
+      restoreSession().finally(showMain)
+      return
+    }
+    const wait = Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now())))
     // The splash stays until the minimum time has passed and the cloud session is known; the product mirror syncs in the background.
     Promise.all([new Promise((r) => setTimeout(r, wait)), restoreSession()]).then(() => {
-      if (splash && !splash.isDestroyed()) splash.webContents.send('splash:leave')
-      setTimeout(
-        () => {
-          if (splash && !splash.isDestroyed()) splash.close()
-          if (!(hidden && isBackgroundMode())) {
-            win.show()
-            win.focus()
-            win.webContents.focus()
-            win.webContents.send('window:shown')
-          }
-        },
-        splash ? SPLASH_LEAVE_MS : 0
-      )
+      if (!splash.isDestroyed()) splash.webContents.send('splash:leave')
+      setTimeout(() => {
+        if (!splash.isDestroyed()) splash.close()
+        showMain()
+      }, SPLASH_LEAVE_MS)
     })
   })
   load(win)
@@ -240,13 +251,19 @@ if (process.argv.includes('--selfcheck')) {
     app.exit(code)
   })
 } else if (!app.requestSingleInstanceLock()) {
-  app.quit()
+  app.exit(0)
 } else {
   app.on('second-instance', () => {
     if (mainWin && !mainWin.isDestroyed()) {
+      if (activeSplash && !activeSplash.isDestroyed()) {
+        activeSplash.show()
+        return
+      }
       if (mainWin.isMinimized()) mainWin.restore()
       mainWin.show()
       mainWin.focus()
+      mainWin.webContents.focus()
+      mainWin.webContents.send('window:shown')
     } else createWindow(false)
   })
 

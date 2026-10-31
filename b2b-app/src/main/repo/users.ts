@@ -1,7 +1,7 @@
 import { isAuthRetryableFetchError } from '@supabase/supabase-js'
 import type { Customer, CustomerInput, DealerLogin, Perm, Session, User, UserRole } from '@shared/types'
 import { createHash } from 'node:crypto'
-import { clearStoredSession, cloud, cloudError, ephemeralCloud, getStoredValue, isConnectivityError, must, mustVoid, removeStoredValue, SESSION_CACHE_STORAGE_KEY, setStoredValue } from '../cloud/client'
+import { clearStoredSession, cloud, cloudError, ephemeralCloud, getStoredValue, isConnectivityError, must, mustVoid, removeStoredValue, SESSION_CACHE_STORAGE_KEY, SESSION_LOGIN_STORAGE_KEY, setStoredValue } from '../cloud/client'
 import { fromCustomer, toCustomer, toUser } from '../cloud/map'
 
 const LOGIN_DOMAIN = 'login.yamansab2b.app'
@@ -58,16 +58,55 @@ function rememberSession(s: Session): void {
   setStoredValue(SESSION_CACHE_STORAGE_KEY, JSON.stringify(s))
 }
 
-function rememberedSession(userId: string | null): Session | null {
+export function rememberedSession(userId: string | null): Session | null {
   const value = getStoredValue(SESSION_CACHE_STORAGE_KEY)
   if (!value) return null
-  const s = JSON.parse(value) as Session
-  s.user.perms ??= []
-  return userId === null || s.user.id === userId ? s : null
+  try {
+    const s = JSON.parse(value) as Session
+    s.user.perms ??= []
+    return userId === null || s.user.id === userId ? s : null
+  } catch {
+    return null
+  }
 }
 
 function forgetSession(): void {
   removeStoredValue(SESSION_CACHE_STORAGE_KEY)
+}
+
+function rememberCredentials(username: string, password: string): void {
+  setStoredValue(SESSION_LOGIN_STORAGE_KEY, JSON.stringify({ username, password }))
+}
+
+function rememberedCredentials(): { username: string; password: string } | null {
+  const value = getStoredValue(SESSION_LOGIN_STORAGE_KEY)
+  if (!value) return null
+  try {
+    const parsed = JSON.parse(value) as { username?: unknown; password?: unknown }
+    if (typeof parsed.username === 'string' && typeof parsed.password === 'string') {
+      return { username: parsed.username, password: parsed.password }
+    }
+  } catch {}
+  return null
+}
+
+function forgetCredentials(): void {
+  removeStoredValue(SESSION_LOGIN_STORAGE_KEY)
+}
+
+export async function trySilentReauth(): Promise<string | null> {
+  const creds = rememberedCredentials()
+  if (!creds) return null
+  const auth = await cloud().auth.signInWithPassword({ email: loginEmail(creds.username), password: creds.password })
+  if (!auth.error && auth.data.user?.id) {
+    return auth.data.user.id
+  }
+  if (auth.error && /Invalid login credentials/i.test(auth.error.message)) {
+    forgetCredentials()
+    forgetSession()
+    clearStoredSession()
+  }
+  return null
 }
 
 export function isTransientRestoreError(error: unknown): boolean {
@@ -90,11 +129,13 @@ export async function login(username: string, password: string): Promise<Session
     await sb.auth.signOut({ scope: 'local' })
     throw new Error('Hesabınız henüz yönetici tarafından onaylanmadı.')
   }
+  rememberCredentials(username, password)
   return sessionOf(user)
 }
 
 export async function logout(): Promise<void> {
   forgetSession()
+  forgetCredentials()
   const r = await cloud().auth.signOut({ scope: 'local' })
   if (r.error) {
     console.error('signOut failed', r.error)
@@ -107,37 +148,36 @@ export async function logout(): Promise<void> {
  * cannot be reached the last confirmed profile is used so queued work and the catalog mirror stay available.
  */
 export async function currentSession(): Promise<Session | null> {
-  const r = await cloud().auth.getSession()
-  if (r.error) {
-    if (isTransientRestoreError(r.error)) {
-      const remembered = rememberedSession(null)
-      if (remembered) return remembered
-      throw r.error
+  let r = await cloud().auth.getSession()
+  let userId = r.data?.session?.user?.id ?? null
+  if (r.error || !userId) {
+    const reauthedId = await trySilentReauth().catch(() => null)
+    if (reauthedId) {
+      userId = reauthedId
+      r = await cloud().auth.getSession()
     }
+  }
+  if (!userId) {
+    const remembered = rememberedSession(null)
+    if (remembered) return remembered
+    if (r.error && isTransientRestoreError(r.error)) throw r.error
     forgetSession()
     clearStoredSession()
     return null
   }
-  if (!r.data.session) {
-    forgetSession()
-    clearStoredSession()
-    return null
-  }
-  const userId = r.data.session.user.id
   try {
     const user = await profileOf(userId)
     if (!user || !user.active || !user.approved) {
       forgetSession()
+      forgetCredentials()
       clearStoredSession()
       return null
     }
     return await sessionOf(user)
   } catch (e) {
-    if (isTransientRestoreError(e)) {
-      const remembered = rememberedSession(userId)
-      if (remembered) return remembered
-      throw e
-    }
+    const remembered = rememberedSession(userId) ?? rememberedSession(null)
+    if (remembered) return remembered
+    if (isTransientRestoreError(e)) throw e
     forgetSession()
     clearStoredSession()
     throw e
@@ -156,6 +196,7 @@ export async function changePassword(username: string, current: string, next: st
   const check = await ephemeralCloud().auth.signInWithPassword({ email: loginEmail(username), password: current })
   if (check.error) throw new Error('Mevcut şifre hatalı.')
   mustVoid(await sb.auth.updateUser({ password: next }))
+  rememberCredentials(username, next)
 }
 
 /** Self-service sign-up: a dealer account with its own company card, locked until an administrator approves it. */
@@ -192,11 +233,16 @@ export async function createDealerAccount(customer: CustomerInput, login: Dealer
   const id = created.data.user?.id
   if (!id) throw new Error('Kullanıcı oluşturulamadı.')
   const sb = cloud()
-  const profile = toUser(must(await sb.from('profiles').update({ role: 'bayi', active: true, approved: true }).eq('id', id).select('*').single()))
-  if (profile.customer_id === null) throw new Error('Cari kart oluşturulamadı.')
-  const { code, ...rest } = fromCustomer({ ...customer, name, code: customer.code.trim() })
-  const patch = code ? { code, ...rest } : rest
-  return toCustomer(must(await sb.from('customers').update(patch).eq('id', profile.customer_id).select('*').single()))
+  try {
+    const profile = toUser(must(await sb.from('profiles').update({ role: 'bayi', active: true, approved: true }).eq('id', id).select('*').single()))
+    if (profile.customer_id === null) throw new Error('Cari kart oluşturulamadı.')
+    const { code, ...rest } = fromCustomer({ ...customer, name, code: customer.code.trim() })
+    const patch = code ? { code, ...rest } : rest
+    return toCustomer(must(await sb.from('customers').update(patch).eq('id', profile.customer_id).select('*').single()))
+  } catch (err) {
+    await sb.rpc('admin_delete_user', { p_user: id }).catch(() => undefined)
+    throw err
+  }
 }
 
 export async function listUsers(): Promise<User[]> {
@@ -218,6 +264,7 @@ export async function saveUser(u: {
   const username = validateUsername(u.username)
   const perms = u.role === 'admin' ? [] : u.perms
   if (u.id) {
+    if (u.password) validatePassword(u.password)
     const r = await sb
       .from('profiles')
       .update({ username, display_name: u.display_name.trim(), role: u.role, perms, customer_id: u.customer_id, active: !!u.active })
@@ -238,15 +285,20 @@ export async function saveUser(u: {
   if (created.error) throw cloudError(created.error)
   const id = created.data.user?.id
   if (!id) throw new Error('Kullanıcı oluşturulamadı.')
-  const r = await sb
-    .from('profiles')
-    .update({ role: u.role, perms, customer_id: u.customer_id ?? undefined, active: !!u.active, approved: true })
-    .eq('id', id)
-    .select('*')
-    .single()
-  const user = toUser(must(r))
-  mustVoid(await sb.rpc('admin_set_password', { p_user: id, p_password: u.password }))
-  return user
+  try {
+    const r = await sb
+      .from('profiles')
+      .update({ role: u.role, perms, customer_id: u.customer_id ?? undefined, active: !!u.active, approved: true })
+      .eq('id', id)
+      .select('*')
+      .single()
+    const user = toUser(must(r))
+    mustVoid(await sb.rpc('admin_set_password', { p_user: id, p_password: u.password }))
+    return user
+  } catch (err) {
+    await sb.rpc('admin_delete_user', { p_user: id }).catch(() => undefined)
+    throw err
+  }
 }
 
 export async function revealPassword(id: string): Promise<string | null> {

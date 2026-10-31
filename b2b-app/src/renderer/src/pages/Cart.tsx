@@ -38,8 +38,8 @@ export function Cart(): ReactNode {
   const customer = isDealer ? session?.customer ?? null : customers.find((c) => c.id === cart.customerId) ?? null
   const discountPct = customer?.discount_pct ?? 0
   const vatPct = settings?.vat_pct ?? 20
-  const currency = cart.lines[0]?.currency ?? settings?.default_currency ?? 'TRY'
-  const mixedCurrency = cart.lines.some((l) => l.currency !== currency)
+  const currency = 'EUR' as const
+  const mixedCurrency = false
   const cardPct = settings?.card_price_pct ?? 0
   const lineUnit = (l: (typeof cart.lines)[number]): number => priceFor(cart.payment, l.unit_price, l.card_price, cardPct) ?? l.unit_price
   const zeroPrice = cart.lines.some((l) => lineUnit(l) <= 0)

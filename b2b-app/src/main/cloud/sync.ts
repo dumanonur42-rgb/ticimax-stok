@@ -22,6 +22,7 @@ let pulling: Promise<number> | null = null
 let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pending: 0, failed: 0 }
 let connectionChecked = false
 let onNewOrder: ((o: OrderRow) => void) | null = null
+let onSettingsUpdated: (() => void) | null = null
 let storagePolicy = { canSeeShelf: false, hidePrices: false }
 
 export function onSyncEvent(l: Listener): void {
@@ -32,12 +33,28 @@ export function onNewOrderRow(cb: ((o: OrderRow) => void) | null): void {
   onNewOrder = cb
 }
 
-export function setStoragePolicy(user: User, showPricesToDealers: boolean): void {
+export function onSettingsSync(cb: (() => void) | null): void {
+  onSettingsUpdated = cb
+}
+
+export function setStoragePolicy(user: User, showPricesToDealers: boolean): boolean {
   const next = {
     canSeeShelf: user.role === 'admin' || user.role === 'ara' || user.perms.includes('shelf'),
     hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices')
   }
+  const changed = next.canSeeShelf !== storagePolicy.canSeeShelf || next.hidePrices !== storagePolicy.hidePrices
+  if (!storagePolicy.hidePrices && next.hidePrices) {
+    try {
+      getDb().exec('UPDATE products SET price = NULL, list_price = NULL, card_price = NULL')
+    } catch {}
+  }
+  if (storagePolicy.canSeeShelf && !next.canSeeShelf) {
+    try {
+      getDb().exec("UPDATE products SET shelf = ''")
+    } catch {}
+  }
   storagePolicy = next
+  return changed
 }
 
 export function syncStatus(): SyncStatus {
@@ -177,7 +194,7 @@ export async function pullProducts(full = false): Promise<number> {
       if (!rows.length) break
       const tail = rows[rows.length - 1]
       last = tail.updated_at
-      if (rows.length > 0) {
+      if (rows.length === PAGE) {
         next = fetchPage(tail.updated_at, tail.id)
         next.catch(() => undefined) // surfaces via the await above, not as an unhandled rejection
       }
@@ -234,7 +251,10 @@ export function startRealtime(): void {
     .on('postgres_changes', { event: '*', schema: 'public', table: 'customers' }, () => listener('customers'))
     .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
       pullSettings()
-        .then(() => listener('settings'))
+        .then(() => {
+          onSettingsUpdated?.()
+          listener('settings')
+        })
         .catch((error) => console.warn('Ayarlar eşitlenemedi.', error))
     })
     .subscribe((state) => {
@@ -268,15 +288,23 @@ export function stopRealtime(): void {
   }
   if (timer) clearInterval(timer)
   timer = null
+  if (pullTimer) clearTimeout(pullTimer)
+  pullTimer = null
 }
 
+let pollInFlight = false
 /** Polling fallback for new-order notifications when the realtime socket is down. */
 export async function pollOrders(): Promise<void> {
-  if (!onNewOrder) return
-  const seen = Number(getState('last_order_id') ?? '0')
-  const rows = must(await cloud().from('orders').select('*').gt('id', seen).order('id').limit(50))
-  for (const r of rows) onNewOrder(r)
-  setStatus({ online: true })
+  if (!onNewOrder || pollInFlight) return
+  pollInFlight = true
+  try {
+    const seen = Number(getState('last_order_id') ?? '0')
+    const rows = must(await cloud().from('orders').select('*').gt('id', seen).order('id').limit(50))
+    for (const r of rows) onNewOrder(r)
+    setStatus({ online: true })
+  } finally {
+    pollInFlight = false
+  }
 }
 
 export function markOrderSeen(id: number): void {

@@ -247,12 +247,12 @@ export function Stock(): ReactNode {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
         if (tab !== 'list') return
         e.preventDefault()
-        if (edits.size && !saving) saveAll()
+        if (edits.size && !saving) void saveAll()
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  })
+  }, [tab, edits.size, saving, patches])
 
   const toggleSelect = (p: Product): void =>
     setSelected((m) => {

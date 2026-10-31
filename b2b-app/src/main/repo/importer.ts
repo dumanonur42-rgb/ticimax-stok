@@ -1,5 +1,5 @@
 import type { Currency, ImportLog, ImportOptions, ImportPreview, ImportResult, ProductInput } from '@shared/types'
-import { readFileSync } from 'node:fs'
+import { readFileSync, statSync } from 'node:fs'
 import { basename, extname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import Papa from 'papaparse'
@@ -15,9 +15,13 @@ interface Parsed {
   filename: string
   headers: string[]
   rows: string[][]
+  createdAt?: number
 }
 
 const pending = new Map<string, Parsed>()
+const MAX_PENDING_PREVIEWS = 10
+const PREVIEW_TTL_MS = 30 * 60_000
+const MAX_IMPORT_BYTES = 50 * 1024 * 1024
 const UNREADABLE_FILE_ERROR = 'Dosya okunamadı. Lütfen geçerli bir Excel (.xlsx, .xls) ya da CSV dosyası seçin.'
 
 type Field = keyof ProductInput
@@ -123,6 +127,10 @@ export function parseBox(raw: string | undefined): string {
 }
 
 function parseFile(path: string): Parsed {
+  const stat = statSync(path)
+  if (stat.size > MAX_IMPORT_BYTES) {
+    throw new Error('Dosya boyutu çok büyük (maksimum 50 MB).')
+  }
   const ext = extname(path).toLowerCase()
   const filename = basename(path)
   let matrix: string[][]
@@ -180,8 +188,17 @@ function parseFile(path: string): Parsed {
 
 export function previewFile(path: string): ImportPreview {
   const parsed = parseFile(path)
+  const now = Date.now()
+  for (const [k, v] of pending) {
+    if (now - (v.createdAt ?? 0) > PREVIEW_TTL_MS) pending.delete(k)
+  }
+  while (pending.size >= MAX_PENDING_PREVIEWS) {
+    const oldest = pending.keys().next().value
+    if (oldest) pending.delete(oldest)
+    else break
+  }
   const token = randomUUID()
-  pending.set(token, parsed)
+  pending.set(token, { ...parsed, createdAt: now })
   const suggestedMapping = suggestMapping(parsed.headers)
   const priceCurrencyHints = Object.fromEntries(parsed.headers.map((header, index) => [
     header,
@@ -391,7 +408,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
         continue
       }
       const newStock = stockVal ?? ex.stock
-      if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null && ex.active) {
+      if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && (cardVal == null || cardVal === ex.card_price) && ex.active) {
         unchanged++
         continue
       }
@@ -498,15 +515,34 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     }
   }
   if (opts.mode === 'replace') {
+    if (batch.length + rekeyed.length === 0) {
+      throw new Error('Dosyada içe aktarılacak geçerli stok kodlu ürün bulunamadı. Mevcut katalog korunarak işlem iptal edildi.')
+    }
+    const backup = [...existing.values()].map(fromLocal)
     // Hard delete + catalog_generation bump, so every installation drops its cache and re-pulls the new list.
     must(await sb.rpc('purge_all_products'))
     getDb().exec('DELETE FROM products')
-  }
-  for (let i = 0; i < rekeyed.length; i += BATCH) {
-    mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
-  }
-  for (let i = 0; i < batch.length; i += BATCH) {
-    mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+    try {
+      for (let i = 0; i < rekeyed.length; i += BATCH) {
+        mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
+      }
+      for (let i = 0; i < batch.length; i += BATCH) {
+        mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+      }
+    } catch (err) {
+      for (let i = 0; i < backup.length; i += BATCH) {
+        await sb.from('products').upsert(backup.slice(i, i + BATCH), { onConflict: 'key_norm' }).catch(() => undefined)
+      }
+      await pullProducts(true).catch(() => undefined)
+      throw err
+    }
+  } else {
+    for (let i = 0; i < rekeyed.length; i += BATCH) {
+      mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
+    }
+    for (let i = 0; i < batch.length; i += BATCH) {
+      mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+    }
   }
   if (opts.deactivateMissing && opts.mode !== 'replace') {
     deactivated = must(await sb.rpc('deactivate_products_not_in', { p_norms: [...seen] }))

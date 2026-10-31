@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS products (
   d_inner REAL, d_outer REAL, width REAL,
   stock REAL NOT NULL DEFAULT 0,
   unit TEXT NOT NULL DEFAULT 'Adet',
-  price REAL NOT NULL DEFAULT 0,
+  price REAL DEFAULT 0,
   currency TEXT NOT NULL DEFAULT 'TRY',
   list_price REAL,
   card_price REAL,
@@ -288,6 +288,19 @@ CREATE TABLE IF NOT EXISTS outbox (
  */
 const MIRROR_SCHEMA = '4'
 
+function ensurePriceNullable(d: DB): void {
+  const cols = d.prepare('PRAGMA table_info(products)').all() as Array<{ name: string; notnull: number }>
+  const priceCol = cols.find((c) => c.name === 'price')
+  if (priceCol && priceCol.notnull === 1) {
+    d.exec(`
+      DROP TRIGGER IF EXISTS products_ai; DROP TRIGGER IF EXISTS products_ad; DROP TRIGGER IF EXISTS products_au;
+      DROP TABLE IF EXISTS products_fts; DROP TABLE IF EXISTS products;
+      DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation');
+    `)
+    d.exec(SCHEMA)
+  }
+}
+
 function migrate(d: DB): void {
   d.exec('CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
   const v = (d.prepare("SELECT value FROM sync_state WHERE key = 'mirror_schema'").get() as { value: string } | undefined)?.value
@@ -301,6 +314,7 @@ function migrate(d: DB): void {
     d.prepare("INSERT OR REPLACE INTO sync_state(key, value) VALUES ('mirror_schema', ?)").run(MIRROR_SCHEMA)
   }
   d.exec(SCHEMA)
+  ensurePriceNullable(d)
 }
 
 /** Tables left behind by single-machine builds (pre-cloud); dropped on the first start of a cloud build. */

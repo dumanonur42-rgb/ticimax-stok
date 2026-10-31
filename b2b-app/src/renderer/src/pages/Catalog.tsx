@@ -267,7 +267,8 @@ export function Catalog(): ReactNode {
   const setRange = (key: RangeKey, idx: 0 | 1, raw: string): void =>
     setFilter((f) => {
       const r: [number | null, number | null] = [...(f[key] ?? [null, null])] as [number | null, number | null]
-      r[idx] = raw.trim() === '' ? null : Number(raw.replace(',', '.'))
+      const parsed = Number(raw.replace(',', '.'))
+      r[idx] = raw.trim() === '' || !Number.isFinite(parsed) ? null : parsed
       return { ...f, [key]: r[0] == null && r[1] == null ? undefined : r }
     })
 

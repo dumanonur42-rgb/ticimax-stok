@@ -266,7 +266,7 @@ export function QuickEntry({ onSaved }: { onSaved: () => void }): ReactNode {
     }
     window.addEventListener('keydown', h)
     return () => window.removeEventListener('keydown', h)
-  })
+  }, [filled, busy, rows])
 
   const template = `44px ${COLS.map((c) => c.width).join(' ')} 44px`
   const existingCount = filled.filter((r) => known.has(rowKey(r))).length

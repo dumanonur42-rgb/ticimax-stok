@@ -45,7 +45,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
       } else {
         if (username.trim().length < 3) throw new Error('Kullanıcı adı en az 3 karakter olmalıdır.')
         if (companyName.trim().length < 2) throw new Error('İşletme adı en az 2 karakter olmalıdır.')
-        if (password.length < 4) throw new Error('Şifre en az 4 karakter olmalıdır.')
+        if (password.length < 6) throw new Error('Şifre en az 6 karakter olmalıdır.')
         if (!password2) throw new Error('Şifre tekrarını girin.')
         if (password !== password2) throw new Error('Şifreler birbiriyle eşleşmiyor.')
         await api('auth:register', { username, display_name: displayName, company_name: companyName, password })
@@ -106,7 +106,7 @@ export function Login({ sessionNotice }: { sessionNotice: string }): ReactNode {
                   onKeyUp={(e) => setCapsLock(e.getModifierState('CapsLock'))}
                   onBlur={() => setCapsLock(false)}
                   required
-                  minLength={isRegister ? 4 : undefined}
+                  minLength={isRegister ? 6 : undefined}
                 />
               )}
             </Field>

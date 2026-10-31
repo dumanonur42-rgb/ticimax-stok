@@ -1,4 +1,5 @@
 import type { Product } from '@shared/types'
+import { normalize } from '@shared/identity'
 import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
@@ -217,7 +218,7 @@ export function ProductDrawer({
                   .map((s) => s.trim())
                   .filter(Boolean)
                   .map((s) => {
-                    const found = equivalents.find((e) => e.sku.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === s.replace(/[^A-Za-z0-9]/g, '').toUpperCase())
+                    const found = equivalents.find((e) => normalize(e.sku) === normalize(s))
                     return (
                       <span key={s} className={`chip ${found ? '' : 'faint'}`} style={{ padding: '3px 10px' }} title={found ? `Stokta: ${num(found.stock)}` : 'Stok listesinde yok'}>
                         {s}

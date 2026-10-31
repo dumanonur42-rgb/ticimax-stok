@@ -8,9 +8,9 @@ export const DEFAULT_SETTINGS: Settings = {
   company_email: '',
   company_address: '',
   company_web: 'yamansarulman.com',
-  default_currency: 'TRY',
-  rate_usd: 0,
-  rate_eur: 0,
+  default_currency: 'EUR',
+  rate_usd: 35.5,
+  rate_eur: 38.5,
   vat_pct: 20,
   low_stock_threshold: 5,
   show_prices_to_dealers: true,
@@ -78,10 +78,16 @@ export function setLocalSettings(patch: Partial<Settings>): Settings {
   return getSettings()
 }
 
+export function setLiveExchangeRates(rate_eur: number, rate_usd: number): Settings {
+  writeLocal({ rate_eur, rate_usd, default_currency: 'EUR' })
+  return getSettings()
+}
+
 export async function pullSettings(): Promise<void> {
   const rows = must(await cloud().from('settings').select('*'))
   const patch: Record<string, unknown> = {}
   for (const r of rows) {
+    if ((r.key === 'rate_eur' || r.key === 'rate_usd') && Number(r.value) <= 0) continue
     if ((r.key in DEFAULT_SETTINGS && !isLocalSetting(r.key)) || MIN_VERSION_KEYS.has(r.key)) patch[r.key] = r.value
   }
   const remoteKeys = new Set(rows.map((row) => row.key))

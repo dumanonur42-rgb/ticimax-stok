@@ -307,7 +307,7 @@ function Users(): ReactNode {
                         <button
                           className="btn ghost icon sm"
                           aria-label={`${u.username} şifresini kopyala`}
-                          onClick={() => void navigator.clipboard.writeText(revealed[u.id] ?? '').then(() => toast('Şifre kopyalandı.', 'success'))}
+                          onClick={() => void api('clipboard:writeText', revealed[u.id] ?? '').then(() => toast('Şifre kopyalandı.', 'success'))}
                         >
                           <Copy size={14} aria-hidden />
                         </button>
@@ -622,7 +622,7 @@ function Password(): ReactNode {
   const [visible, setVisible] = useState(false)
   const [capsLock, setCapsLock] = useState(false)
   const submit = async (): Promise<void> => {
-    if (next.length < 4) return toast('Yeni şifre en az 4 karakter olmalı.', 'error')
+    if (next.length < 6) return toast('Yeni şifre en az 6 karakter olmalı.', 'error')
     if (next !== again) return toast('Şifreler eşleşmiyor.', 'error')
     try {
       await api('auth:changePassword', { current, next })

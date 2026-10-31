@@ -24,8 +24,16 @@ export async function saveCustomer(c: Partial<Customer> & CustomerInput): Promis
     if (!row.code) throw new Error('Cari kodu boş olamaz.')
     return toCustomer(must(await sb.from('customers').update(row).eq('id', c.id).select('*').single()))
   }
-  if (!row.code) row.code = await nextCustomerCode()
-  return toCustomer(must(await sb.from('customers').insert(row).select('*').single()))
+  const autoCode = !row.code
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (autoCode) row.code = await nextCustomerCode(attempt)
+    const res = await sb.from('customers').insert(row).select('*').single()
+    if (!res.error) return toCustomer(must(res))
+    if (!autoCode || !/duplicate key|unique constraint|23505/i.test(res.error.message) || attempt === 2) {
+      throw cloudError(res.error)
+    }
+  }
+  throw new Error('Cari kodu oluşturulamadı.')
 }
 
 export async function deleteCustomer(id: number): Promise<void> {
@@ -37,10 +45,19 @@ export async function updateMyCompany(p: CustomerProfile): Promise<Customer> {
   return toCustomer(must(await cloud().rpc('update_my_company', { p: { ...p } })))
 }
 
-async function nextCustomerCode(): Promise<string> {
+async function nextCustomerCode(offset = 0): Promise<string> {
   const r = await cloud().from('customers').select('code')
-  const taken = new Set(must(r).map((c) => c.code))
-  let n = taken.size + 1
+  const codes = must(r).map((c) => c.code)
+  const taken = new Set(codes)
+  let maxNum = codes.length
+  for (const c of codes) {
+    const m = /^B(\d+)$/i.exec(c.trim())
+    if (m) {
+      const val = Number.parseInt(m[1], 10)
+      if (val > maxNum) maxNum = val
+    }
+  }
+  let n = maxNum + 1 + offset
   let code = `B${String(n).padStart(4, '0')}`
   while (taken.has(code)) code = `B${String(++n).padStart(4, '0')}`
   return code

@@ -16,6 +16,7 @@ function tokenFile(): string {
 }
 
 export const SESSION_CACHE_STORAGE_KEY = 'yamansa-b2b-profile-session'
+export const SESSION_LOGIN_STORAGE_KEY = 'yamansa-b2b-login-credentials'
 
 function readStorage(file: string): Record<string, string> {
   if (!existsSync(file)) return {}
@@ -43,7 +44,7 @@ function readStorage(file: string): Record<string, string> {
 }
 
 function writeStorage(file: string, all: Record<string, string>): void {
-  const temporaryFile = `${file}.tmp`
+  const temporaryFile = `${file}.${process.pid}.tmp`
   mkdirSync(dirname(file), { recursive: true })
   writeFileSync(temporaryFile, encryptAtRest(JSON.stringify(all)), { mode: 0o600 })
   renameSync(temporaryFile, file)
@@ -109,9 +110,6 @@ export async function quiesceAuth(): Promise<void> {
   if (!client) return
   try {
     await client.auth.stopAutoRefresh()
-  } catch {}
-  try {
-    await client.auth.getSession()
   } catch {}
 }
 

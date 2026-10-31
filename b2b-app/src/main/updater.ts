@@ -85,7 +85,7 @@ function retrySilently(): void {
 
 export function checkForUpdates(): void {
   if (!selfUpdating()) return
-  if (state.status === 'available' || state.status === 'downloading' || state.status === 'downloaded' || state.status === 'installing') return
+  if (state.status === 'checking' || state.status === 'available' || state.status === 'downloading' || state.status === 'downloaded' || state.status === 'installing') return
   lastCheckAt = Date.now()
   autoUpdater.checkForUpdates().catch((error: Error) => {
     console.warn('Güncelleme denetimi başarısız.', error)
