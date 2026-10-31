@@ -531,7 +531,9 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       }
     } catch (err) {
       for (let i = 0; i < backup.length; i += BATCH) {
-        await sb.from('products').upsert(backup.slice(i, i + BATCH), { onConflict: 'key_norm' }).catch(() => undefined)
+        try {
+          await sb.from('products').upsert(backup.slice(i, i + BATCH), { onConflict: 'key_norm' })
+        } catch {}
       }
       await pullProducts(true).catch(() => undefined)
       throw err

@@ -240,7 +240,9 @@ export async function createDealerAccount(customer: CustomerInput, login: Dealer
     const patch = code ? { code, ...rest } : rest
     return toCustomer(must(await sb.from('customers').update(patch).eq('id', profile.customer_id).select('*').single()))
   } catch (err) {
-    await sb.rpc('admin_delete_user', { p_user: id }).catch(() => undefined)
+    try {
+      await sb.rpc('admin_delete_user', { p_user: id })
+    } catch {}
     throw err
   }
 }
@@ -296,7 +298,9 @@ export async function saveUser(u: {
     mustVoid(await sb.rpc('admin_set_password', { p_user: id, p_password: u.password }))
     return user
   } catch (err) {
-    await sb.rpc('admin_delete_user', { p_user: id }).catch(() => undefined)
+    try {
+      await sb.rpc('admin_delete_user', { p_user: id })
+    } catch {}
     throw err
   }
 }
