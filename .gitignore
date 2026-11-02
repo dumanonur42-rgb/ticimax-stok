@@ -1,2 +1,11 @@
 .env
 __pycache__/
+b2b-mobile/node_modules/
+b2b-mobile/dist/
+b2b-mobile/android/.gradle/
+b2b-mobile/android/local.properties
+b2b-mobile/android/app/build/
+b2b-mobile/android/build/
+b2b-mobile/android/.idea/
+*.jks
+*.keystore
