@@ -1,5 +1,9 @@
 # Sürüm notları
 
+## 1.0.8
+
+- Google Play için Android 16 (API 36) hedeflendi; işlevlerde değişiklik yok.
+
 ## 1.0.7
 
 - Sepetteki ürünler eşitleme sonrası güncel fiyat ve para birimiyle yenilenir; yeni ürün kimlikleri doğru eşleştirilir.
