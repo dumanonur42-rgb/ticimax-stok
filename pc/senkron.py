@@ -588,6 +588,8 @@ def main():
     k = kilit()
     if not k:
         log("zaten calisiyor"); return
+    if os.name == "nt":  # calisma bitene kadar PC uykuya gecmesin
+        ctypes.windll.kernel32.SetThreadExecutionState(0x80000001)
     try:
         durum = calis(elle)
         durum["log"] = LOG[-60:]
