@@ -577,12 +577,21 @@ def madte_adim(s):
         b = io.BytesIO()
         with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(yeni.encode("utf-8"))
         gh_yaz("main", "ekler/madte.xml.gz", b.getvalue(), f"Madte gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
+        if ELLE:  # elle calistirmada Talha dosyasini hemen yeniden olustur, Ticimax ilk okumada alsin
+            try:
+                gh("POST", "/actions/workflows/gunluk-stok.yml/dispatches", {"ref": "main"}); log("Talha dosyasi yenileniyor")
+            except Exception as e:  # noqa: BLE001
+                log("Talha tetiklenemedi", e)
     d["durum"] = "tamam"; return d
 
 
+ELLE = False
+
+
 def main():
+    global ELLE
     os.makedirs(ANA, exist_ok=True)
-    elle = "--elle" in sys.argv
+    elle = ELLE = "--elle" in sys.argv
     if "--giris" in sys.argv:
         giris_penceresi(); return
     k = kilit()
