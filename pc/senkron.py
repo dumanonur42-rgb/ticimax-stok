@@ -495,7 +495,7 @@ $dosya = $env:YS_DOSYA
 $lacivert = [Drawing.Color]::FromArgb(11, 42, 74); $gri = [Drawing.Color]::FromArgb(95, 104, 115)
 $yesil = [Drawing.Color]::FromArgb(22, 135, 76); $kirmizi = [Drawing.Color]::FromArgb(200, 40, 40)
 $sari = [Drawing.Color]::FromArgb(196, 128, 0); $mavi = [Drawing.Color]::FromArgb(25, 103, 210)
-function F($b, $s) { New-Object Drawing.Font('Segoe UI', $b, $s) }
+function F($b, $s) { New-Object Drawing.Font('Segoe UI', [single]$b, [Drawing.FontStyle]$s) }
 $f = New-Object Windows.Forms.Form
 $f.Text = 'Yamansa Senkron'; $f.ClientSize = New-Object Drawing.Size(560, 430); $f.BackColor = [Drawing.Color]::White
 $f.StartPosition = 'CenterScreen'; $f.FormBorderStyle = 'FixedSingle'; $f.MaximizeBox = $false; $f.Font = F 10 'Regular'
