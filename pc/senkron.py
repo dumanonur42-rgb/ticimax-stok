@@ -235,10 +235,18 @@ MD_JS = """(async (u) => { for (let t = 0; t < 4; t++) { try {
   await new Promise(z => setTimeout(z, 8000 * (t + 1))); } return null; })(%s)"""
 
 
-def madte_cek(s):
+def madte_girisli(s):
     s.git(MD + "/", 5)
-    if "Giris" in (s.js("location.href") or ""):
-        raise GirisYok("Madte girisi yok")
+    return "giris" not in (s.js("location.href") or "").lower()
+
+
+def madte_cek(s):
+    if not madte_girisli(s):
+        link = gizli_oku("madte_link.dat")
+        if link:
+            s.git(link.decode(), 6)
+        if not madte_girisli(s):
+            raise GirisYok("Madte girisi yok")
     urunler = {}
     for kok in MADTE_KOK:
         p = 0
@@ -344,7 +352,8 @@ def giris_penceresi():
     t = cdp.Tarayici(PROFIL, gorunur=True)
     s = t.sayfa(); s.komut("Network.enable")
     s.git(RD + "/", 2)
-    s.komut("Target.createTarget", url=MD + "/")
+    if not gizli_oku("madte_link.dat"):
+        s.komut("Target.createTarget", url=MD + "/")
     try:
         while t.proc.poll() is None:
             time.sleep(3)
