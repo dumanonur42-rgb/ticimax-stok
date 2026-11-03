@@ -435,9 +435,12 @@ def rd_cerez_coz(metin):
         for satir in re.split(r"[\r\n]+", metin):
             satir = satir.strip()
             if not satir: continue
+            if satir.startswith("#"): continue
             if "\t" in satir:
                 p = [x.strip() for x in satir.split("\t")]
-                if len(p) >= 2 and p[0] and p[1]: c[p[0]] = p[1]
+                if len(p) >= 7 and p[1].upper() in ("TRUE", "FALSE"):  # Netscape cookies.txt
+                    if p[5] and p[6]: c[p[5]] = p[6]
+                elif len(p) >= 2 and p[0] and p[1]: c[p[0]] = p[1]
             elif "=" in satir:
                 for par in satir.split(";"):
                     if "=" in par:
@@ -447,6 +450,7 @@ def rd_cerez_coz(metin):
                 c["RulmanB4bV4Session"] = satir
     temiz = {}
     for a, b in c.items():
+        if "." in a and a.lower().endswith(("rulman.com.tr", ".com")): continue
         b = b.strip().strip('"')
         if CEREZ_AD.match(a) and b and not re.search(r"[\s;,]", b):
             temiz[a] = b
