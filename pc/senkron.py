@@ -379,7 +379,9 @@ def rd_adim(s):
          "kayip": say["kayip"], "fiyatsiz": say["fiyatsiz"], "yeni_sayi": len(say["yeni"])}
     if say["eslesen"] < ESIK * len(site):
         d["hata"] = "eslesen urun cok az, eski XML korundu"; return d
-    gh_yaz("rd-yayin", "rd_guncelle.xml", xml.encode(), f"RD gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
+    b = io.BytesIO()
+    with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(xml.encode("utf-8"))
+    gh_yaz(DAL, "durum/rd_guncelle.xml.gz", b.getvalue(), f"RD gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
     gh_yaz(DAL, "durum/rd_yeni_urunler.txt", "\n".join(say["yeni"]).encode(), "RD yeni urun listesi")
     d["durum"] = "tamam"; return d
 
