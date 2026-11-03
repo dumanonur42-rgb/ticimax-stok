@@ -417,27 +417,50 @@ def ps_calistir(betik, mesaj):
     return r.stdout.decode("utf-8", "replace").strip()
 
 
+CEREZ_AD = re.compile(r"^[A-Za-z0-9_.\-]+$")
+
+
 def rd_cerez_coz(metin):
-    metin = metin.strip()
+    """Yapistirilan cerezi okur: 'ad=deger; ...', JSON, DevTools tablosu (sekmeli) ya da sadece deger."""
+    metin = (metin or "").strip().strip('"').strip()
     if metin.lower().startswith("cookie:"): metin = metin[7:].strip()
-    if metin.startswith("["):
-        return {x["name"]: x["value"] for x in json.loads(metin) if x.get("name") and "value" in x}
-    if "=" in metin:
-        c = {}
-        for par in metin.split(";"):
-            if "=" in par:
-                a, b = par.split("=", 1)
-                if a.strip(): c[a.strip()] = b.strip()
-        return c
-    return {"RulmanB4bV4Session": metin} if metin else {}
+    c = {}
+    if metin[:1] in "[{":
+        try:
+            j = json.loads(metin); j = j if isinstance(j, list) else j.get("cookies", [j])
+            c = {x["name"]: str(x["value"]) for x in j if x.get("name") and "value" in x}
+        except Exception:  # noqa: BLE001
+            c = {}
+    if not c:
+        for satir in re.split(r"[\r\n]+", metin):
+            satir = satir.strip()
+            if not satir: continue
+            if "\t" in satir:
+                p = [x.strip() for x in satir.split("\t")]
+                if len(p) >= 2 and p[0] and p[1]: c[p[0]] = p[1]
+            elif "=" in satir:
+                for par in satir.split(";"):
+                    if "=" in par:
+                        a, b = par.split("=", 1)
+                        if a.strip(): c[a.strip()] = b.strip()
+            elif not c:
+                c["RulmanB4bV4Session"] = satir
+    temiz = {}
+    for a, b in c.items():
+        b = b.strip().strip('"')
+        if CEREZ_AD.match(a) and b and not re.search(r"[\s;,]", b):
+            temiz[a] = b
+    log("RD cerez okundu:", ", ".join(f"{a}({len(b)})" for a, b in temiz.items()) or "bos")
+    return temiz
 
 
 def rd_cerez_yukle(s, c):
     for ad in c:
-        s.komut("Network.deleteCookies", name=ad, domain="b4b.rulman.com.tr")
-        s.komut("Network.deleteCookies", name=ad, domain=".rulman.com.tr")
-    s.komut("Network.setCookies", cookies=[{"name": a, "value": b, "url": RD + "/", "path": "/", "secure": True,
-                                            "httpOnly": True} for a, b in c.items()])
+        for dom in ("b4b.rulman.com.tr", ".rulman.com.tr", ".b4b.rulman.com.tr"):
+            s.komut("Network.deleteCookies", name=ad, domain=dom)
+    for a, b in c.items():
+        s.komut("Network.setCookie", name=a, value=b, domain="b4b.rulman.com.tr", path="/", secure=True,
+                httpOnly=True)
 
 
 def rd_cerezle(s):
@@ -453,11 +476,14 @@ def rd_cerezle(s):
         except Exception:  # noqa: BLE001
             c = {}
         if c:
-            rd_cerez_yukle(s, c)
             try:
+                rd_cerez_yukle(s, c)
                 return rd_adim(s)
             except GirisYok:
                 pass
+            except RuntimeError as e:
+                if "Cookie" not in str(e) and "cookie" not in str(e): raise
+                log("cerez yuklenemedi", str(e)[:120])
         mesaj = "Bu cerez calismadi (suresi dolmus ya da eksik). Rulman Dunyasi'ni yeniden acip yeni cerezi yapistirin."
     raise GirisYok("Rulman Dunyasi cerezi gecersiz")
 
@@ -467,6 +493,7 @@ def calis(elle=False):
     t, s = tarayici_ac()
     try:
         for ad, f in (("madte", madte_adim), ("rd", rd_adim)):
+            if "--sadece-rd" in sys.argv and ad == "madte": continue
             try:
                 try:
                     durum[ad] = f(s)
@@ -487,6 +514,7 @@ def ozet(durum):
     sat = []
     for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dunyasi")):
         d = durum.get(ad) or {}
+        if not d: continue
         if d.get("durum") == "tamam":
             sat.append(f"{isim}: guncellendi ({d.get('eslesen', 0)} urun).")
         elif d.get("durum") == "giris_gerekli":
