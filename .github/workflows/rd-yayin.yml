@@ -29,10 +29,26 @@ jobs:
           n=$(grep -c "<Urun>" rd_guncelle.xml.yeni || true)
           echo "urun sayisi: $n"
           if [ "$n" -lt 38000 ]; then echo "urun sayisi cok az, yayinlanmadi"; exit 1; fi
+          python3 - <<'PY'
+          import re, sys
+          s = open("rd_guncelle.xml.yeni", encoding="utf-8").read()
+          ids = re.findall(r"<UrunKartiID>(.*?)</UrunKartiID>", s)
+          kod = re.findall(r"<StokKodu>(.*?)</StokKodu>", s)
+          ted = set(re.findall(r"<Tedarikci>(.*?)</Tedarikci>", s))
+          hata = []
+          if len(ids) != len(set(ids)): hata.append("kopya UrunKartiID")
+          if len(kod) != len(set(kod)): hata.append("kopya StokKodu")
+          if any(not i.startswith("RD") for i in ids): hata.append("RD disi urun")
+          if ted != {"RULMANDUNYASI"}: hata.append("tedarikci %s" % ted)
+          if "<Aciklama>" in s or "<Resim>" in s: hata.append("icerik alani var")
+          print("kontrol:", len(ids), "urun", hata or "sorun yok")
+          sys.exit(1 if hata else 0)
+          PY
           mv rd_guncelle.xml.yeni rd_guncelle.xml
+          cp rd_guncelle.xml rd_test.xml  # Connect "rdtest" gorevi bu adresi okuyor
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rd_guncelle.xml
+          git add rd_guncelle.xml rd_test.xml
           if git diff --cached --quiet; then echo "Degisiklik yok"; exit 0; fi
           git commit -m "RD gunluk fiyat/stok $(TZ=Europe/Istanbul date +%F)"
           git push origin HEAD:rd-yayin
