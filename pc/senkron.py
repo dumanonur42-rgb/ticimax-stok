@@ -237,15 +237,36 @@ MD_JS = """(async (u) => { for (let t = 0; t < 4; t++) { try {
 
 def madte_girisli(s):
     s.git(MD + "/", 5)
-    return "giris" not in (s.js("location.href") or "").lower()
+    u = (s.js("location.href") or "").lower()
+    return "giris" not in u and "login" not in u
+
+
+def chrome_madte_linkleri():
+    """Madte masaustu uygulamasinin Chrome'a actirdigi hizli giris adresleri (en yeni once)."""
+    import shutil, sqlite3, tempfile
+    h = os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\User Data\Default\History")
+    t = os.path.join(tempfile.gettempdir(), "ys_md_gecmis.db")
+    try:
+        shutil.copyfile(h, t)
+        db = sqlite3.connect(t)
+        r = [x[0] for x in db.execute("select url from urls where url like '%b2b.madte.com.tr/login/HizliGiris/%'"
+                                      " order by last_visit_time desc limit 3")]
+        db.close(); return r
+    except Exception as e:  # noqa: BLE001
+        log("Chrome gecmisi okunamadi", e); return []
+    finally:
+        try: os.remove(t)
+        except OSError: pass
 
 
 def madte_cek(s):
     if not madte_girisli(s):
-        link = gizli_oku("madte_link.dat")
-        if link:
-            s.git(link.decode(), 6)
-        if not madte_girisli(s):
+        eski = gizli_oku("madte_link.dat")
+        for link in ([eski.decode()] if eski else []) + chrome_madte_linkleri():
+            s.git(link, 6)
+            if madte_girisli(s):
+                gizli_yaz("madte_link.dat", link.encode()); break
+        else:
             raise GirisYok("Madte girisi yok")
     urunler = {}
     for kok in MADTE_KOK:
@@ -363,21 +384,117 @@ def giris_penceresi():
         t.kapat()
 
 
+PS_KUTU = r"""
+Add-Type -AssemblyName System.Windows.Forms
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+$f = New-Object Windows.Forms.Form
+$f.Text = 'Yamansa Senkron - Rulman Dunyasi'; $f.Width = 520; $f.Height = 300; $f.TopMost = $true
+$f.StartPosition = 'CenterScreen'; $f.FormBorderStyle = 'FixedDialog'; $f.MaximizeBox = $false
+$l = New-Object Windows.Forms.Label; $l.Left = 12; $l.Top = 10; $l.Width = 480; $l.Height = 60
+$l.Text = $env:YS_MESAJ; $f.Controls.Add($l)
+$t = New-Object Windows.Forms.TextBox; $t.Left = 12; $t.Top = 75; $t.Width = 480; $t.Height = 120
+$t.Multiline = $true; $t.UseSystemPasswordChar = $false; $t.ScrollBars = 'Vertical'; $f.Controls.Add($t)
+$o = New-Object Windows.Forms.Button; $o.Text = 'Guncelle'; $o.Left = 300; $o.Top = 210; $o.Width = 90
+$o.DialogResult = 'OK'; $f.Controls.Add($o); $f.AcceptButton = $o
+$v = New-Object Windows.Forms.Button; $v.Text = 'Vazgec'; $v.Left = 400; $v.Top = 210; $v.Width = 90
+$v.DialogResult = 'Cancel'; $f.Controls.Add($v); $f.CancelButton = $v
+$f.Add_Shown({ $f.Activate(); $t.Focus() })
+if ($f.ShowDialog() -eq 'OK') { [Console]::Out.Write($t.Text) }
+"""
+
+PS_BILGI = r"""
+Add-Type -AssemblyName System.Windows.Forms
+[Windows.Forms.MessageBox]::Show($env:YS_MESAJ, 'Yamansa Senkron') | Out-Null
+"""
+
+
+def ps_calistir(betik, mesaj):
+    import subprocess
+    env = dict(os.environ, YS_MESAJ=mesaj)
+    r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
+                        "-Command", betik], env=env, capture_output=True, timeout=3600,
+                       creationflags=0x08000000)
+    return r.stdout.decode("utf-8", "replace").strip()
+
+
+def rd_cerez_coz(metin):
+    metin = metin.strip()
+    if metin.lower().startswith("cookie:"): metin = metin[7:].strip()
+    if metin.startswith("["):
+        return {x["name"]: x["value"] for x in json.loads(metin) if x.get("name") and "value" in x}
+    if "=" in metin:
+        c = {}
+        for par in metin.split(";"):
+            if "=" in par:
+                a, b = par.split("=", 1)
+                if a.strip(): c[a.strip()] = b.strip()
+        return c
+    return {"RulmanB4bV4Session": metin} if metin else {}
+
+
+def rd_cerez_yukle(s, c):
+    for ad in c:
+        s.komut("Network.deleteCookies", name=ad, domain="b4b.rulman.com.tr")
+        s.komut("Network.deleteCookies", name=ad, domain=".rulman.com.tr")
+    s.komut("Network.setCookies", cookies=[{"name": a, "value": b, "url": RD + "/", "path": "/", "secure": True,
+                                            "httpOnly": True} for a, b in c.items()])
+
+
+def rd_cerezle(s):
+    """Kayitli giris gecmisse kullanicidan cerez ister (sadece elle calistirmada)."""
+    mesaj = ("Madte guncellendi. Simdi Rulman Dunyasi icin cerezi buraya yapistirip Guncelle'ye basin.\n"
+             "Vazgec derseniz RD fiyatlari bugun degismez.")
+    for _ in range(3):
+        metin = ps_calistir(PS_KUTU, mesaj)
+        if not metin:
+            raise GirisYok("Rulman Dunyasi cerezi girilmedi")
+        try:
+            c = rd_cerez_coz(metin)
+        except Exception:  # noqa: BLE001
+            c = {}
+        if c:
+            rd_cerez_yukle(s, c)
+            try:
+                return rd_adim(s)
+            except GirisYok:
+                pass
+        mesaj = "Bu cerez calismadi (suresi dolmus ya da eksik). Rulman Dunyasi'ni yeniden acip yeni cerezi yapistirin."
+    raise GirisYok("Rulman Dunyasi cerezi gecersiz")
+
+
 def calis(elle=False):
     durum = {"zaman": datetime.datetime.now().isoformat(timespec="seconds"), "elle": elle}
     t, s = tarayici_ac()
     try:
-        for ad, f in (("rd", rd_adim), ("madte", madte_adim)):
+        for ad, f in (("madte", madte_adim), ("rd", rd_adim)):
             try:
-                durum[ad] = f(s)
+                try:
+                    durum[ad] = f(s)
+                except GirisYok:
+                    if not (elle and ad == "rd"): raise
+                    durum[ad] = rd_cerezle(s)
             except GirisYok as e:
                 durum[ad] = {"durum": "giris_gerekli", "hata": str(e)}; log(e)
             except Exception as e:  # noqa: BLE001
                 durum[ad] = {"durum": "hata", "hata": str(e)[:300]}; log(traceback.format_exc())
-        cerez_kaydet(s)
+            cerez_kaydet(s)
     finally:
         t.kapat()
     return durum
+
+
+def ozet(durum):
+    sat = []
+    for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dunyasi")):
+        d = durum.get(ad) or {}
+        if d.get("durum") == "tamam":
+            sat.append(f"{isim}: guncellendi ({d.get('eslesen', 0)} urun).")
+        elif d.get("durum") == "giris_gerekli":
+            sat.append(f"{isim}: giris yapilamadi, fiyatlar degismedi."
+                       + (" Madte uygulamasini bir kez acin." if ad == "madte" else ""))
+        else:
+            sat.append(f"{isim}: guncellenmedi, eski fiyatlar korundu. ({d.get('hata', '')[:120]})")
+    return "\n".join(sat)
 
 
 def rd_adim(s):
@@ -421,14 +538,14 @@ def main():
         log("zaten calisiyor"); return
     try:
         durum = calis(elle)
-        if elle and any((durum.get(a) or {}).get("durum") == "giris_gerekli" for a in ("rd", "madte")):
-            giris_penceresi(); durum = calis(elle)
         durum["log"] = LOG[-60:]
         log("BITTI", json.dumps({a: (durum.get(a) or {}).get("durum") for a in ("rd", "madte")}))
         try:
             gh_yaz(DAL, "durum/son.json", json.dumps(durum, ensure_ascii=False, indent=1).encode(), "PC senkron durumu")
         except Exception as e:  # noqa: BLE001
             log("durum yazilamadi", e)
+        if elle:
+            ps_calistir(PS_BILGI, ozet(durum))
     finally:
         os.remove(k)
 
