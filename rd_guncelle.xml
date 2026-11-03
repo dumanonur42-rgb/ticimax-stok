@@ -14911,6 +14911,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325503</UrunKartiID>
+    <UrunAdi>EM01 MMRG 125X37,5F EMES Döner Tablalı Frenli Gri Kauçuk Tekerlek 125x37,5 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.33</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325503</VaryasyonID>
+        <StokKodu>EMS 110-10526101</StokKodu>
+        <Barkod>EMS 110-10526101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>816.76</SatisFiyati>
+        <IndirimliFiyat>816.76</IndirimliFiyat>
+        <IndirimliFiyatTL>816.76</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>816.76</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD320040</UrunKartiID>
     <UrunAdi>EM01 MMRG 150X40 EMES Döner Tablalı Gri Kauçuk Tekerlek 150x40 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -20161,6 +20191,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325453</UrunKartiID>
+    <UrunAdi>EM02 MMR 100X30 (INOX) EMES Sabit Maşalı Siyah Kauçuk Tekerlek 100x30 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.49</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325453</VaryasyonID>
+        <StokKodu>EMS 110-20515301</StokKodu>
+        <Barkod>EMS 110-20515301</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>599.20</SatisFiyati>
+        <IndirimliFiyat>599.20</IndirimliFiyat>
+        <IndirimliFiyatTL>599.20</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>599.20</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD317554</UrunKartiID>
     <UrunAdi>EM02 MMR 125X37,5 EMES Sabit Maşalı Siyah Kauçuk Tekerlek 125x37,5 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -22047,6 +22107,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1704.36</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325447</UrunKartiID>
+    <UrunAdi>EM03 SPRG 200X50F (Ö.F.) EMES Pim Bağlantılı Frenli Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>3.29</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325447</VaryasyonID>
+        <StokKodu>EMS 110-30028101</StokKodu>
+        <Barkod>EMS 110-30028101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1548.12</SatisFiyati>
+        <IndirimliFiyat>1548.12</IndirimliFiyat>
+        <IndirimliFiyatTL>1548.12</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1548.12</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -33121,6 +33211,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325515</UrunKartiID>
+    <UrunAdi>EM04 MMR 80X25 EMES Delik Bağlantılı Siyah Kauçuk Tekerlek 80x25 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.56</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325515</VaryasyonID>
+        <StokKodu>EMS 110-40514001</StokKodu>
+        <Barkod>EMS 110-40514001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>413.84</SatisFiyati>
+        <IndirimliFiyat>413.84</IndirimliFiyat>
+        <IndirimliFiyatTL>413.84</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>413.84</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325489</UrunKartiID>
     <UrunAdi>EM04 MMR 80X25F EMES Delik Bağlantılı Frenli Siyah Kauçuk Tekerlek 80x25 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -37081,6 +37201,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325456</UrunKartiID>
+    <UrunAdi>EM05 SMRG 100X30TF 5/8 EMES Civata Bağlantılı Frenli Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.9</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325456</VaryasyonID>
+        <StokKodu>EMS 110-51065401</StokKodu>
+        <Barkod>EMS 110-51065401</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>723.80</SatisFiyati>
+        <IndirimliFiyat>723.80</IndirimliFiyat>
+        <IndirimliFiyatTL>723.80</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>723.80</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325874</UrunKartiID>
     <UrunAdi>EM05 SMRG 125X37,5 5/8 EMES Civata Bağlantılı Gri Kauçuk Tekerlek 125x37,5 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -38011,6 +38161,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325463</UrunKartiID>
+    <UrunAdi>EM05 ZKZ 200X50T 5/8 EMES Civata Bağlantılı Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>3.29</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325463</VaryasyonID>
+        <StokKodu>EMS 110-51108201</StokKodu>
+        <Barkod>EMS 110-51108201</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1375.64</SatisFiyati>
+        <IndirimliFiyat>1375.64</IndirimliFiyat>
+        <IndirimliFiyatTL>1375.64</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1375.64</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325798</UrunKartiID>
     <UrunAdi>EM05 ZKZ 200X50TF 5/8 (Ö.F.) EMES Civata Bağlantılı Frenli Tekerlek</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -38367,6 +38547,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1821.40</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325513</UrunKartiID>
+    <UrunAdi>EM05 ZKP 150X40 M16 (INOX) EMES Civata Bağlantılı Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.91</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325513</VaryasyonID>
+        <StokKodu>EMS 110-51127302</StokKodu>
+        <Barkod>EMS 110-51127302</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1808.24</SatisFiyati>
+        <IndirimliFiyat>1808.24</IndirimliFiyat>
+        <IndirimliFiyatTL>1808.24</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1808.24</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -39297,6 +39507,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>879.48</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325505</UrunKartiID>
+    <UrunAdi>EM05 MKR 200X50 5/8 EMES Civata Bağlantılı Siyah Kauçuk Tekerlek 200x50 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>2.88</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325505</VaryasyonID>
+        <StokKodu>EMS 110-51408001</StokKodu>
+        <Barkod>EMS 110-51408001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1090.04</SatisFiyati>
+        <IndirimliFiyat>1090.04</IndirimliFiyat>
+        <IndirimliFiyatTL>1090.04</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1090.04</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -42361,6 +42601,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325436</UrunKartiID>
+    <UrunAdi>EM05 SMRG 125X37,5F M16 EMES Civata Bağlantılı Frenli Gri Kauçuk Tekerlek 125x37,5 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.44</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325436</VaryasyonID>
+        <StokKodu>EMS 110-52066101</StokKodu>
+        <Barkod>EMS 110-52066101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>918.12</SatisFiyati>
+        <IndirimliFiyat>918.12</IndirimliFiyat>
+        <IndirimliFiyatTL>918.12</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>918.12</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD326100</UrunKartiID>
     <UrunAdi>EM05 SMRG 125X37,5T M16 EMES Civata Bağlantılı Tekerlek</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -43287,6 +43557,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1258.88</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325450</UrunKartiID>
+    <UrunAdi>EM05 ZKZ 200X50F M16 (Ö.F.) EMES Civata Bağlantılı Frenli Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>3.29</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325450</VaryasyonID>
+        <StokKodu>EMS 110-52108101</StokKodu>
+        <Barkod>EMS 110-52108101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1629.60</SatisFiyati>
+        <IndirimliFiyat>1629.60</IndirimliFiyat>
+        <IndirimliFiyatTL>1629.60</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1629.60</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -50941,6 +51241,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325511</UrunKartiID>
+    <UrunAdi>EM07 MMR 125X37,5F (20-25 KARE SOKET) EMES Soket Bağlantılı Frenli Siyah Kauçuk Tekerlek 125x37,5 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.4</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325511</VaryasyonID>
+        <StokKodu>EMS 110-71516101</StokKodu>
+        <Barkod>EMS 110-71516101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>889.84</SatisFiyati>
+        <IndirimliFiyat>889.84</IndirimliFiyat>
+        <IndirimliFiyatTL>889.84</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>889.84</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325034</UrunKartiID>
     <UrunAdi>EM07 MMR 150X40 (20-25 KARE SOKET) EMES Soket Bağlantılı Siyah Kauçuk Tekerlek 150x40 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -51087,6 +51417,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>704.20</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325501</UrunKartiID>
+    <UrunAdi>EM07 MMRG 100X30F (20-25 KARE SOKET) EMES Soket Bağlantılı Frenli Gri Kauçuk Tekerlek 100x30 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.02</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325501</VaryasyonID>
+        <StokKodu>EMS 110-71525101</StokKodu>
+        <Barkod>EMS 110-71525101</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>806.68</SatisFiyati>
+        <IndirimliFiyat>806.68</IndirimliFiyat>
+        <IndirimliFiyatTL>806.68</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>806.68</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -55351,6 +55711,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325462</UrunKartiID>
+    <UrunAdi>EM07 MMR 80X25 (26-30 KARE SOKET TAKIM) EMES Soket Bağlantılı Siyah Kauçuk Tekerlek 80x25 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.71</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325462</VaryasyonID>
+        <StokKodu>EMS 110-72514001</StokKodu>
+        <Barkod>EMS 110-72514001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>613.20</SatisFiyati>
+        <IndirimliFiyat>613.20</IndirimliFiyat>
+        <IndirimliFiyatTL>613.20</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>613.20</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD326186</UrunKartiID>
     <UrunAdi>EM07 MMR 80X25F (26-30 KARE SOKET TAKIM) EMES Soket Bağlantılı Frenli Siyah Kauçuk Tekerlek 80x25 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -55497,6 +55887,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>891.24</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325440</UrunKartiID>
+    <UrunAdi>EM07 MMR 150X40 (26-30 KARE SOKET TAKIM) EMES Soket Bağlantılı Siyah Kauçuk Tekerlek 150x40 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>1.49</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325440</VaryasyonID>
+        <StokKodu>EMS 110-72517001</StokKodu>
+        <Barkod>EMS 110-72517001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>867.16</SatisFiyati>
+        <IndirimliFiyat>867.16</IndirimliFiyat>
+        <IndirimliFiyatTL>867.16</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>867.16</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -81751,6 +82171,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325506</UrunKartiID>
+    <UrunAdi>ED02 ZMP 100X35T EMES Sabit Maşalı Tekerlek 100 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>2.14</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325506</VaryasyonID>
+        <StokKodu>EMS 127-20224201</StokKodu>
+        <Barkod>EMS 127-20224201</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>953.40</SatisFiyati>
+        <IndirimliFiyat>953.40</IndirimliFiyat>
+        <IndirimliFiyatTL>953.40</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>953.40</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325950</UrunKartiID>
     <UrunAdi>ED02 ZMP 125X40 EMES Sabit Maşalı Poliüretan Tekerlek 125 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -83487,6 +83937,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1561.84</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325512</UrunKartiID>
+    <UrunAdi>ED02 VBV 150X45T EMES Sabit Maşalı Tekerlek 150 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>4.46</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325512</VaryasyonID>
+        <StokKodu>EMS 127-20726201</StokKodu>
+        <Barkod>EMS 127-20726201</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1634.36</SatisFiyati>
+        <IndirimliFiyat>1634.36</IndirimliFiyat>
+        <IndirimliFiyatTL>1634.36</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1634.36</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -138091,6 +138571,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325502</UrunKartiID>
+    <UrunAdi>EZ 04 ZKP 150 (INOX)(Ø14) EMES Delik Bağlantılı Teker 150x45 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;ORTA SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>ORTA SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>2.03</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325502</VaryasyonID>
+        <StokKodu>EMS 159-40125301</StokKodu>
+        <Barkod>EMS 159-40125301</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1718.08</SatisFiyati>
+        <IndirimliFiyat>1718.08</IndirimliFiyat>
+        <IndirimliFiyatTL>1718.08</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1718.08</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325653</UrunKartiID>
     <UrunAdi>EZ 04 ZKP 150 (INOX)(Ø16) EMES Delik Bağlantılı Teker 150x45 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -138207,6 +138717,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1628.34</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325460</UrunKartiID>
+    <UrunAdi>EZ 04 ZMP 150 (INOX)(Ø12) EMES Delik Bağlantılı Teker 150x45 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;ORTA SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>ORTA SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>2.03</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325460</VaryasyonID>
+        <StokKodu>EMS 159-40225302</StokKodu>
+        <Barkod>EMS 159-40225302</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1875.93</SatisFiyati>
+        <IndirimliFiyat>1875.93</IndirimliFiyat>
+        <IndirimliFiyatTL>1875.93</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1875.93</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -145381,6 +145921,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325504</UrunKartiID>
+    <UrunAdi>EV 02 VBPb 250 EMES Sabit Maşalı Teker 250x60 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>12.61</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325504</VaryasyonID>
+        <StokKodu>EMS 167-20747003</StokKodu>
+        <Barkod>EMS 167-20747003</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>7583.52</SatisFiyati>
+        <IndirimliFiyat>7583.52</IndirimliFiyat>
+        <IndirimliFiyatTL>7583.52</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>7583.52</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD321318</UrunKartiID>
     <UrunAdi>EV 02 VBP 300 EMES Sabit Maşalı Teker 300x70 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -149041,6 +149611,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325516</UrunKartiID>
+    <UrunAdi>EA 02 VBR 150 EMES Sabit Maşalı Teker 150 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>4.23</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325516</VaryasyonID>
+        <StokKodu>EMS 176-20765001</StokKodu>
+        <Barkod>EMS 176-20765001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2113.02</SatisFiyati>
+        <IndirimliFiyat>2113.02</IndirimliFiyat>
+        <IndirimliFiyatTL>2113.02</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2113.02</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD316808</UrunKartiID>
     <UrunAdi>EA 02 VBR 200 EMES Sabit Maşalı Teker 200x50 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -151051,6 +151651,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325431</UrunKartiID>
+    <UrunAdi>EW 02 VBV 200 EMES Sabit Maşalı Teker 200x50 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>20.97</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325431</VaryasyonID>
+        <StokKodu>EMS 178-20722001</StokKodu>
+        <Barkod>EMS 178-20722001</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>8490.09</SatisFiyati>
+        <IndirimliFiyat>8490.09</IndirimliFiyat>
+        <IndirimliFiyatTL>8490.09</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>8490.09</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD326041</UrunKartiID>
     <UrunAdi>EW 02 VBV 250 EMES Sabit Maşalı Teker 250x60 mm</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -151167,6 +151797,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>10138.17</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325441</UrunKartiID>
+    <UrunAdi>EW 02 VBPb 200 EMES Sabit Maşalı Teker 200x50 mm</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>EKSTRA AĞIR SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>19.77</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325441</VaryasyonID>
+        <StokKodu>EMS 178-20742002</StokKodu>
+        <Barkod>EMS 178-20742002</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>7997.43</SatisFiyati>
+        <IndirimliFiyat>7997.43</IndirimliFiyat>
+        <IndirimliFiyatTL>7997.43</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>7997.43</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -160651,6 +161311,66 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325521</UrunKartiID>
+    <UrunAdi>TM008 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325521</VaryasyonID>
+        <StokKodu>EMS 999-TM008</StokKodu>
+        <Barkod>EMS 999-TM008</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>51.52</SatisFiyati>
+        <IndirimliFiyat>51.52</IndirimliFiyat>
+        <IndirimliFiyatTL>51.52</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>51.52</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325465</UrunKartiID>
+    <UrunAdi>TM009 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325465</VaryasyonID>
+        <StokKodu>EMS 999-TM009</StokKodu>
+        <Barkod>EMS 999-TM009</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>16.24</SatisFiyati>
+        <IndirimliFiyat>16.24</IndirimliFiyat>
+        <IndirimliFiyatTL>16.24</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>16.24</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD326180</UrunKartiID>
     <UrunAdi>TM010 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -161641,6 +162361,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325510</UrunKartiID>
+    <UrunAdi>TM044 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325510</VaryasyonID>
+        <StokKodu>EMS 999-TM044</StokKodu>
+        <Barkod>EMS 999-TM044</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>40.32</SatisFiyati>
+        <IndirimliFiyat>40.32</IndirimliFiyat>
+        <IndirimliFiyatTL>40.32</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>40.32</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD326214</UrunKartiID>
     <UrunAdi>TM045 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -161727,6 +162477,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>54.60</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325448</UrunKartiID>
+    <UrunAdi>TM048 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325448</VaryasyonID>
+        <StokKodu>EMS 999-TM048</StokKodu>
+        <Barkod>EMS 999-TM048</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>16.24</SatisFiyati>
+        <IndirimliFiyat>16.24</IndirimliFiyat>
+        <IndirimliFiyatTL>16.24</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>16.24</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -162331,6 +163111,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325499</UrunKartiID>
+    <UrunAdi>TM069 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325499</VaryasyonID>
+        <StokKodu>EMS 999-TM069</StokKodu>
+        <Barkod>EMS 999-TM069</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>255.36</SatisFiyati>
+        <IndirimliFiyat>255.36</IndirimliFiyat>
+        <IndirimliFiyatTL>255.36</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>255.36</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325627</UrunKartiID>
     <UrunAdi>TM070 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -162357,6 +163167,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1005.20</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325444</UrunKartiID>
+    <UrunAdi>TM071 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325444</VaryasyonID>
+        <StokKodu>EMS 999-TM071</StokKodu>
+        <Barkod>EMS 999-TM071</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>223.16</SatisFiyati>
+        <IndirimliFiyat>223.16</IndirimliFiyat>
+        <IndirimliFiyatTL>223.16</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>223.16</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -162537,6 +163377,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>173.32</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325454</UrunKartiID>
+    <UrunAdi>TM078 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325454</VaryasyonID>
+        <StokKodu>EMS 999-TM078</StokKodu>
+        <Barkod>EMS 999-TM078</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>686.28</SatisFiyati>
+        <IndirimliFiyat>686.28</IndirimliFiyat>
+        <IndirimliFiyatTL>686.28</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>686.28</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -163081,6 +163951,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325422</UrunKartiID>
+    <UrunAdi>TM098 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325422</VaryasyonID>
+        <StokKodu>EMS 999-TM098</StokKodu>
+        <Barkod>EMS 999-TM098</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>117.04</SatisFiyati>
+        <IndirimliFiyat>117.04</IndirimliFiyat>
+        <IndirimliFiyatTL>117.04</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>117.04</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325588</UrunKartiID>
     <UrunAdi>TM099 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -163321,6 +164221,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325508</UrunKartiID>
+    <UrunAdi>TM107 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325508</VaryasyonID>
+        <StokKodu>EMS 999-TM107</StokKodu>
+        <Barkod>EMS 999-TM107</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>157.64</SatisFiyati>
+        <IndirimliFiyat>157.64</IndirimliFiyat>
+        <IndirimliFiyatTL>157.64</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>157.64</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325301</UrunKartiID>
     <UrunAdi>TM108 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -163441,6 +164371,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325428</UrunKartiID>
+    <UrunAdi>TM112 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325428</VaryasyonID>
+        <StokKodu>EMS 999-TM112</StokKodu>
+        <Barkod>EMS 999-TM112</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>99.96</SatisFiyati>
+        <IndirimliFiyat>99.96</IndirimliFiyat>
+        <IndirimliFiyatTL>99.96</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>99.96</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325300</UrunKartiID>
     <UrunAdi>TM113 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -163557,6 +164517,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>120.68</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325439</UrunKartiID>
+    <UrunAdi>TM117 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325439</VaryasyonID>
+        <StokKodu>EMS 999-TM117</StokKodu>
+        <Barkod>EMS 999-TM117</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>281.12</SatisFiyati>
+        <IndirimliFiyat>281.12</IndirimliFiyat>
+        <IndirimliFiyatTL>281.12</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>281.12</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -164461,6 +165451,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325518</UrunKartiID>
+    <UrunAdi>TM153 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325518</VaryasyonID>
+        <StokKodu>EMS 999-TM153</StokKodu>
+        <Barkod>EMS 999-TM153</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>14.56</SatisFiyati>
+        <IndirimliFiyat>14.56</IndirimliFiyat>
+        <IndirimliFiyatTL>14.56</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>14.56</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325558</UrunKartiID>
     <UrunAdi>TM154 EMES Teker Tamir Takımı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -164487,6 +165507,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>307.44</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325421</UrunKartiID>
+    <UrunAdi>TM155 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325421</VaryasyonID>
+        <StokKodu>EMS 999-TM155</StokKodu>
+        <Barkod>EMS 999-TM155</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>314.44</SatisFiyati>
+        <IndirimliFiyat>314.44</IndirimliFiyat>
+        <IndirimliFiyatTL>314.44</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>314.44</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -164727,6 +165777,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>325.08</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325438</UrunKartiID>
+    <UrunAdi>TM165 EMES Teker Tamir Takımı</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;TEKER YEDEK PARÇALARI VE AKSESUARLARI</KategoriYolu>
+    <Kategori>TEKER YEDEK PARÇALARI VE AKSESUARLARI</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325438</VaryasyonID>
+        <StokKodu>EMS 999-TM165</StokKodu>
+        <Barkod>EMS 999-TM165</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>320.60</SatisFiyati>
+        <IndirimliFiyat>320.60</IndirimliFiyat>
+        <IndirimliFiyatTL>320.60</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>320.60</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -181368,7 +182448,7 @@
         <VaryasyonID>RD16838</VaryasyonID>
         <StokKodu>FAG 22207-E1-XL-C3</StokKodu>
         <Barkod>FAG 22207-E1-XL-C3</Barkod>
-        <StokAdedi>179</StokAdedi>
+        <StokAdedi>177</StokAdedi>
         <SatisFiyati>2018.88</SatisFiyati>
         <IndirimliFiyat>2018.88</IndirimliFiyat>
         <IndirimliFiyatTL>2018.88</IndirimliFiyatTL>
@@ -182688,7 +183768,7 @@
         <VaryasyonID>RD16887</VaryasyonID>
         <StokKodu>FAG 22215-E1-XL-C3</StokKodu>
         <Barkod>FAG 22215-E1-XL-C3</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>19</StokAdedi>
         <SatisFiyati>4500.42</SatisFiyati>
         <IndirimliFiyat>4500.42</IndirimliFiyat>
         <IndirimliFiyatTL>4500.42</IndirimliFiyatTL>
@@ -182988,7 +184068,7 @@
         <VaryasyonID>RD16897</VaryasyonID>
         <StokKodu>FAG 22216-E1-XL-K-C3</StokKodu>
         <Barkod>FAG 22216-E1-XL-K-C3</Barkod>
-        <StokAdedi>19</StokAdedi>
+        <StokAdedi>10</StokAdedi>
         <SatisFiyati>5131.32</SatisFiyati>
         <IndirimliFiyat>5131.32</IndirimliFiyat>
         <IndirimliFiyatTL>5131.32</IndirimliFiyatTL>
@@ -183228,7 +184308,7 @@
         <VaryasyonID>RD16905</VaryasyonID>
         <StokKodu>FAG 22217-E1-XL-K-C3</StokKodu>
         <Barkod>FAG 22217-E1-XL-K-C3</Barkod>
-        <StokAdedi>9</StokAdedi>
+        <StokAdedi>7</StokAdedi>
         <SatisFiyati>5720.16</SatisFiyati>
         <IndirimliFiyat>5720.16</IndirimliFiyat>
         <IndirimliFiyatTL>5720.16</IndirimliFiyatTL>
@@ -187398,7 +188478,7 @@
         <VaryasyonID>RD17051</VaryasyonID>
         <StokKodu>FAG 22312-E1-XL-K-C3</StokKodu>
         <Barkod>FAG 22312-E1-XL-K-C3</Barkod>
-        <StokAdedi>10</StokAdedi>
+        <StokAdedi>8</StokAdedi>
         <SatisFiyati>5131.32</SatisFiyati>
         <IndirimliFiyat>5131.32</IndirimliFiyat>
         <IndirimliFiyatTL>5131.32</IndirimliFiyatTL>
@@ -214128,7 +215208,7 @@
         <VaryasyonID>RD17984</VaryasyonID>
         <StokKodu>FAG 29415-E1-XL</StokKodu>
         <Barkod>FAG 29415-E1-XL</Barkod>
-        <StokAdedi>27</StokAdedi>
+        <StokAdedi>26</StokAdedi>
         <SatisFiyati>20188.80</SatisFiyati>
         <IndirimliFiyat>20188.80</IndirimliFiyat>
         <IndirimliFiyatTL>20188.80</IndirimliFiyatTL>
@@ -225811,246 +226891,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD18392</UrunKartiID>
-    <UrunAdi>32238-A FAG Konik Makaralı Rulman 190x340x97</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>35.9</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18392</VaryasyonID>
-        <StokKodu>FAG 32238-A</StokKodu>
-        <Barkod>FAG 32238-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>134174.56</SatisFiyati>
-        <IndirimliFiyat>134174.56</IndirimliFiyat>
-        <IndirimliFiyatTL>134174.56</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>134174.56</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18393</UrunKartiID>
-    <UrunAdi>32238-XL FAG Konik Makaralı Rulman 190x340x97</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>35.9</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18393</VaryasyonID>
-        <StokKodu>FAG 32238-XL</StokKodu>
-        <Barkod>FAG 32238-XL</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>134174.56</SatisFiyati>
-        <IndirimliFiyat>134174.56</IndirimliFiyat>
-        <IndirimliFiyatTL>134174.56</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>134174.56</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18394</UrunKartiID>
-    <UrunAdi>32240-XL FAG Konik Makaralı Rulman 200x360x104</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>42.42</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18394</VaryasyonID>
-        <StokKodu>FAG 32240-XL</StokKodu>
-        <Barkod>FAG 32240-XL</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>138201.82</SatisFiyati>
-        <IndirimliFiyat>138201.82</IndirimliFiyat>
-        <IndirimliFiyatTL>138201.82</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>138201.82</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18396</UrunKartiID>
-    <UrunAdi>32244-XL FAG Konik Makaralı Rulman 220x400x114</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>59.6</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18396</VaryasyonID>
-        <StokKodu>FAG 32244-XL</StokKodu>
-        <Barkod>FAG 32244-XL</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>193513.08</SatisFiyati>
-        <IndirimliFiyat>193513.08</IndirimliFiyat>
-        <IndirimliFiyatTL>193513.08</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>193513.08</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18397</UrunKartiID>
-    <UrunAdi>32303-A FAG Konik Makaralı Rulman 17x47x20,25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>0.18</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18397</VaryasyonID>
-        <StokKodu>FAG 32303-A</StokKodu>
-        <Barkod>FAG 32303-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1084.27</SatisFiyati>
-        <IndirimliFiyat>1084.27</IndirimliFiyat>
-        <IndirimliFiyatTL>1084.27</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1084.27</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18398</UrunKartiID>
-    <UrunAdi>32304-A FAG Konik Makaralı Rulman 20x52x22,25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>0.25</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18398</VaryasyonID>
-        <StokKodu>FAG 32304-A</StokKodu>
-        <Barkod>FAG 32304-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1131.51</SatisFiyati>
-        <IndirimliFiyat>1131.51</IndirimliFiyat>
-        <IndirimliFiyatTL>1131.51</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1131.51</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18399</UrunKartiID>
-    <UrunAdi>32305-A FAG Konik Makaralı Rulman 25x62x25,25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>0.37</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18399</VaryasyonID>
-        <StokKodu>FAG 32305-A</StokKodu>
-        <Barkod>FAG 32305-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1226.40</SatisFiyati>
-        <IndirimliFiyat>1226.40</IndirimliFiyat>
-        <IndirimliFiyatTL>1226.40</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1226.40</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18400</UrunKartiID>
-    <UrunAdi>32306-A FAG Konik Makaralı Rulman 30x72x28,75</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>0.57</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18400</VaryasyonID>
-        <StokKodu>FAG 32306-A</StokKodu>
-        <Barkod>FAG 32306-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1465.84</SatisFiyati>
-        <IndirimliFiyat>1465.84</IndirimliFiyat>
-        <IndirimliFiyatTL>1465.84</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1465.84</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD18401</UrunKartiID>
     <UrunAdi>32307-A FAG Konik Makaralı Rulman 35x80x32,75</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -226077,36 +226917,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1233.76</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD18402</UrunKartiID>
-    <UrunAdi>32308-A FAG Konik Makaralı Rulman 40x90x35,25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>FAG</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KONİK MAKARALI RULMANLAR&gt;30000 SERİSİ KONİK MAKARALI RULMANLAR</KategoriYolu>
-    <Kategori>30000 SERİSİ KONİK MAKARALI RULMANLAR</Kategori>
-    <Desi>1.08</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD18402</VaryasyonID>
-        <StokKodu>FAG 32308-A</StokKodu>
-        <Barkod>FAG 32308-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1994.79</SatisFiyati>
-        <IndirimliFiyat>1994.79</IndirimliFiyat>
-        <IndirimliFiyatTL>1994.79</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1994.79</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -228811,6 +229621,156 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD18495</UrunKartiID>
+    <UrunAdi>3305-BD-XL-2Z-TVH FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18495</VaryasyonID>
+        <StokKodu>FAG 3305-BD-XL-2Z-TVH</StokKodu>
+        <Barkod>FAG 3305-BD-XL-2Z-TVH</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2417.21</SatisFiyati>
+        <IndirimliFiyat>2417.21</IndirimliFiyat>
+        <IndirimliFiyatTL>2417.21</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2417.21</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18496</UrunKartiID>
+    <UrunAdi>3305-BD-XL-2Z-TVH-C3 FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.36</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18496</VaryasyonID>
+        <StokKodu>FAG 3305-BD-XL-2Z-TVH-C3</StokKodu>
+        <Barkod>FAG 3305-BD-XL-2Z-TVH-C3</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2417.21</SatisFiyati>
+        <IndirimliFiyat>2417.21</IndirimliFiyat>
+        <IndirimliFiyatTL>2417.21</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2417.21</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18497</UrunKartiID>
+    <UrunAdi>3305-BD-XL-C3 FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18497</VaryasyonID>
+        <StokKodu>FAG 3305-BD-XL-C3</StokKodu>
+        <Barkod>FAG 3305-BD-XL-C3</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2417.21</SatisFiyati>
+        <IndirimliFiyat>2417.21</IndirimliFiyat>
+        <IndirimliFiyatTL>2417.21</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2417.21</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18498</UrunKartiID>
+    <UrunAdi>3305-BD-XL-TVH FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.34</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18498</VaryasyonID>
+        <StokKodu>FAG 3305-BD-XL-TVH</StokKodu>
+        <Barkod>FAG 3305-BD-XL-TVH</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2200.28</SatisFiyati>
+        <IndirimliFiyat>2200.28</IndirimliFiyat>
+        <IndirimliFiyatTL>2200.28</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2200.28</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18499</UrunKartiID>
+    <UrunAdi>3305-BD-XL-TVH-C3 FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.35</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18499</VaryasyonID>
+        <StokKodu>FAG 3305-BD-XL-TVH-C3</StokKodu>
+        <Barkod>FAG 3305-BD-XL-TVH-C3</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2200.28</SatisFiyati>
+        <IndirimliFiyat>2200.28</IndirimliFiyat>
+        <IndirimliFiyatTL>2200.28</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2200.28</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD18492</UrunKartiID>
     <UrunAdi>3305-BDXL-2HRS-TVHC3 FAG Açısal Temaslı Bilyalı Rulman 25x62x25,4</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -228837,6 +229797,156 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1850.64</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18500</UrunKartiID>
+    <UrunAdi>3306-BD-XL FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.55</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18500</VaryasyonID>
+        <StokKodu>FAG 3306-BD-XL</StokKodu>
+        <Barkod>FAG 3306-BD-XL</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>2796.55</SatisFiyati>
+        <IndirimliFiyat>2796.55</IndirimliFiyat>
+        <IndirimliFiyatTL>2796.55</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>2796.55</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18501</UrunKartiID>
+    <UrunAdi>3306-BD-XL-2HRS FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.56</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18501</VaryasyonID>
+        <StokKodu>FAG 3306-BD-XL-2HRS</StokKodu>
+        <Barkod>FAG 3306-BD-XL-2HRS</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>3358.51</SatisFiyati>
+        <IndirimliFiyat>3358.51</IndirimliFiyat>
+        <IndirimliFiyatTL>3358.51</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>3358.51</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18502</UrunKartiID>
+    <UrunAdi>3306-BD-XL-2HRS-C3 FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.56</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18502</VaryasyonID>
+        <StokKodu>FAG 3306-BD-XL-2HRS-C3</StokKodu>
+        <Barkod>FAG 3306-BD-XL-2HRS-C3</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>3112.44</SatisFiyati>
+        <IndirimliFiyat>3112.44</IndirimliFiyat>
+        <IndirimliFiyatTL>3112.44</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>3112.44</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18503</UrunKartiID>
+    <UrunAdi>3306-BD-XL-2HRS-TVH FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.55</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18503</VaryasyonID>
+        <StokKodu>FAG 3306-BD-XL-2HRS-TVH</StokKodu>
+        <Barkod>FAG 3306-BD-XL-2HRS-TVH</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>3020.35</SatisFiyati>
+        <IndirimliFiyat>3020.35</IndirimliFiyat>
+        <IndirimliFiyatTL>3020.35</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>3020.35</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18505</UrunKartiID>
+    <UrunAdi>3306-BD-XL-2Z FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.56</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18505</VaryasyonID>
+        <StokKodu>FAG 3306-BD-XL-2Z</StokKodu>
+        <Barkod>FAG 3306-BD-XL-2Z</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>3212.34</SatisFiyati>
+        <IndirimliFiyat>3212.34</IndirimliFiyat>
+        <IndirimliFiyatTL>3212.34</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>3212.34</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -228987,6 +230097,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>2641.10</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD18504</UrunKartiID>
+    <UrunAdi>3306-BDXL-2HRS-TVHC3 FAG Açısal Temaslı Bilyalı Rulman 30x72x30,2</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>FAG</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
+    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
+    <Desi>0.55</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD18504</VaryasyonID>
+        <StokKodu>FAG 3306-BDXL-2HRS-TVHC3</StokKodu>
+        <Barkod>FAG 3306-BDXL-2HRS-TVHC3</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>3190.64</SatisFiyati>
+        <IndirimliFiyat>3190.64</IndirimliFiyat>
+        <IndirimliFiyatTL>3190.64</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>3190.64</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -235308,7 +236448,7 @@
         <VaryasyonID>RD18772</VaryasyonID>
         <StokKodu>FAG 52209</StokKodu>
         <Barkod>FAG 52209</Barkod>
-        <StokAdedi>27</StokAdedi>
+        <StokAdedi>25</StokAdedi>
         <SatisFiyati>2860.08</SatisFiyati>
         <IndirimliFiyat>2860.08</IndirimliFiyat>
         <IndirimliFiyatTL>2860.08</IndirimliFiyatTL>
@@ -252978,7 +254118,7 @@
         <VaryasyonID>RD19298</VaryasyonID>
         <StokKodu>FAG 6205-C-2Z</StokKodu>
         <Barkod>FAG 6205-C-2Z</Barkod>
-        <StokAdedi>4509</StokAdedi>
+        <StokAdedi>4485</StokAdedi>
         <SatisFiyati>229.92</SatisFiyati>
         <IndirimliFiyat>229.92</IndirimliFiyat>
         <IndirimliFiyatTL>229.92</IndirimliFiyatTL>
@@ -254598,7 +255738,7 @@
         <VaryasyonID>RD332408</VaryasyonID>
         <StokKodu>FAG 6208-H-2RSR-C3</StokKodu>
         <Barkod>FAG 6208-H-2RSR-C3</Barkod>
-        <StokAdedi>3125</StokAdedi>
+        <StokAdedi>3115</StokAdedi>
         <SatisFiyati>504.72</SatisFiyati>
         <IndirimliFiyat>504.72</IndirimliFiyat>
         <IndirimliFiyatTL>504.72</IndirimliFiyatTL>
@@ -257868,7 +259008,7 @@
         <VaryasyonID>RD332419</VaryasyonID>
         <StokKodu>FAG 6214-H-2Z-SN-C3</StokKodu>
         <Barkod>FAG 6214-H-2Z-SN-C3</Barkod>
-        <StokAdedi>512</StokAdedi>
+        <StokAdedi>511</StokAdedi>
         <SatisFiyati>1934.76</SatisFiyati>
         <IndirimliFiyat>1934.76</IndirimliFiyat>
         <IndirimliFiyatTL>1934.76</IndirimliFiyatTL>
@@ -371238,7 +372378,7 @@
         <VaryasyonID>RD24243</VaryasyonID>
         <StokKodu>FAG UCF215-J7</StokKodu>
         <Barkod>FAG UCF215-J7</Barkod>
-        <StokAdedi>246</StokAdedi>
+        <StokAdedi>242</StokAdedi>
         <SatisFiyati>4386.86</SatisFiyati>
         <IndirimliFiyat>4386.86</IndirimliFiyat>
         <IndirimliFiyatTL>4386.86</IndirimliFiyatTL>
@@ -371868,7 +373008,7 @@
         <VaryasyonID>RD24264</VaryasyonID>
         <StokKodu>FAG UCFC207-J7</StokKodu>
         <Barkod>FAG UCFC207-J7</Barkod>
-        <StokAdedi>41</StokAdedi>
+        <StokAdedi>30</StokAdedi>
         <SatisFiyati>1472.66</SatisFiyati>
         <IndirimliFiyat>1472.66</IndirimliFiyat>
         <IndirimliFiyatTL>1472.66</IndirimliFiyatTL>
@@ -371898,7 +373038,7 @@
         <VaryasyonID>RD24265</VaryasyonID>
         <StokKodu>FAG UCFC208-J7</StokKodu>
         <Barkod>FAG UCFC208-J7</Barkod>
-        <StokAdedi>1179</StokAdedi>
+        <StokAdedi>1175</StokAdedi>
         <SatisFiyati>1738.48</SatisFiyati>
         <IndirimliFiyat>1738.48</IndirimliFiyat>
         <IndirimliFiyatTL>1738.48</IndirimliFiyatTL>
@@ -372888,7 +374028,7 @@
         <VaryasyonID>RD24298</VaryasyonID>
         <StokKodu>FAG UCP205-J7</StokKodu>
         <Barkod>FAG UCP205-J7</Barkod>
-        <StokAdedi>2000</StokAdedi>
+        <StokAdedi>1994</StokAdedi>
         <SatisFiyati>864.76</SatisFiyati>
         <IndirimliFiyat>864.76</IndirimliFiyat>
         <IndirimliFiyatTL>864.76</IndirimliFiyatTL>
@@ -373188,7 +374328,7 @@
         <VaryasyonID>RD24308</VaryasyonID>
         <StokKodu>FAG UCP215-J7</StokKodu>
         <Barkod>FAG UCP215-J7</Barkod>
-        <StokAdedi>119</StokAdedi>
+        <StokAdedi>110</StokAdedi>
         <SatisFiyati>4386.86</SatisFiyati>
         <IndirimliFiyat>4386.86</IndirimliFiyat>
         <IndirimliFiyatTL>4386.86</IndirimliFiyatTL>
@@ -405108,7 +406248,7 @@
         <VaryasyonID>RD332926</VaryasyonID>
         <StokKodu>INA GE17-DO-E</StokKodu>
         <Barkod>INA GE17-DO-E</Barkod>
-        <StokAdedi>4</StokAdedi>
+        <StokAdedi>0</StokAdedi>
         <SatisFiyati>560.80</SatisFiyati>
         <IndirimliFiyat>560.80</IndirimliFiyat>
         <IndirimliFiyatTL>560.80</IndirimliFiyatTL>
@@ -407761,36 +408901,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD27271</UrunKartiID>
-    <UrunAdi>GE35-DO-2TS INA Küresel Mafsal Rulmanı 35x55x25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.2</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27271</VaryasyonID>
-        <StokKodu>INA GE35-DO-2TS</StokKodu>
-        <Barkod>INA GE35-DO-2TS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1568.27</SatisFiyati>
-        <IndirimliFiyat>1568.27</IndirimliFiyat>
-        <IndirimliFiyatTL>1568.27</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1568.27</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD332931</UrunKartiID>
     <UrunAdi>GE35-DO-E INA Küresel Mafsal Rulmanı 35x55x25</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -407817,396 +408927,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1009.44</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27272</UrunKartiID>
-    <UrunAdi>GE35-FO-2RS INA Küresel Mafsal Rulmanı 35x62x35</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.41</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27272</VaryasyonID>
-        <StokKodu>INA GE35-FO-2RS</StokKodu>
-        <Barkod>INA GE35-FO-2RS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2256.00</SatisFiyati>
-        <IndirimliFiyat>2256.00</IndirimliFiyat>
-        <IndirimliFiyatTL>2256.00</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2256.00</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27273</UrunKartiID>
-    <UrunAdi>GE35-FO-2RS-HLN INA Küresel Mafsal Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27273</VaryasyonID>
-        <StokKodu>INA GE35-FO-2RS-HLN</StokKodu>
-        <Barkod>INA GE35-FO-2RS-HLN</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1904.71</SatisFiyati>
-        <IndirimliFiyat>1904.71</IndirimliFiyat>
-        <IndirimliFiyatTL>1904.71</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1904.71</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27275</UrunKartiID>
-    <UrunAdi>GE35-HO-2RS INA Küresel Mafsal Rulmanı 35x55x35</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.28</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27275</VaryasyonID>
-        <StokKodu>INA GE35-HO-2RS</StokKodu>
-        <Barkod>INA GE35-HO-2RS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2047.25</SatisFiyati>
-        <IndirimliFiyat>2047.25</IndirimliFiyat>
-        <IndirimliFiyatTL>2047.25</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2047.25</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27276</UrunKartiID>
-    <UrunAdi>GE35-SW-A INA Küresel Mafsal Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27276</VaryasyonID>
-        <StokKodu>INA GE35-SW-A</StokKodu>
-        <Barkod>INA GE35-SW-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>4431.85</SatisFiyati>
-        <IndirimliFiyat>4431.85</IndirimliFiyat>
-        <IndirimliFiyatTL>4431.85</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>4431.85</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27278</UrunKartiID>
-    <UrunAdi>GE35-UK-2TS INA Küresel Mafsal Rulmanı 35x55x25</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.2</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27278</VaryasyonID>
-        <StokKodu>INA GE35-UK-2TS</StokKodu>
-        <Barkod>INA GE35-UK-2TS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>3243.53</SatisFiyati>
-        <IndirimliFiyat>3243.53</IndirimliFiyat>
-        <IndirimliFiyatTL>3243.53</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>3243.53</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27279</UrunKartiID>
-    <UrunAdi>GE35-XL-KLL-B INA Yatak Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;YATAKLI RULMAN&gt;RULMAN YATAKLARI VE INSERT</KategoriYolu>
-    <Kategori>RULMAN YATAKLARI VE INSERT</Kategori>
-    <Desi>2.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27279</VaryasyonID>
-        <StokKodu>INA GE35-XL-KLL-B</StokKodu>
-        <Barkod>INA GE35-XL-KLL-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2638.47</SatisFiyati>
-        <IndirimliFiyat>2638.47</IndirimliFiyat>
-        <IndirimliFiyatTL>2638.47</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2638.47</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27280</UrunKartiID>
-    <UrunAdi>GE35-XL-KRR-B INA Yatak Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;YATAKLI RULMAN&gt;RULMAN YATAKLARI VE INSERT</KategoriYolu>
-    <Kategori>RULMAN YATAKLARI VE INSERT</Kategori>
-    <Desi>2.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27280</VaryasyonID>
-        <StokKodu>INA GE35-XL-KRR-B</StokKodu>
-        <Barkod>INA GE35-XL-KRR-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1993.04</SatisFiyati>
-        <IndirimliFiyat>1993.04</IndirimliFiyat>
-        <IndirimliFiyatTL>1993.04</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1993.04</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27281</UrunKartiID>
-    <UrunAdi>GE35-XL-KRRB-FA125.5 INA Yatak Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;YATAKLI RULMAN&gt;RULMAN YATAKLARI VE INSERT</KategoriYolu>
-    <Kategori>RULMAN YATAKLARI VE INSERT</Kategori>
-    <Desi>2.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27281</VaryasyonID>
-        <StokKodu>INA GE35-XL-KRRB-FA125.5</StokKodu>
-        <Barkod>INA GE35-XL-KRRB-FA125.5</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2245.80</SatisFiyati>
-        <IndirimliFiyat>2245.80</IndirimliFiyat>
-        <IndirimliFiyatTL>2245.80</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2245.80</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27282</UrunKartiID>
-    <UrunAdi>GE35-XL-KTT-B INA Yatak Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;YATAKLI RULMAN&gt;RULMAN YATAKLARI VE INSERT</KategoriYolu>
-    <Kategori>RULMAN YATAKLARI VE INSERT</Kategori>
-    <Desi>2.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27282</VaryasyonID>
-        <StokKodu>INA GE35-XL-KTT-B</StokKodu>
-        <Barkod>INA GE35-XL-KTT-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2538.54</SatisFiyati>
-        <IndirimliFiyat>2538.54</IndirimliFiyat>
-        <IndirimliFiyatTL>2538.54</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2538.54</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27283</UrunKartiID>
-    <UrunAdi>GE40-AW-A INA Küresel Mafsal Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27283</VaryasyonID>
-        <StokKodu>INA GE40-AW-A</StokKodu>
-        <Barkod>INA GE40-AW-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>13220.33</SatisFiyati>
-        <IndirimliFiyat>13220.33</IndirimliFiyat>
-        <IndirimliFiyatTL>13220.33</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>13220.33</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27284</UrunKartiID>
-    <UrunAdi>GE40-AX INA Küresel Mafsal Rulmanı 40x105x32</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>1.33</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27284</VaryasyonID>
-        <StokKodu>INA GE40-AX</StokKodu>
-        <Barkod>INA GE40-AX</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>9935.51</SatisFiyati>
-        <IndirimliFiyat>9935.51</IndirimliFiyat>
-        <IndirimliFiyatTL>9935.51</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>9935.51</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27285</UrunKartiID>
-    <UrunAdi>GE40-DO INA Küresel Mafsal Rulmanı 40x62x28</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.28</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27285</VaryasyonID>
-        <StokKodu>INA GE40-DO</StokKodu>
-        <Barkod>INA GE40-DO</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1570.24</SatisFiyati>
-        <IndirimliFiyat>1570.24</IndirimliFiyat>
-        <IndirimliFiyatTL>1570.24</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1570.24</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27286</UrunKartiID>
-    <UrunAdi>GE40-DO-2RS INA Küresel Mafsal Rulmanı 40x62x28</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.28</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27286</VaryasyonID>
-        <StokKodu>INA GE40-DO-2RS</StokKodu>
-        <Barkod>INA GE40-DO-2RS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1586.84</SatisFiyati>
-        <IndirimliFiyat>1586.84</IndirimliFiyat>
-        <IndirimliFiyatTL>1586.84</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1586.84</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -408241,36 +408961,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD27287</UrunKartiID>
-    <UrunAdi>GE40-DO-2TS INA Küresel Mafsal Rulmanı 40x62x28</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.28</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27287</VaryasyonID>
-        <StokKodu>INA GE40-DO-2TS</StokKodu>
-        <Barkod>INA GE40-DO-2TS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1871.20</SatisFiyati>
-        <IndirimliFiyat>1871.20</IndirimliFiyat>
-        <IndirimliFiyatTL>1871.20</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1871.20</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD331591</UrunKartiID>
     <UrunAdi>GE40-DO-E INA Küresel Mafsal Rulmanı 40x62x28</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -408297,156 +408987,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1627.89</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27288</UrunKartiID>
-    <UrunAdi>GE40-FO-2RS INA Küresel Mafsal Rulmanı 40x68x40</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.54</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27288</VaryasyonID>
-        <StokKodu>INA GE40-FO-2RS</StokKodu>
-        <Barkod>INA GE40-FO-2RS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2312.43</SatisFiyati>
-        <IndirimliFiyat>2312.43</IndirimliFiyat>
-        <IndirimliFiyatTL>2312.43</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2312.43</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27289</UrunKartiID>
-    <UrunAdi>GE40-FO-2RS-HLN INA Küresel Mafsal Rulmanı 40x68x40</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.54</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27289</VaryasyonID>
-        <StokKodu>INA GE40-FO-2RS-HLN</StokKodu>
-        <Barkod>INA GE40-FO-2RS-HLN</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2312.43</SatisFiyati>
-        <IndirimliFiyat>2312.43</IndirimliFiyat>
-        <IndirimliFiyatTL>2312.43</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2312.43</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27291</UrunKartiID>
-    <UrunAdi>GE40-HO-2RS INA Küresel Mafsal Rulmanı 40x62x38</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.38</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27291</VaryasyonID>
-        <StokKodu>INA GE40-HO-2RS</StokKodu>
-        <Barkod>INA GE40-HO-2RS</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2321.71</SatisFiyati>
-        <IndirimliFiyat>2321.71</IndirimliFiyat>
-        <IndirimliFiyatTL>2321.71</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2321.71</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27292</UrunKartiID>
-    <UrunAdi>GE40-LO INA Küresel Mafsal Rulmanı 40x62x40</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.4</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27292</VaryasyonID>
-        <StokKodu>INA GE40-LO</StokKodu>
-        <Barkod>INA GE40-LO</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2470.40</SatisFiyati>
-        <IndirimliFiyat>2470.40</IndirimliFiyat>
-        <IndirimliFiyatTL>2470.40</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2470.40</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27293</UrunKartiID>
-    <UrunAdi>GE40-SW-A INA Küresel Mafsal Rulmanı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;MAFSAL RULMANLARI</KategoriYolu>
-    <Kategori>MAFSAL RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27293</VaryasyonID>
-        <StokKodu>INA GE40-SW-A</StokKodu>
-        <Barkod>INA GE40-SW-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>4698.94</SatisFiyati>
-        <IndirimliFiyat>4698.94</IndirimliFiyat>
-        <IndirimliFiyatTL>4698.94</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>4698.94</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -418557,36 +419097,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>2369.16</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD27789</UrunKartiID>
-    <UrunAdi>GRA20-XL INA Flanşlı Yataklı Rulman</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;YATAKLI RULMAN&gt;YATAKLI RULMANLAR</KategoriYolu>
-    <Kategori>YATAKLI RULMANLAR</Kategori>
-    <Desi>2.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD27789</VaryasyonID>
-        <StokKodu>INA GRA20-XL</StokKodu>
-        <Barkod>INA GRA20-XL</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1633.78</SatisFiyati>
-        <IndirimliFiyat>1633.78</IndirimliFiyat>
-        <IndirimliFiyatTL>1633.78</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1633.78</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -451531,96 +452041,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD28874</UrunKartiID>
-    <UrunAdi>KRV22-X-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28874</VaryasyonID>
-        <StokKodu>INA KRV22-X-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV22-X-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2156.67</SatisFiyati>
-        <IndirimliFiyat>2156.67</IndirimliFiyat>
-        <IndirimliFiyatTL>2156.67</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2156.67</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28875</UrunKartiID>
-    <UrunAdi>KRV26-B INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28875</VaryasyonID>
-        <StokKodu>INA KRV26-B</StokKodu>
-        <Barkod>INA KRV26-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>1877.86</SatisFiyati>
-        <IndirimliFiyat>1877.86</IndirimliFiyat>
-        <IndirimliFiyatTL>1877.86</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>1877.86</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28876</UrunKartiID>
-    <UrunAdi>KRV26-B-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28876</VaryasyonID>
-        <StokKodu>INA KRV26-B-NMT</StokKodu>
-        <Barkod>INA KRV26-B-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2066.22</SatisFiyati>
-        <IndirimliFiyat>2066.22</IndirimliFiyat>
-        <IndirimliFiyatTL>2066.22</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2066.22</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD28877</UrunKartiID>
     <UrunAdi>KRV26-PP-A INA Kam Makarası (Saplamalı Tip) 10x26x36</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -451651,156 +452071,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD28878</UrunKartiID>
-    <UrunAdi>KRV26-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28878</VaryasyonID>
-        <StokKodu>INA KRV26-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV26-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2092.27</SatisFiyati>
-        <IndirimliFiyat>2092.27</IndirimliFiyat>
-        <IndirimliFiyatTL>2092.27</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2092.27</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28880</UrunKartiID>
-    <UrunAdi>KRV26-X-PP-A INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28880</VaryasyonID>
-        <StokKodu>INA KRV26-X-PP-A</StokKodu>
-        <Barkod>INA KRV26-X-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2092.27</SatisFiyati>
-        <IndirimliFiyat>2092.27</IndirimliFiyat>
-        <IndirimliFiyatTL>2092.27</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2092.27</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28881</UrunKartiID>
-    <UrunAdi>KRV26-X-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28881</VaryasyonID>
-        <StokKodu>INA KRV26-X-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV26-X-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2283.05</SatisFiyati>
-        <IndirimliFiyat>2283.05</IndirimliFiyat>
-        <IndirimliFiyatTL>2283.05</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2283.05</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28882</UrunKartiID>
-    <UrunAdi>KRV30-B INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28882</VaryasyonID>
-        <StokKodu>INA KRV30-B</StokKodu>
-        <Barkod>INA KRV30-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2106.60</SatisFiyati>
-        <IndirimliFiyat>2106.60</IndirimliFiyat>
-        <IndirimliFiyatTL>2106.60</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2106.60</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28883</UrunKartiID>
-    <UrunAdi>KRV30-B-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28883</VaryasyonID>
-        <StokKodu>INA KRV30-B-NMT</StokKodu>
-        <Barkod>INA KRV30-B-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2318.68</SatisFiyati>
-        <IndirimliFiyat>2318.68</IndirimliFiyat>
-        <IndirimliFiyatTL>2318.68</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2318.68</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD28884</UrunKartiID>
     <UrunAdi>KRV30-PP-A INA Kam Makarası (Saplamalı Tip) 12x30x40</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -451827,456 +452097,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>2439.48</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28885</UrunKartiID>
-    <UrunAdi>KRV30-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28885</VaryasyonID>
-        <StokKodu>INA KRV30-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV30-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2492.81</SatisFiyati>
-        <IndirimliFiyat>2492.81</IndirimliFiyat>
-        <IndirimliFiyatTL>2492.81</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2492.81</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28886</UrunKartiID>
-    <UrunAdi>KRV30-X-PP-A INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28886</VaryasyonID>
-        <StokKodu>INA KRV30-X-PP-A</StokKodu>
-        <Barkod>INA KRV30-X-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2492.81</SatisFiyati>
-        <IndirimliFiyat>2492.81</IndirimliFiyat>
-        <IndirimliFiyatTL>2492.81</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2492.81</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28887</UrunKartiID>
-    <UrunAdi>KRV30-X-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28887</VaryasyonID>
-        <StokKodu>INA KRV30-X-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV30-X-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2721.55</SatisFiyati>
-        <IndirimliFiyat>2721.55</IndirimliFiyat>
-        <IndirimliFiyatTL>2721.55</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2721.55</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28888</UrunKartiID>
-    <UrunAdi>KRV32-B INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28888</VaryasyonID>
-        <StokKodu>INA KRV32-B</StokKodu>
-        <Barkod>INA KRV32-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2387.93</SatisFiyati>
-        <IndirimliFiyat>2387.93</IndirimliFiyat>
-        <IndirimliFiyatTL>2387.93</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2387.93</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28889</UrunKartiID>
-    <UrunAdi>KRV32-B-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28889</VaryasyonID>
-        <StokKodu>INA KRV32-B-NMT</StokKodu>
-        <Barkod>INA KRV32-B-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2626.16</SatisFiyati>
-        <IndirimliFiyat>2626.16</IndirimliFiyat>
-        <IndirimliFiyatTL>2626.16</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2626.16</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28890</UrunKartiID>
-    <UrunAdi>KRV32-PP-A INA Kam Makarası (Saplamalı Tip) 12x32x40</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.12</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28890</VaryasyonID>
-        <StokKodu>INA KRV32-PP-A</StokKodu>
-        <Barkod>INA KRV32-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2837.33</SatisFiyati>
-        <IndirimliFiyat>2837.33</IndirimliFiyat>
-        <IndirimliFiyatTL>2837.33</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2837.33</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28891</UrunKartiID>
-    <UrunAdi>KRV32-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28891</VaryasyonID>
-        <StokKodu>INA KRV32-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV32-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2664.42</SatisFiyati>
-        <IndirimliFiyat>2664.42</IndirimliFiyat>
-        <IndirimliFiyatTL>2664.42</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2664.42</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28892</UrunKartiID>
-    <UrunAdi>KRV32-X-PP-A INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28892</VaryasyonID>
-        <StokKodu>INA KRV32-X-PP-A</StokKodu>
-        <Barkod>INA KRV32-X-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2664.42</SatisFiyati>
-        <IndirimliFiyat>2664.42</IndirimliFiyat>
-        <IndirimliFiyatTL>2664.42</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2664.42</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28893</UrunKartiID>
-    <UrunAdi>KRV32-X-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28893</VaryasyonID>
-        <StokKodu>INA KRV32-X-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV32-X-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2907.39</SatisFiyati>
-        <IndirimliFiyat>2907.39</IndirimliFiyat>
-        <IndirimliFiyatTL>2907.39</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2907.39</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28894</UrunKartiID>
-    <UrunAdi>KRV35-B INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28894</VaryasyonID>
-        <StokKodu>INA KRV35-B</StokKodu>
-        <Barkod>INA KRV35-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2654.83</SatisFiyati>
-        <IndirimliFiyat>2654.83</IndirimliFiyat>
-        <IndirimliFiyatTL>2654.83</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2654.83</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28895</UrunKartiID>
-    <UrunAdi>KRV35-B-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28895</VaryasyonID>
-        <StokKodu>INA KRV35-B-NMT</StokKodu>
-        <Barkod>INA KRV35-B-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2921.72</SatisFiyati>
-        <IndirimliFiyat>2921.72</IndirimliFiyat>
-        <IndirimliFiyatTL>2921.72</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2921.72</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28896</UrunKartiID>
-    <UrunAdi>KRV35-PP-A INA Kam Makarası (Saplamalı Tip) 16x35x52</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.17</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28896</VaryasyonID>
-        <StokKodu>INA KRV35-PP-A</StokKodu>
-        <Barkod>INA KRV35-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2873.88</SatisFiyati>
-        <IndirimliFiyat>2873.88</IndirimliFiyat>
-        <IndirimliFiyatTL>2873.88</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2873.88</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28897</UrunKartiID>
-    <UrunAdi>KRV35-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28897</VaryasyonID>
-        <StokKodu>INA KRV35-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV35-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2716.81</SatisFiyati>
-        <IndirimliFiyat>2716.81</IndirimliFiyat>
-        <IndirimliFiyatTL>2716.81</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2716.81</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28898</UrunKartiID>
-    <UrunAdi>KRV35-X-PP-A INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28898</VaryasyonID>
-        <StokKodu>INA KRV35-X-PP-A</StokKodu>
-        <Barkod>INA KRV35-X-PP-A</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2988.35</SatisFiyati>
-        <IndirimliFiyat>2988.35</IndirimliFiyat>
-        <IndirimliFiyatTL>2988.35</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2988.35</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD28899</UrunKartiID>
-    <UrunAdi>KRV35-X-PP-A-NMT INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28899</VaryasyonID>
-        <StokKodu>INA KRV35-X-PP-A-NMT</StokKodu>
-        <Barkod>INA KRV35-X-PP-A-NMT</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2988.35</SatisFiyati>
-        <IndirimliFiyat>2988.35</IndirimliFiyat>
-        <IndirimliFiyatTL>2988.35</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2988.35</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -496968,7 +496788,7 @@
         <VaryasyonID>RD49482</VaryasyonID>
         <StokKodu>INA RCSMB20/65-XL-FA106</StokKodu>
         <Barkod>INA RCSMB20/65-XL-FA106</Barkod>
-        <StokAdedi>50</StokAdedi>
+        <StokAdedi>49</StokAdedi>
         <SatisFiyati>1850.64</SatisFiyati>
         <IndirimliFiyat>1850.64</IndirimliFiyat>
         <IndirimliFiyatTL>1850.64</IndirimliFiyatTL>
@@ -506628,7 +506448,7 @@
         <VaryasyonID>RD30776</VaryasyonID>
         <StokKodu>INA RSL183005-A-XL</StokKodu>
         <Barkod>INA RSL183005-A-XL</Barkod>
-        <StokAdedi>39</StokAdedi>
+        <StokAdedi>37</StokAdedi>
         <SatisFiyati>1682.40</SatisFiyati>
         <IndirimliFiyat>1682.40</IndirimliFiyat>
         <IndirimliFiyatTL>1682.40</IndirimliFiyatTL>
@@ -551778,7 +551598,7 @@
         <VaryasyonID>RD47393</VaryasyonID>
         <StokKodu>BAN 12,5 X 1425 (W/P)</StokKodu>
         <Barkod>BAN 12,5 X 1425 (W/P)</Barkod>
-        <StokAdedi>42</StokAdedi>
+        <StokAdedi>36</StokAdedi>
         <SatisFiyati>274.38</SatisFiyati>
         <IndirimliFiyat>274.38</IndirimliFiyat>
         <IndirimliFiyatTL>274.38</IndirimliFiyatTL>
@@ -557208,7 +557028,7 @@
         <VaryasyonID>RD47501</VaryasyonID>
         <StokKodu>BAN 13 X 1675 (W/P)</StokKodu>
         <Barkod>BAN 13 X 1675 (W/P)</Barkod>
-        <StokAdedi>182</StokAdedi>
+        <StokAdedi>172</StokAdedi>
         <SatisFiyati>312.78</SatisFiyati>
         <IndirimliFiyat>312.78</IndirimliFiyat>
         <IndirimliFiyatTL>312.78</IndirimliFiyatTL>
@@ -564678,7 +564498,7 @@
         <VaryasyonID>RD47639</VaryasyonID>
         <StokKodu>BAN 17 X 1100 (W/P)</StokKodu>
         <Barkod>BAN 17 X 1100 (W/P)</Barkod>
-        <StokAdedi>89</StokAdedi>
+        <StokAdedi>85</StokAdedi>
         <SatisFiyati>280.27</SatisFiyati>
         <IndirimliFiyat>280.27</IndirimliFiyat>
         <IndirimliFiyatTL>280.27</IndirimliFiyatTL>
@@ -565758,7 +565578,7 @@
         <VaryasyonID>RD2601</VaryasyonID>
         <StokKodu>BAN 17 X 1425 (RPF)</StokKodu>
         <Barkod>BAN 17 X 1425 (RPF)</Barkod>
-        <StokAdedi>9</StokAdedi>
+        <StokAdedi>6</StokAdedi>
         <SatisFiyati>625.55</SatisFiyati>
         <IndirimliFiyat>625.55</IndirimliFiyat>
         <IndirimliFiyatTL>625.55</IndirimliFiyatTL>
@@ -565788,7 +565608,7 @@
         <VaryasyonID>RD47670</VaryasyonID>
         <StokKodu>BAN 17 X 1425 (W/P)</StokKodu>
         <Barkod>BAN 17 X 1425 (W/P)</Barkod>
-        <StokAdedi>215</StokAdedi>
+        <StokAdedi>213</StokAdedi>
         <SatisFiyati>362.95</SatisFiyati>
         <IndirimliFiyat>362.95</IndirimliFiyat>
         <IndirimliFiyatTL>362.95</IndirimliFiyatTL>
@@ -568128,7 +567948,7 @@
         <VaryasyonID>RD47711</VaryasyonID>
         <StokKodu>BAN 17 X 2250 (W/P)</StokKodu>
         <Barkod>BAN 17 X 2250 (W/P)</Barkod>
-        <StokAdedi>40</StokAdedi>
+        <StokAdedi>30</StokAdedi>
         <SatisFiyati>573.99</SatisFiyati>
         <IndirimliFiyat>573.99</IndirimliFiyat>
         <IndirimliFiyatTL>573.99</IndirimliFiyatTL>
@@ -568668,7 +568488,7 @@
         <VaryasyonID>RD47729</VaryasyonID>
         <StokKodu>BAN 17 X 2700 (W/P)</StokKodu>
         <Barkod>BAN 17 X 2700 (W/P)</Barkod>
-        <StokAdedi>215</StokAdedi>
+        <StokAdedi>195</StokAdedi>
         <SatisFiyati>688.61</SatisFiyati>
         <IndirimliFiyat>688.61</IndirimliFiyat>
         <IndirimliFiyatTL>688.61</IndirimliFiyatTL>
@@ -577548,7 +577368,7 @@
         <VaryasyonID>RD315884</VaryasyonID>
         <StokKodu>BAN 22 X 1975 (W/P)</StokKodu>
         <Barkod>BAN 22 X 1975 (W/P)</Barkod>
-        <StokAdedi>133</StokAdedi>
+        <StokAdedi>131</StokAdedi>
         <SatisFiyati>739.62</SatisFiyati>
         <IndirimliFiyat>739.62</IndirimliFiyat>
         <IndirimliFiyatTL>739.62</IndirimliFiyatTL>
@@ -578418,7 +578238,7 @@
         <VaryasyonID>RD47959</VaryasyonID>
         <StokKodu>BAN 22 X 2600 (W/P)</StokKodu>
         <Barkod>BAN 22 X 2600 (W/P)</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>18</StokAdedi>
         <SatisFiyati>973.65</SatisFiyati>
         <IndirimliFiyat>973.65</IndirimliFiyat>
         <IndirimliFiyatTL>973.65</IndirimliFiyatTL>
@@ -578478,7 +578298,7 @@
         <VaryasyonID>RD47961</VaryasyonID>
         <StokKodu>BAN 22 X 2650 (W/P)</StokKodu>
         <Barkod>BAN 22 X 2650 (W/P)</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>0</StokAdedi>
         <SatisFiyati>992.14</SatisFiyati>
         <IndirimliFiyat>992.14</IndirimliFiyat>
         <IndirimliFiyatTL>992.14</IndirimliFiyatTL>
@@ -579048,7 +578868,7 @@
         <VaryasyonID>RD47992</VaryasyonID>
         <StokKodu>BAN 22 X 3600 (W/P)</StokKodu>
         <Barkod>BAN 22 X 3600 (W/P)</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>15</StokAdedi>
         <SatisFiyati>1348.08</SatisFiyati>
         <IndirimliFiyat>1348.08</IndirimliFiyat>
         <IndirimliFiyatTL>1348.08</IndirimliFiyatTL>
@@ -579168,7 +578988,7 @@
         <VaryasyonID>RD47995</VaryasyonID>
         <StokKodu>BAN 22 X 3800 (W/P)</StokKodu>
         <Barkod>BAN 22 X 3800 (W/P)</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>15</StokAdedi>
         <SatisFiyati>1422.91</SatisFiyati>
         <IndirimliFiyat>1422.91</IndirimliFiyat>
         <IndirimliFiyatTL>1422.91</IndirimliFiyatTL>
@@ -579318,7 +579138,7 @@
         <VaryasyonID>RD48001</VaryasyonID>
         <StokKodu>BAN 22 X 4050 (W/P)</StokKodu>
         <Barkod>BAN 22 X 4050 (W/P)</Barkod>
-        <StokAdedi>20</StokAdedi>
+        <StokAdedi>12</StokAdedi>
         <SatisFiyati>1516.52</SatisFiyati>
         <IndirimliFiyat>1516.52</IndirimliFiyat>
         <IndirimliFiyatTL>1516.52</IndirimliFiyatTL>
@@ -582258,7 +582078,7 @@
         <VaryasyonID>RD48102</VaryasyonID>
         <StokKodu>BAN 22 X 9500 (W/P)</StokKodu>
         <Barkod>BAN 22 X 9500 (W/P)</Barkod>
-        <StokAdedi>84</StokAdedi>
+        <StokAdedi>64</StokAdedi>
         <SatisFiyati>2667.86</SatisFiyati>
         <IndirimliFiyat>2667.86</IndirimliFiyat>
         <IndirimliFiyatTL>2667.86</IndirimliFiyatTL>
@@ -620611,36 +620431,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD5127</UrunKartiID>
-    <UrunAdi>Bando 6 PK 1635 Kanallı V Kayışı</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>BANDO</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>KAYIŞ&gt;KANALLI V KAYIŞI</KategoriYolu>
-    <Kategori>KANALLI V KAYIŞI</Kategori>
-    <Desi>1.31</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD5127</VaryasyonID>
-        <StokKodu>BAN 6 PK 1635</StokKodu>
-        <Barkod>BAN 6 PK 1635</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>675.16</SatisFiyati>
-        <IndirimliFiyat>675.16</IndirimliFiyat>
-        <IndirimliFiyatTL>675.16</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>675.16</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD5128</UrunKartiID>
     <UrunAdi>Bando 6 PK 1640 Kanallı V Kayışı</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -647808,7 +647598,7 @@
         <VaryasyonID>RD48237</VaryasyonID>
         <StokKodu>BAN 8 X 0700 (W/P)</StokKodu>
         <Barkod>BAN 8 X 0700 (W/P)</Barkod>
-        <StokAdedi>724</StokAdedi>
+        <StokAdedi>714</StokAdedi>
         <SatisFiyati>119.39</SatisFiyati>
         <IndirimliFiyat>119.39</IndirimliFiyat>
         <IndirimliFiyatTL>119.39</IndirimliFiyatTL>
@@ -725508,7 +725298,7 @@
         <VaryasyonID>RD40361</VaryasyonID>
         <StokKodu>SUP DMK-6421-NB17-1</StokKodu>
         <Barkod>SUP DMK-6421-NB17-1</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>340</StokAdedi>
         <SatisFiyati>84.46</SatisFiyati>
         <IndirimliFiyat>84.46</IndirimliFiyat>
         <IndirimliFiyatTL>84.46</IndirimliFiyatTL>
@@ -826968,7 +826758,7 @@
         <VaryasyonID>RD45188</VaryasyonID>
         <StokKodu>SUP SDT-0121-NB02-1</StokKodu>
         <Barkod>SUP SDT-0121-NB02-1</Barkod>
-        <StokAdedi>87</StokAdedi>
+        <StokAdedi>72</StokAdedi>
         <SatisFiyati>175.61</SatisFiyati>
         <IndirimliFiyat>175.61</IndirimliFiyat>
         <IndirimliFiyatTL>175.61</IndirimliFiyatTL>
@@ -843978,7 +843768,7 @@
         <VaryasyonID>RD49704</VaryasyonID>
         <StokKodu>KOYO JM612949/10</StokKodu>
         <Barkod>KOYO JM612949/10</Barkod>
-        <StokAdedi>142</StokAdedi>
+        <StokAdedi>130</StokAdedi>
         <SatisFiyati>2271.24</SatisFiyati>
         <IndirimliFiyat>2271.24</IndirimliFiyat>
         <IndirimliFiyatTL>2271.24</IndirimliFiyatTL>
@@ -894588,7 +894378,7 @@
         <VaryasyonID>RD316201</VaryasyonID>
         <StokKodu>NTN 6004LLUC3/2AS</StokKodu>
         <Barkod>NTN 6004LLUC3/2AS</Barkod>
-        <StokAdedi>9196</StokAdedi>
+        <StokAdedi>9181</StokAdedi>
         <SatisFiyati>237.78</SatisFiyati>
         <IndirimliFiyat>237.78</IndirimliFiyat>
         <IndirimliFiyatTL>237.78</IndirimliFiyatTL>
@@ -903177,36 +902967,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>4619.03</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD326950</UrunKartiID>
-    <UrunAdi>7906UADG/GNP42 NTN Tek Sıralı Açısal Temaslı Rulman</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>NTN</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;AÇISAL TEMASLI RULMANLAR</KategoriYolu>
-    <Kategori>AÇISAL TEMASLI RULMANLAR</Kategori>
-    <Desi>0.58</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD326950</VaryasyonID>
-        <StokKodu>NTN 7906UADG/GNP42</StokKodu>
-        <Barkod>NTN 7906UADG/GNP42</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>4782.22</SatisFiyati>
-        <IndirimliFiyat>4782.22</IndirimliFiyat>
-        <IndirimliFiyatTL>4782.22</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>4782.22</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -934188,7 +933948,7 @@
         <VaryasyonID>RD46565</VaryasyonID>
         <StokKodu>WAN MG38-6</StokKodu>
         <Barkod>WAN MG38-6</Barkod>
-        <StokAdedi>282</StokAdedi>
+        <StokAdedi>182</StokAdedi>
         <SatisFiyati>2459.34</SatisFiyati>
         <IndirimliFiyat>2459.34</IndirimliFiyat>
         <IndirimliFiyatTL>2459.34</IndirimliFiyatTL>
@@ -936018,7 +935778,7 @@
         <VaryasyonID>RD332544</VaryasyonID>
         <StokKodu>WAN MG40A7-26</StokKodu>
         <Barkod>WAN MG40A7-26</Barkod>
-        <StokAdedi>135</StokAdedi>
+        <StokAdedi>131</StokAdedi>
         <SatisFiyati>2459.34</SatisFiyati>
         <IndirimliFiyat>2459.34</IndirimliFiyat>
         <IndirimliFiyatTL>2459.34</IndirimliFiyatTL>
@@ -947838,7 +947598,7 @@
         <VaryasyonID>RD8689</VaryasyonID>
         <StokKodu>BMS 012</StokKodu>
         <Barkod>BMS 012</Barkod>
-        <StokAdedi>577</StokAdedi>
+        <StokAdedi>547</StokAdedi>
         <SatisFiyati>269.18</SatisFiyati>
         <IndirimliFiyat>269.18</IndirimliFiyat>
         <IndirimliFiyatTL>269.18</IndirimliFiyatTL>
@@ -954828,7 +954588,7 @@
         <VaryasyonID>RD330712</VaryasyonID>
         <StokKodu>ASAL F-204781</StokKodu>
         <Barkod>ASAL F-204781</Barkod>
-        <StokAdedi>90</StokAdedi>
+        <StokAdedi>86</StokAdedi>
         <SatisFiyati>2270.16</SatisFiyati>
         <IndirimliFiyat>2270.16</IndirimliFiyat>
         <IndirimliFiyatTL>2270.16</IndirimliFiyatTL>
@@ -979711,6 +979471,36 @@
     </UrunSecenek>
   </Urun>
   <Urun>
+    <UrunKartiID>RD325457</UrunKartiID>
+    <UrunAdi>EM05 ZKP 80X30F 5/8 (INOX) EMES Civata Bağlantılı Frenli Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.65</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325457</VaryasyonID>
+        <StokKodu>EMS 110-52124601</StokKodu>
+        <Barkod>EMS 110-52124601</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1558.48</SatisFiyati>
+        <IndirimliFiyat>1558.48</IndirimliFiyat>
+        <IndirimliFiyatTL>1558.48</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1558.48</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
     <UrunKartiID>RD325704</UrunKartiID>
     <UrunAdi>EM05 ZKP 80X30F M16 (INOX) EMES Civata Bağlantılı Frenli Tekerlek</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -979767,6 +979557,36 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>1304.24</FiyatTL>
+      </Secenek>
+    </UrunSecenek>
+  </Urun>
+  <Urun>
+    <UrunKartiID>RD325429</UrunKartiID>
+    <UrunAdi>EM05 ZKP 100X30 5/8 (INOX) EMES Civata Bağlantılı Tekerlek</UrunAdi>
+    <MinSiparisAdedi>1</MinSiparisAdedi>
+    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
+    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
+    <UyeAlisMin>1</UyeAlisMin>
+    <BayiAlisMin>1</BayiAlisMin>
+    <Marka>EMES</Marka>
+    <Tedarikci>RULMANDUNYASI</Tedarikci>
+    <KategoriYolu>TEKERLEKLER&gt;HAFİF SANAYİ TİPİ TEKERLEKLER</KategoriYolu>
+    <Kategori>HAFİF SANAYİ TİPİ TEKERLEKLER</Kategori>
+    <Desi>0.9</Desi>
+    <UrunSecenek>
+      <Secenek>
+        <VaryasyonID>RD325429</VaryasyonID>
+        <StokKodu>EMS 110-52125302</StokKodu>
+        <Barkod>EMS 110-52125302</Barkod>
+        <StokAdedi>0</StokAdedi>
+        <SatisFiyati>1314.88</SatisFiyati>
+        <IndirimliFiyat>1314.88</IndirimliFiyat>
+        <IndirimliFiyatTL>1314.88</IndirimliFiyatTL>
+        <KDVDahil>false</KDVDahil>
+        <KdvOrani>20</KdvOrani>
+        <ParaBirimi>TL</ParaBirimi>
+        <ParaBirimiKodu>TRY</ParaBirimiKodu>
+        <FiyatTL>1314.88</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -1041181,36 +1041001,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD28879</UrunKartiID>
-    <UrunAdi>KRV26-X-B INA Kam Makarası (Saplamalı Tip)</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>INA</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;KAM MAKARALARI VE RULMANLARI</KategoriYolu>
-    <Kategori>KAM MAKARALARI VE RULMANLARI</Kategori>
-    <Desi>0.46</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD28879</VaryasyonID>
-        <StokKodu>INA KRV26-X-B</StokKodu>
-        <Barkod>INA KRV26-X-B</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2066.22</SatisFiyati>
-        <IndirimliFiyat>2066.22</IndirimliFiyat>
-        <IndirimliFiyatTL>2066.22</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2066.22</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD29170</UrunKartiID>
     <UrunAdi>LR6002-2RS-HLC INA Kam Makarası</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -1044828,7 +1044618,7 @@
         <VaryasyonID>RD40041</VaryasyonID>
         <StokKodu>SUP DMK-6169-FK01-1</StokKodu>
         <Barkod>SUP DMK-6169-FK01-1</Barkod>
-        <StokAdedi>0</StokAdedi>
+        <StokAdedi>30</StokAdedi>
         <SatisFiyati>176.84</SatisFiyati>
         <IndirimliFiyat>176.84</IndirimliFiyat>
         <IndirimliFiyatTL>176.84</IndirimliFiyatTL>
@@ -1050198,7 +1049988,7 @@
         <VaryasyonID>RD40821</VaryasyonID>
         <StokKodu>SUP DMK-6776-FK01-1</StokKodu>
         <Barkod>SUP DMK-6776-FK01-1</Barkod>
-        <StokAdedi>30</StokAdedi>
+        <StokAdedi>15</StokAdedi>
         <SatisFiyati>955.34</SatisFiyati>
         <IndirimliFiyat>955.34</IndirimliFiyat>
         <IndirimliFiyatTL>955.34</IndirimliFiyatTL>
@@ -1082268,7 +1082058,7 @@
         <VaryasyonID>RD32454</VaryasyonID>
         <StokKodu>KOYO 6302 2RSC3</StokKodu>
         <Barkod>KOYO 6302 2RSC3</Barkod>
-        <StokAdedi>828</StokAdedi>
+        <StokAdedi>818</StokAdedi>
         <SatisFiyati>173.84</SatisFiyati>
         <IndirimliFiyat>173.84</IndirimliFiyat>
         <IndirimliFiyatTL>173.84</IndirimliFiyatTL>
@@ -1122858,7 +1122648,7 @@
         <VaryasyonID>RD339184</VaryasyonID>
         <StokKodu>NSK 6004ZZC3</StokKodu>
         <Barkod>NSK 6004ZZC3</Barkod>
-        <StokAdedi>1171</StokAdedi>
+        <StokAdedi>1151</StokAdedi>
         <SatisFiyati>229.93</SatisFiyati>
         <IndirimliFiyat>229.93</IndirimliFiyat>
         <IndirimliFiyatTL>229.93</IndirimliFiyatTL>
@@ -1123068,7 +1122858,7 @@
         <VaryasyonID>RD339262</VaryasyonID>
         <StokKodu>NSK 6007DDUC3</StokKodu>
         <Barkod>NSK 6007DDUC3</Barkod>
-        <StokAdedi>1582</StokAdedi>
+        <StokAdedi>1570</StokAdedi>
         <SatisFiyati>398.17</SatisFiyati>
         <IndirimliFiyat>398.17</IndirimliFiyat>
         <IndirimliFiyatTL>398.17</IndirimliFiyatTL>
@@ -1123278,7 +1123068,7 @@
         <VaryasyonID>RD340341</VaryasyonID>
         <StokKodu>NSK 6201ZZC3</StokKodu>
         <Barkod>NSK 6201ZZC3</Barkod>
-        <StokAdedi>2185</StokAdedi>
+        <StokAdedi>2165</StokAdedi>
         <SatisFiyati>162.63</SatisFiyati>
         <IndirimliFiyat>162.63</IndirimliFiyat>
         <IndirimliFiyatTL>162.63</IndirimliFiyatTL>
@@ -1123398,7 +1123188,7 @@
         <VaryasyonID>RD339182</VaryasyonID>
         <StokKodu>NSK 6203DDUC3</StokKodu>
         <Barkod>NSK 6203DDUC3</Barkod>
-        <StokAdedi>2705</StokAdedi>
+        <StokAdedi>2665</StokAdedi>
         <SatisFiyati>218.71</SatisFiyati>
         <IndirimliFiyat>218.71</IndirimliFiyat>
         <IndirimliFiyatTL>218.71</IndirimliFiyatTL>
@@ -1126968,7 +1126758,7 @@
         <VaryasyonID>RD337998</VaryasyonID>
         <StokKodu>JOTON 6304ZZ 280°</StokKodu>
         <Barkod>JOTON 6304ZZ 280°</Barkod>
-        <StokAdedi>2114</StokAdedi>
+        <StokAdedi>2086</StokAdedi>
         <SatisFiyati>650.62</SatisFiyati>
         <IndirimliFiyat>650.62</IndirimliFiyat>
         <IndirimliFiyatTL>650.62</IndirimliFiyatTL>
@@ -1127058,7 +1126848,7 @@
         <VaryasyonID>RD338001</VaryasyonID>
         <StokKodu>JOTON 6307ZZ 280°</StokKodu>
         <Barkod>JOTON 6307ZZ 280°</Barkod>
-        <StokAdedi>328</StokAdedi>
+        <StokAdedi>320</StokAdedi>
         <SatisFiyati>800.76</SatisFiyati>
         <IndirimliFiyat>800.76</IndirimliFiyat>
         <IndirimliFiyatTL>800.76</IndirimliFiyatTL>
@@ -1174531,36 +1174321,6 @@
     </UrunSecenek>
   </Urun>
   <Urun>
-    <UrunKartiID>RD326949</UrunKartiID>
-    <UrunAdi>6207L1C3(M) NTN Sabit Bilyalı Rulman 35x72x17</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>NTN</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;SABİT BİLYALI RULMANLAR&gt;TEK SIRALI SABİT BİLYALI RULMANLAR</KategoriYolu>
-    <Kategori>TEK SIRALI SABİT BİLYALI RULMANLAR</Kategori>
-    <Desi>0.29</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD326949</VaryasyonID>
-        <StokKodu>NTN 6207L1C3(M)</StokKodu>
-        <Barkod>NTN 6207L1C3(M)</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>2523.60</SatisFiyati>
-        <IndirimliFiyat>2523.60</IndirimliFiyat>
-        <IndirimliFiyatTL>2523.60</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>2523.60</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
     <UrunKartiID>RD336009</UrunKartiID>
     <UrunAdi>6208L1C3(M) NTN Sabit Bilyalı Rulman 40x80x18</UrunAdi>
     <MinSiparisAdedi>1</MinSiparisAdedi>
@@ -1174617,36 +1174377,6 @@
         <ParaBirimi>TL</ParaBirimi>
         <ParaBirimiKodu>TRY</ParaBirimiKodu>
         <FiyatTL>3575.10</FiyatTL>
-      </Secenek>
-    </UrunSecenek>
-  </Urun>
-  <Urun>
-    <UrunKartiID>RD326946</UrunKartiID>
-    <UrunAdi>6210L1C3(M) NTN Sabit Bilyalı Rulman 50x90x20</UrunAdi>
-    <MinSiparisAdedi>1</MinSiparisAdedi>
-    <UrunAdediMinimumDeger>1</UrunAdediMinimumDeger>
-    <UrunAdediVarsayilanDeger>1</UrunAdediVarsayilanDeger>
-    <UyeAlisMin>1</UyeAlisMin>
-    <BayiAlisMin>1</BayiAlisMin>
-    <Marka>NTN</Marka>
-    <Tedarikci>RULMANDUNYASI</Tedarikci>
-    <KategoriYolu>RULMAN&gt;SABİT BİLYALI RULMANLAR&gt;TEK SIRALI SABİT BİLYALI RULMANLAR</KategoriYolu>
-    <Kategori>TEK SIRALI SABİT BİLYALI RULMANLAR</Kategori>
-    <Desi>0.48</Desi>
-    <UrunSecenek>
-      <Secenek>
-        <VaryasyonID>RD326946</VaryasyonID>
-        <StokKodu>NTN 6210L1C3(M)</StokKodu>
-        <Barkod>NTN 6210L1C3(M)</Barkod>
-        <StokAdedi>0</StokAdedi>
-        <SatisFiyati>3364.80</SatisFiyati>
-        <IndirimliFiyat>3364.80</IndirimliFiyat>
-        <IndirimliFiyatTL>3364.80</IndirimliFiyatTL>
-        <KDVDahil>false</KDVDahil>
-        <KdvOrani>20</KdvOrani>
-        <ParaBirimi>TL</ParaBirimi>
-        <ParaBirimiKodu>TRY</ParaBirimiKodu>
-        <FiyatTL>3364.80</FiyatTL>
       </Secenek>
     </UrunSecenek>
   </Urun>
@@ -1212258,7 +1211988,7 @@
         <VaryasyonID>RD9959</VaryasyonID>
         <StokKodu>BMS MB11</StokKodu>
         <Barkod>BMS MB11</Barkod>
-        <StokAdedi>6</StokAdedi>
+        <StokAdedi>2</StokAdedi>
         <SatisFiyati>38.00</SatisFiyati>
         <IndirimliFiyat>38.00</IndirimliFiyat>
         <IndirimliFiyatTL>38.00</IndirimliFiyatTL>
@@ -1214178,7 +1213908,7 @@
         <VaryasyonID>RD8732</VaryasyonID>
         <StokKodu>BMS 054</StokKodu>
         <Barkod>BMS 054</Barkod>
-        <StokAdedi>177</StokAdedi>
+        <StokAdedi>157</StokAdedi>
         <SatisFiyati>619.12</SatisFiyati>
         <IndirimliFiyat>619.12</IndirimliFiyat>
         <IndirimliFiyatTL>619.12</IndirimliFiyatTL>
@@ -1221768,7 +1221498,7 @@
         <VaryasyonID>RD9040</VaryasyonID>
         <StokKodu>BMS 349</StokKodu>
         <Barkod>BMS 349</Barkod>
-        <StokAdedi>400</StokAdedi>
+        <StokAdedi>390</StokAdedi>
         <SatisFiyati>592.20</SatisFiyati>
         <IndirimliFiyat>592.20</IndirimliFiyat>
         <IndirimliFiyatTL>592.20</IndirimliFiyatTL>
@@ -1231248,7 +1230978,7 @@
         <VaryasyonID>RD340577</VaryasyonID>
         <StokKodu>BMS+ 32906</StokKodu>
         <Barkod>BMS+ 32906</Barkod>
-        <StokAdedi>458</StokAdedi>
+        <StokAdedi>452</StokAdedi>
         <SatisFiyati>315.30</SatisFiyati>
         <IndirimliFiyat>315.30</IndirimliFiyat>
         <IndirimliFiyatTL>315.30</IndirimliFiyatTL>
@@ -1233348,7 +1233078,7 @@
         <VaryasyonID>RD336567</VaryasyonID>
         <StokKodu>BMS+ GE16ES2RS(27MM)</StokKodu>
         <Barkod>BMS+ GE16ES2RS(27MM)</Barkod>
-        <StokAdedi>728</StokAdedi>
+        <StokAdedi>722</StokAdedi>
         <SatisFiyati>200.19</SatisFiyati>
         <IndirimliFiyat>200.19</IndirimliFiyat>
         <IndirimliFiyatTL>200.19</IndirimliFiyatTL>
@@ -1233378,7 +1233108,7 @@
         <VaryasyonID>RD336568</VaryasyonID>
         <StokKodu>BMS+ GE16ES2RS(30MM)</StokKodu>
         <Barkod>BMS+ GE16ES2RS(30MM)</Barkod>
-        <StokAdedi>833</StokAdedi>
+        <StokAdedi>827</StokAdedi>
         <SatisFiyati>220.21</SatisFiyati>
         <IndirimliFiyat>220.21</IndirimliFiyat>
         <IndirimliFiyatTL>220.21</IndirimliFiyatTL>
@@ -1256508,7 +1256238,7 @@
         <VaryasyonID>RD332772</VaryasyonID>
         <StokKodu>GRADIN 8 X 0450 (W/P)</StokKodu>
         <Barkod>GRADIN 8 X 0450 (W/P)</Barkod>
-        <StokAdedi>548</StokAdedi>
+        <StokAdedi>538</StokAdedi>
         <SatisFiyati>95.09</SatisFiyati>
         <IndirimliFiyat>95.09</IndirimliFiyat>
         <IndirimliFiyatTL>95.09</IndirimliFiyatTL>
@@ -1265628,7 +1265358,7 @@
         <VaryasyonID>RD37246</VaryasyonID>
         <StokKodu>SLS AS 5578</StokKodu>
         <Barkod>SLS AS 5578</Barkod>
-        <StokAdedi>1428</StokAdedi>
+        <StokAdedi>1378</StokAdedi>
         <SatisFiyati>37.84</SatisFiyati>
         <IndirimliFiyat>37.84</IndirimliFiyat>
         <IndirimliFiyatTL>37.84</IndirimliFiyatTL>
