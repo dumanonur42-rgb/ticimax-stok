@@ -23,15 +23,45 @@ CANLI = {"adimlar": {"madte": {"ad": "Madte", "durum": "bekliyor", "yuzde": 0, "
          "bitti": False, "ozet": "", "pid": os.getpid()}
 
 
-def ekran(adim=None, **k):
-    """Bilgi ekraninin okudugu canli durum dosyasini yazar."""
+class Iptal(Exception):
+    pass
+
+
+IPTAL = {"istendi": False, "tarayici": None}
+
+
+def iptal_bak():
+    if not IPTAL["istendi"] and os.path.exists(os.path.join(ANA, "iptal.istek")):
+        IPTAL["istendi"] = True; log("kullanici iptal etti")
+    return IPTAL["istendi"]
+
+
+def iptal_izle():
+    """Iptal istenirse arka plandaki tarayiciyi kapatir; o anki cekim yarida kesilir, hicbir sey yayinlanmaz."""
+    import threading
+
+    def dongu():
+        while not iptal_bak(): time.sleep(2)
+        CANLI["iptal"] = True; ekran(kontrol=False)
+        t = IPTAL["tarayici"]
+        if t:
+            try: t.kapat()
+            except Exception: pass  # noqa: BLE001
+    threading.Thread(target=dongu, daemon=True).start()
+
+
+def ekran(adim=None, kontrol=True, **k):
+    """Bilgi ekraninin okudugu canli durum dosyasini yazar. Iptal istendiyse yayindan once durdurur."""
+    if kontrol and adim and iptal_bak(): raise Iptal()
     if adim: CANLI["adimlar"][adim].update(k)
     else: CANLI.update(k)
     CANLI["zaman"] = time.time()
     try:
         y = os.path.join(ANA, "canli.json")
         with open(y + ".tmp", "w", encoding="utf-8") as f: json.dump(CANLI, f, ensure_ascii=False)
-        os.replace(y + ".tmp", y)
+        for _ in range(5):
+            try: os.replace(y + ".tmp", y); break
+            except PermissionError: time.sleep(0.2)
     except OSError:
         pass
 
@@ -497,7 +527,7 @@ $yesil = [Drawing.Color]::FromArgb(22, 135, 76); $kirmizi = [Drawing.Color]::Fro
 $sari = [Drawing.Color]::FromArgb(196, 128, 0); $mavi = [Drawing.Color]::FromArgb(25, 103, 210)
 function F($b, $s) { New-Object Drawing.Font('Segoe UI', [single]$b, [Drawing.FontStyle]$s) }
 $f = New-Object Windows.Forms.Form
-$f.Text = 'Yamansa Senkron'; $f.ClientSize = New-Object Drawing.Size(560, 430); $f.BackColor = [Drawing.Color]::White
+$f.Text = 'Yamansa Senkron'; $f.ClientSize = New-Object Drawing.Size(560, 470); $f.BackColor = [Drawing.Color]::White
 $f.StartPosition = 'CenterScreen'; $f.FormBorderStyle = 'FixedSingle'; $f.MaximizeBox = $false; $f.Font = F 10 'Regular'
 $ust = New-Object Windows.Forms.Panel; $ust.SetBounds(0, 0, 560, 74); $ust.BackColor = $lacivert; $f.Controls.Add($ust)
 $b1 = New-Object Windows.Forms.Label; $b1.Text = 'Yamansa Senkron'; $b1.ForeColor = [Drawing.Color]::White
@@ -506,8 +536,8 @@ $b2 = New-Object Windows.Forms.Label; $b2.Text = 'Madte ve Rulman Dünyası fiya
 $b2.ForeColor = [Drawing.Color]::FromArgb(190, 205, 222); $b2.SetBounds(22, 44, 420, 20); $ust.Controls.Add($b2)
 $sure = New-Object Windows.Forms.Label; $sure.ForeColor = [Drawing.Color]::FromArgb(190, 205, 222)
 $sure.TextAlign = 'MiddleRight'; $sure.SetBounds(400, 44, 140, 20); $ust.Controls.Add($sure)
-$genel = New-Object Windows.Forms.Label; $genel.Font = F 11 'Bold'; $genel.SetBounds(20, 86, 520, 24); $f.Controls.Add($genel)
-$satir = @{}; $y = 120
+$genel = New-Object Windows.Forms.Label; $genel.Font = F 11 'Bold'; $genel.SetBounds(20, 84, 520, 44); $f.Controls.Add($genel)
+$satir = @{}; $y = 134
 foreach ($a in 'madte', 'rd') {
   $ad = New-Object Windows.Forms.Label; $ad.Font = F 11 'Bold'; $ad.ForeColor = $lacivert; $ad.SetBounds(20, $y, 300, 22)
   $dr = New-Object Windows.Forms.Label; $dr.Font = F 10 'Bold'; $dr.TextAlign = 'MiddleRight'; $dr.SetBounds(300, $y, 240, 22)
@@ -515,16 +545,23 @@ foreach ($a in 'madte', 'rd') {
   $mt = New-Object Windows.Forms.Label; $mt.ForeColor = $gri; $mt.SetBounds(20, ($y + 48), 520, 40)
   $f.Controls.AddRange(@($ad, $dr, $pb, $mt)); $satir[$a] = @($ad, $dr, $pb, $mt); $y += 100
 }
-$oz = New-Object Windows.Forms.Label; $oz.SetBounds(20, 322, 520, 56); $oz.ForeColor = $lacivert; $f.Controls.Add($oz)
-$not = New-Object Windows.Forms.Label; $not.ForeColor = $gri; $not.Font = F 8.5 'Regular'; $not.SetBounds(20, 392, 400, 30)
+$oz = New-Object Windows.Forms.Label; $oz.SetBounds(20, 336, 520, 76); $oz.ForeColor = $lacivert; $f.Controls.Add($oz)
+$not = New-Object Windows.Forms.Label; $not.ForeColor = $gri; $not.Font = F 8.5 'Regular'; $not.SetBounds(20, 428, 300, 34)
 $not.Text = 'Pencereyi kapatsanız da güncelleme arka planda devam eder.'; $f.Controls.Add($not)
-$k = New-Object Windows.Forms.Button; $k.Text = 'Kapat'; $k.SetBounds(440, 388, 100, 30); $k.FlatStyle = 'Flat'
+$k = New-Object Windows.Forms.Button; $k.Text = 'Kapat'; $k.SetBounds(440, 428, 100, 30); $k.FlatStyle = 'Flat'
 $k.BackColor = $lacivert; $k.ForeColor = [Drawing.Color]::White; $k.Add_Click({ $f.Close() }); $f.Controls.Add($k)
+$ip = New-Object Windows.Forms.Button; $ip.Text = 'İptal Et'; $ip.SetBounds(330, 428, 100, 30); $ip.FlatStyle = 'Flat'
+$ip.ForeColor = $kirmizi; $ip.Add_Click({
+  $c = [Windows.Forms.MessageBox]::Show('Güncelleme iptal edilsin mi?' + [Environment]::NewLine + 'Siteye yarım veri gönderilmez, eski fiyatlar korunur.', 'Yamansa Senkron', 'YesNo', 'Question')
+  if ($c -eq 'Yes') { Set-Content -LiteralPath (Join-Path (Split-Path $dosya) 'iptal.istek') -Value '1'; $ip.Enabled = $false; $ip.Text = 'İptal ediliyor' }
+}); $f.Controls.Add($ip)
+$script:olu = 0
 $etiket = @{ bekliyor = @('Sırada', $gri, 1); calisiyor = @('Çalışıyor', $mavi, 1); tamam = @('✔ Tamamlandı', $yesil, 1);
-  hata = @('✖ Hata', $kirmizi, 2); cerez = @('● Sizi bekliyor', $sari, 3); atlandi = @('Atlandı', $gri, 1) }
+  hata = @('✖ Hata', $kirmizi, 2); iptal = @('İptal edildi', $sari, 3); cerez = @('● Sizi bekliyor', $sari, 3); atlandi = @('Atlandı', $gri, 1) }
 $t = New-Object Windows.Forms.Timer; $t.Interval = 1000
 $t.Add_Tick({
-  try { $d = Get-Content -Raw -Encoding UTF8 $dosya | ConvertFrom-Json } catch { return }
+  try { $d = Get-Content -LiteralPath $dosya -Raw -Encoding UTF8 -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop } catch { $d = $null }
+  if (-not $d -or -not $d.adimlar) { $genel.Text = '● Başlatılıyor…'; $genel.ForeColor = $mavi; return }
   $simdi = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
   if ($d.baslangic) { $sn = [int]($simdi - $d.baslangic); $sure.Text = 'Süre: {0}:{1:00}' -f [int][math]::Floor($sn / 60), ($sn % 60) }
   $hataVar = $false; $bekle = $false
@@ -536,15 +573,17 @@ $t.Add_Tick({
     [YS.W]::SendMessage($s[2].Handle, 0x410, [IntPtr]$e[2], [IntPtr]::Zero) | Out-Null
     if ($x.durum -eq 'hata') { $hataVar = $true }; if ($x.durum -eq 'cerez') { $bekle = $true }
   }
-  $canli = $null -ne (Get-Process -Id $d.pid -ErrorAction SilentlyContinue)
+  if (Get-Process -Id $d.pid -ErrorAction SilentlyContinue) { $script:olu = 0 } else { $script:olu++ }
+  $canli = $script:olu -lt 4
   if ($d.bitti) {
-    $t.Stop(); $oz.Text = $d.ozet
+    $t.Stop(); $oz.Text = $d.ozet; $ip.Visible = $false
     if ($hataVar) { $genel.Text = '✖ Bitti ama hata var. Hatalı kısımda eski fiyatlar korundu.'; $genel.ForeColor = $kirmizi }
     else { $genel.Text = '✔ Güncelleme bitti'; $genel.ForeColor = $yesil }
     $not.Text = 'Bitti. Pencereyi kapatabilirsiniz.'; $f.Activate()
   } elseif (-not $canli) {
+    $t.Stop(); $ip.Visible = $false
     $genel.Text = '✖ Program beklenmedik şekilde kapandı. Siteye yarım veri gitmedi, tekrar deneyin.'; $genel.ForeColor = $kirmizi
-  } elseif ($bekle) { $genel.Text = '● Rulman Dünyası çerezi bekleniyor'; $genel.ForeColor = $sari }
+  } elseif ($d.iptal) { $genel.Text = '● İptal ediliyor, birkaç saniye sürer…'; $genel.ForeColor = $sari } elseif ($bekle) { $genel.Text = '● Rulman Dünyası çerezi bekleniyor'; $genel.ForeColor = $sari }
   elseif ($simdi - $d.zaman -gt 900) {
     $genel.Text = '● 15 dakikadır ilerleme yok, bağlantı yavaş olabilir. Bekleyin.'; $genel.ForeColor = $sari
   } else { $genel.Text = '● Çalışıyor, ürünler çekiliyor…'; $genel.ForeColor = $mavi }
@@ -634,6 +673,7 @@ def rd_cerezle(s):
     mesaj = ("Madte guncellendi. Simdi Rulman Dunyasi icin cerezi buraya yapistirip Guncelle'ye basin.\n"
              "Vazgec derseniz RD fiyatlari bugun degismez.")
     for _ in range(3):
+        if iptal_bak(): raise Iptal()
         ekran("rd", durum="cerez", metin="Rulman Dünyası çerezi bekleniyor. Açılan pencereye yapıştırın.")
         metin = ps_calistir(PS_KUTU, mesaj)
         if not metin:
@@ -662,23 +702,27 @@ def adim_metin(ad, d):
             f" · stoğu değişen {sayi(d.get('stok', 0))} · min adedi değişen {sayi(d.get('min', 0))}"
         k = d.get("kayip", 0) + d.get("fiyatsiz", 0)
         return m + (f" · {sayi(k)} ürün eski hâliyle korundu" if k else "")
+    if d.get("durum") == "iptal":
+        return "İptal edildi. Siteye bir şey gönderilmedi, eski fiyatlar korundu."
     if d.get("durum") == "giris_gerekli":
         return "Giriş yapılamadı, fiyatlar değişmedi." + (" Madte uygulamasını bir kez açın." if ad == "madte" else "")
     return f"Hata: {d.get('hata', '')[:150]} · Eski fiyatlar korundu, siteye bir şey gitmedi."
 
 
 def adim_ekran(ad, d):
-    ekran(ad, durum="tamam" if d.get("durum") == "tamam" else "hata",
+    ekran(ad, kontrol=False, durum=d.get("durum") if d.get("durum") in ("tamam", "iptal") else "hata",
           yuzde=100 if d.get("durum") == "tamam" else CANLI["adimlar"][ad]["yuzde"], metin=adim_metin(ad, d))
 
 
 def calis(elle=False):
     durum = {"zaman": datetime.datetime.now().isoformat(timespec="seconds"), "elle": elle}
-    t, s = tarayici_ac()
+    t, s = tarayici_ac(); IPTAL["tarayici"] = t
     try:
         for ad, f in (("madte", madte_adim), ("rd", rd_adim)):
             if "--sadece-rd" in sys.argv and ad == "madte":
-                ekran(ad, durum="atlandi", metin="Bu sefer çalıştırılmadı"); continue
+                ekran(ad, kontrol=False, durum="atlandi", metin="Bu sefer çalıştırılmadı"); continue
+            if iptal_bak():
+                durum[ad] = {"durum": "iptal"}; adim_ekran(ad, durum[ad]); continue
             ekran(ad, durum="calisiyor", yuzde=0, metin="Giriş yapılıyor…")
             try:
                 try:
@@ -686,12 +730,15 @@ def calis(elle=False):
                 except GirisYok:
                     if not (elle and ad == "rd"): raise
                     durum[ad] = rd_cerezle(s)
+            except Iptal:
+                durum[ad] = {"durum": "iptal"}
             except GirisYok as e:
                 durum[ad] = {"durum": "giris_gerekli", "hata": str(e)}; log(e)
             except Exception as e:  # noqa: BLE001
-                durum[ad] = {"durum": "hata", "hata": str(e)[:300]}; log(traceback.format_exc())
+                durum[ad] = {"durum": "iptal"} if iptal_bak() else {"durum": "hata", "hata": str(e)[:300]}
+                log(traceback.format_exc())
             adim_ekran(ad, durum[ad])
-            cerez_kaydet(s)
+            if not iptal_bak(): cerez_kaydet(s)
     finally:
         t.kapat()
     return durum
@@ -700,7 +747,7 @@ def calis(elle=False):
 def ozet(durum):
     d = {a: (durum.get(a) or {}) for a in ("madte", "rd")}
     sat = [f"{isim}: {adim_metin(ad, d[ad])}" for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dünyası")) if d[ad]]
-    if sat and all(x.get("durum") in ("tamam", None) for x in d.values()):
+    if sat and all(x.get("durum") in ("tamam", None) for x in d.values()) and any(d.values()):
         sat.append("Ticimax bir sonraki okumada (10 saatte bir) siteye geçirir.")
     return "\n".join(sat)
 
@@ -775,9 +822,19 @@ def main():
     k = kilit()
     if not k:
         log("zaten calisiyor")
-        if elle: ekran_ac()
+        if elle:
+            try:
+                with open(os.path.join(ANA, "canli.json"), encoding="utf-8") as f: cp = json.load(f).get("pid")
+                kp = int(open(os.path.join(ANA, "calisiyor.lock")).read().strip() or 0)
+            except (OSError, ValueError):
+                cp, kp = None, -1
+            if cp == kp: ekran_ac()
+            else: ps_calistir(PS_BILGI, "Güncelleme zaten çalışıyor. Yeniden başlatılmadı, bitince fiyatlar kendiliğinden güncellenir.")
         return
+    try: os.remove(os.path.join(ANA, "iptal.istek"))
+    except OSError: pass
     ekran(bitti=False, ozet="", baslangic=time.time())
+    iptal_izle()
     if elle: ekran_ac()
     if os.name == "nt":  # calisma bitene kadar PC uykuya gecmesin
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000001)
@@ -793,7 +850,7 @@ def main():
     except Exception as e:  # noqa: BLE001
         log(traceback.format_exc()); durum["hata"] = str(e)[:200]
     finally:
-        ekran(bitti=True, ozet=ozet(durum) or ("Hata: " + durum.get("hata", "bilinmeyen")))
+        ekran(kontrol=False, bitti=True, ozet=ozet(durum) or ("Hata: " + durum.get("hata", "bilinmeyen")))
         os.remove(k)
         if elle and not EKRAN_ACIK:
             ps_calistir(PS_BILGI, ozet(durum))
