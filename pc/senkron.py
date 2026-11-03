@@ -359,11 +359,31 @@ class GirisYok(Exception):
 
 
 # ---------- ana akis ----------
+def kilit_canli(p):
+    """Kilidi birakan program hala calisiyor mu (yarida kapanan calismadan kalan kilidi temizlemek icin)."""
+    try:
+        pid = int(open(p).read().strip() or 0)
+    except (OSError, ValueError):
+        return False
+    if not pid: return False
+    if os.name != "nt":
+        try: os.kill(pid, 0); return True
+        except OSError: return False
+    import ctypes
+    k = ctypes.windll.kernel32
+    h = k.OpenProcess(0x1000, False, pid)
+    if not h: return False
+    kod = ctypes.c_ulong(); k.GetExitCodeProcess(h, ctypes.byref(kod)); k.CloseHandle(h)
+    return kod.value == 259
+
+
 def kilit():
     p = os.path.join(ANA, "calisiyor.lock")
     try:
-        if os.path.exists(p) and time.time() - os.path.getmtime(p) > 4 * 3600: os.remove(p)
-        fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY); os.close(fd); return p
+        if os.path.exists(p) and (time.time() - os.path.getmtime(p) > 4 * 3600 or not kilit_canli(p)):
+            os.remove(p)
+        fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY); os.write(fd, str(os.getpid()).encode()); os.close(fd)
+        return p
     except FileExistsError:
         return None
 
