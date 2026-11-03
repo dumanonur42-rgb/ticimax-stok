@@ -18,6 +18,46 @@ MADTE_KOK = ['22', '25', '28', '34', '141', '329', '343', '368', '385', '420', '
              '567', '599', '650', '652', '762']
 ESIK = 0.90
 LOG = []
+CANLI = {"adimlar": {"madte": {"ad": "Madte", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"},
+                     "rd": {"ad": "Rulman Dünyası", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"}},
+         "bitti": False, "ozet": "", "pid": os.getpid()}
+
+
+def ekran(adim=None, **k):
+    """Bilgi ekraninin okudugu canli durum dosyasini yazar."""
+    if adim: CANLI["adimlar"][adim].update(k)
+    else: CANLI.update(k)
+    CANLI["zaman"] = time.time()
+    try:
+        y = os.path.join(ANA, "canli.json")
+        with open(y + ".tmp", "w", encoding="utf-8") as f: json.dump(CANLI, f, ensure_ascii=False)
+        os.replace(y + ".tmp", y)
+    except OSError:
+        pass
+
+
+def sayi(n):
+    return f"{int(n):,}".replace(",", ".")
+
+
+def onceki(ad, varsayilan):
+    try:
+        with open(os.path.join(ANA, "onceki.json")) as f: return json.load(f).get(ad) or varsayilan
+    except (OSError, ValueError):
+        return varsayilan
+
+
+def onceki_yaz(ad, deger):
+    y = os.path.join(ANA, "onceki.json")
+    try:
+        with open(y) as f: d = json.load(f)
+    except (OSError, ValueError):
+        d = {}
+    d[ad] = deger
+    try:
+        with open(y, "w") as f: json.dump(d, f)
+    except OSError:
+        pass
 
 
 def log(*a):
@@ -162,13 +202,20 @@ def rd_cek(s):
     if not isinstance(m, list) or len(m) < 2:
         raise GirisYok("Rulman Dunyasi girisi yok")
     urunler = {}
-    for x in m[1:]:
+    toplam = sum(int(x.get("RecordCount") or 0) for x in m[1:]) or onceki("rd_toplam", 54000); n = 0
+    ekran("rd", durum="calisiyor", yuzde=1, metin=f"Giriş tamam. Toplam {sayi(toplam)} ürün çekilecek.")
+    for i, x in enumerate(m[1:], 1):
+        ekran("rd", metin=f"{sayi(n)} / {sayi(toplam)} ürün çekildi · şimdi: {x['Name']} ({i}/{len(m) - 1} marka)")
         r = s.js(RD_JS % json.dumps(dict(RD_ARAMA, manufacturer=x["Name"])), 1800)
         if not r or r.get("hata"):
-            raise RuntimeError(f"RD {x['Name']} cekilemedi")
+            raise RuntimeError(f"RD {x['Name']} markasi cekilemedi (baglanti koptu)")
         for u in r["urunler"]:
             urunler[str(u[0])] = u
+        n += r["n"]
+        ekran("rd", yuzde=min(90, int(90 * n / max(toplam, 1))),
+              metin=f"{sayi(n)} / {sayi(toplam)} ürün çekildi · son: {x['Name']}")
         log("RD", x["Name"], x.get("RecordCount"), r["n"])
+    onceki_yaz("rd_toplam", n)
     return urunler
 
 
@@ -269,6 +316,8 @@ def madte_cek(s):
         else:
             raise GirisYok("Madte girisi yok")
     urunler = {}
+    toplam = onceki("madte_toplam", 23000)
+    ekran("madte", durum="calisiyor", yuzde=1, metin=f"Giriş tamam. Yaklaşık {sayi(toplam)} ürün çekilecek.")
     for kok in MADTE_KOK:
         p = 0
         while True:
@@ -280,9 +329,12 @@ def madte_cek(s):
             for it in its:
                 if it["id"]: urunler[it["id"]] = it
             p += 1
+            ekran("madte", yuzde=min(90, int(90 * len(urunler) / max(toplam, 1))),
+                  metin=f"{sayi(len(urunler))} / {sayi(toplam)} ürün çekildi")
             if not its or p * 250 >= tot: break
             time.sleep(1.5)
         log("Madte", kok, p, len(urunler))
+    onceki_yaz("madte_toplam", len(urunler))
     return urunler
 
 
@@ -329,8 +381,13 @@ def madte_min(P, x):
     return None
 
 
+def deger(b, t):
+    m = re.search(rf"<{t}>([^<]*)</{t}>", b)
+    return m.group(1) if m else None
+
+
 def madte_guncelle(eski_xml, urunler, K):
-    say = {"eslesen": 0, "kayip": 0, "fiyatsiz": 0, "degisen": 0}
+    say = {"eslesen": 0, "kayip": 0, "fiyatsiz": 0, "degisen": 0, "fiyat": 0, "stok": 0, "min": 0}
 
     def tag(b, t, v):
         return re.sub(rf"<{t}>[^<]*</{t}>", f"<{t}>{v}</{t}>", b)
@@ -349,6 +406,8 @@ def madte_guncelle(eski_xml, urunler, K):
             for t in ("MinSiparisAdedi", "UrunAdediMinimumDeger", "UrunAdediVarsayilanDeger", "UyeAlisMin", "BayiAlisMin"):
                 y = tag(y, t, mn)
         say["degisen"] += y != b
+        for a, t in (("fiyat", "SatisFiyati"), ("stok", "StokAdedi"), ("min", "MinSiparisAdedi")):
+            say[a] += deger(b, t) != deger(y, t)
         return y
     yeni = re.sub(r"  <Urun>.*?</Urun>", bir, eski_xml, flags=re.S)
     return yeni, say
@@ -428,6 +487,89 @@ Add-Type -AssemblyName System.Windows.Forms
 """
 
 
+PS_EKRAN = r"""
+Add-Type -AssemblyName System.Windows.Forms, System.Drawing
+Add-Type -Namespace YS -Name W -MemberDefinition '[DllImport("user32.dll")] public static extern IntPtr SendMessage(IntPtr h, int m, IntPtr w, IntPtr l);'
+[Windows.Forms.Application]::EnableVisualStyles()
+$dosya = $env:YS_DOSYA
+$lacivert = [Drawing.Color]::FromArgb(11, 42, 74); $gri = [Drawing.Color]::FromArgb(95, 104, 115)
+$yesil = [Drawing.Color]::FromArgb(22, 135, 76); $kirmizi = [Drawing.Color]::FromArgb(200, 40, 40)
+$sari = [Drawing.Color]::FromArgb(196, 128, 0); $mavi = [Drawing.Color]::FromArgb(25, 103, 210)
+function F($b, $s) { New-Object Drawing.Font('Segoe UI', $b, $s) }
+$f = New-Object Windows.Forms.Form
+$f.Text = 'Yamansa Senkron'; $f.ClientSize = New-Object Drawing.Size(560, 430); $f.BackColor = [Drawing.Color]::White
+$f.StartPosition = 'CenterScreen'; $f.FormBorderStyle = 'FixedSingle'; $f.MaximizeBox = $false; $f.Font = F 10 'Regular'
+$ust = New-Object Windows.Forms.Panel; $ust.SetBounds(0, 0, 560, 74); $ust.BackColor = $lacivert; $f.Controls.Add($ust)
+$b1 = New-Object Windows.Forms.Label; $b1.Text = 'Yamansa Senkron'; $b1.ForeColor = [Drawing.Color]::White
+$b1.Font = F 16 'Bold'; $b1.SetBounds(20, 10, 400, 32); $ust.Controls.Add($b1)
+$b2 = New-Object Windows.Forms.Label; $b2.Text = 'Madte ve Rulman Dünyası fiyat / stok güncellemesi'
+$b2.ForeColor = [Drawing.Color]::FromArgb(190, 205, 222); $b2.SetBounds(22, 44, 420, 20); $ust.Controls.Add($b2)
+$sure = New-Object Windows.Forms.Label; $sure.ForeColor = [Drawing.Color]::FromArgb(190, 205, 222)
+$sure.TextAlign = 'MiddleRight'; $sure.SetBounds(400, 44, 140, 20); $ust.Controls.Add($sure)
+$genel = New-Object Windows.Forms.Label; $genel.Font = F 11 'Bold'; $genel.SetBounds(20, 86, 520, 24); $f.Controls.Add($genel)
+$satir = @{}; $y = 120
+foreach ($a in 'madte', 'rd') {
+  $ad = New-Object Windows.Forms.Label; $ad.Font = F 11 'Bold'; $ad.ForeColor = $lacivert; $ad.SetBounds(20, $y, 300, 22)
+  $dr = New-Object Windows.Forms.Label; $dr.Font = F 10 'Bold'; $dr.TextAlign = 'MiddleRight'; $dr.SetBounds(300, $y, 240, 22)
+  $pb = New-Object Windows.Forms.ProgressBar; $pb.SetBounds(20, ($y + 26), 520, 18); $pb.Style = 'Continuous'
+  $mt = New-Object Windows.Forms.Label; $mt.ForeColor = $gri; $mt.SetBounds(20, ($y + 48), 520, 40)
+  $f.Controls.AddRange(@($ad, $dr, $pb, $mt)); $satir[$a] = @($ad, $dr, $pb, $mt); $y += 100
+}
+$oz = New-Object Windows.Forms.Label; $oz.SetBounds(20, 322, 520, 56); $oz.ForeColor = $lacivert; $f.Controls.Add($oz)
+$not = New-Object Windows.Forms.Label; $not.ForeColor = $gri; $not.Font = F 8.5 'Regular'; $not.SetBounds(20, 392, 400, 30)
+$not.Text = 'Pencereyi kapatsanız da güncelleme arka planda devam eder.'; $f.Controls.Add($not)
+$k = New-Object Windows.Forms.Button; $k.Text = 'Kapat'; $k.SetBounds(440, 388, 100, 30); $k.FlatStyle = 'Flat'
+$k.BackColor = $lacivert; $k.ForeColor = [Drawing.Color]::White; $k.Add_Click({ $f.Close() }); $f.Controls.Add($k)
+$etiket = @{ bekliyor = @('Sırada', $gri, 1); calisiyor = @('Çalışıyor', $mavi, 1); tamam = @('✔ Tamamlandı', $yesil, 1);
+  hata = @('✖ Hata', $kirmizi, 2); cerez = @('● Sizi bekliyor', $sari, 3); atlandi = @('Atlandı', $gri, 1) }
+$t = New-Object Windows.Forms.Timer; $t.Interval = 1000
+$t.Add_Tick({
+  try { $d = Get-Content -Raw -Encoding UTF8 $dosya | ConvertFrom-Json } catch { return }
+  $simdi = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+  if ($d.baslangic) { $sn = [int]($simdi - $d.baslangic); $sure.Text = 'Süre: {0}:{1:00}' -f [int][math]::Floor($sn / 60), ($sn % 60) }
+  $hataVar = $false; $bekle = $false
+  foreach ($a in 'madte', 'rd') {
+    $x = $d.adimlar.$a; $s = $satir[$a]; $e = $etiket[[string]$x.durum]; if (-not $e) { $e = $etiket.bekliyor }
+    $s[0].Text = $x.ad; $s[1].Text = $e[0]; $s[1].ForeColor = $e[1]; $s[3].Text = $x.metin
+    $yz = [int]$x.yuzde; if ($yz -gt 100) { $yz = 100 }; $s[2].Value = $yz
+    if ($x.durum -eq 'calisiyor') { $s[1].Text = 'Çalışıyor  %' + $yz }
+    [YS.W]::SendMessage($s[2].Handle, 0x410, [IntPtr]$e[2], [IntPtr]::Zero) | Out-Null
+    if ($x.durum -eq 'hata') { $hataVar = $true }; if ($x.durum -eq 'cerez') { $bekle = $true }
+  }
+  $canli = $null -ne (Get-Process -Id $d.pid -ErrorAction SilentlyContinue)
+  if ($d.bitti) {
+    $t.Stop(); $oz.Text = $d.ozet
+    if ($hataVar) { $genel.Text = '✖ Bitti ama hata var. Hatalı kısımda eski fiyatlar korundu.'; $genel.ForeColor = $kirmizi }
+    else { $genel.Text = '✔ Güncelleme bitti'; $genel.ForeColor = $yesil }
+    $not.Text = 'Bitti. Pencereyi kapatabilirsiniz.'; $f.Activate()
+  } elseif (-not $canli) {
+    $genel.Text = '✖ Program beklenmedik şekilde kapandı. Siteye yarım veri gitmedi, tekrar deneyin.'; $genel.ForeColor = $kirmizi
+  } elseif ($bekle) { $genel.Text = '● Rulman Dünyası çerezi bekleniyor'; $genel.ForeColor = $sari }
+  elseif ($simdi - $d.zaman -gt 900) {
+    $genel.Text = '● 15 dakikadır ilerleme yok, bağlantı yavaş olabilir. Bekleyin.'; $genel.ForeColor = $sari
+  } else { $genel.Text = '● Çalışıyor, ürünler çekiliyor…'; $genel.ForeColor = $mavi }
+})
+$f.Add_Shown({ $t.Start(); $f.Activate() })
+[Windows.Forms.Application]::Run($f)
+"""
+EKRAN_ACIK = False
+
+
+def ekran_ac():
+    """Canli bilgi ekranini ayri bir pencerede acar (programi bekletmez)."""
+    global EKRAN_ACIK
+    if os.name != "nt": return
+    try:
+        import subprocess
+        y = os.path.join(ANA, "ekran.ps1")
+        with open(y, "w", encoding="utf-8-sig") as f: f.write(PS_EKRAN)
+        subprocess.Popen(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden", "-File", y],
+                         env=dict(os.environ, YS_DOSYA=os.path.join(ANA, "canli.json")), creationflags=0x08000000)
+        EKRAN_ACIK = True
+    except Exception as e:  # noqa: BLE001
+        log("bilgi ekrani acilamadi", e)
+
+
 def ps_calistir(betik, mesaj):
     import subprocess
     env = dict(os.environ, YS_MESAJ=mesaj)
@@ -492,6 +634,7 @@ def rd_cerezle(s):
     mesaj = ("Madte guncellendi. Simdi Rulman Dunyasi icin cerezi buraya yapistirip Guncelle'ye basin.\n"
              "Vazgec derseniz RD fiyatlari bugun degismez.")
     for _ in range(3):
+        ekran("rd", durum="cerez", metin="Rulman Dünyası çerezi bekleniyor. Açılan pencereye yapıştırın.")
         metin = ps_calistir(PS_KUTU, mesaj)
         if not metin:
             raise GirisYok("Rulman Dunyasi cerezi girilmedi")
@@ -508,8 +651,25 @@ def rd_cerezle(s):
             except RuntimeError as e:
                 if "Cookie" not in str(e) and "cookie" not in str(e): raise
                 log("cerez yuklenemedi", str(e)[:120])
+        ekran("rd", durum="cerez", metin="Bu çerez çalışmadı, yenisini yapıştırın.")
         mesaj = "Bu cerez calismadi (suresi dolmus ya da eksik). Rulman Dunyasi'ni yeniden acip yeni cerezi yapistirin."
     raise GirisYok("Rulman Dunyasi cerezi gecersiz")
+
+
+def adim_metin(ad, d):
+    if d.get("durum") == "tamam":
+        m = f"{sayi(d.get('eslesen', 0))} ürün güncellendi · fiyatı değişen {sayi(d.get('fiyat', 0))}" \
+            f" · stoğu değişen {sayi(d.get('stok', 0))} · min adedi değişen {sayi(d.get('min', 0))}"
+        k = d.get("kayip", 0) + d.get("fiyatsiz", 0)
+        return m + (f" · {sayi(k)} ürün eski hâliyle korundu" if k else "")
+    if d.get("durum") == "giris_gerekli":
+        return "Giriş yapılamadı, fiyatlar değişmedi." + (" Madte uygulamasını bir kez açın." if ad == "madte" else "")
+    return f"Hata: {d.get('hata', '')[:150]} · Eski fiyatlar korundu, siteye bir şey gitmedi."
+
+
+def adim_ekran(ad, d):
+    ekran(ad, durum="tamam" if d.get("durum") == "tamam" else "hata",
+          yuzde=100 if d.get("durum") == "tamam" else CANLI["adimlar"][ad]["yuzde"], metin=adim_metin(ad, d))
 
 
 def calis(elle=False):
@@ -517,7 +677,9 @@ def calis(elle=False):
     t, s = tarayici_ac()
     try:
         for ad, f in (("madte", madte_adim), ("rd", rd_adim)):
-            if "--sadece-rd" in sys.argv and ad == "madte": continue
+            if "--sadece-rd" in sys.argv and ad == "madte":
+                ekran(ad, durum="atlandi", metin="Bu sefer çalıştırılmadı"); continue
+            ekran(ad, durum="calisiyor", yuzde=0, metin="Giriş yapılıyor…")
             try:
                 try:
                     durum[ad] = f(s)
@@ -528,6 +690,7 @@ def calis(elle=False):
                 durum[ad] = {"durum": "giris_gerekli", "hata": str(e)}; log(e)
             except Exception as e:  # noqa: BLE001
                 durum[ad] = {"durum": "hata", "hata": str(e)[:300]}; log(traceback.format_exc())
+            adim_ekran(ad, durum[ad])
             cerez_kaydet(s)
     finally:
         t.kapat()
@@ -535,28 +698,41 @@ def calis(elle=False):
 
 
 def ozet(durum):
-    sat = []
-    for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dunyasi")):
-        d = durum.get(ad) or {}
-        if not d: continue
-        if d.get("durum") == "tamam":
-            sat.append(f"{isim}: guncellendi ({d.get('eslesen', 0)} urun).")
-        elif d.get("durum") == "giris_gerekli":
-            sat.append(f"{isim}: giris yapilamadi, fiyatlar degismedi."
-                       + (" Madte uygulamasini bir kez acin." if ad == "madte" else ""))
-        else:
-            sat.append(f"{isim}: guncellenmedi, eski fiyatlar korundu. ({d.get('hata', '')[:120]})")
+    d = {a: (durum.get(a) or {}) for a in ("madte", "rd")}
+    sat = [f"{isim}: {adim_metin(ad, d[ad])}" for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dünyası")) if d[ad]]
+    if sat and all(x.get("durum") in ("tamam", None) for x in d.values()):
+        sat.append("Ticimax bir sonraki okumada (10 saatte bir) siteye geçirir.")
     return "\n".join(sat)
+
+
+def rd_fark(eski, yeni):
+    def oku(x):
+        return {deger(b, "UrunKartiID"): (deger(b, "SatisFiyati"), deger(b, "StokAdedi"), deger(b, "MinSiparisAdedi"))
+                for b in re.findall(r"<Urun>.*?</Urun>", x, re.S)}
+    E, Y = oku(eski), oku(yeni)
+    f = {"fiyat": 0, "stok": 0, "min": 0}
+    for i, v in Y.items():
+        w = E.get(i)
+        if not w: continue
+        for j, a in enumerate(("fiyat", "stok", "min")): f[a] += v[j] != w[j]
+    return f
 
 
 def rd_adim(s):
     site = json.loads(gzip.decompress(gh_oku(DAL, "pc/rd_site.json.gz")))
     urunler = rd_cek(s)
+    ekran("rd", yuzde=92, metin="Fiyat ve stoklar hesaplanıyor, kontrol ediliyor…")
     xml, say = rd_xml(site, urunler)
     d = {"durum": "yayinlanmadi", "rd_toplam": len(urunler), "site": len(site), "eslesen": say["eslesen"],
          "kayip": say["kayip"], "fiyatsiz": say["fiyatsiz"], "yeni_sayi": len(say["yeni"])}
     if say["eslesen"] < ESIK * len(site):
         d["hata"] = "eslesen urun cok az, eski XML korundu"; return d
+    try:
+        eski = gzip.decompress(gh_oku(DAL, "durum/rd_guncelle.xml.gz")).decode("utf-8")
+        d.update(rd_fark(eski, xml))
+    except Exception as e:  # noqa: BLE001
+        log("RD fark hesaplanamadi", e)
+    ekran("rd", yuzde=96, metin="Dosya siteye gönderiliyor…")
     b = io.BytesIO()
     with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(xml.encode("utf-8"))
     gh_yaz(DAL, "durum/rd_guncelle.xml.gz", b.getvalue(), f"RD gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
@@ -568,12 +744,14 @@ def madte_adim(s):
     K = kur()
     urunler = madte_cek(s)
     eski = gzip.decompress(gh_oku("main", "ekler/madte.xml.gz")).decode("utf-8")
+    ekran("madte", yuzde=92, metin="Fiyat ve stoklar hesaplanıyor, kontrol ediliyor…")
     yeni, say = madte_guncelle(eski, urunler, K)
     toplam = say["eslesen"] + say["kayip"] + say["fiyatsiz"]
     d = dict(say, durum="yayinlanmadi", madte_toplam=len(urunler), kur=K.get("USD"))
     if say["eslesen"] < ESIK * toplam:
         d["hata"] = "eslesen urun cok az, eski XML korundu"; return d
     if say["degisen"]:
+        ekran("madte", yuzde=96, metin="Dosya siteye gönderiliyor…")
         b = io.BytesIO()
         with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(yeni.encode("utf-8"))
         gh_yaz("main", "ekler/madte.xml.gz", b.getvalue(), f"Madte gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
@@ -596,9 +774,14 @@ def main():
         giris_penceresi(); return
     k = kilit()
     if not k:
-        log("zaten calisiyor"); return
+        log("zaten calisiyor")
+        if elle: ekran_ac()
+        return
+    ekran(bitti=False, ozet="", baslangic=time.time())
+    if elle: ekran_ac()
     if os.name == "nt":  # calisma bitene kadar PC uykuya gecmesin
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000001)
+    durum = {}
     try:
         durum = calis(elle)
         durum["log"] = LOG[-60:]
@@ -607,10 +790,13 @@ def main():
             gh_yaz(DAL, "durum/son.json", json.dumps(durum, ensure_ascii=False, indent=1).encode(), "PC senkron durumu")
         except Exception as e:  # noqa: BLE001
             log("durum yazilamadi", e)
-        if elle:
-            ps_calistir(PS_BILGI, ozet(durum))
+    except Exception as e:  # noqa: BLE001
+        log(traceback.format_exc()); durum["hata"] = str(e)[:200]
     finally:
+        ekran(bitti=True, ozet=ozet(durum) or ("Hata: " + durum.get("hata", "bilinmeyen")))
         os.remove(k)
+        if elle and not EKRAN_ACIK:
+            ps_calistir(PS_BILGI, ozet(durum))
 
 
 if __name__ == "__main__":
