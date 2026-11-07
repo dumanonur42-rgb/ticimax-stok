@@ -1,5 +1,5 @@
 {
- "zaman": "2026-11-05T07:00:02",
+ "zaman": "2026-11-07T07:00:03",
  "elle": false,
  "madte": {
   "durum": "hata",
@@ -12,17 +12,17 @@
  "log": [
   "07:00:32 Madte 22 4 755",
   "07:00:33 Madte 25 1 805",
-  "07:04:28 Madte 28 39 10492",
-  "07:04:41 Madte 34 4 11460",
-  "07:04:44 Madte 141 2 11472",
-  "07:04:58 Madte 329 4 12470",
-  "07:05:35 Madte 343 9 14589",
-  "07:05:52 Madte 368 5 15778",
-  "07:06:13 Madte 385 6 17101",
-  "07:06:15 Madte 420 1 17340",
-  "07:07:09 Traceback (most recent call last):\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 729, in calis\n    durum[ad] = f(s)\n                ^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 792, in madte_adim\n    urunler = madte_cek(s)\n              ^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 354, in madte_cek\n    r = s.js(MD_JS % json.dumps(f\"/Arama/_Prbx?page={p}&Cat={kok}&_StokBoxCount=250&Paging=true\"), 600)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 122, in js\n    r = self.komut(\"Runtime.evaluate\", zaman=zaman + 30, expression=ifade, awaitPromise=True,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 108, in komut\n    m = self._mesaj()\n        ^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 91, in _mesaj\n    b1, b2 = self._oku(2)\n             ^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 77, in _oku\n    if not c: raise RuntimeError(\"websocket kapandi\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: websocket kapandi\n",
-  "07:07:09 cerez kaydedilemedi [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi",
-  "07:07:11 Traceback (most recent call last):\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 729, in calis\n    durum[ad] = f(s)\n                ^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 770, in rd_adim\n    urunler = rd_cek(s)\n              ^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 230, in rd_cek\n    s.git(RD + \"/Search\", 5)\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 114, in git\n    self.komut(\"Page.navigate\", url=url)\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 105, in komut\n    self._gonder(json.dumps({\"id\": no, \"method\": metod, \"params\": param}))\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 86, in _gonder\n    self.s.sendall(bas + m + bytes(b ^ m[i % 4] for i, b in enumerate(d)))\nConnectionAbortedError: [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi\n",
-  "07:07:11 cerez kaydedilemedi [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi"
+  "07:04:39 Madte 28 41 10887",
+  "07:04:53 Madte 34 4 11855",
+  "07:04:56 Madte 141 2 11867",
+  "07:05:13 Madte 329 5 12868",
+  "07:05:50 Madte 343 9 14987",
+  "07:06:07 Madte 368 5 16176",
+  "07:06:30 Madte 385 6 17499",
+  "07:06:32 Madte 420 1 17738",
+  "07:07:07 Traceback (most recent call last):\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 729, in calis\n    durum[ad] = f(s)\n                ^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 792, in madte_adim\n    urunler = madte_cek(s)\n              ^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 354, in madte_cek\n    r = s.js(MD_JS % json.dumps(f\"/Arama/_Prbx?page={p}&Cat={kok}&_StokBoxCount=250&Paging=true\"), 600)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 122, in js\n    r = self.komut(\"Runtime.evaluate\", zaman=zaman + 30, expression=ifade, awaitPromise=True,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 108, in komut\n    m = self._mesaj()\n        ^^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 91, in _mesaj\n    b1, b2 = self._oku(2)\n             ^^^^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 77, in _oku\n    if not c: raise RuntimeError(\"websocket kapandi\")\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: websocket kapandi\n",
+  "07:07:07 cerez kaydedilemedi [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi",
+  "07:07:08 Traceback (most recent call last):\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 729, in calis\n    durum[ad] = f(s)\n                ^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 770, in rd_adim\n    urunler = rd_cek(s)\n              ^^^^^^^^^\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\senkron.py\", line 230, in rd_cek\n    s.git(RD + \"/Search\", 5)\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 114, in git\n    self.komut(\"Page.navigate\", url=url)\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 105, in komut\n    self._gonder(json.dumps({\"id\": no, \"method\": metod, \"params\": param}))\n  File \"C:\\Users\\yaman\\AppData\\Local\\YamansaSenkron\\kod\\cdp.py\", line 86, in _gonder\n    self.s.sendall(bas + m + bytes(b ^ m[i % 4] for i, b in enumerate(d)))\nConnectionAbortedError: [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi\n",
+  "07:07:08 cerez kaydedilemedi [WinError 10053] Kurulan bir bağlantı, ana makinenizdeki yazılım tarafından iptal edildi"
  ]
 }
