@@ -11,10 +11,11 @@ install! 'cocoapods', :disable_input_output_paths => true
 def capacitor_pods
   pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+  pod 'AparajitaCapacitorSecureStorage', :path => '../../node_modules/@aparajita/capacitor-secure-storage'
   pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
   pod 'CapacitorAppLauncher', :path => '../../node_modules/@capacitor/app-launcher'
-  pod 'CapawesomeCapacitorAppUpdate', :path => '../../node_modules/@capawesome/capacitor-app-update'
-  pod 'CapgoCapacitorUpdater', :path => '../../node_modules/@capgo/capacitor-updater'
+  pod 'CapacitorNetwork', :path => '../../node_modules/@capacitor/network'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
 end
 
 target 'App' do
