@@ -172,6 +172,14 @@ async function wipeLocalUserData(): Promise<void> {
   await clearLocalCatalog()
   await secureStorage.removeItem(SESSION_CACHE)
   await secureStorage.removeItem(CART_STORAGE_KEY)
+  if (Capacitor.getPlatform() === 'ios') {
+    await secureStorage.removeItem(SUPABASE_AUTH_STORAGE_KEY)
+    localStorage.clear()
+    sessionStorage.clear()
+    if ('caches' in window) {
+      await Promise.all((await caches.keys()).map((key) => caches.delete(key)))
+    }
+  }
 }
 
 function mapProfile(profile: ProfileRow): User {

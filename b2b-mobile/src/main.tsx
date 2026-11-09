@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Capacitor } from '@capacitor/core'
+import { Keyboard, KeyboardResize } from '@capacitor/keyboard'
 import App from './App'
 import { SystemInsets, type SystemInsetsValue } from './lib/systemInsets'
 import './styles.css'
@@ -70,6 +71,17 @@ async function initializeSystemInsets(): Promise<void> {
 }
 
 async function bootstrap(): Promise<void> {
+  if (Capacitor.getPlatform() === 'ios') {
+    await Keyboard.setResizeMode({ mode: KeyboardResize.Native })
+    await Keyboard.addListener('keyboardDidShow', () => {
+      root.dataset.keyboardOpen = 'true'
+      scrollFocusedField()
+    })
+    await Keyboard.addListener('keyboardDidHide', () => {
+      root.dataset.keyboardOpen = 'false'
+    })
+    document.addEventListener('focusin', scrollFocusedField)
+  }
   const initialization = initializeSystemInsets().catch(() => {
     root.dataset.keyboardOpen = 'false'
   })
