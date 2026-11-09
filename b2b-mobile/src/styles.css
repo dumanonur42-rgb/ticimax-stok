@@ -73,6 +73,14 @@ img { max-width: 100%; }
   background: var(--background);
 }
 .app-shell { display: flex; flex-direction: column; overflow: hidden; }
+:root[data-platform='ios'] .app-shell,
+:root[data-platform='ios'] .login-screen {
+  height: var(--ios-viewport-height, 100%);
+  min-height: 0;
+}
+:root[data-platform='ios'][data-keyboard-open='true'] .login-card { margin-top: 0; }
+:root[data-platform='ios'] .sheet-backdrop { bottom: var(--ios-keyboard-height, 0px); }
+:root[data-platform='ios'] .bottom-sheet { max-height: min(820px, calc(var(--ios-viewport-height, 100dvh) - var(--safe-top) - var(--safe-bottom) - 12px)); }
 .app-shell.dark, .login-screen.dark {
   --background: #0d1625;
   --surface: #142033;

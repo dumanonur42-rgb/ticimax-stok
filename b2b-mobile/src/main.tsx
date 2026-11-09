@@ -26,7 +26,8 @@ function scrollFocusedField(): void {
   const loginScreen = activeElement.closest<HTMLElement>('.login-screen')
   if (loginScreen) {
     requestAnimationFrame(() => {
-      const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue('--keyboard')) || 0
+      const keyboardProperty = Capacitor.getPlatform() === 'ios' ? '--ios-keyboard-height' : '--keyboard'
+      const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue(keyboardProperty)) || 0
       const safeTop = Number.parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
       const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
@@ -72,13 +73,20 @@ async function initializeSystemInsets(): Promise<void> {
 
 async function bootstrap(): Promise<void> {
   if (Capacitor.getPlatform() === 'ios') {
-    await Keyboard.setResizeMode({ mode: KeyboardResize.Native })
-    await Keyboard.addListener('keyboardDidShow', () => {
-      root.dataset.keyboardOpen = 'true'
-      scrollFocusedField()
-    })
-    await Keyboard.addListener('keyboardDidHide', () => {
-      root.dataset.keyboardOpen = 'false'
+    await Keyboard.setResizeMode({ mode: KeyboardResize.None })
+    const updateKeyboard = (height: number): void => {
+      const keyboardHeight = Math.max(0, height)
+      root.style.setProperty('--ios-keyboard-height', `${keyboardHeight}px`)
+      root.style.setProperty('--ios-viewport-height', `${Math.max(0, window.innerHeight - keyboardHeight)}px`)
+      root.dataset.keyboardOpen = String(keyboardHeight > 0)
+      if (keyboardHeight > 0) scrollFocusedField()
+    }
+    await Keyboard.addListener('keyboardWillShow', ({ keyboardHeight }) => updateKeyboard(keyboardHeight))
+    await Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => updateKeyboard(keyboardHeight))
+    await Keyboard.addListener('keyboardWillHide', () => updateKeyboard(0))
+    await Keyboard.addListener('keyboardDidHide', () => updateKeyboard(0))
+    window.addEventListener('resize', () => {
+      updateKeyboard(Number.parseFloat(root.style.getPropertyValue('--ios-keyboard-height')) || 0)
     })
     document.addEventListener('focusin', scrollFocusedField)
   }
