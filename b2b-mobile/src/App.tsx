@@ -127,7 +127,9 @@ export default function App(): ReactNode {
   useEffect(() => {
     if (!Capacitor.isNativePlatform() || appReadyNotified.current) return
     appReadyNotified.current = true
-    void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+    if (Capacitor.getPlatform() === 'android') {
+      void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+    }
   }, [])
 
   const syncNow = useCallback(async () => {
@@ -267,7 +269,7 @@ export default function App(): ReactNode {
   }, [platform, setProducts, setSession, setOnline, setCustomers, clearCart, showToast, setSheet, syncNow])
 
   useEffect(() => {
-    if (!Capacitor.isNativePlatform() || (platform !== 'android' && platform !== 'ios')) return
+    if (Capacitor.getPlatform() !== 'android' || platform !== 'android') return
     let active = true
     let resumeHandle: { remove: () => Promise<void> } | undefined
     let pauseHandle: { remove: () => Promise<void> } | undefined
@@ -286,10 +288,6 @@ export default function App(): ReactNode {
       const forced = !!minimum && compareVersions(currentVersion, minimum) < 0
       if (forced && active) setRequiredUpdate({ platform, version: minimum, ...(platform === 'android' ? { url: androidReleasesPage() } : {}) })
       if (navigator.onLine === false) return
-      if (platform === 'ios') {
-        try { await AppUpdate.getAppUpdateInfo({ country: 'TR' }) } catch { /* Store lookup is unavailable until release. */ }
-        return
-      }
       try {
         const info = await AppUpdate.getAppUpdateInfo()
         const storeCurrentVersion = info.currentVersionName || currentVersion
