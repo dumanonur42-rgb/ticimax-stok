@@ -1,0 +1,22 @@
+{
+  "site_assets": "844a0f4fcabc85516eb114c46c60e9cebd284024",
+  "draw": "247bee7f5bd3e4e4789f5d51521aec1ce38dfc52",
+  "module_sha256": "df3778b6b1f6fec1cfe2bfeaf315f33b7fce6830e982d6c72fc3680f6b4efa90",
+  "products": [
+    {
+      "kod": "ORK BK SPA1003",
+      "html": "spa-100x3.html",
+      "png": "spa-100x3.png"
+    },
+    {
+      "kod": "ORK BK SPB4005",
+      "html": "spb-400x5-kollu.html",
+      "png": "spb-400x5-kollu.png"
+    },
+    {
+      "kod": "KYS BK SPB1803",
+      "html": "kys-spb-180x3.html",
+      "png": "kys-spb-180x3.png"
+    }
+  ]
+}

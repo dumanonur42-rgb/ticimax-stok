@@ -1,0 +1,38 @@
+[
+  {
+    "kod": "ORK BK SPA1003",
+    "html": "spa-100x3.html",
+    "png": "spa-100x3.png",
+    "cards": 6,
+    "rows": 12,
+    "svg": 1,
+    "drawWidth": 456,
+    "drawHeight": 257.734375,
+    "overflow": false,
+    "height": 2232
+  },
+  {
+    "kod": "ORK BK SPB4005",
+    "html": "spb-400x5-kollu.html",
+    "png": "spb-400x5-kollu.png",
+    "cards": 6,
+    "rows": 14,
+    "svg": 1,
+    "drawWidth": 456,
+    "drawHeight": 257.734375,
+    "overflow": false,
+    "height": 2329
+  },
+  {
+    "kod": "KYS BK SPB1803",
+    "html": "kys-spb-180x3.html",
+    "png": "kys-spb-180x3.png",
+    "cards": 5,
+    "rows": 11,
+    "svg": 1,
+    "drawWidth": 456,
+    "drawHeight": 257.734375,
+    "overflow": false,
+    "height": 2232
+  }
+]
