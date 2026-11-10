@@ -5,7 +5,7 @@ function N(s){return String(s||'').replace(/İ/g,'I').replace(/ı/g,'i').toUpper
 var NEG=/BURC|KILIT|MATKAP|EKSENEL|AKSIYEL|KECE|MANSON|SEGMAN|YATAK|IGNELI|ZINCIR|LINEER|OYNAK|SILINDIRIK|BILYALI|DISLI|PIM|FREZE|RAYBA|HAVSA|TAKIM|PUL\b/;
 function series(c){var t=N(c.title),m=t.match(/(?:^|[^0-9])(3[0-3][0-9])[0-9]{2}/);if(m)return m[1];if(/(^|[^A-Z])(LM|HM|JLM|JM|JL|HH|LL|L|M)[0-9]{4,6}/.test(t))return 'inch';return ''}
 function match(c){var t=N(c.title),cr=N((c.crumbs||[]).join(' | '));
- if(NEG.test(t))return false;
+ if(NEG.test(t)||/\bKONIK DELIK(?:LI)?\b/.test(t)||/OYNAK (MAKARALI|BILYALI)/.test(cr))return false;
  if(/KONIK MAKARALI/.test(t))return true;
  return /KONIK MAKARALI RULMAN/.test(cr)&&/RULMAN|^[A-Z]*[0-9]/.test(t)&&!NEG.test(cr.split('|').pop());}
 var LB={d:/^IC CAP/,D:/^DIS CAP/,B:/^(KALINLIK|IC BILEZIK GENISLIGI)/,E:/^(E OLCUSU|DIS BILEZIK GENISLIGI)/,F:/^(F OLCUSU|TOPLAM GENISLIK)/};

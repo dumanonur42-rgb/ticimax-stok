@@ -1,3 +1,11 @@
+# Konik delik regresyonu
+
+`KONIK DELIK` ve `KONIK DELIKLI` yalnız KONIK engelinden muaf tutulur; `KONIK MAKARALI` hâlâ reddedilir. Oynak/silindirik aile ve mevcut model şartları korunur. CCK, EK, CCK/W33, CCK30 ve NN K örnekleri `fixtures/konik-delik.json` içinde yer alır. Ölçüsüz örnek null döner.
+
+734 mevcut fixture bağlamında tüm modüllerin match/çizim anahtarları önce/sonra aynıdır: diff `[]`. 214 ürünün HTML teknik listesiyle QA: bilyali 136, makarali 75, konik 2, lineer_kh 1; başarısız `[]`. `Delik: Konik ...` olan 16 ürünün başlığına ` Konik Delik` eklenmiştir.
+
+1208 K mevcut bilyali modülüne gider. Başlığına ayrıca Konik Delikli yazılırsa mevcut bilyali engeli yüzünden çizilmez; bilyali.js kapsam dışı olduğundan değiştirilmedi. Ortak önizleme: `preview/konik-delik.html`; yeni PNG'ler `preview/makarali/konik-delik-{0,3}-{360,460}.png`.
+
 # makarali — Teknik Çizim Modülü Raporu
 
 Modül: `site/draw/makarali.js` → `window.YDRAW.makarali` (`match`, `draw`). ES5, dış kütüphane yok.

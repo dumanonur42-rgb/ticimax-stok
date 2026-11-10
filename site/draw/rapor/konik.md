@@ -1,3 +1,9 @@
+# Konik delik regresyonu
+
+Başlıktaki `Konik Delik`/`Konik Delikli` ve breadcrumb içindeki `OYNAK MAKARALI`/`OYNAK BİLYALI` konik aile eşlemesini reddeder. Gerçek konik makaralı pozitifleri ve diğer negatifler korunur. 734 mevcut fixture bağlamında tüm modüllerin match/çizim anahtarları önce/sonra aynıdır: diff `[]`.
+
+Yeni `fixtures/konik-delik.json`: URB 32215 → konik (d,D,B,E,F); oynak konik delikliler → konik false; oynak breadcrumb'lı yanıltıcı konik başlık → false. 214 ürün QA: bilyali 136, makarali 75, konik 2, lineer_kh 1; başarısız `[]`. Ortak önizleme: `preview/konik-delik.html?case=2`; yeni PNG'ler `preview/konik/konik-delik-2-{360,460}.png`.
+
 # Konik makaralı rulman — teknik çizim raporu
 
 Modül: `site/draw/konik.js` (`YDRAW.konik`). Önizleme: `site/draw/preview/konik.html`, ekran görüntüleri `site/draw/preview/konik/{460,360}_*.png`.
