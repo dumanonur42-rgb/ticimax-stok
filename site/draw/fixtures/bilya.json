@@ -20,10 +20,6 @@
    {
     "l": "Hassasiyet Sınıfı",
     "v": "G1000"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Adet (minimum 100 adet)"
    }
   ],
   "onyazi": [],
@@ -33,13 +29,13 @@
   "grup": "site-mevcut"
  },
  {
-  "path": "/(yeni) tb-1010g1000-02-karbon-celik-tane-bilya-2-mm-aisi-1010-g1000-600-000-adet-koli",
-  "title": "TB 1010G1000 02 Karbon Çelik Tane Bilya 2 mm AISI 1010 G1000 - 600.000 Adet Koli",
+  "path": "/(yeni) tb-1010g1000-02-karbon-celik-tane-bilya-2-mm-aisi-1010-g1000",
+  "title": "TB 1010G1000 02 Karbon Çelik Tane Bilya 2 mm AISI 1010 G1000",
   "crumbs": [
    "Anasayfa",
    "TANE BİLYA - MASURA",
    "TANE BİLYA",
-   "TB 1010G1000 02 Karbon Çelik Tane Bilya 2 mm AISI 1010 G1000 - 600.000 Adet Koli"
+   "TB 1010G1000 02 Karbon Çelik Tane Bilya 2 mm AISI 1010 G1000"
   ],
   "specs": [
    {
@@ -63,24 +59,8 @@
     "v": "G1000"
    },
    {
-    "l": "Küresellik Sapması",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Lot Çap Farkı",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Nominal Çap Toleransı",
-    "v": "±0,127 mm"
-   },
-   {
     "l": "1000 Adet Ağırlığı",
     "v": "0,0326 kg"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "600.000 adet"
    },
    {
     "l": "Koli Ağırlığı",
@@ -89,10 +69,6 @@
    {
     "l": "1 Litre Adedi",
     "v": "152.789 adet"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Koli (600.000 adet)"
    }
   ],
   "onyazi": [
@@ -107,23 +83,19 @@
    {
     "l": "Hassasiyet",
     "v": "G1000"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "600.000 adet"
    }
   ],
   "photos": [],
   "grup": "yeni-1010"
  },
  {
-  "path": "/(yeni) tb-316g1000-07541-paslanmaz-celik-tane-bilya-7-541-mm-19-64-aisi-316-g1000-12-000-adet-koli",
-  "title": "TB 316G1000 07541 Paslanmaz Çelik Tane Bilya 7,541 mm (19/64″) AISI 316 G1000 - 12.000 Adet Koli",
+  "path": "/(yeni) tb-316g1000-07541-paslanmaz-celik-tane-bilya-7-541-mm-19-64-aisi-316-g1000",
+  "title": "TB 316G1000 07541 Paslanmaz Çelik Tane Bilya 7,541 mm (19/64″) AISI 316 G1000",
   "crumbs": [
    "Anasayfa",
    "TANE BİLYA - MASURA",
    "TANE BİLYA",
-   "TB 316G1000 07541 Paslanmaz Çelik Tane Bilya 7,541 mm (19/64″) AISI 316 G1000 - 12.000 Adet Koli"
+   "TB 316G1000 07541 Paslanmaz Çelik Tane Bilya 7,541 mm (19/64″) AISI 316 G1000"
   ],
   "specs": [
    {
@@ -151,32 +123,12 @@
     "v": "G1000"
    },
    {
-    "l": "Küresellik Sapması",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Lot Çap Farkı",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Nominal Çap Toleransı",
-    "v": "±0,127 mm"
-   },
-   {
     "l": "1000 Adet Ağırlığı",
     "v": "1,749 kg"
    },
    {
-    "l": "Koli Adedi",
-    "v": "12.000 adet"
-   },
-   {
     "l": "Koli Ağırlığı",
     "v": "20,99 kg"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Koli (12.000 adet)"
    }
   ],
   "onyazi": [
@@ -195,23 +147,19 @@
    {
     "l": "Hassasiyet",
     "v": "G1000"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "12.000 adet"
    }
   ],
   "photos": [],
   "grup": "yeni-316"
  },
  {
-  "path": "/(yeni) tb-1010g1000s-0635-soft-karbon-celik-tane-bilya-6-35-mm-1-4-aisi-1010-g1000-20-000-adet-koli",
-  "title": "TB 1010G1000S 0635 Soft Karbon Çelik Tane Bilya 6,35 mm (1/4″) AISI 1010 G1000 - 20.000 Adet Koli",
+  "path": "/(yeni) tb-1010g1000s-0635-soft-karbon-celik-tane-bilya-6-35-mm-1-4-aisi-1010-g1000",
+  "title": "TB 1010G1000S 0635 Soft Karbon Çelik Tane Bilya 6,35 mm (1/4″) AISI 1010 G1000",
   "crumbs": [
    "Anasayfa",
    "TANE BİLYA - MASURA",
    "TANE BİLYA",
-   "TB 1010G1000S 0635 Soft Karbon Çelik Tane Bilya 6,35 mm (1/4″) AISI 1010 G1000 - 20.000 Adet Koli"
+   "TB 1010G1000S 0635 Soft Karbon Çelik Tane Bilya 6,35 mm (1/4″) AISI 1010 G1000"
   ],
   "specs": [
    {
@@ -237,26 +185,6 @@
    {
     "l": "Hassasiyet Sınıfı",
     "v": "G1000"
-   },
-   {
-    "l": "Küresellik Sapması",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Lot Çap Farkı",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Nominal Çap Toleransı",
-    "v": "±0,127 mm"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "20.000 adet"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Koli (20.000 adet)"
    }
   ],
   "onyazi": [
@@ -275,23 +203,19 @@
    {
     "l": "Hassasiyet",
     "v": "G1000"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "20.000 adet"
    }
   ],
   "photos": [],
   "grup": "yeni-soft"
  },
  {
-  "path": "/(yeni) tb-52100g100-254-krom-celik-tane-bilya-25-4-mm-1-aisi-52100-g100-300-adet-koli",
-  "title": "TB 52100G100 254 Krom Çelik Tane Bilya 25,4 mm (1″) AISI 52100 G100 - 300 Adet Koli",
+  "path": "/(yeni) tb-52100g100-254-krom-celik-tane-bilya-25-4-mm-1-aisi-52100-g100",
+  "title": "TB 52100G100 254 Krom Çelik Tane Bilya 25,4 mm (1″) AISI 52100 G100",
   "crumbs": [
    "Anasayfa",
    "TANE BİLYA - MASURA",
    "TANE BİLYA",
-   "TB 52100G100 254 Krom Çelik Tane Bilya 25,4 mm (1″) AISI 52100 G100 - 300 Adet Koli"
+   "TB 52100G100 254 Krom Çelik Tane Bilya 25,4 mm (1″) AISI 52100 G100"
   ],
   "specs": [
    {
@@ -319,32 +243,8 @@
     "v": "G100"
    },
    {
-    "l": "Küresellik Sapması",
-    "v": "en fazla 0,0025 mm"
-   },
-   {
-    "l": "Lot Çap Farkı",
-    "v": "en fazla 0,0025 mm"
-   },
-   {
-    "l": "Nominal Çap Toleransı",
-    "v": "±0,0127 mm"
-   },
-   {
-    "l": "Yüzey Pürüzlülüğü (Ra)",
-    "v": "en fazla 0,127 µm"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "300 adet"
-   },
-   {
     "l": "Koli Ağırlığı",
     "v": "20,052 kg"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Koli (300 adet)"
    }
   ],
   "onyazi": [
@@ -363,23 +263,19 @@
    {
     "l": "Hassasiyet",
     "v": "G100"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "300 adet"
    }
   ],
   "photos": [],
   "grup": "yeni-52100"
  },
  {
-  "path": "/(yeni) tb-316g1000-26987-paslanmaz-celik-tane-bilya-26-987-mm-1-1-16-aisi-316-g1000-250-adet-koli",
-  "title": "TB 316G1000 26987 Paslanmaz Çelik Tane Bilya 26,987 mm (1-1/16″) AISI 316 G1000 - 250 Adet Koli",
+  "path": "/(yeni) tb-316g1000-26987-paslanmaz-celik-tane-bilya-26-987-mm-1-1-16-aisi-316-g1000",
+  "title": "TB 316G1000 26987 Paslanmaz Çelik Tane Bilya 26,987 mm (1-1/16″) AISI 316 G1000",
   "crumbs": [
    "Anasayfa",
    "TANE BİLYA - MASURA",
    "TANE BİLYA",
-   "TB 316G1000 26987 Paslanmaz Çelik Tane Bilya 26,987 mm (1-1/16″) AISI 316 G1000 - 250 Adet Koli"
+   "TB 316G1000 26987 Paslanmaz Çelik Tane Bilya 26,987 mm (1-1/16″) AISI 316 G1000"
   ],
   "specs": [
    {
@@ -407,24 +303,8 @@
     "v": "G1000"
    },
    {
-    "l": "Küresellik Sapması",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Lot Çap Farkı",
-    "v": "en fazla 0,025 mm"
-   },
-   {
-    "l": "Nominal Çap Toleransı",
-    "v": "±0,127 mm"
-   },
-   {
     "l": "1000 Adet Ağırlığı",
     "v": "80,17 kg"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "250 adet"
    },
    {
     "l": "Koli Ağırlığı",
@@ -433,10 +313,6 @@
    {
     "l": "1 Litre Adedi",
     "v": "62 adet"
-   },
-   {
-    "l": "Satış Birimi",
-    "v": "Koli (250 adet)"
    }
   ],
   "onyazi": [
@@ -455,10 +331,6 @@
    {
     "l": "Hassasiyet",
     "v": "G1000"
-   },
-   {
-    "l": "Koli Adedi",
-    "v": "250 adet"
    }
   ],
   "photos": [],
