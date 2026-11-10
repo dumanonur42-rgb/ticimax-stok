@@ -40,46 +40,54 @@ function draw(c,opt){
  function text(x,y,s,attr){return '<text x="'+q(x)+'" y="'+q(y)+'" fill="'+dim+'" font-size="12" font-weight="700" text-anchor="middle" '+(attr||'')+'>'+esc(s)+'</text>'}
  function group(k,s){var v=d[k];if(v==null)return '';keys.push({k:k,l:labels[k],v:k=='profil'?v:k=='tip'?'Tip '+v:k=='kanal'||k=='burc'?String(v):f(v)+' mm'});return '<g class="hl" data-k="'+k+'">'+s+'</g>'}
  function arrow(a,b,x,y){return line(a,b,x,y,'stroke="'+dim+'" stroke-width=".8" marker-start="url(#'+id+'a)" marker-end="url(#'+id+'a)"')}
- function hd(k,a,b,y,label){return group(k,line(a,174,a,y+3,'stroke="'+dim+'" stroke-width=".5"')+line(b,174,b,y+3,'stroke="'+dim+'" stroke-width=".5"')+arrow(a,y,b,y)+text((a+b)/2,y-4,label+' '+f(d[k])))}
+ function hd(k,a,b,y,label){return group(k,line(a,cy+R+3,a,y+3,'stroke="'+dim+'" stroke-width=".5"')+line(b,cy+R+3,b,y+3,'stroke="'+dim+'" stroke-width=".5"')+arrow(a,y,b,y)+text((a+b)/2,y+14,label+' '+f(d[k])))}
+ function offset(k,a,b,side){var y=cy+(n+inner)/2+2,x=side<0?Math.min(a,b)-19:Math.max(a,b)+19,s='';
+  function edge(x){return cy+(Math.abs(x-X(h0))<.1||Math.abs(x-X(h1))<.1?n:inner)+2}
+  s+=line(a,edge(a),a,y+3,'stroke="'+dim+'" stroke-width=".5"')+line(b,edge(b),b,y+3,'stroke="'+dim+'" stroke-width=".5"');
+  if(Math.abs(b-a)<16)s+=line(Math.min(a,b)-7,y,Math.min(a,b),y,'stroke="'+dim+'" marker-end="url(#'+id+'a)"')+line(Math.max(a,b)+7,y,Math.max(a,b),y,'stroke="'+dim+'" marker-end="url(#'+id+'a)"');
+  else s+=arrow(a,y,b,y);
+  return group(k,s+text(x,y+17,k+' '+f(d[k])));
+ }
  function leader(k,x,y,tx,ty,label){return group(k,line(tx,ty,x,y-4,'stroke="'+dim+'" stroke-width=".7" marker-start="url(#'+id+'a)"')+text(x,y-7,label+' '+f(d[k])))}
  function circle(x,y,r,attr){return '<circle cx="'+q(x)+'" cy="'+q(y)+'" r="'+q(r)+'" '+(attr||'')+'/>'}
  var cx=113,cy=112,R=59,rad=R*2/d.O,j=d.J!=null?d.J*rad/2:R*.73,n=d.N!=null?d.N*rad/2:R*.43,b=d.mil!=null?d.mil*rad/2:n*.43;
- j=Math.max(12,Math.min(R-5,j));n=Math.max(9,Math.min(j-3,n));b=Math.max(4,Math.min(n-3,b));
+ j=Math.max(36,Math.min(R-14,j));n=Math.max(21,Math.min(j-10,n));b=Math.max(6,Math.min(n-9,b));
  var inner=arm||disk?j:Math.max(n,j),front='';
  front+=circle(cx,cy,R,'fill="none" stroke="'+C+'" stroke-width="1.4"');
  if(disk)front+=circle(cx,cy,inner,'fill="#9aa6bd" fill-opacity=".12" stroke="'+C+'" stroke-width=".8"');
  if(arm){for(i=0;i<6;i++){var a=i*Math.PI/3,x1=cx+n*Math.cos(a),y1=cy+n*Math.sin(a),x2=cx+inner*Math.cos(a),y2=cy+inner*Math.sin(a);front+=line(x1,y1,x2,y2,'stroke="'+C+'" stroke-width="7"')}front+=circle(cx,cy,inner,'fill="none" stroke="'+C+'" stroke-width="1"')}
  for(i=0;i<d.kanal;i++)front+=circle(cx,cy,R-2-i*Math.min(2,13/d.kanal),'fill="none" stroke="'+C+'" stroke-width=".55"');
- front+=circle(cx,cy,n,'fill="none" stroke="'+C+'" stroke-width="1.2"')+circle(cx,cy,b,'fill="none" stroke="'+C+'" stroke-width="1.3"');
+ var kw=Math.max(3,b*.3),kh=Math.max(3,b*.25),ky=cy-Math.sqrt(b*b-kw*kw);
+ front+=circle(cx,cy,n,'fill="none" stroke="'+C+'" stroke-width="1.2"');
+ front+='<path d="M'+q(cx-kw)+','+q(ky)+'A'+q(b)+','+q(b)+' 0 1 0 '+q(cx+kw)+','+q(ky)+'V'+q(ky-kh)+'H'+q(cx-kw)+'Z" fill="none" stroke="'+C+'" stroke-width="1.1"/>';
  front+=circle(cx,cy,d.P*rad/2,'fill="none" stroke="'+C+'" stroke-width=".6" stroke-dasharray="5 3"');
  g+=front+line(cx-R-6,cy,cx+R+6,cy,'stroke="'+C+'" stroke-width=".5" stroke-dasharray="8 3 2 3"')+line(cx,cy-R-6,cx,cy+R+6,'stroke="'+C+'" stroke-width=".5" stroke-dasharray="8 3 2 3"');
  g+='<g fill="'+C+'" font-size="10" text-anchor="middle"><text x="113" y="13">ÖN GÖRÜNÜŞ</text><text x="345" y="13">KESİT A-A</text></g>';
- g+=group('profil',text(87,31,d.profil))+group('kanal',text(153,31,d.kanal+' kanal'))+group('tip',text(345,257,'Tip '+t));
+ g+=group('profil',text(87,31,d.profil))+group('kanal',text(153,31,d.kanal+' kanal'))+group('tip',text(345,250,'Tip '+t+' · '+(arm?'Kollu':disk?'Diskli':'Dolu')));
  var lo=Math.min(0,h0),hi=Math.max(d.F,h1),scale=Math.min(100/(hi-lo),2.5),base=345-(hi+lo)*scale/2;
  function X(x){return base+x*scale}function Y(r,sign){return cy-sign*r}
  var w=d.E!=null?Math.min(d.F,d.E):Math.min(d.F,d.L)*.32,w0=(d.F-w)/2,w1=w0+w;
- if(arm){w0=Math.max(0,h0);w1=Math.min(d.F,h1)}
- var depth=Math.min(8,Math.max(3,scale*d.F/d.kanal*.32));
+ if(arm){w=Math.min(d.F,d.L)*.28;w0=(d.F-w)/2;w1=w0+w}
+ var pitch=(t==9?h0:d.F)*scale/d.kanal,depth=Math.min((R-inner)*.72,pitch*.32/Math.tan(19*Math.PI/180)),half=depth*Math.tan(19*Math.PI/180);
  for(var sign=-1;sign<=1;sign+=2){var points=[[X(0),Y(R,sign)]];
-  for(i=0;i<d.kanal;i++){var pitch=(t==9?h0:d.F)/d.kanal;points.push([X((i+.18)*pitch),Y(R,sign)],[X((i+.42)*pitch),Y(R-depth,sign)],[X((i+.58)*pitch),Y(R-depth,sign)],[X((i+.82)*pitch),Y(R,sign)])}
+  for(i=0;i<d.kanal;i++){var center=X(0)+(i+.5)*pitch;points.push([center-half,Y(R,sign)],[center,Y(R-depth,sign)],[center+half,Y(R,sign)])}
   points.push([X(d.F),Y(R,sign)]);
   if(arm||disk)points=points.concat([[X(d.F),Y(inner,sign)],[X(w1),Y(inner,sign)],[X(w1),Y(n,sign)],[X(h1),Y(n,sign)],[X(h1),Y(b*.88,sign)],[X(h0),Y(b,sign)],[X(h0),Y(n,sign)],[X(w0),Y(n,sign)],[X(w0),Y(inner,sign)],[X(0),Y(inner,sign)]]);
   else points=points.concat([[X(d.F),Y(inner,sign)],[X(h1),Y(inner,sign)],[X(h1),Y(b*.88,sign)],[X(h0),Y(b,sign)],[X(h0),Y(inner,sign)],[X(0),Y(inner,sign)]]);
   g+='<path d="'+points.map(function(p,ix){return (ix?'L':'M')+q(p[0])+','+q(p[1])}).join('')+'Z" fill="url(#'+id+'h)" stroke="'+C+'" stroke-width="1.2" stroke-linejoin="round"/>';
-  if(arm)g+='<rect x="'+q(X(w0))+'" y="'+q(sign>0?cy-inner:cy+n)+'" width="'+q((w1-w0)*scale)+'" height="'+q(inner-n)+'" fill="white" stroke="'+C+'" stroke-width=".7"/>';
  }
  g+=line(X(lo)-8,cy,X(hi)+8,cy,'stroke="'+C+'" stroke-width=".5" stroke-dasharray="8 3 2 3"');
  g+=group('O',line(29,cy-R,cx,cy-R,'stroke="'+dim+'" stroke-width=".5"')+line(29,cy+R,cx,cy+R,'stroke="'+dim+'" stroke-width=".5"')+arrow(33,cy-R,33,cy+R)+text(23,cy,'O '+f(d.O),'transform="rotate(-90 23 '+cy+')"'));
  g+=group('P',line(cx-d.P*rad/2,cy,cx-d.P*rad/2,193,'stroke="'+dim+'" stroke-width=".4" opacity=".5"')+line(cx+d.P*rad/2,cy,cx+d.P*rad/2,193,'stroke="'+dim+'" stroke-width=".4" opacity=".5"')+arrow(cx-d.P*rad/2,190,cx+d.P*rad/2,190)+text(cx,186,'P '+f(d.P)));
  g+=group('F',line(X(0),cy-R,X(0),44,'stroke="'+dim+'" stroke-width=".5"')+line(X(d.F),cy-R,X(d.F),44,'stroke="'+dim+'" stroke-width=".5"')+arrow(X(0),45,X(d.F),45)+text(345,41,'F '+f(d.F)));
- g+=hd('L',X(h0),X(h1),192,'L');
- if(d.K!=null)g+=t==2?leader('K',210,210,X(0),cy+inner,'K'):hd('K',X(t==4||t==7?h0:0),X(t==4||t==7?0:h0),215,'K');
- if(d.M!=null)g+=hd('M',X(Math.min(h1,d.F)),X(Math.max(h1,d.F)),236,'M');
+ g+=hd('L',X(h0),X(h1),210,'L');
+ if(d.K!=null)g+=t==2?leader('K',244,193,X(0),cy+inner,'K'):offset('K',X(t==4||t==7?h0:0),X(t==4||t==7?0:h0),-1);
+ if(d.M!=null)g+=offset('M',X(Math.min(h1,d.F)),X(Math.max(h1,d.F)),1);
  if(d.J!=null)g+=leader('J',206,59,cx+inner*.7,cy-inner*.7,'J');
  if(d.N!=null)g+=leader('N',210,169,cx+n*.7,cy+n*.7,'N');
  if(d.mil!=null)g+=leader('mil',208,123,cx+b,cy,'Mil ≤');
  if(d.E!=null)g+=leader('E',433,78,X(w1),cy-(inner+n)/2,'E');
- if(d.burc!=null)g+=group('burc',text(113,237,'Burç '+d.burc));
+ if(d.burc!=null)g+=group('burc',text(113,250,'Burç '+d.burc));
  var defs='<defs><pattern id="'+id+'h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="#9aa6bd" stroke-width="1"/></pattern><marker id="'+id+'a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M10 5L0 1L0 9Z" fill="'+dim+'"/></marker></defs>';
  return {svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 260" width="100%" style="font-family:inherit">'+defs+g+'</svg>',keys:keys};
 }
