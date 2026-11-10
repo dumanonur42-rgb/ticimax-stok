@@ -1,0 +1,1278 @@
+[
+  {
+    "id": "06b-1",
+    "kod": "ETA ZİN 06B1",
+    "path": "",
+    "title": "ETAZON 06B-1 Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "9,525 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "6,35 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "3,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "8,26 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "08b-2",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "16b-3",
+    "kod": "TMP ZİN 16B3",
+    "path": "",
+    "title": "TMP 16B-3 Üç Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "25,4 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "17,02 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "15,88 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "8,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "21,08 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "31,88 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "3"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "16b-4",
+    "kod": "TMP ZİN 16B4",
+    "path": "",
+    "title": "TMP 16B-4 Dört Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "25,4 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "17,02 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "15,88 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "8,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "21,08 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "31,88 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "4"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "ss-12b-1",
+    "kod": "ORK ZİN SS12B1",
+    "path": "",
+    "title": "12B-1 Paslanmaz Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [],
+    "onyazi": [
+      {
+        "l": "Adım (p)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "11,68 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "12,07 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "16,13 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "hp-08b-1",
+    "kod": "ORK ZİN HP08B",
+    "path": "",
+    "title": "08B-1 Pim Delikli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": ""
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": ""
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": ""
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": ""
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "c2052",
+    "kod": "ORK ZİN C2052",
+    "path": "",
+    "title": "C2052 Çift Hatveli Konveyör Zinciri",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "9,4 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "5,08 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "15,0 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://www.donghua.co.uk/downloads/doublepitchconveyorchains.pdf",
+      "https://www.donghua.co.uk/downloads/doublepitchconveyorchains.pdf",
+      "https://www.donghua.co.uk/downloads/doublepitchconveyorchains.pdf",
+      "https://www.donghua.co.uk/downloads/doublepitchconveyorchains.pdf",
+      "https://www.donghua.co.uk/downloads/doublepitchconveyorchains.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "a2052",
+    "kod": "ORK ZİN A2052",
+    "path": "",
+    "title": "A2052 Çift Hatveli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "9,4 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "5,08 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "15,0 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "http://www.beijingthc.com/transmission_drive_chain/ansi_double_pitch_transmission_roller_chains.html",
+      "http://www.beijingthc.com/transmission_drive_chain/ansi_double_pitch_transmission_roller_chains.html",
+      "http://www.beijingthc.com/transmission_drive_chain/ansi_double_pitch_transmission_roller_chains.html",
+      "http://www.beijingthc.com/transmission_drive_chain/ansi_double_pitch_transmission_roller_chains.html",
+      "http://www.beijingthc.com/transmission_drive_chain/ansi_double_pitch_transmission_roller_chains.html"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "offset-08b-1",
+    "kod": "ORK ZB 08B1",
+    "path": "",
+    "title": "08B-1 Zincir Baklası Yarım Kilit",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "clip-12b-2",
+    "kod": "ORK ZK 12B2",
+    "path": "",
+    "title": "12B-2 Zincir Kilidi Tam Kilit",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "11,68 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "12,07 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "16,13 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "19,46 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "hp-c2052",
+    "kod": "ORK ZİN HPC2052",
+    "path": "",
+    "title": "C2052 Çift Hatveli Pim Delikli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": ""
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": ""
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": ""
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": ""
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://chains.ustsubaki.com/viewitems/hollow-pin-chain/double-pitch-type-hollow-pin-chain"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "415h",
+    "kod": "ORK ZK P415H20",
+    "path": "",
+    "title": "415H Zincir Kilidi Tam Kilit 100 Adet Paket",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": ""
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": ""
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": ""
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": ""
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://www.kmc-international.com/motorcycle.html"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "official-hp-reference",
+    "path": "",
+    "title": "Tsubaki RF2050R-HP Çift Hatveli Pim Delikli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "9,53 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "7,22 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Pim Delik Çapı",
+        "v": "5,12 mm"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://tsubaki.eu/products/chain/attachment-chain/ansi-standard-attachment-chain/ansi-double-pitch-hp/"
+    ],
+    "notlar": "Resmi Tsubaki referansı; Yamansa ürününe aktarılmamıştır.",
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "official-hp-no-bore",
+    "path": "",
+    "title": "Tsubaki RF2050R-HP Çift Hatveli Pim Delikli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "9,53 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "7,22 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://tsubaki.eu/products/chain/attachment-chain/ansi-standard-attachment-chain/ansi-double-pitch-hp/"
+    ],
+    "notlar": "Resmi Tsubaki referansı; Yamansa ürününe aktarılmamıştır.",
+    "expected": {
+      "match": true,
+      "draw": true,
+      "module": "zincir"
+    }
+  },
+  {
+    "path": "/08b-1-12-1-zincir-17700",
+    "title": "08B-1 (1/2-1) ZİNCİR",
+    "crumbs": [
+      "Anasayfa",
+      "ZİNCİR - ZİNCİR DİŞLİSİ",
+      "ZİNCİRLER",
+      "08B-1 (1/2-1) ZİNCİR"
+    ],
+    "specs": [],
+    "onyazi": [
+      {
+        "l": "DIN ISO Kodu",
+        "v": "08B-1"
+      },
+      {
+        "l": "İnç Kodu",
+        "v": "1/2-1"
+      },
+      {
+        "l": "Adım",
+        "v": "12.7 mm"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "photos": [
+      "https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85,format=webp/79038/uploads/urunresimleri/buyuk/08b-1-12-1-zincir-c57512.png",
+      "https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85,format=webp/79038/uploads/urunresimleri/buyuk/08b-1-12-1-zincir-c7-bec.jpeg"
+    ],
+    "id": "existing-08b-1",
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": "zincir_disli"
+    }
+  },
+  {
+    "id": "sprocket-1209",
+    "kod": "ORK ZD 1209",
+    "path": "",
+    "title": "Zincir Dişli Çift Sıra 1*2*09",
+    "crumbs": [
+      "ZİNCİR DİŞLİLERİ"
+    ],
+    "specs": [
+      {
+        "l": "Diş Sayısı",
+        "v": "9"
+      },
+      {
+        "l": "Zincir Ölçüsü",
+        "v": "1*2"
+      },
+      {
+        "l": "Ürün Tipi",
+        "v": "ÇİFT SIRA"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "parca/zincir.jsonl.gz#ORK ZD 1209"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": "zincir_disli"
+    }
+  },
+  {
+    "id": "exclude-disli",
+    "kod": "ETA ZİN 06B1",
+    "path": "",
+    "title": "Zincir Dişli",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "9,525 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "6,35 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "3,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "8,26 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": "zincir_disli"
+    }
+  },
+  {
+    "id": "exclude-kaplin",
+    "kod": "ETA ZİN 06B1",
+    "path": "",
+    "title": "Zincirli Kaplin",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "9,525 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "6,35 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "3,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "8,26 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": null
+    }
+  },
+  {
+    "id": "exclude-sprey",
+    "kod": "ETA ZİN 06B1",
+    "path": "",
+    "title": "Zincir Spreyi",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "9,525 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "5,72 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "6,35 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "3,28 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "8,26 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": null
+    }
+  },
+  {
+    "id": "missing-p",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": "zincir_disli"
+    }
+  },
+  {
+    "id": "missing-b1",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": "zincir_disli"
+    }
+  },
+  {
+    "id": "missing-h",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": ""
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "invalid-number",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "-2 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "invalid-strands",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": "13,92 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "5"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "invalid-pt",
+    "kod": "ORK ZİN 08B2",
+    "path": "",
+    "title": "08B-2 Çift Sıra Makaralı Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "7,75 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "8,51 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "4,45 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "11,81 mm"
+      },
+      {
+        "l": "Sıralar Arası Mesafe (pt)",
+        "v": ""
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "2"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf",
+      "https://iwis.com/antriebssysteme-drive-systems/as-catalogs/ecoplus/ecoplus-catalog-roller-chains-iwis.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "invalid-bore",
+    "path": "",
+    "title": "Tsubaki RF2050R-HP Çift Hatveli Pim Delikli Zincir",
+    "crumbs": [
+      "ZİNCİRLER"
+    ],
+    "specs": [
+      {
+        "l": "Adım (p)",
+        "v": "31,75 mm"
+      },
+      {
+        "l": "İç Genişlik (b1)",
+        "v": "9,53 mm"
+      },
+      {
+        "l": "Makara Çapı (d3)",
+        "v": "19,05 mm"
+      },
+      {
+        "l": "Pim Çapı (d1)",
+        "v": "7,22 mm"
+      },
+      {
+        "l": "Plaka Yüksekliği (h)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Sıra Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Pim Delik Çapı",
+        "v": "20 mm"
+      }
+    ],
+    "onyazi": [],
+    "kaynak": [
+      "https://tsubaki.eu/products/chain/attachment-chain/ansi-standard-attachment-chain/ansi-double-pitch-hp/"
+    ],
+    "notlar": "Resmi Tsubaki referansı; Yamansa ürününe aktarılmamıştır.",
+    "expected": {
+      "match": true,
+      "draw": false,
+      "module": "zincir"
+    }
+  },
+  {
+    "id": "empty",
+    "title": "",
+    "path": "",
+    "specs": [],
+    "onyazi": [],
+    "crumbs": [],
+    "expected": {
+      "match": false,
+      "draw": false,
+      "module": null
+    }
+  }
+]
