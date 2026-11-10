@@ -1,0 +1,67 @@
+Defaulting to user installation because normal site-packages is not writeable
+Collecting rembg[cpu]
+  Downloading rembg-2.0.69-py3-none-any.whl (43 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.7/43.7 KB 3.0 MB/s eta 0:00:00
+Collecting pooch
+  Downloading pooch-1.9.0-py3-none-any.whl (67 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.2/67.2 KB 6.0 MB/s eta 0:00:00
+Collecting scikit-image
+  Downloading scikit_image-0.25.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.8/14.8 MB 58.1 MB/s eta 0:00:00
+Requirement already satisfied: jsonschema in /usr/lib/python3/dist-packages (from rembg[cpu]) (3.2.0)
+Requirement already satisfied: pillow in /home/ubuntu/.local/lib/python3.10/site-packages (from rembg[cpu]) (12.3.0)
+Collecting opencv-python-headless
+  Downloading opencv_python_headless-5.0.0.93-cp37-abi3-manylinux_2_28_x86_64.whl (61.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.2/61.2 MB 55.8 MB/s eta 0:00:00
+Requirement already satisfied: scipy in /home/ubuntu/.local/lib/python3.10/site-packages (from rembg[cpu]) (1.15.3)
+Collecting tqdm
+  Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.2/80.2 KB 39.5 MB/s eta 0:00:00
+Requirement already satisfied: numpy in /home/ubuntu/.local/lib/python3.10/site-packages (from rembg[cpu]) (2.2.6)
+Collecting pymatting
+  Downloading pymatting-1.1.16-py3-none-any.whl (56 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.3/56.3 KB 23.0 MB/s eta 0:00:00
+Collecting onnxruntime
+  Downloading onnxruntime-1.23.2-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (17.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.4/17.4 MB 107.2 MB/s eta 0:00:00
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from onnxruntime->rembg[cpu]) (21.3)
+Requirement already satisfied: protobuf in /home/ubuntu/.local/lib/python3.10/site-packages (from onnxruntime->rembg[cpu]) (7.36.2)
+Collecting sympy
+  Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 182.1 MB/s eta 0:00:00
+Collecting coloredlogs
+  Downloading coloredlogs-15.0.1-py2.py3-none-any.whl (46 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.0/46.0 KB 26.4 MB/s eta 0:00:00
+Collecting flatbuffers
+  Downloading flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+Requirement already satisfied: platformdirs>=2.5.0 in /home/ubuntu/.local/lib/python3.10/site-packages (from pooch->rembg[cpu]) (4.12.4)
+Requirement already satisfied: requests>=2.19.0 in /home/ubuntu/.local/lib/python3.10/site-packages (from pooch->rembg[cpu]) (2.34.2)
+Collecting numba>=0.60.0
+  Downloading numba-0.68.1-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (3.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.8/3.8 MB 137.5 MB/s eta 0:00:00
+Collecting tifffile>=2022.8.12
+  Downloading tifffile-2025.5.10-py3-none-any.whl (226 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.5/226.5 KB 53.9 MB/s eta 0:00:00
+Collecting networkx>=3.0
+  Downloading networkx-3.4.2-py3-none-any.whl (1.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 189.9 MB/s eta 0:00:00
+Collecting imageio!=2.35.0,>=2.33
+  Downloading imageio-2.38.0-py3-none-any.whl (328 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 328.1/328.1 KB 129.8 MB/s eta 0:00:00
+Collecting lazy-loader>=0.4
+  Downloading lazy_loader-0.6-py3-none-any.whl (8.8 kB)
+Collecting llvmlite<0.51,>=0.50.0dev0
+  Downloading llvmlite-0.50.0-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (59.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.7/59.7 MB 38.4 MB/s eta 0:00:00
+Requirement already satisfied: urllib3<3,>=1.26 in /usr/lib/python3/dist-packages (from requests>=2.19.0->pooch->rembg[cpu]) (1.26.5)
+Requirement already satisfied: idna<4,>=2.5 in /usr/lib/python3/dist-packages (from requests>=2.19.0->pooch->rembg[cpu]) (3.3)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/ubuntu/.local/lib/python3.10/site-packages (from requests>=2.19.0->pooch->rembg[cpu]) (3.5.2)
+Requirement already satisfied: certifi>=2023.5.7 in /home/ubuntu/.local/lib/python3.10/site-packages (from requests>=2.19.0->pooch->rembg[cpu]) (2026.10.23)
+Collecting humanfriendly>=9.1
+  Downloading humanfriendly-10.0-py2.py3-none-any.whl (86 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.8/86.8 KB 24.1 MB/s eta 0:00:00
+Collecting mpmath<1.4,>=1.1.0
+  Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 KB 122.7 MB/s eta 0:00:00
+Installing collected packages: mpmath, flatbuffers, tqdm, tifffile, sympy, opencv-python-headless, networkx, llvmlite, lazy-loader, imageio, humanfriendly, scikit-image, pooch, numba, coloredlogs, pymatting, onnxruntime, rembg
+Successfully installed coloredlogs-15.0.1 flatbuffers-25.12.19 humanfriendly-10.0 imageio-2.38.0 lazy-loader-0.6 llvmlite-0.50.0 mpmath-1.3.0 networkx-3.4.2 numba-0.68.1 onnxruntime-1.23.2 opencv-python-headless-5.0.0.93 pooch-1.9.0 pymatting-1.1.16 rembg-2.0.69 scikit-image-0.25.2 sympy-1.14.0 tifffile-2025.5.10 tqdm-4.70.1

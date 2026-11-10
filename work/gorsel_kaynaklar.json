@@ -1,0 +1,205 @@
+{
+  "chain1": {
+    "file": "work/gorsel_kaynak/06b.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/03/06B-ZİNCİR.jpg",
+    "page": "https://orkapt.com/service/standart-zincirler/",
+    "note": "Tek sıralı, dolu pimli makaralı zincir; seri fotoğrafı.",
+    "crop": null,
+    "remove_background": false
+  },
+  "chain2": {
+    "file": "work/gorsel_kaynak/08b.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/03/08B-ZİNCİR-.jpg",
+    "page": "https://orkapt.com/service/standart-zincirler/",
+    "note": "İki sıralı, dolu pimli makaralı zincir; seri fotoğrafı.",
+    "crop": null,
+    "remove_background": false
+  },
+  "chain3": {
+    "file": "work/gorsel_kaynak/candidate-chain3-1.jpg",
+    "url": "https://image.made-in-china.com/202f0j00CNehDafwHPUu/Simplex-Duplex-Triplex-Strands-Oil-Field-Chains-for-Industrial-and-Agricultural-Transmission.webp",
+    "page": "https://ru.made-in-china.com/co_starmachinechina/product_Simplex-Duplex-Triplex-Strands-Oil-Field-Chains-for-Industrial-and-Agricultural-Transmission_uoeirhnogu.html",
+    "note": "Üç sıralı makaralı zincir seri fotoğrafı; yatay çevrildi ve ürün sınırına sıkı kırpıldı.",
+    "crop": null,
+    "remove_background": false,
+    "rotation": -55
+  },
+  "chain4": {
+    "file": "work/gorsel_kaynak/quad.jpg",
+    "url": "https://usarollerchain.com/cdn/shop/files/08B-4-ROLLER-CHAIN-2_b9e6d53c-fca2-4047-9a26-a5084755e1de.jpg?v=1756328007",
+    "page": "https://usarollerchain.com/products/16b-4-roller-chain",
+    "note": "Dört sıralı gerçek makaralı zincir fotoğrafı; ortak pimli dört sıra.",
+    "crop": null,
+    "remove_background": false
+  },
+  "sschain1": {
+    "file": "work/gorsel_kaynak/candidate-sschain1-8.jpg",
+    "url": "https://media.epind.top/wp-content/uploads/2023/02/Short-Pitch-Stainless-Steel-Roller-Chain.webp",
+    "page": "https://www.ever-power.net/blog/stainless-steel-short-pitch-roller-chain-for-rail-transport-logistics/",
+    "note": "Parlak paslanmaz tek sıralı makaralı zincir; baskısız plaka yüzü.",
+    "crop": null,
+    "remove_background": false
+  },
+  "sschain2": {
+    "file": "work/gorsel_kaynak/candidate-sschain2-6.jpg",
+    "url": "https://sc04.alicdn.com/kf/H7d0b1f7491724141b3eb35f1c7d23ebcR/276257413/H7d0b1f7491724141b3eb35f1c7d23ebcR.png",
+    "page": "https://www.alibaba.com/product-detail/Stainless-Steel-Roller-Chain-Stainless-Steel_1601005462557.html",
+    "note": "Parlak paslanmaz çift sıralı makaralı zincir; iki sıra görünür.",
+    "crop": null,
+    "remove_background": false
+  },
+  "hpchain": {
+    "file": "work/gorsel_kaynak/usa-select-hpchain-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08BHP-CHAIN-2.jpg?v=1756324032",
+    "page": "https://usarollerchain.com/products/08bhp-chain",
+    "note": "Tek sıralı pim delikli zincir; pimlerdeki delikler açıkça görünür.",
+    "crop": null,
+    "remove_background": false
+  },
+  "sshpchain": {
+    "file": "work/gorsel_kaynak/usa-select-sshpchain-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08B-SS-HOLLOW-PIN-ROLLER-CHAIN-2.jpg?v=1756323936",
+    "page": "https://usarollerchain.com/products/08b-ss-hollow-pin-roller-chain",
+    "note": "Paslanmaz pim delikli zincir; parlak yüzey ve açık pim delikleri.",
+    "crop": null,
+    "remove_background": false
+  },
+  "double": {
+    "file": "work/gorsel_kaynak/usa-select-doublelarge-1.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/PRE-C2042-ROLLER-CHAIN-2_2cd5909a-0949-4fdb-98b6-61f523e947b5.jpg?v=1756380669",
+    "page": "https://usarollerchain.com/products/pre-c2052-roller-chain",
+    "note": "Çift hatveli, düz uzun plakalı ve büyük makaralı konveyör zinciri.",
+    "crop": null,
+    "remove_background": false
+  },
+  "hpdouble": {
+    "file": "work/gorsel_kaynak/usa-select-hpdoublelarge-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/C2042HP-CHAIN-2_a20a773f-bde3-4249-b869-d8fd61f1460a.jpg?v=1756364857",
+    "page": "https://usarollerchain.com/products/c2052hp-chain",
+    "note": "Çift hatveli pim delikli zincir; uzun düz plaka ve büyük makara.",
+    "crop": null,
+    "remove_background": false
+  },
+  "offset1": {
+    "file": "work/gorsel_kaynak/kilit.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/04/zincir-kilitleri.jpg",
+    "page": "https://orkapt.com/service/zincir-kilitleri/",
+    "note": "Yalnız sağdaki tek sıralı kranked yarım kilit kırpıldı.",
+    "crop": [
+      455,
+      320,
+      745,
+      625
+    ],
+    "remove_background": false
+  },
+  "offset2": {
+    "file": "work/gorsel_kaynak/usa-offset2ok.jpg",
+    "url": "https://usarollerchain.com/cdn/shop/files/P-06B-2-OFFSET-LINK-2_b85d6127-82f3-4985-86e2-7117a0508b0a.jpg?v=1756379809",
+    "page": "https://usarollerchain.com/products/p-08b-2-offset-link",
+    "note": "Çift sıralı yarım kilit; kranked plaka, iki makara ve pim ucu.",
+    "crop": null,
+    "remove_background": false
+  },
+  "offset3": {
+    "file": "work/gorsel_kaynak/usa-offset3ok.jpg",
+    "url": "https://usarollerchain.com/cdn/shop/files/05B-3-OFFSET-LINK-2_eb12c505-3436-4024-9ecd-40752036da28.jpg?v=1756371638",
+    "page": "https://usarollerchain.com/products/eco-08b-3-offset-link",
+    "note": "Üç sıralı yarım kilit; kranked plakalar ve üç makara.",
+    "crop": null,
+    "remove_background": false
+  },
+  "ssoffset1": {
+    "file": "work/gorsel_kaynak/usa-select-ssoffset1-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/05BSS-OFFSET-LINK-2_f04c1f36-7b17-4c1d-b6b8-9dc8b58f3043.jpg?v=1756324055",
+    "page": "https://usarollerchain.com/products/08bss-offset-link",
+    "note": "Paslanmaz tek sıralı yarım kilit; kranked plaka ve makara.",
+    "crop": null,
+    "remove_background": false
+  },
+  "ssoffset2": {
+    "file": "work/gorsel_kaynak/usa-select-ssoffset2-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08B-2SS-OFFSET-LINK-2.jpg?v=1756323914",
+    "page": "https://usarollerchain.com/products/08b-2ss-offset-link",
+    "note": "Paslanmaz çift sıralı yarım kilit; kranked plakalar ve iki makara.",
+    "crop": null,
+    "remove_background": false
+  },
+  "clip1": {
+    "file": "work/gorsel_kaynak/kilit.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/04/zincir-kilitleri.jpg",
+    "page": "https://orkapt.com/service/zincir-kilitleri/",
+    "note": "Yalnız soldaki tek sıralı, yaylı klipsli tam kilit kırpıldı.",
+    "crop": [
+      150,
+      325,
+      450,
+      625
+    ],
+    "remove_background": false
+  },
+  "clip2": {
+    "file": "work/gorsel_kaynak/usa-clip2ok.jpg",
+    "url": "https://usarollerchain.com/cdn/shop/files/P-06B-2-CONNECTING-LINK-2_33946a37-cdcf-41a1-95e0-906d49ac711b.jpg?v=1756379793",
+    "page": "https://usarollerchain.com/products/p-08b-2-connecting-link",
+    "note": "Çift sıralı tam kilit; üç plaka, iki uzun pim ve yaylı klips.",
+    "crop": null,
+    "remove_background": false
+  },
+  "clip3": {
+    "file": "work/gorsel_kaynak/usa-clip3ok.jpg",
+    "url": "https://usarollerchain.com/cdn/shop/files/05B-3-CONNECTING-LINK-2_8ba903dd-07fb-456b-9fa6-a5064d03f2ce.jpg?v=1756371687",
+    "page": "https://usarollerchain.com/products/eco-08b-3-connecting-link",
+    "note": "Üç sıralı tam kilit; dört plaka, iki uzun pim ve yaylı klips.",
+    "crop": null,
+    "remove_background": false
+  },
+  "ssclip1": {
+    "file": "work/gorsel_kaynak/usa-select-ssclip1-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/stainless_steel_connecting_link.png?v=1772632816",
+    "page": "https://usarollerchain.com/products/08bss-connecting-link",
+    "note": "Paslanmaz tek sıralı tam kilit; iki pim, dış plaka ve yaylı klips.",
+    "crop": null,
+    "remove_background": false
+  },
+  "ssclip2": {
+    "file": "work/gorsel_kaynak/usa-select-ssclip2-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08B-2SS-CONNECTING-LINK-2.jpg?v=1756323909",
+    "page": "https://usarollerchain.com/products/08b-2ss-connecting-link",
+    "note": "Paslanmaz çift sıralı tam kilit; üç plaka, iki pim ve yaylı klips.",
+    "crop": null,
+    "remove_background": false
+  },
+  "hpclip": {
+    "file": "work/gorsel_kaynak/usa-select-hpclipcarbon-0.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08BHP-CL-2.jpg?v=1756324057",
+    "page": "https://usarollerchain.com/products/08bhp-cl",
+    "note": "Pim delikli tek sıralı tam kilit; iki boş pim ve segmanlar.",
+    "crop": null,
+    "remove_background": true
+  },
+  "sshpclip": {
+    "file": "work/gorsel_kaynak/usa-select-sshpchain-1.jpg",
+    "url": "https://cdn.shopify.com/s/files/1/0633/0187/7925/files/08B-SS-HP-CONNECTING-LINK-2.jpg?v=1756323962",
+    "page": "https://usarollerchain.com/products/08b-ss-hp-connecting-link",
+    "note": "Paslanmaz pim delikli tam kilit; iki boş pim ve segmanlar.",
+    "crop": null,
+    "remove_background": true
+  },
+  "415hclip": {
+    "file": "work/gorsel_kaynak/candidate-415h-9.jpg",
+    "url": "https://www.pocketbikecanada.ca/images/stories/virtuemart/product/Master_Chain_Link_-_415H_Series_Master_Link_1.jpg",
+    "page": "https://www.pocketbikecanada.ca/buy-online/express-parts-catalog/chains-guides-tensioners/master-links/master-chain-link-415h-series-master-link-lnk415h-pbc1068f1",
+    "note": "415H tipi ince motosiklet/moped zincir kilidi; yaylı klipsli, kod baskısız.",
+    "crop": null,
+    "remove_background": false
+  },
+  "sprocket2": {
+    "file": "work/gorsel_kaynak/sprocket20.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/03/20B-ZİNCİR-DİŞLİLER.jpg",
+    "page": "https://orkapt.com/service/zincir-disliler/",
+    "note": "Çift sıralı, göbekli ve düz pilot delikli dişli seri fotoğrafı; 9 dişli birebir ürün fotoğrafı değildir.",
+    "crop": null,
+    "remove_background": false
+  }
+}

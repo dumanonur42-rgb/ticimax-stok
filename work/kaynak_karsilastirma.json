@@ -1,0 +1,60 @@
+[
+  {
+    "iso_kod": "08B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "04B-1",
+    "farklar": {
+      "b2": {
+        "site": 4.1,
+        "iwis": 4.15
+      },
+      "F1": {
+        "site": 7.4,
+        "iwis": 6.8
+      }
+    }
+  },
+  {
+    "iso_kod": "05B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "06B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "10B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "12B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "16B-1",
+    "farklar": {
+      "b2": {
+        "site": 25.42,
+        "iwis": 25.45
+      }
+    }
+  },
+  {
+    "iso_kod": "20B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "24B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "28B-1",
+    "farklar": {}
+  },
+  {
+    "iso_kod": "32B-1",
+    "farklar": {}
+  }
+]

@@ -1,0 +1,12 @@
+PASS: 230/230 preserved unique stock codes; all required fields; stable names, real brands, categories and flags
+PASS: visible ACIKLAMA >=1800 (minimum 2623); SEO <=60/155; keywords <=950; repeated paragraphs >120 chars=0
+PASS: no forbidden brand/boilerplate, U+0307 or em dash; Turkish decimal values; 2 allowed links/product; table summary and direct technical lists
+PASS: source-backed geometry; SS/links have no breaking load; units, 70 package quantities and 30 birim_yok flags
+PASS: 17 collision groups (18 extra rows) flagged against every matching stock code; 17 existing chain pages compared; possible duplicates=2
+PASS: 230 existing 500x500 JPG mappings; no forbidden image filename; empty/invalid code and unit tests
+PASS: browser ACIKLAMA -> ctx.specs drawings: 206 non-null; 24 null (all flagged eksik); sprocket=zincir_disli
+PREVIEW: work/onizleme/08b-1-tek-sira-zincir-kilidi-tam-kilit-12-7-mm.png
+PREVIEW: work/onizleme/iwis-ecoplus-12b-2-cift-sira-makarali-zincir-19-05-mm.png
+PREVIEW: work/onizleme/tmp-16b-4-dort-sira-makarali-zincir-25-4-mm.png
+PASS: 3 browser previews; images, drawing controls and alt text; browser errors=0
+FLAGS: {"birim_yok": 30, "eksik": 25, "ham_marka_bos": 1, "marka_celiskisi": 9, "marka_kaynagi_yok": 53, "olasi_kopya": 2, "olcu_celiskisi": 1, "seri_belirsiz": 4, "sira_celiskisi": 1}

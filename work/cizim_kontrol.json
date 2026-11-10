@@ -1,0 +1,2940 @@
+[
+  {
+    "kod": "AYZ ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "AYZ ZİN 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "CSE ZİN 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "CSE ZİN 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "CSE ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "CSE ZİN 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "EBF ZİN 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "EBF ZİN 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 06B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 06B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 08B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 08B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 10B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 10B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 12B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 12B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 16B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 16B4",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 20B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 20B4",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ETA ZİN 32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "İWİ ZİN 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "İWİ ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "NAT ZİN 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "NAT ZİN 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "NAT ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "NAT ZİN 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "NAT ZİN 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "NAT ZİN ASA601",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "NAT ZİN HP08B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZB 06B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 08B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 10B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 16B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 20B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 24B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 28B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 28B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 28B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB 32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB 32B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P04B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P05B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P05B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P06B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P06B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P06B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P08B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P08B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P08B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P10B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P10B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P10B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P12B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P12B250",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P12B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P16B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB P16B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB P16B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SS32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP05B110",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP05B210",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP06B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP06B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP08B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP08B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP10B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP10B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP12B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP12B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP16B110",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZB SSP16B210",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZD 1209",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "z",
+      "p",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 04B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 05B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 05B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 28B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN 32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN A2052",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN C2052",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN C2062",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN HP08B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HP10B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HP12B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HP16B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPA2052",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPC2042",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPC2052",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPC2062",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPC2082",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN HPC2102",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN SS05B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS05B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS06B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS08B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS10B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS12B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SS32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZİN SSHP08B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN SSHP10B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN SSHP12B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZİN SSHP16B",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK 06B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 08B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 08B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 10B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 12B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 12B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 20B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 24B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 28B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 28B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 28B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK 32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK 32B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK HP08B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK HP10B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK HP12B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK HP16B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK P04B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P05B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P05B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P06B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P06B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P06B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P08B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P08B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P08B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P10B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P10B2100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P10B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P12B1100",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P12B250",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P12B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P16B150",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK P16B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P16B320",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK P415H20",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK SS20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SS20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SS24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SS24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SS32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SS32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSHP08B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK SSHP10B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK SSHP12B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK SSHP16B10",
+    "match": false,
+    "draw": false,
+    "keys": []
+  },
+  {
+    "kod": "ORK ZK SSP05B110",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP05B210",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP06B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP06B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP08B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP08B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP10B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP10B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP12B120",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP12B220",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP16B110",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "ORK ZK SSP16B210",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "SED ZİN 10B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "SED ZİN 12B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "SED ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "SED ZİN 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "SPC ZİN 10B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "SPC ZİN 12B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "SPC ZİN 16B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 16B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 16B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 16B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 16B4",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 20B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 20B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 20B3",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 24B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 24B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 32B1",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n"
+    ]
+  },
+  {
+    "kod": "TMP ZİN 32B2",
+    "match": true,
+    "draw": true,
+    "keys": [
+      "p",
+      "h",
+      "d1",
+      "d3",
+      "b1",
+      "n",
+      "pt"
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+PASS: 230/230 original stock codes map to an existing, decodable 500x500 JPG; missing=0
+PASS: 212 ASCII name-slug JPGs; 18 extra stock codes reuse name-based image paths; orphan files=0
+PASS: 230 source URLs, type mappings and recorded Yandex searches; 24 source variants
+PASS: Yamansa template header; products within y=100..350; white logo-free bottom band; no package text or forbidden brand in titles
+PASS: 6 detailed contact sheets cover all 230 stock codes; full 230-product overview exists
+COUNTS: birebir=0 ayni_tip=230 gorsel_yok=0
+PASS: composition normal/transparent, empty-photo rejection, invalid-file rejection; package quantity never changes title
