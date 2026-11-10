@@ -5,16 +5,18 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from PIL import Image
 from playwright.sync_api import sync_playwright
-from content_zincir import ROOT, ROWS, TECH, IMAGES, EXISTING_CODES, generate, generate_all, sales_specs
+from content_zincir import ROOT, ROWS, TECH, IMAGES, EXISTING_CODES, EXCLUDED, ACTIVE_ROWS, SITE_DUPLICATES, CHAIN, LINK, generate, generate_all, sales_specs, publication_exclusions
 
-FIELDS = set('kod URUNADI MARKA KATEGORI EK_KATEGORILER yeni_kategori ONYAZI ACIKLAMA ANAHTARKELIME SEO_SAYFABASLIK SEO_SAYFAACIKLAMA SEO_ANAHTARKELIME resim resim_seviye resim_kaynak teknik_kaynak bayraklar'.split())
+FIELDS = set('kod URUNADI MARKA KATEGORI EK_KATEGORILER yeni_kategori oneri_kategori ONYAZI ACIKLAMA ANAHTARKELIME SEO_SAYFABASLIK SEO_SAYFAACIKLAMA SEO_ANAHTARKELIME resim resim_seviye resim_kaynak teknik_kaynak bayraklar'.split())
 
 
 def main():
     records = [json.loads(line) for line in (ROOT / 'urunler.jsonl').read_text().splitlines()]
-    assert len(records) == 230 and records == generate_all()
+    assert len(records) == 210 and records == generate_all()
     original = {r['kod']: r for r in ROWS}
-    assert set(original) == {r['kod'] for r in records}
+    published = {r['kod'] for r in records}
+    assert published == {r['kod'] for r in ACTIVE_ROWS}
+    assert not published.intersection(EXCLUDED) and set(original) == published.union(EXCLUDED)
     allowed = set((ROOT / 'katurl.txt').read_text().splitlines())
     paragraphs = defaultdict(list)
     names = defaultdict(list)
@@ -23,7 +25,13 @@ def main():
         kod = record['kod']
         row = original[kod]
         assert set(record) == FIELDS, kod
-        assert all(record[k] for k in FIELDS if k not in {'bayraklar', 'EK_KATEGORILER', 'yeni_kategori'}), kod
+        assert all(record[k] for k in FIELDS if k not in {'bayraklar', 'EK_KATEGORILER', 'yeni_kategori', 'oneri_kategori'}), kod
+        assert record['yeni_kategori'] is False and record['EK_KATEGORILER'] == [], kod
+        if row['tip'] in {'bakla', 'kilit'}:
+            assert record['KATEGORI'] == CHAIN and record['oneri_kategori'] == LINK, kod
+        else:
+            assert record['oneri_kategori'] is None, kod
+        assert not any(f.startswith('ayni_ad:') or f == 'olasi_kopya' for f in record['bayraklar']), kod
         assert record['URUNADI'] == IMAGES[kod]['URUNADI'], kod
         customer = ' '.join(record[k] for k in ['URUNADI', 'MARKA', 'ONYAZI', 'ACIKLAMA', 'ANAHTARKELIME', 'SEO_SAYFABASLIK', 'SEO_SAYFAACIKLAMA', 'SEO_ANAHTARKELIME'])
         assert not re.search(r'orka|orkapt|\u0307|—|katalogla doğrulanmıştır|Montajdan önce makinenin enerjisini|Yalnız makine türüne bakarak|koli halinde satılır|ARASH|TYCO|REXBO', customer, re.I), kod
@@ -98,14 +106,25 @@ def main():
             assert image.format == 'JPEG' and image.size == (500, 500), kod
     assert not [codes for codes in paragraphs.values() if len(codes) > 1], 'Repeated paragraphs'
     collisions = [group for group in names.values() if len(group) > 1]
-    assert sum(len(group)-1 for group in collisions) == 18
-    for group in collisions:
-        for record in group:
-            assert all('ayni_ad:' + other['kod'] in record['bayraklar'] for other in group if other != record)
-    duplicates = [r['kod'] for r in records if 'olasi_kopya' in r['bayraklar']]
-    expected_duplicates = [r['kod'] for r in ROWS if r['gosterilecek_marka'] == 'Yamansa' and r['tip'] == 'zincir' and r['sira'] == 1 and not r['paslanmaz'] and not r['pim_delikli'] and r['iso_kod'] in EXISTING_CODES]
-    assert duplicates == expected_duplicates == ['ORK ZİN 04B1', 'ORK ZİN 05B1']
-    for kod in ['', 'NOT_A_STOCK_CODE']:
+    assert not collisions
+    packages = {k: v[1] for k, v in EXCLUDED.items() if v[0] == 'paket_kopya'}
+    assert len(packages) == 18 and len(set(packages.values())) == 17
+    assert all(original[k]['paket_adet'] and not original[target]['paket_adet'] and target in published for k, target in packages.items())
+    assert packages['ORK ZB 16B220'] == packages['ORK ZB P16B220'] == 'ORK ZB 16B2'
+    assert {k: v[1] for k, v in EXCLUDED.items() if v[0] == 'site_kopya'} == SITE_DUPLICATES
+    assert all(original[k]['iso_kod'] in EXISTING_CODES for k in SITE_DUPLICATES)
+    assert publication_exclusions([], {}) == {}
+    single = dict(kod='single', birim='ADET', paket_adet=None)
+    package = dict(kod='package', birim='PAKET', paket_adet=20)
+    drafts = {k: {'URUNADI': 'same'} for k in ['single', 'package', 'other']}
+    assert publication_exclusions([single, package], drafts) == {'package': ('paket_kopya', 'single')}
+    for ambiguous in [[single, dict(single, kod='other')], [package, dict(package, kod='other')]]:
+        try:
+            publication_exclusions(ambiguous, drafts)
+            raise AssertionError('Ambiguous duplicate group accepted')
+        except ValueError:
+            pass
+    for kod in ['', 'NOT_A_STOCK_CODE', *EXCLUDED]:
         try:
             generate(kod)
             raise AssertionError('Unknown code accepted')
@@ -120,13 +139,15 @@ def main():
         raise AssertionError('Unknown unit accepted')
     except ValueError:
         pass
-    print('PASS: 230/230 preserved unique stock codes; all required fields; stable names, real brands, categories and flags')
+    assert sum('birim_yok' in r['bayraklar'] for r in records) == 30
+    print('PASS: 210 retained products; 18 package duplicates and 2 confirmed site duplicates excluded; 0 duplicate names')
+    print('PASS: 105 links use existing ZİNCİRLER category; proposal only in oneri_kategori; no stale duplicate flags')
     print('PASS: visible ACIKLAMA >=1800 (minimum ' + str(min(visible_lengths)) + '); SEO <=60/155; keywords <=950; repeated paragraphs >120 chars=0')
     print('PASS: full URUNADI <=2/product, only heading/first sentence; code <=2 further mentions; section facts and numeric SEO; no vague multi-row wording')
     print('PASS: no forbidden brand/boilerplate, U+0307 or em dash; Turkish decimal values; 2 allowed links/product; table summary and direct technical lists')
-    print('PASS: source-backed geometry; SS/links have no breaking load; units, 70 package quantities and 30 birim_yok flags')
-    print('PASS: 17 collision groups (18 extra rows) flagged against every matching stock code; 17 existing chain pages compared; possible duplicates=2')
-    print('PASS: 230 existing 500x500 JPG mappings; no forbidden image filename; empty/invalid code and unit tests')
+    print('PASS: source-backed geometry; SS/links have no breaking load; 52 package quantities and 30 unchanged missing sales units')
+    print('PASS: 17 original name groups retain single rows; triple group resolved; normal/empty/ambiguous exclusion tests')
+    print('PASS: 210 existing 500x500 JPG mappings; no forbidden image filename; empty/invalid/excluded code and unit tests')
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path='/home/ubuntu/.local/bin/google-chrome', headless=True, args=['--no-sandbox'])
         page = browser.new_page(viewport={'width': 1280, 'height': 1000}, device_scale_factor=1)

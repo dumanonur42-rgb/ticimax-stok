@@ -5,6 +5,7 @@ from collections import Counter
 from pathlib import Path
 from PIL import Image, ImageChops, ImageStat, UnidentifiedImageError
 from prepare_images import ROOT, ROWS, compose, name, slug, source_key
+from content_zincir import ACTIVE_ROWS
 
 
 def check_composition():
@@ -43,9 +44,12 @@ def main():
     sources = json.loads((ROOT / 'work/gorsel_kaynaklar.json').read_text())
     research = json.loads((ROOT / 'work/gorsel_arama.json').read_text())
     assert set(records) == {r['kod'] for r in ROWS} and len(records) == 230
+    records = {r['kod']: records[r['kod']] for r in ACTIVE_ROWS}
+    exported = [json.loads(line) for line in (ROOT / 'urunler.jsonl').read_text().splitlines()]
+    assert len(exported) == 210 and set(records) == {r['kod'] for r in exported}
     used_files = set()
     header = Image.open(ROOT / 'sablon.png').convert('RGB').crop((0, 0, 500, 100))
-    for row in ROWS:
+    for row in ACTIVE_ROWS:
         record = records[row['kod']]
         assert record['URUNADI'] == name(row)
         assert record['file'] == 'gorseller/' + slug(record['URUNADI']) + '.jpg'
@@ -76,11 +80,11 @@ def main():
     assert len(list((ROOT / 'work/gorsel_onizleme').glob('tum-urunler-*.png'))) == 6
     assert (ROOT / 'work/gorsel_onizleme/tum-230-urun.png').is_file()
     counts = Counter(r['resim_seviye'] for r in records.values())
-    print('PASS: 230/230 original stock codes map to an existing, decodable 500x500 JPG; missing=0')
-    print('PASS: ' + str(len(used_files)) + ' ASCII name-slug JPGs; 18 extra stock codes reuse name-based image paths; orphan files=0')
-    print('PASS: 230 source URLs, type mappings and recorded Yandex searches; 24 source variants')
+    print('PASS: 210/210 retained stock codes map to an existing, decodable 500x500 JPG; missing=0')
+    print('PASS: ' + str(len(used_files)) + ' ASCII name-slug JPGs; shared package images retained; unused site-duplicate images removed; orphan files=0')
+    print('PASS: 210 retained source mappings; original 230-product source research preserved')
     print('PASS: Yamansa template header; products within y=100..350; white logo-free bottom band; no package text or forbidden brand in titles')
-    print('PASS: 6 detailed contact sheets cover all 230 stock codes; full 230-product overview exists')
+    print('PASS: 6 archived research contact sheets and overview preserve the original 230-product research')
     print('COUNTS: birebir=' + str(counts['birebir']) + ' ayni_tip=' + str(counts['ayni_tip']) + ' gorsel_yok=0')
     check_composition()
 

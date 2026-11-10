@@ -673,20 +673,6 @@
     ]
   },
   {
-    "kod": "ORK ZB 16B220",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZB 20B1",
     "match": true,
     "draw": true,
@@ -891,33 +877,6 @@
     ]
   },
   {
-    "kod": "ORK ZB P06B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZB P06B2100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZB P06B320",
     "match": true,
     "draw": true,
@@ -932,61 +891,7 @@
     ]
   },
   {
-    "kod": "ORK ZB P08B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZB P08B2100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZB P08B320",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
-    "kod": "ORK ZB P10B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZB P10B2100",
     "match": true,
     "draw": true,
     "keys": [
@@ -1027,48 +932,7 @@
     ]
   },
   {
-    "kod": "ORK ZB P12B250",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZB P12B320",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
-    "kod": "ORK ZB P16B120",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZB P16B220",
     "match": true,
     "draw": true,
     "keys": [
@@ -1345,32 +1209,6 @@
     "keys": [
       "z",
       "p",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZİN 04B1",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZİN 05B1",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
       "n"
     ]
   },
@@ -2230,48 +2068,7 @@
     ]
   },
   {
-    "kod": "ORK ZK P06B2100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZK P06B320",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
-    "kod": "ORK ZK P08B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZK P08B2100",
     "match": true,
     "draw": true,
     "keys": [
@@ -2299,61 +2096,7 @@
     ]
   },
   {
-    "kod": "ORK ZK P10B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZK P10B2100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
     "kod": "ORK ZK P10B320",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n",
-      "pt"
-    ]
-  },
-  {
-    "kod": "ORK ZK P12B1100",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
-    ]
-  },
-  {
-    "kod": "ORK ZK P12B250",
     "match": true,
     "draw": true,
     "keys": [
@@ -2378,19 +2121,6 @@
       "b1",
       "n",
       "pt"
-    ]
-  },
-  {
-    "kod": "ORK ZK P16B150",
-    "match": true,
-    "draw": true,
-    "keys": [
-      "p",
-      "h",
-      "d1",
-      "d3",
-      "b1",
-      "n"
     ]
   },
   {

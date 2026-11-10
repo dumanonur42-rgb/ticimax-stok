@@ -28,6 +28,10 @@ if __name__ == '__main__':
     parser.add_argument('--kod')
     args = parser.parse_args()
     products = generate_all()
+    used_images = {r['resim'] for r in products}
+    for path in (ROOT / 'gorseller').glob('*.jpg'):
+        if str(path.relative_to(ROOT)) not in used_images:
+            path.unlink()
     if args.kod:
         products = [r for r in products if r['kod'] == args.kod]
         if not products:
@@ -35,7 +39,7 @@ if __name__ == '__main__':
     (ROOT / 'urunler.jsonl').write_text(''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in products))
     out = ROOT / 'work/onizleme'
     out.mkdir(exist_ok=True)
-    selected = {'ORK ZK P08B1100', 'İWİ ZİN 12B2', 'TMP ZİN 16B4'}
+    selected = {'ORK ZK 08B1', 'İWİ ZİN 12B2', 'TMP ZİN 16B4'}
     for product in products:
         if product['kod'] in selected:
             path = out / (Path(product['resim']).stem + '.html')

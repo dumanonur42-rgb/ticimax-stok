@@ -17,6 +17,31 @@ CHAIN = BASE + 'ZİNCİRLER'
 LINK = BASE + 'ZİNCİR KİLİTLERİ VE BAKLALARI'
 DRAW_LABELS = [('p', 'Adım (p)'), ('b1', 'İç Genişlik (b1)'), ('d3', 'Makara Çapı (d3)'), ('d1', 'Pim Çapı (d1)'), ('h', 'Plaka Yüksekliği (h)'), ('pt', 'Sıralar Arası Mesafe (pt)'), ('pim_delik_capi', 'Pim Delik Çapı')]
 VARIANTS = {row['kod']: i for i, row in enumerate(sorted(ROWS, key=lambda r: hashlib.sha256(r['kod'].encode()).hexdigest()))}
+SITE_DUPLICATES = {'ORK ZİN 04B1': 'YMN ZNC 04B-1', 'ORK ZİN 05B1': 'YMN ZNC 05B-1'}
+
+
+def publication_exclusions(rows, images):
+    groups = defaultdict(list)
+    for row in rows:
+        groups[images[row['kod']]['URUNADI']].append(row)
+    excluded = {}
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        singles = [r for r in group if not r.get('paket_adet') and r.get('birim') != 'PAKET']
+        if len(singles) != 1:
+            raise ValueError('Aynı ad grubunda tek bir tekli ürün bulunmalıdır: ' + ', '.join(r['kod'] for r in group))
+        for row in group:
+            if row['kod'] != singles[0]['kod']:
+                excluded[row['kod']] = ('paket_kopya', singles[0]['kod'])
+    for row in rows:
+        if row['kod'] in SITE_DUPLICATES:
+            excluded[row['kod']] = ('site_kopya', SITE_DUPLICATES[row['kod']])
+    return excluded
+
+
+EXCLUDED = publication_exclusions(ROWS, IMAGES)
+ACTIVE_ROWS = [r for r in ROWS if r['kod'] not in EXCLUDED]
 
 
 def decimal(value):
@@ -301,11 +326,11 @@ def seo_description(row, values):
 
 
 def generate(kod, variant=None):
-    row = next((r for r in ROWS if r['kod'] == kod), None)
+    row = next((r for r in ACTIVE_ROWS if r['kod'] == kod), None)
     if row is None:
         raise ValueError('Stok kodu bulunamadı: ' + kod)
     brand = brand_name(row)
-    flags = list(row['bayraklar'])
+    flags = [f for f in row['bayraklar'] if not f.startswith('ayni_ad:') and f != 'olasi_kopya']
     if any('marka_uyusmazligi' in f for f in flags):
         flags.append('marka_celiskisi')
     if kod == 'AYZ ZİN 16B2':
@@ -314,8 +339,6 @@ def generate(kod, variant=None):
         flags.append('olcu_celiskisi')
     if row['tip'] == 'disli':
         flags.append('gorsel_seri_fotografi:9_dis_birebir_degil')
-    if brand == 'Yamansa' and row['tip'] == 'zincir' and row['sira'] == 1 and not row['paslanmaz'] and not row['pim_delikli'] and row['iso_kod'] in EXISTING_CODES:
-        flags.append('olasi_kopya')
     values, specs, source = technical(row, flags)
     pitch = decimal(values['p']['deger'])
     title = IMAGES[kod]['URUNADI']
@@ -329,23 +352,13 @@ def generate(kod, variant=None):
     if row['hatve_inc']:
         summary.insert(1, ('İnç Kodu', row['hatve_inc'] + '"'))
     onyazi = '<table><tbody><tr>' + ''.join('<td><strong>' + html.escape(k) + '</strong> ' + html.escape(v) + '</td>' for k, v in summary) + '</tr></tbody></table>'
-    category = BASE + 'ÇİFT SIRA ZİNCİR DİŞLİLERİ' if row['tip'] == 'disli' else LINK if row['tip'] in {'bakla', 'kilit'} else CHAIN
+    category = BASE + 'ÇİFT SIRA ZİNCİR DİŞLİLERİ' if row['tip'] == 'disli' else CHAIN
     words = keywords(row, brand, ref, pitch)
-    return {'kod': kod, 'URUNADI': title, 'MARKA': brand, 'KATEGORI': category, 'EK_KATEGORILER': [CHAIN] if category == LINK else [], 'yeni_kategori': category == LINK,
+    return {'kod': kod, 'URUNADI': title, 'MARKA': brand, 'KATEGORI': category, 'EK_KATEGORILER': [], 'yeni_kategori': False, 'oneri_kategori': LINK if row['tip'] in {'bakla', 'kilit'} else None,
             'ONYAZI': onyazi, 'ACIKLAMA': description, 'ANAHTARKELIME': words,
             'SEO_SAYFABASLIK': clip(title, 60), 'SEO_SAYFAACIKLAMA': seo_description(row, values), 'SEO_ANAHTARKELIME': words,
             'resim': IMAGES[kod]['file'], 'resim_seviye': IMAGES[kod]['resim_seviye'], 'resim_kaynak': IMAGES[kod]['resim_kaynak'], 'teknik_kaynak': source, 'bayraklar': sorted(set(flags))}
 
 
 def generate_all():
-    groups = defaultdict(list)
-    for row in ROWS:
-        groups[IMAGES[row['kod']]['URUNADI']].append(row['kod'])
-    records = []
-    for row in ROWS:
-        name = IMAGES[row['kod']]['URUNADI']
-        group = sorted(groups[name])
-        record = generate(row['kod'])
-        record['bayraklar'] += ['ayni_ad:' + k for k in group if k != row['kod']]
-        records.append(record)
-    return records
+    return [generate(row['kod']) for row in ACTIVE_ROWS]
