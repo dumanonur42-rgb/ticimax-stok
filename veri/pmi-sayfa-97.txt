@@ -1,0 +1,34 @@
+Ball Chain Heavy Load Type, SMA Series
+E1 E2
+Master rail
+Subsidiary rail
+Reference side Reference side
+Fig.1
+Interchangeable Type
+Code of Carriage
+Series：SMA
+Size：15, 20, 25
+Carriage type：Heavy load
+A : Flange type, mounting from top
+E : Flange type, mounting either from top or bottom
+S : Square type
+Dust protection option of carriage：
+No symbol, UU, SS, ZZ, DD, KK, LL, RR
+Preload：FC (Light preload), F0 (Medium preload)
+Accuracy grade：N, H, P
+Code of special carriage：No symbol, A, B,  ...
+SMA　25　A　　SS　   FC   N
+MSA    25    R    1200    - 20    / 40    N
+Code of Rail
+Series：MSA
+Size：15, 20, 25
+Rail type：R (Counter-bore type), T (Tapped hole type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.1)
+Rail hole pitch to the end side (E2, see Fig.1)
+Accuracy grade：N, H, P
+Code of special rail：No symbol, A, B ...
+Dust protection option of rail：No symbol, /CC, /MC , /MD
+( refer to Code of Contamination for Rail [B1-243] )
+LINEAR GUIDEWAY
+B1-193B1-192

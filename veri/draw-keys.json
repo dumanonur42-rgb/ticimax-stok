@@ -1,47 +1,902 @@
 [
   {
-    "k": "W",
-    "l": "Genişlik (W)",
-    "v": "44 mm"
+    "kod": "ORK LA HGH20HA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGH20HA.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "H",
-    "l": "Yükseklik (H)",
-    "v": "30 mm"
+    "kod": "ORK LA HGH25HA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGH25HA.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "L",
-    "l": "Uzunluk (L)",
-    "v": "92,2 mm"
+    "kod": "ORK LA HGH30HA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGH30HA.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "B",
-    "l": "B",
-    "v": "32 mm"
+    "kod": "ORK LA HGH35HA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGH35HA.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "C",
-    "l": "C",
-    "v": "50 mm"
+    "kod": "ORK LA HGH45HA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGH45HA.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "L1",
-    "l": "L1",
-    "v": "65,2 mm"
+    "kod": "ORK LA HGW15CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW15CC.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "H1",
-    "l": "H1",
-    "v": "4,6 mm"
+    "kod": "ORK LA HGW20CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW20CC.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "N",
-    "l": "N",
-    "v": "12 mm"
+    "kod": "ORK LA HGW20HC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW20HC.svg",
+    "eksik_veri": "null"
   },
   {
-    "k": "M",
-    "l": "Vida (M x l)",
-    "v": "M5×6"
+    "kod": "ORK LA HGW25CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW25CC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW25HC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW25HC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW30CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW30CC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW30HC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW30HC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW35CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW35CC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW35HC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW35HC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW45CC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW45CC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LA HGW45HC",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/ORK_LA_HGW45HC.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR15",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR15.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR20",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR20.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR25",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR25.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR30",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR30.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR35",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR35.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR HGR45",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "WR",
+      "HR",
+      "P"
+    ],
+    "svg": "onizleme/ORK_LR_HGR45.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA15E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA15E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA15S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA15S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA15SZZ",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA15SZZ.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA20S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA20S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA25S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA25S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA25SZZ",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA25SZZ.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30A",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30A.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30EZZ",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30EZZ.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30LE",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30LE.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30LS",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30LS.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA30S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA30S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35A",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35A.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35LA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35LA.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35LE",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35LE.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA35SZZ",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA35SZZ.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA45E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA45E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA45LA",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA45LA.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA45LE",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA45LE.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA45LS",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA45LS.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSA45S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSA45S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB15E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB15E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB15S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB15S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB20E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB20E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB25S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB25S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB30E",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB30E.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB30S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB30S.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "PMI MSB35S",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "H",
+      "L",
+      "B",
+      "C",
+      "L1",
+      "H1",
+      "N",
+      "M"
+    ],
+    "svg": "onizleme/PMI_MSB35S.svg",
+    "eksik_veri": "null"
   }
 ]

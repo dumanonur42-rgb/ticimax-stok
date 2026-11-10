@@ -1,0 +1,97 @@
+Interchangeable Type
+Note: De/f_inition of interchangeable: It is con/f_ined to the carriage on the single rail, not including the exchange of
+            multiple rails and carriages.
+Model
+No. Item
+Accuracy Grade
+Normal
+N
+High
+H
+Precision
+P
+15
+20
+Tolerance for height H ±0.1 ±0.03 0     -0.03
+Height diﬀerence ΔH 0.02 0.01 0.006
+Tolerance for distance W2 ±0.1 ±0.03 0     -0.03
+Diﬀerence in distance W2(ΔW2) 0.02 0.01 0.006
+Running parallelism of surface C with
+surface A ΔC (see the Table 1)
+Running parallelism of surface D with
+surface B ΔD (see the Table 1)
+25
+30
+35
+Tolerance for height H ±0.1 ±0.04  0     -0.04
+Height diﬀerence ΔH 0.02 0.015 0.007
+Tolerance for distance W2 ±0.1 ±0.04  0     -0.04
+Diﬀerence in distance W2(ΔW2) 0.03 0.015 0.007
+Running parallelism of surface C with
+surface A ΔC (see the Table 1)
+Running parallelism of surface D with
+surface B ΔD (see the Table 1)
+45
+55
+Tolerance for height H ±0.1 ±0.05 0     -0.05
+Height diﬀerence ΔH 0.03 0.015 0.007
+Tolerance for distance W2 ±0.1 ±0.05 0     -0.05
+Diﬀerence in distance W2(ΔW2) 0.03 0.02 0.01
+Running parallelism of surface C with
+surface A ΔC (see the Table 1)
+Running parallelism of surface D with
+surface B ΔD (see the Table 1)
+65
+Tolerance for height H ±0.1 ±0.07 0     -0.07
+Height diﬀerence ΔH 0.03 0.02 0.01
+Tolerance for distance W2 ±0.1 ±0.07 0     -0.07
+Diﬀerence in distance W2(ΔW2) 0.03 0.025 0.015
+Running parallelism of surface C with
+surface A ΔC (see the Table 1)
+Running parallelism of surface D with
+surface B ΔD (see the Table 1)
+Series
+Preload grade
+Light preload (FC) Medium preload (F0) Heavy preload (F1)
+MSA15
+0~0.02C 0.03~0.05C
+-
+MSA20
+0.05~0.08C
+MSA25
+MSA30
+MSA35
+MSA45
+MSA55
+MSA65
+MSA20L
+0~0.02C 0.03~0.05C 0.05~0.08C
+MSA25L
+MSA30L
+MSA35L
+MSA45L
+MSA55L
+MSA65L
+Preload Grade
+The Shoulder Height and Corner Radius for Installation
+Note: C is basic dynamic load rating in above table. Refer to the speci/f_ication of products,  please.
+h2
+h1 H2
+r2
+r1
+Model No. r1
+(max.)
+r2
+(max.) h1 h2 H2
+15 0.5 0.5 3 4 4.2
+20 0.5 0.5 3.5 5 5
+25 1 1 5 5 6.5
+30 1 1 5 5 8
+35 1 1 6 6 9.5
+45 1 1 8 8 10
+55 1.5 1.5 10 10 13
+65 1.5 1.5 10 10 15
+Unit:mm MSA series
+Heavy Load Type, MSA Series
+LINEAR GUIDEWAY
+B1-53B1-52

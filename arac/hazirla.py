@@ -49,16 +49,15 @@ def main():
     desc += ''.join('<div class="ysc"><h3>' + h + '</h3><p>' + p + '</p></div>' for h, p in sections)
     desc += '<h3>Teknik Özellikler</h3><ul>' + ''.join('<li><strong>' + escape(k) + ':</strong> ' + escape(v) + '</li>' for k, v in specs) + '</ul></div></div><div class="teknikDetay"></div></div>'
     words = 'HGH20HA, HGH 20HA, HGH 20 HA, HGH-20HA, HGH-20-HA, hgh20, hgh 20 ha, hgh-20ha, lineer araba, dar uzun lineer araba, lineer kızak arabası, lineer kizak arabasi, linear guide block, 20 mm lineer araba, 20mm lineer araba, 44x30x92,2 mm, 44 x 30 x 92,2 mm, M5x6, M5 x 6, 32x50 mm, 32 x 50 mm, Yamansa HGH20HA'
-    item = dict(kod='ORK LA HGH20HA', URUNADI=title, MARKA='Yamansa', KATEGORI='LİNEER>LİNEER ARABALAR', EK_KATEGORILER=[], yeni_kategori=False, ONYAZI=onyazi, ACIKLAMA=desc, ANAHTARKELIME=words, SEO_SAYFABASLIK=title, SEO_SAYFAACIKLAMA='HGH 20HA dar uzun lineer araba: 20 mm ray boyutu, 44 mm genişlik, 92,2 mm uzunluk ve M5 x 6 bağlantı. Yamansa ekonomik model.', SEO_ANAHTARKELIME=words, resim='gorseller/hgh-20ha-dar-uzun-lineer-araba-20-mm.jpg', resim_seviye='ayni_tip', resim_kaynak=PHOTO, teknik_kaynak=[PDF], bayraklar=['eksik: Yamansa dinamik/statik yük kapasitesi ve gerçek ağırlığı için üretici verisi yok; eşdeğer markanın değerleri satış metnine aktarılmadı'])
+    item = dict(kod='ORK LA HGH20HA', URUNADI=title, MARKA='Yamansa', KATEGORI='LİNEER>LİNEER ARABALAR', EK_KATEGORILER=[], yeni_kategori=False, ONYAZI=onyazi, ACIKLAMA=desc, ANAHTARKELIME=words, SEO_SAYFABASLIK=title, SEO_SAYFAACIKLAMA='HGH 20HA dar uzun lineer araba: 20 mm ray boyutu, 44 mm genişlik, 92,2 mm uzunluk ve M5 x 6 bağlantı. Yamansa ekonomik model.', SEO_ANAHTARKELIME=words, resim='gorseller/hgh-20ha-dar-uzun-lineer-araba-20-mm.jpg', resim_seviye='birebir', resim_kaynak=PHOTO, teknik_kaynak=[PDF], bayraklar=['eksik: Yamansa dinamik/statik yük kapasitesi ve gerçek ağırlığı için üretici verisi yok; eşdeğer markanın değerleri satış metnine aktarılmadı'])
     (ROOT / 'urunler.jsonl').write_text(json.dumps(item, ensure_ascii=False) + '\n')
     im = Image.open(ROOT / 'veri/fon9.jpg').convert('RGB')
     mask = ImageChops.difference(im, Image.new('RGB', im.size, 'white')).convert('L').point(lambda p: 255 if p > 22 else 0)
     im = im.crop(mask.getbbox())
-    im.thumbnail((440, 230), Image.Resampling.LANCZOS)
+    im.thumbnail((440, 240), Image.Resampling.LANCZOS)
     template = Image.open(ROOT / 'sablon.png').convert('RGB')
     canvas = Image.new('RGB', (500, 500), 'white')
     canvas.paste(template.crop((0, 0, 500, 100)), (0, 0))
-    canvas.paste(template.crop((0, 350, 500, 500)), (0, 350))
     canvas.paste(im, ((500 - im.width) // 2, 100 + (250 - im.height) // 2))
     canvas.save(ROOT / item['resim'], quality=95, subsampling=0)
     ctx = dict(title=title, path='/hgh-20ha-dar-uzun-lineer-araba-20-mm', crumbs=['Anasayfa', 'LİNEER', 'LİNEER ARABALAR'], specs=[dict(l=k, v=v) for k, v in specs], onyazi=[dict(l=k, v=v) for k, v in opening])

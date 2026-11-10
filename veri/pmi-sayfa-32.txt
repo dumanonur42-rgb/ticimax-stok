@@ -1,0 +1,104 @@
+MP MR
+12
+2
+WW
+H
+H
+T
+W
+B4-Sxl
+MY
+C
+L
+L
+K
+(G)
+P
+Ød
+E
+ØD
+4-Ød
+N
+h
+H1
+1
+1
+Dimensions of MSA-S / MSA-LS
+Unit: mm
+Note: The basic dynamic load rating C of ball type is based on the 50 km for nomonal life. The conversion between C for
+               50 km and C100 for 100 km is C=1.26 x C100.
+Note*: Single: Single carriage/ Double: Double carriages closely contacting with each other.
+Dimensions of MSA
+Model No.
+Rail dimension Basic load rating Static moment rating Weight
+Width
+W1
+Height
+H1
+Pitch
+P
+E
+std. D × h × d
+Dynamic
+C
+kN
+Static
+Co
+kN
+MP
+kN-m
+MY
+kN-m MR
+kN-m
+Carriage
+kg
+Rail
+kg/mSingle* Double* Single* Double*
+MSA 15 S 15 15 60 20 7.5×5.3×4.5 11.8 18.9 0.12 0.68 0.12 0.68 0.14 0.18 1.5
+MSA 20 S
+MSA 20 LS 20 18 60 20 9.5×8.5×6 19.2 23.3 29.5 39.3 0.23 0.39 1.42 2.23 0.23 0.39 1.42 2.23 0.29 0.38 0.3 0.39 2.4
+MSA 25 S
+MSA 25 LS 23 22 60 20 11×9×7 28.1 34.4 42.4 56.6 0.39 0.67 2.20 3.52 0.39 0.67 2.20 3.52 0.48 0.63 0.52 0.68 3.4
+MSA 30 S
+MSA 30 LS 28 26 80 20 14×12×9 39.2 47.9 57.8 77.0 0.62 1.07 3.67 5.81 0.62 1.07 3.67 5.81 0.79 1.05 0.86 1.12 4.8
+MSA 35 S
+MSA 35 LS 34 29 80 20 14×12×9 52.0 63.6 75.5 100.6 0.93 1.60 5.47 8.67 0.93 1.60 5.47 8.67 1.25 1.67 1.45 1.9 6.6
+MSA 45 S
+MSA 45 LS 45 38 105 22.5 20×17×14 83.8 102.4 117.9 157.3 1.81 3.13 10.67 16.95 1.81 3.13 10.67 16.95 2.57 3.43 2.83 3.7 11.5
+MSA 55 S
+MSA 55 LS 53 44 120 30 23×20×16 123.6 151.1 169.8 226.4 3.13 5.40 17.57 28.11  3.13 5.40 17.57 28.11  4.50 6.00 4.12 4.91 15.5
+MSA 65 S
+MSA 65 LS 63 53 150 35 26×22×18 198.8 253.5 265.3 375.9 6.11 11.84 33.71 57.32 6.11 11.84 33.71 57.32 8.36 11.84 6.43 8.76 21.9
+Unit: mm
+Dimensions of MSA
+Model No.
+External dimension Carriage dimension
+Height
+H
+Width
+W
+Length
+L W2 H2 B C S × l L1 T N G K d1
+Grease
+Nipple
+MSA 15 S 28 34 56.3 9.5 4.2 26 26 M4×5 39.3 7.2 8.3 7 5.4 3.3 G-M4
+MSA 20 S
+MSA 20 LS 30 44 72.9 88.8 12 5 32 36 50 M5×6 51.3 67.2 8 5 12 5 3.3 G-M6
+MSA 25 S
+MSA 25 LS 40 48 81.6 100.6 12.5 6.5 35 35 50 M6×8 59 78 10 10 12 5.5 3.3 G-M6
+MSA 30 S
+MSA 30 LS 45 60 97 119.2 16 8 40 40 60 M8×10 71.4 93.6 11.7 10 12 6 3.3 G-M6
+MSA 35 S
+MSA 35 LS 55 70 111.2 136.6 18 9.5 50 50 72 M8×12 81 106.4 12.7 15 11.5 6.5 3.3 G-M6
+MSA 45 S
+MSA 45 LS 70 86 137.7 169.5 20.5 10 60 60 80 M10×17 102.5 134.3 16 20 13.5 7 3.3 G-PT 1/8
+MSA 55 S
+MSA 55 LS 80 100 162.1 200.1 23.5 13 75 75 95 M12×18 119.5 157.5 18 21 13.5 12.4 3.3 G-PT 1/8
+MSA 65 S
+MSA 65 LS 90 126 198.6 252.6 31.5 15 76 70 120 M16×20 149 203 23 19 13.5 15.9 3.3 G-PT 1/8
+Speci/f_ications
+Speci/f_ications Product
+Product
+LINEAR GUIDEWAY
+B1-63B1-62
+LINEAR GUIDEWAY

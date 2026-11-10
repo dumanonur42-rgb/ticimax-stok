@@ -1,0 +1,146 @@
+Model No.
+External dimension Carriage dimension
+Height
+H
+Width
+W
+Length
+L W2 H2 B C S × l L1 T T1 N G K d1
+Grease
+Nipple
+MSB 15 TE
+MSB 15 E 24 52 40.2 57.2 18.5 4.5 41 - 26 M5×7 23.5 40.5 5 7 6 5.5 3.2 3.3 G-M4
+MSB 20 TE
+MSB 20 E 28 59 48 67 19.5 6 49 - 32 M6×9 29 48 5 9 5.5 12 3.6 3.3 G-M6
+MSB 25 TE
+MSB 25 E 33 73 60.2 82 25 7 60 - 35 M8×10 38.7 60.5 7 10 6 12 4.5 3.3 G-M6
+MSB 30 TE
+MSB 30 E 42 90 68 96.7 31 9.5 72 - 40 M10×10 43.3 72 7 10 8 12 6 3.3 G-M6
+MSB 35 TE
+MSB 35 E
+MSB 35 LE
+48 100
+78
+112
+137.5
+33 9.5 82
+-
+50
+62
+M10×13
+46
+80
+105.5
+9 13 8.5 12 6.2 3.3 G-M6
+Note: Rail mounting holes for M3 (6x4.5x3.5) and M4 (7.5x5.3x4.5) are available for MSB15 rail. The codes of rail
+              type are MSB15R for M3 mounting holes, and MSB15U for M4 mounting holes.
+Note: The basic dynamic load rating C of ball type is based on the 50 km for nomonal life. The conversion between C for
+                50 km and C100 for 100 km is C=1.26 x C100.
+Note*: Single: Single carriage/ Double: Double carriages closely contacting with each other.
+MP MY MR
+H
+T1 T
+W2
+W
+B
+W1
+H2
+S1
+S2
+MSB-TEMSB-E
+2-Sxl
+4-Sxl
+4-Ød1
+N N
+K
+(G)L
+L1K
+(G) L
+L1
+C
+h
+ØD
+Ød
+PE
+H1
+Dimensions of MSB-TE / MSB-E
+Unit: mm
+Dimensions of MSB
+Model No.
+Rail dimension Basic load rating Static moment rating Weight
+Width
+W1
+Height
+H1
+Pitch
+P
+E
+std. D × h × d
+Dynamic
+C
+kN
+Static
+Co
+kN
+MP
+kN-m
+MY
+kN-m MR
+kN-m
+Carriage
+kg
+Rail
+kg/mSingle* Double* Single* Double*
+MSB 15 TE
+MSB 15 E 15 12.5 60 20 6×4.5×3.5 (7.5×5.3×4.5) 6.7 10.0 9.6 16.9 0.04 0.10 0.26 0.61 0.04 0.10 0.26 0.61 0.07 0.13 0.12 0.21 1.2
+MSB 20 TE
+MSB 20 E 20 15 60 20 9.5×8.5×6 9.7 13.9 14.2 23.6 0.07 0.18 0.44 0.97 0.07 0.18 0.44 0.97 0.14 0.24 0.20 0.34 2
+MSB 25 TE
+MSB 25 E 23 18 60 20 11×9×7 15.6 22.3 22.1 36.9 0.13 0.35 0.91 1.87 0.13 0.35 0.91 1.87 0.26 0.43 0.39 0.60 3
+MSB 30 TE
+MSB 30 E 28 23 80 20 11×9×7 23.1 32.9 31.8 53.1 0.23 0.60 1.39 3.15 0.23 0.60 1.39 3.15 0.45 0.74 0.65 1.08 4.4
+MSB 35 TE
+MSB 35 E
+MSB 35 LE
+34 27.5 80 20 14×12×9
+35.7
+52.0
+63.6
+44.0
+75.5
+100.6
+0.34
+0.93
+1.60
+2.81
+5.47
+8.67
+0.34
+0.93
+1.60
+2.81
+5.47
+8.67
+0.75
+1.28
+1.67
+0.91
+1.61
+1.80
+6.2
+Model No.
+Bolt Size
+S1 S2
+MSB 15 M5 M4
+MSB 20 M6 M5
+MSB 25 M8 M6
+MSB 30 M10 M8
+MSB 35 M10 M8
+Unit: mm
+Dimensions of MSB
+Speci/f_ications
+Speci/f_ications Product
+Product
+LINEAR GUIDEWAY
+B1-81B1-80
+LINEAR GUIDEWAY

@@ -1,0 +1,84 @@
+Note: De/f_inition of interchangeable: It is con/f_ined to the carriage on the single rail, not including the exchange of
+            multiple rails and carriages.
+Model
+No. Item
+Accuracy Grade
+Normal
+N
+High
+H
+Precision
+P
+15
+20
+Tolerance for height H ±0.1 ±0.03 0     -0.03
+Height diﬀerence ΔH 0.02 0.01 0.006
+Tolerance for distance W2 ±0.1 ±0.03 0     -0.03
+Diﬀerence in distance W2(ΔW2) 0.02 0.01 0.006
+Running parallelism of surface C
+with surface A ΔC (see the Table 8)
+Running parallelism of surface D
+with surface B ΔD (see the Table 8)
+25
+30
+35
+Tolerance for height H ±0.1 ±0.04  0     -0.04
+Height diﬀerence ΔH 0.02 0.015 0.007
+Tolerance for distance W2 ±0.1 ±0.04  0     -0.04
+Diﬀerence in distance W2(ΔW2) 0.03 0.015 0.007
+Running parallelism of surface C
+with surface A ΔC (see the Table 8)
+Running parallelism of surface D
+with surface B ΔD (see the Table 8)
+45
+Tolerance for height H ±0.1 ±0.05 0     -0.05
+Height diﬀerence ΔH 0.03 0.015 0.007
+Tolerance for distance W2 ±0.1 ±0.05 0     -0.05
+Diﬀerence in distance W2(ΔW2) 0.03 0.02 0.01
+Running parallelism of surface C
+with surface A ΔC (see the Table 8)
+Running parallelism of surface D
+with surface B ΔD (see the Table 8)
+Interchangeable Type Preload Grade
+The Shoulder Height and Corner Radius for Installation
+Series
+Preload grade
+Light preload (FC) Medium preload (F0) Heavy preload (F1)
+SME15
+0.01~0.03C 0.04~0.06C
+-
+0.07~0.09C
+SME20
+SME25
+SME30
+SME35
+SME45
+SME15L
+0.01~0.03C 0.04~0.06C 0.07~0.09C
+SME20L
+SME25L
+SME30L
+SME35L
+SME45L
+Unit: mm
+Model
+No.
+r1
+(max.)
+r2
+(max.) h1 h2 H2
+15 0.5 0.5 2.5 5 3.5
+20 0.5 0.5 3.5 5 4.7
+25 1 1 5 6 5.8
+30 1 1 5 7 7.5
+35 1 1 6 8 8
+45 1 1 8 8 10
+SME series
+h2
+h1 H2
+r2
+r1
+Note: C is basic dynamic load rating in above table. Refer to the speci/f_ication of products,  please.
+Ball Chain Heavy Load Type, SME Series
+LINEAR GUIDEWAY
+B1-175B1-174

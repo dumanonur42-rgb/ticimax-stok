@@ -1,0 +1,498 @@
+{
+  "HGH20HA": {
+    "dosya": "veri/HGH20HA-1.jpg",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2021-03-10/en-HGH20HA--5-.jpg",
+    "seviye": "birebir",
+    "incelendi": true
+  },
+  "HGH25HA": {
+    "dosya": "veri/HGH25HA-1.jpg",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2021-03-10/en-HGH25HA--4-.jpg",
+    "seviye": "birebir",
+    "incelendi": true
+  },
+  "HGH30HA": {
+    "dosya": "veri/HGH30HA-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-08-23/en-HGH30HA.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGH30HA-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      245,
+      230,
+      525,
+      450
+    ]
+  },
+  "HGH35HA": {
+    "dosya": "veri/HGH35HA-1.jpg",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2021-03-11/en-HGH35HA--8-.jpg",
+    "seviye": "birebir",
+    "incelendi": true
+  },
+  "HGH45HA": {
+    "dosya": "veri/HGH45HA-1.jpg",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2021-03-11/en-HGH45HA--2-.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGW15CC": {
+    "dosya": "veri/HGW15CC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW15CC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW15CC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      250,
+      220,
+      480,
+      430
+    ]
+  },
+  "HGW20CC": {
+    "dosya": "veri/HGW20CC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW20CC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW20CC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      245,
+      220,
+      500,
+      440
+    ]
+  },
+  "HGW20HC": {
+    "dosya": "veri/HGW20HC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW20HC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW20HC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      230,
+      200,
+      520,
+      460
+    ]
+  },
+  "HGW25CC": {
+    "dosya": "veri/HGW25CC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW25CC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW25CC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      240,
+      190,
+      650,
+      530
+    ],
+    "on_plan": [
+      [
+        300,
+        285
+      ],
+      [
+        450,
+        200
+      ],
+      [
+        612,
+        287
+      ],
+      [
+        600,
+        311
+      ],
+      [
+        619,
+        333
+      ],
+      [
+        455,
+        451
+      ],
+      [
+        386,
+        488
+      ],
+      [
+        286,
+        384
+      ],
+      [
+        281,
+        334
+      ]
+    ]
+  },
+  "HGW25HC": {
+    "dosya": "veri/HGW25HC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW25HC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW25HC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      255,
+      210,
+      515,
+      455
+    ]
+  },
+  "HGW30CC": {
+    "dosya": "veri/HGW30CC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-10-27/en-HGW30CC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW30CC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      220,
+      125,
+      660,
+      535
+    ]
+  },
+  "HGW30HC": {
+    "dosya": "veri/HGW30HC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW30HC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW30HC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      245,
+      210,
+      515,
+      450
+    ]
+  },
+  "HGW35CC": {
+    "dosya": "veri/HGW35CC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW35CC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW35CC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      255,
+      225,
+      520,
+      470
+    ]
+  },
+  "HGW35HC": {
+    "dosya": "veri/HGW35HC-0-kesim.png",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW35HC.jpg",
+    "seviye": "birebir",
+    "incelendi": true,
+    "ham_dosya": "veri/HGW35HC-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      170,
+      150,
+      590,
+      550
+    ]
+  },
+  "HGW45CC": {
+    "dosya": "veri/arama-HGW-CC-bottom-green-0-kesim.png",
+    "url": "https://ae-pic-a1.aliexpress-media.com/kf/S8d1b721140e94d03be423f459a974c744.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-HGW-CC-bottom-green-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      480,
+      225,
+      800,
+      550
+    ]
+  },
+  "HGW45HC": {
+    "dosya": "veri/HGW45HC-1.jpg",
+    "url": "https://www.fonlinearguide.com/Uploads/products/2021-03-15/en-HGW45HC--4-.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR15": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR20": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR25": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR30": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR35": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "HGR45": {
+    "dosya": "veri/arama-HGR15-HGR20-rail-0.jpg",
+    "url": "https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA15E": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA15S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA15SZZ": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA20S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA25S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA25SZZ": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA30A": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA30E": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA30EZZ": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA30LE": {
+    "dosya": "veri/arama-PMI-MSA30LE-10-kesim.png",
+    "url": "https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA30LE-10.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA30LS": {
+    "dosya": "veri/arama-PMI-MSA45LS-block-8-kesim.png",
+    "url": "https://image.made-in-china.com/2f0j00SyjcFqHMcJkg/PMI-MSA45LS-Support-Roller-CNC-Linear-Motion-Guide-Rail.webp",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA45LS-block-8.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA30S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA35A": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA35E": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA35LA": {
+    "dosya": "veri/arama-PMI-MSA30LE-10-kesim.png",
+    "url": "https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA30LE-10.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA35LE": {
+    "dosya": "veri/arama-PMI-MSA30LE-10-kesim.png",
+    "url": "https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA30LE-10.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA35S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA35SZZ": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSA45E": {
+    "dosya": "veri/arama-PMI-MSA15E-13-kesim.png",
+    "url": "https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA15E-13.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA45LA": {
+    "dosya": "veri/arama-PMI-MSA30LE-10-kesim.png",
+    "url": "https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA30LE-10.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA45LE": {
+    "dosya": "veri/arama-PMI-MSA30LE-10-kesim.png",
+    "url": "https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA30LE-10.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA45LS": {
+    "dosya": "veri/arama-PMI-MSA45LS-block-8-kesim.png",
+    "url": "https://image.made-in-china.com/2f0j00SyjcFqHMcJkg/PMI-MSA45LS-Support-Roller-CNC-Linear-Motion-Guide-Rail.webp",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSA45LS-block-8.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSA45S": {
+    "dosya": "veri/arama-PMI-MSA15S-0.jpg",
+    "url": "https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg",
+    "seviye": "ayni_tip",
+    "incelendi": true
+  },
+  "MSB15E": {
+    "dosya": "veri/arama-PMI-MSB15E-0-kesim.png",
+    "url": "https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB15E-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      165,
+      70,
+      580,
+      385
+    ]
+  },
+  "MSB15S": {
+    "dosya": "veri/arama-PMI-MSB15S-1.jpg",
+    "url": "https://ae-pic-a1.aliexpress-media.com/kf/Sf925feaa64a14e6288008966cf5149959.jpg",
+    "seviye": "birebir",
+    "incelendi": true
+  },
+  "MSB20E": {
+    "dosya": "veri/arama-PMI-MSB15E-0-kesim.png",
+    "url": "https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB15E-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      165,
+      70,
+      580,
+      385
+    ]
+  },
+  "MSB25S": {
+    "dosya": "veri/arama-PMI-MSB20S-8-kesim.png",
+    "url": "https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB20S-8.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSB30E": {
+    "dosya": "veri/arama-PMI-MSB15E-0-kesim.png",
+    "url": "https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB15E-0.jpg",
+    "arka_plan_ayir": true,
+    "ham_kutu": [
+      165,
+      70,
+      580,
+      385
+    ]
+  },
+  "MSB30S": {
+    "dosya": "veri/arama-PMI-MSB20S-8-kesim.png",
+    "url": "https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB20S-8.jpg",
+    "arka_plan_ayir": true
+  },
+  "MSB35S": {
+    "dosya": "veri/arama-PMI-MSB20S-8-kesim.png",
+    "url": "https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp",
+    "seviye": "ayni_tip",
+    "incelendi": true,
+    "ham_dosya": "veri/arama-PMI-MSB20S-8.jpg",
+    "arka_plan_ayir": true
+  }
+}

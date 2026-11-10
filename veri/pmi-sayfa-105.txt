@@ -1,0 +1,43 @@
+LINEAR GUIDEWAY
+Rail Type
+SMB   25   E   2   SS   F0          +R   1200   -20   /40   P   　   　   II
+Ball Chain Compact Type, SMB Series
+Carriage Type
+Heavy Load Type
+SMB-E Type SMB-S Type
+This type oﬀers the installation either from top
+or bottom side of carriage.
+Square type with smaller width and can be
+installed from top side of carriage.
+Counter Bore (R, U type) Tapped Hole (T type)
+Description of Speci/f_ication
+Non-Interchangeable Type
+Series：SMB
+Size：15, 20, 25, 30
+Carriage type：
+Heavy load
+E : Flange type, mounting
+     either from top or bottom
+S : Square type
+Number of carriages per rail：
+1, 2, 3 ...
+Dust protection option of carriage：
+No symbol, UU, SS, ZZ, DD, KK, LL, RR, HD
+(refer to Dust Proof [B1-242] )
+Preload：FC (Light preload)
+F0 (Medium preload), F1 (Heavy preload)
+Code of special carriage：
+No symbol, A, B,  ...
+Rail type：
+R ,U* (Counter-bore type), T (Tapped hole type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.2)
+Rail hole pitch to the end side (E2, see Fig.2)
+Accuracy grade：N, H, P
+Code of special rail：No symbol, A, B ...
+Dust protection option of rail：
+No symbol, /CC, /MC, /MD
+( refer to Code of Contamination for Rail [B1-243])
+Number of rails per axis：No symbol, II, III, IV ...
+Note*: U type rail is only applicable for MSB15 with M4 mounting hole.
+B1-209B1-208

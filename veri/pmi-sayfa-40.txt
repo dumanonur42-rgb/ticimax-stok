@@ -1,0 +1,36 @@
+Model No.
+Standard Pitch
+(P)
+Standard (Estd.) Minimum (Emin.) Max (L0 max.)
+MSB 15 60 20 5 4000
+MSB 20 60 20 6 4000
+MSB 25 60 20 7 4000
+MSB 30 80 20 7 4000
+MSB 35 80 20 8 4000
+MSB 45 105 22.5 11 4000
+L0
+EPE
+n(Number of rail mounting holes)
+Rail Maximum Length and Standard
+Unit: mm
+S
+h
+L
+EPE
+0
+Rail Model S h(mm)
+MSB 15 T M5 7
+MSB 20 T M6 9
+MSB 25 T M6 10
+MSB 30 T M8 14
+MSB 35 T M8 16
+MSB 45 T M12 24
+Tapped Hole Rail Dimensions
+Compact Type, MSB Series
+L0=(n-1)×P+2×E
+L0 : Total Length of rail (mm)
+n   : Number of mounting holes
+P  : Distance between any two holes (mm)
+E  : Distance from the center of the last hole to the edge (mm)
+LINEAR GUIDEWAY
+B1-79B1-78

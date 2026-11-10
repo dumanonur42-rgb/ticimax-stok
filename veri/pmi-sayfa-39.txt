@@ -1,0 +1,40 @@
+Dimensional Tolerance of Mounting Surface
+With the self alignment capability, the minor dimensional error in mounting surface could be
+compensated and achieves smooth linear motion. The tolerances of parallelism between two
+axes are shown as below.
+// e1
+軸的水平度誤差軸的平行度誤差
+MSG系列
+e2
+500
+// e1
+軸的水平度誤差軸的平行度誤差
+MSG系列
+e2
+500
+Model No.
+Preload Grade
+FC F0 F1
+15 25 18 -
+20  25 20 18
+25  30  22  20
+30  40  30  27
+35  50  35  30
+45 60 40 35
+The parallel deviation between two axes (e₁)
+Unit: μm
+Model No.
+Preload Grade
+FC F0 F1
+15 130 85 -
+20 130  85 50
+25  130  85  70
+30  170  110  90
+35  210  150  120
+45 250 170 140
+Level diﬀerence between two axes (e2)
+Note: The permissible values in table are applicable when  the span is 500mm wide.
+Unit: μm
+Compact Type, MSB Series
+LINEAR GUIDEWAY
+B1-77B1-76

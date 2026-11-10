@@ -1,0 +1,25 @@
+Carriage Type
+Medium Load
+Heavy Load
+MSB-TE Type MSB-TS Type
+This type oﬀers the installation either from top
+or bottom side of carriage.
+Square type with smaller width and can be
+installed from top side of carriage.
+MSB-E Type MSB-S Type
+All dimensions are same as MSB-TE except the
+length is longer, which makes it more rigid.
+All dimensions are same as MSB-TS except the
+length is longer, which makes it more rigid.
+Ultra Heavy Load
+MSB-LE Type MSB-LS Type
+All dimensions are same as MSB-E except the
+length is longer, which makes it more rigid.
+All dimensions are same as MSB-S except the
+length is longer, which makes it more rigid.
+Rail Type
+Counter Bore (R, U type)
+ Tapped Hole (T type)
+Compact Type, MSB Series
+LINEAR GUIDEWAY
+B1-67B1-66

@@ -1,0 +1,55 @@
+Dust Proof
+Code of contamination protection
+Code of contamination protection for Carriage
+w MSA, MSB Series：
+w MSG, MSR, SMR, SME Series
+w SMA, SMB Series
+Code Contamination Protection
+no symbol Scraper(both ends)
+UU Bidirectional end seal(both ends)
+SS Bidirectional end seal+Bottom seal
+ZZ SS+Scraper
+DD Double bidirectional end seal+Bottom seal
+KK DD+Scraper
+LL Low frictional end seal
+RR LL+Bottom seal
+HD high dust prove end seal  +high dust prove inner and bottom seal (reference[B1-238])
+Code Contamination Protection
+no symbol Scraper(both ends)
+UU Bidirectional end seal(both ends)
+SS Bidirectional end seal+Bottom seal+Inner seal
+ZZ SS+Scraper
+DD Double bidirectional end seal+Bottom seal+Inner seal
+KK DD+Scraper
+Code Contamination Protection
+no symbol Scraper(both ends)
+UU Bidirectional end seal(both ends)
+SS Bidirectional end seal+Bottom seal
+ZZ SS+Scraper
+DD Double bidirectional end seal+Bottom seal
+KK DD+Scraper
+LL Low frictional end seal
+RR LL+Bottom seal
+Options
+Code of contamination protection for Rail
+w MSA、MSB、MSG、MSR、SMR、SME 、SMA、SMB Series
+w MSC, MSD Series：
+Code Contamination Protection
+LL Low frictional end seal
+RR LL+Bottom seal
+Code Contamination Protection
+/CB Cover strip (Buckle Type)
+/CC Cover strip (Rail have steel strip groove)
+/CD Cover strip (Rail without steel strip groove)
+/MC Brass bolt cap
+/MD Stainless bolt cap
+Seal materials choice
+Beside the standard seal NBR that FKM (Fluorocarbon Rubber) seal or HNBR (Hyfrogenated
+Nitrile Butadiene Rubber) seal could be supplied as requirement by customer's choice.
+Because FKM and HNBR series are not standard products, we do not prepare stocks.
+Customization is necessary.
+Note: There are two metallic bolt caps of copper and stainless that could be supplied by customer's choice.
+Note: Buckle Type: Apply to MSR, SMR Series
+Options
+LINEAR GUIDEWAY
+B1-243B1-242

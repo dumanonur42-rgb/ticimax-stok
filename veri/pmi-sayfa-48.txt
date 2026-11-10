@@ -1,0 +1,65 @@
+Interchangeable Type Preload Grade
+Note: C is basic dynamic load rating in above table. Refer to the speci/f_ication of products,  please.
+Model
+No. Item
+Accuracy Grade
+Normal
+N
+High
+H
+Precision
+P
+17
+21
+Tolerance for height H ±0.1 ±0.03 0     -0.03
+Height diﬀerence ΔH 0.02 0.01 0.006
+Tolerance for distance W2 ±0.1 ±0.03 0     -0.03
+Diﬀerence in distance W2(ΔW2) 0.02 0.01 0.006
+Running parallelism of surface C
+with surface A ΔC (see the Table 3)
+Running parallelism of surface D
+with surface B ΔD  (see the Table 3)
+27
+35
+Tolerance for height H ±0.1 ±0.04  0     -0.04
+Height diﬀerence ΔH 0.02 0.015 0.007
+Tolerance for distance W2 ±0.1 ±0.04  0     -0.04
+Diﬀerence in distance W2(ΔW2) 0.03 0.015 0.007
+Running parallelism of surface C
+with surface A ΔC  (see the Table 3)
+Running parallelism of surface D
+with surface B ΔD  (see the Table 3)
+Series
+Preload grade
+Light preload (FC) Medium preload (F0) Heavy preload (F1)
+MSG17
+0~0.02C 0.03~0.05C 0.05~0.08C
+MSG21
+MSG27
+MSG35
+Note: De/f_inition of interchangeable: It is con/f_ined to the carriage on the single rail, not including the exchange of
+            multiple rails and carriages.
+The Shoulder Height and Corner Radius for Installation
+MSG series
+Dimensional Tolerance of Mounting Surface
+With the self alignment capability, the minor dimensional error in mounting surface could be
+compensated and achieves smooth linear motion. The tolerances of parallelism between two
+axes are shown as below.
+Model
+No.
+r1
+(max.)
+r2
+(max.) h1 h2 H2
+17 0.4 0.4 2 5 2.5
+21 0.4 0.4 2.5 5 3
+27 0.4 0.4 2.5 7 3
+35 0.8 0.8 3.5 10 4
+Unit: mm
+h2
+h1 H2
+r2
+r1
+Wide Rail Type, MSG Series
+LINEAR GUIDEWAY
+B1-95B1-94

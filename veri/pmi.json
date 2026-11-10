@@ -1,0 +1,3671 @@
+[
+  {
+    "kod": "PMI MSA15E",
+    "model": "MSA15E",
+    "nominal": "15",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "24",
+      "W": "47",
+      "L": "56.3",
+      "W2": "16",
+      "H2": "4.2",
+      "B": "38",
+      "C": "30",
+      "L1": "39.3",
+      "T": "7",
+      "T1": "11",
+      "G": "7",
+      "M": "M5x7",
+      "ray_WR": "15",
+      "ray_HR": "15",
+      "ray_D": "7.5",
+      "ray_h": "5.3",
+      "ray_d": "4.5",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "1.5"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 15 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "56,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "4,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "30 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "39,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "11 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M5 x 7",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "11,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "18,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,18 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA15S",
+    "model": "MSA15S",
+    "nominal": "15",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "28",
+      "W": "34",
+      "L": "56.3",
+      "W2": "9.5",
+      "H2": "4.2",
+      "B": "26",
+      "C": "26",
+      "L1": "39.3",
+      "T": "7.2",
+      "G": "7",
+      "M": "M4x5",
+      "ray_WR": "15",
+      "ray_HR": "15",
+      "ray_D": "7.5",
+      "ray_h": "5.3",
+      "ray_d": "4.5",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "1.5"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 15 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "56,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "4,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "39,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "7,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M4 x 5",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "11,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "18,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,18 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA15SZZ",
+    "model": "MSA15SZZ",
+    "nominal": "15",
+    "bayraklar": [
+      "eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı"
+    ],
+    "katalog_etiketleri": {
+      "H": "28",
+      "W": "34",
+      "L": "56.3",
+      "W2": "9.5",
+      "H2": "4.2",
+      "B": "26",
+      "C": "26",
+      "L1": "39.3",
+      "T": "7.2",
+      "G": "7",
+      "M": "M4x5",
+      "ray_WR": "15",
+      "ray_HR": "15",
+      "ray_D": "7.5",
+      "ray_h": "5.3",
+      "ray_d": "4.5",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "1.5"
+    },
+    "ZZ_boy_farki_mm": "6",
+    "ZZ_boy_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=125",
+    "referans_degerler": {
+      "Araba Ağırlığı": {
+        "deger": "0,18 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "ZZ",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 15 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "62,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "4,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "39,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "7,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M4 x 5",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "11,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "18,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA20S",
+    "model": "MSA20S",
+    "nominal": "20",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "30",
+      "W": "44",
+      "L": "72.9",
+      "W2": "12",
+      "H2": "5",
+      "B": "32",
+      "C": "36",
+      "L1": "51.3",
+      "T": "8",
+      "G": "12",
+      "M": "M5x6",
+      "ray_WR": "20",
+      "ray_HR": "18",
+      "ray_D": "9.5",
+      "ray_h": "8.5",
+      "ray_d": "6",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "2.4"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 20 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "44 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "72,9 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "32 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "36 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "51,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M5 x 6",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "19,2 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "29,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,3 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA25S",
+    "model": "MSA25S",
+    "nominal": "25",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "40",
+      "W": "48",
+      "L": "81.6",
+      "W2": "12.5",
+      "H2": "6.5",
+      "B": "35",
+      "C": "35",
+      "L1": "59",
+      "T": "10",
+      "G": "12",
+      "M": "M6x8",
+      "ray_WR": "23",
+      "ray_HR": "22",
+      "ray_D": "11",
+      "ray_h": "9",
+      "ray_d": "7",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "3.4"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 25 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "81,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "6,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "59 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M6 x 8",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "28,1 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "42,4 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,52 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA25SZZ",
+    "model": "MSA25SZZ",
+    "nominal": "25",
+    "bayraklar": [
+      "eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı"
+    ],
+    "katalog_etiketleri": {
+      "H": "40",
+      "W": "48",
+      "L": "81.6",
+      "W2": "12.5",
+      "H2": "6.5",
+      "B": "35",
+      "C": "35",
+      "L1": "59",
+      "T": "10",
+      "G": "12",
+      "M": "M6x8",
+      "ray_WR": "23",
+      "ray_HR": "22",
+      "ray_D": "11",
+      "ray_h": "9",
+      "ray_d": "7",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "3.4"
+    },
+    "ZZ_boy_farki_mm": "7",
+    "ZZ_boy_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=125",
+    "referans_degerler": {
+      "Araba Ağırlığı": {
+        "deger": "0,52 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "ZZ",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 25 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "88,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "6,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "59 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M6 x 8",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "28,1 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "42,4 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30A",
+    "model": "MSA30A",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "90",
+      "L": "97",
+      "W2": "31",
+      "H2": "8",
+      "B": "72",
+      "C": "52",
+      "L1": "71.4",
+      "T": "11",
+      "T1": "18",
+      "G": "12",
+      "M": "M10x18",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "A",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 30,
+    "satir": "MSA 30 A",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "97 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "71,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 18",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "39,2 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "57,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,09 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30E",
+    "model": "MSA30E",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "90",
+      "L": "97",
+      "W2": "31",
+      "H2": "8",
+      "B": "72",
+      "C": "52",
+      "L1": "71.4",
+      "T": "11",
+      "T1": "18",
+      "G": "12",
+      "M": "M10x10",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 30 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "97 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "71,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "39,2 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "57,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,09 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30EZZ",
+    "model": "MSA30EZZ",
+    "nominal": "30",
+    "bayraklar": [
+      "eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı"
+    ],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "90",
+      "L": "97",
+      "W2": "31",
+      "H2": "8",
+      "B": "72",
+      "C": "52",
+      "L1": "71.4",
+      "T": "11",
+      "T1": "18",
+      "G": "12",
+      "M": "M10x10",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "ZZ_boy_farki_mm": "7",
+    "ZZ_boy_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=125",
+    "referans_degerler": {
+      "Araba Ağırlığı": {
+        "deger": "1,09 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "E",
+    "conta": "ZZ",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 30 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "104,0 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "71,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "39,2 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "57,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30LE",
+    "model": "MSA30LE",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "90",
+      "L": "119.2",
+      "W2": "31",
+      "H2": "8",
+      "B": "72",
+      "C": "52",
+      "L1": "93.6",
+      "T": "11",
+      "T1": "18",
+      "G": "12",
+      "M": "M10x10",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "genis": true,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LE",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 30 LE",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "119,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "93,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "47,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "77,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,43 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30LS",
+    "model": "MSA30LS",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "45",
+      "W": "60",
+      "L": "119.2",
+      "W2": "16",
+      "H2": "8",
+      "B": "40",
+      "C": "60",
+      "L1": "93.6",
+      "T": "11.7",
+      "G": "12",
+      "M": "M8x10",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "genis": false,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LS",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 30 LS",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "119,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "93,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "47,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "77,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,12 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA30S",
+    "model": "MSA30S",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "45",
+      "W": "60",
+      "L": "97",
+      "W2": "16",
+      "H2": "8",
+      "B": "40",
+      "C": "40",
+      "L1": "71.4",
+      "T": "11.7",
+      "G": "12",
+      "M": "M8x10",
+      "ray_WR": "28",
+      "ray_HR": "26",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.8"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 30 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "97 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "71,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "11,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "39,2 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "57,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,86 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35A",
+    "model": "MSA35A",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "48",
+      "W": "100",
+      "L": "111.2",
+      "W2": "33",
+      "H2": "9.5",
+      "B": "82",
+      "C": "62",
+      "L1": "81",
+      "T": "13",
+      "T1": "21",
+      "G": "11.5",
+      "M": "M10x21",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "A",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 30,
+    "satir": "MSA 35 A",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "111,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "81 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "21 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 21",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "52,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "75,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,61 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35E",
+    "model": "MSA35E",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "48",
+      "W": "100",
+      "L": "111.2",
+      "W2": "33",
+      "H2": "9.5",
+      "B": "82",
+      "C": "62",
+      "L1": "81",
+      "T": "13",
+      "T1": "21",
+      "G": "11.5",
+      "M": "M10x13",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 35 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "111,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "81 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "21 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 13",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "52,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "75,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,61 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35LA",
+    "model": "MSA35LA",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "48",
+      "W": "100",
+      "L": "136.6",
+      "W2": "33",
+      "H2": "9.5",
+      "B": "82",
+      "C": "62",
+      "L1": "106.4",
+      "T": "13",
+      "T1": "21",
+      "G": "11.5",
+      "M": "M10x21",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "genis": true,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LA",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 30,
+    "satir": "MSA 35 LA",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "136,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "106,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "21 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 21",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "63,6 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "100,6 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,11 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35LE",
+    "model": "MSA35LE",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "48",
+      "W": "100",
+      "L": "136.6",
+      "W2": "33",
+      "H2": "9.5",
+      "B": "82",
+      "C": "62",
+      "L1": "106.4",
+      "T": "13",
+      "T1": "21",
+      "G": "11.5",
+      "M": "M10x13",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "genis": true,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LE",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 35 LE",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "136,6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "106,4 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "21 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 13",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "63,6 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "100,6 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,11 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35S",
+    "model": "MSA35S",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "55",
+      "W": "70",
+      "L": "111.2",
+      "W2": "18",
+      "H2": "9.5",
+      "B": "50",
+      "C": "50",
+      "L1": "81",
+      "T": "12.7",
+      "G": "11.5",
+      "M": "M8x12",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 35 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "55 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "111,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "81 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "12,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 12",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "52,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "75,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,45 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA35SZZ",
+    "model": "MSA35SZZ",
+    "nominal": "35",
+    "bayraklar": [
+      "eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı"
+    ],
+    "katalog_etiketleri": {
+      "H": "55",
+      "W": "70",
+      "L": "111.2",
+      "W2": "18",
+      "H2": "9.5",
+      "B": "50",
+      "C": "50",
+      "L1": "81",
+      "T": "12.7",
+      "G": "11.5",
+      "M": "M8x12",
+      "ray_WR": "34",
+      "ray_HR": "29",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.6"
+    },
+    "ZZ_boy_farki_mm": "7.8",
+    "ZZ_boy_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=125",
+    "referans_degerler": {
+      "Araba Ağırlığı": {
+        "deger": "1,45 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "ZZ",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 35 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "55 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "119,0 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "81 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "12,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 12",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "52,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "75,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA45E",
+    "model": "MSA45E",
+    "nominal": "45",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "60",
+      "W": "120",
+      "L": "137.7",
+      "W2": "37.5",
+      "H2": "10",
+      "B": "100",
+      "C": "80",
+      "L1": "102.5",
+      "T": "13",
+      "T1": "25",
+      "G": "13.5",
+      "M": "M12x15",
+      "ray_WR": "45",
+      "ray_HR": "38",
+      "ray_D": "20",
+      "ray_h": "17",
+      "ray_d": "14",
+      "ray_P": "105",
+      "ray_E": "22.5",
+      "ray_kgm": "11.5"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 45 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "120 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "137,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "37,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "102,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "25 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "13,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M12 x 15",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "83,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "117,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,98 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA45LA",
+    "model": "MSA45LA",
+    "nominal": "45",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "60",
+      "W": "120",
+      "L": "169.5",
+      "W2": "37.5",
+      "H2": "10",
+      "B": "100",
+      "C": "80",
+      "L1": "134.3",
+      "T": "13",
+      "T1": "25",
+      "G": "13.5",
+      "M": "M12x25",
+      "ray_WR": "45",
+      "ray_HR": "38",
+      "ray_D": "20",
+      "ray_h": "17",
+      "ray_d": "14",
+      "ray_P": "105",
+      "ray_E": "22.5",
+      "ray_kgm": "11.5"
+    },
+    "genis": true,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LA",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 30,
+    "satir": "MSA 45 LA",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "120 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "169,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "37,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "134,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "25 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "13,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M12 x 25",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "102,4 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "157,3 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "3,9 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA45LE",
+    "model": "MSA45LE",
+    "nominal": "45",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "60",
+      "W": "120",
+      "L": "169.5",
+      "W2": "37.5",
+      "H2": "10",
+      "B": "100",
+      "C": "80",
+      "L1": "134.3",
+      "T": "13",
+      "T1": "25",
+      "G": "13.5",
+      "M": "M12x15",
+      "ray_WR": "45",
+      "ray_HR": "38",
+      "ray_D": "20",
+      "ray_h": "17",
+      "ray_d": "14",
+      "ray_P": "105",
+      "ray_E": "22.5",
+      "ray_kgm": "11.5"
+    },
+    "genis": true,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LE",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 31,
+    "satir": "MSA 45 LE",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "120 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "169,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "37,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "100 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "134,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "13 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "25 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "13,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M12 x 15",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "102,4 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "157,3 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "3,9 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA45LS",
+    "model": "MSA45LS",
+    "nominal": "45",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "70",
+      "W": "86",
+      "L": "169.5",
+      "W2": "20.5",
+      "H2": "10",
+      "B": "60",
+      "C": "80",
+      "L1": "134.3",
+      "T": "16",
+      "G": "13.5",
+      "M": "M10x17",
+      "ray_WR": "45",
+      "ray_HR": "38",
+      "ray_D": "20",
+      "ray_h": "17",
+      "ray_d": "14",
+      "ray_P": "105",
+      "ray_E": "22.5",
+      "ray_kgm": "11.5"
+    },
+    "genis": false,
+    "uzun": true,
+    "seri": "MSA",
+    "govde": "LS",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 45 LS",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "86 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "169,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "20,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "134,3 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "13,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 17",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "102,4 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "157,3 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "3,7 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSA45S",
+    "model": "MSA45S",
+    "nominal": "45",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "70",
+      "W": "86",
+      "L": "137.7",
+      "W2": "20.5",
+      "H2": "10",
+      "B": "60",
+      "C": "60",
+      "L1": "102.5",
+      "T": "16",
+      "G": "13.5",
+      "M": "M10x17",
+      "ray_WR": "45",
+      "ray_HR": "38",
+      "ray_D": "20",
+      "ray_h": "17",
+      "ray_d": "14",
+      "ray_P": "105",
+      "ray_E": "22.5",
+      "ray_kgm": "11.5"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSA",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=25",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 32,
+    "satir": "MSA 45 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "86 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "137,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "20,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "102,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "13,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 17",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "83,8 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "117,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,83 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB15E",
+    "model": "MSB15E",
+    "nominal": "15",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "24",
+      "W": "52",
+      "L": "57.2",
+      "W2": "18.5",
+      "H2": "4.5",
+      "B": "41",
+      "C": "26",
+      "L1": "40.5",
+      "T": "5",
+      "T1": "7",
+      "G": "5.5",
+      "M": "M5x7",
+      "ray_WR": "15",
+      "ray_HR": "12.5",
+      "ray_D": "6",
+      "ray_h": "4.5",
+      "ray_d": "3.5",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "1.2"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 41,
+    "satir": "MSB 15 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "52 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "57,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "18,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "4,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "41 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "40,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M5 x 7",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "10,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "16,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,21 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB15S",
+    "model": "MSB15S",
+    "nominal": "15",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "24",
+      "W": "34",
+      "L": "57.2",
+      "W2": "9.5",
+      "H2": "4.5",
+      "B": "26",
+      "C": "26",
+      "L1": "40.5",
+      "T": "6",
+      "G": "5.5",
+      "M": "M4x6",
+      "ray_WR": "15",
+      "ray_HR": "12.5",
+      "ray_D": "6",
+      "ray_h": "4.5",
+      "ray_d": "3.5",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "1.2"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 42,
+    "satir": "MSB 15 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "57,2 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "4,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "26 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "40,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M4 x 6",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "10,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "16,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,16 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB20E",
+    "model": "MSB20E",
+    "nominal": "20",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "28",
+      "W": "59",
+      "L": "67",
+      "W2": "19.5",
+      "H2": "6",
+      "B": "49",
+      "C": "32",
+      "L1": "48",
+      "T": "5",
+      "T1": "9",
+      "G": "12",
+      "M": "M6x9",
+      "ray_WR": "20",
+      "ray_HR": "15",
+      "ray_D": "9.5",
+      "ray_h": "8.5",
+      "ray_d": "6",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "2"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 41,
+    "satir": "MSB 20 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "59 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "67 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "19,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "6 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "49 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "32 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "9 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M6 x 9",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "13,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "23,6 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,34 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB25S",
+    "model": "MSB25S",
+    "nominal": "25",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "33",
+      "W": "48",
+      "L": "82",
+      "W2": "12.5",
+      "H2": "7",
+      "B": "35",
+      "C": "35",
+      "L1": "60.5",
+      "T": "8",
+      "G": "12",
+      "M": "M6x9",
+      "ray_WR": "23",
+      "ray_HR": "18",
+      "ray_D": "11",
+      "ray_h": "9",
+      "ray_d": "7",
+      "ray_P": "60",
+      "ray_E": "20",
+      "ray_kgm": "3"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 42,
+    "satir": "MSB 25 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "33 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "82 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "35 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "60,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M6 x 9",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "22,3 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "36,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,45 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB30E",
+    "model": "MSB30E",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "90",
+      "L": "96.7",
+      "W2": "31",
+      "H2": "9.5",
+      "B": "72",
+      "C": "40",
+      "L1": "72",
+      "T": "7",
+      "T1": "10",
+      "G": "12",
+      "M": "M10x10",
+      "ray_WR": "28",
+      "ray_HR": "23",
+      "ray_D": "11",
+      "ray_h": "9",
+      "ray_d": "7",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.4"
+    },
+    "genis": true,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "E",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 41,
+    "satir": "MSB 30 E",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "96,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T1": {
+        "deger": "10 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 10",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "23 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "32,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "53,1 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,08 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB30S",
+    "model": "MSB30S",
+    "nominal": "30",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "42",
+      "W": "60",
+      "L": "96.7",
+      "W2": "16",
+      "H2": "9.5",
+      "B": "40",
+      "C": "40",
+      "L1": "72",
+      "T": "8",
+      "G": "12",
+      "M": "M8x12",
+      "ray_WR": "28",
+      "ray_HR": "23",
+      "ray_D": "11",
+      "ray_h": "9",
+      "ray_d": "7",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "4.4"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 42,
+    "satir": "MSB 30 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "96,7 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "40 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "72 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 12",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "23 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "32,9 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "53,1 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,82 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  },
+  {
+    "kod": "PMI MSB35S",
+    "model": "MSB35S",
+    "nominal": "35",
+    "bayraklar": [],
+    "katalog_etiketleri": {
+      "H": "48",
+      "W": "70",
+      "L": "112",
+      "W2": "18",
+      "H2": "9.5",
+      "B": "50",
+      "C": "50",
+      "L1": "80",
+      "T": "12.5",
+      "G": "11.5",
+      "M": "M8x12",
+      "ray_WR": "34",
+      "ray_HR": "27.5",
+      "ray_D": "14",
+      "ray_h": "12",
+      "ray_d": "9",
+      "ray_P": "80",
+      "ray_E": "20",
+      "ray_kgm": "6.2"
+    },
+    "genis": false,
+    "uzun": false,
+    "seri": "MSB",
+    "govde": "S",
+    "conta": "SS",
+    "on_yuk": "FC: hafif ön yük",
+    "hassasiyet": "N: normal hassasiyet",
+    "kod_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=36",
+    "conta_kaynagi": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf#page=122",
+    "cizim_esleme": {
+      "H1": "PMI H2 (alt açıklık)",
+      "N": "PMI W2 (yanal taşma)",
+      "HR": "PMI ray H1",
+      "WR": "PMI ray W1"
+    },
+    "pdf_sayfa": 42,
+    "satir": "MSB 35 S",
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "112 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "N": {
+        "deger": "18 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "B": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "L1": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "T": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "G": {
+        "deger": "11,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 12",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "27,5 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Dinamik Yük Kapasitesi": {
+        "deger": "52,0 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "75,5 kN",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,13 kg",
+        "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+      }
+    },
+    "kaynak": "https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf"
+  }
+]

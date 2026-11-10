@@ -1,117 +1,6258 @@
-{
-  "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
-  "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
-  "crumbs": [
-    "Anasayfa",
-    "LİNEER",
-    "LİNEER ARABALAR"
-  ],
-  "specs": [
-    {
-      "l": "Genişlik (W)",
-      "v": "44 mm"
-    },
-    {
-      "l": "Yükseklik (H)",
-      "v": "30 mm"
-    },
-    {
-      "l": "H1",
-      "v": "4,6 mm"
-    },
-    {
-      "l": "N",
-      "v": "12 mm"
-    },
-    {
-      "l": "B",
-      "v": "32 mm"
-    },
-    {
-      "l": "B1",
-      "v": "6 mm"
-    },
-    {
-      "l": "C",
-      "v": "50 mm"
-    },
-    {
-      "l": "L1",
-      "v": "65,2 mm"
-    },
-    {
-      "l": "Uzunluk (L)",
-      "v": "92,2 mm"
-    },
-    {
-      "l": "K1",
-      "v": "12,6 mm"
-    },
-    {
-      "l": "K2",
-      "v": "6 mm"
-    },
-    {
-      "l": "G",
-      "v": "12 mm"
-    },
-    {
-      "l": "Vida (M x l)",
-      "v": "M5 x 6"
-    },
-    {
-      "l": "T",
-      "v": "8 mm"
-    },
-    {
-      "l": "H2",
-      "v": "6 mm"
-    },
-    {
-      "l": "H3",
-      "v": "6 mm"
-    },
-    {
-      "l": "Ray Genişliği (WR)",
-      "v": "20 mm"
-    },
-    {
-      "l": "Ray Yüksekliği (HR)",
-      "v": "17,5 mm"
-    }
-  ],
-  "onyazi": [
-    {
-      "l": "Marka",
-      "v": "Yamansa"
-    },
-    {
-      "l": "Genişlik (W)",
-      "v": "44 mm"
-    },
-    {
-      "l": "Yükseklik (H)",
-      "v": "30 mm"
-    },
-    {
-      "l": "Uzunluk (L)",
-      "v": "92,2 mm"
-    },
-    {
-      "l": "C",
-      "v": "50 mm"
-    },
-    {
-      "l": "L1",
-      "v": "65,2 mm"
-    },
-    {
-      "l": "Vida (M x l)",
-      "v": "M5 x 6"
-    },
-    {
-      "l": "Ray Genişliği (WR)",
-      "v": "20 mm"
-    }
-  ]
-}
+[
+  {
+    "kod": "ORK LA HGH20HA",
+    "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
+    "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
+    "productId": 1,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "12 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "44 mm"
+      },
+      {
+        "l": "B",
+        "v": "32 mm"
+      },
+      {
+        "l": "B1",
+        "v": "6 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "L1",
+        "v": "65,2 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "92,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "12,6 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 6"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6 mm"
+      },
+      {
+        "l": "H3",
+        "v": "6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "17,5 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "44 mm"
+      },
+      {
+        "l": "B",
+        "v": "32 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "92,2 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 6"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGH25HA",
+    "title": "HGH 25HA Dar Uzun Lineer Araba 25 mm",
+    "path": "/hgh-25ha-dar-uzun-lineer-araba-25-mm",
+    "productId": 2,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "H1",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "B1",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "L1",
+        "v": "78,6 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,6 mm"
+      },
+      {
+        "l": "K1",
+        "v": "18,5 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "H2",
+        "v": "10 mm"
+      },
+      {
+        "l": "H3",
+        "v": "9 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,6 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGH30HA",
+    "title": "HGH 30HA Dar Uzun Lineer Araba 30 mm",
+    "path": "/hgh-30ha-dar-uzun-lineer-araba-30-mm",
+    "productId": 3,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "B1",
+        "v": "10 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "L1",
+        "v": "93 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "120,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "21,75 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      },
+      {
+        "l": "T",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "H2",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "13,8 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "120,4 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGH35HA",
+    "title": "HGH 35HA Dar Uzun Lineer Araba 35 mm",
+    "path": "/hgh-35ha-dar-uzun-lineer-araba-35-mm",
+    "productId": 4,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "H1",
+        "v": "7,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "18 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "B1",
+        "v": "10 mm"
+      },
+      {
+        "l": "C",
+        "v": "72 mm"
+      },
+      {
+        "l": "L1",
+        "v": "105,8 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "138,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "K2",
+        "v": "7 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      },
+      {
+        "l": "T",
+        "v": "10,2 mm"
+      },
+      {
+        "l": "H2",
+        "v": "16 mm"
+      },
+      {
+        "l": "H3",
+        "v": "19,6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "72 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "138,2 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGH45HA",
+    "title": "HGH 45HA Dar Uzun Lineer Araba 45 mm",
+    "path": "/hgh-45ha-dar-uzun-lineer-araba-45-mm",
+    "productId": 5,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "20,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "B1",
+        "v": "13 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "128,8 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "171,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "28,9 mm"
+      },
+      {
+        "l": "K2",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12,9 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      },
+      {
+        "l": "T",
+        "v": "16 mm"
+      },
+      {
+        "l": "H2",
+        "v": "18,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "30,5 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "171,2 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW15CC",
+    "title": "HGW 15CC GENİŞ Lineer Araba 15 mm",
+    "path": "/hgw-15cc-genis-lineer-araba-15-mm",
+    "productId": 6,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,3 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "47 mm"
+      },
+      {
+        "l": "B",
+        "v": "38 mm"
+      },
+      {
+        "l": "B1",
+        "v": "4,5 mm"
+      },
+      {
+        "l": "C",
+        "v": "30 mm"
+      },
+      {
+        "l": "L1",
+        "v": "39,4 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "61,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "8 mm"
+      },
+      {
+        "l": "K2",
+        "v": "4,85 mm"
+      },
+      {
+        "l": "G",
+        "v": "5,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "6 mm"
+      },
+      {
+        "l": "T1",
+        "v": "8,9 mm"
+      },
+      {
+        "l": "T2",
+        "v": "6,95 mm"
+      },
+      {
+        "l": "H2",
+        "v": "3,95 mm"
+      },
+      {
+        "l": "H3",
+        "v": "3,7 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M5"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "47 mm"
+      },
+      {
+        "l": "B",
+        "v": "38 mm"
+      },
+      {
+        "l": "C",
+        "v": "30 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "61,4 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M5"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW20CC",
+    "title": "HGW 20CC GENİŞ Lineer Araba 20 mm",
+    "path": "/hgw-20cc-genis-lineer-araba-20-mm",
+    "productId": 7,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "21,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "63 mm"
+      },
+      {
+        "l": "B",
+        "v": "53 mm"
+      },
+      {
+        "l": "B1",
+        "v": "5 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "L1",
+        "v": "50,5 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "77,5 mm"
+      },
+      {
+        "l": "K1",
+        "v": "10,25 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "T1",
+        "v": "10 mm"
+      },
+      {
+        "l": "T2",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6 mm"
+      },
+      {
+        "l": "H3",
+        "v": "6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M6"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "63 mm"
+      },
+      {
+        "l": "B",
+        "v": "53 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "77,5 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M6"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW20HC",
+    "title": "HGW 20HC GENİŞ Uzun Lineer Araba 20 mm",
+    "path": "/hgw-20hc-genis-uzun-lineer-araba-20-mm",
+    "productId": 8,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "21,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "63 mm"
+      },
+      {
+        "l": "B",
+        "v": "53 mm"
+      },
+      {
+        "l": "B1",
+        "v": "5 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "L1",
+        "v": "65,2 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "92,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "17,6 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "T1",
+        "v": "10 mm"
+      },
+      {
+        "l": "T2",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6 mm"
+      },
+      {
+        "l": "H3",
+        "v": "6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M6"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "63 mm"
+      },
+      {
+        "l": "B",
+        "v": "53 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "92,2 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M6"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW25CC",
+    "title": "HGW 25CC GENİŞ Lineer Araba 25 mm",
+    "path": "/hgw-25cc-genis-lineer-araba-25-mm",
+    "productId": 9,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "36 mm"
+      },
+      {
+        "l": "H1",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "23,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "57 mm"
+      },
+      {
+        "l": "B1",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "C",
+        "v": "45 mm"
+      },
+      {
+        "l": "L1",
+        "v": "58 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "84 mm"
+      },
+      {
+        "l": "K1",
+        "v": "10,7 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "T1",
+        "v": "14 mm"
+      },
+      {
+        "l": "T2",
+        "v": "10 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6 mm"
+      },
+      {
+        "l": "H3",
+        "v": "5 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M8"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "57 mm"
+      },
+      {
+        "l": "C",
+        "v": "45 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "84 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M8"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW25HC",
+    "title": "HGW 25HC GENİŞ Uzun Lineer Araba 25 mm",
+    "path": "/hgw-25hc-genis-uzun-lineer-araba-25-mm",
+    "productId": 10,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "36 mm"
+      },
+      {
+        "l": "H1",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "23,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "57 mm"
+      },
+      {
+        "l": "B1",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "C",
+        "v": "45 mm"
+      },
+      {
+        "l": "L1",
+        "v": "78,6 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,6 mm"
+      },
+      {
+        "l": "K1",
+        "v": "21 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "T1",
+        "v": "14 mm"
+      },
+      {
+        "l": "T2",
+        "v": "10 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6 mm"
+      },
+      {
+        "l": "H3",
+        "v": "5 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M8"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "B",
+        "v": "57 mm"
+      },
+      {
+        "l": "C",
+        "v": "45 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,6 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M8"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW30CC",
+    "title": "HGW 30CC GENİŞ Lineer Araba 30 mm",
+    "path": "/hgw-30cc-genis-lineer-araba-30-mm",
+    "productId": 11,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "B1",
+        "v": "9 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "14,25 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "T1",
+        "v": "16 mm"
+      },
+      {
+        "l": "T2",
+        "v": "10 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "10,8 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97,4 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW30HC",
+    "title": "HGW 30HC GENİŞ Uzun Lineer Araba 30 mm",
+    "path": "/hgw-30hc-genis-uzun-lineer-araba-30-mm",
+    "productId": 12,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "B1",
+        "v": "9 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "93 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "120,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "25,75 mm"
+      },
+      {
+        "l": "K2",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "T1",
+        "v": "16 mm"
+      },
+      {
+        "l": "T2",
+        "v": "10 mm"
+      },
+      {
+        "l": "H2",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "10,8 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "120,4 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW35CC",
+    "title": "HGW 35CC GENİŞ Lineer Araba 35 mm",
+    "path": "/hgw-35cc-genis-lineer-araba-35-mm",
+    "productId": 13,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "H1",
+        "v": "7,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "B1",
+        "v": "9 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "80 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "112,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "14,6 mm"
+      },
+      {
+        "l": "K2",
+        "v": "7 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "10,1 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "T2",
+        "v": "13 mm"
+      },
+      {
+        "l": "H2",
+        "v": "9 mm"
+      },
+      {
+        "l": "H3",
+        "v": "12,6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "112,4 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW35HC",
+    "title": "HGW 35HC GENİŞ Uzun Lineer Araba 35 mm",
+    "path": "/hgw-35hc-genis-uzun-lineer-araba-35-mm",
+    "productId": 14,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "H1",
+        "v": "7,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "B1",
+        "v": "9 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "105,8 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "138,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "27,5 mm"
+      },
+      {
+        "l": "K2",
+        "v": "7 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "T",
+        "v": "10,1 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "T2",
+        "v": "13 mm"
+      },
+      {
+        "l": "H2",
+        "v": "9 mm"
+      },
+      {
+        "l": "H3",
+        "v": "12,6 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "138,2 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M10"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW45CC",
+    "title": "HGW 45CC GENİŞ Lineer Araba 45 mm",
+    "path": "/hgw-45cc-genis-lineer-araba-45-mm",
+    "productId": 15,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "37,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "B1",
+        "v": "10 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "97 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "139,4 mm"
+      },
+      {
+        "l": "K1",
+        "v": "13 mm"
+      },
+      {
+        "l": "K2",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12,9 mm"
+      },
+      {
+        "l": "T",
+        "v": "15,1 mm"
+      },
+      {
+        "l": "T1",
+        "v": "22 mm"
+      },
+      {
+        "l": "T2",
+        "v": "15 mm"
+      },
+      {
+        "l": "H2",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "20,5 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M12"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "139,4 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M12"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LA HGW45HC",
+    "title": "HGW 45HC GENİŞ Uzun Lineer Araba 45 mm",
+    "path": "/hgw-45hc-genis-uzun-lineer-araba-45-mm",
+    "productId": 16,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "37,5 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "B1",
+        "v": "10 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "128,8 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "171,2 mm"
+      },
+      {
+        "l": "K1",
+        "v": "28,9 mm"
+      },
+      {
+        "l": "K2",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12,9 mm"
+      },
+      {
+        "l": "T",
+        "v": "15,1 mm"
+      },
+      {
+        "l": "T1",
+        "v": "22 mm"
+      },
+      {
+        "l": "T2",
+        "v": "15 mm"
+      },
+      {
+        "l": "H2",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "H3",
+        "v": "20,5 mm"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M12"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "171,2 mm"
+      },
+      {
+        "l": "Vida (M)",
+        "v": "M12"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR15",
+    "title": "HGR 15 Lineer Ray 15 mm - 4 Metre",
+    "path": "/hgr-15-lineer-ray-15-mm-4-metre",
+    "productId": 17,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "D",
+        "v": "7,5 mm"
+      },
+      {
+        "l": "h",
+        "v": "5,3 mm"
+      },
+      {
+        "l": "d",
+        "v": "4,5 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "D",
+        "v": "7,5 mm"
+      },
+      {
+        "l": "h",
+        "v": "5,3 mm"
+      },
+      {
+        "l": "d",
+        "v": "4,5 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR20",
+    "title": "HGR 20 Lineer Ray 20 mm - 4 Metre",
+    "path": "/hgr-20-lineer-ray-20-mm-4-metre",
+    "productId": 18,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "D",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "h",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "d",
+        "v": "6 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "D",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "h",
+        "v": "8,5 mm"
+      },
+      {
+        "l": "d",
+        "v": "6 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR25",
+    "title": "HGR 25 Lineer Ray 25 mm - 4 Metre",
+    "path": "/hgr-25-lineer-ray-25-mm-4-metre",
+    "productId": 19,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "D",
+        "v": "11 mm"
+      },
+      {
+        "l": "h",
+        "v": "9 mm"
+      },
+      {
+        "l": "d",
+        "v": "7 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "D",
+        "v": "11 mm"
+      },
+      {
+        "l": "h",
+        "v": "9 mm"
+      },
+      {
+        "l": "d",
+        "v": "7 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR30",
+    "title": "HGR 30 Lineer Ray 30 mm - 4 Metre",
+    "path": "/hgr-30-lineer-ray-30-mm-4-metre",
+    "productId": 20,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "D",
+        "v": "14 mm"
+      },
+      {
+        "l": "h",
+        "v": "12 mm"
+      },
+      {
+        "l": "d",
+        "v": "9 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "D",
+        "v": "14 mm"
+      },
+      {
+        "l": "h",
+        "v": "12 mm"
+      },
+      {
+        "l": "d",
+        "v": "9 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR35",
+    "title": "HGR 35 Lineer Ray 35 mm - 4 Metre",
+    "path": "/hgr-35-lineer-ray-35-mm-4-metre",
+    "productId": 21,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "D",
+        "v": "14 mm"
+      },
+      {
+        "l": "h",
+        "v": "12 mm"
+      },
+      {
+        "l": "d",
+        "v": "9 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "D",
+        "v": "14 mm"
+      },
+      {
+        "l": "h",
+        "v": "12 mm"
+      },
+      {
+        "l": "d",
+        "v": "9 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "ORK LR HGR45",
+    "title": "HGR 45 Lineer Ray 45 mm - 4 Metre",
+    "path": "/hgr-45-lineer-ray-45-mm-4-metre",
+    "productId": 22,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER RAYLAR"
+    ],
+    "specs": [
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "D",
+        "v": "20 mm"
+      },
+      {
+        "l": "h",
+        "v": "17 mm"
+      },
+      {
+        "l": "d",
+        "v": "14 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "D",
+        "v": "20 mm"
+      },
+      {
+        "l": "h",
+        "v": "17 mm"
+      },
+      {
+        "l": "d",
+        "v": "14 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "Boy",
+        "v": "4000 mm"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA15E",
+    "title": "PMI MSA 15 E SS FCN GENİŞ Lineer Araba 15 mm",
+    "path": "/pmi-msa-15-e-ss-fcn-genis-lineer-araba-15-mm",
+    "productId": 23,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "47 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "56,3 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "38 mm"
+      },
+      {
+        "l": "C",
+        "v": "30 mm"
+      },
+      {
+        "l": "L1",
+        "v": "39,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "7 mm"
+      },
+      {
+        "l": "T1",
+        "v": "11 mm"
+      },
+      {
+        "l": "G",
+        "v": "7 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 7"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "11,8 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "18,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,18 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "47 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "56,3 mm"
+      },
+      {
+        "l": "B",
+        "v": "38 mm"
+      },
+      {
+        "l": "C",
+        "v": "30 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 7"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA15S",
+    "title": "PMI MSA 15 S SS FCN Dar Lineer Araba 15 mm",
+    "path": "/pmi-msa-15-s-ss-fcn-dar-lineer-araba-15-mm",
+    "productId": 24,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "56,3 mm"
+      },
+      {
+        "l": "N",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "L1",
+        "v": "39,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "7,2 mm"
+      },
+      {
+        "l": "G",
+        "v": "7 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 5"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "11,8 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "18,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,18 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "56,3 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 5"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA15SZZ",
+    "title": "PMI MSA 15 S ZZ FCN Dar Lineer Araba 15 mm",
+    "path": "/pmi-msa-15-s-zz-fcn-dar-lineer-araba-15-mm",
+    "productId": 25,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "62,3 mm"
+      },
+      {
+        "l": "N",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "L1",
+        "v": "39,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "7,2 mm"
+      },
+      {
+        "l": "G",
+        "v": "7 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 5"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "11,8 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "18,9 kN"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "ZZ: SS + metal sıyırıcı"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "62,3 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 5"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA20S",
+    "title": "PMI MSA 20 S SS FCN Dar Lineer Araba 20 mm",
+    "path": "/pmi-msa-20-s-ss-fcn-dar-lineer-araba-20-mm",
+    "productId": 26,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "44 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "72,9 mm"
+      },
+      {
+        "l": "N",
+        "v": "12 mm"
+      },
+      {
+        "l": "H1",
+        "v": "5 mm"
+      },
+      {
+        "l": "B",
+        "v": "32 mm"
+      },
+      {
+        "l": "C",
+        "v": "36 mm"
+      },
+      {
+        "l": "L1",
+        "v": "51,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 6"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "18 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "19,2 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "29,5 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,3 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "44 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "72,9 mm"
+      },
+      {
+        "l": "B",
+        "v": "32 mm"
+      },
+      {
+        "l": "C",
+        "v": "36 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 6"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA25S",
+    "title": "PMI MSA 25 S SS FCN Dar Lineer Araba 25 mm",
+    "path": "/pmi-msa-25-s-ss-fcn-dar-lineer-araba-25-mm",
+    "productId": 27,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "81,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "L1",
+        "v": "59 mm"
+      },
+      {
+        "l": "T",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "28,1 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "42,4 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,52 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "81,6 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA25SZZ",
+    "title": "PMI MSA 25 S ZZ FCN Dar Lineer Araba 25 mm",
+    "path": "/pmi-msa-25-s-zz-fcn-dar-lineer-araba-25-mm",
+    "productId": 28,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "88,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "L1",
+        "v": "59 mm"
+      },
+      {
+        "l": "T",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "22 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "28,1 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "42,4 kN"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "ZZ: SS + metal sıyırıcı"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "88,6 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 8"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30A",
+    "title": "PMI MSA 30 A SS FCN GENİŞ Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-a-ss-fcn-genis-lineer-araba-30-mm",
+    "productId": 29,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "71,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "11 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 18"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "39,2 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "57,8 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,09 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 18"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30E",
+    "title": "PMI MSA 30 E SS FCN GENİŞ Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-e-ss-fcn-genis-lineer-araba-30-mm",
+    "productId": 30,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "71,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "11 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "39,2 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "57,8 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,09 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30EZZ",
+    "title": "PMI MSA 30 E ZZ FCN GENİŞ Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-e-zz-fcn-genis-lineer-araba-30-mm",
+    "productId": 31,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,0 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "71,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "11 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "39,2 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "57,8 kN"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "ZZ: SS + metal sıyırıcı"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "104,0 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30LE",
+    "title": "PMI MSA 30 LE SS FCN GENİŞ Uzun Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-le-ss-fcn-genis-uzun-lineer-araba-30-mm",
+    "productId": 32,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "L1",
+        "v": "93,6 mm"
+      },
+      {
+        "l": "T",
+        "v": "11 mm"
+      },
+      {
+        "l": "T1",
+        "v": "18 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "47,9 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "77,0 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,43 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "52 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30LS",
+    "title": "PMI MSA 30 LS SS FCN Dar Uzun Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-ls-ss-fcn-dar-uzun-lineer-araba-30-mm",
+    "productId": 33,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "L1",
+        "v": "93,6 mm"
+      },
+      {
+        "l": "T",
+        "v": "11,7 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "47,9 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "77,0 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,12 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA30S",
+    "title": "PMI MSA 30 S SS FCN Dar Lineer Araba 30 mm",
+    "path": "/pmi-msa-30-s-ss-fcn-dar-lineer-araba-30-mm",
+    "productId": 34,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "H1",
+        "v": "8 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "L1",
+        "v": "71,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "11,7 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "26 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "39,2 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "57,8 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,86 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35A",
+    "title": "PMI MSA 35 A SS FCN GENİŞ Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-a-ss-fcn-genis-lineer-araba-35-mm",
+    "productId": 35,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "81 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "21 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 21"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "52,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "75,5 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,61 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 21"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35E",
+    "title": "PMI MSA 35 E SS FCN GENİŞ Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-e-ss-fcn-genis-lineer-araba-35-mm",
+    "productId": 36,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "81 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "21 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 13"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "52,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "75,5 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,61 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 13"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35LA",
+    "title": "PMI MSA 35 LA SS FCN GENİŞ Uzun Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-la-ss-fcn-genis-uzun-lineer-araba-35-mm",
+    "productId": 37,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "136,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "106,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "21 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 21"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "63,6 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "100,6 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "2,11 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "136,6 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 21"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35LE",
+    "title": "PMI MSA 35 LE SS FCN GENİŞ Uzun Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-le-ss-fcn-genis-uzun-lineer-araba-35-mm",
+    "productId": 38,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "136,6 mm"
+      },
+      {
+        "l": "N",
+        "v": "33 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "L1",
+        "v": "106,4 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "21 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 13"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "63,6 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "100,6 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "2,11 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "136,6 mm"
+      },
+      {
+        "l": "B",
+        "v": "82 mm"
+      },
+      {
+        "l": "C",
+        "v": "62 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 13"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35S",
+    "title": "PMI MSA 35 S SS FCN Dar Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-s-ss-fcn-dar-lineer-araba-35-mm",
+    "productId": 39,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "18 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "L1",
+        "v": "81 mm"
+      },
+      {
+        "l": "T",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "52,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "75,5 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,45 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "111,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA35SZZ",
+    "title": "PMI MSA 35 S ZZ FCN Dar Lineer Araba 35 mm",
+    "path": "/pmi-msa-35-s-zz-fcn-dar-lineer-araba-35-mm",
+    "productId": 40,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,0 mm"
+      },
+      {
+        "l": "N",
+        "v": "18 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "L1",
+        "v": "81 mm"
+      },
+      {
+        "l": "T",
+        "v": "12,7 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "29 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "52,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "75,5 kN"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "ZZ: SS + metal sıyırıcı"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "119,0 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA45E",
+    "title": "PMI MSA 45 E SS FCN GENİŞ Lineer Araba 45 mm",
+    "path": "/pmi-msa-45-e-ss-fcn-genis-lineer-araba-45-mm",
+    "productId": 41,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "137,7 mm"
+      },
+      {
+        "l": "N",
+        "v": "37,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "10 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "102,5 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "25 mm"
+      },
+      {
+        "l": "G",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 15"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "83,8 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "117,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "2,98 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "137,7 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 15"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA45LA",
+    "title": "PMI MSA 45 LA SS FCN GENİŞ Uzun Lineer Araba 45 mm",
+    "path": "/pmi-msa-45-la-ss-fcn-genis-uzun-lineer-araba-45-mm",
+    "productId": 42,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "37,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "10 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "134,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "25 mm"
+      },
+      {
+        "l": "G",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 25"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "102,4 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "157,3 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "3,9 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 25"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA45LE",
+    "title": "PMI MSA 45 LE SS FCN GENİŞ Uzun Lineer Araba 45 mm",
+    "path": "/pmi-msa-45-le-ss-fcn-genis-uzun-lineer-araba-45-mm",
+    "productId": 43,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "37,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "10 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "134,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "13 mm"
+      },
+      {
+        "l": "T1",
+        "v": "25 mm"
+      },
+      {
+        "l": "G",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 15"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "102,4 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "157,3 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "3,9 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "120 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "100 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M12 x 15"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA45LS",
+    "title": "PMI MSA 45 LS SS FCN Dar Uzun Lineer Araba 45 mm",
+    "path": "/pmi-msa-45-ls-ss-fcn-dar-uzun-lineer-araba-45-mm",
+    "productId": 44,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "N",
+        "v": "20,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "10 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "L1",
+        "v": "134,3 mm"
+      },
+      {
+        "l": "T",
+        "v": "16 mm"
+      },
+      {
+        "l": "G",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "102,4 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "157,3 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "3,7 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "169,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "C",
+        "v": "80 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSA45S",
+    "title": "PMI MSA 45 S SS FCN Dar Lineer Araba 45 mm",
+    "path": "/pmi-msa-45-s-ss-fcn-dar-lineer-araba-45-mm",
+    "productId": 45,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "137,7 mm"
+      },
+      {
+        "l": "N",
+        "v": "20,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "10 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "L1",
+        "v": "102,5 mm"
+      },
+      {
+        "l": "T",
+        "v": "16 mm"
+      },
+      {
+        "l": "G",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "38 mm"
+      },
+      {
+        "l": "P",
+        "v": "105 mm"
+      },
+      {
+        "l": "E",
+        "v": "22,5 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "83,8 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "117,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "2,83 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "86 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "137,7 mm"
+      },
+      {
+        "l": "B",
+        "v": "60 mm"
+      },
+      {
+        "l": "C",
+        "v": "60 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 17"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB15E",
+    "title": "PMI MSB 15 E SS FCN GENİŞ Alçak Lineer Araba 15 mm",
+    "path": "/pmi-msb-15-e-ss-fcn-genis-alcak-lineer-araba-15-mm",
+    "productId": 46,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "52 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "57,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "18,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "41 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "L1",
+        "v": "40,5 mm"
+      },
+      {
+        "l": "T",
+        "v": "5 mm"
+      },
+      {
+        "l": "T1",
+        "v": "7 mm"
+      },
+      {
+        "l": "G",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 7"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "10,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "16,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,21 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "52 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "57,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "41 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M5 x 7"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB15S",
+    "title": "PMI MSB 15 S SS FCN Dar Alçak Lineer Araba 15 mm",
+    "path": "/pmi-msb-15-s-ss-fcn-dar-alcak-lineer-araba-15-mm",
+    "productId": 47,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "57,2 mm"
+      },
+      {
+        "l": "N",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "4,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "L1",
+        "v": "40,5 mm"
+      },
+      {
+        "l": "T",
+        "v": "6 mm"
+      },
+      {
+        "l": "G",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 6"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "10,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "16,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,16 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "57,2 mm"
+      },
+      {
+        "l": "B",
+        "v": "26 mm"
+      },
+      {
+        "l": "C",
+        "v": "26 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M4 x 6"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB20E",
+    "title": "PMI MSB 20 E SS FCN GENİŞ Alçak Lineer Araba 20 mm",
+    "path": "/pmi-msb-20-e-ss-fcn-genis-alcak-lineer-araba-20-mm",
+    "productId": 48,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "59 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "67 mm"
+      },
+      {
+        "l": "N",
+        "v": "19,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "6 mm"
+      },
+      {
+        "l": "B",
+        "v": "49 mm"
+      },
+      {
+        "l": "C",
+        "v": "32 mm"
+      },
+      {
+        "l": "L1",
+        "v": "48 mm"
+      },
+      {
+        "l": "T",
+        "v": "5 mm"
+      },
+      {
+        "l": "T1",
+        "v": "9 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 9"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "15 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "13,9 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "23,6 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,34 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "59 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "67 mm"
+      },
+      {
+        "l": "B",
+        "v": "49 mm"
+      },
+      {
+        "l": "C",
+        "v": "32 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 9"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB25S",
+    "title": "PMI MSB 25 S SS FCN Dar Alçak Lineer Araba 25 mm",
+    "path": "/pmi-msb-25-s-ss-fcn-dar-alcak-lineer-araba-25-mm",
+    "productId": 49,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "33 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "82 mm"
+      },
+      {
+        "l": "N",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "H1",
+        "v": "7 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "L1",
+        "v": "60,5 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 9"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "18 mm"
+      },
+      {
+        "l": "P",
+        "v": "60 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "22,3 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "36,9 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,45 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "33 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "82 mm"
+      },
+      {
+        "l": "B",
+        "v": "35 mm"
+      },
+      {
+        "l": "C",
+        "v": "35 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M6 x 9"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB30E",
+    "title": "PMI MSB 30 E SS FCN GENİŞ Alçak Lineer Araba 30 mm",
+    "path": "/pmi-msb-30-e-ss-fcn-genis-alcak-lineer-araba-30-mm",
+    "productId": 50,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "96,7 mm"
+      },
+      {
+        "l": "N",
+        "v": "31 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "L1",
+        "v": "72 mm"
+      },
+      {
+        "l": "T",
+        "v": "7 mm"
+      },
+      {
+        "l": "T1",
+        "v": "10 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "32,9 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "53,1 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,08 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "96,7 mm"
+      },
+      {
+        "l": "B",
+        "v": "72 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M10 x 10"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB30S",
+    "title": "PMI MSB 30 S SS FCN Dar Alçak Lineer Araba 30 mm",
+    "path": "/pmi-msb-30-s-ss-fcn-dar-alcak-lineer-araba-30-mm",
+    "productId": 51,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "96,7 mm"
+      },
+      {
+        "l": "N",
+        "v": "16 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "L1",
+        "v": "72 mm"
+      },
+      {
+        "l": "T",
+        "v": "8 mm"
+      },
+      {
+        "l": "G",
+        "v": "12 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "28 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "23 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "32,9 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "53,1 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "0,82 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "42 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "96,7 mm"
+      },
+      {
+        "l": "B",
+        "v": "40 mm"
+      },
+      {
+        "l": "C",
+        "v": "40 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      }
+    ]
+  },
+  {
+    "kod": "PMI MSB35S",
+    "title": "PMI MSB 35 S SS FCN Dar Alçak Lineer Araba 35 mm",
+    "path": "/pmi-msb-35-s-ss-fcn-dar-alcak-lineer-araba-35-mm",
+    "productId": 52,
+    "crumbs": [
+      "Anasayfa",
+      "LİNEER",
+      "LİNEER ARABALAR"
+    ],
+    "specs": [
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "112 mm"
+      },
+      {
+        "l": "N",
+        "v": "18 mm"
+      },
+      {
+        "l": "H1",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "L1",
+        "v": "80 mm"
+      },
+      {
+        "l": "T",
+        "v": "12,5 mm"
+      },
+      {
+        "l": "G",
+        "v": "11,5 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      },
+      {
+        "l": "Ray Genişliği (WR)",
+        "v": "34 mm"
+      },
+      {
+        "l": "Ray Yüksekliği (HR)",
+        "v": "27,5 mm"
+      },
+      {
+        "l": "P",
+        "v": "80 mm"
+      },
+      {
+        "l": "E",
+        "v": "20 mm"
+      },
+      {
+        "l": "Dinamik Yük Kapasitesi",
+        "v": "52,0 kN"
+      },
+      {
+        "l": "Statik Yük Kapasitesi",
+        "v": "75,5 kN"
+      },
+      {
+        "l": "Araba Ağırlığı",
+        "v": "1,13 kg"
+      },
+      {
+        "l": "Conta Tipi",
+        "v": "SS: iki yönlü uç keçesi + alt keçe"
+      },
+      {
+        "l": "Ön Yük",
+        "v": "FC: hafif ön yük"
+      },
+      {
+        "l": "Hassasiyet",
+        "v": "N: normal hassasiyet"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Marka",
+        "v": "PMI"
+      },
+      {
+        "l": "Yükseklik (H)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Genişlik (W)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Uzunluk (L)",
+        "v": "112 mm"
+      },
+      {
+        "l": "B",
+        "v": "50 mm"
+      },
+      {
+        "l": "C",
+        "v": "50 mm"
+      },
+      {
+        "l": "Vida (M x l)",
+        "v": "M8 x 12"
+      }
+    ]
+  }
+]

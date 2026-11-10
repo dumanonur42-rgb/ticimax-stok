@@ -1,0 +1,46 @@
+Rail Type
+Carriage Type
+Heavy Load Type
+SMA-E Type SMA-S TypeSMA-A Type SMA   25   A   2   SS   F0          +R   1200   -20   /40   P   　   　   II
+Ball Chain Heavy Load Type, SMA Series
+This type oﬀers the installation either
+from top or bottom side of carriage.
+Square type with smaller width and
+can be installed from top side of
+carriage.
+Counter Bore (R type) Tapped Hole (T type)
+Series：SMA
+Size：15, 20, 25
+Carriage type﹕
+Heavy load
+A : Flange type, mounting from top
+E : Flange type, mounting
+     either from top or bottom
+S : Square type
+Number of carriages per rail：
+1, 2, 3 ...
+Dust protection option of carriage：
+No symbol, UU, SS, ZZ, DD, KK, LL, RR
+Preload：FC (Light preload)
+F0 (Medium preload) , F1 (Heavy preload)
+Code of special carriage：
+No symbol, A, B ...
+Rail type：
+R (Counter-bore type), T (Tapped hole type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.1)
+Rail hole pitch to the end side (E2, see Fig.1)
+Accuracy grade：N, H, P
+Code of special rail：No symbol, A, B ...
+Dust protection option of rail：
+No symbol, /CC, /MC, /MD
+(refer to Code of Contamination for Rail [B1-243])
+Number of rails per axis：
+No symbol,  II, III, IV ...
+Description of Speci/f_ication
+Non-Interchangeable Type
+Installed from top side of carriage with
+the thread length longer than MSA-E
+type.
+LINEAR GUIDEWAY
+B1-191B1-190

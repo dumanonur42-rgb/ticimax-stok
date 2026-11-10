@@ -1,0 +1,34 @@
+E1 E2
+Reference side
+Reference side
+Subsidiary rail
+Master rail
+Fig.4
+MSC     7     M    LL    FZ    N   M
+MSC　7　R　600　-7.5　/7.5　N　M
+Interchangeable Type
+Code of Carriage
+Code of Rail
+Series：MSC, MSD
+Size：7, 9, 12, 15
+Carriage type：M: Standard type
+                               LM: Heavy load type
+Dust protection option of carriage：LL, RR  (refer to Dust Proof [B1-242])
+Preload：FZ (Clearance)  FC (Light preload),  F0 (Medium preload)
+Accuracy grade：N, H
+Carriage material：M：Stainless steel (Equal)
+                                       S：Carbon steel (Equal)
+Code of special carriage：No symbol, A, B ...
+Series：MSC, MSD
+Size：7, 9, 12, 15
+Rail type：R (Counter bore type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.4)
+Rail hole pitch to the end side (E2, see Fig.4)
+Accuracy grade：N, H
+Rail material：M：Stainless steel (Equal)
+                             S：Carbon steel (Equal)
+Code of special rail：No symbol, A, B ...
+Miniature Type, MSC, MSD Stainless Steel Series
+LINEAR GUIDEWAY
+B1-107B1-106

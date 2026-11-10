@@ -6,10 +6,11 @@ from denetle import ROOT, audit
 
 class AuditTests(unittest.TestCase):
     def setUp(self):
-        self.row = json.loads((ROOT / 'urunler.jsonl').read_text())
+        self.rows = [json.loads(line) for line in (ROOT / 'urunler.jsonl').read_text().splitlines() if line.strip()]
+        self.row = self.rows[0]
 
     def test_normal(self):
-        self.assertEqual(audit([self.row]), [])
+        self.assertEqual(audit(self.rows), [])
 
     def test_empty(self):
         self.assertTrue(audit([]))

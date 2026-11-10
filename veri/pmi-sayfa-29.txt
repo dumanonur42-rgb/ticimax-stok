@@ -1,0 +1,37 @@
+Rail Maximum Length and Standard
+L0
+EPE
+n(Number of rail mounting holes)
+Model No. Standard Pitch (P) Standard (Estd.) Minimum (Emin.) Max (L0 max.)
+MSA 15 60 20 5 4000
+MSA 20 60 20 6 4000
+MSA 25 60 20 7 4000
+MSA 30 80 20 8 4000
+MSA 35 80 20 8 4000
+MSA 45 105 22.5 11 4000
+MSA 55 120 30 13 4000
+MSA 65 150 35 14 4000
+Unit: mm
+L0=(n-1)×P+2×E
+L0 : Total Length of rail (mm)
+n   : Number of mounting holes
+P  : Distance between any two holes (mm)
+E  : Distance from the center of the last hole to the edge (mm)
+Tapped Hole Rail Dimensions
+Rail Model S h(mm)
+MSA 15 T M5 8
+MSA 20 T M6 10
+MSA 25 T M6 12
+MSA 30 T M8 15
+MSA 35 T M8 17
+MSA 45 T M12 24
+MSA 55 T M14 24
+MSA 65 T M20 30
+S
+h
+L
+EPE
+0
+Heavy Load Type, MSA Series
+LINEAR GUIDEWAY
+B1-57B1-56

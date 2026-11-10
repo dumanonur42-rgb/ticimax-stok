@@ -1,0 +1,326 @@
+[
+  {
+    "kod": "ORK LR HGR15",
+    "model": "HGR15",
+    "nominal": "15",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "1,45 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR15, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH15CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "7,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "5,3 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "4,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LR HGR20",
+    "model": "HGR20",
+    "nominal": "20",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "2,21 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR20, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH20CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LR HGR25",
+    "model": "HGR25",
+    "nominal": "25",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "3,21 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR25, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH25CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "11 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LR HGR30",
+    "model": "HGR30",
+    "nominal": "30",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "4,47 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR30, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH30CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "14 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LR HGR35",
+    "model": "HGR35",
+    "nominal": "35",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "6,30 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR35, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH35CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "14 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LR HGR45",
+    "model": "HGR45",
+    "nominal": "45",
+    "bayraklar": [
+      "eksik: Yamansa ray ağırlığı (kg/m) için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Ray Ağırlığı": {
+        "deger": "10,41 kg/m",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "boy_kaynagi": "parca/lineer_diger.jsonl.gz: ORK LR HGR45, 4 METRE",
+    "pdf_sayfa": 41,
+    "satir": "HGH45CA: üstten havşalı HGR ray; HGR-T tablosu kullanılmaz",
+    "genis": false,
+    "uzun": false,
+    "degerler": {
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "D": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "h": {
+        "deger": "17 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "d": {
+        "deger": "14 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "P": {
+        "deger": "105 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "E": {
+        "deger": "22,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Boy": {
+        "deger": "4000 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  }
+]

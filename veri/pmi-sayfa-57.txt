@@ -1,0 +1,71 @@
+The Shoulder Height and Corner Radius for Installation
+Preload Grade
+Series
+Preload grade
+Clearance（FZ） Light preload (FC) Medium preload (F0)
+MSC7
+Clearance 4~10μm Clearance 2μm~0.01C 0.01~0.02CMSC9 MSC12
+MSC15
+MSC7L
+Clearance 4~10μm Clearance 2μm~0.01C 0.01~0.02CMSC9L MSC12L
+MSC15L
+MSD7
+Clearance 4~10μm Clearance 2μm~0.01C 0.01~0.02CMSD9 MSD12
+MSD15
+MSD7L
+Clearance 4~10μm Clearance 2μm~0.01C 0.01~0.02CMSD9L MSD12L
+MSD15L
+Model
+No.
+r1
+(max.)
+r2
+(max.) h1 h2 H2
+7 0.2 0.2 1.0 3 1.5
+9 0.2 0.3 1.7 3 2.2
+12 0.3 0.4 2.5 4 3
+15 0.5 0.5 3.5 5 4
+Unit: mm
+h1
+h2
+r1
+r2
+H2
+MSC series
+Note: C is basic dynamic load rating in above table. Refer to the speci/f_ication of products,  please.
+Dimensional Tolerance of Mounting Surface
+The tolerances of parallelism between two axes are shown as below.
+// e1
+軸的水平度誤差軸的平行度誤差
+MSG系列
+e2
+500
+Unit: mm
+Model
+No.
+r1
+(max.)
+r2
+(max.) h1 h2 H2
+7 0.2 0.2 1.5 3 2
+9 0.2 0.3 3.2 3 3.7
+12 0.3 0.4 3.5 4 4
+15 0.5 0.5 3.5 5 4
+h1
+h2
+r1
+r2
+H2
+MSD series
+The parallel deviation between two axes (e₁)
+Unit: μm
+Model No.
+Preload Grade
+FZ FC F0
+MSC 7   MSD7 3 3 3
+MSC 9   MSD9 4 4 3
+MSC 12   MSD12 9 9 5
+MSC 15   MSD15 10 10 6
+Miniature Type, MSC, MSD Stainless Steel Series
+LINEAR GUIDEWAY
+B1-113B1-112

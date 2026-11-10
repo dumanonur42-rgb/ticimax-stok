@@ -1,0 +1,41 @@
+E1 E2
+Master rail
+Subsidiary rail
+Reference side Reference side
+Fig.2
+Series：MSB
+Size：15, 20, 25, 30, 35, 45
+Carriage type：Medium load
+TE : Flange type, mounting either from top or bottom
+TS : Square type
+Heavy load
+E : Flange type, mounting either from top or bottom
+S : Square type
+Ultra heavy load
+LE : Flange type,mounting either from top or bottom
+LS : Square type
+Dust protection option of carriage：
+No symbol, UU, SS, ZZ, DD, KK, LL, RR, HD (refer to Dust Proof [B1-242])
+Preload：FC (Light preload) , F0 (Medium preload) ,F1(Heavy preload)
+We don't provide F1(Heavy preload) to MSB15
+Accuracy grade：N, H, P
+Code of special carriage：No symbol, A, B,  ...
+Note*: U type rail is only applicable for MSB15 with M4 mounting hole.
+MSB　 25　E　 SS　FC　N
+MSB    25    R    1200    - 20    / 40    N
+ Interchangeable Type
+Code of Carriage
+Code of Rail
+Series：MSB
+Size：15, 20, 25, 30, 35, 45
+Rail type：R ,U*(Counter-bore type), T (Tapped hole type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.2)
+Rail hole pitch to the end side (E2, see Fig.2)
+Accuracy grade：N, H, P
+Code of special rail：No symbol, A, B ...
+Dust protection option of rail：No symbol, /CC, /CD, /MC, /MD
+(refer to Code of Contamination for Rail [B1-243])
+Compact Type, MSB Series
+LINEAR GUIDEWAY
+B1-71B1-70

@@ -1,0 +1,32 @@
+Master rail
+Subsidiary rail
+E1 E2
+Reference side Reference side
+Fig.3
+Series：MSG
+Size：17, 21, 27, 35
+Carriage type：E : Flange type,mounting either from top or bottom
+                                  S : Square type
+Dust protection option of carriage：No symbol, UU, SS, ZZ, DD, KK
+                                                                            (refer to Dust Proof [B1-242])
+Preload：FC (Light preload), F0 (Medium preload)
+Accuracy grade：N, H, P
+Code of special carriage：No symbol, A, B,  ...
+MSG     27    E      SS     FC    N
+MSG    27    R    1200    - 20    / 40    N
+Interchangeable Type
+Code of Carriage
+Code of Rail
+Series：MSG
+Size：17, 21, 27, 35
+Rail type：R (Counter-bore type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.3)
+Rail hole pitch to the end side (E2, see Fig.3)
+Accuracy grade：N, H, P
+Code of special rail：No symbol, A, B ...
+Dust protection option of rail：No symbol, /CC,  /MC,  /MD
+( refer to Code of Contamination for Rail [B1-243])
+Wide Rail Type, MSG Series
+LINEAR GUIDEWAY
+B1-91B1-90

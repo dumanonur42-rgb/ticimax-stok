@@ -1,0 +1,164 @@
+Dimensions of  MSA-E / MSA-LE
+21
+2
+2 1
+4-Sxl
+T
+H
+H
+T T
+W
+B
+W W
+S1
+S2
+MP MY MR
+C
+L
+L
+K
+(G)
+P
+Ød
+E
+ØD
+4-Ød
+N
+h
+H1
+1
+1
+Note: The basic dynamic load rating C of ball type is based on the 50 km for nomonal life. The conversion between C for
+             50 km and C100 for 100 km is C=1.26 x C100.
+Note*: Single: Single carriage/ Double: Double carriages closely contacting with each other.
+Unit: mm
+Dimensions of MSA
+Model No.
+Bolt Size
+S1 S2
+MSA 15 M5 M4
+MSA 20 M6 M5
+MSA 25 M8 M6
+MSA 30 M10 M8
+MSA 35 M10 M8
+MSA 45 M12 M10
+MSA 55 M14 M12
+MSA 65 M16 M14
+Unit: mm
+Dimensions of MSA
+Model No.
+Rail dimension Basic load rating Static moment rating Weight
+Width
+W1
+Height
+H1
+Pitch
+P
+E
+std. D × h × d
+Dynamic
+C
+kN
+Static
+Co
+kN
+MP
+kN-m
+MY
+kN-m MR
+kN-m
+Carriage
+kg
+Rail
+kg/m
+Single* Double* Single* Double*
+MSA 15 E 15 15 60 20 7.5×5.3×4.5 11.8 18.9 0.12 0.68 0.12 0.68 0.14 0.18 1.5
+MSA 20 E
+MSA 20 LE
+MSA 20 TE
+20 18 60 20
+9.5×8.5×6
+9.5×8.5×6
+11×9×7
+19.2
+23.3
+13.1
+29.5
+39.3
+17.2
+0.23
+0.39
+0.16
+1.42
+2.23
+0.54
+0.23
+0.39
+0.16
+1.42
+2.23
+0.54
+0.29
+0.38
+0.16
+0.4
+0.52
+0.23
+2.4
+MSA 25 E
+MSA 25 LE 23 22 60 20 11×9×7 28.1 34.4 42.4 56.6 0.39 0.67 2.20 3.52 0.39 0.67 2.20 3.52 0.48 0.63 0.62 0.82 3.4
+MSA 30 E
+MSA 30 LE 28 26 80 20 14×12×9 39.2 47.9 57.8 77.0 0.62 1.07 3.67 5.81 0.62 1.07 3.67 5.81 0.79 1.05 1.09 1.43 4.8
+MSA 35 E
+MSA 35 LE 34 29 80 20 14×12×9 52.0 63.6 75.5 100.6 0.93 1.60 5.47 8.67 0.93 1.60 5.47 8.67 1.25 1.67 1.61 2.11 6.6
+MSA 45 E
+MSA 45 LE 45 38 105 22.5 20×17×14 83.8 102.4 117.9 157.3 1.81 3.13 10.67 16.95 1.81 3.13 10.67 16.95 2.57 3.43 2.98 3.9 11.5
+MSA 55 E
+MSA 55 LE 53 44 120 30 23×20×16 123.6 151.1 169.8 226.4 3.13 5.40 17.57 28.11  3.13 5.40 17.57 28.11  4.50 6.00 4.17 5.49 15.5
+MSA 65 E
+MSA 65 LE 63 53 150 35 26×22×18 198.8 253.5 265.3 375.9 6.11 11.84 33.71 57.32 6.11 11.84 33.71 57.32 8.36 11.84 8.73 11.89 21.9
+Model No.
+External dimension Carriage dimension
+Height
+H
+Width
+W
+Length
+L W2 H2 B C S × l L1 T T1 T2 N G K d1
+Grease
+Nipple
+MSA 15 E 24 47 56.3 16 4.2 38 30 M5×7 39.3 7 11 7 4.3 7 5.4 3.3 G-M4
+MSA 20 E
+MSA 20 LE
+MSA 20 TE
+30 63
+72.9
+88.8
+51.1
+21.5 5 53
+40
+40
+-
+M6×10
+51.3
+67.2
+29.5
+7 10 10 5 12 5 3.3 G-M6
+MSA 25 E
+MSA 25 LE 36 70 81.6 100.6 23.5 6.5 57 45 M8×10 59 78 11 16 10 6 12 5.5 3.3 G-M6
+MSA 30 E
+MSA 30 LE 42 90 97 119.2 31 8 72 52 M10×10 71.4 93.6 11 18 10 7 12 6 3.3 G-M6
+MSA 35 E
+MSA 35 LE 48 100 111.2 136.6 33 9.5 82 62 M10×13 81 106.4 13 21 13 8 11.5 6.5 3.3 G-M6
+MSA 45 E
+MSA 45 LE 60 120 137.7 169.5 37.5 10 100 80 M12×15 102.5 134.3 13 25 15 10 13.5 7 3.3 G-PT 1/8
+MSA 55 E
+MSA 55 LE 70 140 162.1 200.1 43.5 13 116 95 M14×17 119.5 157.5 19 32 17 11 13.5 12.4 3.3 G-PT 1/8
+MSA 65 E
+MSA 65 LE 90 170 198.6 252.6 53.5 15 142 110 M16×23 149 203 21.5 37.5 23 19 13.5 15.9 3.3 G-PT 1/8
+Speci/f_ications
+Speci/f_ications Product
+Product
+LINEAR GUIDEWAY
+B1-61B1-60
+LINEAR GUIDEWAY

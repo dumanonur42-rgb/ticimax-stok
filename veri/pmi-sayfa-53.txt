@@ -1,0 +1,25 @@
+Series：MSC, MSD
+Size：7, 9, 12, 15
+Carriage type：M : Standard type
+                               LM : Heavy load type
+Number of carriages per rail：1, 2, 3 ...
+Dust protection option of carriage：LL, RR (refer to Dust Proof [B1-242])
+Preload：FZ (Clearance), FC (Light preload),  F0 (Medium preload)
+Carriage material：M：Stainless steel (Equal)
+                                       S：Carbon steel (Equal)
+Code of special carriage：No symbol, A, B,  ...
+Rail type：R (Counter bore type)
+Rail length (mm)
+Rail hole pitch from start side (E1, see Fig.4)
+Rail hole pitch to the end side (E2, see Fig.4)
+Accuracy grade：N, H, P
+Rail material：M：Stainless steel (Equal)
+                             S：Carbon steel (Equal)
+Code of special rail：No symbol, A, B ...
+Number of rails per axis：No symbol , II, III, IV ...
+Description of Speci/f_ication
+Non-interchangeable Type
+MSC       7     M    2     LL     F0     M        +R　600　-7.5　/7.5　P　M　　　　II
+Miniature Type, MSC, MSD Stainless Steel Series
+LINEAR GUIDEWAY
+B1-105B1-104

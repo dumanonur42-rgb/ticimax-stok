@@ -1,0 +1,56 @@
+MSA25 A HD FC N
+Description of Speci/f_ication
+w Non-Interchangeable Type
+w Interchangeable Type Carriage
+MSA25 A 2 HD F0      + R 1200 -20 /40 P     II
+Note: Rail Model-MSA15, MSA20, MSA25, MSA30, MSA35, MSB15, MSB20(A type, E type, S type)
+Note: Rail Model- MSA15, MSA20, MSA25, MSA30, MSA35, MSB15, MSB20(A type, E type, S type)
+Model no.
+Carriage type
+Number of carriages per rail
+Dust protection option
+Preload
+Code of special carriage
+Rail type
+rail length (mm)
+Rail hole pitch from start side
+Rail hole pitch to the end side
+Accuracy grade
+Code of special rail
+Number of rails per axis
+Model no.
+Carriage type
+Dust protection option
+Preload
+Accuracy grade
+Code of special carriage
+Unit: mm
+Unit: mmMSB Series
+MSA Series
+Each Series of linear guideway with diﬀerent dust-proof accessories, comparing with standard
+dust-proof accessories, the overall length of carriage is diﬀerent, as below table shown:
+Model
+No.
+No
+symbol UU SS LL RR ZZ DD KK HD
+15 1 - - - - 6 5 11 3
+20 1.4 - - - - 7 5.6 12.6 0.4
+25 1.4 - - - - 7 5.6 12.6 0.4
+30 1.4 - - - - 7 5.6 12.6 0.4
+35 0.6 - - - - 7.8 7.2 15 -
+45 0.6 - - - - 7.8 7.2 15 -
+55 - - - - - 7.8 7.8 15.6 -
+65 - - - - - 7.8 7.8 15.6 -
+Model
+No.
+No
+symbol UU SS LL RR ZZ DD KK HD
+15 - - - - - 5 5 10 1
+20 1 - - - - 7 6 13 -
+25 1 - - - - 7 6 13 -
+30 1 - - - - 7 6 13 -
+35 0.6 - - - - 7.8 7.2 15 -
+45 0.6 - - - - 7.8 7.2 15 -
+Options
+LINEAR GUIDEWAY
+B1-249B1-248

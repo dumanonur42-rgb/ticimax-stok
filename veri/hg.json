@@ -1,0 +1,1706 @@
+[
+  {
+    "kod": "ORK LA HGH20HA",
+    "model": "HGH20HA",
+    "nominal": "20",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "32,7 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "47,96 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,39 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 41,
+    "satir": "HGH20HA",
+    "genis": false,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "30 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "4,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "44 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "32 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "65,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "92,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "12,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M5 x 6",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGH25HA",
+    "model": "HGH25HA",
+    "nominal": "25",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "42,2 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "69,07 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,69 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 41,
+    "satir": "HGH25HA",
+    "genis": false,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "40 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "5,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "12,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "48 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "35 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "6,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "78,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "104,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "18,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M6 x 8",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGH30HA",
+    "model": "HGH30HA",
+    "nominal": "30",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "58,6 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "93,99 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,16 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 41,
+    "satir": "HGH30HA",
+    "genis": false,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "40 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "93 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "120,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "21,75 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 10",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "13,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGH35HA",
+    "model": "HGH35HA",
+    "nominal": "35",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "77,9 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "122,77 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,92 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 41,
+    "satir": "HGH35HA",
+    "genis": false,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "55 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "7,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "18 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "50 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "72 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "105,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "138,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "22,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M8 x 12",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "10,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "19,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGH45HA",
+    "model": "HGH45HA",
+    "nominal": "45",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "125,3 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "191,85 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "3,61 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 41,
+    "satir": "HGH45HA",
+    "genis": false,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "70 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "20,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "86 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "13 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "128,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "171,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "28,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M x l)": {
+        "deger": "M10 x 17",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "18,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "30,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW15CC",
+    "model": "HGW15CC",
+    "nominal": "15",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "14,7 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "23,47 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,17 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW15CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "24 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "4,3 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "47 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "38 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "4,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "30 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "39,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "61,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "4,85 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "5,3 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "8,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "6,95 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "3,95 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "3,7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M5",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW20CC",
+    "model": "HGW20CC",
+    "nominal": "20",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "27,1 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "36,68 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,40 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW20CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "30 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "4,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "21,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "63 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "53 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "40 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "50,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "77,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "10,25 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M6",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW20HC",
+    "model": "HGW20HC",
+    "nominal": "20",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "32,7 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "47,96 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,52 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW20HC",
+    "genis": true,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "30 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "4,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "21,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "63 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "53 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "40 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "65,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "92,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "17,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M6",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW25CC",
+    "model": "HGW25CC",
+    "nominal": "25",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "34,9 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "52,82 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,59 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW25CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "36 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "5,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "23,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "57 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "6,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "58 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "84 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "10,7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "14 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M8",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW25HC",
+    "model": "HGW25HC",
+    "nominal": "25",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "42,2 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "69,07 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "0,80 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW25HC",
+    "genis": true,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "36 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "5,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "23,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "70 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "57 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "6,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "78,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "104,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "21 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "14 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "23 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M8",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW30CC",
+    "model": "HGW30CC",
+    "nominal": "30",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "48,5 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "71,87 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,09 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW30CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "70 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "97,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "14,25 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "10,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M10",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW30HC",
+    "model": "HGW30HC",
+    "nominal": "30",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "58,6 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "93,99 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,44 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW30HC",
+    "genis": true,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "42 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "31 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "90 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "72 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "52 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "93 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "120,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "25,75 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "16 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "6,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "10,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "28 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "26 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M10",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW35CC",
+    "model": "HGW35CC",
+    "nominal": "35",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "64,6 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "93,88 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "1,56 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW35CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "7,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "112,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "14,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "10,1 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "13 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "12,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M10",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW35HC",
+    "model": "HGW35HC",
+    "nominal": "35",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "77,9 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "122,77 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,06 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW35HC",
+    "genis": true,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "7,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "33 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "100 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "82 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "62 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "105,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "138,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "27,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "7 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "10,1 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "18 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "13 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "12,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "34 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "29 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M10",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW45CC",
+    "model": "HGW45CC",
+    "nominal": "45",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "103,8 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "146,71 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "2,79 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW45CC",
+    "genis": true,
+    "uzun": false,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "37,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "120 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "100 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "97 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "139,4 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "13 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "15,1 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "20,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M12",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  },
+  {
+    "kod": "ORK LA HGW45HC",
+    "model": "HGW45HC",
+    "nominal": "45",
+    "bayraklar": [
+      "eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı"
+    ],
+    "referans_degerler": {
+      "Dinamik Yük Kapasitesi": {
+        "deger": "125,3 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Statik Yük Kapasitesi": {
+        "deger": "191,85 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Araba Ağırlığı": {
+        "deger": "3,69 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "pdf_sayfa": 45,
+    "satir": "HGW45HC",
+    "genis": true,
+    "uzun": true,
+    "degerler": {
+      "Yükseklik (H)": {
+        "deger": "60 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H1": {
+        "deger": "9,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "N": {
+        "deger": "37,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Genişlik (W)": {
+        "deger": "120 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B": {
+        "deger": "100 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "B1": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "C": {
+        "deger": "80 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "L1": {
+        "deger": "128,8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Uzunluk (L)": {
+        "deger": "171,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K1": {
+        "deger": "28,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "K2": {
+        "deger": "10 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "G": {
+        "deger": "12,9 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T": {
+        "deger": "15,1 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T1": {
+        "deger": "22 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "T2": {
+        "deger": "15 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H2": {
+        "deger": "8,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "H3": {
+        "deger": "20,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "45 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "38 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      },
+      "Vida (M)": {
+        "deger": "M12",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+      }
+    },
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf"
+  }
+]

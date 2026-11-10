@@ -1,0 +1,97 @@
+Dimensions of MSA-A / MSA-LA
+Model No.
+External dimension Carriage dimension
+Height
+H
+Width
+W
+Length
+L W2 H2 B C S × l L1 T T1 N G K d1
+Grease
+Nipple
+MSA 15 A 24 47 56.3 16 4.2 38 30 M5×11 39.3 7 11 4.3 7 5.4 3.3 G-M4
+MSA 20 A
+MSA 20 LA 30 63 72.9 88.8 21.5 5 53 40 M6×10 51.3 67.2 7 10 5 12 5 3.3 G-M6
+MSA 25 A
+MSA 25 LA 36 70 81.6 100.6 23.5 6.5 57 45 M8×16 59 78 11 16 6 12 5.5 3.3 G-M6
+MSA 30 A
+MSA 30 LA 42 90 97 119.2 31 8 72 52 M10×18 71.4 93.6 11 18 7 12 6 3.3 G-M6
+MSA 35 A
+MSA 35 LA 48 100 111.2 136.6 33 9.5 82 62 M10×21 81 106.4 13 21 8 11.5 6.5 3.3 G-M6
+MSA 45 A
+MSA 45 LA 60 120 137.7 169.5 37.5 10 100 80 M12×25 102.5 134.3 13 25 10 13.5 7 3.3 G-PT1/8
+Unit: mm
+MP MY MR
+2
+1
+H
+H
+T T
+W
+B
+2W 1W
+4-Sxl
+C
+L
+L
+K
+(G)
+P
+Ød
+E
+ØD
+4-Ød
+N
+h
+H1
+1
+1
+Dimensions of MSA
+Note: Request for size 55 and 65 MSA-A / MSA-LA carriage, please refer to MSA-E / MSA-LE carriage type.
+Note: The basic dynamic load rating C of ball type is based on the 50 km for nomonal life. The conversion between C for
+            50 km and C100 for 100 km is C=1.26 x C100.
+Note*: Single: Single carriage/ Double: Double carriages closely contacting with each other.
+Model No.
+Rail dimension Basic load rating Static moment rating Weight
+Width
+W1
+Height
+H1
+Pitch
+P
+E
+std. D × h × d
+Dynamic
+C
+kN
+Static
+Co
+kN
+MP
+kN-m
+MY
+kN-m MR
+kN-m
+Carriage
+kg
+Rail
+kg/mSingle* Double* Single* Double*
+MSA 15 A 15 15 60 20 7.5×5.3×4.5 11.8 18.9 0.12 0.68 0.12 0.68 0.14 0.18 1.5
+MSA 20 A
+MSA 20 LA 20 18 60 20 9.5×8.5×6 19.2 23.3 29.5 39.3 0.23 0.39 1.42 2.23 0.23 0.39 1.42 2.23 0.29 0.38 0.4 0.52 2.4
+MSA 25 A
+MSA 25 LA 23 22 60 20 11×9×7 28.1 34.4 42.4 56.6 0.39 0.67 2.20 3.52 0.39 0.67 2.20 3.52 0.48 0.63 0.62 0.82 3.4
+MSA 30 A
+MSA 30 LA 28 26 80 20 14×12×9 39.2 47.9 57.8 77.0 0.62 1.07 3.67 5.81 0.62 1.07 3.67 5.81 0.79 1.05 1.09 1.43 4.8
+MSA 35 A
+MSA 35 LA 34 29 80 20 14×12×9 52.0 63.6 75.5 100.6 0.93 1.60 5.47 8.67 0.93 1.60 5.47 8.67 1.25 1.67 1.61 2.11 6.6
+MSA 45 A
+MSA 45 LA 45 38 105 22.5 20×17×14 83.8 102.4 117.9 157.3 1.81 3.13 10.67 16.95 1.81 3.13 10.67 16.95 2.57 3.43 2.98 3.9 11.5
+Unit: mm
+Dimensions of MSA
+Speci/f_ications
+Speci/f_ications Product
+Product
+LINEAR GUIDEWAY
+B1-59B1-58
+LINEAR GUIDEWAY
