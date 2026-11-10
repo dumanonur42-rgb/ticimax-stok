@@ -60,7 +60,7 @@ Başlıkta “Zincir Dişli” ifadesi ve doğru kategori bağlamı mevcut modü
 
 `preview/zincir.html` kendi fixture/veri kopyasını içerir, yerel dosya olarak Chrome'da açılabilir. `?w=460` ve `?w=360` kullanılır. Ölçü düğmesine tıklamak ilgili `data-k` grubunu kırmızı yapar.
 
-27 fixture'ın her biri için iki PNG: `site/draw/preview/zincir/<fixture-id>-460.png` ve `.../<fixture-id>-360.png`. Ek iki dosya: `16b-4-pt-active-460.png`, `16b-4-pt-active-360.png`. Toplam **56 PNG**.
+27 fixture'ın her biri için iki PNG: `site/draw/preview/zincir/<fixture-id>-460.png` ve `.../<fixture-id>-360.png`. Ek iki dosya: `16b-4-pt-active-460.png`, `16b-4-pt-active-360.png`. Beş incelenen ürünün 460px kartlarını ölçeklemeden birleştiren `review-460.png` ile toplam **57 PNG**.
 
 Fixture id'leri: `06b-1`, `08b-2`, `16b-3`, `16b-4`, `ss-12b-1`, `hp-08b-1`, `c2052`, `a2052`, `offset-08b-1`, `clip-12b-2`, `hp-c2052`, `415h`, `official-hp-reference`, `official-hp-no-bore`, `existing-08b-1`, `sprocket-1209`, `exclude-disli`, `exclude-kaplin`, `exclude-sprey`, `missing-p`, `missing-b1`, `missing-h`, `invalid-number`, `invalid-strands`, `invalid-pt`, `invalid-bore`, `empty`.
 
@@ -113,6 +113,26 @@ PASS: all 17 existing chain pages bypass zincir and retain non-null zincir_disli
 PASS: built yamansa-urun.js parses in Chrome
 PASS: ES5 lexical guard and no ctx.data dependency
 PASS: diff whitespace and existing zincir_disli files unchanged
+```
+
+## Görsel inceleme sonrası revizyon
+
+- Yan görünüş büyütüldü: tek tam hatve ve normal zincirlerde kırpılmış komşu plakalar. Alan genişliği 176 SVG px. Büyük alt tip yazıları kaldırıldı.
+- Makaralı zincirde yan görünüş ve kesit **aynı mm→SVG ölçeğini** kullanır. 16B-4 kesit plakaları artık 64,2 SVG px yüksekliğinde (önce yaklaşık 25 px); 360px önizlemede yaklaşık 50 px.
+- 3–4 sırayı tek yatay şeride küçültmek yerine aynı pim kesiti iki devam satırında gösterilir: ilk satırda sıra 1–2, ikinci satırda kalan sıralar. Pim uçlarında kırılma işaretleri ve küçük `A-A · DEVAM` yazısı vardır. Böylece tüm sıralar, gerçek h oranı ve pt korunur; enine kesit anisotropik olarak gerilmez. `pt` ölçüsü ilk iki sıra merkezinin mesafesidir.
+- Sıra sayısının lider çizgileri kaldırıldı; yalnız anahtar ve küçük `n` metni kaldı.
+- d3 ilk makarada, d1 diğer pimde; yatay çap ölçüleri ve dik uzatma çizgileriyle birbirinden ayrı gösterilir. Çaplar için çapraz lider yok.
+- Yarım kilit kesiti artık iki pim ekseninden geçen boyuna kesittir: sabit kalınlıklı iki krank plaka, bir uçta makara/burç ve diğer uçta pim. Karşılıklı eğik/flared enine plakalar kaldırıldı. Yan görünüşte makara yalnız makara ucunda gösterilir.
+- Tam kilit boyuna kesitinde dış plakalar, iki pim ve pim uçlarına oturan ayrı yaylı klips bulunur. Çok sıralı kilitte her sıra plaka çifti ortak iki pim üzerinde gösterilir. Boyuna kilit kesitleri, b1/pt genişliğini de gösterecek şekilde kendi alanına ölçeklenir; h ölçeği eşitliği makaralı zincirin enine kesiti için geçerlidir.
+- Etiketler, anahtar sırası, fixture verileri, eşleştirme ve eksik ölçü davranışı değişmedi. 27 fixture iki genişlikte yeniden çalıştırıldı; mevcut 17 sayfa ve dişli yönlendirmesi yine geçti. Build yeniden çalıştı, üretilen JS Chrome'da parse edildi.
+- Birleşik dosya: `site/draw/preview/zincir/review-460.png` (936×1313, iki sütun; 16b-4, 08b-2, offset-08b-1, clip-12b-2, c2052). Beş 460px kartın tamamı ve 16B-4 360px kartı görsel olarak incelendi; önceki metin sınırı/çakışma kontrolleri de geçti.
+
+Ek browser kontrolü çıktısı:
+
+```text
+PASS: common side/section scale; h matches section plates; 16B-4 plates 64.2 SVG px
+PASS: cranked offset pair, two-pin link sections, section spring clip, no n leader fan or diagonal d1/d3 leaders
+PASS: five full-resolution 460px previews combined: site/draw/preview/zincir/review-460.png
 ```
 
 Ticimax paneline girilmedi, yükleme/deploy yapılmadı. Bu adım 230 ürünün nihai içerik/görsel/SEO teslimi değildir. Onaylı marka/standart veri kararları `orkapt/zincir` worktree'sindeki ara verilere uygulandı; o dalın `work/` dosyaları henüz commit edilmedi.
