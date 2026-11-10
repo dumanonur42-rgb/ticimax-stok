@@ -17,18 +17,20 @@ body{margin:0;background:#f4f6f9;color:#16203a;font:16px/1.75 Arial,sans-serif}h
     targets = []
     for item in items:
         name = re.sub('[^A-Za-z0-9]', '_', item['kod'])
-        svg = (ROOT / f'onizleme/{name}.svg').read_text()
+        no_module = item['kod'].startswith(('ORK ADM ', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG '))
+        svg = '' if no_module else (ROOT / f'onizleme/{name}.svg').read_text()
         content = html.replace('HGH 20HA ürün önizleme', escape(item['URUNADI'])).replace('Anasayfa / LİNEER / LİNEER ARABALAR', escape('Anasayfa / ' + item['KATEGORI'].replace('>', ' / ')))
-        content += '<h1>' + escape(item['URUNADI']) + '</h1><div class="hero"><img class="photo" src="../' + item['resim'] + '" alt="' + escape(item['URUNADI']) + '"><section><h3>Öne Çıkan Ölçüler</h3><div id="divOnyazi">' + item['ONYAZI'] + '</div></section></div><section class="draw"><h3>Teknik Çizim (mm)</h3>' + svg + '</section><div id="divTabOzellikler">' + item['ACIKLAMA'] + '</div><footer>Önizlemedir. Fiyat, stok veya yükleme işlemi içermez.</footer></main><script>' + js + ';YO();</script></html>'
+        drawing = '<section class="draw"><h3>Teknik Çizim (mm)</h3>' + svg + '</section>' if svg else ''
+        content += '<h1>' + escape(item['URUNADI']) + '</h1><div class="hero"><img class="photo" src="../' + item['resim'] + '" alt="' + escape(item['URUNADI']) + '"><section><h3>Öne Çıkan Ölçüler</h3><div id="divOnyazi">' + item['ONYAZI'] + '</div></section></div>' + drawing + '<div id="divTabOzellikler">' + item['ACIKLAMA'] + '</div><footer>Önizlemedir. Fiyat, stok veya yükleme işlemi içermez.</footer></main><script>' + js + ';YO();</script></html>'
         target = ROOT / f'onizleme/{name}.html'
         target.write_text(content)
         targets.append((name, target))
-    index = '<!doctype html><html lang="tr"><meta charset="utf-8"><title>Aile 1 önizlemeleri</title><h1>52 ürün</h1><ul>' + ''.join('<li><a href="' + name + '.html">' + escape(item['URUNADI']) + '</a></li>' for (name, _), item in zip(targets, items)) + '</ul></html>'
+    index = f'<!doctype html><html lang="tr"><meta charset="utf-8"><title>Aile önizlemeleri</title><h1>{len(items)} ürün</h1><ul>' + ''.join('<li><a href="' + name + '.html">' + escape(item['URUNADI']) + '</a></li>' for (name, _), item in zip(targets, items)) + '</ul></html>'
     (ROOT / 'onizleme/index.html').write_text(index)
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path='/home/ubuntu/.local/bin/google-chrome', headless=True, args=['--no-sandbox'])
         page = browser.new_page(device_scale_factor=1)
-        examples = ['ORK_LA_HGH20HA', 'ORK_LR_HGR25_4', 'PMI_MSA30LE', 'PMI_MSB15S']
+        examples = ['ORK_LA_HGH20HA', 'ORK_LR_HGR25_4', 'PMI_MSA30LE', 'PMI_MSB15S', 'ORK_KKM_20', 'ORK__M_20', 'ORK_ADM_SAC204000', 'ORK_LR_TBR20UU', 'ORK_VM_2505', 'ORK_VMS_SFU3210', 'ETA_VMS_SFU2005', 'ORK_VSG_DSG40H']
         for name, target in targets:
             for width in [1280, 390]:
                 page.set_viewport_size({'width': width, 'height': 900})

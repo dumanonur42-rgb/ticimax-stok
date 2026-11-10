@@ -898,5 +898,497 @@
     ],
     "svg": "onizleme/PMI_MSB35S.svg",
     "eksik_veri": "null"
+  },
+  {
+    "kod": "ETA VMS SFU2005",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ETA VMS SFU2505",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ETA VMS SFU3210",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC164000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC204000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC253000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC254000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC303000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC304000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK ADM SAC404000",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK İM 06",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_06.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 08",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_08.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 10",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_10.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 12",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_12.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 15",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_15.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 16",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_16.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 20",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_20.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 25",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_25.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 30",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_30.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 35",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_35.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 40",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_40.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 45",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_45.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK İM 50",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK__M_50.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 06",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_06.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 08",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_08.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 10",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_10.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 12",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_12.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 15",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_15.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 16",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_16.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 20",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_20.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 25",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_25.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 30",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_30.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 35",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_35.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 40",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_40.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK KKM 50",
+    "match": true,
+    "sonuc": "null değil",
+    "keys": [
+      "dr",
+      "Lm"
+    ],
+    "svg": "onizleme/ORK_KKM_50.svg",
+    "eksik_veri": "null"
+  },
+  {
+    "kod": "ORK LR TBR16UU",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK LR TBR20UU",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK LR TBR25UU",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK LR TBR30UU",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 1605",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 2005",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 2505",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 3210",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 4010",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VM 5010",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU1605",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU2005",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU2505",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU3210",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU4010",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VMS SFU5010",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VSG DSG16H",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VSG DSG20H",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VSG DSG25H",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VSG DSG32H",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK VSG DSG40H",
+    "match": true,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
   }
 ]

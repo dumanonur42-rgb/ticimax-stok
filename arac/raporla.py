@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    if (ROOT / 'veri/aile2.json').exists():
+        from aile2_raporla import main as report_combined
+        report_combined()
+        return
     rows = [json.loads(line) for line in (ROOT / 'urunler.jsonl').read_text().splitlines()]
     draws = json.loads((ROOT / 'veri/draw-keys.json').read_text())
     raw = [r for f in ['hg', 'hgr', 'pmi'] for r in json.loads((ROOT / f'veri/{f}.json').read_text())]

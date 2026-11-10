@@ -1,0 +1,1591 @@
+[
+  {
+    "kod": "ETA VMS SFU2005",
+    "model": "SFU2005",
+    "aile": "SFU",
+    "marka": "ETAZON",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2005"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2005"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2005"
+  },
+  {
+    "kod": "ETA VMS SFU2505",
+    "model": "SFU2505",
+    "aile": "SFU",
+    "marka": "ETAZON",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2505"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2505"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2505"
+  },
+  {
+    "kod": "ETA VMS SFU3210",
+    "model": "SFU3210",
+    "aile": "SFU",
+    "marka": "ETAZON",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "32 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU3210"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU3210"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 32,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU3210"
+  },
+  {
+    "kod": "ORK ADM SAC164000",
+    "model": "SAC164000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC164000"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC164000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC164000"
+  },
+  {
+    "kod": "ORK ADM SAC204000",
+    "model": "SAC204000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC204000"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC204000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC204000"
+  },
+  {
+    "kod": "ORK ADM SAC253000",
+    "model": "SAC253000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC253000"
+      },
+      "Boy (L)": {
+        "deger": "3000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC253000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC253000"
+  },
+  {
+    "kod": "ORK ADM SAC254000",
+    "model": "SAC254000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC254000"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC254000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC254000"
+  },
+  {
+    "kod": "ORK ADM SAC303000",
+    "model": "SAC303000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC303000"
+      },
+      "Boy (L)": {
+        "deger": "3000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC303000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 30,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC303000"
+  },
+  {
+    "kod": "ORK ADM SAC304000",
+    "model": "SAC304000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC304000"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC304000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 30,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC304000"
+  },
+  {
+    "kod": "ORK ADM SAC404000",
+    "model": "SAC404000",
+    "aile": "SAC",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "40 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC404000"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC404000"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.ersarulman.com/tr-TR/sac/3/15/97",
+      "https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK ADM SAC404000"
+  },
+  {
+    "kod": "ORK İM 06",
+    "model": "06",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "6 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 06"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 06"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 6,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 06"
+  },
+  {
+    "kod": "ORK İM 08",
+    "model": "08",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "8 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 08"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 08"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 8,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 08"
+  },
+  {
+    "kod": "ORK İM 10",
+    "model": "10",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 10"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 10"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 10,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 10"
+  },
+  {
+    "kod": "ORK İM 12",
+    "model": "12",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "12 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 12"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 12"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 12,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 12"
+  },
+  {
+    "kod": "ORK İM 15",
+    "model": "15",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "15 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 15"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 15"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 15,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 15"
+  },
+  {
+    "kod": "ORK İM 16",
+    "model": "16",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 16"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 16"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 16"
+  },
+  {
+    "kod": "ORK İM 20",
+    "model": "20",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 20"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 20"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 20"
+  },
+  {
+    "kod": "ORK İM 25",
+    "model": "25",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 25"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 25"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 25"
+  },
+  {
+    "kod": "ORK İM 30",
+    "model": "30",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 30"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 30"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 30,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 30"
+  },
+  {
+    "kod": "ORK İM 35",
+    "model": "35",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "35 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 35"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 35"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 35,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 35"
+  },
+  {
+    "kod": "ORK İM 40",
+    "model": "40",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "40 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 40"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 40"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 40"
+  },
+  {
+    "kod": "ORK İM 45",
+    "model": "45",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "45 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 45"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 45"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 45,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 45"
+  },
+  {
+    "kod": "ORK İM 50",
+    "model": "50",
+    "aile": "IM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 50"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 50"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı"
+    ],
+    "nominal": 50,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK İM 50"
+  },
+  {
+    "kod": "ORK KKM 06",
+    "model": "06",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "6 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 06"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 06"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 6,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 06"
+  },
+  {
+    "kod": "ORK KKM 08",
+    "model": "08",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "8 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 08"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 08"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 8,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 08"
+  },
+  {
+    "kod": "ORK KKM 10",
+    "model": "10",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 10"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 10"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 10,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 10"
+  },
+  {
+    "kod": "ORK KKM 12",
+    "model": "12",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "12 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 12"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 12"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 12,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 12"
+  },
+  {
+    "kod": "ORK KKM 15",
+    "model": "15",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "15 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 15"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 15"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 15,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 15"
+  },
+  {
+    "kod": "ORK KKM 16",
+    "model": "16",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 16"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 16"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 16"
+  },
+  {
+    "kod": "ORK KKM 20",
+    "model": "20",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 20"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 20"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 20"
+  },
+  {
+    "kod": "ORK KKM 25",
+    "model": "25",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 25"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 25"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 25"
+  },
+  {
+    "kod": "ORK KKM 30",
+    "model": "30",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 30"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 30"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 30,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 30"
+  },
+  {
+    "kod": "ORK KKM 35",
+    "model": "35",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "35 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 35"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 35"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 35,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 35"
+  },
+  {
+    "kod": "ORK KKM 40",
+    "model": "40",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "40 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 40"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 40"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 40"
+  },
+  {
+    "kod": "ORK KKM 50",
+    "model": "50",
+    "aile": "KKM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (dr)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 50"
+      },
+      "Boy (Lm)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 50"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı",
+      "eksik: ilave indüksiyon işlemi doğrulanmadı"
+    ],
+    "nominal": 50,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KKM 50"
+  },
+  {
+    "kod": "ORK LR TBR16UU",
+    "model": "TBR16UU",
+    "aile": "TBR",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR16UU"
+      },
+      "Gövde Ölçüsü (W)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (G)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (A)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (L)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (B)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (D)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (C)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Bağlantı Dişi (S1)": {
+        "deger": "M5",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR16UU"
+  },
+  {
+    "kod": "ORK LR TBR20UU",
+    "model": "TBR20UU",
+    "aile": "TBR",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR20UU"
+      },
+      "Gövde Ölçüsü (W)": {
+        "deger": "68 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (G)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (A)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (L)": {
+        "deger": "51 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (B)": {
+        "deger": "54 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (D)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (C)": {
+        "deger": "37 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Bağlantı Dişi (S1)": {
+        "deger": "M6",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR20UU"
+  },
+  {
+    "kod": "ORK LR TBR25UU",
+    "model": "TBR25UU",
+    "aile": "TBR",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR25UU"
+      },
+      "Gövde Ölçüsü (W)": {
+        "deger": "82 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (G)": {
+        "deger": "41 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (A)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (L)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (B)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (D)": {
+        "deger": "41 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (C)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Bağlantı Dişi (S1)": {
+        "deger": "M8",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR25UU"
+  },
+  {
+    "kod": "ORK LR TBR30UU",
+    "model": "TBR30UU",
+    "aile": "TBR",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR30UU"
+      },
+      "Gövde Ölçüsü (W)": {
+        "deger": "91 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (G)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (A)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (L)": {
+        "deger": "75 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (B)": {
+        "deger": "75 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (D)": {
+        "deger": "45,5 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Gövde Ölçüsü (C)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      },
+      "Bağlantı Dişi (S1)": {
+        "deger": "M8",
+        "kaynak": "https://www.kolmb.com.cn/en/prd-20.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı"
+    ],
+    "nominal": 30,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK LR TBR30UU"
+  },
+  {
+    "kod": "ORK VM 1605",
+    "model": "1605",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 1605"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 1605"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 1605"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 1605"
+  },
+  {
+    "kod": "ORK VM 2005",
+    "model": "2005",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2005"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2005"
+      },
+      "Boy (L)": {
+        "deger": "4000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2005"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2005"
+  },
+  {
+    "kod": "ORK VM 2505",
+    "model": "2505",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2505"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2505"
+      },
+      "Boy (L)": {
+        "deger": "5700 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2505"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 2505"
+  },
+  {
+    "kod": "ORK VM 3210",
+    "model": "3210",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "32 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 3210"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 3210"
+      },
+      "Boy (L)": {
+        "deger": "5700 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 3210"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 32,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 3210"
+  },
+  {
+    "kod": "ORK VM 4010",
+    "model": "4010",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "40 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 4010"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 4010"
+      },
+      "Boy (L)": {
+        "deger": "5700 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 4010"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 4010"
+  },
+  {
+    "kod": "ORK VM 5010",
+    "model": "5010",
+    "aile": "VM",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 5010"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 5010"
+      },
+      "Boy (L)": {
+        "deger": "5700 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 5010"
+      }
+    },
+    "bayraklar": [
+      "eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı"
+    ],
+    "nominal": 50,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VM 5010"
+  },
+  {
+    "kod": "ORK VMS SFU1605",
+    "model": "SFU1605",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "16 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU1605"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU1605"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU1605"
+  },
+  {
+    "kod": "ORK VMS SFU2005",
+    "model": "SFU2005",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2005"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2005"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2005"
+  },
+  {
+    "kod": "ORK VMS SFU2505",
+    "model": "SFU2505",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2505"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "5 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2505"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2505"
+  },
+  {
+    "kod": "ORK VMS SFU3210",
+    "model": "SFU3210",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "32 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU3210"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU3210"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 32,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU3210"
+  },
+  {
+    "kod": "ORK VMS SFU4010",
+    "model": "SFU4010",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "40 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU4010"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU4010"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU4010"
+  },
+  {
+    "kod": "ORK VMS SFU5010",
+    "model": "SFU5010",
+    "aile": "SFU",
+    "marka": "Yamansa",
+    "degerler": {
+      "Mil Çapı (d)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU5010"
+      },
+      "Vida Adımı (Ph)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU5010"
+      }
+    },
+    "bayraklar": [
+      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
+      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+    ],
+    "nominal": 50,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU5010"
+  },
+  {
+    "kod": "ORK VSG DSG16H",
+    "model": "DSG16H",
+    "aile": "DSG",
+    "marka": "Yamansa",
+    "degerler": {
+      "Uyumlu Mil Çapı (d)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Malzeme": {
+        "deger": "Alüminyum",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG16H"
+      },
+      "Somun Yuva Çapı (D)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Genişliği (B)": {
+        "deger": "52 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Yüksekliği (H)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Eksen Yüksekliği (h)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (E)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Uzunluğu (L)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C1)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C2)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (P)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (X)": {
+        "deger": "M5",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (W)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (Y)": {
+        "deger": "M5",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      }
+    },
+    "bayraklar": [],
+    "nominal": 16,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG16H"
+  },
+  {
+    "kod": "ORK VSG DSG20H",
+    "model": "DSG20H",
+    "aile": "DSG",
+    "marka": "Yamansa",
+    "degerler": {
+      "Uyumlu Mil Çapı (d)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Malzeme": {
+        "deger": "Alüminyum",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG20H"
+      },
+      "Somun Yuva Çapı (D)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Genişliği (B)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Yüksekliği (H)": {
+        "deger": "44 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Eksen Yüksekliği (h)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (E)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Uzunluğu (L)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C1)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C2)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (P)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (X)": {
+        "deger": "M6",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (W)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (Y)": {
+        "deger": "M6",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      }
+    },
+    "bayraklar": [],
+    "nominal": 20,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG20H"
+  },
+  {
+    "kod": "ORK VSG DSG25H",
+    "model": "DSG25H",
+    "aile": "DSG",
+    "marka": "Yamansa",
+    "degerler": {
+      "Uyumlu Mil Çapı (d)": {
+        "deger": "25 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Malzeme": {
+        "deger": "Alüminyum",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG25H"
+      },
+      "Somun Yuva Çapı (D)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Genişliği (B)": {
+        "deger": "66 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Yüksekliği (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Eksen Yüksekliği (h)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (E)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Uzunluğu (L)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C1)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C2)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (P)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (X)": {
+        "deger": "M6",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (W)": {
+        "deger": "51 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (Y)": {
+        "deger": "M6",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      }
+    },
+    "bayraklar": [],
+    "nominal": 25,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG25H"
+  },
+  {
+    "kod": "ORK VSG DSG32H",
+    "model": "DSG32H",
+    "aile": "DSG",
+    "marka": "Yamansa",
+    "degerler": {
+      "Uyumlu Mil Çapı (d)": {
+        "deger": "32 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Malzeme": {
+        "deger": "Alüminyum",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG32H"
+      },
+      "Somun Yuva Çapı (D)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Genişliği (B)": {
+        "deger": "86 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Yüksekliği (H)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Eksen Yüksekliği (h)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (E)": {
+        "deger": "17 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Uzunluğu (L)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C1)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Gövde Ölçüsü (C2)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (P)": {
+        "deger": "66 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (X)": {
+        "deger": "M8",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Aralığı (W)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Bağlantı Dişi (Y)": {
+        "deger": "M8",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      }
+    },
+    "bayraklar": [],
+    "nominal": 32,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG32H"
+  },
+  {
+    "kod": "ORK VSG DSG40H",
+    "model": "DSG40H",
+    "aile": "DSG",
+    "marka": "Yamansa",
+    "degerler": {
+      "Uyumlu Mil Çapı (d)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html"
+      },
+      "Malzeme": {
+        "deger": "Alüminyum",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG40H"
+      }
+    },
+    "bayraklar": [
+      "eksik: DSG40H için üretici katalogları arasında H/h/L/C2/P farkı var; kesit ölçüsü doğrulanana kadar aktarılmadı"
+    ],
+    "referans_kaynaklar": [
+      "https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html",
+      "https://www.powerbelt.hu/uploads/source/Lintech/katalog/Limon_DSG.pdf"
+    ],
+    "nominal": 40,
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VSG DSG40H"
+  }
+]

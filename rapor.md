@@ -1,108 +1,168 @@
-# Aile 1 teslimi: 52 ürün
+# Aile 1 + Aile 2 teslimi: 108 ürün
 
-Girdideki 16 HGH/HGW araba (pilot dahil), 6 HGR ray ve 30 PMI MSA/MSB arabanın tamamı işlendi. Hiçbiri atlanmadı. Panel erişimi, ürün yükleme ve push yapılmadı. Bu teslim 208 kaydın 52 tanesidir; diğer 156 ürün bu adımın kapsamında değildir.
+Önceki **52 ürün aynen korundu**, ikinci ailenin **56 girdisinin tamamı** eklendi. Kapsam: 12 KKM, 13 İM, 7 SAC, 4 TBR, 6 VM, 6 Yamansa SFU, 3 ETAZON SFU, 5 DSG. SAC25/30'un 3 ve 4 metre varyantları ayrı kayıttır. 208 girdiden kalan 100 ürün bu teslimde işlenmedi. **Panele girilmedi, yükleme ve push yapılmadı.**
 
-## Çıktılar
+## Önemli teknik sınırlar
 
-- `urunler.jsonl`: 52 satır, istenen tüm alanlar.
-- `gorseller/`: 52 ürün için 500×500 JPG. Seviye: **birebir 14, ayni_tip 38**.
-- Ham değer/kaynaklar: `veri/hg.json` (16), `veri/hgr.json` (6), `veri/pmi.json` (30).
-- Görsel seçimleri, ham dosya ve kesim bilgileri: `veri/gorsel-secimleri.json`.
-- Her ürünün gerçek başlığı, kırıntıları, ürün kimliği, teknik listesi ve ön yazısı: `veri/lineer-ctx.json`.
-- Her ürünün match/draw sonucu ve anahtarları: `veri/draw-keys.json`.
-- Yerel önizleme dizini: `onizleme/index.html`; her ürüne ait HTML ve SVG aynı dizinde.
-- Görünür açıklama uzunluğu: 3232–3978 karakter. İç linkler yalnız `katurl.txt` içindeki lineer araba ve ray kategorileridir.
+- KKM/İM için yalnız girdideki çap ve 4000 mm boy kesin bilgi kabul edildi. h6/g6, HRC, krom kalınlığı, CF53/Ck45 ve kg/m bulunamadı; başka markadan aktarılmadı. KKM'ye ek indüksiyon, İM'ye ek krom kaplama yakıştırılmadı. Krom kaplama ile indüksiyon ayrı işlemler olarak anlatıldı, ürünlerin birlikte her iki işlemi gördüğü iddia edilmedi.
+- **ETAZON resmi kaynak bulunamadı.** Üç ETAZON ürününün markası korundu; başka markanın ölçü/yükleri aktarılmadı. Yalnız girdi/modeldeki çap ve adım kullanıldı.
+- **SFU tam sirkülasyon eki belirsiz.** Resmi katalog SFU1605-3 için L40, -4 için L50 veriyor. Girdi SFU1605 diyor; keyfi -4 seçilmedi. Diğer SFU varyantlarında da tam ek yok. D/A/L/B/W/X/Q ve bilya çapı, eşleşmeyen tam varyanttan satış metnine aktarılmadı. Nominal çap/adım dışında kesin gövde değerleri eksik işaretlendi. Yamansa Ca/Coa yazılmadı.
+- **SAC kesiti belirsiz.** ERSA SAC16 ile FYC SAC16-1000 kesit tabloları aynı değil; FYC bir tedarikçi, birebir Yamansa üretici kaynağı değil. Örneğin taban genişlikleri kataloglar arasında değişiyor. SAC40 için ERSA tablosu boş. Boyu ve çapı girdiden alındı; SBR araba ölçüleri destekli mile aktarılmadı.
+- TBR16/20/25/30UU montaj ölçüleri, aynı model kodlarını yayımlayan üretici KOLMB/Ningbo Baoding tablosundan alındı. Yük ve ağırlık Yamansa'ya aktarılmadı.
+- DSG16H/20H/25H/32H montaj geometrisi, eş kodlu Wangong tablosundan alındı. **DSG40H katalogları çelişkili** (H/h/L/C2/P); bu gövdeye nominal uyumlu mil çapı ve girdideki alüminyum dışında değer atanmadı. DSG bir gövdedir; bilya çapı/adım/Ca/Coa ona ait ölçüler değildir.
+- Eksik teknik alanlar tire, boş kutu veya tahminle doldurulmadı. Yeni 56 kaydın 52 tanesinde, toplam 108 kaydın 78 tanesinde eksik bayrağı var. Ayrıntılar aşağıdadır.
 
-## Kaynak ve teknik sınırlar
+## Dosyalar ve yeniden üretim
 
-- https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf
-- https://www.pmi-amt.com/en/supports/7Z/2022MD09%E8%8B%B1%E6%96%87%28%E8%B7%A8%E9%A0%81P159-300%29%20%282%29.pdf
+- Ürünler: `urunler.jsonl`; açıklamaların yeni ailede görünür uzunluğu 2598–3058 karakter.
+- Ham değer/kaynak: `veri/aile2.json`; eski aile `veri/hg.json`, `hgr.json`, `pmi.json`.
+- Yeni araçlar: `arac/aile2_veri.py`, `aile2_gorsel.py`, `aile2_hazirla.py`, `aile2_raporla.py`, `kontak.py`, `test_aile2.py`.
+- Görsel seçimleri: `veri/aile2-gorsel-secimleri.json`; her seçimde kaynak URL, ham fotoğraf, seviye ve kesim bilgisi var.
+- Bağlam/çizim: `veri/lineer-ctx.json`, `veri/draw-keys.json`, `veri/cizim.txt`.
+- Yerel HTML dizini: `onizleme/index.html` (108 ürün). Modülsüz üründe boş/yanlış çizim bölümü gösterilmez.
+- Önceki Aile 1 tesliminin raporu kaybolmadı: `veri/aile1-rapor.md`. Oradaki 52 ürünlük denetim çıktıları tarihsel teslimdir; güncel toplam çıktılar bu rapordadır.
 
-Resmi PDF kopyaları `veri/hg-resmi-katalog.pdf` ve `veri/pmi-resmi-katalog.pdf` içindedir. İlgili sayfaların metin dökümleri `veri/*sayfa-*.txt` dosyalarında saklanır.
+```sh
+python3 arac/veri_hazirla.py
+python3 arac/aile2_veri.py
+python3 arac/gorsel_sec.py
+python3 arac/aile2_gorsel.py
+OMP_NUM_THREADS=2 python3 arac/gorsel_hazirla.py
+OMP_NUM_THREADS=2 python3 arac/gorsel_hazirla.py veri/aile2-gorsel-secimleri.json
+python3 arac/aile_hazirla.py
+/home/ubuntu/.nvm/versions/node/v24.22.2/bin/node arac/ciz.js
+python3 arac/kontak.py
+python3 arac/onizle.py
+python3 arac/denetle.py urunler.jsonl --aile
+python3 -m unittest discover -s arac -p 'test_*.py'
+python3 arac/raporla.py
+```
 
-- HGH: HG PDF sayfa 41; HGW: sayfa 45. Her ham kayıtta model satırı bulunur. Yamansa blokları için yalnız ölçüsel geometri kullanıldı. Eşdeğer markanın dinamik/statik yükü ve ağırlığı ayrı `referans_degerler` içinde tutuldu, satış alanlarına aktarılmadı.
-- HGR: üstten havşalı delikli ray ölçüleri HG araba tablolarındaki ray kesitinden alındı. **HGR-T alttan dişli rayın h/ ağırlık değerleri kullanılmadı.** WR, HR, D, h, d, P, E ve girdideki 4000 mm boy ham veride bulunur. E standart katalog uç mesafesidir; 4 metre kesimin iki ucunda kesin E eşitliği iddia edilmez. Yamansa kg/m doğrulanamadığı için referans ağırlık müşteri alanına yazılmadı.
-- PMI A/LA, E/LE ve S/LS tabloları PDF sayfa 30–32; MSB E ve S sayfa 41–42. A/LA üstten, E/LE üstten veya alttan montajdır. LS/LA/LE uzun gövdeyi ayırt eder. MSB E/S ağır yük gövdeleri TE/TS kısa gövdeyle karıştırılmadı.
-- PMI FC hafif ön yük, N normal hassasiyet sınıfıdır (kod açıklamaları sayfa 25/36). SS iki yönlü uç keçesi + alt keçe; ZZ bunlara ek metal sıyırıcıdır (sayfa 122). ZZ toplam L ölçüleri sayfa 125 uzunluk farkıyla güncellendi. Ayrı ZZ ağırlığı verilmediğinden 4 varyantta ağırlık aktarılmadı; kapasite resmi markanın kendi değeridir. Dinamik kapasiteler 50 km nominal ömür esasıyla verilir, doğrudan güvenli çalışma yükü olarak sunulmaz.
-- Çizim etiketleri için PMI H2 → H1 (alt açıklık), W2 → N (yanal taşma), ray W1 → WR ve ray H1 → HR eşlemesi yapıldı. Özgün PMI etiketleri de `katalog_etiketleri` içinde korunur. `arac/lineer.js` değiştirilmedi; geometrik şema üretir, üretim/tolerans resmi değildir.
-- Pilotun kamuya açık CA karşılaştırması `veri/lineer.json` içinde korunur: https://www.yamansarulman.com/hgh-20-ca-lineer-araba-18295 . CA'nın C/L/L1 değerleri HA'ya aktarılmadı.
+## Kaynaklar
 
-## Görsel seçimi ve kontrol
+Nominal çap/boy ve ürün tipi: `parca/lineer_diger.jsonl.gz`. URL bulunmayan kesin girdi bilgisi ham veride `girdi:parca/...#kod` olarak açıkça gösterildi; uydurma kaynak URL yazılmadı. `teknik_kaynak` alanındaki yerel girdi referansı bir katalog bağlantısı değildir. Yalnız araştırma için bakılan, satış alanına değer aktarılmayan URL'ler ham kaydın `referans_kaynaklar` alanında tutulur.
 
-Önce aynı kod arandı; bulunamayanlarda gövde formu aynı, okunur farklı kodu ve yasak logosu olmayan gerçek fotoğraflar seçildi. `birebir`, aynı model kodunun fotoğrafını ifade eder; gerçek Yamansa stok çekimi olduğu iddia edilmez. PMI'nin kendi logosu yalnız PMI ürünlerinde serbesttir. Teknik çizimler, renderlar, filigranlı fotoğraflar ve ambalajlar ürün görseli olarak kullanılmadı.
+- TBR resmi üretici: https://www.kolmb.com.cn/en/prd-20.html — yerel kopya `veri/tbr-resmi-sayfa.html`.
+- DSG resmi üretici: https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html — içerik dökümü `veri/dsg-resmi-tablo.txt`. Doğrudan HTTP 403 verdi, kamu içerik aracıyla tablo okundu.
+- SFU resmi üretici (varyant referansı, satış gövde değeri değil): https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html — `veri/sfu-resmi-sayfa.html`, `veri/sfu-resmi-cizim.jpg`.
+- SAC karşılaştırması: https://www.ersarulman.com/tr-TR/sac/3/15/97 ve https://fycrulman.com/wp-content/uploads/2021/09/katalog.pdf — `veri/fyc-lineer-katalog.pdf`, `veri/fyc-sayfa-5.txt`.
+- DSG40 karşılaştırması: https://saivsautomatic.com/ball-screw/dsg-series-ball-nut-housing-178.html ve indekslenmiş Limon tablosu https://www.powerbelt.hu/uploads/source/Lintech/katalog/Limon_DSG.pdf (doğrudan PDF 404; canlı dosya doğrulanmış gibi sunulmadı).
+- Orkapt kamu sitesi ve model aramalarında yeni aileye ait ürün özelinde teknik satır bulunamadı. Girdide tüm 56 `orka_site` alanı null. `ETAZON`, `ETAZON SFU somun katalog`, `ETAZON official linear ball screw` aramalarında resmi kaynak bulunamadı.
 
-FOnlineGuide 45HA/45CC/45HC sayfalarının bazı fotoğraflarında 35 kodu görüldüğünden bu fotoğraflar reddedildi. 45HA ve 45HC için kodu görünmeyen aynı tip alt görünüş; 45CC için kodsuz kısa flanş alt görünüş kullanıldı. PMI'de geniş/dar, normal/uzun ve MSB alçak tip fotoğrafları ayrı seçildi. SS/ZZ varyantlarda seviye `ayni_tip` olup fotoğraf conta/sıyırıcı seçeneğinin birebir kanıtı değildir; doğru conta teknik listede yazılıdır.
+Eski ailenin resmi HG/PMI kaynakları ve yük/ağırlık sınırları `veri/aile1-rapor.md` içinde aynen korunmuştur.
 
-Ürün dışındaki montaj parçaları satışa dahil değildir. Uzun ray kuyrukları ve diğer ürünler kadraj dışında tutuldu. Renkli/gri zeminlerde rembg `isnet-general-use` kullanıldı. HGW25CC'nin parlak orta yüzeyinde ilk maskenin kestiği alan, kaynak fotoğrafın gerçek pikselleri korunarak geri alındı; ürün yazısı/logo silinmedi ve yeni ürün detayı çizilmedi.
+## Kategoriler ve iç linkler
 
-Tuval saf beyazdan kurulur, `sablon.png` dosyasından **yalnız üst 100 px** kopyalanır. Alt panelin tamamı beyazdır. Ürün oranı korunarak yaklaşık 440×240 kutuyu mümkün olduğunca dolduracak şekilde ölçeklenir. Pilotun açık gri şeridi kaldırıldı, aynı HGH20HA kodlu logosuz fotoğrafı `birebir` yapıldı.
+`veri/kategori-aile2.json` kategori kararlarını ve kamu URL kontrolünü saklar. KKM/İM için `site_kategoriler.txt` içindeki ortak kategori ve onun `/krom-kapli-` breadcrumb'ı doğrulandı. Ortak kategori adında krom geçmesi, İM ürününün ayrıca krom kaplı olduğuna ilişkin ürün iddiası değildir.
 
-Seçilen bütün kaynak fotoğraflar ve bitmiş ürünlerin 4 kontrol paftası açılarak incelendi: `onizleme/gorsel-kontrol-1.jpg` … `onizleme/gorsel-kontrol-4.jpg`. Ayrıca tekil bitmiş örnekler bizzat açıldı:
+Diğer beş alt yol `site_kategoriler.txt` içinde yok; **katurl.txt içindeki URL adından LİNEER altında türetildi**, bu yüzden brief doğrultusunda `yeni_kategori:false`. Ancak bu beş kamu URL'si kontrol sırasında `/?c=1` ana sayfasına yönlendi; canlı kategori kimliği/breadcrumb doğrulanamadı. Yüklemeden önce bu kimliklerin teyidi gerekir. Bu adım yükleme içermez. Aynı URL'ler açıklamaya iç link yapılmadı; açıklamalarda yalnız katurl'da bulunan ve kamu sayfası açılan `krom-kapli-`, `sbr-serisi`, `lIneer`, `vidali-mil-uc-yatagi` kullanıldı (ürün başına iki link).
 
-- `gorseller/hgh-20ha-dar-uzun-lineer-araba-20-mm.jpg`
-- `gorseller/hgr-25-lineer-ray-25-mm-4-metre.jpg`
-- `gorseller/pmi-msa-30-le-ss-fcn-genis-uzun-lineer-araba-30-mm.jpg`
-- `gorseller/pmi-msb-15-s-ss-fcn-dar-alcak-lineer-araba-15-mm.jpg`
-- `gorseller/hgw-25cc-genis-lineer-araba-25-mm.jpg`
-
-### Ürün bazında görsel kaynakları
-
-| Kod | Seviye | Kaynak |
+| Alt tip | Kategori | Dayanak |
 |---|---|---|
-| ORK LA HGH20HA | birebir | https://www.fonlinearguide.com/Uploads/products/2021-03-10/en-HGH20HA--5-.jpg |
-| ORK LA HGH25HA | birebir | https://www.fonlinearguide.com/Uploads/products/2021-03-10/en-HGH25HA--4-.jpg |
-| ORK LA HGH30HA | birebir | https://www.fonlinearguide.com/Uploads/products/2022-08-23/en-HGH30HA.jpg |
-| ORK LA HGH35HA | birebir | https://www.fonlinearguide.com/Uploads/products/2021-03-11/en-HGH35HA--8-.jpg |
-| ORK LA HGH45HA | ayni_tip | https://www.fonlinearguide.com/Uploads/products/2021-03-11/en-HGH45HA--2-.jpg |
-| ORK LA HGW15CC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW15CC.jpg |
-| ORK LA HGW20CC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW20CC.jpg |
-| ORK LA HGW20HC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW20HC.jpg |
-| ORK LA HGW25CC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW25CC.jpg |
-| ORK LA HGW25HC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-24/en-HGW25HC.jpg |
-| ORK LA HGW30CC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-10-27/en-HGW30CC.jpg |
-| ORK LA HGW30HC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW30HC.jpg |
-| ORK LA HGW35CC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW35CC.jpg |
-| ORK LA HGW35HC | birebir | https://www.fonlinearguide.com/Uploads/products/2022-06-21/en-HGW35HC.jpg |
-| ORK LA HGW45CC | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S8d1b721140e94d03be423f459a974c744.jpg |
-| ORK LA HGW45HC | ayni_tip | https://www.fonlinearguide.com/Uploads/products/2021-03-15/en-HGW45HC--4-.jpg |
-| ORK LR HGR15 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| ORK LR HGR20 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| ORK LR HGR25 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| ORK LR HGR30 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| ORK LR HGR35 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| ORK LR HGR45 | ayni_tip | https://avatars.mds.yandex.net/get-mpic/11442293/2a0000018cabb833471c0ac26b3354cdd118/orig |
-| PMI MSA15E | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA15S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA15SZZ | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA20S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA25S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA25SZZ | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA30A | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA30E | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA30EZZ | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA30LE | ayni_tip | https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg |
-| PMI MSA30LS | ayni_tip | https://image.made-in-china.com/2f0j00SyjcFqHMcJkg/PMI-MSA45LS-Support-Roller-CNC-Linear-Motion-Guide-Rail.webp |
-| PMI MSA30S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA35A | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA35E | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA35LA | ayni_tip | https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg |
-| PMI MSA35LE | ayni_tip | https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg |
-| PMI MSA35S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA35SZZ | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSA45E | ayni_tip | https://sc04.alicdn.com/kf/H88a1507ebf024c7596420cc51fa2e1e8d/225270570/H88a1507ebf024c7596420cc51fa2e1e8d.jpg |
-| PMI MSA45LA | ayni_tip | https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg |
-| PMI MSA45LE | ayni_tip | https://shopcdnpro.grainajz.com/861/upload/other/7bb68a528d87348a98de6a3dd16ad80724ea6af48b679255c36713b2b4ae2cd5.jpeg |
-| PMI MSA45LS | ayni_tip | https://image.made-in-china.com/2f0j00SyjcFqHMcJkg/PMI-MSA45LS-Support-Roller-CNC-Linear-Motion-Guide-Rail.webp |
-| PMI MSA45S | ayni_tip | https://xn--80akffkb2bye.xn--p1ai/images/stories/virtuemart/product/resized/12,17_560x560.jpg |
-| PMI MSB15E | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png |
-| PMI MSB15S | birebir | https://ae-pic-a1.aliexpress-media.com/kf/Sf925feaa64a14e6288008966cf5149959.jpg |
-| PMI MSB20E | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png |
-| PMI MSB25S | ayni_tip | https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp |
-| PMI MSB30E | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/Sae013c3515fb47fe92c2c779351858cdV.png |
-| PMI MSB30S | ayni_tip | https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp |
-| PMI MSB35S | ayni_tip | https://image.made-in-china.com/2f0j00LydbZJGcewkq/PMI-MSB20S-Linear-Rail-High-Precision-Linear-Guide-Motion-Slide-Rod-Bearing.webp |
+| KKM | LİNEER>KROM KAPLI İNDÜKSİYONLU MİLLER | katurl: /krom-kapli-; mevcut yol |
+| IM | LİNEER>KROM KAPLI İNDÜKSİYONLU MİLLER | katurl: /krom-kapli-; mevcut yol |
+| SAC | LİNEER>ALT DESTEKLİ MİLLER | katurl: /alt-destekli-miller; URL adından türetildi, canlı kimlik teyidi gerekli |
+| TBR | LİNEER>TBR SERİSİ | katurl: /tbr-serisi; URL adından türetildi, canlı kimlik teyidi gerekli |
+| VM | LİNEER>VİDALI MİLLER | katurl: /vidali-miller; URL adından türetildi, canlı kimlik teyidi gerekli |
+| SFU | LİNEER>BİLYALI SOMUNLAR | katurl: /bilyali-somunlar; URL adından türetildi, canlı kimlik teyidi gerekli |
+| DSG | LİNEER>VİDALI MİL SOMUN GÖVDESİ | katurl: /vidali-mil-somun-govdesi; URL adından türetildi, canlı kimlik teyidi gerekli |
 
-## Eksik bayraklı ürünler
+## Teknik etiket listeleri
+
+Ölçü etiketleri `Etiket (Harf)` biçimindedir. Marka ve malzeme sayısal ölçü olmadığı için harf almaz. Eksik ölçü etiketi müşteri listesine boş olarak eklenmedi. TBR gövde harfleri, farklı çizim standardına dönüştürülmeden üreticinin harfleriyle korundu.
+
+- **KKM**: `Mil Çapı (dr)`, `Boy (Lm)`; `Marka`.
+- **IM**: `Mil Çapı (dr)`, `Boy (Lm)`; `Marka`.
+- **SAC**: `Mil Çapı (d)`, `Boy (L)`; `Marka`.
+- **TBR**: `Mil Çapı (d)`, `Gövde Ölçüsü (W)`, `Gövde Ölçüsü (G)`, `Gövde Ölçüsü (A)`, `Gövde Ölçüsü (L)`, `Gövde Ölçüsü (B)`, `Gövde Ölçüsü (D)`, `Gövde Ölçüsü (C)`, `Bağlantı Dişi (S1)`; `Marka`.
+- **VM**: `Mil Çapı (d)`, `Vida Adımı (Ph)`, `Boy (L)`; `Marka`.
+- **SFU**: `Mil Çapı (d)`, `Vida Adımı (Ph)`; `Marka`.
+- **DSG**: `Uyumlu Mil Çapı (d)`, `Malzeme`, `Somun Yuva Çapı (D)`, `Gövde Genişliği (B)`, `Gövde Yüksekliği (H)`, `Eksen Yüksekliği (h)`, `Gövde Ölçüsü (E)`, `Gövde Uzunluğu (L)`, `Gövde Ölçüsü (C1)`, `Gövde Ölçüsü (C2)`, `Bağlantı Aralığı (P)`, `Bağlantı Dişi (X)`, `Bağlantı Aralığı (W)`, `Bağlantı Dişi (Y)`; `Marka`.
+
+## Görseller ve görme kontrolü
+
+Üst 100 px şablon bandı korunur, tuvalin kalanı saf beyazdan kurulur. Ürün 440×240 kutuya oranı korunarak sığdırılır; önceki gri şerit geri gelmedi. Yeni mil, destekli mil ve gri zeminli SFU2005 fotoğraflarında rembg isnet-general-use uygulandı; delik boşlukları korunur. Milin parlak yüzeyi gerçek kaynak pikselleriyle maskede korundu. Ürün yazısı/logo silinmedi. SFU2505 fotoğrafındaki ürün dışı model yazısı kadraj dışında tutuldu.
+
+Yeni görüntüler birebir Yamansa/ETAZON stok varyantı olarak doğrulanmadığından **aynı tip** seviyesinde tutuldu. Mil fotoğrafı tek, dolu ve işlenmemiş düz mili; VM fotoğrafı somunsuz bilyalı vidalı mil yüzeyini; TBR açık flanşı; DSG alüminyum gövdeyi gösterir. SFU1605/2005/2505/3210 için altı delikli, 4010/5010 için sekiz delikli flanş görünüşü kullanıldı. Büyük iki SFU için aynı logosuz/kodsuz sekiz delikli gerçek fotoğraf kullanıldı; fotoğraf devre sayısı veya ölçü kanıtı sayılmaz. Kutu, kablo bağı, filigran, okunur farklı kod veya başka marka logosu gösteren adaylar seçilmedi. Bir kısım somundaki bilya tutma aktarım kovanı montaj yardımcısıdır; mil veya somun gövdesi değildir.
+
+Seçilen her benzersiz kaynak fotoğraf açılarak incelendi. Bitmiş **56 görselin tümü** `onizleme/aile2-kontak.jpg` paftasında açılarak kontrol edildi. Yeni düz mil fotoğrafında ilk kontrolde görülen soluk zemin, tek milin arka planı ayrılarak giderildi. Son kontrol paftası ve tekil örnekler bu düzeltmeden sonradır.
+
+- Aile 2: **birebir 0, ayni_tip 56**.
+- Toplam: **birebir 14, ayni_tip 94**.
+
+### Aile 1: ray üzerinde görünen arabalar
+
+`onizleme/aile1-araba-kontrol.jpg` ile 16 araba yeniden gözden geçirildi. HGH45HA, HGW30CC, HGW45HC için raysız alternatif arandı. Bulunanlar farklı kod, rakip logo, filigran veya yanlış kısa/uzun gövde nedeniyle reddedildi. Mevcut fotoğraflar korunmuştur:
+
+- **HGH45HA: rayla birlikte görünüyor.** Ürün yalnız arabadır.
+- **HGW30CC: rayla birlikte görünüyor.** Ürün yalnız arabadır.
+- **HGW45HC: rayla birlikte görünüyor.** Ürün yalnız arabadır.
+- Ek kontrolde **HGW30HC: rayla birlikte görünüyor.** Ürün yalnız arabadır; aynı uzun flanş formunda kurala uygun raysız alternatif bulunamadı.
+
+Ray dahil set olarak sunulmaz; araba adları/kategorileri değişmedi.
+
+### Aile 2 ürün bazında görsel kaynağı
+
+| Kod | Seviye | Fotoğraf |
+|---|---|---|
+| ETA VMS SFU2005 | ayni_tip | https://ir.ozone.ru/s3/multimedia-1-o/7358212608.jpg |
+| ETA VMS SFU2505 | ayni_tip | https://basket-34.wbbasket.ru/vol7120/part712028/712028248/images/big/1.webp |
+| ETA VMS SFU3210 | ayni_tip | https://ir.ozone.ru/s3/multimedia-1-6/7285258914.jpg |
+| ORK ADM SAC164000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC204000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC253000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC254000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC303000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC304000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK ADM SAC404000 | ayni_tip | https://image.ec21.com/image/mytbearing/oimg_GC03624009_CA03624195/Shaft-Support-Rail.jpg |
+| ORK İM 06 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 08 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 10 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 12 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 15 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 16 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 20 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 25 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 30 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 35 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 40 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 45 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK İM 50 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 06 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 08 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 10 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 12 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 15 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 16 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 20 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 25 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 30 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 35 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 40 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK KKM 50 | ayni_tip | https://image.made-in-china.com/2f0j00eWqkFZzdcBcy/Custom-Precision-Hardened-Steel-Linear-Small-Shaft-Polishing-Stainless-Steel-Knurled-Shaft-Chrome-Hardness-Shaft.webp |
+| ORK LR TBR16UU | ayni_tip | https://cdn.vseinstrumenti.ru/images/goods/stanki/promyshlennye-komponenty/8428893/1000x1000/164916649.jpg |
+| ORK LR TBR20UU | ayni_tip | https://cdn.vseinstrumenti.ru/images/goods/stanki/promyshlennye-komponenty/8428893/1000x1000/164916649.jpg |
+| ORK LR TBR25UU | ayni_tip | https://cdn.vseinstrumenti.ru/images/goods/stanki/promyshlennye-komponenty/8428893/1000x1000/164916649.jpg |
+| ORK LR TBR30UU | ayni_tip | https://cdn.vseinstrumenti.ru/images/goods/stanki/promyshlennye-komponenty/8428893/1000x1000/164916649.jpg |
+| ORK VM 1605 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VM 2005 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VM 2505 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VM 3210 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VM 4010 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VM 5010 | ayni_tip | https://i0.wp.com/maedler.in/wp-content/uploads/2026/02/KGT_Spindel.jpg?resize=1536%2C1536&ssl=1 |
+| ORK VMS SFU1605 | ayni_tip | https://ir.ozone.ru/s3/multimedia-1-0/6933370608.jpg |
+| ORK VMS SFU2005 | ayni_tip | https://ir.ozone.ru/s3/multimedia-1-o/7358212608.jpg |
+| ORK VMS SFU2505 | ayni_tip | https://basket-34.wbbasket.ru/vol7120/part712028/712028248/images/big/1.webp |
+| ORK VMS SFU3210 | ayni_tip | https://ir.ozone.ru/s3/multimedia-1-6/7285258914.jpg |
+| ORK VMS SFU4010 | ayni_tip | https://i.siteapi.org/p2I17-tB83_KVJFrAIijJRbz6fI=/0x57:869x726/fit-in/800x800/filters:format(jpg)/s.siteapi.org/a21e49453f8e970/img/l1e4rwqdutcw8484ow8wskws8oc4ws |
+| ORK VMS SFU5010 | ayni_tip | https://i.siteapi.org/p2I17-tB83_KVJFrAIijJRbz6fI=/0x57:869x726/fit-in/800x800/filters:format(jpg)/s.siteapi.org/a21e49453f8e970/img/l1e4rwqdutcw8484ow8wskws8oc4ws |
+| ORK VSG DSG16H | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S5d91ae0dfa7d4cdd8fbf5c1f6651e092A.jpg |
+| ORK VSG DSG20H | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S5d91ae0dfa7d4cdd8fbf5c1f6651e092A.jpg |
+| ORK VSG DSG25H | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S5d91ae0dfa7d4cdd8fbf5c1f6651e092A.jpg |
+| ORK VSG DSG32H | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S5d91ae0dfa7d4cdd8fbf5c1f6651e092A.jpg |
+| ORK VSG DSG40H | ayni_tip | https://ae-pic-a1.aliexpress-media.com/kf/S5d91ae0dfa7d4cdd8fbf5c1f6651e092A.jpg |
+
+## Eksik bayraklı ürünler (toplam)
 
 - **ORK LA HGH20HA**: eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı
 - **ORK LA HGH25HA**: eksik: Yamansa dinamik/statik yük kapasitesi ve araba ağırlığı için üretici verisi yok; eşdeğer marka değerleri satış metnine aktarılmadı
@@ -130,12 +190,64 @@ Seçilen bütün kaynak fotoğraflar ve bitmiş ürünlerin 4 kontrol paftası a
 - **PMI MSA25SZZ**: eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı
 - **PMI MSA30EZZ**: eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı
 - **PMI MSA35SZZ**: eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı
+- **ETA VMS SFU2005**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı
+- **ETA VMS SFU2505**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı
+- **ETA VMS SFU3210**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı
+- **ORK ADM SAC164000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC204000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC253000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC254000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC303000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC304000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK ADM SAC404000**: eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı
+- **ORK İM 06**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 08**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 10**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 12**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 15**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 16**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 20**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 25**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 30**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 35**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 40**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 45**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK İM 50**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: krom kaplama uygulanıp uygulanmadığı doğrulanmadı
+- **ORK KKM 06**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 08**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 10**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 12**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 15**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 16**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 20**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 25**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 30**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 35**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 40**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK KKM 50**: eksik: ürüne özgü tolerans, HRC sertlik, malzeme, krom kalınlığı ve kg/m kanıtı yok; yalnız çap/boy kullanıldı; eksik: ilave indüksiyon işlemi doğrulanmadı
+- **ORK LR TBR16UU**: eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı
+- **ORK LR TBR20UU**: eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı
+- **ORK LR TBR25UU**: eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı
+- **ORK LR TBR30UU**: eksik: Yamansa yük ve ağırlık kanıtı yok; eş kodlu katalogdan yalnız montaj geometrisi kullanıldı
+- **ORK VM 1605**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VM 2005**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VM 2505**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VM 3210**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VM 4010**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VM 5010**: eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı
+- **ORK VMS SFU1605**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VMS SFU2005**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VMS SFU2505**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VMS SFU3210**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VMS SFU4010**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VMS SFU5010**: eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok
+- **ORK VSG DSG40H**: eksik: DSG40H için üretici katalogları arasında H/h/L/C2/P farkı var; kesit ölçüsü doğrulanana kadar aktarılmadı
 
-## Çizim tablosu
+## Çizim sonuçları (toplam)
 
-Her bağlamda `window.YDRAW.lineer.match(ctx)` ve `draw(ctx, options)` çağrıldı. Hepsi eşleşti ve null olmayan SVG üretti. Her üründe zorunlu bir ölçü kaldırıldığında null döndüğü de kontrol edildi.
+Mevcut `arac/lineer.js` değiştirilmedi. 52 eski ürüne ek olarak 25 KKM/İM mil bağlamı mevcut `mil` alt tipiyle çizilir; `dr`, `Lm` anahtarları aranır. Boy kaldırıldığında null dönmesi de kontrol edilir. SAC/TBR/VM/SFU/DSG için yeni modül yazılmadı: 31 bağlam `cizim_modulu:null` taşır. Bu ailelerde genel lineer match=true olabilse de yanlış BK/BF veya SBR çizimi çağrılmaz; sonuç **modül yok / çağrılmadı** olarak ayrı kaydedilir. Bu, başarısız bir çizimi başarılı sayma değildir.
 
-| Kod | match | draw() | keys |
+| Kod | match | Sonuç | Anahtarlar |
 |---|---|---|---|
 | ORK LA HGH20HA | true | null değil | W, H, L, B, C, L1, H1, N, M |
 | ORK LA HGH25HA | true | null değil | W, H, L, B, C, L1, H1, N, M |
@@ -189,53 +301,85 @@ Her bağlamda `window.YDRAW.lineer.match(ctx)` ve `draw(ctx, options)` çağrıl
 | PMI MSB30E | true | null değil | W, H, L, B, C, L1, H1, N, M |
 | PMI MSB30S | true | null değil | W, H, L, B, C, L1, H1, N, M |
 | PMI MSB35S | true | null değil | W, H, L, B, C, L1, H1, N, M |
+| ETA VMS SFU2005 | true | modül yok | uygulanmaz |
+| ETA VMS SFU2505 | true | modül yok | uygulanmaz |
+| ETA VMS SFU3210 | true | modül yok | uygulanmaz |
+| ORK ADM SAC164000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC204000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC253000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC254000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC303000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC304000 | true | modül yok | uygulanmaz |
+| ORK ADM SAC404000 | true | modül yok | uygulanmaz |
+| ORK İM 06 | true | null değil | dr, Lm |
+| ORK İM 08 | true | null değil | dr, Lm |
+| ORK İM 10 | true | null değil | dr, Lm |
+| ORK İM 12 | true | null değil | dr, Lm |
+| ORK İM 15 | true | null değil | dr, Lm |
+| ORK İM 16 | true | null değil | dr, Lm |
+| ORK İM 20 | true | null değil | dr, Lm |
+| ORK İM 25 | true | null değil | dr, Lm |
+| ORK İM 30 | true | null değil | dr, Lm |
+| ORK İM 35 | true | null değil | dr, Lm |
+| ORK İM 40 | true | null değil | dr, Lm |
+| ORK İM 45 | true | null değil | dr, Lm |
+| ORK İM 50 | true | null değil | dr, Lm |
+| ORK KKM 06 | true | null değil | dr, Lm |
+| ORK KKM 08 | true | null değil | dr, Lm |
+| ORK KKM 10 | true | null değil | dr, Lm |
+| ORK KKM 12 | true | null değil | dr, Lm |
+| ORK KKM 15 | true | null değil | dr, Lm |
+| ORK KKM 16 | true | null değil | dr, Lm |
+| ORK KKM 20 | true | null değil | dr, Lm |
+| ORK KKM 25 | true | null değil | dr, Lm |
+| ORK KKM 30 | true | null değil | dr, Lm |
+| ORK KKM 35 | true | null değil | dr, Lm |
+| ORK KKM 40 | true | null değil | dr, Lm |
+| ORK KKM 50 | true | null değil | dr, Lm |
+| ORK LR TBR16UU | true | modül yok | uygulanmaz |
+| ORK LR TBR20UU | true | modül yok | uygulanmaz |
+| ORK LR TBR25UU | true | modül yok | uygulanmaz |
+| ORK LR TBR30UU | true | modül yok | uygulanmaz |
+| ORK VM 1605 | true | modül yok | uygulanmaz |
+| ORK VM 2005 | true | modül yok | uygulanmaz |
+| ORK VM 2505 | true | modül yok | uygulanmaz |
+| ORK VM 3210 | true | modül yok | uygulanmaz |
+| ORK VM 4010 | true | modül yok | uygulanmaz |
+| ORK VM 5010 | true | modül yok | uygulanmaz |
+| ORK VMS SFU1605 | true | modül yok | uygulanmaz |
+| ORK VMS SFU2005 | true | modül yok | uygulanmaz |
+| ORK VMS SFU2505 | true | modül yok | uygulanmaz |
+| ORK VMS SFU3210 | true | modül yok | uygulanmaz |
+| ORK VMS SFU4010 | true | modül yok | uygulanmaz |
+| ORK VMS SFU5010 | true | modül yok | uygulanmaz |
+| ORK VSG DSG16H | true | modül yok | uygulanmaz |
+| ORK VSG DSG20H | true | modül yok | uygulanmaz |
+| ORK VSG DSG25H | true | modül yok | uygulanmaz |
+| ORK VSG DSG32H | true | modül yok | uygulanmaz |
+| ORK VSG DSG40H | true | modül yok | uygulanmaz |
 
-## Denetim ve önizleme
-
-`arac/denetle.py` zorunlu alanları, boş değerleri, marka yasağını (URL ve dosya adı dahil), U+0307/uzun tire/ondalık noktayı, SEO sınırlarını, açıklama uzunluğunu/bölümlerini, izinli iç linkleri, 120+ karakter paragraf tekrarlarını, ONYAZI ve teknik liste yapısını ve 500×500 JPEG dosyalarını kontrol eder. `--aile` ayrıca 52 girdinin tümünün birer kez işlenmesini, ham değer/kaynakları, çizim bağlamı/sonuç kapsamını ve satış metniyle ölçü eşitliğini denetler.
+## Denetim ve yerel önizleme
 
 ```text
 $ python3 arac/denetle.py urunler.jsonl --aile
-Denetlenen ürün: 52
+Denetlenen ürün: 108
 SONUÇ: 0 hata
 ```
 
 ```text
 $ python3 -m unittest discover -s arac -p 'test_*.py'
-.......
+............
 ----------------------------------------------------------------------
-Ran 7 tests in 0.527s
+Ran 12 tests in 0.998s
 
 OK
 ```
 
-
-Örnek masaüstü/mobil PNG'ler:
-
-- `onizleme/ORK_LA_HGH20HA.png`, `onizleme/ORK_LA_HGH20HA_mobil.png`
-- `onizleme/ORK_LR_HGR25.png`, `onizleme/ORK_LR_HGR25_mobil.png`
-- `onizleme/PMI_MSA30LE.png`, `onizleme/PMI_MSA30LE_mobil.png`
-- `onizleme/PMI_MSB15S.png`, `onizleme/PMI_MSB15S_mobil.png`
-- `onizleme/hgh20ha-cizim.png`
-
-52 HTML, 1280 ve 390 px genişlikte yerel Chrome ile render edildi; ön yazı kutuları ve yatay taşma kontrol edildi. Örneklerin görsel+ön yazı+çizim kesitleri `onizleme/kontrol-*.png` içinde ayrıca görüntülendi. Canlı mağaza entegrasyonu denenmedi.
-
-## Yeniden üretim
-
-```sh
-python3 arac/veri_hazirla.py
-python3 arac/gorsel_sec.py
-OMP_NUM_THREADS=2 python3 arac/gorsel_hazirla.py
-python3 arac/aile_hazirla.py
-/home/ubuntu/.nvm/versions/node/v24.22.2/bin/node arac/ciz.js
-python3 arac/onizle.py
-python3 arac/denetle.py urunler.jsonl --aile
-python3 -m unittest discover -s arac -p 'test_*.py'
-python3 arac/raporla.py
+```text
+Çizim: 77 başarılı; 31 modül yok; eksik veri kontrolleri: null
+HTML: 108 ürün; 1280/390 px taşma kontrolleri tamamlandı
 ```
 
-Görsel arama aracı `arac/gorsel_ara.py` yalnız aday indirir; kendiliğinden ürüne atamaz. Yerel ham fotoğraflar saklandığından yeniden üretimde kaynak sitelere erişim gerekmez. Python: Pillow, beautifulsoup4, numpy, scipy, rembg[cpu], playwright; PDF dökümleri için pypdf kullanıldı. Chrome `/home/ubuntu/.local/bin/google-chrome`, Node mevcut nvm dizinindedir; PATH yerine mutlak yolu kullanıldı. `arac/hazirla.py` eski tek ürün pilot aracıdır; 52'li teslim için `arac/aile_hazirla.py` kullanılır.
+Örnekler: `onizleme/ORK_KKM_20.png` ve `_mobil.png`, `onizleme/ORK__M_20.png` ve `_mobil.png`, `onizleme/ORK_ADM_SAC204000.png`, `onizleme/ORK_LR_TBR20UU.png`, `onizleme/ORK_VM_2505.png`, `onizleme/ORK_VMS_SFU3210.png`, `onizleme/ETA_VMS_SFU2005.png`, `onizleme/ORK_VSG_DSG40H.png`. İlgili HTML'ler aynı dizinde. Seçilmiş sayfaların görsel/ön yazı/çizim yüzeyi `onizleme/aile2-sayfa-kontrol.jpg` içinde açılarak kontrol edildi. Canlı mağaza entegrasyonu denenmedi.
 
-## Sonraki ürünler için ek satış birimi kuralı
-
-Paket/koli ürünleri sitede ADET olarak satılır. Gelecek `ORK GKT MG2xx` kaynak tellerinin adına `(15 KG/PKT)` veya `5.000 Adet Koli` gibi paket bilgisi eklenmeyecek; açıklamada paket/koli halinde satış iddia edilmeyecek. Teknik listede `Satış Birimi: Adet`, gerekiyorsa `Ambalaj: 15 kg/paket` yazılacak. 4 metre ve 5700 mm gibi ürün boyları paket sayılmaz ve ad içinde korunur. Bu 52 kaydın dışında kalan kaynak telleri bu adımda değiştirilmedi.
+Paket/Adet kuralı korunur: ileride GKT kaynak teli ürünleri adet olarak sunulacak, adlarında paket/koli ifadesi kullanılmayacak. Bu ailedeki 4 metre, 3 metre, 4000 mm ve 5700 mm değerleri paket değil ürün boyudur; adlarda tutulmuştur.

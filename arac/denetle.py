@@ -40,6 +40,8 @@ def audit(rows, root=ROOT):
             fail('Yamansa marka kuralı')
         if row.get('kod', '').startswith('PMI ') and row.get('MARKA') != 'PMI':
             fail('PMI marka kuralı')
+        if row.get('kod', '').startswith('ETA ') and row.get('MARKA') != 'ETAZON':
+            fail('ETAZON marka kuralı')
         if any('HIWIN' in row.get(k, '').upper() for k in ['URUNADI', 'SEO_SAYFABASLIK', 'SEO_SAYFAACIKLAMA', 'SEO_ANAHTARKELIME', 'ANAHTARKELIME']):
             fail('HIWIN ad/SEO kuralı')
         desc = BeautifulSoup(row.get('ACIKLAMA', ''), 'html.parser')
@@ -83,11 +85,11 @@ def audit(rows, root=ROOT):
 def audit_batch(rows, root=ROOT):
     errors = []
     with gzip.open(root / 'parca/lineer_diger.jsonl.gz', 'rt') as stream:
-        selected = [r['kod'] for line in stream if (r := json.loads(line))['kod'].startswith(('ORK LA HGH', 'ORK LA HGW', 'ORK LR HGR', 'PMI MSA', 'PMI MSB'))]
+        selected = [r['kod'] for line in stream if (r := json.loads(line))['kod'].startswith(('ORK LA HGH', 'ORK LA HGW', 'ORK LR HGR', 'PMI MSA', 'PMI MSB', 'ORK KKM ', 'ORK İM ', 'ORK ADM SAC', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG '))]
     codes = [r['kod'] for r in rows]
-    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 52:
-        errors.append('aile kapsamı: 52 girdinin tümü birer kez işlenmeli')
-    raw = [r for f in ['hg', 'hgr', 'pmi'] for r in json.loads((root / f'veri/{f}.json').read_text())]
+    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 108:
+        errors.append('aile kapsamı: 108 girdinin tümü birer kez işlenmeli')
+    raw = [r for f in ['hg', 'hgr', 'pmi', 'aile2'] for r in json.loads((root / f'veri/{f}.json').read_text())]
     contexts = json.loads((root / 'veri/lineer-ctx.json').read_text())
     drawings = json.loads((root / 'veri/draw-keys.json').read_text())
     for label, records in [('ham veri', raw), ('bağlam', contexts), ('çizim', drawings)]:
@@ -99,11 +101,18 @@ def audit_batch(rows, root=ROOT):
         drawing = next((r for r in drawings if r['kod'] == row['kod']), None)
         if not all([record, ctx, drawing]):
             continue
-        if not drawing['match'] or drawing['sonuc'] != 'null değil' or drawing['eksik_veri'] != 'null':
-            errors.append(row['kod'] + ': çizim sonucu geçersiz')
-        expected = {'WR', 'HR', 'P'} if record['model'].startswith('HGR') else {'W', 'H', 'H1', 'N', 'B', 'C', 'L1', 'L', 'M'}
-        if not expected.issubset(drawing['keys']):
-            errors.append(row['kod'] + ': çizim anahtarları eksik')
+        family = record.get('aile')
+        if family and family not in ['KKM', 'IM']:
+            if ctx.get('cizim_modulu', 'eksik') is not None or drawing['sonuc'] != 'modül yok' or drawing.get('cagrildi') is not False or drawing['keys']:
+                errors.append(row['kod'] + ': modülsüz ailede çizim çalıştırılmamalı')
+        else:
+            if not drawing['match'] or drawing['sonuc'] != 'null değil' or drawing.get('eksik_veri') != 'null':
+                errors.append(row['kod'] + ': çizim sonucu geçersiz')
+            expected = {'dr', 'Lm'} if family in ['KKM', 'IM'] else {'WR', 'HR', 'P'} if record['model'].startswith('HGR') else {'W', 'H', 'H1', 'N', 'B', 'C', 'L1', 'L', 'M'}
+            if not expected.issubset(drawing['keys']):
+                errors.append(row['kod'] + ': çizim anahtarları eksik')
+            if family in ['KKM', 'IM'] and ctx.get('cizim_modulu') != 'mil':
+                errors.append(row['kod'] + ': mil çizim politikası geçersiz')
         technical = {li.strong.get_text(strip=True).rstrip(':'): li.get_text(' ', strip=True).split(':', 1)[1].strip() for li in BeautifulSoup(row['ACIKLAMA'], 'html.parser').select('ul > li') if li.find('strong')}
         context_specs = {s['l']: s['v'] for s in ctx['specs']}
         if context_specs != technical or ctx['title'] != row['URUNADI']:

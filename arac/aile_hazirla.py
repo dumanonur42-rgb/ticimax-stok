@@ -149,6 +149,16 @@ def main():
         compose(photo, item['resim'])
         items.append(item)
         contexts.append(ctx)
+    if (ROOT / 'veri/aile2.json').exists():
+        from aile2_hazirla import product as family2_product
+        extra = json.loads((ROOT / 'veri/aile2.json').read_text())
+        extra_photos = json.loads((ROOT / 'veri/aile2-gorsel-secimleri.json').read_text())
+        for record in extra:
+            photo = extra_photos[record['kod']]
+            item, ctx = family2_product(record, photo, len(items))
+            compose(photo, item['resim'])
+            items.append(item)
+            contexts.append(ctx)
     (ROOT / 'urunler.jsonl').write_text(''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in items))
     (ROOT / 'veri/lineer-ctx.json').write_text(json.dumps(contexts, ensure_ascii=False, indent=2) + '\n')
     print(f'Üretilen ürün: {len(items)}')

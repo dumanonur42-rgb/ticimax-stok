@@ -1,0 +1,22 @@
+{
+  "kaynaklar": ["site_kategoriler.txt", "katurl.txt"],
+  "kontrol": "2026-11-10; kamu sayfaları, Chrome CDP; panel erişimi yok",
+  "mevcut_yol": [
+    {"aile": "KKM/İM", "yol": "LİNEER>KROM KAPLI İNDÜKSİYONLU MİLLER", "url": "https://www.yamansarulman.com/krom-kapli-", "durum": "Başlık ve breadcrumb doğrulandı"}
+  ],
+  "katurl_yol_turetimi": [
+    {"aile": "SAC", "yol": "LİNEER>ALT DESTEKLİ MİLLER", "url": "https://www.yamansarulman.com/alt-destekli-miller"},
+    {"aile": "TBR", "yol": "LİNEER>TBR SERİSİ", "url": "https://www.yamansarulman.com/tbr-serisi"},
+    {"aile": "VM", "yol": "LİNEER>VİDALI MİLLER", "url": "https://www.yamansarulman.com/vidali-miller"},
+    {"aile": "SFU", "yol": "LİNEER>BİLYALI SOMUNLAR", "url": "https://www.yamansarulman.com/bilyali-somunlar"},
+    {"aile": "DSG", "yol": "LİNEER>VİDALI MİL SOMUN GÖVDESİ", "url": "https://www.yamansarulman.com/vidali-mil-somun-govdesi"}
+  ],
+  "sinir": "Beş URL katurl.txt içinde var, ancak kamu kontrolünde /?c=1 ana sayfasına yönlendi; canlı kategori breadcrumb doğrulanamadı. Yollar, brief doğrultusunda URL adından LİNEER altında türetildi, yeni_kategori false. Bunlar müşteri açıklamasında iç link yapılmadı. Yayına hazırlıkta kategori kimliği ayrıca teyit edilmeli.",
+  "aciklamada_kullanilan_dogrulanmis_ic_linkler": [
+    "https://www.yamansarulman.com/krom-kapli-",
+    "https://www.yamansarulman.com/sbr-serisi",
+    "https://www.yamansarulman.com/lIneer",
+    "https://www.yamansarulman.com/vidali-mil-uc-yatagi"
+  ],
+  "not": "İM için mevcut ortak üst kategori kullanımı, ürünün ayrıca krom kaplı olduğunu iddia etmez. İM adı ve açıklaması yalnız girdideki indüksiyonlu niteliği taşır. SAC için mevcut SBR SERİSİ rulman grubu yerine katurl'daki daha özel ALT DESTEKLİ MİLLER yolu türetildi. TBR için daha genel LİNEER RULMANLAR yerine katurl'daki TBR SERİSİ seçildi. Yeni bir çizim modülü yazılmadı."
+}

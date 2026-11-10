@@ -1,0 +1,17 @@
+Kaynak: https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html
+Üretici: Lishui Wangong Precision Machinery Co., Ltd.
+Başlık: BSG/DSG Series Aluminum Nut Housing
+Erişim: web_get_contents içerik dökümü; doğrudan HTTP isteği 403 verdi.
+Tablo dökümü, birimler mm; X/Y diş kodudur.
+
+Model   Paired Model             D   B   H   h   E   L  C1 C2 P  X  W  Y
+DSG16H  1605 1610 1616 1620      28  52  40  20  12  40 8  24 40 M5 38 M5
+DSG20H  2005 2010 2020           36  62  44  22  12  40 8  24 48 M6 47 M6
+DSG25H  2505 2510 2520 2525      40  66  48  24  13  40 8  24 50 M6 51 M6
+DSG32H  3205 3210 3220 3232      50  86  62  31  17  40 8  24 66 M8 65 M8
+DSG40H  4005 4010 4020 4040      63 100  70  35  19  40 8  24 80 M8 78 M8
+
+DSG40H satırı müşteri ölçüsü olarak kullanılmadı. İndekslenmiş Limon DSG PDF dökümünde H80/h40/L59/C2=40/P78; SAIVS SDSG40H tablosunda H70/h40/L60/C2=40/P78 bulunuyor. Aynı ana kod altında üretici farkı olduğundan gerçek ürün kesiti onaylanmadı.
+Limon PDF URL'si doğrudan erişimde 404: https://www.powerbelt.hu/uploads/source/Lintech/katalog/Limon_DSG.pdf
+SAIVS: https://saivsautomatic.com/ball-screw/dsg-series-ball-nut-housing-178.html
+DSG16–32 satırlarında ortak montaj geometrisi, nominal DSGxxH kodu eşleştirilerek kullanıldı; yük/malzeme sertliği/tolerans aktarılmadı. Alüminyum malzeme bilgisi yalnız girdi ürün adından alındı.

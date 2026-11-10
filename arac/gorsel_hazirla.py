@@ -1,5 +1,6 @@
 """Onaylı kaynakların arka planını ayırır; ürün üzerindeki yazılara dokunmaz."""
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -10,8 +11,8 @@ from scipy import ndimage
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main():
-    photos = json.loads((ROOT / 'veri/gorsel-secimleri.json').read_text())
+def main(manifest='veri/gorsel-secimleri.json'):
+    photos = json.loads((ROOT / manifest).read_text())
     session = new_session('isnet-general-use')
     done = set()
     for photo in photos.values():
@@ -31,7 +32,9 @@ def main():
         sizes[0] = 0
         if sizes.max() == 0:
             raise ValueError('Ürün ayrılamadı: ' + photo['ham_dosya'])
-        mask = ndimage.binary_fill_holes(labels == sizes.argmax())
+        mask = labels == sizes.argmax()
+        if not photo.get('delikleri_koru'):
+            mask = ndimage.binary_fill_holes(mask)
         original.putalpha(Image.fromarray((mask * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(.35)))
         original.save(ROOT / photo['dosya'])
         done.add(photo['dosya'])
@@ -39,4 +42,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1] if len(sys.argv) > 1 else 'veri/gorsel-secimleri.json')
