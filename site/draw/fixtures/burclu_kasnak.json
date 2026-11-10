@@ -57,7 +57,13 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
   },
   {
     "kod": "ORK BK SPA1003",
@@ -117,7 +123,13 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/3-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPB1254",
@@ -181,7 +193,14 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/4-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPB8005",
@@ -245,7 +264,14 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/5-kanal/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
   },
   {
     "kod": "ORK BK SPA3554",
@@ -313,7 +339,15 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/4-kanal/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPA1802",
@@ -385,7 +419,16 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/2-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPA1801",
@@ -453,7 +496,15 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/1-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "M": "Göbek Taşması (M)"
+    }
   },
   {
     "kod": "ORK BK SPA0713",
@@ -513,7 +564,13 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/3-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)"
+    }
   },
   {
     "kod": "ORK BK SPZ0561",
@@ -573,7 +630,13 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)"
+    }
   },
   {
     "kod": "ORK BK SPC100010",
@@ -641,7 +704,15 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/10-kanal-2/",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "KYS BK SPB1803",
@@ -697,7 +768,13 @@
     "data": null,
     "teknik_kaynak": "https://www.kys.com.tr/tr/urunler/burclu-v-kasnaklar?tablo=spb-3",
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPC1403",
@@ -1100,7 +1177,13 @@
     "onyazi": [],
     "data": null,
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "K": "K",
+      "L": "L",
+      "M": "M"
+    }
   },
   {
     "kod": "HTK SPA-1-75",
@@ -1167,7 +1250,13 @@
     "onyazi": [],
     "data": null,
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "L": "L",
+      "M": "M",
+      "N": "N"
+    }
   },
   {
     "kod": "HTK SPB-1-125",
@@ -1226,7 +1315,11 @@
     "onyazi": [],
     "data": null,
     "expected": "svg",
-    "reason": ""
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "L": "L"
+    }
   },
   {
     "kod": "Burçlu Triger Kasnak",
@@ -2115,7 +2208,16 @@
     ],
     "onyazi": [],
     "expected": "svg",
-    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir"
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPC5306",
@@ -2186,7 +2288,15 @@
     ],
     "onyazi": [],
     "expected": "svg",
-    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir"
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "ORK BK SPB1064",
@@ -2308,7 +2418,16 @@
     ],
     "onyazi": [],
     "expected": "svg",
-    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden"
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
   },
   {
     "kod": "SCHEMATIC_PROJECTION",
@@ -2372,6 +2491,13 @@
     "data": null,
     "teknik_kaynak": "https://orkapt.com/service/5-kanal/",
     "expected": "svg",
-    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden"
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
   }
 ]

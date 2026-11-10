@@ -4,6 +4,8 @@ Dal: `draw/burclu_kasnak`; taban: `origin/site-assets`. PR açılmadı, siteye y
 
 ## Son değişiklik
 
+`keys[].l` artık sabit/genel etiket değil, her ölçünün ilk geçerli `ctx.specs` etiketidir; `onyazi` yalnız teknik listede bulunmayan ölçüyü tamamlar. Jant İç Çapı/Boşluk Çapı ve Göbek Girintisi/Taşması ayrımları korunur. HTK örneklerinde F/K/L/M/Tipi gibi kendi etiketleri kullanılır. Böylece galeri teknik özelliklerinde J/K/M yeniden eklenmez. 18 SVG fixture'ın eksenel/radyal etiketleri `expected_labels` ile ve tüm keys etiketleri kaynak üyeliğiyle sınandı.
+
 SPC4256 ve SPC5306, K+L+M ile F farklı olduğu için artık null dönmez. Kaynak ölçü yazıları/keys aynen korunur; eksenel geometri şematiktir. Göbek yerleşimi fiziksel sınırların dışına düşerse yalnız şekil yerleşimi sınırlandırılır, kaynak L/K/M sayıları değiştirilmez. F/L veya diğer zorunlu alanlar yoksa null kuralı sürer. Aile dışı, geçersiz ve çelişen aynı etiketli girdiler reddedilir.
 
 Örnekler: SPC4256 F=162, K=30, L=102, M=24; SPC5306 F=162, K=17,5, L=114, M=17,5. Sayılar kaynaktan gösterilir; geometrik toplamdan yeni M sayısı yazılmaz. SPB1064 F ve L eksik olduğundan null.

@@ -6,8 +6,7 @@ function num(s){var m=String(s).replace(/,/g,'.').match(/-?\d+(?:\.\d+)?/);retur
 function f(n){return String(Math.round(n*100)/100).replace('.',',')}
 function q(n){return Math.round(n*100)/100}
 function match(c){var t=norm((c.title||'')+' '+(c.crumbs||[]).join(' '));return !/triger|zaman|\bkor\b|dolu[ -]delikli/.test(t)&&/burclu/.test(t)&&/kasnak/.test(t)}
-var labels={profil:'Profil',kanal:'Kanal Sayısı',P:'Anma Çapı (P)',O:'Dış Çap (O)',tip:'Gövde Tipi',burc:'Burç No',mil:'Maks. Mil Çapı',F:'Kasnak Genişliği (F)',J:'J Çapı',L:'Göbek Uzunluğu (L)',N:'Göbek Çapı (N)',E:'Disk Kalınlığı (E)',K:'K Ölçüsü',M:'M Ölçüsü'};
-function read(c){var d={},bad=false;
+function read(c){var d={labels:{}},bad=false;
  (c.specs||[]).concat(c.onyazi||[]).forEach(function(s){var l=norm(s.l).replace(/:\s*$/,''),k=null,v;
   if(/^(kanal )?profil(i)?$/.test(l))k='profil';
   else if(/^kanal( sayisi)?$/.test(l))k='kanal';
@@ -20,6 +19,7 @@ function read(c){var d={},bad=false;
   if(!k)return;v=k=='profil'?String(s.v).toUpperCase().trim():num(s.v);
   if(k=='profil'?!/^SP[ZABC]$/.test(v):!isFinite(v)||v<0){if(!/^(?:\s*|[-–—/])$/.test(String(s.v)))bad=true;return}
   if(d[k]!=null&&d[k]!==v)bad=true;else d[k]=v;
+  if(d.labels[k]==null)d.labels[k]=String(s.l);
  });return bad?null:d;
 }
 function draw(c,opt){
@@ -38,7 +38,7 @@ function draw(c,opt){
  opt=opt||{};var id=esc(String(opt.id||'bk').replace(/[^a-zA-Z0-9_-]/g,'_')),dim=esc(opt.dim||'#0a2350'),g='',keys=[];
  function line(a,b,x,y,attr){return '<line x1="'+q(a)+'" y1="'+q(b)+'" x2="'+q(x)+'" y2="'+q(y)+'" '+(attr||'')+'/>'}
  function text(x,y,s,attr){return '<text x="'+q(x)+'" y="'+q(y)+'" fill="'+dim+'" font-size="12" font-weight="700" text-anchor="middle" '+(attr||'')+'>'+esc(s)+'</text>'}
- function group(k,s){var v=d[k];if(v==null)return '';keys.push({k:k,l:labels[k],v:k=='profil'?v:k=='tip'?'Tip '+v:k=='kanal'||k=='burc'?String(v):f(v)+' mm'});return '<g class="hl" data-k="'+k+'">'+s+'</g>'}
+ function group(k,s){var v=d[k];if(v==null)return '';keys.push({k:k,l:d.labels[k],v:k=='profil'?v:k=='tip'?'Tip '+v:k=='kanal'||k=='burc'?String(v):f(v)+' mm'});return '<g class="hl" data-k="'+k+'">'+s+'</g>'}
  function arrow(a,b,x,y){return line(a,b,x,y,'stroke="'+dim+'" stroke-width=".8" marker-start="url(#'+id+'a)" marker-end="url(#'+id+'a)"')}
  function hd(k,a,b,y,label){return group(k,line(a,cy+R+3,a,y+3,'stroke="'+dim+'" stroke-width=".5"')+line(b,cy+R+3,b,y+3,'stroke="'+dim+'" stroke-width=".5"')+arrow(a,y,b,y)+text((a+b)/2,y+14,label+' '+f(d[k])))}
  function offset(k,a,b,side){var y=cy+(n+inner)/2+2,x=side<0?Math.min(a,b)-19:Math.max(a,b)+19,s='';
