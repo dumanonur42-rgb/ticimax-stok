@@ -81,8 +81,15 @@ function draw(ctx,opt){
     if(clip)section+='<path data-part="section-clip" d="M'+P(rx+pm*1.5,Y(-ti))+'L'+P(lx-pm*1.5,Y(-ti))+'L'+P(lx-pm*1.5,Y(-ti*1.7))+'L'+P(rx+pm*1.5,Y(-ti*1.7))+'L'+P(rx+pm*1.5,Y(-ti*1.35))+'L'+P(lx+pm*1.5,Y(-ti*1.35))+'" fill="none" stroke="'+C+'" stroke-width="1.8"/>';
     section+=CL(lx-10,137,rx+10,137);
     var bx=255,by1=Y(ti*2),by2=Y(ti*2+D.b1);
-    g+=group('b1',EXT(lx-D.d3*ss/2,by1,bx-4,by1,dim)+EXT(lx-D.d3*ss/2,by2,bx-4,by2,dim)+dimL(id,dim,bx,by1,bx,by2)+txt(bx-7,(by1+by2)/2,'b1 = '+f(D.b1),dim,'transform="rotate(-90 '+(bx-7)+' '+((by1+by2)/2)+')"'));
-    if(D.n>1){var py1=Y(ti*2+D.b1/2),py2=py1+D.pt*ss;g+=group('pt',dimL(id,dim,438,py1,438,py2)+txt(431,(py1+py2)/2,'pt = '+f(D.pt),dim,'transform="rotate(-90 431 '+((py1+py2)/2)+')"'))}
+    if(clip){
+      section='<g transform="rotate(-90 350 137)">'+section+'</g>';
+      var bx1=350+by1-137,bx2=350+by2-137,yt=137-(rx+D.d1*ss-350),yb=137-(lx-D.d1*ss-350);
+      g+=group('b1',EXT(bx1,yt,bx1,41,dim)+EXT(bx2,yt,bx2,41,dim)+dimL(id,dim,bx1,45,bx2,45)+txt((bx1+bx2)/2,38,'b1 = '+f(D.b1),dim));
+      if(D.n>1){var pc1=bx1+D.b1*ss/2,pc2=pc1+D.pt*ss;g+=group('pt',EXT(pc1,yb,pc1,240,dim)+EXT(pc2,yb,pc2,240,dim)+dimL(id,dim,pc1,236,pc2,236)+txt((pc1+pc2)/2,253,'pt = '+f(D.pt),dim))}
+    }else{
+      g+=group('b1',EXT(lx-D.d3*ss/2,by1,bx-4,by1,dim)+EXT(lx-D.d3*ss/2,by2,bx-4,by2,dim)+dimL(id,dim,bx,by1,bx,by2)+txt(bx-7,(by1+by2)/2,'b1 = '+f(D.b1),dim,'transform="rotate(-90 '+(bx-7)+' '+((by1+by2)/2)+')"'));
+      if(D.n>1){var py1=Y(ti*2+D.b1/2),py2=py1+D.pt*ss;g+=group('pt',dimL(id,dim,438,py1,438,py2)+txt(431,(py1+py2)/2,'pt = '+f(D.pt),dim,'transform="rotate(-90 431 '+((py1+py2)/2)+')"'))}
+    }
   }else{
   for(i=0;i<D.n;i++){
     var c=centers[i%cols],a=c-D.b1/2,b=c+D.b1/2,y=rowCy+Math.floor(i/cols)*96;
