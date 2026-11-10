@@ -1,0 +1,134 @@
+[
+  {
+    "kod": "ORK LA HGH20HA",
+    "model": "HGH20HA",
+    "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+    "pdf_sayfa": 41,
+    "basili_sayfa": 38,
+    "degerler": {
+      "Genişlik (W)": {
+        "deger": "44 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "Yükseklik (H)": {
+        "deger": "30 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "H1": {
+        "deger": "4,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "N": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "B": {
+        "deger": "32 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "B1": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "C": {
+        "deger": "50 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "L1": {
+        "deger": "65,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "Uzunluk (L)": {
+        "deger": "92,2 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "K1": {
+        "deger": "12,6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "K2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "G": {
+        "deger": "12 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "Vida (M x l)": {
+        "deger": "M5 x 6",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "T": {
+        "deger": "8 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "H2": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "H3": {
+        "deger": "6 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "Ray Genişliği (WR)": {
+        "deger": "20 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      },
+      "Ray Yüksekliği (HR)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "eşdeğer HGH20HA katalog geometrisi"
+      }
+    },
+    "referans_degerler": {
+      "Dinamik yük": {
+        "deger": "32,7 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "yalnız resmi katalog markasının referans değeri; Yamansa kapasitesi değildir"
+      },
+      "Statik yük": {
+        "deger": "47,96 kN",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "yalnız resmi katalog markasının referans değeri; Yamansa kapasitesi değildir"
+      },
+      "Ağırlık": {
+        "deger": "0,39 kg",
+        "kaynak": "https://hiwin.com/wp-content/uploads/2026/08/HIWIN-Linear-Guideway-Catalog-1.pdf",
+        "kapsam": "yalnız resmi katalog markasının referans değeri; Yamansa kapasitesi değildir"
+      }
+    },
+    "tutarlilik": {
+      "url": "https://www.yamansarulman.com/hgh-20-ca-lineer-araba-18295",
+      "ortak": {
+        "W": "44 mm",
+        "H": "30 mm",
+        "H1": "4,6 mm",
+        "N": "12 mm",
+        "B": "32 mm"
+      },
+      "CA_farklari": {
+        "C": "36 mm",
+        "L1": "50,5 mm",
+        "L": "77,5 mm"
+      },
+      "not": "CA sayfası CDP ile okundu. Yük değerleri eski seri tablosundan farklı; HA için CA kapasitesi aktarılmadı."
+    }
+  }
+]
