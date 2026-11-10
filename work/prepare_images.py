@@ -14,7 +14,10 @@ def name(row):
     brand = row['gosterilecek_marka']
     brand = {'İWİS': 'iwis ECOPLUS', 'SEDİS': 'Sedis', 'CSE (CZECH)': 'CSE'}.get(brand, brand)
     parts = [] if brand == 'Yamansa' else [brand]
-    parts.append(row['iso_kod'])
+    maker_code = 'ASA 60-1 (12A-1)' if row['iso_kod'] == '12A-1' else row['iso_kod']
+    if row['pim_delikli'] and row['aile'] == 'cift_hatve_hp':
+        maker_code = 'HP ' + maker_code
+    parts.append(maker_code)
     if row['paslanmaz']:
         parts.append('Paslanmaz')
     if row['pim_delikli']:

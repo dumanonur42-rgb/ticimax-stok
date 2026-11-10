@@ -16,6 +16,7 @@ BASE = 'ZİNCİR - ZİNCİR DİŞLİSİ>'
 CHAIN = BASE + 'ZİNCİRLER'
 LINK = BASE + 'ZİNCİR KİLİTLERİ VE BAKLALARI'
 DRAW_LABELS = [('p', 'Adım (p)'), ('b1', 'İç Genişlik (b1)'), ('d3', 'Makara Çapı (d3)'), ('d1', 'Pim Çapı (d1)'), ('h', 'Plaka Yüksekliği (h)'), ('pt', 'Sıralar Arası Mesafe (pt)'), ('pim_delik_capi', 'Pim Delik Çapı')]
+VARIANTS = {row['kod']: i for i, row in enumerate(sorted(ROWS, key=lambda r: hashlib.sha256(r['kod'].encode()).hexdigest()))}
 
 
 def decimal(value):
@@ -74,7 +75,7 @@ def technical(row, flags):
     if row['aile'] == 'bs':
         specs.append(('Standart', 'ISO 606 / DIN 8187'))
     elif row['iso_kod'] == '12A-1':
-        specs.append(('Standart', 'ISO 606 / ANSI 60 (12A-1)'))
+        specs.append(('Standart', 'ISO 606 / ANSI 60'))
     if row['tip'] == 'zincir' and not row['paslanmaz'] and not row['pim_delikli'] and values.get('kopma_min_kn'):
         specs.append(('Minimum Kopma Yükü', decimal(values['kopma_min_kn']['deger']) + ' kN'))
     if brand == 'iwis':
@@ -120,55 +121,186 @@ def keywords(row, brand, ref, pitch):
     return ', '.join(result)
 
 
-def paragraphs(row, ref, pitch, variant):
+def paragraphs(row, title, values, variant):
+    def pick(options, slot):
+        return options[(variant // (4 ** slot)) % 4]
+
+    def mm(key):
+        return decimal(values[key]['deger']) if values.get(key) else None
+
+    p, b, d, pin, h, pt = [mm(k) for k in ['p', 'b1', 'd3', 'd1', 'h', 'pt']]
+    span = decimal(values['p']['deger'] * 10)
+    n = row['sira']
+    count = {1: 'bir', 2: 'iki', 3: 'üç', 4: 'dört'}[n]
+    strand = {1: 'tek', 2: 'çift', 3: 'üç', 4: 'dört'}[n]
+    count_title = count[0].replace('i', 'İ').upper() + count[1:]
     code = row['iso_kod']
-    strand = {1: 'tek sıralı', 2: 'çift sıralı', 3: 'üç sıralı', 4: 'dört sıralı'}[row['sira']]
-    if row['tip'] == 'disli':
-        shape = 'Dokuz dişli bu göbekli parça, 1 inç adımlı çift sıralı zincirle çalışacak dişli düzeni içindir. İki diş sırası aynı gövde üzerinde bulunur; tek sıralı bir dişliyle aynı bağlantı düzenine sahip değildir.'
-        meaning = '16B-2 zincir ölçüsü, 25,4 mm adımı ve iki sırayı ifade eder; 9 ise diş sayısıdır. Mil deliği, göbek boyu ve kama kanalı için burada ölçü verilmez. Mevcut dişlinin mile bağlanma biçimi ayrıca karşılaştırılmalıdır.'
-        fit = 'Zincirin dişlere oturuşu kadar mil bağlantısı da önemlidir. Pilot deliğin bitmiş mil deliği olduğu varsayılmamalıdır. Aynı zincir ölçüsündeki farklı diş sayıları aktarım oranını ve zincir yolunu değiştirir.'
-    elif row['iso_kod'] == '415H':
-        shape = 'İnce motosiklet ve moped zincirlerinin uçlarını birleştirmek için kullanılan tam kilit tipidir. İki pim, karşı plaka ve tutucu parça bir bağlantı oluşturur; yarım baklanın boy ayarlama görevinden farklıdır.'
-        meaning = '415H kodunda bu ürün için kullanılabilen adım 12,7 mm’dir. İç genişlik değeri verilmediği için yalnız 1/2 inç adımla kilit seçmek yeterli olmaz. Sökülen kilidin pim aralığı, plaka geçişi ve tutucu biçimiyle karşılaştırma yapılır.'
-        fit = 'Zincirin tam kodu ile kilit tipi birlikte ele alınmalıdır. Aynı adımda daha geniş veya farklı pim yapısında zincirler bulunabilir. Karşı plaka pimlere düzgün oturmalı; tutucu parça kendi yuvasına uygun olmalıdır.'
-    elif row['pim_delikli']:
-        shape = 'Pimlerin içi boştur; bağlantı düzeninde bu deliklerin konumu ve çapı önem taşır. Dolu pimli zincirle yalnız dış görünüşe göre eşleştirme yapılmaz. ' + ('Bu tam kilit, açık pimli zincirin iki ucunu birleştiren bağlantı elemanıdır.' if row['tip'] == 'kilit' else 'Boş pimler, pim içinden geçen bağlantı elemanları kullanılan düzeneklerde değerlendirilir.')
-        meaning = 'HP ifadesi pim delikli yapıyı belirtir. ' + ('Çift hatveli düzende uzun plaka ve makara tipi de kodun parçasıdır. ' if 'cift_hatve' in row['aile'] else '') + 'Adım pim merkezleri arasında ölçülür; delik çapı ve pim dış ölçüsü aynı kavram değildir. Eksik bağlantı ölçülerinin yerine normal dolu pimli zincirin değerleri kullanılmaz.'
-        fit = 'Karşılaştırmada zincirin tam kodu, pim deliklerinin biçimi ve bağlantı parçasının geçişi birlikte ele alınır. Aynı adımlı dolu pimli bir kilit bu yapının yerine düşünülmemelidir. İlave bağlantı parçasının pim deliğine oturması ayrıca kontrol edilir.'
-    elif row['tip'] == 'bakla':
-        shape = 'Yarım kilit veya offset bakla olarak anılan kranked bağlantı elemanıdır. Bir uç makara-burç tarafını, diğer uç pim bağlantısını oluşturur. Zincir boyunu tek adım değiştirmek gereken bağlantılarda değerlendirilir; tam kilitle aynı parça değildir.'
-        meaning = 'Kod zincirin ölçü serisini ve sıra sayısını tanımlar. Yarım bakla, zincirin iç ve dış bağlantı düzenleri arasındaki geçişi sağlayan kıvrımlı plakalarıyla ayırt edilir. Adımın aynı olması tek başına yeterli değildir; makara, pim ve iç genişlik de eşleşmelidir.'
-        fit = 'Zincir boyu ve uç bağlantılarının dizilişi, yarım baklaya ihtiyaç olup olmadığını belirler. Mevcut uçları birleştiren tam kilit ile tek adımlık boy değişikliği sağlayan yarım bakla karıştırılmamalıdır. Montajda kıvrımlı plakanın yönü ve pim bağlantısının oturuşu kontrol edilir.'
-    elif row['tip'] == 'kilit':
-        shape = 'Tam kilit, zincirin iki ucunu birleştiren pimli bağlantı elemanıdır. Dış plaka, iki pim ve tutucu parça birlikte çalışır. Yarım bakla gibi zincir boyunu tek adım değiştirmek için değil, uygun iki ucu kapatmak için seçilir.'
-        meaning = 'Kod, kullanılacağı makaralı zincirin ölçüsünü ve sıra sayısını belirtir. Kilidin pim aralığı zincirin adımıyla eşleşir; pim çapı ve plaka geçişi de bağlantının parçalarıdır. Farklı serilerin aynı adımlı kilitleri otomatik olarak birbirinin yerine geçmez.'
-        fit = 'Kilidi seçerken sökülen parçanın ölçüsünü, zincirin tam kodunu ve tutucu biçimini birlikte karşılaştırın. Plakanın pimlere düzgün yerleşmesi gerekir. Tutucu parçanın türü ve yuvası uyumlu olmalı; yalnız dış plaka uzunluğuna göre seçim yapılmamalıdır.'
-    elif 'cift_hatve' in row['aile']:
-        shape = 'Uzun düz plakalı çift hatveli makaralı zincirdir. Aktarım ve taşıma düzeninde adımın yanında makara tipi de belirleyicidir. Büyük makaralarla çalışan bir düzen, yalnız aynı adımda küçük makaralı başka bir zincirle eşleştirilmez.'
-        meaning = 'A veya C öneki ile devam eden tam seri kodu birlikte okunmalıdır. Bu ölçüdeki plaka aralığı standart kısa adımlı zincirden farklıdır. Makaranın rayla ve dişliyle teması değerlendirilirken kodun son rakamları da korunur; yalnız ilk harften ölçü sonucu çıkarılmaz.'
-        fit = 'Taşıma yüzeyi, makara çapı ve dişli profili birlikte seçilir. Mevcut zinciri değiştirirken düz plakanın boyu ve makara yerleşimi karşılaştırılır. Bağlantı kilidi de aynı çift hatveli seri için olmalı; kısa adımlı zincirin kilidiyle yalnız görünüş üzerinden eşleştirilmemelidir.'
+    hp = row['pim_delikli']
+    double = 'cift_hatve' in row['aile']
+    ss = row['paslanmaz']
+    kind = row['tip']
+    material = 'paslanmaz çelik' if ss else 'çelik'
+    if kind == 'bakla':
+        role = ['zincir boyunu bir adım değiştiren yarım bakladır', 'tek adımlık boy ayarı için kullanılan kıvrımlı bakladır', 'iç ve dış bağlantı arasında geçiş sağlayan yarım kilittir', 'zincire bir adımlık uzunluk kazandıran offset bakladır']
+    elif kind == 'kilit':
+        role = ['zincirin iki ucunu birleştiren tam kilittir', 'açık zincir uçlarını kapatan bağlantı kilididir', 'iki zincir ucunu pimli bağlantıyla birleştiren parçadır', 'uç bağlantısını tamamlamak için kullanılan tam kilittir']
+    elif kind == 'disli':
+        role = ['iki diş sırası bulunan 9 dişli zincir dişlisidir', 'çift sıralı zincir için 9 dişli aktarım parçasıdır', 'iki sıralı zinciri kavrayan 9 dişli dişlidir', '9 dişiyle çift sıralı zincire hareket veren dişlidir']
+    elif hp:
+        role = ['taşıyıcı bağlantıları için içi boş pimleri bulunan zincirdir', 'pim deliklerinden ek parça geçirilebilen makaralı zincirdir', 'çubuk ve taşıyıcı bağlantısına uygun delikli pim yapısındadır', 'pimlerinin içinden bağlantı çubuğu geçirilebilen zincirdir']
+    elif double:
+        role = ['uzun plakalı, çift hatveli bir taşıma zinciridir', 'konveyör düzenlerinde kullanılan uzun adımlı zincirdir', 'uzun düz plakalarıyla ayrılan çift hatveli zincirdir', 'yavaş çalışan taşıma düzenleri için çift hatveli zincirdir']
     else:
-        shape = f'{strand.capitalize()} makaralı transmisyon zinciridir. ' + ('İki veya daha fazla makara sırası ortak pimlerle birlikte ilerler; dişlide aynı sayıda diş sırası gerekir. ' if row['sira'] > 1 else 'Tek makara sırası, uygun tek sıralı dişli üzerinde ilerler. ') + 'Adım, ardışık iki pim merkezinin mesafesidir; zincir seçiminin temel ölçülerinden biridir.'
-        meaning = ('ASA 60, ANSI 60 ve 12A-1 bu ürünün ANSI ölçü ailesini tanımlar. B serisi zincirle aynı kod değildir; 3/4 inç adımın ortak olması iç genişlik ve makara ölçülerinin aynı olduğu anlamına gelmez.' if code == '12A-1' else f'{code} kodu B serisi ölçüyü ve son ekte sıra sayısını belirtir. Aynı adımlı tek, çift, üç ve dört sıralı seçenekler birbirinin yerine doğrudan takılmaz. Seçimde B harfi ile sıra eki birlikte korunur; yalnız inç adımına göre karar verilmez.')
-        fit = 'Dişlinin diş sayısı aktarım oranını, göbek ve mil deliği ise montaj biçimini belirler. Zincir adımıyla birlikte makara çapı, iç genişlik ve sıra sayısı da dişliye uymalıdır. Çok sıralı düzende sıralar arası mesafe, diş sıralarının konumuyla birlikte değerlendirilir.'
-    material = 'Paslanmaz yapı, ortam ve temizlik koşulları dikkate alınarak seçilir. Bu ürün için özel çelik sınıfı veya kopma yükü verilmez; malzeme seçimi yalnız yüzey parlaklığına göre yapılmaz.' if row['paslanmaz'] else 'Pim, burç ve makara bölgelerinin düzenli yağlanması hareketli bağlantılardaki aşınmanın takibini kolaylaştırır. Yağın bağlantı aralıklarına ulaşması ve çalışma ortamına uygun olması önemlidir.'
-    joining = ('Zincir uçları için aynı seri ve sıra sayısında tam kilit kullanılır. Boyu tek adım değiştirmek gerektiğinde uygun yarım bakla ayrıca değerlendirilir. Tam kilit ile yarım baklanın görevleri farklıdır; bağlantı biçimi mevcut zincir ucuyla karşılaştırılır.' if row['tip'] in {'zincir', 'disli'} else 'Bağlantı parçasının karşısındaki zincirin pim ve plaka düzeni esas alınır. Aynı adımda farklı seri veya sıra sayısı seçilmesi uygun bağlantı sağlamaz. Sökülen parçanın ölçüsü ile yeni parçanın pim geçişi ve plaka oturuşu birlikte karşılaştırılır.')
-    usage = ('Konveyörlerin taşıma ve ek bağlantı düzenleri bu tipin kullanım alanları arasındadır. Ek parçaların geçişi, rayla temas ve bağlantı hareketi birlikte incelenir.' if row['pim_delikli'] or 'cift_hatve' in row['aile'] else 'Konveyör tahrikleri, paketleme makineleri, tarım makinesi aktarmaları ve genel makine transmisyonları bu ölçü ailesinin kullanıldığı alanlardır. Mevcut dişli düzeni, zincir boyu ve bağlantı şekli uygulama seçiminin başlangıç noktalarıdır.')
-    maintenance = 'Değişim sırasında zincirin uzamasıyla birlikte diş uçlarının aşınması da incelenir. Millere bağlı dişlilerin aynı düzlemde durması, zincirin yana zorlanmadan ilerlemesine yardımcı olur. Uzama karşılaştırması tek bir pim aralığı yerine birden fazla adım üzerinden yapılır.'
-    openings = [f'{ref}, {pitch} mm adımla çalışan bu ölçü ailesinin bir parçasıdır. ', f'{pitch} mm pim merkezi aralığıyla tanımlanan {ref} için bağlantı düzeni de ölçü kadar önemlidir. ', f'{ref} seçilirken ilk karşılaştırma {pitch} mm adım ve mevcut parçanın düzeni üzerinden yapılır. ', f'Mevcut aktarmadaki {pitch} mm adımı eşleştirmek için {ref} kodu tam olarak okunmalıdır. ']
-    tags = [f'{ref} için ', f'{ref} ile çalışacak düzende ', f'Bu ölçüdeki {ref} seçilirken ', f'{ref} bağlantısını karşılaştırırken ']
-    link = '<a href="https://www.yamansarulman.com/zincirler1">zincir, bakla ve kilit seçenekleri</a>'
-    sprockets = '<a href="https://www.yamansarulman.com/' + ('cift-sira-zincir-dislileri' if row['sira'] == 2 else 'tek-sira-zincir-dislileri' if row['sira'] == 1 else 'zincir-dislileri') + '">uygun zincir dişlileri</a>'
-    texts = [openings[variant] + shape,
-             tags[(variant+1)%4] + 'tam kodun anlamı önemlidir. ' + meaning,
-             tags[(variant+2)%4] + 'eşleşecek dişli ve zincir birlikte ele alınır. ' + fit + ' Seçenekler arasında ' + sprockets + ' incelenebilir.',
-             tags[(variant+3)%4] + 'bağlantı elemanının görevi belirleyicidir. ' + joining + ' Karşılaştırma için ' + link + ' aynı kod ailesi üzerinden ele alınabilir.',
-             tags[variant] + 'kullanım ortamı da seçimde yer alır. ' + usage + ' ' + material,
-             tags[(variant+1)%4] + 'bakımda zincir ve dişli bir bütün olarak incelenir. ' + maintenance]
-    return ['Ürün Yapısı', 'Kod ve Ölçü', 'Dişli ve Zincir Uyumu', 'Bağlantı Parçaları', 'Kullanım Alanları', 'Bakım ve Ölçü Kontrolü'], texts
+        role = [f'{strand} sıralı makaralı transmisyon zinciridir', f'hareketi {count} makara sırasıyla aktaran zincirdir', f'{count} sıra makaradan oluşan tahrik zinciridir', f'{strand} sıralı dişliyle çalışan makaralı zincirdir']
+    intro = title + ', ' + pick(role, 0) + '. '
+    intro += pick([f'Pim merkezleri arasındaki nominal mesafe {p} mm’dir.', f'Bir adımın uzunluğu, iki komşu pim merkezi arasında {p} mm’dir.', f'Adım ölçüsü {p} mm olup komşu pimlerin merkezinden alınır.', f'Yan yana iki pim merkezi {p} mm aralıklıdır.'], 1) + ' '
+    if kind == 'disli':
+        intro = title + ', ' + pick(role, 0) + '. ' + pick([f'Eşleştiği zincirin pim adımı {p} mm’dir.', f'Bu dişliye takılan zincirde pim merkezleri {p} mm aralıklıdır.', f'Dişlinin çalışacağı zincirin nominal adımı {p} mm’dir.', f'Karşılık gelen zincir ölçüsünde bir adım {p} mm’dir.'], 1) + ' '
+    if n > 1:
+        arrangement = [f'Yan yana {count} makara sırası ortak pimlerle birbirine bağlanır.', f'{count_title} makara sırası yan yana ilerler ve aynı pimleri paylaşır.', f'Ortak pimler {count} sırayı birlikte taşır; sıralar yan yana hareket eder.', f'{count_title} sıradaki makaralar aynı pimler üzerinden birlikte ilerler.']
+    else:
+        arrangement = ['Tek makara sırasında iç ve dış baklalar dönüşümlü olarak birbirine bağlanır.', 'İç ve dış baklalar dönüşümlü dizilir; makaralar tek sıra halinde ilerler.', 'Tek sıralı zincirde iç baklayı dış bakla izler; pimler bu bağlantıyı taşır.', 'Bir sıra halinde ilerleyen makaralar, dönüşümlü iç ve dış baklalarla bağlanır.']
+    if kind == 'disli':
+        arrangement = ['İki diş sırası, çift sıralı zincirin iki makara yoluna karşılık gelir.', 'Yan yana iki diş sırası aynı gövdede zinciri kavrar.', 'Çift sıralı zincir, gövde üzerindeki iki diş sırasına birlikte oturur.', 'Dişli üzerinde iki paralel diş sırası bulunur; her biri bir makara yolunu karşılar.']
+    intro += pick(arrangement, 2) + ' '
+    if kind == 'bakla':
+        detail = [f'Kıvrımlı {material} plakalar bir uçtaki iç bağlantıyı diğer uçtaki dış bağlantıya taşır.', f'{material.capitalize()} plaka çifti, makara-burç ucuyla pim ucunu birbirine bağlar.', f'Bir uçta makara ve burç, diğer uçta pim bağlantısı bulunur; plakalar {material} yapıdadır.', f'Bu {material} parçada iç ve dış bağlantı uçları aynı baklada birleşir.']
+    elif hp:
+        detail = [f'{material.capitalize()} yapıdaki delikli pimler ek parçaların geçiş yoludur.', f'Pimler {material} yapıdadır; ortalarındaki delik bağlantı çubuğuna yer açar.', f'Ek taşıyıcılar {material} pimlerin içinden geçen çubuklarla bağlanır.', f'Dolu pim yerine içi boş {material} pim kullanılır; geçiş deliği ek bağlantı içindir.']
+    elif double:
+        detail = [f'Uzun {material} plakalar ardışık makaraların arasını açar.', f'{material.capitalize()} yan plakalar, çift hatveli uzun bağlantı düzenini oluşturur.', f'Birbirini izleyen makaralar uzun {material} plakalarla bağlanır.', f'Plakalar {material} yapıdadır ve uzun adımlı taşıma düzenine sahiptir.']
+    else:
+        detail = [f'Pim ve plakalar {material} yapıdadır; pim-burç bağlantısı hareket sırasında mafsallanır.', f'{material.capitalize()} bağlantıların pim-burç bölgesi, dişli etrafında dönmeye izin verir.', f'Hareketli bağlantılar {material} pim ve plakalardan oluşur; mafsal pim-burç bölgesindedir.', f'Bu {material} yapıda pim-burç bağlantısı, zincirin dişli çevresinde bükülmesini sağlar.']
+    if kind == 'disli':
+        detail = ['Diş sayısı 9’dur; mil deliği ve kama kanalı ölçüsü ayrıca belirlenir.', 'İki diş sırası aynı gövde üzerindedir; bitmiş mil deliği ölçüsü verilmemiştir.', 'Dokuz diş aynı gövdede iki sıra halinde çalışır; göbek ölçüleri listelenmemiştir.', 'Mil bağlantısı için delik çapı, göbek boyu ve kama kanalı ölçülür; burada bu ölçüler yoktur.']
+    intro += pick(detail, 3)
+    brand = brand_name(row)
+    profile = TECH[row['teknik_anahtar']].get('marka_verileri', {}).get(row['kod'], {})
+    if brand == 'iwis' and profile.get('olculer'):
+        intro += f' iwis’in ECOPLUS serisindeki bu zincirin pim uzunluğu {mm("F1")} mm, metre ağırlığı {mm("agirlik_kg_m")} kg’dır.'
+    elif brand == 'Sedis' and profile.get('olculer'):
+        intro += f' Sedis’in bu zincirinde iç genişlik {b} mm, makara çapı {d} mm’dir.'
+
+    if row['aile'] == 'bs':
+        meaning = [f'B serisi ölçüler ISO 606 / DIN 8187 kapsamındadır; -{n} eki {n} sırayı gösterir.', f'Kodun sonundaki -{n}, {count} makara sırasını belirtir; ölçü ailesi ISO 606 / DIN 8187 B serisidir.', f'Ölçü kodundaki B harfi seriyi, -{n} eki ise {strand} sıralı yapıyı anlatır.', f'ISO 606 / DIN 8187 B serisinde sıra eki bu ürün için -{n}’dir; bu ek {count} sırayı tanımlar.']
+    elif code == '12A-1':
+        meaning = ['ASA 60 ile ANSI 60 aynı ölçü ailesini anlatır; -1 eki tek sırayı belirtir.', 'Bu ürün ANSI ölçü ailesindedir; ASA 60 yazımı da kullanılır ve son ek tek sırayı gösterir.', 'ASA ve ANSI adlandırması bu ölçüde aynıdır; 60 serisi tek makara sırasıyla çalışır.', 'ANSI 60 ölçüsü tek sıralıdır; ASA adı da aynı zincir serisi için kullanılır.']
+    elif double:
+        meaning = ['Çift hatveli yapıda uzun plaka kullanılır; makara tipi kodun son rakamlarıyla birlikte seçilir.', 'Bu seri uzun adımlıdır; A/C harfiyle birlikte son rakamlar da makara tipini ayırt eder.', 'Uzun plaka ve makara düzeni birlikte eşleşir; çift hatve için tam seri korunur.', 'Çift hatve yalnız daha uzun bir zincir anlamına gelmez; plaka ve makara düzeni de farklıdır.']
+    elif code == '415H':
+        meaning = ['Bu kilit ince moped ve motosiklet zincirlerine ait bağlantı tipidir.', 'Bu kilit moped zinciri ailesindedir; adımı 12,7 mm’dir.', 'Moped tipi bu bağlantıda pim aralığı 12,7 mm’dir.', 'Bu ince zincir tipi için verilen adım 12,7 mm’dir; kilit de aynı aileden seçilir.']
+    else:
+        meaning = ['Bu dişli iki sıra zincir için 1 inç, yani 25,4 mm adımla çalışır.', 'Zincir ölçüsü 1 inç çift sıradır; pim adımı 25,4 mm’dir.', 'İki diş sırasına oturan zincirin adımı 25,4 mm, yani 1 inçtir.', 'Bir inçlik 25,4 mm adım, çift sıralı zincirin dişlere oturma aralığını tanımlar.']
+    geometry = pick(meaning, 0) + ' '
+    if b and d:
+        geometry += pick([f'İç genişlik {b} mm, makara çapı {d} mm’dir.', f'Makaranın çapı {d} mm, iç plakalar arasındaki açıklık {b} mm’dir.', f'İki iç plakanın arası {b} mm’dir; makara çapı {d} mm olarak eşleşir.', f'Dişli boşluğuna oturan makara {d} mm çapındadır; iç açıklık {b} mm’dir.'], 1) + ' '
+        geometry += pick([f'Pim çapı {pin} mm, plaka yüksekliği {h} mm’dir.', f'Plakalar {h} mm yüksekliğindedir; pimler {pin} mm çapındadır.', f'Bağlantı piminde {pin} mm çap ve plakada {h} mm yükseklik ölçüsü kullanılır.', f'{h} mm yüksekliğindeki plakalar {pin} mm çaplı pimlerle eşleşir.'], 2) + ' '
+    else:
+        geometry += pick([f'{p} mm adım, pim delik çapını veya iç genişliği tanımlamaz.', f'Pim aralığının {p} mm olması iç açıklığı belirlemez.', f'{p} mm’lik merkez mesafesinden pim dış çapı çıkarılamaz.', f'Bilinen {p} mm adım dışında pim ve plaka ölçüleri ayrıca ölçülür.'], 1) + ' '
+        geometry += pick(['İç genişlik, makara çapı ve pim ölçüsü verilmemiştir.', 'Pim, makara ve plaka ölçüleri için sayısal değer yoktur.', 'Bağlantının iç açıklığı ile pim ve makara çapı listelenmemiştir.', 'İç açıklık, plaka yüksekliği ve pim çapı bu üründe belirtilmemiştir.'], 2) + ' '
+    if pt:
+        geometry += pick([f'Sıra merkezleri arasındaki mesafe {pt} mm’dir.', f'Yan yana sıraların merkezleri {pt} mm aralıklıdır.', f'Çok sıralı düzenin merkez aralığı {pt} mm’dir.', f'Diş sıraları zincirin {pt} mm sıra aralığına uymalıdır.'], 3)
+    elif kind == 'disli':
+        geometry += pick(['Delik ve kama kanalı, takılacağı mil üzerinden ölçülür.', 'Mil deliği ölçüsü bu dişlinin adından çıkarılmaz.', 'Mil çapı ve kama ölçüsü işlenecek bağlantıyı belirler.', 'Göbek boyu da mil üzerindeki yerleşimle birlikte ölçülür.'], 3)
+    else:
+        geometry += pick([f'{strand.capitalize()} sıralı bağlantıda dişli de {n} diş sırası taşımalıdır.', f'Bu {strand} sıralı ölçü için aynı sıra sayısında zincir ve dişli kullanılır.', f'Karşı dişli ve zincirin sıra sayısı {n} olarak eşleşir.', f'Montajdaki zincir ve dişli {strand} sıralı yapıya uygun seçilir.'], 3)
+
+    sprockets = '<a href="https://www.yamansarulman.com/' + ('cift-sira-zincir-dislileri' if n == 2 else 'tek-sira-zincir-dislileri' if n == 1 else 'zincir-dislileri') + '">zincir dişlileri</a>'
+    if kind == 'disli':
+        geometry = pick([f'Zincir adımı {p} mm’dir; çift sıralı bağlantı düzeni kullanılır.', f'Çift sıralı zincir, {p} mm adımla dişlere oturur.', f'Bu çift sıralı düzenin zincir adımı {p} mm olarak eşleşir.', f'{p} mm adımlı zincir iki diş sırasına birlikte takılır.'], 0) + ' '
+        geometry += pick(['Dişli üzerinde 9 diş bulunur; bu sayı zincirin adım ölçüsü değildir.', 'Diş sayısı 9’dur; adım ile diş sayısı ayrı seçim bilgileridir.', 'Dokuz dişli bu parçada diş sayısı, karşı milin dişlisiyle birlikte aktarım oranını belirler.', 'Aktarım oranı hesabında bu dişlinin 9 dişi esas alınır.'], 1) + ' '
+        geometry += pick(['Mil deliği çapı ve göbek boyu için sayısal ölçü verilmemiştir.', 'Bitmiş delik çapı ile göbek uzunluğu bu üründe belirtilmemiştir.', 'Göbek ve delik ölçüleri listede yoktur; mevcut montajdan ölçülür.', 'Delik çapı, göbek boyu ve kama kanalı ölçüsü mevcut mil üzerinden alınır.'], 2) + ' '
+        geometry += pick(['Kama genişliği ile mil çapı birlikte ölçülür; diş sayısından delik ölçüsü çıkarılmaz.', 'Kama kanalı mildeki kamaya uymalıdır; diş sayısı mil bağlantısını tanımlamaz.', 'Montaj için mil çapı, kama genişliği ve göbeğin kaplayacağı boy ayrı ayrı alınır.', 'Mil bağlantısı işlenirken kama kanalı genişliği ve göbekteki yerleşim ölçülür.'], 3)
+    sprockets_start = sprockets.replace('>zincir', '>Zincir')
+    fit = pick([f'{strand.capitalize()} sıralı {sprockets} içinden {p} mm adımla çalışan ölçü seçilir.', f'{p} mm adımlı zincir için {strand} sıralı {sprockets} kullanılır.', f'Dişli seçiminde {p} mm adım ve {count} sıra birlikte eşleştirilir; seçenekler {sprockets} bölümündedir.', f'{sprockets_start} arasında aranan düzen {p} mm adımlı ve {strand} sıralıdır.'], 0) + ' '
+    if b and d:
+        fit += pick([f'Dişler {b} mm iç açıklığa girmeli, {d} mm çaplı makaralar diş boşluklarına oturmalıdır.', f'{d} mm makara çapı diş profilini, {b} mm iç genişlik dişin gireceği açıklığı belirler.', f'Makara cepleri {d} mm çapı karşılamalı; diş genişliği {b} mm iç açıklığa sığmalıdır.', f'Dişli genişliği {b} mm iç açıklıkla, diş boşluğu da {d} mm makarayla uyumlu olmalıdır.'], 1) + ' '
+    else:
+        fit += pick(['Mevcut zincirin makara çapı ve iç açıklığı ölçülerek diş profiliyle karşılaştırılır.', 'Dişli dişinin gireceği iç açıklık ve makara çapı sökülen zincirden ölçülür.', 'Makara çapı ile iç genişlik bilinmeden mevcut dişli profili değiştirilmez.', 'Yeni dişli için mevcut zincirin iç açıklığı ve makaraların dişlere oturuşu ölçülür.'], 1) + ' '
+    if pt:
+        fit += pick([f'İki komşu diş sırasının merkez aralığı {pt} mm olmalıdır.', f'{pt} mm sıra aralığı, dişlerin zincire yandan baskı yapmadan girmesini sağlar.', f'Diş sıraları {pt} mm merkez aralığıyla zincirin sıra düzenini karşılamalıdır.', f'Yan yana diş sıralarında {pt} mm merkez mesafesi aranır.'], 2) + ' '
+    elif double:
+        fit += pick(['Uzun plakalı konveyör zincirinde dişli, çift hatveli makara düzenine göre seçilir.', 'Çift hatve için kısa adımlı zincir dişlisi yerine seriye uygun dişli profili kullanılır.', 'Dişlinin makara cepleri, uzun adımlı zincirin makara tipine göre eşleşir.', 'Konveyör rayı ile dişlinin makara tipine uygunluğu birlikte kontrol edilir.'], 2) + ' '
+    else:
+        fit += pick([f'{strand.capitalize()} sıralı yapıda makara yolu ile dişli aynı düzlemde tutulur.', f'Dişli hizası {strand} sıralı zincirin yana sürtünmeden ilerlemesini sağlar.', f'{strand.capitalize()} sıralı zincirin izlediği yol dişli hattıyla aynı düzlemde olmalıdır.', f'Montajda {count} sıra makaraya karşılık gelen diş yolu hizalanır.'], 2) + ' '
+    fit += pick(['Diş sayısı aktarım oranını belirler; mil deliği ve kama kanalı mevcut mile göre seçilir.', 'Aktarım oranı için diş sayısı korunur; göbek ve delik ölçüsü mile göre karşılaştırılır.', 'Dişli değişiminde diş sayısı ile mil bağlantısı ayrı ölçülür; adım bunların yerine geçmez.', 'Mil çapı, kama kanalı ve göbek boyu montajı; diş sayısı ise aktarım oranını belirler.'], 3)
+
+    link = '<a href="https://www.yamansarulman.com/zincirler1">zincir kilitleri ve baklalar</a>'
+    link_start = link.replace('>zincir', '>Zincir')
+    match_code = ('HP ' if hp else '') + code
+    qualifier = 'paslanmaz ' if ss else ''
+    if kind == 'bakla':
+        join_first = [f'Eşleşen zincir ölçüsü {qualifier}{match_code}’dir; yarım bakla çevrim boyunu {p} mm değiştirir.', f'Bu yarım bakla {qualifier}{match_code} zincire takılır ve boyu bir adım, yani {p} mm değiştirir.', f'{qualifier.capitalize()}{match_code} zincirde bir adımlık boy farkı {p} mm’dir; yarım baklanın görevi bu farkı karşılamaktır.', f'{qualifier.capitalize()}{match_code} için yarım bakla, zincire {p} mm’lik tek adım ekler.']
+        join_second = ['Çift sayıda adımla kurulan çevrimde tek sayıya geçmek için kıvrımlı bağlantı kullanılır.', 'Tek sayıda zincir adımı gerektiğinde iç ve dış uçlar bu kıvrımlı parçada birleşir.', 'Yarım bakla adı adımın yarısı anlamına gelmez; çevrimi tek sayıda adımla kapatmayı sağlar.', 'Kıvrımlı plakalar, tek sayıda adımlı çevrimde farklı uç bağlantılarını birbirine geçirir.']
+        join_third = [f'Makara-burç ucu ile pim ucu {strand} sıralı zincirin uçlarına yerleşir.', f'Bu parçada bir uç iç, diğer uç dış bağlantıdır; her ikisi de {n} sırayı karşılar.', f'{strand.capitalize()} sıralı yapıda kıvrımlı plakanın yönü zincirin iç ve dış uçlarına göre yerleştirilir.', f'İç ve dış bağlantı uçları {count} sıra boyunca karşılıklı oturmalıdır.']
+    elif kind == 'kilit':
+        join_first = [f'{qualifier.capitalize()}{match_code} zincirin iki ucu bu tam kilitle birleştirilir.', f'Bu kilit {qualifier}{match_code} zincirin açık uçlarını kapatır.', f'Eşleşeceği zincir {qualifier}{match_code}’dir; tam kilit uç bağlantısını tamamlar.', f'Tam kilit, {qualifier}{match_code} zincirde karşılıklı iki iç bağlantıyı birleştirir.']
+        join_second = ['Pimler iki uçtaki burçlardan geçer; dış plaka ve yaylı tutucu pimleri yerinde tutar.', 'İki pim uçlardaki burçlara girer; karşı plaka yaylı tutucuyla kilitlenir.', 'Uçlar iki pim üzerinde birleşir; dış plaka takıldıktan sonra yaylı tutucu yuvasına oturur.', 'Pimli plaka iki ucu taşır; karşı plaka ve yaylı klips bağlantıyı kapatır.']
+        join_third = [f'Kilit {strand} sıralıdır; yarım bakla gibi tek adımlık boy ayarı yapmaz.', f'{strand.capitalize()} sıralı bu tam kilit, tek adımlık boy değişikliği için kullanılan yarım bakladan farklıdır.', f'{count} sıra için uçları kapatır; zinciri tek adım değiştirmek yarım baklanın işidir.', f'Tam kilidin görevi {n} sıradaki uçları birleştirmektir; kıvrımlı yarım baklayla karıştırılmaz.']
+    else:
+        join_first = [f'Birleştirme için {qualifier}{match_code} tam kilit seçilir; sıra sayısı {n} olarak korunur.', f'{qualifier.capitalize()}{match_code} tam kilit, {strand} sıralı zincirin iki ucunu kapatır.', f'Zincir uçlarında {qualifier}{match_code} tam kilit kullanılır; bağlantı {n} sırayı karşılamalıdır.', f'Uçları kapatacak bağlantı {qualifier}{match_code} tam kilittir; {n} sıraya uygun seçilir.']
+        join_second = ['Tam kilidin pimleri burçlardan geçer; karşı plaka ve yaylı tutucu uçları bir arada tutar.', 'İki pimli tam kilit uçları birleştirir; tutucu parça dış plakanın çıkmasını önler.', 'Uç bağlantısında pimli plaka, karşı plaka ve yaylı tutucu birlikte yerleşir.', 'Tam kilitte iki pim, zincir uçlarını taşır; dış plaka ve tutucu bağlantıyı kapatır.']
+        join_third = [f'Tek adımlık boy farkı {p} mm’dir; bu ayar için aynı ölçünün yarım baklası kullanılır.', f'Boyu tek adım değiştirmek {p} mm fark yaratır; yarım bakla bunun için seçilir.', f'Yarım bakla ile bir adımlık, yani {p} mm’lik boy değişikliği yapılır.', f'{p} mm’lik tek adım ayarı, uç kapatan tam kilit yerine uygun yarım baklayla yapılır.']
+    if hp:
+        join_second = ['Delikli pimlerin içindeki geçiş açık kalmalıdır; dolu pimli kilit bu geçişi kapatır.', 'Bağlantı kilidinde de içi boş pim gerekir; taşıyıcı çubuğun geçişi kesilmez.', 'Kilit pimlerinin deliği, ek çubuğun geçişini sürdürmelidir; dolu pimli bağlantı kullanılmaz.', 'Uç birleştirmede pim delikleri korunur; karşı plaka ve tutucu delikli pimle uyumlu olur.']
+        join_third = ['Kilit üzerindeki tutucu, pim ucunun yuvasına oturur; pim deliğine taşmamalıdır.', 'Çubuğun geçeceği iç çap ile tutucu yuvası ayrı ayrı ölçülür.', 'Ek bağlantının çubuğu, kilit dahil tüm geçiş deliklerinden serbestçe geçmelidir.', 'Taşıyıcı çubuk için kilit pimlerinin iç çapı da zincirdeki delikle eşleştirilir.']
+    joining = pick(join_first, 0) + ' ' + pick(join_second, 1) + ' ' + pick(join_third, 2) + ' '
+    joining += pick([f'{link_start} arasında seçim yaparken pim geçişini ve plaka aralığını karşılaştırın.', f'{link_start} için ölçü karşılaştırmasını sökülen parça üzerinden yapın.', f'Sökülen parçanın pim ve plaka ölçülerini {link} ile karşılaştırın.', f'{link_start} arasında aynı ölçünün bağlantı biçimini seçin; pim yuvası ve plaka aralığı eşleşmelidir.'], 3)
+
+    if ss:
+        use_first = [f'Paslanmaz çelik yapı, {p} mm adımlı zincirin nemli veya sık temizlenen hatlarda kullanılması içindir.', f'Nemli konveyör ve temizlik yapılan makine hatlarında {p} mm adımlı paslanmaz bağlantı kullanılır.', f'{p} mm adımlı paslanmaz düzen, nem ve suyla temas eden taşıma hatlarında tercih edilir.', f'Temizlik yapılan taşıma düzenlerinde {p} mm adım korunurken paslanmaz çelik yapı seçilir.']
+        use_second = ['Paslanmaz çeliğin korozyon direnci, ıslak ortamda yüzey paslanmasını sınırlar.', 'Korozyon direnci, sık ıslanan bağlantılarda paslanmaz çelik seçiminin temel nedenidir.', 'Paslanmaz yapı, nemli ortamda yüzey korozyonuna karşı direnç sağlar.', 'Su ve nemle temasta yüzeyin korozyona direnci paslanmaz yapının avantajıdır.']
+    elif hp:
+        use_first = [f'{p} mm adımlı delikli pimler, konveyör taşıyıcılarına çubuk bağlamak için kullanılır.', f'Konveyörde ek taşıyıcı çubukları {p} mm adımla ilerleyen pim deliklerinden geçirilir.', f'Taşıma hattında ek çubukların bağlantı noktaları {p} mm adımlı pimler üzerindedir.', f'İçi boş pimler, {p} mm adımlı konveyöre taşıyıcı çubuk eklemek için geçiş sağlar.']
+        use_second = ['Çubuğun dış çapı pim deliğine göre seçilir; delik çapı bu ürün için listelenmemiştir.', 'Takılacak çubuğun çapı, ölçülen pim iç çapına göre belirlenir.', 'Taşıyıcı çubuğun geçişi için pim iç çapı ayrıca ölçülür.', 'Pim dış çapı çubuk ölçüsü değildir; geçiş için iç delik çapı ölçülür.']
+    elif double:
+        use_first = [f'{p} mm uzun adım, yavaş çalışan konveyörlerde taşıma elemanlarını birbirinden ayırır.', f'Yavaş konveyör düzeninde uzun plakalar {p} mm aralıkla hareket eder.', f'Uzun düz plakalı bu {p} mm adımlı zincir, düşük hızlı taşıma hatlarında kullanılır.', f'Düşük hızlı konveyör tahrikinde makara merkezleri {p} mm arayla ilerler.']
+        use_second = ['Uzun plakalar taşıyıcılar arasında yer bırakır; makara tipi rayın temas yüzeyiyle eşleşir.', 'Konveyör rayıyla temas eden makara ve uzun plaka düzeni birlikte seçilir.', 'Uzun bağlantılar taşıyıcı aralığını oluşturur; makara-ray teması ayrıca kontrol edilir.', 'Taşıma düzeninde makara çapı rayı, uzun plakalar ise bağlantı aralığını belirler.']
+    else:
+        use_first = [f'{p} mm adımlı {strand} sıralı zincir, konveyör tahriki ve makine aktarmalarında kullanılır.', f'Makine ve konveyör tahrikinde {p} mm adım ile {count} sıra mevcut aktarmayla eşleşir.', f'Paketleme makineleri ve konveyör tahriklerinde {p} mm adımlı {strand} sıralı düzen kullanılır.', f'{strand.capitalize()} sıralı aktarımda {p} mm adım, makine üzerindeki zincir-dişli ölçüsünü korur.']
+        load = values.get('kopma_min_kn') if kind == 'zincir' else None
+        if load:
+            f = decimal(load['deger'])
+            use_second = [f'Minimum kopma yükü {f} kN’dir; bu değer sürekli çalışma yükü değildir.', f'{f} kN minimum kopma yükü, izin verilen devamlı çekme yükünden farklıdır.', f'Kopma yükünün alt sınırı {f} kN’dir; aktarma hesabında sürekli yük olarak kullanılmaz.', f'{f} kN değeri minimum kopma yükünü belirtir, sürekli taşıma kapasitesini değil.']
+        else:
+            use_second = ['Kilit ve bakla, mevcut zincirin iç-dış bağlantı dizilişini tamamlar.', 'Bağlantı elemanı, mevcut zincirin pim ve burç düzenini korur.', 'Uç bağlantısında pim ile burç arasındaki hareketli geçiş korunur.', 'Zincirle birlikte çalışan parça, pim-burç mafsalının hareketine izin verir.']
+    usage = pick(use_first, 0) + ' ' + pick(use_second, 1) + ' '
+    if double and hp:
+        usage += pick(['Uzun plakalı çift hatve, düşük hızlı konveyör taşıyıcılarının aralığını oluşturur.', 'Çift hatveli uzun plakalar, yavaş çalışan taşıma düzenindeki ek parçalara yer açar.', 'Düşük hızlı taşıma hattında uzun plakalar taşıyıcılar arasındaki mesafeyi sağlar.', 'Uzun düz plaka düzeni düşük hızlı konveyördeki taşıyıcı yerleşimine uygundur.'], 2) + ' '
+    elif hp:
+        usage += pick(['Pim deliklerinin hizası, taşıyıcı çubuğun iki yandaki zincirden geçmesini sağlar.', 'Karşılıklı taşıyıcı bağlantılarda pim deliklerinin aynı hizada olması gerekir.', 'Taşıyıcı çubuk iki zinciri bağlıyorsa karşılıklı delikler hizalanır.', 'Ek parçalar zinciri yandan zorlamadan, pim delikleriyle aynı eksende yerleştirilir.'], 2) + ' '
+    elif ss:
+        usage += pick(['Temizlik kimyasalı ile çelik sınıfının uyumu ayrıca kontrol edilir; çelik sınıfı belirtilmemiştir.', 'Çelik sınıfı listelenmediğinden temizleme kimyasalıyla uyumu ürün malzemesi üzerinden kontrol edilir.', 'Yıkamada kullanılan kimyasalın malzemeyle uyumu kontrol edilir; burada çelik sınıfı verilmez.', 'Paslanmaz çelik sınıfı belirtilmemiştir; kimyasal temizlik için malzeme uyumu ayrıca sorgulanır.'], 2) + ' '
+    else:
+        usage += pick([f'{count} sıra boyunca dişlere oturuş eşit olmalı; zincir bir yana çekmemelidir.', f'{strand.capitalize()} sıralı düzen dişli üzerinde yana sürtmeden ilerlemelidir.', f'{strand.capitalize()} sıralı zincir hattı, iki milin dişlileriyle aynı düzlemde tutulur.', f'Mil hizası {n} sıranın dişlerle aynı yönde çalışmasını sağlar.'], 2) + ' '
+    usage += pick(['Yağ, dış yüzeye değil pim-burç arasındaki hareketli bağlantıya ulaşmalıdır.', 'Yağlama bağlantı aralığına yapılır; yağın pim-burç bölgesine girmesi gerekir.', 'Pim-burç mafsalına ulaşan yağ, bağlantının sürtünen yüzeylerini yağlar.', 'Bağlantıların yağlanmasında pim ile burç arasındaki aralığa ulaşılır.'], 3)
+
+    measuring = pick([f'Eşleşen zincirde 10 adımın nominal boyu {span} mm’dir; bu uzunluk 11 pim merkezi arasında ölçülür.', f'Adımı kontrol etmek için 11 ardışık pim merkezi alınır; 10 aralığın nominal toplamı {span} mm’dir.', f'İlk pim merkeziyle 11. pim merkezi arasındaki nominal mesafe {span} mm’dir; arada 10 adım vardır.', f'10 pim aralığını birlikte ölçün; ilk ve 11. pim merkezi arasında nominal {span} mm bulunur.'], 0) + ' '
+    measuring += pick([f'Ölçülen toplamı 10’a bölmek bir adımı verir; nominal sonuç {p} mm’dir.', f'Toplam mesafe 10’a bölünerek {p} mm nominal adımla karşılaştırılır.', f'Toplamı 10’a bölün; bir adımın nominal uzunluğu {p} mm’dir.', f'{p} mm adımı kontrol ederken toplam uzunluğu pim sayısına değil 10 aralığa bölün.'], 1) + ' '
+    measuring += pick(['Zincir düz tutulur, boşluğu alınır; cetvel pimlerin kenarına değil merkezlerine hizalanır.', 'Ölçümde zincir düz bir hatta tutulur; pim dış kenarları yerine merkezler esas alınır.', 'Boşluğu alınmış zincirde cetvel pim merkezlerine paralel yerleştirilir.', 'Pim merkezlerini ölçerken zincir düzleştirilir ve bağlantılardaki boşluk alınır.'], 2) + ' '
+    measuring += pick(['Bakımda aynı aralık yeniden ölçülerek uzama izlenir; kanca biçiminde aşınmış dişler de kontrol edilir.', 'Uzama takibi aynı pim aralığından yapılır; zincirle birlikte dişlerin kanca biçimli aşınmasına bakılır.', 'Sonraki ölçüm aynı 10 adım üzerinden yapılır; diş uçlarının aşınması zincir değişimiyle birlikte incelenir.', 'Karşılaştırma aynı 11 pim merkezi arasında tekrarlanır; aşınmış diş uçları yeni zincirle birlikte değerlendirilir.'], 3)
+    return ['Ürün Yapısı', 'Ölçüler ve Sıra Düzeni', 'Dişli Seçimi', 'Kilit ve Bakla Seçimi', 'Kullanım Alanları', 'Adım Ölçümü ve Bakım'], [intro, geometry, fit, joining, usage, measuring]
 
 
-def generate(kod, variant=0):
+def seo_description(row, values):
+    p = decimal(values['p']['deger'])
+    n = row['sira']
+    strand = {1: 'tek', 2: 'çift', 3: 'üç', 4: 'dört'}[n]
+    if row['tip'] == 'disli':
+        return '25,4 mm adımlı çift sıralı zincir için 9 dişli dişli. Mil bağlantısı ve ölçü bilgilerini inceleyin.'
+    subject = {'zincir': 'zincir', 'bakla': 'yarım bakla', 'kilit': 'bağlantı kilidi'}[row['tip']]
+    material = 'Paslanmaz çelik' if row['paslanmaz'] else 'Pim delikli' if row['pim_delikli'] else 'Çift hatveli' if 'cift_hatve' in row['aile'] else 'Makaralı'
+    text = f'{material} {subject}, {p} mm adımlı {strand} sıralı düzene uyar.'
+    if values.get('b1') and values.get('d3'):
+        text += f' İç genişliği {decimal(values["b1"]["deger"])} mm, makara çapı {decimal(values["d3"]["deger"])} mm’dir.'
+    elif row['pim_delikli']:
+        text += ' Delikli pimler, konveyör taşıyıcılarının çubuk bağlantısı için geçiş sağlar.'
+    else:
+        text += ' Zincir uçlarını birleştirmek için pim ve tutucu ölçülerini karşılaştırın.'
+    return clip(text, 155)
+
+
+def generate(kod, variant=None):
     row = next((r for r in ROWS if r['kod'] == kod), None)
     if row is None:
         raise ValueError('Stok kodu bulunamadı: ' + kod)
@@ -188,7 +320,7 @@ def generate(kod, variant=0):
     pitch = decimal(values['p']['deger'])
     title = IMAGES[kod]['URUNADI']
     ref = title.removesuffix(' ' + pitch + ' mm')
-    headings, texts = paragraphs(row, ref, pitch, variant)
+    headings, texts = paragraphs(row, title, values, VARIANTS[kod] if variant is None else variant)
     technical_html = '<ul>' + ''.join('<li><strong>' + html.escape(k) + ':</strong> ' + html.escape(v) + '</li>' for k, v in specs) + '</ul>'
     description = '<div class="urunTabAlt"><div class="ydsc"><div class="ym"><h2>' + html.escape(title) + '</h2><p>' + texts[0] + '</p>'
     description += ''.join('<div class="ysc"><h3>' + h + '</h3><p>' + p + '</p></div>' for h, p in zip(headings[1:], texts[1:]))
@@ -201,7 +333,7 @@ def generate(kod, variant=0):
     words = keywords(row, brand, ref, pitch)
     return {'kod': kod, 'URUNADI': title, 'MARKA': brand, 'KATEGORI': category, 'EK_KATEGORILER': [CHAIN] if category == LINK else [], 'yeni_kategori': category == LINK,
             'ONYAZI': onyazi, 'ACIKLAMA': description, 'ANAHTARKELIME': words,
-            'SEO_SAYFABASLIK': clip(title, 60), 'SEO_SAYFAACIKLAMA': clip(ref + ': ' + pitch + ' mm adım. Ölçüler, uyumlu bağlantı parçaları ve dişli seçimi için ürün özelliklerini inceleyin.', 155), 'SEO_ANAHTARKELIME': words,
+            'SEO_SAYFABASLIK': clip(title, 60), 'SEO_SAYFAACIKLAMA': seo_description(row, values), 'SEO_ANAHTARKELIME': words,
             'resim': IMAGES[kod]['file'], 'resim_seviye': IMAGES[kod]['resim_seviye'], 'resim_kaynak': IMAGES[kod]['resim_kaynak'], 'teknik_kaynak': source, 'bayraklar': sorted(set(flags))}
 
 
@@ -213,8 +345,7 @@ def generate_all():
     for row in ROWS:
         name = IMAGES[row['kod']]['URUNADI']
         group = sorted(groups[name])
-        variant = (int(hashlib.sha256(name.encode()).hexdigest()[:8], 16) + group.index(row['kod'])) % 4
-        record = generate(row['kod'], variant)
+        record = generate(row['kod'])
         record['bayraklar'] += ['ayni_ad:' + k for k in group if k != row['kod']]
         records.append(record)
     return records

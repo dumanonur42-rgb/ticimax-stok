@@ -62,6 +62,8 @@ def main():
               'Fotoğraf URL ve kırpma kayıtları: work/gorsel_kaynaklar.json; stok bazlı araştırma: work/gorsel_arama.json. Büyük PDF indirmelerinin toplamı 5 MB üstünde olduğu için PDF dosyaları commit dışında; URL ve metin kayıtları korunur.',
               'Denetim: python3 work/check_icerik.py ve python3 work/check_images.py. Çıktılar: work/icerik_kontrol.log, work/gorsel_kontrol.log; stok bazlı çizim sonuçları: work/cizim_kontrol.json.',
               'Her açıklama görünür metinde en az 1800 karakterdir. 120 karakterden uzun tekrar eden paragraf yoktur. SEO, anahtar kelime, kaynak ölçü, görsel ve izinli iç bağlantılar denetlenir.',
+              'İçerik revizyonu: tam ad yalnız h2 ve ilk cümlede; sonraki paragraflarda ölçü, sıra düzeni, bağlantı seçimi ve 10 adım üzerinden ölçüm anlatılır. Tam ürün adı en çok 2 kez, ölçü kodu başlık ve girişten sonra en çok 2 kez geçer. SEO açıklamaları ad kopyası değil, sayısal ölçülü cümlelerdir.',
+              'Üretici kodları ham adlarla karşılaştırıldı: Natural ASA 60-1 (12A-1) yazımı ve HP A2052 / HP C20xx önekleri korundu. Değişen 7 adın görsel dosyaları ve stok eşlemeleri birlikte yeniden adlandırıldı; fotoğraf içerikleri değişmedi.',
               'Üç ürün ön izlemesi: work/onizleme/*.html ve *.png. Temas panoları: work/gorsel_onizleme/.',
               'Bu girdi branch’inde paket düzeyi lint/typecheck/test aşaması yoktur; Python sözdizimi ve içerik/tarayıcı denetimleri kullanılır.']
     (ROOT / 'rapor.md').write_text('\n\n'.join(lines) + '\n')

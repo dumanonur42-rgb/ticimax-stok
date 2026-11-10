@@ -38,6 +38,17 @@ def main():
         visible = description.get_text(' ', strip=True)
         visible_lengths.append(len(visible))
         assert len(visible) >= 1800, (kod, len(visible))
+        assert visible.count(record['URUNADI']) <= 2, (kod, 'Full product name repeated')
+        assert description.h2.get_text() == record['URUNADI'], kod
+        product_paragraphs = description.select('p')
+        assert product_paragraphs[0].get_text().startswith(record['URUNADI'] + ', '), kod
+        assert all(record['URUNADI'] not in paragraph.get_text() for paragraph in product_paragraphs[1:]), kod
+        assert visible.count(row['iso_kod']) <= 4, (kod, 'Code repeated after introduction')
+        assert not re.search(r'tam kodun anlamı önemlidir|seçiminin başlangıç noktalarıdır|iki veya daha fazla', visible, re.I), kod
+        assert not re.search(r'\bIki\b', visible), kod
+        assert all(re.search(r'\d', p.get_text()) for p in product_paragraphs), kod
+        assert record['URUNADI'] not in record['SEO_SAYFAACIKLAMA'], kod
+        assert re.search(r'\d+(?:,\d+)? mm', record['SEO_SAYFAACIKLAMA']), kod
         assert '—' not in visible and not re.search(r'\d+\.\d+\s*(?:mm|kN|kg/m)', visible), kod
         for paragraph in description.select('p'):
             text = paragraph.get_text(' ', strip=True)
@@ -111,6 +122,7 @@ def main():
         pass
     print('PASS: 230/230 preserved unique stock codes; all required fields; stable names, real brands, categories and flags')
     print('PASS: visible ACIKLAMA >=1800 (minimum ' + str(min(visible_lengths)) + '); SEO <=60/155; keywords <=950; repeated paragraphs >120 chars=0')
+    print('PASS: full URUNADI <=2/product, only heading/first sentence; code <=2 further mentions; section facts and numeric SEO; no vague multi-row wording')
     print('PASS: no forbidden brand/boilerplate, U+0307 or em dash; Turkish decimal values; 2 allowed links/product; table summary and direct technical lists')
     print('PASS: source-backed geometry; SS/links have no breaking load; units, 70 package quantities and 30 birim_yok flags')
     print('PASS: 17 collision groups (18 extra rows) flagged against every matching stock code; 17 existing chain pages compared; possible duplicates=2')
