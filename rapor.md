@@ -24,7 +24,7 @@ Her üçünde m×z=Dp: 5×32=160, 5×34=170, 5×36=180 mm. Diş sayısı boyutsu
 - **SSPHS/SSPOS güncellemesi:** B2B adındaki R (A) eşlemesi kullanıcı tarafından onaylandı; Finer/SDTZ aynı SSPHS/SSPOS baz kodunun 6/8/10/12/16/20 boyutları ve kendi kod yükleri 12 ürüne aktarıldı. Harfler katalogdaki d/B/dk/C1/d2/h1/L3/L4/L5/W/d3/d4 veya h/L1/L2/L7 olarak korunur; farklı bir D/d1 uydurulmadı. 14 ve 18 satırı bulunmadığı için dört ürüne ölçü/yük verilmedi. SSPHS-6 diş hücresi M6*10 şüpheli olduğundan yalnız M6 nominali yazıldı. Sağ/sol diş iddiası yoktur.
 - **GKT:** Gedik SG2 belgesi G3Si1 / ER70S-6 eşdeğerliğini, 0,8/1,0/1,2 mm çapları destekliyor. Yamansa parti kimyası, mekanik deney değerleri ve makara ölçüleri aktarılmadı. Adlarda paket miktarı yok; teknik listede `Satış Birimi: Adet`, `Ambalaj: 15 kg/paket` var. Açıklama paket halinde satıldığı iddiasını içermiyor.
 - **YKKM:** Tam kodlu güvenilir teknik kaynak bulunamadı. Yalnız girdi adlarındaki 800/1000/1500/2000 kg kapasite yayınlandı; voltaj, güç, hız, kremayer modülü, uzaktan kumanda, çalışma oranı ve dişli bilgisi verilmedi.
-- **SFU güncellemesi:** Dokuz ORK/ETA somununda Wei-Fong ve Limon aynı kod tablolarının ortak D/A/B/W/X/H/Q/Da montaj geometrisi yayınlandı. 1605/2005/2505/3210/4010 için -3/-4 satırları karşılaştırıldı; 5010 iki katalogda yalnız -4 olduğundan bu sınır ayrıca bayraklandı. Hiçbirinde L, yük ve sirkülasyon sayısı verilmedi. Q yalnız ortak nominal M6/M8; Limon’daki adım tek kaynaktan eklenmedi. ETAZON resmi kaynak eksikliği korunur; ortak geometri kullanıcı onayıyla alınmıştır. VM zaten kaynak adının d/Ph/L değerlerini içerir; başka somunun bilya çapı mile kopyalanmadı. DSG16–32 ortak geometriyi zaten içerir; DSG40 için tam kodlu ikinci güvenilir tablo bulunmadığından çelişkili ölçüler eklenmedi. Limon PDF ve okunmuş pafta: veri/sfu-limon-katalog.pdf, veri/sfu-limon-tablo.png.
+- **SFU güncellemesi:** Sekiz ORK/ETA somununda Wei-Fong ve Limon aynı kod tablolarının ortak D/A/B/W/X/H/Q/Da montaj geometrisi yayınlandı. 1605/2005/2505/3210/4010 için -3/-4 satırları karşılaştırıldı. Dokuzuncu ürün SFU5010 iki katalogda da yalnız -4: ikinci varyantın ortak geometrisi kanıtlanamadığından d/Ph dışında ölçü verilmedi. Hiçbirinde L, yük ve sirkülasyon sayısı verilmedi. Q yalnız ortak nominal M6/M8; Limon’daki adım tek kaynaktan eklenmedi. ETAZON resmi kaynak eksikliği korunur; ortak geometri kullanıcı onayıyla alınmıştır. VM zaten kaynak adının d/Ph/L değerlerini içerir; başka somunun bilya çapı mile kopyalanmadı. DSG16–32 ortak geometriyi zaten içerir; DSG40 için tam kodlu ikinci güvenilir tablo bulunmadığından çelişkili ölçüler eklenmedi. Limon PDF ve okunmuş pafta: veri/sfu-limon-katalog.pdf, veri/sfu-limon-tablo.png.
 - **S060 ve D/L tuzağı:** CTL 250 resmi tablo PDF’sinde CTL250-60 için d=60, D=90; bu kaynakta 60×90 dış çaplı d×D ölçüsüdür. Sitedeki S040 alanı d/D derken ek JPEG aynı 40×65 adını d/L diye etiketliyor. Bu JPEG çelişkisi göz ardı edilmedi: üretici tablosundaki 38/40/42/45/48/50 çiftleri site adlarıyla d×D olarak eşleşiyor; 65/75/80 değerleri üreticinin L değerleri değil. Bu nedenle müşteri alanında `İç Çap (d): 60 mm`, `Dış Çap (D): 90 mm` kullanıldı; 90 mm boy denmedi. Site JPEG’i `veri/aile4-s040-ek.jpeg` içinde saklandı. L/L1, vida, tork ve yük verileri aktarılmadı. S040 ürün fotoğrafı kodsuz aynı tip kaynak olarak kullanıldı; S060’a birebir fotoğraf denmedi.
 
 ## Kategori kararları
@@ -75,7 +75,7 @@ SONUÇ: 0 hata
 ```text
 ......................
 ----------------------------------------------------------------------
-Ran 22 tests in 3.840s
+Ran 22 tests in 3.766s
 
 OK
 ```
@@ -234,7 +234,7 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | ORK VMS SFU2505 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
 | ORK VMS SFU3210 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
 | ORK VMS SFU4010 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
-| ORK VMS SFU5010 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: iki katalogda da yalnız SFU5010-4 satırı bulundu; -3 boyu varsayılmadı, yalnız iki kaynakta eşleşen kesit/montaj ölçüleri kullanıldı |
+| ORK VMS SFU5010 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: iki katalogda da yalnız SFU5010-4 satırı bulundu; ikinci varyant olmadan ortak geometri kanıtlanamadı, d/Ph dışında ölçü aktarılmadı |
 | ORK VSG DSG40H | eksik: DSG40H için üretici katalogları arasında H/h/L/C2/P farkı var; kesit ölçüsü doğrulanana kadar aktarılmadı |
 | ORK KR M320201000 | eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı |
 | ORK KR M550503000 | eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı |
@@ -336,215 +336,239 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | ORK YKKM 2000 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 | ORK YKKM 800 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 
-## 208 ürün çizim sonuçları
+## Yeni iki modül: draw/lineer_diger
 
-| Kod | Sonuç | keys | draw çağrıldı |
-|---|---|---|---|
-| ORK LA HGH20HA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGH25HA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGH30HA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGH35HA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGH45HA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW15CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW20CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW20HC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW25CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW25HC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW30CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW30HC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW35CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW35HC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW45CC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LA HGW45HC | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ORK LR HGR15 | null değil | WR, HR, P | True |
-| ORK LR HGR20 | null değil | WR, HR, P | True |
-| ORK LR HGR25 | null değil | WR, HR, P | True |
-| ORK LR HGR30 | null değil | WR, HR, P | True |
-| ORK LR HGR35 | null değil | WR, HR, P | True |
-| ORK LR HGR45 | null değil | WR, HR, P | True |
-| PMI MSA15E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA15S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA15SZZ | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA20S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA25S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA25SZZ | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30A | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30EZZ | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30LE | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30LS | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA30S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35A | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35LA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35LE | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA35SZZ | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA45E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA45LA | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA45LE | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA45LS | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSA45S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB15E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB15S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB20E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB25S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB30E | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB30S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| PMI MSB35S | null değil | W, H, L, B, C, L1, H1, N, M | True |
-| ETA VMS SFU2005 | modül yok | [] | False |
-| ETA VMS SFU2505 | modül yok | [] | False |
-| ETA VMS SFU3210 | modül yok | [] | False |
-| ORK ADM SAC164000 | modül yok | [] | False |
-| ORK ADM SAC204000 | modül yok | [] | False |
-| ORK ADM SAC253000 | modül yok | [] | False |
-| ORK ADM SAC254000 | modül yok | [] | False |
-| ORK ADM SAC303000 | modül yok | [] | False |
-| ORK ADM SAC304000 | modül yok | [] | False |
-| ORK ADM SAC404000 | modül yok | [] | False |
-| ORK İM 06 | null değil | dr, Lm | True |
-| ORK İM 08 | null değil | dr, Lm | True |
-| ORK İM 10 | null değil | dr, Lm | True |
-| ORK İM 12 | null değil | dr, Lm | True |
-| ORK İM 15 | null değil | dr, Lm | True |
-| ORK İM 16 | null değil | dr, Lm | True |
-| ORK İM 20 | null değil | dr, Lm | True |
-| ORK İM 25 | null değil | dr, Lm | True |
-| ORK İM 30 | null değil | dr, Lm | True |
-| ORK İM 35 | null değil | dr, Lm | True |
-| ORK İM 40 | null değil | dr, Lm | True |
-| ORK İM 45 | null değil | dr, Lm | True |
-| ORK İM 50 | null değil | dr, Lm | True |
-| ORK KKM 06 | null değil | dr, Lm | True |
-| ORK KKM 08 | null değil | dr, Lm | True |
-| ORK KKM 10 | null değil | dr, Lm | True |
-| ORK KKM 12 | null değil | dr, Lm | True |
-| ORK KKM 15 | null değil | dr, Lm | True |
-| ORK KKM 16 | null değil | dr, Lm | True |
-| ORK KKM 20 | null değil | dr, Lm | True |
-| ORK KKM 25 | null değil | dr, Lm | True |
-| ORK KKM 30 | null değil | dr, Lm | True |
-| ORK KKM 35 | null değil | dr, Lm | True |
-| ORK KKM 40 | null değil | dr, Lm | True |
-| ORK KKM 50 | null değil | dr, Lm | True |
-| ORK LR TBR16UU | modül yok | [] | False |
-| ORK LR TBR20UU | modül yok | [] | False |
-| ORK LR TBR25UU | modül yok | [] | False |
-| ORK LR TBR30UU | modül yok | [] | False |
-| ORK VM 1605 | modül yok | [] | False |
-| ORK VM 2005 | modül yok | [] | False |
-| ORK VM 2505 | modül yok | [] | False |
-| ORK VM 3210 | modül yok | [] | False |
-| ORK VM 4010 | modül yok | [] | False |
-| ORK VM 5010 | modül yok | [] | False |
-| ORK VMS SFU1605 | modül yok | [] | False |
-| ORK VMS SFU2005 | modül yok | [] | False |
-| ORK VMS SFU2505 | modül yok | [] | False |
-| ORK VMS SFU3210 | modül yok | [] | False |
-| ORK VMS SFU4010 | modül yok | [] | False |
-| ORK VMS SFU5010 | modül yok | [] | False |
-| ORK VSG DSG16H | modül yok | [] | False |
-| ORK VSG DSG20H | modül yok | [] | False |
-| ORK VSG DSG25H | modül yok | [] | False |
-| ORK VSG DSG32H | modül yok | [] | False |
-| ORK VSG DSG40H | modül yok | [] | False |
-| ORK KR M320201000 | modül yok | [] | False |
-| ORK KR M550503000 | modül yok | [] | False |
-| ORK KRKA M410053010 | modül yok | [] | False |
-| ORK KRKA M410053012 | modül yok | [] | False |
-| ORK KRKA M41005308 | modül yok | [] | False |
-| ORK KRKA M422222010 | modül yok | [] | False |
-| ORK KRÖ M225251000 | modül yok | [] | False |
-| ORK MKİ 210 | modül yok | [] | False |
-| ORK MKİ 260 | modül yok | [] | False |
-| ORK MKİ 280 | modül yok | [] | False |
-| ORK MKİ 330 | modül yok | [] | False |
-| ORK MKİ 380 | modül yok | [] | False |
-| ORK MKİ 430 | modül yok | [] | False |
-| ORK MKİ 500 | modül yok | [] | False |
-| ORK PD M416 | modül yok | [] | False |
-| ORK PD M417 | modül yok | [] | False |
-| ORK PD M418 | modül yok | [] | False |
-| ORK PD M419 | modül yok | [] | False |
-| ORK PD M421 | modül yok | [] | False |
-| ORK PD M423 | modül yok | [] | False |
-| ORK PD M424 | modül yok | [] | False |
-| ORK PD M426 | modül yok | [] | False |
-| ORK PD M427 | modül yok | [] | False |
-| ORK PD M428 | modül yok | [] | False |
-| ORK PD M429 | modül yok | [] | False |
-| ORK PD M431 | modül yok | [] | False |
-| ORK PD M432 | modül yok | [] | False |
-| ORK PD M433 | modül yok | [] | False |
-| ORK PD M434 | modül yok | [] | False |
-| ORK PD M435 | modül yok | [] | False |
-| ORK PD M436 | modül yok | [] | False |
-| ORK PD M437 | modül yok | [] | False |
-| ORK PD M438 | modül yok | [] | False |
-| ORK PD M439 | modül yok | [] | False |
-| ORK PD M440 | modül yok | [] | False |
-| ORK PD M441 | modül yok | [] | False |
-| ORK PD M442 | modül yok | [] | False |
-| ORK PD M443 | modül yok | [] | False |
-| ORK PD M444 | modül yok | [] | False |
-| ORK PD M445 | modül yok | [] | False |
-| ORK PD M446 | modül yok | [] | False |
-| ORK PD M447 | modül yok | [] | False |
-| ORK PD M448 | modül yok | [] | False |
-| ORK PD M449 | modül yok | [] | False |
-| ORK PD M450 | modül yok | [] | False |
-| ORK PD M520 | modül yok | [] | False |
-| ORK PD M522 | modül yok | [] | False |
-| ORK PD M524 | modül yok | [] | False |
-| ORK PD M526 | modül yok | [] | False |
-| ORK PD M528 | modül yok | [] | False |
-| ORK PD M530 | modül yok | [] | False |
-| ORK PD M532 | modül yok | [] | False |
-| ORK PD M534 | modül yok | [] | False |
-| ORK PD M536 | modül yok | [] | False |
-| ORK BMT CY16B2 | modül yok | [] | False |
-| ORK BMT CY25A | modül yok | [] | False |
-| ORK BMT IA19 | modül yok | [] | False |
-| ORK BMT IA25 | modül yok | [] | False |
-| ORK BMT NL8H | modül yok | [] | False |
-| ORK BMT SP12AFL | modül yok | [] | False |
-| ORK BMT SP12B | modül yok | [] | False |
-| ORK BMT SP12BF | modül yok | [] | False |
-| ORK BMT SP15A | modül yok | [] | False |
-| ORK BMT SP15AFL | modül yok | [] | False |
-| ORK BMT SP15B | modül yok | [] | False |
-| ORK BMT SP15C | modül yok | [] | False |
-| ORK BMT SP15P | modül yok | [] | False |
-| ORK BMT SP22B | modül yok | [] | False |
-| ORK BMT SP22C | modül yok | [] | False |
-| ORK BMT SP22P | modül yok | [] | False |
-| ORK BMT SP25B | modül yok | [] | False |
-| ORK BMT SP30B | modül yok | [] | False |
-| ORK BMT SP30C | modül yok | [] | False |
-| ORK BMT SP30P | modül yok | [] | False |
-| ORK BMT SP45B | modül yok | [] | False |
-| ORK BMT SP60B | modül yok | [] | False |
-| ORK GKT MG208 | modül yok | [] | False |
-| ORK GKT MG210 | modül yok | [] | False |
-| ORK GKT MG212 | modül yok | [] | False |
-| ORK KK S060 | modül yok | [] | False |
-| ORK PM SSPHS06R | modül yok | [] | False |
-| ORK PM SSPHS08R | modül yok | [] | False |
-| ORK PM SSPHS10R | modül yok | [] | False |
-| ORK PM SSPHS12R | modül yok | [] | False |
-| ORK PM SSPHS14R | modül yok | [] | False |
-| ORK PM SSPHS16R | modül yok | [] | False |
-| ORK PM SSPHS18R | modül yok | [] | False |
-| ORK PM SSPHS20R | modül yok | [] | False |
-| ORK PM SSPOS06R | modül yok | [] | False |
-| ORK PM SSPOS08R | modül yok | [] | False |
-| ORK PM SSPOS10R | modül yok | [] | False |
-| ORK PM SSPOS12R | modül yok | [] | False |
-| ORK PM SSPOS14R | modül yok | [] | False |
-| ORK PM SSPOS16R | modül yok | [] | False |
-| ORK PM SSPOS18R | modül yok | [] | False |
-| ORK PM SSPOS20R | modül yok | [] | False |
-| ORK YKKM 1000 | modül yok | [] | False |
-| ORK YKKM 1500 | modül yok | [] | False |
-| ORK YKKM 2000 | modül yok | [] | False |
-| ORK YKKM 800 | modül yok | [] | False |
+Ayrı worktree: `/home/ubuntu/repos/ticimax-stok-draw`, dal `draw/lineer_diger`, site-assets tabanlı. Yeni kod yalnız draw dalında; ürün dalındaki bu tablo, `veri/ek-cizim-sonuclari.json` ile doğrulanmış ek sonuçları birleştirir. `veri/draw-keys.json` ve eski lineer kontrol logu yalnız mevcut lineer.js testidir; yeni modülleri ölçmez.
+
+| Modül | Ürün | SVG | null |
+|---|---:|---:|---:|
+| pinyon_kremayer | 47 | 41 | 6 |
+| vidali_mil | 31 | 22 | 9 |
+
+Birleşik kapsam: **140 SVG, 15 eksik veriden null, 53 modül yok = 208 ürün.** Düz pinyon 40/40, kremayer 1/7; VM 6/6, SFU 8/9, DSG 4/5, TBR 4/4, SAC 0/7.
+
+**Loader:** `site/yg.js:26–29` alfabetik ilk match ile durur; draw null sonucunda devam etmez. LİNEER breadcrumb eski lineer.match’i tetikler ve yeni vidalı mil modülünü gölgeler. Başka dosya değiştirmeden, vidali_mil aynı API’yi canonical `vidali_mil` yanında sıralamada önce gelen `0_vidali_mil` anahtarına da kaydeder. Match yalnız beş hedef alt tip içindir. 208 gerçek ctx üzerinde yalnız 78 hedefin yeni ailelere girdiği, 78’inin de loader’da doğru yeni API’yi seçtiği test edildi. Build.py yeni dosyaları otomatik içerir; bundle kopya dizinde üretildi, repo loader/build/bundle dosyalarına dokunulmadı.
+
+**Tamamlanamayan ölçülendirme:** Pinyon kaynağındaki küçük d/büyük D çizim harfleriyle eşleşmediğinden bunları ters çevirip delik/göbek sayısı yazmadık. 40 pinyonda De/Dp/m/Z gerçek, göbek/delik ve eksenel kesit boyları açıkça şematiktir. Tam göbek D / delik d ölçülendirmesi kaynak eşlemesi bekler. Altı kremayerde hp/he/hs, yedi SAC’ta B/H/h yok; DSG40H kesiti çelişkili; SFU5010 ikinci varyant kanıtı yok. Bu 15 ürün null; eksik kesitler çizilmedi. Diğer SFU’da bilinmeyen L yerine boyu kırık ve açıkça şematik kesit var. TBR’nin anlamı doğrulanmamış G/A/B/D/C harfleri yeni yükseklik anlamlarıyla kullanılmadı.
+
+Modül raporları: draw worktree içinde `site/draw/rapor/pinyon_kremayer.md`, `vidali_mil.md`. Fixture, sonuç JSON, önizleme HTML ve her başarılı üründe 460/360 PNG aynı aile dizinlerindedir. Açılarak kontrol edilen 360 px PNG’ler: `pinyon_kremayer/ORK_PD_M416-360.png`, `pinyon_kremayer/ORK_KR__M225251000-360.png`, `vidali_mil/ORK_VM_1605-360.png`, `vidali_mil/ORK_VMS_SFU1605-360.png`, `vidali_mil/ORK_VSG_DSG16H-360.png`, `vidali_mil/ORK_LR_TBR16UU-360.png`. Metin çakışması yok; altı görüntüde tarama, eksen ve kaynak ölçü etiketleri kontrol edildi. Önizlemede ölçü grubunun tıklanıp kırmızı olması Chromium’da test edildi.
+
+```text
+pinyon_kremayer: 41 başarılı; 6 null; 3 negatif başarılı
+vidali_mil: 22 başarılı; 9 null; 3 negatif başarılı
+Loader: ilk match; null fallback yok; 0_vidali_mil öncelik kaydı doğrulandı
+Kapsam: 208 bağlamda yalnız 78 hedef ürün yeni modüllere ait
+```
+
+## 208 ürün çizim sonuçları (yeni modüller dahil)
+
+| Kod | Modül | Sonuç | keys | draw çağrıldı | Null nedeni |
+|---|---|---|---|---|---|
+| ORK LA HGH20HA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGH25HA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGH30HA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGH35HA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGH45HA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW15CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW20CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW20HC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW25CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW25HC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW30CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW30HC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW35CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW35HC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW45CC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LA HGW45HC | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ORK LR HGR15 | lineer | null değil | WR, HR, P | True |  |
+| ORK LR HGR20 | lineer | null değil | WR, HR, P | True |  |
+| ORK LR HGR25 | lineer | null değil | WR, HR, P | True |  |
+| ORK LR HGR30 | lineer | null değil | WR, HR, P | True |  |
+| ORK LR HGR35 | lineer | null değil | WR, HR, P | True |  |
+| ORK LR HGR45 | lineer | null değil | WR, HR, P | True |  |
+| PMI MSA15E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA15S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA15SZZ | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA20S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA25S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA25SZZ | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30A | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30EZZ | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30LE | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30LS | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA30S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35A | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35LA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35LE | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA35SZZ | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA45E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA45LA | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA45LE | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA45LS | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSA45S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB15E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB15S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB20E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB25S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB30E | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB30S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| PMI MSB35S | lineer | null değil | W, H, L, B, C, L1, H1, N, M | True |  |
+| ETA VMS SFU2005 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ETA VMS SFU2505 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ETA VMS SFU3210 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK ADM SAC164000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC204000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC253000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC254000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC303000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC304000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK ADM SAC404000 | vidali_mil | null | [] | True | SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı |
+| ORK İM 06 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 08 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 10 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 12 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 15 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 16 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 20 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 25 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 30 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 35 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 40 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 45 | lineer | null değil | dr, Lm | True |  |
+| ORK İM 50 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 06 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 08 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 10 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 12 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 15 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 16 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 20 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 25 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 30 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 35 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 40 | lineer | null değil | dr, Lm | True |  |
+| ORK KKM 50 | lineer | null değil | dr, Lm | True |  |
+| ORK LR TBR16UU | vidali_mil | null değil | W, d, L, S1 | True |  |
+| ORK LR TBR20UU | vidali_mil | null değil | W, d, L, S1 | True |  |
+| ORK LR TBR25UU | vidali_mil | null değil | W, d, L, S1 | True |  |
+| ORK LR TBR30UU | vidali_mil | null değil | W, d, L, S1 | True |  |
+| ORK VM 1605 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VM 2005 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VM 2505 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VM 3210 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VM 4010 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VM 5010 | vidali_mil | null değil | d, Ph, L | True |  |
+| ORK VMS SFU1605 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK VMS SFU2005 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK VMS SFU2505 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK VMS SFU3210 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK VMS SFU4010 | vidali_mil | null değil | A, W, X, d, B, D, Ph, Q | True |  |
+| ORK VMS SFU5010 | vidali_mil | null | [] | True | Yalnız -4 kaynakları bulundu; ikinci varyantta ortak montaj ölçüleri kanıtlanamadı |
+| ORK VSG DSG16H | vidali_mil | null değil | B, H, D, h, L | True |  |
+| ORK VSG DSG20H | vidali_mil | null değil | B, H, D, h, L | True |  |
+| ORK VSG DSG25H | vidali_mil | null değil | B, H, D, h, L | True |  |
+| ORK VSG DSG32H | vidali_mil | null değil | B, H, D, h, L | True |  |
+| ORK VSG DSG40H | vidali_mil | null | [] | True | DSG40H H/h/L kaynakları çelişkili, kesit verisi eksik |
+| ORK KR M320201000 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KR M550503000 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KRKA M410053010 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KRKA M410053012 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KRKA M41005308 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KRKA M422222010 | pinyon_kremayer | null | [] | True | hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok |
+| ORK KRÖ M225251000 | pinyon_kremayer | null değil | p, L, hs, he, hp | True |  |
+| ORK MKİ 210 | Yok | modül yok | [] | False |  |
+| ORK MKİ 260 | Yok | modül yok | [] | False |  |
+| ORK MKİ 280 | Yok | modül yok | [] | False |  |
+| ORK MKİ 330 | Yok | modül yok | [] | False |  |
+| ORK MKİ 380 | Yok | modül yok | [] | False |  |
+| ORK MKİ 430 | Yok | modül yok | [] | False |  |
+| ORK MKİ 500 | Yok | modül yok | [] | False |  |
+| ORK PD M416 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M417 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M418 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M419 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M421 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M423 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M424 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M426 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M427 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M428 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M429 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M431 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M432 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M433 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M434 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M435 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M436 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M437 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M438 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M439 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M440 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M441 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M442 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M443 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M444 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M445 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M446 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M447 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M448 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M449 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M450 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M520 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M522 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M524 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M526 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M528 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M530 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M532 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M534 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK PD M536 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
+| ORK BMT CY16B2 | Yok | modül yok | [] | False |  |
+| ORK BMT CY25A | Yok | modül yok | [] | False |  |
+| ORK BMT IA19 | Yok | modül yok | [] | False |  |
+| ORK BMT IA25 | Yok | modül yok | [] | False |  |
+| ORK BMT NL8H | Yok | modül yok | [] | False |  |
+| ORK BMT SP12AFL | Yok | modül yok | [] | False |  |
+| ORK BMT SP12B | Yok | modül yok | [] | False |  |
+| ORK BMT SP12BF | Yok | modül yok | [] | False |  |
+| ORK BMT SP15A | Yok | modül yok | [] | False |  |
+| ORK BMT SP15AFL | Yok | modül yok | [] | False |  |
+| ORK BMT SP15B | Yok | modül yok | [] | False |  |
+| ORK BMT SP15C | Yok | modül yok | [] | False |  |
+| ORK BMT SP15P | Yok | modül yok | [] | False |  |
+| ORK BMT SP22B | Yok | modül yok | [] | False |  |
+| ORK BMT SP22C | Yok | modül yok | [] | False |  |
+| ORK BMT SP22P | Yok | modül yok | [] | False |  |
+| ORK BMT SP25B | Yok | modül yok | [] | False |  |
+| ORK BMT SP30B | Yok | modül yok | [] | False |  |
+| ORK BMT SP30C | Yok | modül yok | [] | False |  |
+| ORK BMT SP30P | Yok | modül yok | [] | False |  |
+| ORK BMT SP45B | Yok | modül yok | [] | False |  |
+| ORK BMT SP60B | Yok | modül yok | [] | False |  |
+| ORK GKT MG208 | Yok | modül yok | [] | False |  |
+| ORK GKT MG210 | Yok | modül yok | [] | False |  |
+| ORK GKT MG212 | Yok | modül yok | [] | False |  |
+| ORK KK S060 | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS06R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS08R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS10R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS12R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS14R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS16R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS18R | Yok | modül yok | [] | False |  |
+| ORK PM SSPHS20R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS06R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS08R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS10R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS12R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS14R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS16R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS18R | Yok | modül yok | [] | False |  |
+| ORK PM SSPOS20R | Yok | modül yok | [] | False |  |
+| ORK YKKM 1000 | Yok | modül yok | [] | False |  |
+| ORK YKKM 1500 | Yok | modül yok | [] | False |  |
+| ORK YKKM 2000 | Yok | modül yok | [] | False |  |
+| ORK YKKM 800 | Yok | modül yok | [] | False |  |

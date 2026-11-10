@@ -1,0 +1,972 @@
+[
+  {
+    "kod": "ORK KR M320201000",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KR M550503000",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KRKA M410053010",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KRKA M410053012",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KRKA M41005308",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KRKA M422222010",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+  },
+  {
+    "kod": "ORK KRÖ M225251000",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "p",
+      "L",
+      "hs",
+      "he",
+      "hp"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M416",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M417",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M418",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M419",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M421",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M423",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M424",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M426",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M427",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M428",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M429",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M431",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M432",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M433",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M434",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M435",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M436",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M437",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M438",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M439",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M440",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M441",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M442",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M443",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M444",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M445",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M446",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M447",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M448",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M449",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M450",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M520",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M522",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M524",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M526",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M528",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M530",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M532",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M534",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK PD M536",
+    "modul": "pinyon_kremayer",
+    "sonuc": "null değil",
+    "keys": [
+      "De",
+      "Dp",
+      "Z",
+      "m"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ETA VMS SFU2005",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ETA VMS SFU2505",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ETA VMS SFU3210",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK ADM SAC164000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC204000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC253000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC254000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC303000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC304000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK ADM SAC404000",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+  },
+  {
+    "kod": "ORK LR TBR16UU",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "d",
+      "L",
+      "S1"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK LR TBR20UU",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "d",
+      "L",
+      "S1"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK LR TBR25UU",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "d",
+      "L",
+      "S1"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK LR TBR30UU",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "W",
+      "d",
+      "L",
+      "S1"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 1605",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 2005",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 2505",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 3210",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 4010",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VM 5010",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "d",
+      "Ph",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU1605",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU2005",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU2505",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU3210",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU4010",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "A",
+      "W",
+      "X",
+      "d",
+      "B",
+      "D",
+      "Ph",
+      "Q"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VMS SFU5010",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "Yalnız -4 kaynakları bulundu; ikinci varyantta ortak montaj ölçüleri kanıtlanamadı"
+  },
+  {
+    "kod": "ORK VSG DSG16H",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "B",
+      "H",
+      "D",
+      "h",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VSG DSG20H",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "B",
+      "H",
+      "D",
+      "h",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VSG DSG25H",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "B",
+      "H",
+      "D",
+      "h",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VSG DSG32H",
+    "modul": "vidali_mil",
+    "sonuc": "null değil",
+    "keys": [
+      "B",
+      "H",
+      "D",
+      "h",
+      "L"
+    ],
+    "cagrildi": true,
+    "neden": ""
+  },
+  {
+    "kod": "ORK VSG DSG40H",
+    "modul": "vidali_mil",
+    "sonuc": "null",
+    "keys": [],
+    "cagrildi": true,
+    "neden": "DSG40H H/h/L kaynakları çelişkili, kesit verisi eksik"
+  }
+]

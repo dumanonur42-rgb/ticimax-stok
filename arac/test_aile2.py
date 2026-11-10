@@ -43,9 +43,10 @@ class SecondFamilyTests(unittest.TestCase):
             labels = row['degerler']
             self.assertFalse(any('Kapasite' in label or label in ['Ca', 'Coa'] for label in labels))
             if row['aile'] == 'SFU':
-                self.assertEqual(len(labels), 10)
-                self.assertIn('Flanş Kalınlığı (B)', labels)
-                self.assertIn('Bilya Çapı (Da)', labels)
+                self.assertEqual(len(labels), 2 if row['model'] == 'SFU5010' else 10)
+                if row['model'] != 'SFU5010':
+                    self.assertIn('Flanş Kalınlığı (B)', labels)
+                    self.assertIn('Bilya Çapı (Da)', labels)
                 self.assertNotIn('Boy (L)', labels)
                 self.assertTrue(row['bayraklar'])
             if row['marka'] == 'ETAZON':

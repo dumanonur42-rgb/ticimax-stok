@@ -12,6 +12,10 @@ def main():
     family = json.loads((ROOT / 'veri/aile4.json').read_text())
     photos = json.loads((ROOT / 'veri/aile4-gorsel-secimleri.json').read_text())
     drawings = json.loads((ROOT / 'veri/draw-keys.json').read_text())
+    extra_file = ROOT / 'veri/ek-cizim-sonuclari.json'
+    if extra_file.exists():
+        extra = {r['kod']: r for r in json.loads(extra_file.read_text())}
+        drawings = [extra.get(r['kod'], r) for r in drawings]
     with gzip.open(ROOT / 'parca/lineer_diger.jsonl.gz', 'rt') as stream:
         codes = [json.loads(line)['kod'] for line in stream]
     levels = Counter(r['resim_seviye'] for r in rows)
@@ -38,7 +42,7 @@ def main():
             '- **SSPHS/SSPOS güncellemesi:** B2B adındaki R (A) eşlemesi kullanıcı tarafından onaylandı; Finer/SDTZ aynı SSPHS/SSPOS baz kodunun 6/8/10/12/16/20 boyutları ve kendi kod yükleri 12 ürüne aktarıldı. Harfler katalogdaki d/B/dk/C1/d2/h1/L3/L4/L5/W/d3/d4 veya h/L1/L2/L7 olarak korunur; farklı bir D/d1 uydurulmadı. 14 ve 18 satırı bulunmadığı için dört ürüne ölçü/yük verilmedi. SSPHS-6 diş hücresi M6*10 şüpheli olduğundan yalnız M6 nominali yazıldı. Sağ/sol diş iddiası yoktur.',
             '- **GKT:** Gedik SG2 belgesi G3Si1 / ER70S-6 eşdeğerliğini, 0,8/1,0/1,2 mm çapları destekliyor. Yamansa parti kimyası, mekanik deney değerleri ve makara ölçüleri aktarılmadı. Adlarda paket miktarı yok; teknik listede `Satış Birimi: Adet`, `Ambalaj: 15 kg/paket` var. Açıklama paket halinde satıldığı iddiasını içermiyor.',
             '- **YKKM:** Tam kodlu güvenilir teknik kaynak bulunamadı. Yalnız girdi adlarındaki 800/1000/1500/2000 kg kapasite yayınlandı; voltaj, güç, hız, kremayer modülü, uzaktan kumanda, çalışma oranı ve dişli bilgisi verilmedi.',
-            '- **SFU güncellemesi:** Dokuz ORK/ETA somununda Wei-Fong ve Limon aynı kod tablolarının ortak D/A/B/W/X/H/Q/Da montaj geometrisi yayınlandı. 1605/2005/2505/3210/4010 için -3/-4 satırları karşılaştırıldı; 5010 iki katalogda yalnız -4 olduğundan bu sınır ayrıca bayraklandı. Hiçbirinde L, yük ve sirkülasyon sayısı verilmedi. Q yalnız ortak nominal M6/M8; Limon’daki adım tek kaynaktan eklenmedi. ETAZON resmi kaynak eksikliği korunur; ortak geometri kullanıcı onayıyla alınmıştır. VM zaten kaynak adının d/Ph/L değerlerini içerir; başka somunun bilya çapı mile kopyalanmadı. DSG16–32 ortak geometriyi zaten içerir; DSG40 için tam kodlu ikinci güvenilir tablo bulunmadığından çelişkili ölçüler eklenmedi. Limon PDF ve okunmuş pafta: veri/sfu-limon-katalog.pdf, veri/sfu-limon-tablo.png.',
+            '- **SFU güncellemesi:** Sekiz ORK/ETA somununda Wei-Fong ve Limon aynı kod tablolarının ortak D/A/B/W/X/H/Q/Da montaj geometrisi yayınlandı. 1605/2005/2505/3210/4010 için -3/-4 satırları karşılaştırıldı. Dokuzuncu ürün SFU5010 iki katalogda da yalnız -4: ikinci varyantın ortak geometrisi kanıtlanamadığından d/Ph dışında ölçü verilmedi. Hiçbirinde L, yük ve sirkülasyon sayısı verilmedi. Q yalnız ortak nominal M6/M8; Limon’daki adım tek kaynaktan eklenmedi. ETAZON resmi kaynak eksikliği korunur; ortak geometri kullanıcı onayıyla alınmıştır. VM zaten kaynak adının d/Ph/L değerlerini içerir; başka somunun bilya çapı mile kopyalanmadı. DSG16–32 ortak geometriyi zaten içerir; DSG40 için tam kodlu ikinci güvenilir tablo bulunmadığından çelişkili ölçüler eklenmedi. Limon PDF ve okunmuş pafta: veri/sfu-limon-katalog.pdf, veri/sfu-limon-tablo.png.',
             '- **S060 ve D/L tuzağı:** CTL 250 resmi tablo PDF’sinde CTL250-60 için d=60, D=90; bu kaynakta 60×90 dış çaplı d×D ölçüsüdür. Sitedeki S040 alanı d/D derken ek JPEG aynı 40×65 adını d/L diye etiketliyor. Bu JPEG çelişkisi göz ardı edilmedi: üretici tablosundaki 38/40/42/45/48/50 çiftleri site adlarıyla d×D olarak eşleşiyor; 65/75/80 değerleri üreticinin L değerleri değil. Bu nedenle müşteri alanında `İç Çap (d): 60 mm`, `Dış Çap (D): 90 mm` kullanıldı; 90 mm boy denmedi. Site JPEG’i `veri/aile4-s040-ek.jpeg` içinde saklandı. L/L1, vida, tork ve yük verileri aktarılmadı. S040 ürün fotoğrafı kodsuz aynı tip kaynak olarak kullanıldı; S060’a birebir fotoğraf denmedi.', '',
             '## Kategori kararları', '',
             '| Aile | Yol | Yeni kategori | Ek kategori |', '|---|---|---|---|']
@@ -77,9 +81,19 @@ def main():
         out.append('| ' + ', '.join(c for c, p in photos.items() if p['url'] == url) + ' | aynı tip | ' + url + ' |')
     out += ['', '## Eksik ürünlerin tamamı', '', '| Kod | Gerekçe |', '|---|---|']
     out += [f'| {r["kod"]} | {"; ".join(r["bayraklar"])} |' for r in missing]
-    out += ['', '## 208 ürün çizim sonuçları', '', '| Kod | Sonuç | keys | draw çağrıldı |', '|---|---|---|---|']
+    out += ['', '## Yeni iki modül: draw/lineer_diger', '',
+            'Ayrı worktree: `/home/ubuntu/repos/ticimax-stok-draw`, dal `draw/lineer_diger`, site-assets tabanlı. Yeni kod yalnız draw dalında; ürün dalındaki bu tablo, `veri/ek-cizim-sonuclari.json` ile doğrulanmış ek sonuçları birleştirir. `veri/draw-keys.json` ve eski lineer kontrol logu yalnız mevcut lineer.js testidir; yeni modülleri ölçmez.', '',
+            '| Modül | Ürün | SVG | null |', '|---|---:|---:|---:|',
+            '| pinyon_kremayer | 47 | 41 | 6 |', '| vidali_mil | 31 | 22 | 9 |', '',
+            'Birleşik kapsam: **140 SVG, 15 eksik veriden null, 53 modül yok = 208 ürün.** Düz pinyon 40/40, kremayer 1/7; VM 6/6, SFU 8/9, DSG 4/5, TBR 4/4, SAC 0/7.', '',
+            '**Loader:** `site/yg.js:26–29` alfabetik ilk match ile durur; draw null sonucunda devam etmez. LİNEER breadcrumb eski lineer.match’i tetikler ve yeni vidalı mil modülünü gölgeler. Başka dosya değiştirmeden, vidali_mil aynı API’yi canonical `vidali_mil` yanında sıralamada önce gelen `0_vidali_mil` anahtarına da kaydeder. Match yalnız beş hedef alt tip içindir. 208 gerçek ctx üzerinde yalnız 78 hedefin yeni ailelere girdiği, 78’inin de loader’da doğru yeni API’yi seçtiği test edildi. Build.py yeni dosyaları otomatik içerir; bundle kopya dizinde üretildi, repo loader/build/bundle dosyalarına dokunulmadı.', '',
+            '**Tamamlanamayan ölçülendirme:** Pinyon kaynağındaki küçük d/büyük D çizim harfleriyle eşleşmediğinden bunları ters çevirip delik/göbek sayısı yazmadık. 40 pinyonda De/Dp/m/Z gerçek, göbek/delik ve eksenel kesit boyları açıkça şematiktir. Tam göbek D / delik d ölçülendirmesi kaynak eşlemesi bekler. Altı kremayerde hp/he/hs, yedi SAC’ta B/H/h yok; DSG40H kesiti çelişkili; SFU5010 ikinci varyant kanıtı yok. Bu 15 ürün null; eksik kesitler çizilmedi. Diğer SFU’da bilinmeyen L yerine boyu kırık ve açıkça şematik kesit var. TBR’nin anlamı doğrulanmamış G/A/B/D/C harfleri yeni yükseklik anlamlarıyla kullanılmadı.', '',
+            'Modül raporları: draw worktree içinde `site/draw/rapor/pinyon_kremayer.md`, `vidali_mil.md`. Fixture, sonuç JSON, önizleme HTML ve her başarılı üründe 460/360 PNG aynı aile dizinlerindedir. Açılarak kontrol edilen 360 px PNG’ler: `pinyon_kremayer/ORK_PD_M416-360.png`, `pinyon_kremayer/ORK_KR__M225251000-360.png`, `vidali_mil/ORK_VM_1605-360.png`, `vidali_mil/ORK_VMS_SFU1605-360.png`, `vidali_mil/ORK_VSG_DSG16H-360.png`, `vidali_mil/ORK_LR_TBR16UU-360.png`. Metin çakışması yok; altı görüntüde tarama, eksen ve kaynak ölçü etiketleri kontrol edildi. Önizlemede ölçü grubunun tıklanıp kırmızı olması Chromium’da test edildi.', '',
+            '```text', 'pinyon_kremayer: 41 başarılı; 6 null; 3 negatif başarılı', 'vidali_mil: 22 başarılı; 9 null; 3 negatif başarılı', 'Loader: ilk match; null fallback yok; 0_vidali_mil öncelik kaydı doğrulandı', 'Kapsam: 208 bağlamda yalnız 78 hedef ürün yeni modüllere ait', '```', '',
+            '## 208 ürün çizim sonuçları (yeni modüller dahil)', '', '| Kod | Modül | Sonuç | keys | draw çağrıldı | Null nedeni |', '|---|---|---|---|---|---|']
     for d in drawings:
-        out.append(f'| {d["kod"]} | {d["sonuc"]} | {", ".join(d["keys"]) or "[]"} | {d.get("cagrildi", True)} |')
+        module = d.get('modul', 'lineer' if d['sonuc'] == 'null değil' else 'Yok')
+        out.append(f'| {d["kod"]} | {module} | {d["sonuc"]} | {", ".join(d["keys"]) or "[]"} | {d.get("cagrildi", True)} | {d.get("neden", "")} |')
     (ROOT / 'rapor.md').write_text('\n'.join(out) + '\n')
     print('Rapor: rapor.md (208 ürün; Aile 4 ve pinyon düzeltmesi)')
 
