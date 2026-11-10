@@ -22,7 +22,8 @@ Malzeme dağılımı: 1010 G1000: 91, 316 G1000: 91, 52100 G100: 21, 52100 G1000
 
 - Hepsi `MARKA = Yamansa` (212 ORKAPT + 8 markasız; hepsi Orka kendi ürünü). Ad, ön yazı, açıklama, SEO, anahtar kelime ve görselde ORKA/ORKAPT yok.
 - Stok kodundaki `ORK ` öneki müşteriye görünen alanlardan çıkarıldı, kod `TB 52100G100 10` biçiminde yazıldı (`kod` alanı aynen duruyor). İstenirse ad/anahtar kelimeye tam kod geri eklenebilir.
-- Ad kalıbı: `TB <malzeme><sınıf> <ölçü kodu> <Malzeme> Tane Bilya <çap> mm (<inç>) AISI <no> G<sınıf> - <koli adedi> Adet Koli`.
+- Ad kalıbı: `TB <malzeme><sınıf> <ölçü kodu> <Malzeme> Tane Bilya <çap> mm (<inç>) AISI <no> G<sınıf>`. Adda paket/koli ifadesi yok.
+- Satış: ürünler adet olarak satılır. Ön yazıda ve teknik listede `Satış Birimi: Adet` yazar. Koli içeriği teknik listede `Ambalaj: N adet/koli` olarak verildi. Açıklamada "koli halinde satılır" ifadesi yok.
 
 ## Kategori
 
@@ -32,7 +33,11 @@ Malzeme dağılımı: 1010 G1000: 91, 316 G1000: 91, 52100 G100: 21, 52100 G1000
 
 - 1010 / 316 / 52100 G1000 serileri: orkapt.com seri tablosundaki ürün satırı (çap, inç, 1000 adet ağırlığı, koli adedi, koli ağırlığı, 1 litre adedi).
 - 52100 G100 (21), 1010 Soft (10) ve 36,513–40 mm büyük G1000 ölçüleri (12): seri sayfalarında satır yok; çap, inç, koli adedi ve (adında tam yazıyorsa) koli ağırlığı B2B ürün adından alındı. 1000 adet ağırlığı / 1 litre adedi yazılmadı, ürün `eksik` bayraklı.
-- G100 / G1000 tolerans değerleri (küresellik, lot çap farkı, nominal çap toleransı, G100 için Ra): ABMA metrik sınıf tablosu (https://en.wikipedia.org/wiki/Ball_(bearing)#Grade). Sınıf kodu birebir aynı olduğu için kullanıldı. Sertlik, kimyasal analiz gibi kaynağı olmayan değerler yazılmadı.
+- G100 / G1000 toleransları: Wikipedia değerleri ve hesaplanan çap aralıkları ÇIKARILDI. Yeni kaynak, bilya üreticisi Redhill Precision'ın sınıf sayfası (https://www.redhillballs.com/company/precision-grades/). Bu sayfada ISO 3290 tablosu da yayımlanıyor.
+  - G100 (ISO 3290 tablosu): VDws 2,5 µm, küresellikten sapma 2,5 µm, VDwL 5 µm, Ra 0,1 µm.
+  - G1000: ISO 3290-1'de G1000 sınıfı yok (tablo G200'de bitiyor). Değerler aynı sayfadaki AFBMA (ABMA) metrik tablosundan alındı: VDws 25 µm, küresellikten sapma 25 µm. Bu tabloda G1000 lot çap değişimi ve nominal çap toleransı verilmediği için bu iki değer yazılmadı.
+  - Not: Redhill sitesinin altında "içerik yapay zekâ ile üretilmiştir" uyarısı var. Daha resmi bir üretici kataloğu bulunursa kaynak değiştirilebilir.
+  - Sertlik, kimyasal analiz gibi kaynağı olmayan değerler yazılmadı.
 - Koli adedi seri tablosu ile B2B kaydında farklı olan 3 ürün var; satılan koli B2B kaydına göre yazıldı:
   - `ORK TB 1010G1000 02381`: koli adedi farkı: seri tablosu 400.000, B2B stok kaydı 360.000 (satılan koli B2B kaydına göre yazıldı)
   - `ORK TB 1010G1000 18`: koli adedi farkı: seri tablosu 900, B2B stok kaydı 850 (satılan koli B2B kaydına göre yazıldı)
@@ -41,12 +46,17 @@ Malzeme dağılımı: 1010 G1000: 91, 316 G1000: 91, 52100 G100: 21, 52100 G1000
 
 ## Görseller
 
-- Birebir (aynı kod) foto bulunamadı: Orka seri fotoğrafında (orkapt.com/wp-content/uploads/2020/04/BİLYA.jpg) tüm resmin üzerinde site filigranı var, o yüzden kullanılmadı. Yandex görselde malzeme bazında aranıp logosuz/filigransız, beyaz zeminli, kutusuz gerçek foto seçildi (`resim_seviye = ayni_tip`, kaynak her üründe `resim_kaynak`):
-  - AISI 1010: alibaba.com, "AISI 1010 Carbon Steel Balls G1000"
-  - AISI 1010 Soft: made-in-china.com, "AISI1010 Carbon Steel Ball"
-  - AISI 316: alibaba.com, "Solid AISI 304 316 Stainless Steel Ball"
-  - AISI 52100: made-in-china.com, "G16 Chrome Steel Balls"
-- `sablon.png` içinde örnek ürün (mil) gömülü olduğu için ürün alanı beyazlatılıp sadece Yamansa logo bandı kullanıldı. 220 × 500x500 JPG, ad slug'ı ile `gorseller/`.
+- Birebir (aynı kod) fotoğraf bulunamadı. 220 ürünün hepsi `ayni_tip`, her üründe `resim_kaynak` var.
+- Önceki yansımalı ve karışık boy gösteren fotoğraflar değiştirildi. Her malzeme için tek boy bilya gösteren, logosuz, filigransız, kişi/kamera yansıması olmayan, beyaz zeminli gerçek bir fotoğraf seçildi:
+  - AISI 1010: jinnai (made-in-china), "12mm Low Carbon Steel Ball AISI1010": aynı boy 20 bilya, ızgara düzeni.
+  - AISI 1010 Soft: jinnai (made-in-china), "6.28mm Carbon Steel Ball AISI1010-AISI1015": aynı boy 5 bilya.
+  - AISI 316: lasercutting (made-in-china), "Stainless Steel Hard Balls": aynı boy 8 bilya.
+  - AISI 52100: czhuari (made-in-china), "7mm G24 100Cr6 Chrome Steel Balls": aynı boy 5 bilya.
+- Üretici sitelerine bakıldı:
+  - Redhill'in krom, düşük karbonlu ve 316 ürün fotoğraflarının hepsi karışık boy bilya kompozisyonu, bu yüzden kullanılmadı.
+  - Hartford, Thomson, Tsubaki Nakashima, Kugel Pompel, Spheric-Trafalgar ve Dejiang sayfaları açılmadı (404, 403 ya da bağlantı hatası) veya uygun fotoğraf çıkmadı.
+  - Orka seri fotoğrafının filigransız versiyonu bulunamadı.
+- `sablon.png` içinde örnek ürün (mil) gömülü olduğu için ürün alanı beyazlatılıp sadece Yamansa logo bandı kullanıldı. 220 adet 500x500 JPG, ad slug'ı ile `gorseller/` altında.
 
 ## Teknik çizim
 
