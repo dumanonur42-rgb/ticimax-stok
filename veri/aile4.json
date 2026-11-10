@@ -1,0 +1,1359 @@
+[
+  {
+    "kod": "ORK BMT CY16B2",
+    "model": "CY16B2",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI CY 16B-2 (DP 5/8) YUVARLAK MODEL",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT CY16B2",
+    "degerler": {
+      "Ölçü (Dp)": {
+        "deger": "5/8 inç",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT CY16B2"
+      },
+      "Gövde Tipi": {
+        "deger": "Yuvarlak model",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT CY16B2"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT CY25A",
+    "model": "CY25A",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI CY 25A (FL MODELİ-2 CİVATA BAĞLANTILI)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT CY25A",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "25,4 mm",
+        "kaynak": "https://www.slidingbearings.com/Product/5147985851.html"
+      },
+      "Montaj Tipi": {
+        "deger": "İki cıvata bağlantılı flanş",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT CY25A"
+      },
+      "Bilya Malzemesi": {
+        "deger": "Karbon çeliği",
+        "kaynak": "https://www.slidingbearings.com/Product/5147985851.html"
+      },
+      "Önerilen Yük Kapasitesi": {
+        "deger": "25 kg",
+        "kaynak": "https://www.slidingbearings.com/Product/5147985851.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.slidingbearings.com/Product/5147985851.html"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT IA19",
+    "model": "IA19",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI TABLA BAĞLANTILI IA 19",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT IA19",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "19 mm",
+        "kaynak": "https://www.slidingbearings.com/Product/4967821313.html"
+      },
+      "Montaj Tipi": {
+        "deger": "Tabla bağlantılı",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT IA19"
+      },
+      "Yük Kapasitesi": {
+        "deger": "80 kg",
+        "kaynak": "https://www.slidingbearings.com/Product/4967821313.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.slidingbearings.com/Product/4967821313.html"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT IA25",
+    "model": "IA25",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI TABLA BAĞLANTILI IA 25",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT IA25",
+    "degerler": {
+      "Montaj Tipi": {
+        "deger": "Tabla bağlantılı",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT IA25"
+      },
+      "Yük Kapasitesi": {
+        "deger": "130 kg",
+        "kaynak": "https://www.slidingbearings.com/Product/1896301434.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.slidingbearings.com/Product/1896301434.html"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT NL8H",
+    "model": "NL8H",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI NL-8H MİNİ KOMPLE PLASTİK",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT NL8H",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Komple plastik",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT NL8H"
+      },
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html"
+      },
+      "Montaj Tipi": {
+        "deger": "Yuvaya oturtmalı",
+        "kaynak": "https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html"
+      },
+      "Önerilen Yük Kapasitesi": {
+        "deger": "2 kg",
+        "kaynak": "https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP12AFL",
+    "model": "SP12AFL",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI CİVATA BAĞLANTILI SP 12AFL (FLANŞLI MODEL)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP12AFL",
+    "degerler": {
+      "Montaj Tipi": {
+        "deger": "Cıvata bağlantılı flanş",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP12AFL"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP12B",
+    "model": "SP12B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 12B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP12B",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "12,700 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      },
+      "Ölçü (h)": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşsız, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      },
+      "Yük Kapasitesi": {
+        "deger": "10 kg",
+        "kaynak": "https://www.newball.it/en/prodotto/sp12b/"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp12b/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP12BF",
+    "model": "SP12BF",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 12B (FLANŞLI MODEL)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP12BF",
+    "degerler": {
+      "Montaj Tipi": {
+        "deger": "Flanşlı",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP12BF"
+      }
+    },
+    "bayraklar": [
+      "eksik: girdi kodu SP12BF fakat adı SP12B flanşlı; flanşsız SP12B katalog ölçüleri bu varyanta aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP15A",
+    "model": "SP15A",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 15 AĞIR SERİ",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15A",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (h)": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "21 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (b)": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      }
+    },
+    "bayraklar": [
+      "eksik: ölçüler tam kodlu Techprim SP tablosundan; yük ve malzeme kalitesi için Yamansa varyant teyidi yok, aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP15AFL",
+    "model": "SP15AFL",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI CİVATA BAĞLANTILI SP 15AFL",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15AFL",
+    "degerler": {
+      "Montaj Tipi": {
+        "deger": "Cıvata bağlantılı flanş",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15AFL"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP15B",
+    "model": "SP15B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 15B (DOLU)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15B",
+    "degerler": {
+      "Gövde Çapı (D)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      },
+      "Ölçü (h)": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "21 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      },
+      "Ölçü (b)": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15b/"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı kodda New Ball ve Techprim bilya çapı/yük değerleri farklı; çelişen değerler ve yuvarlaması farklı H/h/b hücreleri aktarılmadı, ortak geometrik ölçüler korundu",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp15b/",
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP15C",
+    "model": "SP15C",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PASLANMAZ BİLYALI SP 15C",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15C",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15C"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      },
+      "Ölçü (h)": {
+        "deger": "9,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "21 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      },
+      "Ölçü (b)": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp15c/"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı kodda New Ball ve Techprim bilya çapı/yük değerleri farklı; çelişen değerler ve yuvarlaması farklı H/h/b hücreleri aktarılmadı, ortak geometrik ölçüler korundu",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp15c/",
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP15P",
+    "model": "SP15P",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PLASTİK BİLYALI SP 15P",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15P",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Plastik",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP15P"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP22B",
+    "model": "SP22B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 22B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP22B",
+    "degerler": {
+      "Gövde Çapı (D)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp22b/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp22b/"
+      },
+      "Ölçü (h)": {
+        "deger": "9,8 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp22b/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp22b/"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı kodda New Ball ve Techprim bilya çapı/yük değerleri farklı; çelişen değerler ve yuvarlaması farklı H/h/b hücreleri aktarılmadı, ortak geometrik ölçüler korundu",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp22b/",
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP22C",
+    "model": "SP22C",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PASLANMAZ BİLYALI SP 22C",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP22C",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP22C"
+      },
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (h)": {
+        "deger": "9,8 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (b)": {
+        "deger": "6 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      }
+    },
+    "bayraklar": [
+      "eksik: ölçüler tam kodlu Techprim SP tablosundan; yük ve malzeme kalitesi için Yamansa varyant teyidi yok, aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP22P",
+    "model": "SP22P",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PLASTİK BİLYALI SP 22P",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP22P",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Plastik",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP22P"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP25B",
+    "model": "SP25B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 25B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP25B",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "25 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "46 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (h)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "31 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (b)": {
+        "deger": "7 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      }
+    },
+    "bayraklar": [
+      "eksik: ölçüler tam kodlu Techprim SP tablosundan; yük ve malzeme kalitesi için Yamansa varyant teyidi yok, aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP30B",
+    "model": "SP30B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 30B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP30B",
+    "degerler": {
+      "Gövde Çapı (D)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp30b/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "55 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp30b/"
+      },
+      "Ölçü (b)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp30b/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp30b/"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı kodda New Ball ve Techprim bilya çapı/yük değerleri farklı; çelişen değerler ve yuvarlaması farklı H/h/b hücreleri aktarılmadı, ortak geometrik ölçüler korundu",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp30b/",
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP30C",
+    "model": "SP30C",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PASLANMAZ BİLYALI SP 30C",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP30C",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP30C"
+      },
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "55 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (h)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "37 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (b)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      }
+    },
+    "bayraklar": [
+      "eksik: ölçüler tam kodlu Techprim SP tablosundan; yük ve malzeme kalitesi için Yamansa varyant teyidi yok, aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP30P",
+    "model": "SP30P",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI PLASTİK BİLYALI SP 30P",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP30P",
+    "degerler": {
+      "Ana Bilya Malzemesi": {
+        "deger": "Plastik",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP30P"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP45B",
+    "model": "SP45B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 45B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP45B",
+    "degerler": {
+      "Gövde Çapı (D)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp45b/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "75 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp45b/"
+      },
+      "Ölçü (h)": {
+        "deger": "19 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp45b/"
+      },
+      "Ölçü (b)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.newball.it/en/prodotto/sp45b/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.newball.it/en/prodotto/sp45b/"
+      }
+    },
+    "bayraklar": [
+      "eksik: aynı kodda New Ball ve Techprim bilya çapı/yük değerleri farklı; çelişen değerler ve yuvarlaması farklı H/h/b hücreleri aktarılmadı, ortak geometrik ölçüler korundu",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.newball.it/en/prodotto/sp45b/",
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK BMT SP60B",
+    "model": "SP60B",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA BİLYALI MASAÜSTÜ TAŞIYICI SP 60B",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK BMT SP60B",
+    "degerler": {
+      "Ana Bilya Çapı (Dw)": {
+        "deger": "60 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Gövde Çapı (D)": {
+        "deger": "100 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Flanş Çapı (D1)": {
+        "deger": "117 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (h)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Toplam Yükseklik (H)": {
+        "deger": "78 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Ölçü (b)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      },
+      "Montaj Tipi": {
+        "deger": "Flanşlı, yuvaya oturtmalı",
+        "kaynak": "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+      }
+    },
+    "bayraklar": [
+      "eksik: ölçüler tam kodlu Techprim SP tablosundan; yük ve malzeme kalitesi için Yamansa varyant teyidi yok, aktarılmadı",
+      "eksik: tam varyantın tüm gövde, montaj ve malzeme detayları doğrulanamadı; listede bulunmayan ölçü/yük varsayılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/"
+    ],
+    "aile": "BMT"
+  },
+  {
+    "kod": "ORK GKT MG208",
+    "model": "MG208",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA GAZALTI KAYNAK TELİ SG 2 (MG 2) - 0,8 MM (15 KG/PKT)",
+    "girdi_birimi": "PAKET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG208",
+    "degerler": {
+      "Tel Çapı (d)": {
+        "deger": "0,8 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG208"
+      },
+      "Tel Sınıfı": {
+        "deger": "SG2 / MG2",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG208"
+      },
+      "Standart Sınıf Eşdeğerliği": {
+        "deger": "EN ISO 14341-A G3Si1 / AWS ER70S-6",
+        "kaynak": "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+      },
+      "Satış Birimi": {
+        "deger": "Adet",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG208; kullanıcı paket/Adet kuralı"
+      },
+      "Ambalaj": {
+        "deger": "15 kg/paket",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG208"
+      }
+    },
+    "bayraklar": [
+      "eksik: SG2 sınıf eşdeğerliği Gedik teknik föyünden; Yamansa parti sertifikası, akım aralığı ve kimyasal/mekanik değerleri yok, aktarılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+    ],
+    "aile": "GKT"
+  },
+  {
+    "kod": "ORK GKT MG210",
+    "model": "MG210",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA GAZALTI KAYNAK TELİ SG 2 (MG 2) - 1,0 MM (15 KG/PKT)",
+    "girdi_birimi": "PAKET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG210",
+    "degerler": {
+      "Tel Çapı (d)": {
+        "deger": "1,0 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG210"
+      },
+      "Tel Sınıfı": {
+        "deger": "SG2 / MG2",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG210"
+      },
+      "Standart Sınıf Eşdeğerliği": {
+        "deger": "EN ISO 14341-A G3Si1 / AWS ER70S-6",
+        "kaynak": "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+      },
+      "Satış Birimi": {
+        "deger": "Adet",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG210; kullanıcı paket/Adet kuralı"
+      },
+      "Ambalaj": {
+        "deger": "15 kg/paket",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG210"
+      }
+    },
+    "bayraklar": [
+      "eksik: SG2 sınıf eşdeğerliği Gedik teknik föyünden; Yamansa parti sertifikası, akım aralığı ve kimyasal/mekanik değerleri yok, aktarılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+    ],
+    "aile": "GKT"
+  },
+  {
+    "kod": "ORK GKT MG212",
+    "model": "MG212",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA GAZALTI KAYNAK TELİ SG 2 (MG 2) - 1,2 MM (15 KG/PKT)",
+    "girdi_birimi": "PAKET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG212",
+    "degerler": {
+      "Tel Çapı (d)": {
+        "deger": "1,2 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG212"
+      },
+      "Tel Sınıfı": {
+        "deger": "SG2 / MG2",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG212"
+      },
+      "Standart Sınıf Eşdeğerliği": {
+        "deger": "EN ISO 14341-A G3Si1 / AWS ER70S-6",
+        "kaynak": "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+      },
+      "Satış Birimi": {
+        "deger": "Adet",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG212; kullanıcı paket/Adet kuralı"
+      },
+      "Ambalaj": {
+        "deger": "15 kg/paket",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK GKT MG212"
+      }
+    },
+    "bayraklar": [
+      "eksik: SG2 sınıf eşdeğerliği Gedik teknik föyünden; Yamansa parti sertifikası, akım aralığı ve kimyasal/mekanik değerleri yok, aktarılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://file.gedik.com.tr/portal/approval_documents/geka-sg-2-tr_6278a8d8217cb.pdf?v=1652074703"
+    ],
+    "aile": "GKT"
+  },
+  {
+    "kod": "ORK KK S060",
+    "model": "S060",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA KONİK KİLİT 250 (S TİPİ) 060*90",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KK S060",
+    "degerler": {
+      "İç Çap (d)": {
+        "deger": "60 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KK S060; çap sırası doğrulaması:https://www.konikkilit.com/_ekler/122-1583389614-ctl-250-tablo.pdf; https://www.yamansarulman.com/konik-kilit-250-s-tipi-04065-17617"
+      },
+      "Dış Çap (D)": {
+        "deger": "90 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KK S060; çap sırası doğrulaması:https://www.konikkilit.com/_ekler/122-1583389614-ctl-250-tablo.pdf; https://www.yamansarulman.com/konik-kilit-250-s-tipi-04065-17617"
+      },
+      "Tip": {
+        "deger": "S tipi (250 tipi)",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KK S060"
+      }
+    },
+    "bayraklar": [
+      "eksik: site S040 metni 40×65 için d×D, ek JPEG ise aynı 65 değerini L diye adlandırıyor; 250 üretici tablosunda 38/40/42/45/48/50 modelleri site adlarıyla d×D olarak eşleşiyor ve CTL250-60 satırı d=60 D=90 veriyor; bu nedenle 60×90 d×D alındı, çelişkili site L etiketi kullanılmadı; diğer boylar ve Yamansa tork/yük değerleri aktarılmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.konikkilit.com/_ekler/122-1583389614-ctl-250-tablo.pdf",
+      "https://www.yamansarulman.com/konik-kilit-250-s-tipi-04065-17617"
+    ],
+    "aile": "KK"
+  },
+  {
+    "kod": "ORK PM SSPHS06R",
+    "model": "SSPHS06R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 06R (SSPHS 06A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS06R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS06R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS08R",
+    "model": "SSPHS08R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 08R (SSPHS 08A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS08R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS08R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS10R",
+    "model": "SSPHS10R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 10R (SSPHS 10A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS10R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS10R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS12R",
+    "model": "SSPHS12R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 12R (SSPHS 12A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS12R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS12R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS14R",
+    "model": "SSPHS14R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 14R (SSPHS 14A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS14R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS14R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS16R",
+    "model": "SSPHS16R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 16R (SSPHS 16A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS16R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS16R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS18R",
+    "model": "SSPHS18R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 18R (SSPHS 18A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS18R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS18R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPHS20R",
+    "model": "SSPHS20R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPHS 20R (SSPHS 20A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS20R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPHS20R"
+      },
+      "Diş Tipi": {
+        "deger": "İç dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS06R",
+    "model": "SSPOS06R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 06R (SSPOS 06A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS06R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS06R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS08R",
+    "model": "SSPOS08R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 08R (SSPOS 08A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS08R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS08R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS10R",
+    "model": "SSPOS10R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 10R (SSPOS 10A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS10R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS10R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS12R",
+    "model": "SSPOS12R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 12R (SSPOS 12A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS12R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS12R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS14R",
+    "model": "SSPOS14R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 14R (SSPOS 14A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS14R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS14R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS16R",
+    "model": "SSPOS16R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 16R (SSPOS 16A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS16R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS16R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS18R",
+    "model": "SSPOS18R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 18R (SSPOS 18A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS18R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS18R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK PM SSPOS20R",
+    "model": "SSPOS20R",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA PASLANMAZ MAFSAL SSPOS 20R (SSPOS 20A)",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS20R",
+    "degerler": {
+      "Malzeme": {
+        "deger": "Paslanmaz",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PM SSPOS20R"
+      },
+      "Diş Tipi": {
+        "deger": "Dış dişli",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      }
+    },
+    "bayraklar": [
+      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+    ],
+    "incelenen_kaynaklar": [
+      "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+    ],
+    "aile": "PM"
+  },
+  {
+    "kod": "ORK YKKM 1000",
+    "model": "1000",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA YANA KAYAR KAPI MOTORU 1000 KG",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 1000",
+    "degerler": {
+      "Kapı Ağırlığı Kapasitesi": {
+        "deger": "1000 kg",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 1000"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "YKKM"
+  },
+  {
+    "kod": "ORK YKKM 1500",
+    "model": "1500",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA YANA KAYAR KAPI MOTORU 1500 KG",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 1500",
+    "degerler": {
+      "Kapı Ağırlığı Kapasitesi": {
+        "deger": "1500 kg",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 1500"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "YKKM"
+  },
+  {
+    "kod": "ORK YKKM 2000",
+    "model": "2000",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA YANA KAYAR KAPI MOTORU 2000 KG",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 2000",
+    "degerler": {
+      "Kapı Ağırlığı Kapasitesi": {
+        "deger": "2000 kg",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 2000"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "YKKM"
+  },
+  {
+    "kod": "ORK YKKM 800",
+    "model": "800",
+    "marka": "Yamansa",
+    "girdi_adi": "ORKA YANA KAYAR KAPI MOTORU 800 KG",
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 800",
+    "degerler": {
+      "Kapı Ağırlığı Kapasitesi": {
+        "deger": "800 kg",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK YKKM 800"
+      }
+    },
+    "bayraklar": [
+      "eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı"
+    ],
+    "incelenen_kaynaklar": [],
+    "aile": "YKKM"
+  }
+]

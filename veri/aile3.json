@@ -3979,6 +3979,10 @@
         "deger": "5",
         "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
       },
+      "Diş Sayısı (Z)": {
+        "deger": "32",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M532; doğrulama:https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/#Dp=m×z"
+      },
       "Dış Çap (De)": {
         "deger": "170 mm",
         "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
@@ -3997,7 +4001,6 @@
       }
     },
     "bayraklar": [
-      "eksik: kaynak diş sayısı 31, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
       "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
     ],
     "girdi_birimi": "ADET",
@@ -4042,6 +4045,7 @@
       ]
     },
     "aile": "PD",
+    "dis_sayisi_duzeltmesi": "Tablo hücresi 31 hatalı; B2B adındaki 32 diş, Dp=160 ve m=5 ile tutarlı.",
     "nominal": 5
   },
   {
@@ -4052,6 +4056,10 @@
       "Modül (m)": {
         "deger": "5",
         "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "34",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M534; doğrulama:https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/#Dp=m×z"
       },
       "Dış Çap (De)": {
         "deger": "180 mm",
@@ -4071,7 +4079,6 @@
       }
     },
     "bayraklar": [
-      "eksik: kaynak diş sayısı 32, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
       "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
     ],
     "girdi_birimi": "ADET",
@@ -4116,6 +4123,7 @@
       ]
     },
     "aile": "PD",
+    "dis_sayisi_duzeltmesi": "Tablo hücresi 32 hatalı; B2B adındaki 34 diş, Dp=170 ve m=5 ile tutarlı.",
     "nominal": 5
   },
   {
@@ -4126,6 +4134,10 @@
       "Modül (m)": {
         "deger": "5",
         "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "36",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M536; doğrulama:https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/#Dp=m×z"
       },
       "Dış Çap (De)": {
         "deger": "190 mm",
@@ -4145,7 +4157,6 @@
       }
     },
     "bayraklar": [
-      "eksik: kaynak diş sayısı 33, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
       "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
     ],
     "girdi_birimi": "ADET",
@@ -4190,6 +4201,7 @@
       ]
     },
     "aile": "PD",
+    "dis_sayisi_duzeltmesi": "Tablo hücresi 33 hatalı; B2B adındaki 36 diş, Dp=180 ve m=5 ile tutarlı.",
     "nominal": 5
   }
 ]

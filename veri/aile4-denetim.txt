@@ -1,0 +1,4 @@
+Girdi: 208 satır; 208 benzersiz kod; yinelenen kod: 0
+Çıktı: 208 satır; 208 benzersiz kod; yinelenen kod: 0
+Denetlenen ürün: 208
+SONUÇ: 0 hata

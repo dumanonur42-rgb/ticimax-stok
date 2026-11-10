@@ -86,11 +86,13 @@ def audit(rows, root=ROOT):
 def audit_batch(rows, root=ROOT):
     errors = []
     with gzip.open(root / 'parca/lineer_diger.jsonl.gz', 'rt') as stream:
-        selected = [r['kod'] for line in stream if (r := json.loads(line))['kod'].startswith(('ORK LA HGH', 'ORK LA HGW', 'ORK LR HGR', 'PMI MSA', 'PMI MSB', 'ORK KKM ', 'ORK İM ', 'ORK ADM SAC', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG ', 'ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ '))]
+        selected = [json.loads(line)['kod'] for line in stream]
     codes = [r['kod'] for r in rows]
-    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 162:
-        errors.append('aile kapsamı: 162 girdinin tümü birer kez işlenmeli')
-    raw = [r for f in ['hg', 'hgr', 'pmi', 'aile2', 'aile3'] for r in json.loads((root / f'veri/{f}.json').read_text())]
+    if len(selected) != len(set(selected)):
+        errors.append('girdide yinelenen kod: ' + ', '.join(sorted({c for c in selected if selected.count(c) > 1})))
+    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 208:
+        errors.append('aile kapsamı: 208 girdinin tümü birer kez işlenmeli')
+    raw = [r for f in ['hg', 'hgr', 'pmi', 'aile2', 'aile3', 'aile4'] for r in json.loads((root / f'veri/{f}.json').read_text())]
     contexts = json.loads((root / 'veri/lineer-ctx.json').read_text())
     drawings = json.loads((root / 'veri/draw-keys.json').read_text())
     for label, records in [('ham veri', raw), ('bağlam', contexts), ('çizim', drawings)]:
@@ -123,10 +125,17 @@ def audit_batch(rows, root=ROOT):
                 errors.append(row['kod'] + ': değer/kaynak uyumsuz: ' + label)
         if row['bayraklar'] != record['bayraklar']:
             errors.append(row['kod'] + ': eksik bayrakları korunmadı')
-        if family in ['PD', 'KR', 'MKI'] and row['teknik_kaynak'] != list(dict.fromkeys(v['kaynak'] for v in record['degerler'].values())):
+        if family in ['PD', 'KR', 'MKI', 'BMT', 'PM', 'GKT', 'YKKM', 'KK'] and row['teknik_kaynak'] != list(dict.fromkeys(v['kaynak'] for v in record['degerler'].values())):
             errors.append(row['kod'] + ': teknik kaynak metadatası ham veriyle farklı')
         if family in ['SAC', 'TBR', 'VM', 'SFU', 'DSG'] and (row['yeni_kategori'] is not True or 'LİNEER' not in row['EK_KATEGORILER']):
             errors.append(row['kod'] + ': pasif kategori önerisi/ek kategori eksik')
+        if family == 'GKT':
+            if re.search(r'15\s*KG|PKT|KOL[Iİ]|PAKET', row['URUNADI'], re.I):
+                errors.append(row['kod'] + ': ürün adında paket ifadesi')
+            if technical.get('Satış Birimi') != 'Adet':
+                errors.append(row['kod'] + ': kaynak teli satış birimi Adet olmalı')
+            if re.search(r'(?:koli|paket)\s+halinde\s+sat', BeautifulSoup(row['ACIKLAMA'], 'html.parser').get_text(' ', strip=True), re.I):
+                errors.append(row['kod'] + ': açıklamada paket halinde satış ifadesi')
     return errors
 
 
@@ -137,6 +146,11 @@ if __name__ == '__main__':
         errors = audit(rows)
         if '--aile' in sys.argv:
             errors.extend(audit_batch(rows))
+            with gzip.open(ROOT / 'parca/lineer_diger.jsonl.gz', 'rt') as stream:
+                input_codes = [json.loads(line)['kod'] for line in stream]
+            output_codes = [row['kod'] for row in rows]
+            print(f'Girdi: {len(input_codes)} satır; {len(set(input_codes))} benzersiz kod; yinelenen kod: {len(input_codes) - len(set(input_codes))}')
+            print(f'Çıktı: {len(output_codes)} satır; {len(set(output_codes))} benzersiz kod; yinelenen kod: {len(output_codes) - len(set(output_codes))}')
     except (ValueError, OSError) as exc:
         rows, errors = [], [str(exc)]
     print(f'Denetlenen ürün: {len(rows)}')

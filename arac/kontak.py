@@ -28,7 +28,10 @@ def main():
         codes = {r['kod'] for r in json.loads((ROOT / 'veri/aile3.json').read_text())}
         sheet([r for r in rows if r['kod'] in codes], 'onizleme/aile3-kontak.jpg')
         sheet([r for r in rows if r['kod'].startswith('ORK ADM ')], 'onizleme/sac-yeni-kontrol.jpg')
-    print('Kontak: onizleme/aile2-kontak.jpg (56 ürün)')
+    if (ROOT / 'veri/aile4.json').exists():
+        codes = {r['kod'] for r in json.loads((ROOT / 'veri/aile4.json').read_text())}
+        sheet([r for r in rows if r['kod'] in codes], 'onizleme/aile4-kontak.jpg', columns=6)
+    print('Kontak: onizleme/aile4-kontak.jpg (46 ürün)')
 
 
 if __name__ == '__main__':

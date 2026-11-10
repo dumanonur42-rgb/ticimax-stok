@@ -17,7 +17,7 @@ body{margin:0;background:#f4f6f9;color:#16203a;font:16px/1.75 Arial,sans-serif}h
     targets = []
     for item in items:
         name = re.sub('[^A-Za-z0-9]', '_', item['kod'])
-        no_module = item['kod'].startswith(('ORK ADM ', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG ', 'ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ '))
+        no_module = item['kod'].startswith(('ORK ADM ', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG ', 'ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ ', 'ORK BMT ', 'ORK PM ', 'ORK GKT ', 'ORK YKKM ', 'ORK KK '))
         svg = '' if no_module else (ROOT / f'onizleme/{name}.svg').read_text()
         content = html.replace('HGH 20HA ürün önizleme', escape(item['URUNADI'])).replace('Anasayfa / LİNEER / LİNEER ARABALAR', escape('Anasayfa / ' + item['KATEGORI'].replace('>', ' / ')))
         drawing = '<section class="draw"><h3>Teknik Çizim (mm)</h3>' + svg + '</section>' if svg else ''
@@ -37,7 +37,7 @@ body{margin:0;background:#f4f6f9;color:#16203a;font:16px/1.75 Arial,sans-serif}h
                 page.goto(target.as_uri())
                 assert page.locator('.yon .oi').count() > 0, name
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), name
-                if name in examples or name.startswith('ORK_LR_HGR25'):
+                if name in examples or name.startswith('ORK_LR_HGR25') or name in ['ORK_BMT_SP12B', 'ORK_BMT_SP12AFL', 'ORK_BMT_NL8H', 'ORK_PM_SSPHS06R', 'ORK_GKT_MG208', 'ORK_YKKM_800', 'ORK_KK_S060']:
                     filename = name + ('_mobil' if width == 390 else '') + '.png'
                     page.screenshot(path=str(ROOT / 'onizleme' / filename), full_page=True)
                     print(f'Önizleme: onizleme/{filename} ({width}px)')

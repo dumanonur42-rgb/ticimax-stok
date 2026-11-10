@@ -1768,5 +1768,327 @@
     "sonuc": "modül yok",
     "keys": [],
     "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT CY16B2",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT CY25A",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT IA19",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT IA25",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT NL8H",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP12AFL",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP12B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP12BF",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP15A",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP15AFL",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP15B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP15C",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP15P",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP22B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP22C",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP22P",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP25B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP30B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP30C",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP30P",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP45B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK BMT SP60B",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK GKT MG208",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK GKT MG210",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK GKT MG212",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KK S060",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS06R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS08R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS10R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS12R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS14R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS16R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS18R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPHS20R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS06R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS08R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS10R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS12R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS14R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS16R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS18R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PM SSPOS20R",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK YKKM 1000",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK YKKM 1500",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK YKKM 2000",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK YKKM 800",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
   }
 ]

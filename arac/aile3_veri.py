@@ -37,8 +37,13 @@ def prepare(row):
             values[label] = value(number, site['url'], '' if label in PINION_LABELS[:2] else 'mm')
         module, teeth, _, pitch_diameter = [float(s.replace(',', '.')) for s in site['satir'][2:6]]
         if not math.isclose(module * teeth, pitch_diameter):
-            flags.append(f'eksik: kaynak diş sayısı {site["satir"][3]}, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor')
-            del values['Diş Sayısı (Z)']
+            named = re.search(r'M\s*(\d+)\s*\*\s*(\d+)', row['ad'])
+            if named and math.isclose(float(named[1]), module) and math.isclose(module * int(named[2]), pitch_diameter):
+                values['Diş Sayısı (Z)'] = value(named[2], origin + '; doğrulama:' + site['url'] + '#Dp=m×z', '')
+                raw['dis_sayisi_duzeltmesi'] = f'Tablo hücresi {site["satir"][3]} hatalı; B2B adındaki {named[2]} diş, Dp={site["satir"][5]} ve m={site["satir"][2]} ile tutarlı.'
+            else:
+                flags.append(f'eksik: kaynak diş sayısı {site["satir"][3]}, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor')
+                del values['Diş Sayısı (Z)']
         flags.append('eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı')
         raw['nominal'] = int(site['satir'][2])
     elif code.startswith('ORK MKİ '):

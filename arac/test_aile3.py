@@ -19,8 +19,8 @@ class ThirdFamilyTests(unittest.TestCase):
                 if row['aile'] == 'PD':
                     expected = dict(zip(PINION_LABELS, row['orka_site']['satir'][2:8]))
                     if row['kod'] in ['ORK PD M532', 'ORK PD M534', 'ORK PD M536']:
-                        expected.pop('Diş Sayısı (Z)')
-                        self.assertTrue(any('çelişkili' in f for f in row['bayraklar']))
+                        expected['Diş Sayısı (Z)'] = row['model'][2:]
+                        self.assertIn('dis_sayisi_duzeltmesi', row)
                     self.assertEqual({k: v['deger'].split()[0] for k, v in row['degerler'].items()}, expected)
                 elif row['aile'] == 'MKI':
                     self.assertEqual([v['deger'].split()[0] for v in row['degerler'].values()], row['orka_site']['satir'][3:15])
@@ -51,6 +51,18 @@ class ThirdFamilyTests(unittest.TestCase):
             prepare(pinion)
         with self.assertRaises(KeyError):
             identity({})
+
+    def test_tooth_correction_requires_name_and_pitch_agreement(self):
+        source = copy.deepcopy(next(r for r in selected() if r['kod'] == 'ORK PD M532'))
+        restored = prepare(source)
+        self.assertEqual(restored['degerler']['Diş Sayısı (Z)']['deger'], '32')
+        source['orka_site']['satir'][5] = '159'
+        rejected = prepare(source)
+        self.assertNotIn('Diş Sayısı (Z)', rejected['degerler'])
+        self.assertNotIn('dis_sayisi_duzeltmesi', rejected)
+        source['orka_site']['satir'][5] = '160'
+        source['ad'] = ''
+        self.assertNotIn('Diş Sayısı (Z)', prepare(source)['degerler'])
 
     def test_catalog_and_customer_brand_boundary(self):
         rows = [json.loads(line) for line in (ROOT / 'urunler.jsonl').read_text().splitlines()]

@@ -13134,8 +13134,8 @@
   },
   {
     "kod": "ORK PD M532",
-    "title": "M532 Düz Pinyon Dişli Modül 5 - 170 mm",
-    "path": "/m532-duz-pinyon-disli-modul-5-170-mm",
+    "title": "M532 Düz Pinyon Dişli Modül 5 - 32 Diş 170 mm",
+    "path": "/m532-duz-pinyon-disli-modul-5-32-dis-170-mm",
     "productId": 160,
     "crumbs": [
       "Anasayfa",
@@ -13147,6 +13147,10 @@
       {
         "l": "Modül (m)",
         "v": "5"
+      },
+      {
+        "l": "Diş Sayısı (Z)",
+        "v": "32"
       },
       {
         "l": "Dış Çap (De)",
@@ -13173,6 +13177,10 @@
       {
         "l": "Modül (m)",
         "v": "5"
+      },
+      {
+        "l": "Diş Sayısı (Z)",
+        "v": "32"
       },
       {
         "l": "Dış Çap (De)",
@@ -13199,8 +13207,8 @@
   },
   {
     "kod": "ORK PD M534",
-    "title": "M534 Düz Pinyon Dişli Modül 5 - 180 mm",
-    "path": "/m534-duz-pinyon-disli-modul-5-180-mm",
+    "title": "M534 Düz Pinyon Dişli Modül 5 - 34 Diş 180 mm",
+    "path": "/m534-duz-pinyon-disli-modul-5-34-dis-180-mm",
     "productId": 161,
     "crumbs": [
       "Anasayfa",
@@ -13212,6 +13220,10 @@
       {
         "l": "Modül (m)",
         "v": "5"
+      },
+      {
+        "l": "Diş Sayısı (Z)",
+        "v": "34"
       },
       {
         "l": "Dış Çap (De)",
@@ -13238,6 +13250,10 @@
       {
         "l": "Modül (m)",
         "v": "5"
+      },
+      {
+        "l": "Diş Sayısı (Z)",
+        "v": "34"
       },
       {
         "l": "Dış Çap (De)",
@@ -13264,8 +13280,8 @@
   },
   {
     "kod": "ORK PD M536",
-    "title": "M536 Düz Pinyon Dişli Modül 5 - 190 mm",
-    "path": "/m536-duz-pinyon-disli-modul-5-190-mm",
+    "title": "M536 Düz Pinyon Dişli Modül 5 - 36 Diş 190 mm",
+    "path": "/m536-duz-pinyon-disli-modul-5-36-dis-190-mm",
     "productId": 162,
     "crumbs": [
       "Anasayfa",
@@ -13277,6 +13293,10 @@
       {
         "l": "Modül (m)",
         "v": "5"
+      },
+      {
+        "l": "Diş Sayısı (Z)",
+        "v": "36"
       },
       {
         "l": "Dış Çap (De)",
@@ -13305,6 +13325,10 @@
         "v": "5"
       },
       {
+        "l": "Diş Sayısı (Z)",
+        "v": "36"
+      },
+      {
         "l": "Dış Çap (De)",
         "v": "190 mm"
       },
@@ -13319,6 +13343,2240 @@
       {
         "l": "Ölçü (D)",
         "v": "25 mm"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT CY16B2",
+    "title": "CY16B2 Bilyalı Masaüstü Taşıyıcı",
+    "path": "/cy16b2-bilyali-masaustu-tasiyici",
+    "productId": 163,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ölçü (Dp)",
+        "v": "5/8 inç"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Yuvarlak model"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ölçü (Dp)",
+        "v": "5/8 inç"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Yuvarlak model"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT CY25A",
+    "title": "CY25A Bilyalı Masaüstü Taşıyıcı 25,4 mm",
+    "path": "/cy25a-bilyali-masaustu-tasiyici-25-4-mm",
+    "productId": 164,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "25,4 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "İki cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Bilya Malzemesi",
+        "v": "Karbon çeliği"
+      },
+      {
+        "l": "Önerilen Yük Kapasitesi",
+        "v": "25 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "25,4 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "İki cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Bilya Malzemesi",
+        "v": "Karbon çeliği"
+      },
+      {
+        "l": "Önerilen Yük Kapasitesi",
+        "v": "25 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT IA19",
+    "title": "IA19 Bilyalı Masaüstü Taşıyıcı 19 mm",
+    "path": "/ia19-bilyali-masaustu-tasiyici-19-mm",
+    "productId": 165,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "19 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Tabla bağlantılı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "80 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "19 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Tabla bağlantılı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "80 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT IA25",
+    "title": "IA25 Bilyalı Masaüstü Taşıyıcı",
+    "path": "/ia25-bilyali-masaustu-tasiyici",
+    "productId": 166,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Tabla bağlantılı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "130 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Tabla bağlantılı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "130 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT NL8H",
+    "title": "NL-8H Komple Plastik Bilyalı Masaüstü Taşıyıcı 8 mm",
+    "path": "/nl-8h-komple-plastik-bilyali-masaustu-tasiyici-8-mm",
+    "productId": 167,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Komple plastik"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Yuvaya oturtmalı"
+      },
+      {
+        "l": "Önerilen Yük Kapasitesi",
+        "v": "2 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Komple plastik"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Yuvaya oturtmalı"
+      },
+      {
+        "l": "Önerilen Yük Kapasitesi",
+        "v": "2 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP12AFL",
+    "title": "SP12AFL Cıvatalı Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp12afl-civatali-bilyali-masaustu-tasiyici",
+    "productId": 168,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP12B",
+    "title": "SP12B Bilyalı Masaüstü Taşıyıcı 12,700 mm",
+    "path": "/sp12b-bilyali-masaustu-tasiyici-12-700-mm",
+    "productId": 169,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "12,700 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşsız, yuvaya oturtmalı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "10 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "12,700 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşsız, yuvaya oturtmalı"
+      },
+      {
+        "l": "Yük Kapasitesi",
+        "v": "10 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP12BF",
+    "title": "SP12BF Flanşlı Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp12bf-flansli-bilyali-masaustu-tasiyici",
+    "productId": 170,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP15A",
+    "title": "SP15A Ağır Seri Bilyalı Masaüstü Taşıyıcı 15 mm",
+    "path": "/sp15a-agir-seri-bilyali-masaustu-tasiyici-15-mm",
+    "productId": 171,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP15AFL",
+    "title": "SP15AFL Cıvatalı Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp15afl-civatali-bilyali-masaustu-tasiyici",
+    "productId": 172,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Montaj Tipi",
+        "v": "Cıvata bağlantılı flanş"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP15B",
+    "title": "SP15B Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp15b-bilyali-masaustu-tasiyici",
+    "productId": 173,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP15C",
+    "title": "SP15C Paslanmaz Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp15c-paslanmaz-bilyali-masaustu-tasiyici",
+    "productId": 174,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "5,5 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP15P",
+    "title": "SP15P Plastik Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp15p-plastik-bilyali-masaustu-tasiyici",
+    "productId": 175,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP22B",
+    "title": "SP22B Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp22b-bilyali-masaustu-tasiyici",
+    "productId": 176,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP22C",
+    "title": "SP22C Paslanmaz Bilyalı Masaüstü Taşıyıcı 22 mm",
+    "path": "/sp22c-paslanmaz-bilyali-masaustu-tasiyici-22-mm",
+    "productId": 177,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,8 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "6 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "36 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "9,8 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "6 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP22P",
+    "title": "SP22P Plastik Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp22p-plastik-bilyali-masaustu-tasiyici",
+    "productId": 178,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP25B",
+    "title": "SP25B Bilyalı Masaüstü Taşıyıcı 25 mm",
+    "path": "/sp25b-bilyali-masaustu-tasiyici-25-mm",
+    "productId": 179,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "46 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "13 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "7 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "46 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "13 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "31 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "7 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP30B",
+    "title": "SP30B Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp30b-bilyali-masaustu-tasiyici",
+    "productId": 180,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP30C",
+    "title": "SP30C Paslanmaz Bilyalı Masaüstü Taşıyıcı 30 mm",
+    "path": "/sp30c-paslanmaz-bilyali-masaustu-tasiyici-30-mm",
+    "productId": 181,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "14 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "37 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "55 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "14 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "37 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "8 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP30P",
+    "title": "SP30P Plastik Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp30p-plastik-bilyali-masaustu-tasiyici",
+    "productId": 182,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Malzemesi",
+        "v": "Plastik"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP45B",
+    "title": "SP45B Bilyalı Masaüstü Taşıyıcı",
+    "path": "/sp45b-bilyali-masaustu-tasiyici",
+    "productId": 183,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "62 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "75 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "19 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "10 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "62 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "75 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "19 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "10 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK BMT SP60B",
+    "title": "SP60B Bilyalı Masaüstü Taşıyıcı 60 mm",
+    "path": "/sp60b-bilyali-masaustu-tasiyici-60-mm",
+    "productId": 184,
+    "crumbs": [
+      "Anasayfa",
+      "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+    ],
+    "specs": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "117 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "78 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Ana Bilya Çapı (Dw)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Gövde Çapı (D)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Flanş Çapı (D1)",
+        "v": "117 mm"
+      },
+      {
+        "l": "Ölçü (h)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H)",
+        "v": "78 mm"
+      },
+      {
+        "l": "Ölçü (b)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Montaj Tipi",
+        "v": "Flanşlı, yuvaya oturtmalı"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK GKT MG208",
+    "title": "SG2 MG208 Gazaltı Kaynak Teli 0,8 mm",
+    "path": "/sg2-mg208-gazalti-kaynak-teli-0-8-mm",
+    "productId": 185,
+    "crumbs": [
+      "Anasayfa",
+      "KAYNAK SARF MALZEMELERİ",
+      "GAZALTI KAYNAK TELLERİ"
+    ],
+    "specs": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "0,8 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "0,8 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK GKT MG210",
+    "title": "SG2 MG210 Gazaltı Kaynak Teli 1,0 mm",
+    "path": "/sg2-mg210-gazalti-kaynak-teli-1-0-mm",
+    "productId": 186,
+    "crumbs": [
+      "Anasayfa",
+      "KAYNAK SARF MALZEMELERİ",
+      "GAZALTI KAYNAK TELLERİ"
+    ],
+    "specs": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "1,0 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "1,0 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK GKT MG212",
+    "title": "SG2 MG212 Gazaltı Kaynak Teli 1,2 mm",
+    "path": "/sg2-mg212-gazalti-kaynak-teli-1-2-mm",
+    "productId": 187,
+    "crumbs": [
+      "Anasayfa",
+      "KAYNAK SARF MALZEMELERİ",
+      "GAZALTI KAYNAK TELLERİ"
+    ],
+    "specs": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "1,2 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Tel Çapı (d)",
+        "v": "1,2 mm"
+      },
+      {
+        "l": "Tel Sınıfı",
+        "v": "SG2 / MG2"
+      },
+      {
+        "l": "Standart Sınıf Eşdeğerliği",
+        "v": "EN ISO 14341-A G3Si1 / AWS ER70S-6"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      },
+      {
+        "l": "Ambalaj",
+        "v": "15 kg/paket"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK KK S060",
+    "title": "S060 S Tipi 250 Konik Kilit 60×90 mm",
+    "path": "/s060-s-tipi-250-konik-kilit-60-90-mm",
+    "productId": 188,
+    "crumbs": [
+      "Anasayfa",
+      "KONİK KİLİTLER",
+      "S TİPİ (250 TİPİ) KONİK KİLİTLER"
+    ],
+    "specs": [
+      {
+        "l": "İç Çap (d)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Tip",
+        "v": "S tipi (250 tipi)"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "İç Çap (d)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Tip",
+        "v": "S tipi (250 tipi)"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS06R",
+    "title": "SSPHS06R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs06r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 189,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS08R",
+    "title": "SSPHS08R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs08r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 190,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS10R",
+    "title": "SSPHS10R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs10r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 191,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS12R",
+    "title": "SSPHS12R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs12r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 192,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS14R",
+    "title": "SSPHS14R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs14r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 193,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS16R",
+    "title": "SSPHS16R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs16r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 194,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS18R",
+    "title": "SSPHS18R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs18r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 195,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPHS20R",
+    "title": "SSPHS20R İç Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/ssphs20r-ic-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 196,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "İç dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS06R",
+    "title": "SSPOS06R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos06r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 197,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS08R",
+    "title": "SSPOS08R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos08r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 198,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS10R",
+    "title": "SSPOS10R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos10r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 199,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS12R",
+    "title": "SSPOS12R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos12r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 200,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS14R",
+    "title": "SSPOS14R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos14r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 201,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS16R",
+    "title": "SSPOS16R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos16r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 202,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS18R",
+    "title": "SSPOS18R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos18r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 203,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK PM SSPOS20R",
+    "title": "SSPOS20R Dış Dişli Paslanmaz Rot Başı Mafsal",
+    "path": "/sspos20r-dis-disli-paslanmaz-rot-basi-mafsal",
+    "productId": 204,
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "MAFSAL RULMANLARI"
+    ],
+    "specs": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Malzeme",
+        "v": "Paslanmaz"
+      },
+      {
+        "l": "Diş Tipi",
+        "v": "Dış dişli"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK YKKM 1000",
+    "title": "Yana Kayar Kapı Motoru 1000 kg",
+    "path": "/yana-kayar-kapi-motoru-1000-kg",
+    "productId": 205,
+    "crumbs": [
+      "Anasayfa",
+      "KAPI OTOMASYONU",
+      "YANA KAYAR KAPI MOTORLARI"
+    ],
+    "specs": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "1000 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "1000 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK YKKM 1500",
+    "title": "Yana Kayar Kapı Motoru 1500 kg",
+    "path": "/yana-kayar-kapi-motoru-1500-kg",
+    "productId": 206,
+    "crumbs": [
+      "Anasayfa",
+      "KAPI OTOMASYONU",
+      "YANA KAYAR KAPI MOTORLARI"
+    ],
+    "specs": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "1500 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "1500 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK YKKM 2000",
+    "title": "Yana Kayar Kapı Motoru 2000 kg",
+    "path": "/yana-kayar-kapi-motoru-2000-kg",
+    "productId": 207,
+    "crumbs": [
+      "Anasayfa",
+      "KAPI OTOMASYONU",
+      "YANA KAYAR KAPI MOTORLARI"
+    ],
+    "specs": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "2000 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "2000 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "cizim_modulu": null
+  },
+  {
+    "kod": "ORK YKKM 800",
+    "title": "Yana Kayar Kapı Motoru 800 kg",
+    "path": "/yana-kayar-kapi-motoru-800-kg",
+    "productId": 208,
+    "crumbs": [
+      "Anasayfa",
+      "KAPI OTOMASYONU",
+      "YANA KAYAR KAPI MOTORLARI"
+    ],
+    "specs": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "800 kg"
+      },
+      {
+        "l": "Marka",
+        "v": "Yamansa"
+      }
+    ],
+    "onyazi": [
+      {
+        "l": "Kapı Ağırlığı Kapasitesi",
+        "v": "800 kg"
       },
       {
         "l": "Marka",
