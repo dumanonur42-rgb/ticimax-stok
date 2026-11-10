@@ -12,14 +12,47 @@
       "Vida Adımı (Ph)": {
         "deger": "5 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2005"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "58 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "6,6 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "44 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "3,175 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı",
+      "eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 20,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2005"
@@ -37,14 +70,47 @@
       "Vida Adımı (Ph)": {
         "deger": "5 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2505"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "51 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "6,6 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "3,175 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı",
+      "eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 25,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU2505"
@@ -62,14 +128,47 @@
       "Vida Adımı (Ph)": {
         "deger": "10 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU3210"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "80 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "6,35 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı",
+      "eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 32,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ETA VMS SFU3210"
@@ -1158,14 +1257,46 @@
       "Vida Adımı (Ph)": {
         "deger": "5 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU1605"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "38 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "5,5 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "3,175 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 16,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU1605"
@@ -1183,14 +1314,46 @@
       "Vida Adımı (Ph)": {
         "deger": "5 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2005"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "58 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "6,6 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "44 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "3,175 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 20,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2005"
@@ -1208,14 +1371,46 @@
       "Vida Adımı (Ph)": {
         "deger": "5 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2505"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "51 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "6,6 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "3,175 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 25,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU2505"
@@ -1233,14 +1428,46 @@
       "Vida Adımı (Ph)": {
         "deger": "10 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU3210"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "80 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "62 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M6",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "6,35 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 32,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU3210"
@@ -1258,14 +1485,46 @@
       "Vida Adımı (Ph)": {
         "deger": "10 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU4010"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "63 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "93 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "78 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "70 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M8",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "6,35 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 40,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU4010"
@@ -1283,14 +1542,47 @@
       "Vida Adımı (Ph)": {
         "deger": "10 mm",
         "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU5010"
+      },
+      "Somun Gövde Çapı (D)": {
+        "deger": "75 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Çapı (A)": {
+        "deger": "110 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Kalınlığı (B)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Delik Dairesi Çapı (W)": {
+        "deger": "93 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bağlantı Delik Çapı (X)": {
+        "deger": "11 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Flanş Yüksekliği (H)": {
+        "deger": "85 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Yağlama Dişi (Q)": {
+        "deger": "M8",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
+      },
+      "Bilya Çapı (Da)": {
+        "deger": "6,35 mm",
+        "kaynak": "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html; ortak ölçü karşılaştırması:https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
       }
     },
     "bayraklar": [
-      "eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı",
-      "eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok"
+      "eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı",
+      "eksik: iki katalogda da yalnız SFU5010-4 satırı bulundu; -3 boyu varsayılmadı, yalnız iki kaynakta eşleşen kesit/montaj ölçüleri kullanıldı"
     ],
     "referans_kaynaklar": [
-      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html"
+      "https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html",
+      "https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf"
     ],
     "nominal": 50,
     "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK VMS SFU5010"

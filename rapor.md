@@ -21,9 +21,10 @@ Her üçünde m×z=Dp: 5×32=160, 5×34=170, 5×36=180 mm. Diş sayısı boyutsu
 ## Aile 4 kaynak kararları ve sınırlar
 
 - **BMT:** CY/IA/NL ve SP kodları için üretici/aynı kod katalogları incelendi. New Ball ve Techprim bazı SP bilya çapı, yük ve yüksekliklerinde ayrışıyor; çelişkili değerler aktarılmadı. SP12B ve NL8H için doğrudan kendi kod sayfasındaki yük bilgisi verildi. Kod kaynağı bulunmayan varyantlarda yalnız adın kesin malzeme/montaj bilgisi kullanıldı.
-- **SSPHS/SSPOS:** Finer/SDTZ paslanmaz katalog iç/dış diş tipini destekliyor, fakat istenen R son ekini tanımlamıyor. R=sağ diş bağı ve tam R varyantının ölçü/yük tablosu doğrulanamadı. 16 kodun R eki korundu; A ile değiştirilmedi, baz seri ölçüleri kopyalanmadı. 14 ve 18 ölçüleri bulunan tabloda yok. Müşteriye sağ diş iddiası veya tahmini ölçü yazılmadı.
+- **SSPHS/SSPOS güncellemesi:** B2B adındaki R (A) eşlemesi kullanıcı tarafından onaylandı; Finer/SDTZ aynı SSPHS/SSPOS baz kodunun 6/8/10/12/16/20 boyutları ve kendi kod yükleri 12 ürüne aktarıldı. Harfler katalogdaki d/B/dk/C1/d2/h1/L3/L4/L5/W/d3/d4 veya h/L1/L2/L7 olarak korunur; farklı bir D/d1 uydurulmadı. 14 ve 18 satırı bulunmadığı için dört ürüne ölçü/yük verilmedi. SSPHS-6 diş hücresi M6*10 şüpheli olduğundan yalnız M6 nominali yazıldı. Sağ/sol diş iddiası yoktur.
 - **GKT:** Gedik SG2 belgesi G3Si1 / ER70S-6 eşdeğerliğini, 0,8/1,0/1,2 mm çapları destekliyor. Yamansa parti kimyası, mekanik deney değerleri ve makara ölçüleri aktarılmadı. Adlarda paket miktarı yok; teknik listede `Satış Birimi: Adet`, `Ambalaj: 15 kg/paket` var. Açıklama paket halinde satıldığı iddiasını içermiyor.
 - **YKKM:** Tam kodlu güvenilir teknik kaynak bulunamadı. Yalnız girdi adlarındaki 800/1000/1500/2000 kg kapasite yayınlandı; voltaj, güç, hız, kremayer modülü, uzaktan kumanda, çalışma oranı ve dişli bilgisi verilmedi.
+- **SFU güncellemesi:** Dokuz ORK/ETA somununda Wei-Fong ve Limon aynı kod tablolarının ortak D/A/B/W/X/H/Q/Da montaj geometrisi yayınlandı. 1605/2005/2505/3210/4010 için -3/-4 satırları karşılaştırıldı; 5010 iki katalogda yalnız -4 olduğundan bu sınır ayrıca bayraklandı. Hiçbirinde L, yük ve sirkülasyon sayısı verilmedi. Q yalnız ortak nominal M6/M8; Limon’daki adım tek kaynaktan eklenmedi. ETAZON resmi kaynak eksikliği korunur; ortak geometri kullanıcı onayıyla alınmıştır. VM zaten kaynak adının d/Ph/L değerlerini içerir; başka somunun bilya çapı mile kopyalanmadı. DSG16–32 ortak geometriyi zaten içerir; DSG40 için tam kodlu ikinci güvenilir tablo bulunmadığından çelişkili ölçüler eklenmedi. Limon PDF ve okunmuş pafta: veri/sfu-limon-katalog.pdf, veri/sfu-limon-tablo.png.
 - **S060 ve D/L tuzağı:** CTL 250 resmi tablo PDF’sinde CTL250-60 için d=60, D=90; bu kaynakta 60×90 dış çaplı d×D ölçüsüdür. Sitedeki S040 alanı d/D derken ek JPEG aynı 40×65 adını d/L diye etiketliyor. Bu JPEG çelişkisi göz ardı edilmedi: üretici tablosundaki 38/40/42/45/48/50 çiftleri site adlarıyla d×D olarak eşleşiyor; 65/75/80 değerleri üreticinin L değerleri değil. Bu nedenle müşteri alanında `İç Çap (d): 60 mm`, `Dış Çap (D): 90 mm` kullanıldı; 90 mm boy denmedi. Site JPEG’i `veri/aile4-s040-ek.jpeg` içinde saklandı. L/L1, vida, tork ve yük verileri aktarılmadı. S040 ürün fotoğrafı kodsuz aynı tip kaynak olarak kullanıldı; S060’a birebir fotoğraf denmedi.
 
 ## Kategori kararları
@@ -47,7 +48,7 @@ Aile 4 için yeni çizim modülü yazılmadı; 46 bağlamın tamamında `cizim_m
 | Alt aile | Kullanılan etiketler |
 |---|---|
 | BMT | Ölçü (Dp); Gövde Tipi; Ana Bilya Çapı (Dw); Montaj Tipi; Bilya Malzemesi; Önerilen Yük Kapasitesi; Yük Kapasitesi; Malzeme; Gövde Çapı (D); Ölçü (h); Toplam Yükseklik (H); Flanş Çapı (D1); Ölçü (b); Ana Bilya Malzemesi |
-| PM | Malzeme; Diş Tipi |
+| PM | Malzeme; Diş Tipi; İç Çap (d); Bilezik Genişliği (B); Küre Çapı (dk); Gövde Genişliği (C1); Başlık Çapı (d2); Ölçü (h1); Ölçü (L3); Ölçü (L4); Ölçü (L5); Ölçü (W); Ölçü (d3); Ölçü (d4); Eğilme Açısı (α); Bağlantı Dişi (G); Dinamik Yük (C); Statik Yük (C0); Ölçü (h); Ölçü (L1); Ölçü (L2); Ölçü (L7) |
 | GKT | Tel Çapı (d); Tel Sınıfı; Standart Sınıf Eşdeğerliği; Satış Birimi; Ambalaj |
 | YKKM | Kapı Ağırlığı Kapasitesi |
 | KK | İç Çap (d); Dış Çap (D); Tip |
@@ -74,7 +75,7 @@ SONUÇ: 0 hata
 ```text
 ......................
 ----------------------------------------------------------------------
-Ran 22 tests in 3.606s
+Ran 22 tests in 3.840s
 
 OK
 ```
@@ -114,6 +115,7 @@ git diff --check
 - https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/#Dp=m×z
 - https://www.en.techprim.pl/offer/ball-transfer-units-omni-wheels-rack-multi-directional-transfer-units/ball-transfer-units-series-ef/ball-transfer-units-with-solid-body-and-flange/
 - https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf
+- https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf
 - https://www.kolmb.com.cn/en/prd-20.html
 - https://www.konikkilit.com/_ekler/122-1583389614-ctl-250-tablo.pdf
 - https://www.newball.it/en/prodotto/sp12b/
@@ -128,6 +130,7 @@ git diff --check
 - https://www.slidingbearings.com/Product/5147985851.html
 - https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html
 - https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html
+- https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html
 - https://www.yamansarulman.com/konik-kilit-250-s-tipi-04065-17617
 
 B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.gz` ve `veri/*.json` içindedir; hesaplar ayrıca etiketlenir. Müşteri alanlarına kaynak domaini veya rakip marka adı eklenmedi.
@@ -181,9 +184,9 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | PMI MSA25SZZ | eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı |
 | PMI MSA30EZZ | eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı |
 | PMI MSA35SZZ | eksik: ZZ metal sıyırıcılı varyantın ayrı ağırlığı resmi tabloda yok; standart gövde ağırlığı satış metnine aktarılmadı |
-| ETA VMS SFU2005 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı |
-| ETA VMS SFU2505 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı |
-| ETA VMS SFU3210 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı |
+| ETA VMS SFU2005 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı |
+| ETA VMS SFU2505 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı |
+| ETA VMS SFU3210 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı |
 | ORK ADM SAC164000 | eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı |
 | ORK ADM SAC204000 | eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı |
 | ORK ADM SAC253000 | eksik: aynı SAC boyunda katalog kesitleri farklı; Yamansa kesit ve delik düzeni doğrulanmadı, SBR ölçüleri aktarılmadı |
@@ -226,12 +229,12 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | ORK VM 3210 | eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı |
 | ORK VM 4010 | eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı |
 | ORK VM 5010 | eksik: hassasiyet, ön yük, malzeme, bilya çapı ve yük kapasitesi ürüne özgü kaynakla doğrulanmadı |
-| ORK VMS SFU1605 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
-| ORK VMS SFU2005 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
-| ORK VMS SFU2505 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
-| ORK VMS SFU3210 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
-| ORK VMS SFU4010 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
-| ORK VMS SFU5010 | eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı; eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok |
+| ORK VMS SFU1605 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
+| ORK VMS SFU2005 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
+| ORK VMS SFU2505 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
+| ORK VMS SFU3210 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
+| ORK VMS SFU4010 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı |
+| ORK VMS SFU5010 | eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı; eksik: iki katalogda da yalnız SFU5010-4 satırı bulundu; -3 boyu varsayılmadı, yalnız iki kaynakta eşleşen kesit/montaj ölçüleri kullanıldı |
 | ORK VSG DSG40H | eksik: DSG40H için üretici katalogları arasında H/h/L/C2/P farkı var; kesit ölçüsü doğrulanana kadar aktarılmadı |
 | ORK KR M320201000 | eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı |
 | ORK KR M550503000 | eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı |
@@ -312,22 +315,22 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | ORK GKT MG210 | eksik: SG2 sınıf eşdeğerliği Gedik teknik föyünden; Yamansa parti sertifikası, akım aralığı ve kimyasal/mekanik değerleri yok, aktarılmadı |
 | ORK GKT MG212 | eksik: SG2 sınıf eşdeğerliği Gedik teknik föyünden; Yamansa parti sertifikası, akım aralığı ve kimyasal/mekanik değerleri yok, aktarılmadı |
 | ORK KK S060 | eksik: site S040 metni 40×65 için d×D, ek JPEG ise aynı 65 değerini L diye adlandırıyor; 250 üretici tablosunda 38/40/42/45/48/50 modelleri site adlarıyla d×D olarak eşleşiyor ve CTL250-60 satırı d=60 D=90 veriyor; bu nedenle 60×90 d×D alındı, çelişkili site L etiketi kullanılmadı; diğer boylar ve Yamansa tork/yük değerleri aktarılmadı |
-| ORK PM SSPHS06R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPHS08R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPHS10R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPHS12R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPHS14R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi; eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı |
-| ORK PM SSPHS16R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPHS18R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi; eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı |
-| ORK PM SSPHS20R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS06R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS08R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS10R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS12R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS14R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi; eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı |
-| ORK PM SSPOS16R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
-| ORK PM SSPOS18R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi; eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı |
-| ORK PM SSPOS20R | eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi |
+| ORK PM SSPHS06R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı; eksik: SSPHS-6 katalog dişi M6*10 yazıyor; adım hücresi hatalı/şüpheli, M6 nominali dışında adım aktarılmadı |
+| ORK PM SSPHS08R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPHS10R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPHS12R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPHS14R | eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi |
+| ORK PM SSPHS16R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPHS18R | eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi |
+| ORK PM SSPHS20R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS06R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS08R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS10R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS12R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS14R | eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi |
+| ORK PM SSPOS16R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
+| ORK PM SSPOS18R | eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi |
+| ORK PM SSPOS20R | eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı |
 | ORK YKKM 1000 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 | ORK YKKM 1500 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 | ORK YKKM 2000 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |

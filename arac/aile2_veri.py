@@ -9,6 +9,15 @@ PREFIXES = ('ORK KKM ', 'ORK İM ', 'ORK ADM SAC', 'ORK LR TBR', 'ORK VM ', 'ORK
 TBR_SOURCE = 'https://www.kolmb.com.cn/en/prd-20.html'
 DSG_SOURCE = 'https://www.wangong.net/product/coupling-nut-housing/bsg-dsg-series-aluminum-nut-housing.html'
 SFU_SOURCE = 'https://www.wfint.com.tw/Ball-Screw-SFU-Series-DIN69051/Ball-Screw-Factory.html'
+SFU_LIMON = 'https://www.hannovermesse.de/apollo/hannover_messe_2021/obs/Binary/A1090020/LIMON%20ball%20screw%20catalog-SFU.pdf'
+SFU_COMMON = {
+    '1605': '28 48 10 38 5.5 40 M6 3.175',
+    '2005': '36 58 10 47 6.6 44 M6 3.175',
+    '2505': '40 62 10 51 6.6 48 M6 3.175',
+    '3210': '50 80 12 65 9 62 M6 6.35',
+    '4010': '63 93 14 78 9 70 M8 6.35',
+    '5010': '75 110 16 93 11 85 M8 6.35',
+}
 TBR = {
     16: '62 26 8 42 50 31 30 M5',
     20: '68 31 10 51 54 34 37 M6',
@@ -60,12 +69,15 @@ def prepare(row):
     elif group == 'SFU':
         size, pitch = int(model[3:5]), int(model[5:])
         values.update({'Mil Çapı (d)': value(size, source), 'Vida Adımı (Ph)': value(pitch, source)})
-        raw['bayraklar'].append('eksik: sirkülasyon eki ve tam gövde ölçüleri belirtilmemiş; -3/-4 varyantı seçilmedi, başka varyantın L ve yükleri aktarılmadı')
+        labels = ['Somun Gövde Çapı (D)', 'Flanş Çapı (A)', 'Flanş Kalınlığı (B)', 'Delik Dairesi Çapı (W)', 'Bağlantı Delik Çapı (X)', 'Flanş Yüksekliği (H)', 'Yağlama Dişi (Q)', 'Bilya Çapı (Da)']
+        for label, n in zip(labels, SFU_COMMON[model[3:]].split(), strict=True):
+            values[label] = value(n, SFU_SOURCE + '; ortak ölçü karşılaştırması:' + SFU_LIMON, '' if n.startswith('M') else 'mm')
+        raw['bayraklar'].append('eksik: sirkülasyon eki belirtilmemiş; bulunan kaynak satırlarının ortak montaj ölçüleri kullanıldı; varyanta bağlı L, sirkülasyon sayısı ve yükler aktarılmadı')
+        if model == 'SFU5010':
+            raw['bayraklar'].append('eksik: iki katalogda da yalnız SFU5010-4 satırı bulundu; -3 boyu varsayılmadı, yalnız iki kaynakta eşleşen kesit/montaj ölçüleri kullanıldı')
         if raw['marka'] == 'ETAZON':
-            raw['bayraklar'].append('eksik: ETAZON resmi katalog veya üretici sayfası bulunamadı; başka markanın geometrisi kullanılmadı')
-        else:
-            raw['bayraklar'].append('eksik: Yamansa Ca/Coa ve bilya çapı kanıtı yok')
-        raw['referans_kaynaklar'] = [SFU_SOURCE]
+            raw['bayraklar'].append('eksik: ETAZON resmi katalog bulunamadı; kullanıcı onayıyla aynı SFU baz kodunun ortak geometrisi alındı, marka yükü/ağırlığı aktarılmadı')
+        raw['referans_kaynaklar'] = [SFU_SOURCE, SFU_LIMON]
     elif group == 'TBR':
         labels = ['Gövde Ölçüsü (W)', 'Gövde Ölçüsü (G)', 'Gövde Ölçüsü (A)', 'Gövde Ölçüsü (L)', 'Gövde Ölçüsü (B)', 'Gövde Ölçüsü (D)', 'Gövde Ölçüsü (C)', 'Bağlantı Dişi (S1)']
         values['Mil Çapı (d)'] = value(size, source)

@@ -34,9 +34,14 @@ class FourthFamilyTests(unittest.TestCase):
     def test_missing_and_ambiguous_sources(self):
         for r in self.raw:
             if r['aile'] == 'PM':
-                self.assertEqual(set(r['degerler']), {'Malzeme', 'Diş Tipi'})
+                if r['model'][5:7] in ['14', '18']:
+                    self.assertEqual(set(r['degerler']), {'Malzeme', 'Diş Tipi'})
+                else:
+                    self.assertIn('İç Çap (d)', r['degerler'])
+                    self.assertIn('Dinamik Yük (C)', r['degerler'])
+                    self.assertIn('Bağlantı Dişi (G)', r['degerler'])
                 self.assertTrue(r['model'].endswith('R'))
-                self.assertTrue(any('R sağ diş' in f for f in r['bayraklar']))
+                self.assertTrue(any('diş yönü' in f for f in r['bayraklar']))
             elif r['aile'] == 'YKKM':
                 self.assertEqual(set(r['degerler']), {'Kapı Ağırlığı Kapasitesi'})
         by_model = {r['model']: r for r in self.raw}

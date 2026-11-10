@@ -15,6 +15,17 @@ LOCK = 'https://www.konikkilit.com/_ekler/122-1583389614-ctl-250-tablo.pdf'
 SITE_LOCK = 'https://www.yamansarulman.com/konik-kilit-250-s-tipi-04065-17617'
 NL = 'https://www.transferunits.com/product/NL-8H-Drop-in-Plastic-Nylon-Ball-Roller.html'
 BALL_LABELS = ['Ana Bilya Çapı (Dw)', 'Gövde Çapı (D)', 'Flanş Çapı (D1)', 'Ölçü (h)', 'Toplam Yükseklik (H)', 'Ölçü (b)']
+ROD_BASE = {
+    6: '6 9 12.70 6.75 18 13 4.3 7.2',
+    8: '8 12 15.88 9 22 14 7.2 11.6',
+    10: '10 14 19.05 10.5 26 13 10 14.5',
+    12: '12 16 22.23 12 30 13 13.4 17',
+    16: '16 21 28.58 15 40 15 21.6 28.5',
+    20: '20 25 34.93 18 50 14 31.5 42.5',
+}
+ROD_FEMALE = {6: '30 12 39 5 11 10 13', 8: '36 16 47 5 14 12.5 16', 10: '43 20 56 6.5 17 15 19', 12: '50 22 65 6.5 19 17.5 22', 16: '64 28 84 8 24 22 27', 20: '77 33 102 10 30 27.5 34'}
+ROD_MALE = {6: '36 22 45 13 13 4.3 7.2', 8: '42 25 53 14 14 7.2 11.6', 10: '48 29 61 13 13 10 14.5', 12: '54 33 69 13 13 10 14.5', 16: '66 40 86 15 13 13.4 17', 20: '78 47 103 14 16 17 24'}
+ROD_THREAD = {6: 'M6×1,0', 8: 'M8×1,25', 10: 'M10×1,5', 12: 'M12×1,75', 16: 'M16×2,0', 20: 'M20×1,5'}
 
 
 def selected():
@@ -96,9 +107,28 @@ def prepare(row):
         v['Malzeme'] = value('Paslanmaz', origin, '')
         v['Diş Tipi'] = value('İç dişli' if female else 'Dış dişli', ROD, '')
         raw['incelenen_kaynaklar'].append(ROD)
-        flags.append('eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi')
-        if re.search(r'(14|18)R$', model):
-            flags.append('eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı')
+        size = int(re.search(r'\d+', model).group())
+        raw['seri_eslemesi'] = 'B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı'
+        if size in ROD_BASE:
+            labels = ['İç Çap (d)', 'Bilezik Genişliği (B)', 'Küre Çapı (dk)', 'Gövde Genişliği (C1)', 'Başlık Çapı (d2)']
+            base = ROD_BASE[size].split()
+            for label, n in zip(labels, base[:5], strict=True):
+                v[label] = value(n, ROD)
+            dims = (ROD_FEMALE if female else ROD_MALE)[size].split()
+            letters = ['h1', 'L3', 'L4', 'L5', 'W', 'd3', 'd4'] if female else ['h', 'L1', 'L2', 'L7']
+            for letter, n in zip(letters, dims[:len(letters)], strict=True):
+                v['Ölçü (' + letter + ')'] = value(n, ROD)
+            angle = base[5] if female else dims[4]
+            v['Eğilme Açısı (α)'] = value(angle, ROD, '°')
+            v['Bağlantı Dişi (G)'] = value('M6' if female and size == 6 else ROD_THREAD[size], ROD, '')
+            loads = base[6:] if female else dims[5:]
+            v['Dinamik Yük (C)'] = value(loads[0], ROD, 'kN')
+            v['Statik Yük (C0)'] = value(loads[1], ROD, 'kN')
+            flags.append('eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı')
+            if female and size == 6:
+                flags.append('eksik: SSPHS-6 katalog dişi M6*10 yazıyor; adım hücresi hatalı/şüpheli, M6 nominali dışında adım aktarılmadı')
+        else:
+            flags.append('eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi')
     elif code.startswith('ORK GKT '):
         raw['aile'] = 'GKT'
         diameter = re.search(r'-\s*([\d,]+)\s*MM', row['ad']).group(1)

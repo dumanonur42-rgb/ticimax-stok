@@ -891,15 +891,81 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "6 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "12,70 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "6,75 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "39 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "11 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M6",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "4,3 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "7,2 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı",
+      "eksik: SSPHS-6 katalog dişi M6*10 yazıyor; adım hücresi hatalı/şüpheli, M6 nominali dışında adım aktarılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS08R",
@@ -916,15 +982,80 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "15,88 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "12,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "14 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M8×1,25",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "7,2 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "11,6 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS10R",
@@ -941,15 +1072,80 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "19,05 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "10,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "43 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "56 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "6,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "17 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "19 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M10×1,5",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "10 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "14,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS12R",
@@ -966,15 +1162,80 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "22,23 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "65 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "6,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "19 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "17,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M12×1,75",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "13,4 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "17 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS14R",
@@ -994,13 +1255,13 @@
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
-      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS16R",
@@ -1017,15 +1278,80 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "21 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "28,58 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "64 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "28 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "84 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "24 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "27 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "15 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M16×2,0",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "21,6 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "28,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS18R",
@@ -1045,13 +1371,13 @@
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
-      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPHS20R",
@@ -1068,15 +1394,80 @@
       "Diş Tipi": {
         "deger": "İç dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "25 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "34,93 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h1)": {
+        "deger": "77 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L3)": {
+        "deger": "33 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L4)": {
+        "deger": "102 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L5)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (W)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d3)": {
+        "deger": "27,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (d4)": {
+        "deger": "34 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "14 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M20×1,5",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "31,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "42,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS06R",
@@ -1093,15 +1484,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "6 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "12,70 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "6,75 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "36 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "45 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M6×1,0",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "4,3 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "7,2 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS08R",
@@ -1118,15 +1562,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "8 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "15,88 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "9 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "22 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "42 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "25 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "53 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "14 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M8×1,25",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "7,2 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "11,6 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS10R",
@@ -1143,15 +1640,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "10 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "19,05 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "10,5 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "26 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "48 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "29 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "61 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M10×1,5",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "10 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "14,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS12R",
@@ -1168,15 +1718,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "22,23 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "12 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "30 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "54 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "33 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "69 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "13 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M12×1,75",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "10 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "14,5 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS14R",
@@ -1196,13 +1799,13 @@
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
-      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS16R",
@@ -1219,15 +1822,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "16 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "21 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "28,58 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "66 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "40 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "86 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "15 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "13 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M16×2,0",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "13,4 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "17 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS18R",
@@ -1247,13 +1903,13 @@
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi",
-      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı da yok; ara ölçü hesaplanmadı"
+      "eksik: bulunan paslanmaz seri tablosunda 14/18 satırı yok; ara ölçü veya yük hesaplanmadı; diş yönü belirtilmedi"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK PM SSPOS20R",
@@ -1270,15 +1926,68 @@
       "Diş Tipi": {
         "deger": "Dış dişli",
         "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "İç Çap (d)": {
+        "deger": "20 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bilezik Genişliği (B)": {
+        "deger": "25 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Küre Çapı (dk)": {
+        "deger": "34,93 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Gövde Genişliği (C1)": {
+        "deger": "18 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Başlık Çapı (d2)": {
+        "deger": "50 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (h)": {
+        "deger": "78 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L1)": {
+        "deger": "47 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L2)": {
+        "deger": "103 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Ölçü (L7)": {
+        "deger": "14 mm",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Eğilme Açısı (α)": {
+        "deger": "16 °",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Bağlantı Dişi (G)": {
+        "deger": "M20×1,5",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Dinamik Yük (C)": {
+        "deger": "17 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
+      },
+      "Statik Yük (C0)": {
+        "deger": "24 kN",
+        "kaynak": "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
       }
     },
     "bayraklar": [
-      "eksik: bulunan SSPHS/SSPOS kataloğu R/A eklerini tanımlamıyor; R sağ diş eşlemesi ve tam varyant doğrulanamadı, baz seri ölçüleri/yükleri aktarılmadı; R kodu A ile değiştirilmedi"
+      "eksik: baz seri ölçü/yükleri eş kodlu SSPHS/SSPOS kataloğundan; diş yönü kaynakta tanımlanmıyor, sağ/sol diş iddiası yazılmadı"
     ],
     "incelenen_kaynaklar": [
       "https://www.finerpt.com/site/DefaultSite/filesystem/documents/Finer%20Catalogue%20Files/Bearings%20-%20Rod%20Ends/Stainless%20Steel%20Rod%20Ends/SS%20Rod%20Ends.pdf"
     ],
-    "aile": "PM"
+    "aile": "PM",
+    "seri_eslemesi": "B2B adı R (A) aynı ürünü tanımlıyor; kullanıcı onayıyla SSPHS/SSPOS baz seri boyutu kullanıldı; diş yönü çıkarılmadı"
   },
   {
     "kod": "ORK YKKM 1000",
