@@ -19,6 +19,14 @@ ES5, bağımsız modül; yalnız window.YDRAW kaydı, data-k/keys eşliği, opt.
 - TBR: 4/4; d/W/L gerekli, S1 varsa gösterilir. Açık rulman kesiti; genel G/A/B/D/C harflerine kanıtlanmamış yükseklik/merkez anlamı atanmaz ve bu ölçüler keys listesine alınmaz.
 - SAC: 0/7; renderer d/B/H/h/L ile destekli milin ön görünüşünü ve kesitini destekler, fakat gerçek 7 girdide yalnız d/L vardır. B/H/h tahmin edilmedi; tümü null. Tam destek kesiti olmadan sıradan mil resmi çizilmez.
 
+## Ölçülendirme ve kesit kalite düzeltmesi
+
+Referans olarak `preview/bilyali/w360-c0.png` ve `preview/lineer/00-460.png` açıldı. Aynı ince uzatma çizgisi, sınırda ok ucu, tarama ve eksen çizgisi dili kullanıldı.
+Ölçü oklarının referansı marker ucudur (refX=10); uzatma çizgileri ölçülen kontur veya eksen noktasından başlar. Çaplarda Ø vardır. Yazılar 12–12,5 px bold; 460/360 px tüm SVG metin kutuları taşma ve birbirleriyle çakışma için denetlendi. SVG’de açıklama notu yoktur: yalnız görünüş başlıkları, ölçüler ve pinyon z/m bilgisi bulunur.
+Pinyonda De dış diş ucu zarfına, Dp bölüm dairesi kutuplarına bağlıdır. z ve m başlık altında oklu olmayan ayrı data-k gruplarıdır. Kesitte diş bölgesi, kök çizgisi, göbek, açık delik ve eksen bulunur. Diş genişliği ve anlamı belirsiz d/D sayıları eklenmedi; bu eksikler yalnız rapordadır.
+SFU kesitindeki A/D çapları ve B kalınlığı ön görünüşle aynı ölçeğe bağlıdır. W uzatmaları delik dairesinin çap uçlarından çıkar. İç bilya kanalı profilleri kesik çizgilidir; Ph aynı profilde iki komşu diş tepesi arasında ölçülür. Q oku çizilmiş radyal yağlama deliğinin ağzına gider. Eksenel L hâlâ kaynakta bilinmediğinden boy ölçüsü verilmez; kesit uzunluğu temsili kalır.
+VM diş profili ve helisel izleri ile bir adımlık Ph gösterilir. DSG kesitinde açık iç delik ve kaynak L/B/H oranları korunur. TBR kesitine yuvarlanma elemanları eklendi; d çap çizgisi delik merkezinden geçer, S1 oku çizilmiş bağlantı deliğine gider. SAC sayısal destek kesiti yokken yine null döner; tam verili renderer da uzatma/çap çizgileri kullanır.
+
 ## Gerçek ürün sonuçları
 
 | Kod | Sonuç | Loader seçimi | Keys / null nedeni |
@@ -64,5 +72,5 @@ python3 site/draw/_lineer_diger.py --preview
 ```
 
 460 ve 360 px tüm başarılı ürün PNG’leri `site/draw/preview/vidali_mil/` içinde; HTML null nedenleri dahil tüm gerçek ürünleri içerir. Metin sınırları ve tıklanan data-k grubunun kırmızı olması Chromium’da test edildi.
-Görsel olarak açılan 360 px PNG’ler: pinyon_kremayer/ORK_PD_M416-360.png, pinyon_kremayer/ORK_KR__M225251000-360.png, vidali_mil/ORK_VM_1605-360.png, vidali_mil/ORK_VMS_SFU1605-360.png, vidali_mil/ORK_VSG_DSG16H-360.png, vidali_mil/ORK_LR_TBR16UU-360.png. Ölçü yazıları çakışmıyor; tarama ve eksen çizgileri okunur. Göbek/delik ve boy eksikliği SVG’de belirtilir. Canlı siteye yüklenmedi.
+Görsel olarak açılan 360 px PNG’ler: pinyon_kremayer/ORK_PD_M416-360.png, pinyon_kremayer/ORK_KR__M225251000-360.png, vidali_mil/ORK_VM_1605-360.png, vidali_mil/ORK_VMS_SFU1605-360.png, vidali_mil/ORK_VSG_DSG16H-360.png, vidali_mil/ORK_LR_TBR16UU-360.png. Ölçü yazıları çakışmıyor; tarama ve eksen çizgileri okunur. Göbek/delik ve boy eksikliği yalnız raporda belirtilir. Canlı siteye yüklenmedi.
 PDF raster aracı pdftoppm ortamda yoktu; Python bağımlılıkları kontrol edildi ve kurulu pypdfium2 ile kaynak PDF açıldı. Ortam/bağımlılık ayarı değiştirilmedi.

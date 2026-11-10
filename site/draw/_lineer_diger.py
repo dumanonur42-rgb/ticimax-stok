@@ -67,6 +67,9 @@ def preview():
                         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
                         boxes = page.locator('svg text').evaluate_all('(nodes)=>nodes.map(n=>{let b=n.getBBox();return {x:b.x,y:b.y,w:b.width,h:b.height}})')
                         assert all(b['x'] >= -1 and b['y'] >= -1 and b['x']+b['w'] <= 461 and b['y']+b['h'] <= 261 for b in boxes), result['kod']
+                        for a, first in enumerate(boxes):
+                            for second in boxes[a+1:]:
+                                assert min(first['x']+first['w'], second['x']+second['w']) - max(first['x'], second['x']) <= .5 or min(first['y']+first['h'], second['y']+second['h']) - max(first['y'], second['y']) <= .5, result['kod'] + ': metin çakışması'
                     page.close()
             doc = '<!doctype html><meta charset="utf-8"><title>' + name + '</title><style>body{font:14px Arial;background:#eef1f5}section{background:white;max-width:460px;padding:12px;margin:16px auto}h2{font-size:14px}.hl{cursor:pointer}.hl.active line,.hl.active path{stroke:#d0101e}.hl.active text{fill:#d0101e}</style>' + ''.join(cards)
             doc += '<script>document.addEventListener("click",function(e){var g=e.target.closest(".hl");if(g)g.classList.toggle("active")});</script>'
@@ -81,7 +84,7 @@ def preview():
         browser.close()
 
 
-def report(catalog):
+def report(catalog=None):
     overlay = []
     for name in ['pinyon_kremayer', 'vidali_mil']:
         results = [r for r in json.loads((ROOT / 'preview' / (name + '-results.json')).read_text()) if not r['negative']]
@@ -102,7 +105,13 @@ def report(catalog):
                     '- DSG: 4/5; D/B/H/h/L gerekli. Delikli ön görünüş ve boyuna taramalı kesit. DSG40H çelişkili kesit nedeniyle null.',
                     '- TBR: 4/4; d/W/L gerekli, S1 varsa gösterilir. Açık rulman kesiti; genel G/A/B/D/C harflerine kanıtlanmamış yükseklik/merkez anlamı atanmaz ve bu ölçüler keys listesine alınmaz.',
                     '- SAC: 0/7; renderer d/B/H/h/L ile destekli milin ön görünüşünü ve kesitini destekler, fakat gerçek 7 girdide yalnız d/L vardır. B/H/h tahmin edilmedi; tümü null. Tam destek kesiti olmadan sıradan mil resmi çizilmez.']
-        out += ['', '## Gerçek ürün sonuçları', '', '| Kod | Sonuç | Loader seçimi | Keys / null nedeni |', '|---|---|---|---|']
+        out += ['', '## Ölçülendirme ve kesit kalite düzeltmesi', '',
+                'Referans olarak `preview/bilyali/w360-c0.png` ve `preview/lineer/00-460.png` açıldı. Aynı ince uzatma çizgisi, sınırda ok ucu, tarama ve eksen çizgisi dili kullanıldı.',
+                'Ölçü oklarının referansı marker ucudur (refX=10); uzatma çizgileri ölçülen kontur veya eksen noktasından başlar. Çaplarda Ø vardır. Yazılar 12–12,5 px bold; 460/360 px tüm SVG metin kutuları taşma ve birbirleriyle çakışma için denetlendi. SVG’de açıklama notu yoktur: yalnız görünüş başlıkları, ölçüler ve pinyon z/m bilgisi bulunur.',
+                'Pinyonda De dış diş ucu zarfına, Dp bölüm dairesi kutuplarına bağlıdır. z ve m başlık altında oklu olmayan ayrı data-k gruplarıdır. Kesitte diş bölgesi, kök çizgisi, göbek, açık delik ve eksen bulunur. Diş genişliği ve anlamı belirsiz d/D sayıları eklenmedi; bu eksikler yalnız rapordadır.',
+                'SFU kesitindeki A/D çapları ve B kalınlığı ön görünüşle aynı ölçeğe bağlıdır. W uzatmaları delik dairesinin çap uçlarından çıkar. İç bilya kanalı profilleri kesik çizgilidir; Ph aynı profilde iki komşu diş tepesi arasında ölçülür. Q oku çizilmiş radyal yağlama deliğinin ağzına gider. Eksenel L hâlâ kaynakta bilinmediğinden boy ölçüsü verilmez; kesit uzunluğu temsili kalır.',
+                'VM diş profili ve helisel izleri ile bir adımlık Ph gösterilir. DSG kesitinde açık iç delik ve kaynak L/B/H oranları korunur. TBR kesitine yuvarlanma elemanları eklendi; d çap çizgisi delik merkezinden geçer, S1 oku çizilmiş bağlantı deliğine gider. SAC sayısal destek kesiti yokken yine null döner; tam verili renderer da uzatma/çap çizgileri kullanır.', '',
+                '## Gerçek ürün sonuçları', '', '| Kod | Sonuç | Loader seçimi | Keys / null nedeni |', '|---|---|---|---|']
         for r in results:
             keys = ', '.join(k['k'] for k in r['keys'])
             out.append(f'| {r["kod"]} | {"SVG" if r["svg"] else "null"} | {r["selected"]} | {keys or r["reason"]} |')
@@ -110,11 +119,12 @@ def report(catalog):
         out += ['', '## Kontrol ve yeniden üretim', '',
                 '```sh', 'python3 site/draw/_lineer_diger.py --catalog /home/ubuntu/repos/ticimax-stok', '/home/ubuntu/.nvm/versions/node/v24.22.2/bin/node site/draw/_test_lineer_diger.js /home/ubuntu/repos/ticimax-stok/veri/lineer-ctx.json', 'python3 site/draw/_lineer_diger.py --preview', '```', '',
                 '460 ve 360 px tüm başarılı ürün PNG’leri `site/draw/preview/' + name + '/` içinde; HTML null nedenleri dahil tüm gerçek ürünleri içerir. Metin sınırları ve tıklanan data-k grubunun kırmızı olması Chromium’da test edildi.',
-                'Görsel olarak açılan 360 px PNG’ler: pinyon_kremayer/ORK_PD_M416-360.png, pinyon_kremayer/ORK_KR__M225251000-360.png, vidali_mil/ORK_VM_1605-360.png, vidali_mil/ORK_VMS_SFU1605-360.png, vidali_mil/ORK_VSG_DSG16H-360.png, vidali_mil/ORK_LR_TBR16UU-360.png. Ölçü yazıları çakışmıyor; tarama ve eksen çizgileri okunur. Göbek/delik ve boy eksikliği SVG’de belirtilir. Canlı siteye yüklenmedi.',
+                'Görsel olarak açılan 360 px PNG’ler: pinyon_kremayer/ORK_PD_M416-360.png, pinyon_kremayer/ORK_KR__M225251000-360.png, vidali_mil/ORK_VM_1605-360.png, vidali_mil/ORK_VMS_SFU1605-360.png, vidali_mil/ORK_VSG_DSG16H-360.png, vidali_mil/ORK_LR_TBR16UU-360.png. Ölçü yazıları çakışmıyor; tarama ve eksen çizgileri okunur. Göbek/delik ve boy eksikliği yalnız raporda belirtilir. Canlı siteye yüklenmedi.',
                 'PDF raster aracı pdftoppm ortamda yoktu; Python bağımlılıkları kontrol edildi ve kurulu pypdfium2 ile kaynak PDF açıldı. Ortam/bağımlılık ayarı değiştirilmedi.']
         (ROOT / 'rapor' / (name + '.md')).write_text('\n'.join(out) + '\n')
-    (catalog / 'veri/ek-cizim-sonuclari.json').write_text(json.dumps(overlay, ensure_ascii=False, indent=2) + '\n')
-    print('Rapor: iki modül ve 78 ürün ek çizim sonucu')
+    if catalog:
+        (catalog / 'veri/ek-cizim-sonuclari.json').write_text(json.dumps(overlay, ensure_ascii=False, indent=2) + '\n')
+    print('Rapor: iki modül; 78 ürün; ürün dalına ' + ('yazıldı' if catalog else 'yazılmadı'))
 
 
 if __name__ == '__main__':
@@ -122,6 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('--catalog', type=Path)
     parser.add_argument('--preview', action='store_true')
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--report-draw', action='store_true')
     args = parser.parse_args()
     if args.catalog:
         fixtures(args.catalog)
@@ -129,3 +140,5 @@ if __name__ == '__main__':
         preview()
     if args.report:
         report(args.report)
+    elif args.report_draw:
+        report()

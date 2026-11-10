@@ -22,6 +22,32 @@ fs.readdirSync(root).filter(function(f) { return /\.js$/.test(f) && f.charAt(0)!
     if(out) {
       assert(/viewBox="0 0 460 260"/.test(out.svg));
       assert(!/NaN|undefined|Infinity/.test(out.svg));
+      assert(!/şematik|bilinmiyor|verilmemiş|gösterilmiştir|Destek kesiti/.test(out.svg),'SVG açıklama notu içermemeli');
+      assert(out.svg.indexOf('refX="10"')>=0,'Ok ucu ölçü sınırında olmalı');
+      Array.from(out.svg.matchAll(/font-size="([\d.]+)"/g)).forEach(function(x) { assert(Number(x[1])>=12 && Number(x[1])<=13); });
+      var dimensionGroups={};
+      Array.from(out.svg.matchAll(/<g class="hl" data-k="([^"]+)">([\s\S]*?)<\/g>/g)).forEach(function(x) { dimensionGroups[x[1]]=x[2]; });
+      function endpoints(k) {
+        var line=dimensionGroups[k].match(/<line\b[^>]*marker-end[^>]*>/)[0], coords={};
+        Array.from(line.matchAll(/\b(x1|x2|y1|y2)="([\d.-]+)"/g)).forEach(function(a) { coords[a[1]]=Number(a[2]); });
+        return coords;
+      }
+      function close(a,b) { assert(Math.abs(a-b)<.02,f.kod+': ölçü sınırı '+a+' != '+b); }
+      function number(k) { return out.keys.find(function(x) { return x.k===k; }).v.match(/[\d,]+/)[0].replace(',','.')*1; }
+      if(dimensionGroups.De) {
+        close(endpoints('De').y1,67); close(endpoints('De').y2,197);
+        close(endpoints('Dp').y1,132-65*number('Dp')/number('De'));
+        close(endpoints('Dp').y2,132+65*number('Dp')/number('De'));
+        assert(!/<line|marker/.test(dimensionGroups.Z+dimensionGroups.m));
+      }
+      if(dimensionGroups.A && dimensionGroups.Ph) {
+        close(endpoints('A').y1,72); close(endpoints('A').y2,192);
+        close(endpoints('W').x1,119-60*number('W')/number('A'));
+        close(endpoints('W').x2,119+60*number('W')/number('A'));
+        close(endpoints('B').x2-endpoints('B').x1,120*number('B')/number('A'));
+        close(endpoints('D').y1,132-60*number('D')/number('A'));
+        close(endpoints('D').y2,132+60*number('D')/number('A'));
+      }
       var ids=Array.from(out.svg.matchAll(/\bid="([^"]+)"/g)).map(function(x) { return x[1]; });
       assert(ids.every(function(x) { return x.indexOf(id)===0; }));
       var groups=Array.from(out.svg.matchAll(/data-k="([^"]+)"/g)).map(function(x) { return x[1]; });
