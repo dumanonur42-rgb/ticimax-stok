@@ -75,4 +75,4 @@ ORK KKM 30: match=true; draw() null değil; keys: dr, Lm
 ORK KKM 35: match=true; draw() null değil; keys: dr, Lm
 ORK KKM 40: match=true; draw() null değil; keys: dr, Lm
 ORK KKM 50: match=true; draw() null değil; keys: dr, Lm
-Çizim: 77 başarılı; 31 modül yok; eksik veri kontrolleri: null
+Çizim: 77 başarılı; 85 modül yok; eksik veri kontrolleri: null

@@ -11,7 +11,7 @@
     {"aile": "SFU", "yol": "LİNEER>BİLYALI SOMUNLAR", "url": "https://www.yamansarulman.com/bilyali-somunlar"},
     {"aile": "DSG", "yol": "LİNEER>VİDALI MİL SOMUN GÖVDESİ", "url": "https://www.yamansarulman.com/vidali-mil-somun-govdesi"}
   ],
-  "sinir": "Beş URL katurl.txt içinde var, ancak kamu kontrolünde /?c=1 ana sayfasına yönlendi; canlı kategori breadcrumb doğrulanamadı. Yollar, brief doğrultusunda URL adından LİNEER altında türetildi, yeni_kategori false. Bunlar müşteri açıklamasında iç link yapılmadı. Yayına hazırlıkta kategori kimliği ayrıca teyit edilmeli.",
+  "sinir": "Beş URL katurl.txt içinde var ama sayfa ana sayfaya yönleniyor; kategori boş/pasif olabilir, kullanıcı onaylayacak. Yollar LİNEER altında öneri olarak korundu; yeni_kategori:true ve EK_KATEGORILER:[LİNEER] olarak düzeltildi. Bunlar müşteri açıklamasında iç link yapılmadı.",
   "aciklamada_kullanilan_dogrulanmis_ic_linkler": [
     "https://www.yamansarulman.com/krom-kapli-",
     "https://www.yamansarulman.com/sbr-serisi",

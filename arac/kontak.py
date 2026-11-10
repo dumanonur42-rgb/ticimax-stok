@@ -24,6 +24,10 @@ def main():
     extra_codes = {r['kod'] for r in json.loads((ROOT / 'veri/aile2.json').read_text())}
     sheet([r for r in rows if r['kod'] in extra_codes], 'onizleme/aile2-kontak.jpg')
     sheet([r for r in rows if r['kod'].startswith('ORK LA ')], 'onizleme/aile1-araba-kontrol.jpg', columns=4)
+    if (ROOT / 'veri/aile3.json').exists():
+        codes = {r['kod'] for r in json.loads((ROOT / 'veri/aile3.json').read_text())}
+        sheet([r for r in rows if r['kod'] in codes], 'onizleme/aile3-kontak.jpg')
+        sheet([r for r in rows if r['kod'].startswith('ORK ADM ')], 'onizleme/sac-yeni-kontrol.jpg')
     print('Kontak: onizleme/aile2-kontak.jpg (56 ürün)')
 
 

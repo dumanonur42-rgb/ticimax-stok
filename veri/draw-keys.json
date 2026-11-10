@@ -1390,5 +1390,383 @@
     "sonuc": "modül yok",
     "keys": [],
     "cagrildi": false
+  },
+  {
+    "kod": "ORK KR M320201000",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KR M550503000",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KRKA M410053010",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KRKA M410053012",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KRKA M41005308",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KRKA M422222010",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK KRÖ M225251000",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 210",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 260",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 280",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 330",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 380",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 430",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK MKİ 500",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M416",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M417",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M418",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M419",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M421",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M423",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M424",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M426",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M427",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M428",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M429",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M431",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M432",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M433",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M434",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M435",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M436",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M437",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M438",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M439",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M440",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M441",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M442",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M443",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M444",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M445",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M446",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M447",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M448",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M449",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M450",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M520",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M522",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M524",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M526",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M528",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M530",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M532",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M534",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
+  },
+  {
+    "kod": "ORK PD M536",
+    "match": false,
+    "sonuc": "modül yok",
+    "keys": [],
+    "cagrildi": false
   }
 ]

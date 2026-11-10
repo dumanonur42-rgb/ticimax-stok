@@ -93,6 +93,7 @@ def product(raw, photo, index):
     words = ', '.join(dict.fromkeys(terms))
     brief = title + '. Ölçüleri, montaj seçimini ve kullanım alanlarını inceleyin.'
     category = 'LİNEER>' + CATEGORIES[family][0]
-    item = dict(kod=raw['kod'], URUNADI=title, MARKA=raw['marka'], KATEGORI=category, EK_KATEGORILER=[], yeni_kategori=False, ONYAZI=table(specs), ACIKLAMA=desc, ANAHTARKELIME=words, SEO_SAYFABASLIK=title, SEO_SAYFAACIKLAMA=brief, SEO_ANAHTARKELIME=words, resim='gorseller/' + slug(title) + '.jpg', resim_seviye=photo['seviye'], resim_kaynak=photo['url'], teknik_kaynak=list(dict.fromkeys(v['kaynak'] for v in raw['degerler'].values())), bayraklar=raw['bayraklar'])
+    proposed = family not in ['KKM', 'IM']
+    item = dict(kod=raw['kod'], URUNADI=title, MARKA=raw['marka'], KATEGORI=category, EK_KATEGORILER=['LİNEER'] if proposed else [], yeni_kategori=proposed, ONYAZI=table(specs), ACIKLAMA=desc, ANAHTARKELIME=words, SEO_SAYFABASLIK=title, SEO_SAYFAACIKLAMA=brief, SEO_ANAHTARKELIME=words, resim='gorseller/' + slug(title) + '.jpg', resim_seviye=photo['seviye'], resim_kaynak=photo['url'], teknik_kaynak=list(dict.fromkeys(v['kaynak'] for v in raw['degerler'].values())), bayraklar=raw['bayraklar'])
     ctx = dict(kod=raw['kod'], title=title, path='/' + slug(title), productId=index + 1, crumbs=['Anasayfa'] + category.split('>'), specs=[dict(l=k, v=v) for k, v in specs], onyazi=[dict(l=k, v=v) for k, v in specs], cizim_modulu='mil' if family in ['KKM', 'IM'] else None)
     return item, ctx

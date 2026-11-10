@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    if (ROOT / 'veri/aile3.json').exists():
+        from aile3_raporla import main as report_third
+        report_third()
+        return
     if (ROOT / 'veri/aile2.json').exists():
         from aile2_raporla import main as report_combined
         report_combined()

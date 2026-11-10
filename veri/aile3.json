@@ -1,0 +1,4195 @@
+[
+  {
+    "kod": "ORK KR M320201000",
+    "model": "M320201000",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "3",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000"
+      },
+      "Hatve (p)": {
+        "deger": "9,42 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000"
+      },
+      "Kesit Ölçüsü (a)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000"
+      },
+      "Kesit Ölçüsü (b)": {
+        "deger": "20 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000"
+      },
+      "Boy (L)": {
+        "deger": "1000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000"
+      }
+    },
+    "bayraklar": [
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M320201000",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 3,
+    "kapi_alti": false,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KR M550503000",
+    "model": "M550503000",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000"
+      },
+      "Hatve (p)": {
+        "deger": "15,71 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000"
+      },
+      "Kesit Ölçüsü (a)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000"
+      },
+      "Kesit Ölçüsü (b)": {
+        "deger": "50 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000"
+      },
+      "Boy (L)": {
+        "deger": "3000 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000"
+      }
+    },
+    "bayraklar": [
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KR M550503000",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 5,
+    "kapi_alti": false,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KRKA M410053010",
+    "model": "M410053010",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010"
+      },
+      "Hatve (p)": {
+        "deger": "12,57 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010"
+      },
+      "Kesit Ölçüsü (a)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010"
+      },
+      "Kesit Ölçüsü (b)": {
+        "deger": "10 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010"
+      },
+      "Boy (L)": {
+        "deger": "1005 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010"
+      }
+    },
+    "bayraklar": [
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı",
+      "eksik: KRKA kapı altı koduna özel üretici fotoğrafı/diş geometrisi bulunamadı; düz kremayer sınıflaması aynı tip kapı kremayeri görünüşüne dayanır",
+      "eksik: girdide satış birimi boş; birim varsayılmadı"
+    ],
+    "girdi_birimi": "",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053010",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 4,
+    "kapi_alti": true,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KRKA M410053012",
+    "model": "M410053012",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012"
+      },
+      "Hatve (p)": {
+        "deger": "12,57 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012"
+      },
+      "Kesit Ölçüsü (a)": {
+        "deger": "30 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012"
+      },
+      "Kesit Ölçüsü (b)": {
+        "deger": "12 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012"
+      },
+      "Boy (L)": {
+        "deger": "1005 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012"
+      }
+    },
+    "bayraklar": [
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı",
+      "eksik: KRKA kapı altı koduna özel üretici fotoğrafı/diş geometrisi bulunamadı; düz kremayer sınıflaması aynı tip kapı kremayeri görünüşüne dayanır",
+      "eksik: girdide satış birimi boş; birim varsayılmadı"
+    ],
+    "girdi_birimi": "",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M410053012",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 4,
+    "kapi_alti": true,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KRKA M41005308",
+    "model": "M41005308",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M41005308"
+      },
+      "Hatve (p)": {
+        "deger": "12,57 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M41005308"
+      }
+    },
+    "bayraklar": [
+      "eksik: ürün adında kesit ve boy ölçüsü yok; kod rakamlarından ölçü türetilmedi",
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı",
+      "eksik: KRKA kapı altı koduna özel üretici fotoğrafı/diş geometrisi bulunamadı; düz kremayer sınıflaması aynı tip kapı kremayeri görünüşüne dayanır",
+      "eksik: girdide satış birimi boş; birim varsayılmadı"
+    ],
+    "girdi_birimi": "",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M41005308",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 4,
+    "kapi_alti": true,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KRKA M422222010",
+    "model": "M422222010",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010"
+      },
+      "Hatve (p)": {
+        "deger": "12,57 mm",
+        "kaynak": "hesap:p=π·m; girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010"
+      },
+      "Kesit Ölçüsü (a)": {
+        "deger": "22 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010"
+      },
+      "Kesit Ölçüsü (b)": {
+        "deger": "22 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010"
+      },
+      "Boy (L)": {
+        "deger": "2010 mm",
+        "kaynak": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010"
+      }
+    },
+    "bayraklar": [
+      "eksik: canlı kremayer tablosunda tam kod yok; diş sayısı, malzeme, hp/he/hs ve bağlantı delikleri aktarılmadı",
+      "eksik: KRKA kapı altı koduna özel üretici fotoğrafı/diş geometrisi bulunamadı; düz kremayer sınıflaması aynı tip kapı kremayeri görünüşüne dayanır"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KRKA M422222010",
+    "orka_site": null,
+    "aile": "KR",
+    "nominal": 4,
+    "kapi_alti": true,
+    "yeniden_arama": [
+      "https://orkapt.com/service/kremayer-raylar/",
+      "https://orkapt.com/service-cat/kremayer-raylar-pinyon-disliler/",
+      "https://orkapt.com/?s=kap%C4%B1"
+    ]
+  },
+  {
+    "kod": "ORK KRÖ M225251000",
+    "model": "M225251000",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "2",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "159",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Hatve (p)": {
+        "deger": "6,28 mm",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Ölçü (hp)": {
+        "deger": "22,5 mm",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Ölçü (he)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Ölçü (hs)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      },
+      "Boy (L)": {
+        "deger": "1000 mm",
+        "kaynak": "https://orkapt.com/service/kremayer-raylar/"
+      }
+    },
+    "bayraklar": [],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK KRÖ M225251000",
+    "orka_site": {
+      "url": "https://orkapt.com/service/kremayer-raylar/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "Z",
+          "Hatve (mm)",
+          "hp (mm)",
+          "he (mm)",
+          "hs (mm)",
+          "L (mm)",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK KR M225251000",
+        "KREMAYER RAY M 2 25*25*1000",
+        "2",
+        "159",
+        "6,28",
+        "22,5",
+        "25",
+        "25",
+        "1000",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/DÜZ-KREMAYER-RAYLAR.jpg"
+      ]
+    },
+    "aile": "KR",
+    "nominal": 2,
+    "kapi_alti": false,
+    "kod_eslemesi": "Girdi KRÖ, kaynak KR; açıklama M2 25*25*1000 aynıdır. Girdi kodu değiştirilmedi."
+  },
+  {
+    "kod": "ORK MKİ 210",
+    "model": "210",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "70 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "30,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "210 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "10,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "40,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "240 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "196 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "96,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "59,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "2 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 210",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 210",
+        "MOTOR KIZAĞI İNCE 210",
+        "İNCE SERİ",
+        "70",
+        "30,5",
+        "210",
+        "10,5",
+        "50",
+        "40,5",
+        "240",
+        "196",
+        "96,5",
+        "59,5",
+        "50",
+        "2",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 210
+  },
+  {
+    "kod": "ORK MKİ 260",
+    "model": "260",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "70 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "30,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "260 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "10,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "40,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "290 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "196 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "96,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "70 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "69,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "2 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 260",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 260",
+        "MOTOR KIZAĞI İNCE 260",
+        "İNCE SERİ",
+        "70",
+        "30,5",
+        "260",
+        "10,5",
+        "50",
+        "40,5",
+        "290",
+        "196",
+        "96,5",
+        "70",
+        "69,5",
+        "2",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 260
+  },
+  {
+    "kod": "ORK MKİ 280",
+    "model": "280",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "85 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "44 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "280 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "12,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "66,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "60 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "310 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "260 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "127 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "79,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "68 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "3 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 280",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 280",
+        "MOTOR KIZAĞI İNCE 280",
+        "İNCE SERİ",
+        "85",
+        "44",
+        "280",
+        "12,5",
+        "66,5",
+        "60",
+        "310",
+        "260",
+        "127",
+        "79,5",
+        "68",
+        "3",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 280
+  },
+  {
+    "kod": "ORK MKİ 330",
+    "model": "330",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "85 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "44 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "330 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "12,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "73 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "50,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "360 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "260 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "127 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "102,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "81,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "3 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 330",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 330",
+        "MOTOR KIZAĞI İNCE 330",
+        "İNCE SERİ",
+        "85",
+        "44",
+        "330",
+        "12,5",
+        "73",
+        "50,5",
+        "360",
+        "260",
+        "127",
+        "102,5",
+        "81,5",
+        "3",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 330
+  },
+  {
+    "kod": "ORK MKİ 380",
+    "model": "380",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "56 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "380 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "14,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "89 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "64,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "410 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "341 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "165,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "114,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "90 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "4 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 380",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 380",
+        "MOTOR KIZAĞI İNCE 380",
+        "İNCE SERİ",
+        "110",
+        "56",
+        "380",
+        "14,5",
+        "89",
+        "64,5",
+        "410",
+        "341",
+        "165,5",
+        "114,5",
+        "90",
+        "4",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 380
+  },
+  {
+    "kod": "ORK MKİ 430",
+    "model": "430",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "56 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "430 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "14,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "119 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "84,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "460 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "391 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "190,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "114,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "115 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "4 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 430",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 430",
+        "MOTOR KIZAĞI İNCE 430",
+        "İNCE SERİ",
+        "110",
+        "56",
+        "430",
+        "14,5",
+        "119",
+        "84,5",
+        "460",
+        "391",
+        "190,5",
+        "114,5",
+        "115",
+        "4",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 430
+  },
+  {
+    "kod": "ORK MKİ 500",
+    "model": "500",
+    "marka": "Yamansa",
+    "degerler": {
+      "Ölçü (A)": {
+        "deger": "135 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (B)": {
+        "deger": "70 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (C)": {
+        "deger": "500 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (D)": {
+        "deger": "18,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (E)": {
+        "deger": "116,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (F)": {
+        "deger": "76,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (G)": {
+        "deger": "530 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (H)": {
+        "deger": "420 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (M)": {
+        "deger": "218 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (N)": {
+        "deger": "97,5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (O)": {
+        "deger": "152 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      },
+      "Ölçü (S)": {
+        "deger": "5 mm",
+        "kaynak": "https://orkapt.com/service/motor-kizaklari/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak motor-teknik.png, motor kızağı yerine ilgisiz araç çizimi; A…S harflerine ölçü anlamı atanmadı, sadece tablo değerleri kullanıldı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK MKİ 500",
+    "orka_site": {
+      "url": "https://orkapt.com/service/motor-kizaklari/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Tip",
+          "Ölçüler (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "M",
+          "N",
+          "O",
+          "S",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK MKİ 500",
+        "MOTOR KIZAĞI İNCE 500",
+        "İNCE SERİ",
+        "135",
+        "70",
+        "500",
+        "18,5",
+        "116,5",
+        "76,5",
+        "530",
+        "420",
+        "218",
+        "97,5",
+        "152",
+        "5",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.12.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/03/motor-teknik.png"
+      ]
+    },
+    "aile": "MKI",
+    "nominal": 500
+  },
+  {
+    "kod": "ORK PD M416",
+    "model": "M416",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "16",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "72 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "64 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "15 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M416",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M416",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*16",
+        "4",
+        "16",
+        "72",
+        "64",
+        "50",
+        "15",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M417",
+    "model": "M417",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "17",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "76 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "68 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "15 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M417",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M417",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*17",
+        "4",
+        "17",
+        "76",
+        "68",
+        "50",
+        "15",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M418",
+    "model": "M418",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "18",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "72 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "50 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "15 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M418",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M418",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*18",
+        "4",
+        "18",
+        "80",
+        "72",
+        "50",
+        "15",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M419",
+    "model": "M419",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "19",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "84 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "76 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "60 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "15 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M419",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M419",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*19",
+        "4",
+        "19",
+        "84",
+        "76",
+        "60",
+        "15",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M421",
+    "model": "M421",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "21",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "92 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "84 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "70 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M421",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M421",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*21",
+        "4",
+        "21",
+        "92",
+        "84",
+        "70",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M423",
+    "model": "M423",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "23",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "100 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "92 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M423",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M423",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*23",
+        "4",
+        "23",
+        "100",
+        "92",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M424",
+    "model": "M424",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "24",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "104 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "96 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M424",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M424",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*24",
+        "4",
+        "24",
+        "104",
+        "96",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M426",
+    "model": "M426",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "26",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "112 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "104 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M426",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M426",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*26",
+        "4",
+        "26",
+        "112",
+        "104",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M427",
+    "model": "M427",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "27",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "116 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "108 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M427",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M427",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*27",
+        "4",
+        "27",
+        "116",
+        "108",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M428",
+    "model": "M428",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "28",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "120 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "112 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M428",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M428",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*28",
+        "4",
+        "28",
+        "120",
+        "112",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M429",
+    "model": "M429",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "29",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "124 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "116 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "75 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M429",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M429",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*29",
+        "4",
+        "29",
+        "124",
+        "116",
+        "75",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M431",
+    "model": "M431",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "31",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "132 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "124 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M431",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M431",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*31",
+        "4",
+        "31",
+        "132",
+        "124",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M432",
+    "model": "M432",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "32",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "136 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "128 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M432",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M432",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*32",
+        "4",
+        "32",
+        "136",
+        "128",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M433",
+    "model": "M433",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "33",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "140 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "132 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M433",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M433",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*33",
+        "4",
+        "33",
+        "140",
+        "132",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M434",
+    "model": "M434",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "34",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "144 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "136 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M434",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M434",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*34",
+        "4",
+        "34",
+        "144",
+        "136",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M435",
+    "model": "M435",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "35",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "148 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "140 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M435",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M435",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*35",
+        "4",
+        "35",
+        "148",
+        "140",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M436",
+    "model": "M436",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "36",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "152 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "144 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M436",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M436",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*36",
+        "4",
+        "36",
+        "152",
+        "144",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M437",
+    "model": "M437",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "37",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "156 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "148 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M437",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M437",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*37",
+        "4",
+        "37",
+        "156",
+        "148",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M438",
+    "model": "M438",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "38",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "160 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "152 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M438",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M438",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*38",
+        "4",
+        "38",
+        "160",
+        "152",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M439",
+    "model": "M439",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "39",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "164 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "156 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M439",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M439",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*39",
+        "4",
+        "39",
+        "164",
+        "156",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M440",
+    "model": "M440",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "40",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "168 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "160 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M440",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M440",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*40",
+        "4",
+        "40",
+        "168",
+        "160",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M441",
+    "model": "M441",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "41",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "172 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "164 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M441",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M441",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*41",
+        "4",
+        "41",
+        "172",
+        "164",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M442",
+    "model": "M442",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "42",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "176 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "168 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M442",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M442",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*42",
+        "4",
+        "42",
+        "176",
+        "168",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M443",
+    "model": "M443",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "43",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "180 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "172 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M443",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M443",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*43",
+        "4",
+        "43",
+        "180",
+        "172",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M444",
+    "model": "M444",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "44",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "184 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "176 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M444",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M444",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*44",
+        "4",
+        "44",
+        "184",
+        "176",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M445",
+    "model": "M445",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "45",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "188 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "180 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M445",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M445",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*45",
+        "4",
+        "45",
+        "188",
+        "180",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M446",
+    "model": "M446",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "46",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "192 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "184 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M446",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M446",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*46",
+        "4",
+        "46",
+        "192",
+        "184",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M447",
+    "model": "M447",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "47",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "196 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "188 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M447",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M447",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*47",
+        "4",
+        "47",
+        "196",
+        "188",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M448",
+    "model": "M448",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "48",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "200 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "192 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M448",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M448",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*48",
+        "4",
+        "48",
+        "200",
+        "192",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M449",
+    "model": "M449",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "49",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "204 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "196 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M449",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M449",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*49",
+        "4",
+        "49",
+        "204",
+        "196",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M450",
+    "model": "M450",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "4",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "50",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Dış Çap (De)": {
+        "deger": "208 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "200 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M450",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-4/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M450",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M4*50",
+        "4",
+        "50",
+        "208",
+        "200",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 4
+  },
+  {
+    "kod": "ORK PD M520",
+    "model": "M520",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "20",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "100 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "20 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M520",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M520",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*20",
+        "5",
+        "20",
+        "110",
+        "100",
+        "80",
+        "20",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M522",
+    "model": "M522",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "22",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "120 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "80 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M522",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M522",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*22",
+        "5",
+        "22",
+        "120",
+        "110",
+        "80",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M524",
+    "model": "M524",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "24",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "130 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "120 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "90 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M524",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M524",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*24",
+        "5",
+        "24",
+        "130",
+        "120",
+        "90",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M526",
+    "model": "M526",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "26",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "140 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "130 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "100 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M526",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M526",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*26",
+        "5",
+        "26",
+        "140",
+        "130",
+        "100",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M528",
+    "model": "M528",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "28",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "150 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "140 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "100 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M528",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M528",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*28",
+        "5",
+        "28",
+        "150",
+        "140",
+        "100",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M530",
+    "model": "M530",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Diş Sayısı (Z)": {
+        "deger": "30",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "160 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "150 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "100 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M530",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M530",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*30",
+        "5",
+        "30",
+        "160",
+        "150",
+        "100",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M532",
+    "model": "M532",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "170 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "160 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak diş sayısı 31, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M532",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M532",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*32",
+        "5",
+        "31",
+        "170",
+        "160",
+        "110",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M534",
+    "model": "M534",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "180 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "170 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak diş sayısı 32, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M534",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M534",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*34",
+        "5",
+        "32",
+        "180",
+        "170",
+        "110",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  },
+  {
+    "kod": "ORK PD M536",
+    "model": "M536",
+    "marka": "Yamansa",
+    "degerler": {
+      "Modül (m)": {
+        "deger": "5",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Dış Çap (De)": {
+        "deger": "190 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Bölüm Dairesi Çapı (Dp)": {
+        "deger": "180 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (d)": {
+        "deger": "110 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      },
+      "Ölçü (D)": {
+        "deger": "25 mm",
+        "kaynak": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/"
+      }
+    },
+    "bayraklar": [
+      "eksik: kaynak diş sayısı 33, ad ve Dp/modül oranıyla çelişkili; diş sayısı yayınlanmadı, üretici teyidi gerekiyor",
+      "eksik: diş genişliği, göbek boyu ve malzeme kaynak satırında yok; d/D için çizim harfleri tabloyla eşleşmediğinden anlam atanmadı"
+    ],
+    "girdi_birimi": "ADET",
+    "girdi_kaynagi": "girdi:parca/lineer_diger.jsonl.gz#ORK PD M536",
+    "orka_site": {
+      "url": "https://orkapt.com/service/pinyon-disliler-modul-dislilermodul-5/",
+      "baslik": [
+        [
+          "Ürün Kodu",
+          "Ürün Açıklaması",
+          "Modül",
+          "Diş Sayısı",
+          "ÖLÇÜLER (mm)",
+          "İndirilebilir"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "De",
+          "Dp",
+          "d",
+          "D",
+          "Dosyalar"
+        ]
+      ],
+      "satir": [
+        "ORK PD M536",
+        "PİNYON DİŞLİ (MODÜL DİŞLİ) M5*36",
+        "5",
+        "33",
+        "190",
+        "180",
+        "110",
+        "25",
+        ""
+      ],
+      "resimler": [
+        "https://orkapt.com/wp-content/uploads/2020/03/1.9.jpg",
+        "https://orkapt.com/wp-content/uploads/2020/04/PİNYON-DİŞLİLER-teknik.jpg"
+      ]
+    },
+    "aile": "PD",
+    "nominal": 5
+  }
+]

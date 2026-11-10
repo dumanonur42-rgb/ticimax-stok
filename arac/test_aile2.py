@@ -74,7 +74,7 @@ class SecondFamilyTests(unittest.TestCase):
             (root / 'veri').mkdir()
             (root / 'parca').mkdir()
             shutil.copy(ROOT / 'parca/lineer_diger.jsonl.gz', root / 'parca/lineer_diger.jsonl.gz')
-            for name in ['hg', 'hgr', 'pmi', 'aile2', 'lineer-ctx', 'draw-keys']:
+            for name in ['hg', 'hgr', 'pmi', 'aile2', 'aile3', 'lineer-ctx', 'draw-keys']:
                 shutil.copy(ROOT / f'veri/{name}.json', root / f'veri/{name}.json')
             self.assertEqual(audit_batch(rows, root), [])
             drawings = json.loads((root / 'veri/draw-keys.json').read_text())

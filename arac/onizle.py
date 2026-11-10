@@ -17,7 +17,7 @@ body{margin:0;background:#f4f6f9;color:#16203a;font:16px/1.75 Arial,sans-serif}h
     targets = []
     for item in items:
         name = re.sub('[^A-Za-z0-9]', '_', item['kod'])
-        no_module = item['kod'].startswith(('ORK ADM ', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG '))
+        no_module = item['kod'].startswith(('ORK ADM ', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG ', 'ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ '))
         svg = '' if no_module else (ROOT / f'onizleme/{name}.svg').read_text()
         content = html.replace('HGH 20HA ürün önizleme', escape(item['URUNADI'])).replace('Anasayfa / LİNEER / LİNEER ARABALAR', escape('Anasayfa / ' + item['KATEGORI'].replace('>', ' / ')))
         drawing = '<section class="draw"><h3>Teknik Çizim (mm)</h3>' + svg + '</section>' if svg else ''
@@ -30,7 +30,7 @@ body{margin:0;background:#f4f6f9;color:#16203a;font:16px/1.75 Arial,sans-serif}h
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path='/home/ubuntu/.local/bin/google-chrome', headless=True, args=['--no-sandbox'])
         page = browser.new_page(device_scale_factor=1)
-        examples = ['ORK_LA_HGH20HA', 'ORK_LR_HGR25_4', 'PMI_MSA30LE', 'PMI_MSB15S', 'ORK_KKM_20', 'ORK__M_20', 'ORK_ADM_SAC204000', 'ORK_LR_TBR20UU', 'ORK_VM_2505', 'ORK_VMS_SFU3210', 'ETA_VMS_SFU2005', 'ORK_VSG_DSG40H']
+        examples = ['ORK_LA_HGH20HA', 'ORK_LR_HGR25_4', 'PMI_MSA30LE', 'PMI_MSB15S', 'ORK_KKM_20', 'ORK__M_20', 'ORK_ADM_SAC204000', 'ORK_LR_TBR20UU', 'ORK_VM_2505', 'ORK_VMS_SFU3210', 'ETA_VMS_SFU2005', 'ORK_VSG_DSG40H', 'ORK_PD_M416', 'ORK_PD_M536', 'ORK_KRKA_M41005308', 'ORK_MK__210']
         for name, target in targets:
             for width in [1280, 390]:
                 page.set_viewport_size({'width': width, 'height': 900})

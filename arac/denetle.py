@@ -25,7 +25,8 @@ def audit(rows, root=ROOT):
                 fail(f'boş/eksik alan: {key}')
         for key, value in row.items():
             serialized = json.dumps(value, ensure_ascii=False)
-            if re.search(r'orka(?:pt)?', serialized, re.I):
+            source_metadata = key in ['resim_kaynak', 'teknik_kaynak'] and row.get('kod', '').startswith(('ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ '))
+            if not source_metadata and re.search(r'orka(?:pt)?', serialized, re.I):
                 fail(f'yasak marka: {key}')
             if '\u0307' in serialized:
                 fail(f'U+0307: {key}')
@@ -85,11 +86,11 @@ def audit(rows, root=ROOT):
 def audit_batch(rows, root=ROOT):
     errors = []
     with gzip.open(root / 'parca/lineer_diger.jsonl.gz', 'rt') as stream:
-        selected = [r['kod'] for line in stream if (r := json.loads(line))['kod'].startswith(('ORK LA HGH', 'ORK LA HGW', 'ORK LR HGR', 'PMI MSA', 'PMI MSB', 'ORK KKM ', 'ORK İM ', 'ORK ADM SAC', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG '))]
+        selected = [r['kod'] for line in stream if (r := json.loads(line))['kod'].startswith(('ORK LA HGH', 'ORK LA HGW', 'ORK LR HGR', 'PMI MSA', 'PMI MSB', 'ORK KKM ', 'ORK İM ', 'ORK ADM SAC', 'ORK LR TBR', 'ORK VM ', 'ORK VMS ', 'ETA VMS ', 'ORK VSG ', 'ORK PD ', 'ORK KR ', 'ORK KRÖ ', 'ORK KRKA ', 'ORK MKİ '))]
     codes = [r['kod'] for r in rows]
-    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 108:
-        errors.append('aile kapsamı: 108 girdinin tümü birer kez işlenmeli')
-    raw = [r for f in ['hg', 'hgr', 'pmi', 'aile2'] for r in json.loads((root / f'veri/{f}.json').read_text())]
+    if len(codes) != len(set(codes)) or sorted(codes) != sorted(selected) or len(codes) != 162:
+        errors.append('aile kapsamı: 162 girdinin tümü birer kez işlenmeli')
+    raw = [r for f in ['hg', 'hgr', 'pmi', 'aile2', 'aile3'] for r in json.loads((root / f'veri/{f}.json').read_text())]
     contexts = json.loads((root / 'veri/lineer-ctx.json').read_text())
     drawings = json.loads((root / 'veri/draw-keys.json').read_text())
     for label, records in [('ham veri', raw), ('bağlam', contexts), ('çizim', drawings)]:
@@ -122,6 +123,10 @@ def audit_batch(rows, root=ROOT):
                 errors.append(row['kod'] + ': değer/kaynak uyumsuz: ' + label)
         if row['bayraklar'] != record['bayraklar']:
             errors.append(row['kod'] + ': eksik bayrakları korunmadı')
+        if family in ['PD', 'KR', 'MKI'] and row['teknik_kaynak'] != list(dict.fromkeys(v['kaynak'] for v in record['degerler'].values())):
+            errors.append(row['kod'] + ': teknik kaynak metadatası ham veriyle farklı')
+        if family in ['SAC', 'TBR', 'VM', 'SFU', 'DSG'] and (row['yeni_kategori'] is not True or 'LİNEER' not in row['EK_KATEGORILER']):
+            errors.append(row['kod'] + ': pasif kategori önerisi/ek kategori eksik')
     return errors
 
 

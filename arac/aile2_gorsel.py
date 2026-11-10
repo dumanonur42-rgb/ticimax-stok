@@ -13,7 +13,7 @@ def main():
             photo = candidate('hardened precision shaft rod', 13, cutout=True)
             photo['on_plan'] = [[45, 481], [53, 467], [799, 256], [799, 310], [77, 519], [58, 516]]
         elif ' ADM ' in code:
-            photo = candidate('supported shaft SBR photo', 10, cutout=True)
+            photo = candidate('supported shaft rail only SBR16', 0)
             photo['delikleri_koru'] = True
         elif ' TBR' in code:
             photo = candidate('TBR16UU', 2)
