@@ -38,7 +38,55 @@ Diş yüksekliği/oluk oranları, BTK konik yuva açısı ve flanş kalınlığ�
 imalat resmi veya standart profil toleransı iddiası yoktur. Ön görünüş ve kesit farklı eksenel ölçek kullanabilir.
 BTK maksimum delik yalnız veri etiketi olarak gösterilir; mevcut burç deliği çapı değildir.
 Eksik d çizilmez; eksik F/L şekli şematik oranla gösterilebilir ama ölçü etiketi ve keys oluşturulmaz.
-Ölçü liderleri/okları ve etiketleri data-k gruplarında; preview kartları tıklanarak grup vurgulanabilir.
+Ölçü okları ve etiketleri data-k gruplarında; preview kartları tıklanarak grup vurgulanabilir.
+
+## Beklenen etiketler
+
+Etiketler `ctx.specs` veya `ctx.onyazi` içindeki `{l, v}` nesnelerinden okunur.
+İki listede aynı etiket varsa `ctx.specs` önceliklidir. Aşağıdaki `l` metinleri tam kullanılabilir;
+modül Türkçe büyük/küçük harf farkını normalize eder. Ölçü değerleri örneğin `64,68 mm` olabilir.
+
+| Değer | Tam `l` etiketi | Zorunluluk / kullanım |
+| --- | --- | --- |
+| Aile | `Ürün Tipi` | Başlık `triger kasnak` içermiyorsa gerekli; `Triger Kasnak` veya `Burçlu Triger Kasnak`. BTK ayrımı da buradan veya başlıktan yapılır. |
+| Profil | `Diş Profili` | Zorunlu: XL, L, H, T5, T10, 3M, 5M, 8M. |
+| z | `Diş Sayısı` | Zorunlu: pozitif tam sayı, desteklenen aralık 3–1000. |
+| De | `Dış Çap (De)` | De veya Dp'den en az biri zorunlu; pozitif mm. Eksik olan için sayısal etiket oluşturulmaz. |
+| Dp | `Bölüm Çapı (Dp)` | De veya Dp'den en az biri zorunlu; pozitif mm. Kesik-noktalı bölüm dairesi. |
+| Flanş durumu | `Flanş` | Opsiyonel: `Flanşlı` veya `Flanşsız`. Yalnız `Flanşlı` flanş geometrisini açar. |
+| Df | `Flanş Çapı (Df)` | Opsiyonel; yalnız flanşlıysa daire ve dikey çap ölçüsü. |
+| Dm | `Göbek Çapı (Dm)` | Opsiyonel; göbek dairesi, kesit göbek çapı ve dikey çap ölçüsü. |
+| F | `Kasnak Genişliği (F)` | Opsiyonel; kesitte yatay diş genişliği ölçüsü. |
+| L | `Toplam Boy (L)` | Opsiyonel; kesitte yatay toplam boy ölçüsü, L>F ise tek taraflı göbek uzantısı. TK/BTK ayrımı yapmadan mevcutsa kullanılır. |
+| d | `Ön Delik (d)` | Opsiyonel; yalnız TK için ön delik dairesi, kesit deliği ve dikey çap ölçüsü. |
+| Burç kodu | `Burç Tipi` | Opsiyonel; yalnız BTK için `Burç 1108` gibi, lider çizgisiz etiket. Geometri bu koddan türetilmez. |
+| Delik sınırı | `Maksimum Delik` | Opsiyonel; yalnız BTK için maksimum delik etiketi. Mevcut burç deliği çapı olarak kullanılmaz. |
+
+`Hatve`, `Kayış Genişliği`, `Di Ölçüsü`, `S Ölçüsü`, `R Ölçüsü`, `Malzeme`, `Ürün Kodu`,
+`Marka`, `Tip Kodu`, `Flanş Kodu` çizim modülü tarafından **okunmaz**.
+BTK konik yuvası şematiktir; bilinmeyen burç deliğine sayısal ölçü yazılmaz.
+
+## Görsel revizyon
+
+Kesitte üst yarı taralı, alt yarı taramasız yarım kesit düzeni kullanılır; dişli gövde, iki flanş,
+varsa tek taraflı göbek, ön delik/konik burç yuvası ve eksen gösterilir.
+F, flanşların iç yüzleri arasında; L, dış yüzler arasında ölçülür. Bilinmeyen flanş kalınlığı şematiktir.
+Dp/De/Df/d çap ölçüleri kesitin sağında dikey okludur; Dm solda dikey okludur.
+Ön görünüşte ölçü lideri yoktur; hiçbir çap veya burç etiketi için çapraz lider çizilmez.
+Fixture ve preview başlıklarından ORKA/ORKAPT kaldırılmıştır.
+
+Revizyon sonrası tüm 915 ctx ile Node kontrolü tekrar çalıştırıldı:
+
+```text
+ALL: 908/915 draw; 7 null (missing orka_site: De and Dp absent)
+PASS: finite SVG, keys/data-k, forbidden dimensions, no diagonal leaders, hatch and centreline
+PASS: 44 fixtures = 40 draw + 1 missing-source null + 3 negatives
+PASS: brand-free titles, onyazi fallback, optional BTK L, empty ctx, missing diameters
+```
+
+Sekiz PNG yeniden üretildi. `xl-6f-360.png`, `8m-gobek-360.png`, `btk-5f-360.png`
+dosyaları açılarak yeni yarım kesit, dikey çap ölçüleri ve lider çizgilerinin kaldırıldığı doğrulandı;
+bu üç örnekte etiket çakışması görülmedi. 112 dişli örneğin kaynak eksiği devam ediyor.
 
 ## Kontroller
 
