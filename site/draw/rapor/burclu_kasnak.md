@@ -1,6 +1,7 @@
 # Burçlu V kasnak çizim modülü
 
-Çizim/fixture/PNG commit: `e2dc2151be6ee666a606e0f629290bc01d8d784d`.
+Güncel çizim/PNG commit: `8b9e4e7d8162b9649d89b0786315f76eeae90e6c`.
+İlk çizim/fixture commit: `e2dc2151be6ee666a606e0f629290bc01d8d784d`.
 Dal: `draw/burclu_kasnak`; taban: `origin/site-assets`; worktree: `/home/ubuntu/work/draw_wt`.
 Ana checkout `orkapt/burclu_kasnak` üzerinde ve değişmeden kaldı. Ticimax paneli/yükleme ve PR işlemi yapılmadı.
 
@@ -24,6 +25,7 @@ Tip 9 olukları kanallı K kısmında; tip 4/5 kollu, tip 6/7 E kalınlıklı di
 ```text
 PASS: 519 benzersiz ürün; KYS resmi değerleri ve MARKA=KYS; 11 eksik ürünün gövde tipi null
 PASS 40/40 fixtures; 14 SVG, 26 null; ES5, ids, keys, optional omissions
+PASS 14 SVG geometry: hatched section halves, axis symmetry, channel-count V grooves at 38 degrees, front keyways, no white arm overlays
 PASS 28 headless Chrome PNG; text boxes: no overlaps at 460/360px
 ```
 
@@ -33,8 +35,17 @@ Headless Chrome CDP hedefi `type=page` olarak seçildi; SVG yüklenmesi ve gerç
 İlk yakalama yanlışlıkla Chrome toolbar hedefini seçmişti; o PNG'ler geçersiz sayılıp tamamı yeniden üretildi.
 Gerçek renderde bulunan Tip/F yazı çakışması ve önizleme kaydırma çubuğu/kırpılması giderildi.
 
-28 PNG'nin 460/360 montajları gözle incelendi; metin çakışması veya F/L/K/M yönleriyle tutarsızlık görülmedi.
-Son değişen tip 8 PNG'leri ayrıca her iki genişlikte açılıp incelendi. Şekiller üretim resmi değil, şematik teknik görseldir.
+## Görsel kalite revizyonu
+
+- Tip 4/5 kesitindeki beyaz kol maskesi kaldırıldı. J çapında iç kenarlı taranmış jant, N çapında/L uzunluğunda taranmış göbek ve aradaki dar taranmış kol bağlantısı tek kapalı kesit sınırıyla çiziliyor. Diskli tiplerde aynı sınır E kalınlıklı ağı içeriyor.
+- Konik burç yuvası taramasız ve eksene simetrik. Çok küçük gerçek radyal oranlarda okunurluk için şematik minimum göbek/jant et kalınlığı kullanılır; ölçü değerleri değişmez. K/M eksenel yerleşimleri gerçek F/L ilişkisini korur.
+- Her kanal tek sivri V oluğu; iki yanak arasındaki açı 38 derece. Oluk aralığı F/kanal, tip 9'da kanallı K/kanal üzerinden hesaplanır. Oluk derinliği jantın içinde sınırlanır.
+- Küçük K/M mesafelerinde dışarıdan oklar; kısa uzatma çizgileri ve kesit yanındaki etiketler kullanılır. L alt sırada, Burç ve Tip açıklamaları ortak y=250 taban çizgisindedir.
+- Ön görünüşte kanal halkaları, N göbeği, kama çentikli burç deliği ve J'ye kadar uzanan kollar bulunur. Kama ölçüsü tahmin edilip yazılmaz.
+
+Tüm 28 PNG yeniden üretildi. 460 ve 360 genişliklerinin tamamı montaj halinde gözle incelendi: metin çakışması, kesik footer veya taranmamış kollu jant görülmedi; K/M taşma/girinti yönleri kontrol edildi.
+Geometri kontrolü her SVG için iki taranmış yarıyı, eksen simetrisini, kanal adedi kadar simetrik 38 derecelik V oluğu ve kama işaretini ayrıca doğruladı.
+Şekiller üretim resmi değil, şematik teknik görseldir.
 
 ## Dört örnek (farklı kanal sayıları)
 
