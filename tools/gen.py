@@ -221,18 +221,19 @@ def aciklama(d, nm):
     if 'Dp' in D: pr += ' Hesaplamalarda esas alınan bölüm çapı %s mm\'dir; kayışın hatve hattı bu çap üzerinde döner.' % D['Dp']
     s.append(('%s Diş Profili ve Hatve' % p, pr))
     if btk:
-        bp = 'Bu kasnak konik burç (taper bush) ile mile bağlanır. '
+        bp = pick(k, 'b', ['%s dişli %s, konik burç (taper bush) ile mile bağlanır. ', '%s kodlu %s dişli kasnağın mile bağlantısı konik burç (taper bush) ile yapılır. ', 'Konik burç (taper bush) yuvalı %s, %s dişli gövdesiyle mile burç üzerinden sabitlenir. '])
+        bp = bp % ((z, c) if bp.startswith('%s dişli') else (c, z))
         if d['burc']: bp += 'Kullanılacak burç tipi <b>%s</b>' % d['burc'] + (" olup bu burçla elde edilebilecek maksimum delik ölçüsü %s mm'dir. " % d['maxd'] if d['maxd'] else ' olarak belirtilmiştir. ')
         bp += 'Burç ayrı olarak seçilir; mil çapınıza uygun delikli burç ile kasnak, kama kanalı açmaya veya tornalamaya gerek kalmadan mile sıkıca oturur. Uygun burçlar için %s sayfasına bakabilirsiniz.' % a(L_KB, 'konik burçlar')
         s.append(('Konik Burç ile Bağlantı', bp))
     else:
         bp = ''
-        if d['d']: bp += 'Kasnak %s mm ön delikli (pilot delik) olarak gelir; mil çapınıza göre delik büyütülüp kama kanalı ve vida deliği açılabilir. ' % d['d']
+        if d['d']: bp += pick(k, 'd', ['%s, %s mm ön delikli (pilot delik) olarak gelir; ', '%s dişli %s kasnağın ön deliği %s mm\'dir (pilot delik); ', '%s mm pilot delikli teslim edilen %s; ']).replace('%s dişli %s kasnağın', z + ' dişli ' + c + ' kasnağın').replace('%s, %s mm', c + ', ' + d['d'] + ' mm').replace('%s mm pilot', d['d'] + ' mm pilot').replace('teslim edilen %s', 'teslim edilen ' + c).replace("%s\'dir", d['d'] + "\'dir") + 'mil çapınıza göre delik büyütülüp kama kanalı ve vida deliği açılabilir. '
         else: bp += 'Ön delik ölçüsü kaynak tabloda belirtilmemiştir; sipariş öncesi mil bağlantısını teyit ediniz. '
         if 'Dm' in D: bp += 'Göbek çapı (Dm) %s mm' % D['Dm'] + (', toplam boy (L) %s mm' % D['L'] if 'L' in D else '') + ' olduğundan delik işlenirken et kalınlığı korunmalıdır.'
         s.append(('Mil Bağlantısı ve Delik', bp))
     if d['flans']:
-        fp = 'Kasnağın iki yanındaki flanşlar, kayışın çalışma sırasında yana kaçmasını önler.'
+        fp = '%s kasnağın iki yanındaki flanşlar, kayışın çalışma sırasında yana kaçmasını önler.' % c
         if 'Df' in D: fp += ' Flanş çapı (Df) %s mm\'dir; montaj alanında bu çap kadar boşluk bırakılmalıdır.' % D['Df']
         fp += pick(k, 'f', [' Genellikle iki kasnaklı sistemde en az bir kasnağın flanşlı olması önerilir.',
                             ' Özellikle dikey eksenli veya uzun mesafeli tahriklerde flanşlı kasnak kayışı yerinde tutar.',

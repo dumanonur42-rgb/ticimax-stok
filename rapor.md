@@ -147,8 +147,6 @@ Birden çok üründe birebir aynı `<p>` paragrafları (bilgilendirme; ürün ba
 
 | Ürün sayısı | Paragraf |
 | ---: | --- |
-| 46 | 1610 burç / 42 mm maksimum delik bağlantı açıklaması |
-| 32 | 2012 burç / 50 mm maksimum delik bağlantı açıklaması |
-| 32 | 10 mm pilot delik / Dm 45 mm bağlantı açıklaması |
-| 25 | 1108 burç / 28 mm maksimum delik bağlantı açıklaması |
-| 20 | 8 mm pilot delik / Dm 45 mm bağlantı açıklaması |
+| 7 | Aynı diş sayısı ve aynı H profilindeki ürünlerde profil/hatve paragrafı (ürün kodu ve ölçüler diğer paragraflarda ayrışır) |
+
+Burç, pilot delik ve flanş paragrafları ürün kodu ve diş sayısı içerecek şekilde ürüne özgü hale getirildi; en çok tekrar eden paragraf 7 ürünle sınırlı.
