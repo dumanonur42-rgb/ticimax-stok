@@ -19,6 +19,7 @@ const results = contexts.map(ctx => {
   assert.strictEqual(product.bayraklar.includes('cizim_yok'), out === null, ctx.kod);
   if (out) {
     assert(out.svg.includes('<svg') && !/NaN|Infinity|undefined/.test(out.svg), ctx.kod);
+    for (const key of out.keys) assert(ctx.specs.some(s => s.l === key.l), ctx.kod + ' kaynak etiketi: ' + key.l);
     for (const key of out.keys.filter(k => k.k === 'K' || k.k === 'M' || k.k === 'L')) {
       const spec = ctx.specs.find(s => s.l.endsWith('(' + key.k + ')'));
       assert.strictEqual(key.v, spec.v, ctx.kod + ' ' + key.k);

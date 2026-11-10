@@ -7,10 +7,36 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from ad import urun_slug
-from gorsel_uret import REPO, ROOT, govde, kaynaklar, kompozit
+from gorsel_uret import CHANNELS, REPO, ROOT, govde, kaynaklar, kompozit, secimler
 
 
 class GorselTest(unittest.TestCase):
+    def test_same_channel_selection(self):
+        sources = {(n, 'dolu'): {} for n in CHANNELS}
+        sources[3, 'kollu'] = {}
+        selected = secimler(sources)
+        self.assertEqual(len(selected), 24)
+        self.assertEqual(selected[3, 'kollu'], (3, 'kollu'))
+        self.assertEqual(selected[5, 'diskli'], (5, 'dolu'))
+        self.assertTrue(all(wanted[0] == chosen[0] for wanted, chosen in selected.items()))
+
+    def test_empty_and_missing_channel_sources(self):
+        for sources in ({}, {(1, 'dolu'): {}}):
+            with self.assertRaisesRegex(ValueError, 'Aynı kanallı'):
+                secimler(sources)
+
+    def test_invalid_source_group(self):
+        for record in ({'kanal_sayisi': 7, 'govde': 'dolu'},
+                       {'kanal_sayisi': 1, 'govde': 'bilinmeyen'}):
+            with patch('gorsel_uret.Path.read_text', return_value=json.dumps([record])):
+                with self.assertRaisesRegex(ValueError, 'Geçersiz/tekrar'):
+                    kaynaklar()
+
+    def test_changed_source(self):
+        with patch('gorsel_uret.Path.read_bytes', return_value=b'changed'):
+            with self.assertRaisesRegex(ValueError, 'Denetlenmemiş/değişmiş'):
+                kaynaklar()
+
     def test_empty(self):
         with patch('gorsel_uret.Image.open', return_value=Image.new('RGB', (100, 100), 'white')):
             with self.assertRaises(ValueError):

@@ -9,7 +9,7 @@
     "drawWidth": 456,
     "drawHeight": 257.734375,
     "overflow": false,
-    "height": 2232
+    "height": 2193
   },
   {
     "kod": "ORK BK SPB4005",
@@ -21,7 +21,7 @@
     "drawWidth": 456,
     "drawHeight": 257.734375,
     "overflow": false,
-    "height": 2329
+    "height": 2254
   },
   {
     "kod": "KYS BK SPB1803",
@@ -33,6 +33,6 @@
     "drawWidth": 456,
     "drawHeight": 257.734375,
     "overflow": false,
-    "height": 2232
+    "height": 2193
   }
 ]

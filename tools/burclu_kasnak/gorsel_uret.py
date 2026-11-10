@@ -1,19 +1,22 @@
-"""Denetlenmiş kaynak fotoğraflarından kasnak kompozitleri."""
+"""Gözle denetlenmiş Taper-Lock fotoğraflarından kasnak kompozitleri."""
+import hashlib
 import json
 import os
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
-import numpy as np
 import cv2
-from PIL import Image, ImageDraw, ImageFilter
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from scipy import ndimage
 
-from ad import urun_adi, urun_slug
+from ad import urun_slug
 
 ROOT = Path(os.environ.get('BURCLU_WORK', str(Path.home() / 'work')))
 REPO = Path(os.environ.get('BURCLU_REPO', str(Path.home() / 'repos/ticimax-stok')))
+HERE = Path(__file__).resolve().parent
 GROUPS = ('dolu', 'kollu', 'diskli')
+CHANNELS = (1, 2, 3, 4, 5, 6, 8, 10)
 
 
 def govde(row):
@@ -28,37 +31,30 @@ def govde(row):
 
 
 def kaynaklar():
-    metadata = []
-    for name in ('photos/candidates.json', 'photos2/candidates.json', 'photos3/candidates.json',
-                 'photos6/candidates.json', 'surplus_photos.json', 'photos/direct.json'):
-        metadata.extend(json.loads((ROOT / name).read_text()))
-    choices = [
-        (1, 'dolu', 'f553de40757c4d88.jpg'),
-        (2, 'dolu', 'c958b6bfeab30fe6.jpg'),
-        (3, 'dolu', '8445915c8158a946.jpg'),
-        (4, 'dolu', '78f39b193eb6ba24.jpg'),
-        (4, 'diskli', '512e66d9b36baf10.jpg'),
-        (5, 'dolu', '2226e602882ee635.jpg'),
-        (5, 'kollu', '84577ce9074b544a.jpg'),
-        (6, 'dolu', '5fe38c641a43792a.jpg'),
-        (8, 'diskli', 'bf0ba8d805887ddd.jpg'),
-        (10, 'diskli', 'c4ddf3ec83f053a4.jpg'),
-    ]
+    records = json.loads((HERE / 'taper_kaynaklar.json').read_text())
     sources = {}
-    for channel, body, filename in choices:
-        record = next(r for r in metadata if Path(r['path']).name == filename)
-        sources[channel, body] = dict(record, kanal_sayisi=channel, govde=body)
-        if (channel, body) in ((3, 'dolu'), (5, 'kollu')):
-            sources[channel, body]['background'] = 'white'
-    sources[1, 'kollu'] = dict(
-        url='https://orkapt.com/wp-content/uploads/2020/03/SPA-BURÇLU-V-KASNAKLAR.jpg',
-        page='https://orkapt.com/service/spa-burclu-v-kasnaklar/',
-        path=str(ROOT / 'm_SPA-BURÇLU-V-KASNAKLAR.jpg'), kanal_sayisi=1, govde='kollu')
-    sources[3, 'kollu'] = dict(
-        url='https://orkapt.com/wp-content/uploads/2020/04/v-kasnak-ic.jpg',
-        page='https://orkapt.com/service/3-kanal-2/', path=str(ROOT / 'v-kasnak-ic.jpg'),
-        kanal_sayisi=3, govde='kollu')
+    for record in records:
+        key = record['kanal_sayisi'], record['govde']
+        if key[0] not in CHANNELS or key[1] not in GROUPS or key in sources:
+            raise ValueError('Geçersiz/tekrar kaynak grubu: ' + str(key))
+        path = HERE / 'kaynaklar' / record['dosya']
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != record['sha256'] or not record.get('kontrol'):
+            raise ValueError('Denetlenmemiş/değişmiş kaynak: ' + str(path))
+        sources[key] = dict(record, path=str(path))
     return sources
+
+
+def secimler(sources):
+    selected = {}
+    for n in CHANNELS:
+        same_channel = [key for key in sources if key[0] == n]
+        if not same_channel:
+            raise ValueError('Aynı kanallı denetlenmiş Taper-Lock kaynak yok: ' + str(n))
+        for body in GROUPS:
+            key = n, body
+            selected[key] = key if key in sources else same_channel[0]
+    return selected
 
 
 def kompozit(source, template):
@@ -105,13 +101,9 @@ def main():
     if duplicates:
         raise ValueError('Slug çakışması: ' + str(duplicates))
     sources = kaynaklar()
-    counts = Counter((row['kanal_sayisi'], govde(row)) for row in rows if govde(row))
-    common = {n: max(GROUPS, key=lambda g: counts[n, g]) for n in (1, 2, 3, 4, 5, 6, 8, 10)}
-    selected = {}
-    for n in common:
-        for body in GROUPS:
-            key = (n, body)
-            selected[key] = key if key in sources else next(k for k in sources if k[0] == n)
+    selected = secimler(sources)
+    counts = Counter((r['kanal_sayisi'], govde(r)) for r in rows if govde(r))
+    common = {n: max(GROUPS, key=lambda g: counts[n, g]) for n in CHANNELS}
     outdir = REPO / 'gorseller'
     outdir.mkdir(exist_ok=True)
     template = Image.open(REPO / 'sablon.png').convert('RGB')
@@ -119,58 +111,55 @@ def main():
         raise ValueError('Şablon 500×500 olmalı')
     composites = {key: kompozit(source, template) for key, source in sources.items()}
     mapped = []
-    group_rows = defaultdict(list)
     for row in rows:
         n, body = row['kanal_sayisi'], govde(row)
-        wanted = body or common[n]
-        chosen = selected[n, wanted]
+        chosen = selected[n, body or common[n]]
         flags = list(row['bayraklar'])
         if body is None:
             flags.append('gorsel_govde_dogrulanmadi')
-        if chosen[1] != wanted:
+        elif chosen[1] != body:
             flags.append('gorsel_govde_farkli')
         relative = 'gorseller/' + urun_slug(row) + '.jpg'
         composites[chosen].save(REPO / relative, quality=90, subsampling=0)
         mapped.append(dict(kod=row['kod'], resim_yolu=relative, resim_seviye='ayni_tip',
                            resim_kaynak=sources[chosen]['url'], bayraklar=flags))
-        group_rows[n, body].append(dict(row, yeni_ad=urun_adi(row), resim_yolu=relative))
-    (ROOT / 'gorsel_map.jsonl').write_text(''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in mapped))
+    referenced = {Path(r['resim_yolu']).name for r in mapped}
+    unused = [p for p in outdir.glob('*.jpg') if p.name not in referenced]
+    for path in unused:
+        path.unlink()
+    encoded = ''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in mapped)
+    (ROOT / 'gorsel_map.jsonl').write_text(encoded)
+    (REPO / 'gorsel_map.jsonl').write_text(encoded)
     manifest = [dict(source, id=f'{n}-{body}') for (n, body), source in sources.items()]
     (ROOT / 'gorsel_kaynaklari.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2))
-    visual_flags = [{**r, 'gorsel_bayraklari': [f for f in r['bayraklar'] if f.startswith('gorsel_')]}
-                    for r in mapped if any(f.startswith('gorsel_') for f in r['bayraklar'])]
-    (ROOT / 'gorsel_bayraklilar.json').write_text(json.dumps(visual_flags, ensure_ascii=False, indent=2))
-    examples = []
-    for n, body in ((1, 'dolu'), (3, 'kollu'), (4, 'diskli'), (6, 'dolu'), (10, 'kollu')):
-        examples.append((f'{n} {body}', group_rows[n, body][0]['resim_yolu']))
-    kys = next(r for r in mapped if r['kod'].startswith('KYS '))
-    examples.append(('KYS', kys['resim_yolu']))
-    report = [
-        '# Burçlu V kasnak görselleri', '',
-        f'519 ürün; birebir 0; ayni_tip 519; slug çakışması {len(duplicates)}.',
-        f'{len(sources)} kaynak grubu; {24 - len(sources)} grup aynı kanallı farklı gövde fallback. Gövde farklı: {sum("gorsel_govde_farkli" in r["bayraklar"] for r in mapped)} ürün. Gövdesi bilinmeyen: 11 ürün.', '',
-        '## Kaynak denetimi',
-        'Orka: allmedia.txt ve orka_photo_audit.json içindeki 21 seri URL curl -skL ile kontrol edildi; tamamında aynı v-kasnak-ic.jpg + teknik çizim v-kasnak-resim.jpg var. Model bazlı fotoğraf bulunmadı. SPA/SPB/SPC kapakları aynı tek kanallı kollu ürünü gösteriyor (iki jant dudağı arasında tek V oluk); SPA kapak fotoğrafı 1 kollu için seçildi. SPZ kapak fotoğrafında cepheden oluklar sayılamıyor; kullanılmadı. v-kasnak-ic: 3 oluk, delikli/kollu gövde; yazı/logo/ambalaj yok.',
-        'KYS resmi sayfada SPB 180-3 tablo satırı var; modele bağlı tekil fotoğraf yok. Genel kategori kolajı birebir sayılmadı. KYS için de 3 dolu ayni_tip kullanıldı.',
-        'Bütün seçilen kaynaklar view_image ile incelendi: oluklar sayılabilir, ambalaj/filigran/logo/okunur model kodu yok. Dolu: kapalı, kolsuz kompakt gövde; diskli: kapalı geri konumlu web, ayrı jant ve iç göbek; kollu: açık pencereler/kollar. Bazı bayi fotoğrafları QD burçlu serilerdendir; aynı marka/model/ölçü/burç iddiası yok, yalnız kanal × gövde eşleşmesi kullanıldı. CAD/teknik çizim kullanılmadı. Orka fotoğrafik üretici görsellerinin çekim/render üretim yöntemi bağımsız doğrulanamadı; kullanıcı tarafından fotoğraf olarak verilen bu kaynaklar aynı tip için kabul edildi.',
-        'Arama kayıtları photo_pages*.json, photos*/pages.json, candidates.json; Chiaravalli işaretli göbekler, Bearing Revolution/ Bearings R Us filigranları, Metal Rulman renderları, HTK logolu renderları, EMW 8 kollu okunur gövde kodları ve 10 kanal sayfasında 8 oluk gösteren temsili fotoğraflar reddedildi. Ampro, Motion, Purvis, Tristate adayları 403; Kothari ve Blackstar 429. 24 özgün grubun tamamı bulunmuş gibi gösterilmedi.', '',
-        '## Grup → orijinal fotoğraf URL', '',
-        '| Kanal | İstenen gövde | Kullanılan gövde | Adet | Durum | URL |',
-        '|---:|---|---|---:|---|---|',
-    ]
-    for (n, body), chosen in sorted(selected.items()):
-        status = 'aynı grup' if chosen[1] == body else 'gorsel_govde_farkli'
-        report.append(f'| {n} | {body} | {chosen[1]} | {counts[n, body]} | {status} | {sources[chosen]["url"]} |')
-    report += ['', '11 bilinmeyen gövde kaynak veride null kaldı. Aynı kanalda en yaygın gövde dolu (1/2/3/4) seçildi; yalnız gorsel_govde_dogrulanmadi eklendi. Tüm görsel bayraklı kodlar: gorsel_bayraklilar.json; mevcut teknik bayraklar map içinde korundu.', '',
-               '## Kompozitler', '500×500 JPEG kalite 90; şablonun 0–99 ve 350–499 bantları korunur; ürün beyaz 100–349 alanına, en çok 420×220 boyutta ortalanır. Oluk/kol üretme, kod silme veya ürün geometrisi değiştirme yapılmaz.', '',
-               '## Altı örnek (repo köküne göre)', '']
-    for label, path in examples:
-        report.append(f'- {label}: `{path}`')
-    report += ['', '10 kollu örneği talep edilen ürün grubudur; fotoğrafı 10 diskli fallback, map içinde gorsel_govde_farkli bayraklıdır.', '',
-               '## Yeniden üretim', '`/home/ubuntu/work/photoenv/bin/python /home/ubuntu/work/gorsel_uret.py`',
-               'Bağımlılıklar: Pillow, NumPy, SciPy, opencv-python-headless. OpenCV yalnız work/photoenv ortamına kuruldu; repo/shared bağımlılık dosyaları değiştirilmedi. Kaynak dosyalar gorsel_kaynaklari.json içinde.']
+    flagged = [r for r in mapped if any(f.startswith('gorsel_') for f in r['bayraklar'])]
+    (ROOT / 'gorsel_bayraklilar.json').write_text(json.dumps(flagged, ensure_ascii=False, indent=2))
+    table = ['| Kanal | Gövde | Durum | Kullanılan gövde | Adet | URL |', '|---:|---|---|---|---:|---|']
+    sheet = Image.new('RGB', (1500, 6 * 335), 'white')
+    draw = ImageDraw.Draw(sheet)
+    font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 17)
+    for i, (wanted, chosen) in enumerate(selected.items()):
+        n, body = wanted
+        exact = wanted == chosen
+        status = 'aynı' if exact else 'farklı / bulunamadı'
+        table.append(f'| {n} | {body} | {status} | {chosen[1]} | {counts[wanted]} | {sources[chosen]["url"]} |')
+        thumb = composites[chosen].resize((360, 360), Image.Resampling.LANCZOS)
+        x, y = i % 4 * 375, i // 4 * 335
+        sheet.paste(thumb.crop((0, 70, 360, 285)), (x + 7, y + 70))
+        draw.text((x + 7, y + 8), f'{n} kanal / {body} / {status}', fill='black', font=font)
+        draw.text((x + 7, y + 35), f'Fotoğraf: {chosen[1]} · adet {counts[wanted]}', fill='black', font=font)
+    sheet.save(ROOT / 'secim_kontak.jpg', quality=95)
+    matched = sum(not any(f in r['bayraklar'] for f in ('gorsel_govde_farkli', 'gorsel_govde_dogrulanmadi')) for r in mapped)
+    different = sum('gorsel_govde_farkli' in r['bayraklar'] for r in mapped)
+    report = ['# Taper-Lock görsel seçimi', '', f'519 ürün; birebir 0 / ayni_tip 519; gövde eşleşen {matched}; farklı {different}; bilinmeyen 11.', '',
+              f'{len(sources)}/24 aynı grup; {24 - len(sources)} grup üç arama turunda bulunamadı. Bunlar yalnız aynı kanallı denetlenmiş kaynakla, farklı bayrağı korunarak temsil edilir.', '',
+              'QD, okunur yazı/kod/logo/filigran, ambalaj seçili kaynaklarda yok. 11 orijinal kaynak tek tek view_image ile incelendi. Kanal sayıları fotoğraftan; gövde fotoğraftaki bağlantı yapısından belirlendi, ürün adı/çapından türetilmedi. Kod rötuşu, kanal/kol ekleme yapılmadı. 5 kanallı fotoğrafta Taper-Lock yarım deliği derindeki yuvanın solunda görünür; diğer yarım delikler bakış açısıyla örtülüdür. Orka üretici görsellerinin çekim/render yöntemi bağımsız doğrulanmadı; diğer seçili kaynaklar fotoğrafik yüzey dokusu taşır.', '', *table, '',
+              'Adetler teknik gövdesi bilinen 508 üründür. Ek 11 bilinmeyen (1/2/3/4 kanal) dolu fotoğraf alır; teknik tip null ve gorsel_govde_dogrulanmadi korunur.', '',
+              '24 hücreli kontak: /home/ubuntu/work/secim_kontak.jpg. 500×500 kalite 90 JPEG; 0–99/350–499 şablon bantları korunur; 420×220 sınırında merkezlenir.', '',
+              'Kaynak kayıtları: tools/burclu_kasnak/taper_kaynaklar.json; özgün fotoğraflar kaynaklar/ içinde SHA256 ile sabitlenir. Reddedilen adayların tek satırlı nedenleri taper_redler.md içindedir.']
     (ROOT / 'gorsel_rapor.md').write_text('\n'.join(report) + '\n')
-    print(f'ÜRETİLDİ: {len(mapped)} JPG, {len(sources)} kaynak, {len(duplicates)} slug çakışması')
+    print(f'ÜRETİLDİ: {len(mapped)} JPG, {len(sources)} kaynak, {len(duplicates)} slug çakışması; kullanılmayan {len(unused)} dosya silindi')
+    print(f'GÖVDE: eşleşen {matched}; farklı {different}; bilinmeyen 11')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,98 @@
+[
+  {
+    "kanal_sayisi": 1,
+    "govde": "dolu",
+    "dosya": "1-dolu.jpg",
+    "url": "https://images.bearingboys.co.uk/SPA150_1_1610__Dunlop_Taperlock_V_Pulley-prod-4487-2.png",
+    "background": "white",
+    "kontrol": "1 oluk; kompakt kapalı gövde; konik yuva yarım delikleri; yazı/QD yok",
+    "sha256": "442043fb4f4f1cd1671a9c09ed4e16c43518bcda4aa5aeb7681d61be4541d99c"
+  },
+  {
+    "kanal_sayisi": 1,
+    "govde": "kollu",
+    "dosya": "1-kollu.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/03/SPA-BURÇLU-V-KASNAKLAR.jpg",
+    "kontrol": "1 oluk; açık kollu gövde; Taper-Lock yuva; yazı/QD yok",
+    "sha256": "20b2e88009f8fda426610df9b2787652c37533984f9c74f890b76543cc00e0e0"
+  },
+  {
+    "kanal_sayisi": 2,
+    "govde": "dolu",
+    "dosya": "2-dolu.jpg",
+    "url": "https://icdn.tradew.com/file/202003/1574364/png/8062678.png?x-oss-process=image/quality,Q_90",
+    "background": "white",
+    "kontrol": "2 oluk; kompakt kapalı gövde; üç yarım delikli Taper-Lock yuva; yazı/QD yok",
+    "sha256": "fac46977a3ae8932df0ac2a0c48ca31113fc2500f933d8aa6db6b2f627854faa"
+  },
+  {
+    "kanal_sayisi": 2,
+    "govde": "kollu",
+    "dosya": "2-kollu.jpg",
+    "url": "https://image.made-in-china.com/2f0j00psnVyLjalwGk/SPA-Spb-Spc-Multi-Groove-V-Belt-Pulley-Wheel-for-Mineral-Machine.webp",
+    "kontrol": "2 oluk (ayrıntı kırpımıyla sayıldı); dört kol; üç yarım delikli Taper-Lock yuva; janttaki dört nokta balans deliği, yazı değil; QD yok",
+    "sha256": "12ac1d767485025a5a2ec51d1af75d6db1c55e2fb647981c3dfccffae469c5da"
+  },
+  {
+    "kanal_sayisi": 3,
+    "govde": "dolu",
+    "dosya": "3-dolu.jpg",
+    "url": "https://i.ebayimg.com/images/g/f5gAAOSwZ1BXd7e-/s-l400.jpg",
+    "background": "white",
+    "kontrol": "3 oluk; kompakt kapalı gövde; Taper-Lock yuva yarım delikleri; yazı/QD yok",
+    "sha256": "fa21c3cf655e58d8f3ae21e25b514eaad9529df85e41b79e7da3d776c7851272"
+  },
+  {
+    "kanal_sayisi": 3,
+    "govde": "kollu",
+    "dosya": "3-kollu.jpg",
+    "url": "https://orkapt.com/wp-content/uploads/2020/04/v-kasnak-ic.jpg",
+    "kontrol": "3 oluk; açık pencereli kollu gövde; Taper-Lock yuva; yazı/QD yok",
+    "sha256": "4a08bb16003c12b4b42272a44970a66d4504bb5db0d743bec859e334f936b038"
+  },
+  {
+    "kanal_sayisi": 4,
+    "govde": "dolu",
+    "dosya": "4-dolu.jpg",
+    "url": "https://images.bearingboys.co.uk/SPC1000_4_5050__Dunlop_Taperlock_V_Pulley-prod-5069-2.png",
+    "background": "white",
+    "kontrol": "4 oluk; kompakt kapalı gövde; Taper-Lock yuva; yüzey izi var, okunur kod yok; QD yok",
+    "sha256": "9b12e26ece8aaaf98e611172f907dcd639ca325d86de033ea5650243b1afebe2"
+  },
+  {
+    "kanal_sayisi": 5,
+    "govde": "diskli",
+    "dosya": "5-diskli.jpg",
+    "url": "https://m.media-amazon.com/images/I/717K9nQTdiL.jpg",
+    "background": "white",
+    "kontrol": "5 oluk; derinde kapalı disk/web ve iç göbek, ayrı dış jant; Taper-Lock yarım deliği derindeki yuvanın solunda görünür, diğer delikler açı nedeniyle örtülü; yazı/QD yok",
+    "sha256": "d63d4dc6ac1f454ec1640319de7b58add1a83ed0ca14a28d1736cbd8836ec41c"
+  },
+  {
+    "kanal_sayisi": 6,
+    "govde": "dolu",
+    "dosya": "6-dolu.jpg",
+    "url": "https://m.media-amazon.com/images/I/71EEZzZnKgL.jpg",
+    "background": "white",
+    "kontrol": "6 oluk; kompakt kapalı gövde; üç yarım delikli Taper-Lock yuva; yazı/QD yok",
+    "sha256": "812521ea5957c7f31c315f9089c575e8acb0c4c347fc864e97d4ec30836098f3"
+  },
+  {
+    "kanal_sayisi": 8,
+    "govde": "dolu",
+    "dosya": "8-dolu.jpg",
+    "url": "https://icdn.tradew.com/file/202003/1574364/png/8062673.png?x-oss-process=image/quality,Q_90",
+    "background": "white",
+    "kontrol": "8 oluk; kompakt kapalı gövde; Taper-Lock yuva yarım delikleri; yazı/QD yok",
+    "sha256": "d36b8dd04e0d3c78ce67def7e113b5fc5830da55e4bfaf43ba5c916ae233d29c"
+  },
+  {
+    "kanal_sayisi": 10,
+    "govde": "diskli",
+    "dosya": "10-diskli.jpg",
+    "url": "https://reliance.ie/product/image/mediumlarge/spc300x10TL.jpg",
+    "background": "white",
+    "kontrol": "10 oluk; kapalı disk/web, ayrı göbek ve dış jant; üç yarım delikli Taper-Lock yuva; yazı/QD yok",
+    "sha256": "ce166c19df74503ab096089b34e15e5d3f8f35350becbf6fa061fd158b955af5"
+  }
+]
