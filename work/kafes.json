@@ -1,0 +1,32 @@
+{
+  "URB 22215": {
+    "kafes": "belirsiz",
+    "kanit": "Resmi URB katalog s.22 (PDF 22): '2,9 2800 3800 22215 CW33 1,89' ve '2,7 2600 3400 22215 MB 1,79'; s.24: '2,7 2600 3400 22215 MBW33 1,77'. S.5 Tablo 4: C design = 'Special steel sheet cage'; MB design = 'Machined solid brass cage guided on collar'. Aynı baz kodda çelik ve pirinç tasarım birlikte listelenir; eksiz kod tek kafes seçtirmez.",
+    "url": "https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf"
+  },
+  "URB 23044": {
+    "kafes": "pirinç",
+    "kanit": "Resmi URB katalog s.68 (PDF 68): '2,5 900 1200 23044 MBW33 31' ve '2,5 900 1200 23044 MBKW33 31'. Ana ürün tablosunda bu baz kod yalnız MB tasarımıyla listelenir; silindirik/konik delik seçenekleri aynı kafestir. S.5 Tablo 4, MB design: 'Machined solid brass cage guided on collar'. Bu katalog-standardı sonucudur; eksiz stok ürününün fiziksel kafesi ayrıca doğrulanmadı.",
+    "url": "https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf"
+  },
+  "URB 23048": {
+    "kafes": "belirsiz",
+    "kanit": "Resmi URB katalog s.70 (PDF 70): '2,2 900 1100 23048 CW33 34,5', '2,7 800 1000 23048 MBKW33 33,9', '2,7 800 1000 23048 MBW33 33,9'. S.5 Tablo 4: C design = 'Special steel sheet cage'; MB design = 'Machined solid brass cage guided on collar'. Çelik ve pirinç varyantlar birlikte listelenir.",
+    "url": "https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf"
+  },
+  "URB 23218": {
+    "kafes": "belirsiz",
+    "kanit": "Resmi URB katalog s.28 (PDF 28), ana ürün tablosu: '2 1500 2000 23218 MB 4,37', '2 1500 2000 23218 MBK 4,25', '2 1500 2000 23218 MBW33 4,35', '2 1500 2000 23218 MBKW33 4,23' (tümü pirinç MB). Ancak s.89 adaptör manşonlu rulman tablosu: '90 160 52,4 2 23218 CKW33 H2318 340 485 1500 2000'; s.107 sökme manşonlu tablo: '90 160 52,4 2 23218 CKW33 AHX2318 340 485 2200 3000'. S.5 Tablo 4: C design = 'Special steel sheet cage'; MB design = 'Machined solid brass cage guided on collar'. Kataloğun tamamında aynı baz kod için C ve MB kanıtı var; eksiz ürünü pirinç kabul etmek güvenli değil.",
+    "url": "https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf"
+  },
+  "URB 24026": {
+    "kafes": "belirsiz",
+    "kanit": "Resmi URB katalog s.42 (PDF 42): '1,9 1200 1600 24026 C', '1,9 1200 1600 24026 CW33', '1,9 1200 1600 24026 MB 7,98'; s.44: '1,9 1200 1600 24026 MBW33 7,99', '1,9 1200 1600 24026 MBK30W33 7,78'. S.5 Tablo 4: C design = 'Special steel sheet cage'; MB design = 'Machined solid brass cage guided on collar'. Birden fazla kafes tasarımı bulundu.",
+    "url": "https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf"
+  },
+  "JPN 22206": {
+    "kafes": "belirsiz",
+    "kanit": "İstenen resmi alan adı https://jpn.com.pl/ DNS çözümlemesinde başarısız: '[Errno -2] Name or service not known'. Alan adı + 22206 ve JPN Polonya katalog aramalarında bu ürüne ait resmi kafes tablosu bulunamadı. Sayfa no ve 22206 satır metni: bulunamadı; başka markanın 22206 kafesi aktarılmadı.",
+    "url": "https://jpn.com.pl/"
+  }
+}

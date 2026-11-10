@@ -24,10 +24,11 @@ Kaynak: `parca/rulman.jsonl.gz` (orkapt-girdi). Ticimax'e hiçbir şey yüklenme
 ## Teknik çizim
 - 214/214 ürün site çizim modülüyle çiziliyor (ACIKLAMA teknik listesi ile ctx test edildi): bilyali 136, makarali 75, konik 2, lineer_kh 1.
 - KH için yeni modül `site/draw/lineer_kh.js` — branch `draw/rulman` (fixtures, preview png, rapor dahil; PR açılmadı).
-- Not: makarali.js başlıkta "KONİK" görünce çizmiyor; bu yüzden konik delikli oynak rulmanların adına "Konik Delik" yazılmadı (K eki kodda, açıklamada var).
+- makarali.js / konik.js düzeltildi (draw/rulman): "Konik Delik/Konik Delikli" ve K ekli oynak rulmanlar makarali modülüne, gerçek konik makaralılar konik modülüne gider; mevcut 734 fixture eşlemesinde değişiklik yok. 16 konik delikli oynak rulmanın adında "Konik Delik" var.
 
 ## Dikkat edilecekler (bayraklar)
-- `kafes_belirsiz` (6): JPN 22206, URB 22215, URB 23044, URB 23048, URB 23218, URB 24026 — kodda/adda kafes yok; görsel çelik kafes, açıklamada not var.
+- `kafes_belirsiz` (5): JPN 22206, URB 22215, URB 23048, URB 23218, URB 24026 — URB kataloğunda aynı baz kod hem çelik (C) hem pirinç (MB) listeleniyor; JPN resmi kaynağı bulunamadı. Görsel çelik kafes, açıklamada not var. URB 23044: katalogda yalnız MB → pirinç kafes yazıldı, pirinç foto. Kanıtlar: `work/kafes.json`.
+- Düzeltme: teknik veride "pirinç" yazan 15 oynak rulman (CA/MB) önceki sürümde çelik foto/çelik kafes almıştı; artık pirinç kafes foto ve "Kafes: Pirinç".
 - `kod_ad_celiski`: SKF 62012RS1 — SKF 62012RS1: kod C3'süz, Orkapt adı ile çelişki; C3'süz 6201-2RS1 olarak hazırlandı.
 - `skf_varyant_belirsiz`: SKF 62102RS — SKF'de 2RSH ve 2RS1 ikisi de var; 2RSH esas alındı.
 - `gorsel_ayni_tip_skf`: SKF 6313ZZC3, SKF 63142RSC3, SKF 6314ZZC3, SKF 63152RSC3, SKF 63162RSC3, SKF 6318ZZC3, SKF 6314ZZ

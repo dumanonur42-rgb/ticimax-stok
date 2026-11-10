@@ -2,6 +2,7 @@
 import json,gzip,re,hashlib,os,unicodedata
 R='/home/ubuntu/repos/ticimax-stok'
 T=json.load(open(R+'/work/teknik.json'))
+KZ=json.load(open(R+'/work/kafes.json'))
 BK=json.load(open('/home/ubuntu/work/img/bk_skf.json'))
 SITE='https://www.yamansarulman.com/'
 BRAND={'SKF':'SKF','ARA':'ARASHİ','BET':'BETE','DYZ':'DYZV','ECO':'ECO','ETE':'ETERNO','JPN':'JPN','KBC':'KBC','KG':'KG','ORB':'ORB','RBE':'RBE','URB':'URB','ZKL':'ZKL'}
@@ -311,9 +312,12 @@ def run(only=None):
     for r in rows:
         k=r['kod']
         if only and k not in only: continue
-        t=T[k]; code=kodyaz(r,t); mk=marka(r)
+        t=dict(T[k]); code=kodyaz(r,t); mk=marka(r)
+        if t.get('kafes')=='pirinç': t['kafes']='sarı'
+        kz=KZ.get(k)
+        if kz and kz['kafes']=='pirinç': t['kafes']='sarı'; t['kaynak_kafes']=kz['url']
         ol=olcu(t); name=('%s %s %s %s mm'%('' if mk=='Yamansa' else mk,code,TIPAD[t['tip']],ol)).strip()
-        pass
+        if t['tip']=='oynak_makarali' and t.get('konik_delik'): name+=' Konik Delik'
         P=aciklama(r,t,code,mk,name,None)
         S=speclist(r,t,code,mk)
         tek='<h3>Teknik Özellikler</h3><ul>'+''.join('<li><strong>%s:</strong> %s</li>'%(l,v) for l,v in S)+'</ul>'
@@ -334,7 +338,7 @@ def run(only=None):
         if k in seen: bay.append('mukerrer_kod')
         seen[k]=1
         kat,ek=KAT[t['tip']]
-        tk=[u for u in [t.get('kaynak_olcu'),t.get('kaynak_marka'),t.get('kaynak_olcu_B_C'),t.get('kaynak_esdegerlik')] if u]
+        tk=[u for u in [t.get('kaynak_olcu'),t.get('kaynak_marka'),t.get('kaynak_olcu_B_C'),t.get('kaynak_esdegerlik'),t.get('kaynak_kafes')] if u]
         tk=list(dict.fromkeys(tk))
         out.append(dict(kod=k,URUNADI=name,MARKA=mk,KATEGORI=kat,EK_KATEGORILER=ek,yeni_kategori=False,ONYAZI=onyazi(t,mk),ACIKLAMA=html,
             ANAHTARKELIME=kw,SEO_SAYFABASLIK=st,SEO_SAYFAACIKLAMA=sd,SEO_ANAHTARKELIME=kw,resim=fn,resim_seviye=lv,resim_kaynak=src,
