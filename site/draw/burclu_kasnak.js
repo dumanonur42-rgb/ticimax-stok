@@ -32,9 +32,9 @@ function draw(c,opt){
  var h0=0;
  if(t==3||t==5||t==6||t==8||t==9)h0=d.K!=null?d.K:(d.M!=null?d.F-d.L-d.M:(d.F-d.L)/2);
  if(t==4||t==7)h0=d.K!=null?-d.K:(d.M!=null?d.F+d.M-d.L:(d.F-d.L)/2);
- var h1=h0+d.L,expectedM=recess?d.F-h1:h1-d.F;
- if(d.M!=null&&Math.abs(expectedM-d.M)>.11)return null;
- if(recess&&(h0<-.11||h1>d.F+.11)||!recess&&(h0>.11||h1<d.F-.11))return null;
+ var h1=h0+d.L;
+ if(recess&&(h0<0||h1>d.F)){var hub=Math.min(d.L,d.F*.75);h0=Math.max(0,Math.min(d.F-hub,h0));h1=h0+hub}
+ if(!recess&&(h0>0||h1<d.F)){h0=Math.min(0,h0);h1=Math.max(d.F,h1)}
  opt=opt||{};var id=esc(String(opt.id||'bk').replace(/[^a-zA-Z0-9_-]/g,'_')),dim=esc(opt.dim||'#0a2350'),g='',keys=[];
  function line(a,b,x,y,attr){return '<line x1="'+q(a)+'" y1="'+q(b)+'" x2="'+q(x)+'" y2="'+q(y)+'" '+(attr||'')+'/>'}
  function text(x,y,s,attr){return '<text x="'+q(x)+'" y="'+q(y)+'" fill="'+dim+'" font-size="12" font-weight="700" text-anchor="middle" '+(attr||'')+'>'+esc(s)+'</text>'}

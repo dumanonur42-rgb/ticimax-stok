@@ -2041,5 +2041,337 @@
     "onyazi": [],
     "expected": "null",
     "reason": "Boş veri"
+  },
+  {
+    "kod": "ORK BK SPC4256",
+    "title": "SPC 425x6 Burçlu V Kasnak 6 Kanallı 4040 Burç Ø425 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-425x6-burclu-v-kasnak-6-kanalli-4040-burc-425-mm",
+    "tip": 6,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "425 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "434,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 6 – Diskli gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "369 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "102 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir"
+  },
+  {
+    "kod": "ORK BK SPC5306",
+    "title": "SPC 530x6 Burçlu V Kasnak 6 Kanallı 5050 Burç Ø530 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-530x6-burclu-v-kasnak-6-kanalli-5050-burc-530-mm",
+    "tip": 5,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "530 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "539,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 5 – Kollu gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "5050"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "125 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "474 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "114 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "265 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir"
+  },
+  {
+    "kod": "ORK BK SPB1064",
+    "title": "SPB 106x4 Burçlu V Kasnak 4 Kanallı 1610 Burç Ø106 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spb-106x4-burclu-v-kasnak-4-kanalli-1610-burc-106-mm",
+    "tip": 8,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "106 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "113 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 8 – Dolu gövde, göbek bir yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "1610"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "42 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "null",
+    "reason": "Zorunlu F ve L eksik"
+  },
+  {
+    "kod": "SCHEMATIC_RECESS",
+    "title": "SPC 425x6 Burçlu V Kasnak 6 Kanallı 4040 Burç Ø425 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-425x6-burclu-v-kasnak-6-kanalli-4040-burc-425-mm",
+    "tip": 6,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "425 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "434,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 6 – Diskli gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "369 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "200 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden"
+  },
+  {
+    "kod": "SCHEMATIC_PROJECTION",
+    "path": "/fixture/ORK-BK-SPB8005",
+    "title": "ORKA BURÇLU KASNAK SPB 8005",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "5"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "800 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "807 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 4 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "754 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "1 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/5-kanal/",
+    "expected": "svg",
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden"
   }
 ]
