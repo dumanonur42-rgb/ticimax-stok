@@ -1,0 +1,4386 @@
+{
+  "ARA 6011ZZTNC3": {
+    "baz": "6011",
+    "tip": "sabit_bilyali",
+    "d": 55.0,
+    "D": 90.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6011&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6011; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ARA 60132RSTNC3": {
+    "baz": "6013",
+    "tip": "sabit_bilyali",
+    "d": 65.0,
+    "D": 100.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6013&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6013; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ARA 62042RSC3": {
+    "baz": "6204",
+    "tip": "sabit_bilyali",
+    "d": 20.0,
+    "D": 47.0,
+    "B": 14.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6204&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6204-C>V; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ARA 62062RSTNC3": {
+    "baz": "6206",
+    "tip": "sabit_bilyali",
+    "d": 30.0,
+    "D": 62.0,
+    "B": 16.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6206&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6206-C>V; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ARA 62082RSTNC3": {
+    "baz": "6208",
+    "tip": "sabit_bilyali",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6208&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6208-C>V; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "BET 22208CC3W33": {
+    "baz": "22208",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22208-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22208-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "BET 22324CAW33C3": {
+    "baz": "22324",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 120.0,
+    "D": 260.0,
+    "B": 86.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22324-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22324-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "BET 23026CCW33C3": {
+    "baz": "23026",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 130.0,
+    "D": 200.0,
+    "B": 52.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23026-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23026-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "DYZ 22244MBW33C3": {
+    "baz": "22244",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 220.0,
+    "D": 400.0,
+    "B": 108.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22244-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22244-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ECO 22205CC3W33": {
+    "baz": "22205",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 25.0,
+    "D": 52.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22205-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22205-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ECO 22211CCKW33C3": {
+    "baz": "22211",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 25.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22211-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22211-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ECO 22212CCW33C3": {
+    "baz": "22212",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 28.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22212-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22212-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ECO 22213CC3W33": {
+    "baz": "22213",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22213-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22213-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ECO 22216CC3W33": {
+    "baz": "22216",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 80.0,
+    "D": 140.0,
+    "B": 33.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22216-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22216-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22208CCW33C3P6": {
+    "baz": "22208",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": true,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22208-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22208-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22210CCKW33C3": {
+    "baz": "22210",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22210-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22210-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22211CCW33C3": {
+    "baz": "22211",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 25.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22211-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22211-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22212CCKW33C3": {
+    "baz": "22212",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 28.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22212-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22212-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22213CCW33C3": {
+    "baz": "22213",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22213-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22213-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22216CCW33-P6": {
+    "baz": "22216",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": false,
+    "P6": true,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 80.0,
+    "D": 140.0,
+    "B": 33.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22216-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22216-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22219CCW33C3": {
+    "baz": "22219",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 95.0,
+    "D": 170.0,
+    "B": 43.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22219-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22219-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 22334E1T41AW33": {
+    "baz": "22334",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": false,
+    "P6": false,
+    "E1": true,
+    "T41A": true,
+    "konik_delik": false,
+    "d": 170.0,
+    "D": 360.0,
+    "B": 120.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22334-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22334-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 23024CCW33C3": {
+    "baz": "23024",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 120.0,
+    "D": 180.0,
+    "B": 46.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23024-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23024-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 23218CCW33C3": {
+    "baz": "23218",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 90.0,
+    "D": 160.0,
+    "B": 52.4,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23218-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23218-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 23222CCW33C3": {
+    "baz": "23222",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 110.0,
+    "D": 200.0,
+    "B": 69.8,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23222-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23222-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ETE 24028CCW33": {
+    "baz": "24028",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 140.0,
+    "D": 210.0,
+    "B": 69.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24028-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24028-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "JPN 22206": {
+    "baz": "22206",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 30.0,
+    "D": 62.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22206-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22206-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "JPN 22214CCW33C3": {
+    "baz": "22214",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22214-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22214-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "JPN 22218CCW33C3": {
+    "baz": "22218",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 90.0,
+    "D": 160.0,
+    "B": 40.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22218-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22218-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "KBC 63132RSC3": {
+    "baz": "6313",
+    "tip": "sabit_bilyali",
+    "d": 65.0,
+    "D": 140.0,
+    "B": 33.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6313&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6313; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "KG 62102RSC3": {
+    "baz": "6210",
+    "tip": "sabit_bilyali",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6210&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6210-C>V; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "NAT 24044CAW33": {
+    "baz": "24044",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 220.0,
+    "D": 340.0,
+    "B": 118.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24044-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24044-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORB 23024CCW33C3": {
+    "baz": "23024",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 120.0,
+    "D": 180.0,
+    "B": 46.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23024-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23024-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORB 23026CCW33C3": {
+    "baz": "23026",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 130.0,
+    "D": 200.0,
+    "B": 52.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23026-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23026-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORB 24028MBC3W33": {
+    "baz": "24028",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 140.0,
+    "D": 210.0,
+    "B": 69.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24028-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24028-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORB 24032CCW33C3": {
+    "baz": "24032",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 160.0,
+    "D": 240.0,
+    "B": 80.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24032-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24032-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22205CCW33C3": {
+    "baz": "22205",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 25.0,
+    "D": 52.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22205-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22205-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22206CCKW33C3": {
+    "baz": "22206",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 30.0,
+    "D": 62.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22206-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22206-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22206CCW33C3": {
+    "baz": "22206",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 30.0,
+    "D": 62.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22206-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22206-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22207CCKW33C3": {
+    "baz": "22207",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 35.0,
+    "D": 72.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22207-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22207-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22207CCW33C3": {
+    "baz": "22207",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 35.0,
+    "D": 72.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22207-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22207-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22208CCKW33C3": {
+    "baz": "22208",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22208-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22208-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22208CCW33C3": {
+    "baz": "22208",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22208-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22208-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22209CCKW33C3": {
+    "baz": "22209",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 45.0,
+    "D": 85.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22209-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22209-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22209CCW33C3": {
+    "baz": "22209",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 45.0,
+    "D": 85.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22209-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22209-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22210CCKW33C3": {
+    "baz": "22210",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22210-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22210-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22210CCW33C3": {
+    "baz": "22210",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22210-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22210-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22211CCKW33C3": {
+    "baz": "22211",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 25.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22211-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22211-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22211CCW33C3": {
+    "baz": "22211",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 25.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22211-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22211-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22212CCKW33C3": {
+    "baz": "22212",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 28.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22212-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22212-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22212CCW33C3": {
+    "baz": "22212",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 28.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22212-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22212-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22213CCKW33C3": {
+    "baz": "22213",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22213-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22213-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22213CCW33C3": {
+    "baz": "22213",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22213-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22213-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22214CCKW33C3": {
+    "baz": "22214",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22214-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22214-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22214CCW33C3": {
+    "baz": "22214",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22214-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22214-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22215CCKW33C3": {
+    "baz": "22215",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 75.0,
+    "D": 130.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22215-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22215-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22215CCW33C3": {
+    "baz": "22215",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 75.0,
+    "D": 130.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22215-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22215-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22216CCKW33C3": {
+    "baz": "22216",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 80.0,
+    "D": 140.0,
+    "B": 33.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22216-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22216-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22216CCW33C3": {
+    "baz": "22216",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 80.0,
+    "D": 140.0,
+    "B": 33.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22216-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22216-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22217CCKW33C3": {
+    "baz": "22217",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 85.0,
+    "D": 150.0,
+    "B": 36.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22217-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22217-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22217CCW33C3": {
+    "baz": "22217",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 85.0,
+    "D": 150.0,
+    "B": 36.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22217-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22217-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22218CCKW33C3": {
+    "baz": "22218",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": true,
+    "kafes": "çelik",
+    "d": 90.0,
+    "D": 160.0,
+    "B": 40.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22218-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22218-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 22218CCW33C3": {
+    "baz": "22218",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 90.0,
+    "D": 160.0,
+    "B": 40.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22218-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22218-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 23032CAW33C3": {
+    "baz": "23032",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 160.0,
+    "D": 240.0,
+    "B": 60.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23032-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23032-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "ORK RUL 23036CAW33C3": {
+    "baz": "23036",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 180.0,
+    "D": 280.0,
+    "B": 74.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23036-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23036-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 60032RSC3": {
+    "baz": "6003",
+    "tip": "sabit_bilyali",
+    "d": 17.0,
+    "D": 35.0,
+    "B": 10.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6003&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6003; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 60092RSC3": {
+    "baz": "6009",
+    "tip": "sabit_bilyali",
+    "d": 45.0,
+    "D": 75.0,
+    "B": 16.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6009&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6009; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 6010ZZC3": {
+    "baz": "6010",
+    "tip": "sabit_bilyali",
+    "d": 50.0,
+    "D": 80.0,
+    "B": 16.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6010&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6010; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 60122RSC3": {
+    "baz": "6012",
+    "tip": "sabit_bilyali",
+    "d": 60.0,
+    "D": 95.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6012&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6012; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 60142RSC3": {
+    "baz": "6014",
+    "tip": "sabit_bilyali",
+    "d": 70.0,
+    "D": 110.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6014&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6014; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RBE 62102RSC3": {
+    "baz": "6210",
+    "tip": "sabit_bilyali",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 20.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6210&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6210-C>V; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı."
+  },
+  "RUL 69172RS": {
+    "baz": "6917",
+    "tip": "sabit_bilyali",
+    "d": 85,
+    "D": 120,
+    "B": 18,
+    "rs_min": 1.1,
+    "kaynak_olcu": "https://www.ntnglobal.com/en/products/catalog/pdf/2203E.pdf#page=112",
+    "not": "ISO standart ölçü, baz kod aynı. NTN 6917 katalog satırı (PDF s.112); NTN yük/hız/kütle değerleri aktarılmadı."
+  },
+  "RUL KH1630PP": {
+    "baz": "KH1630",
+    "tip": "lineer",
+    "d": 16,
+    "D": 24,
+    "L": 30,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=KH16-PP&lang=en&pageSize=100",
+    "kaynak_marka_INA": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=KH16-PP&lang=en&pageSize=100",
+    "INA_referans": {
+      "designation_resmi": "KH16-PP",
+      "Cr_max_kN": 1.06,
+      "C0r_max_kN": 0.91,
+      "mass_kg": 0.027274999999999997
+    },
+    "kaynak_esdegerlik": "https://www.abf.store/s/en/bearings/KH16-PP-INA/495545",
+    "not": "KH1630-PP resmi API aramasında sonuç yok; resmi güncel INA adı KH16-PP. KH1630PP eşadı ABF distribütör çapraz referansında açıkça yazıyor. Ölçüler resmi KH16-PP kaydından: d=Fw, L=uzunluk. B uydurulmadı. INA yük/kütlesi ayrı INA_referans grubunda, ürün markasına mal edilmedi; yükler API’de max, Cr/C0r genel değerine çevrilmedi. Kullanım kararınıza bırakıldı."
+  },
+  "SKF 60002RSC3": {
+    "baz": "6000",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6000-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6000-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6000-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2RSH%2FC3",
+    "d": 10.0,
+    "D": 26.0,
+    "B": 8.0,
+    "Cr_kN": 4.75,
+    "C0r_kN": 1.96,
+    "ref_speed": 67000.0,
+    "limit_speed": 19000.0,
+    "mass_kg": 0.019,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6000ZZC3": {
+    "baz": "6000",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6000-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6000-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6000-2Z%2FC3",
+    "d": 10.0,
+    "D": 26.0,
+    "B": 8.0,
+    "Cr_kN": 4.75,
+    "C0r_kN": 1.96,
+    "ref_speed": 67000.0,
+    "limit_speed": 34000.0,
+    "mass_kg": 0.0194
+  },
+  "SKF 60012RSC3": {
+    "baz": "6001",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6001-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6001-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6001-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2RSH%2FC3",
+    "d": 12.0,
+    "D": 28.0,
+    "B": 8.0,
+    "Cr_kN": 5.4,
+    "C0r_kN": 2.36,
+    "ref_speed": 60000.0,
+    "limit_speed": 17000.0,
+    "mass_kg": 0.0201,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6001ZZC3": {
+    "baz": "6001",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6001-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6001-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6001-2Z%2FC3",
+    "d": 12.0,
+    "D": 28.0,
+    "B": 8.0,
+    "Cr_kN": 5.4,
+    "C0r_kN": 2.36,
+    "ref_speed": 60000.0,
+    "limit_speed": 30000.0,
+    "mass_kg": 0.0217
+  },
+  "SKF 60022RSC3": {
+    "baz": "6002",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6002-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6002-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6002-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH%2FC3",
+    "d": 15.0,
+    "D": 32.0,
+    "B": 9.0,
+    "Cr_kN": 5.85,
+    "C0r_kN": 2.85,
+    "ref_speed": 50000.0,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.0298,
+    "not": "6002-2RS1/C3 SKF tarafından 6002-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6002ZZC3": {
+    "baz": "6002",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6002-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6002-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2Z%2FC3",
+    "d": 15.0,
+    "D": 32.0,
+    "B": 9.0,
+    "Cr_kN": 5.85,
+    "C0r_kN": 2.85,
+    "ref_speed": 50000.0,
+    "limit_speed": 26000.0,
+    "mass_kg": 0.031
+  },
+  "SKF 60032RSC3": {
+    "baz": "6003",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6003-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6003-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6003-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2RSH%2FC3",
+    "d": 17.0,
+    "D": 35.0,
+    "B": 10.0,
+    "Cr_kN": 6.37,
+    "C0r_kN": 3.25,
+    "ref_speed": 45000.0,
+    "limit_speed": 13000.0,
+    "mass_kg": 0.0392,
+    "not": "6003-2RS1/C3 SKF tarafından 6003-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6003ZZC3": {
+    "baz": "6003",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6003-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6003-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6003-2Z%2FC3",
+    "d": 17.0,
+    "D": 35.0,
+    "B": 10.0,
+    "Cr_kN": 6.37,
+    "C0r_kN": 3.25,
+    "ref_speed": 45000.0,
+    "limit_speed": 22000.0,
+    "mass_kg": 0.04
+  },
+  "SKF 60042RSC3": {
+    "baz": "6004",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6004-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6004-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6004-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2RSH%2FC3",
+    "d": 20.0,
+    "D": 42.0,
+    "B": 12.0,
+    "Cr_kN": 9.95,
+    "C0r_kN": 5.0,
+    "ref_speed": 38000.0,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.0638,
+    "not": "6004-2RS1/C3 SKF tarafından 6004-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6004ZZC3": {
+    "baz": "6004",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6004-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6004-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z%2FC3",
+    "d": 20.0,
+    "D": 42.0,
+    "B": 12.0,
+    "Cr_kN": 9.95,
+    "C0r_kN": 5.0,
+    "ref_speed": 38000.0,
+    "limit_speed": 19000.0,
+    "mass_kg": 0.0684
+  },
+  "SKF 60052RSC3": {
+    "baz": "6005",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6005-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6005-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6005-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2RSH%2FC3",
+    "d": 25.0,
+    "D": 47.0,
+    "B": 12.0,
+    "Cr_kN": 11.9,
+    "C0r_kN": 6.55,
+    "ref_speed": 32000.0,
+    "limit_speed": 9500.0,
+    "mass_kg": 0.0797,
+    "not": "6005-2RS1/C3 SKF tarafından 6005-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6005ZZC3": {
+    "baz": "6005",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6005-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6005-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6005-2Z%2FC3",
+    "d": 25.0,
+    "D": 47.0,
+    "B": 12.0,
+    "Cr_kN": 11.9,
+    "C0r_kN": 6.55,
+    "ref_speed": 32000.0,
+    "limit_speed": 16000.0,
+    "mass_kg": 0.08
+  },
+  "SKF 60062RSC3": {
+    "baz": "6006",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6006-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6006-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6006-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2RS1%2FC3",
+    "d": 30.0,
+    "D": 55.0,
+    "B": 13.0,
+    "Cr_kN": 13.8,
+    "C0r_kN": 8.3,
+    "limit_speed": 8000.0,
+    "mass_kg": 0.117,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6006ZZC3": {
+    "baz": "6006",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6006-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6006-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z%2FC3",
+    "d": 30.0,
+    "D": 55.0,
+    "B": 13.0,
+    "Cr_kN": 13.8,
+    "C0r_kN": 8.3,
+    "ref_speed": 28000.0,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.116
+  },
+  "SKF 60072RSC3": {
+    "baz": "6007",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6007-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6007-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6007-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2RS1%2FC3",
+    "d": 35.0,
+    "D": 62.0,
+    "B": 14.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 10.2,
+    "limit_speed": 7000.0,
+    "mass_kg": 0.154,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6007ZZC3": {
+    "baz": "6007",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6007-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6007-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6007-2Z%2FC3",
+    "d": 35.0,
+    "D": 62.0,
+    "B": 14.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 10.2,
+    "ref_speed": 24000.0,
+    "limit_speed": 12000.0,
+    "mass_kg": 0.155
+  },
+  "SKF 60082RSC3": {
+    "baz": "6008",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6008-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6008-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6008-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2RS1%2FC3",
+    "d": 40.0,
+    "D": 68.0,
+    "B": 15.0,
+    "Cr_kN": 17.8,
+    "C0r_kN": 11.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.191,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6008ZZC3": {
+    "baz": "6008",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6008-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6008-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6008-2Z%2FC3",
+    "d": 40.0,
+    "D": 68.0,
+    "B": 15.0,
+    "Cr_kN": 17.8,
+    "C0r_kN": 11.0,
+    "ref_speed": 22000.0,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.194
+  },
+  "SKF 60092RSC3": {
+    "baz": "6009",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6009-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6009-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6009-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2RS1%2FC3",
+    "d": 45.0,
+    "D": 75.0,
+    "B": 16.0,
+    "Cr_kN": 22.1,
+    "C0r_kN": 14.6,
+    "limit_speed": 5600.0,
+    "mass_kg": 0.244,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6009ZZC3": {
+    "baz": "6009",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6009-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6009-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6009-2Z%2FC3",
+    "d": 45.0,
+    "D": 75.0,
+    "B": 16.0,
+    "Cr_kN": 22.1,
+    "C0r_kN": 14.6,
+    "ref_speed": 20000.0,
+    "limit_speed": 10000.0,
+    "mass_kg": 0.245
+  },
+  "SKF 60102RSC3": {
+    "baz": "6010",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6010-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6010-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6010-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2RS1%2FC3",
+    "d": 50.0,
+    "D": 80.0,
+    "B": 16.0,
+    "Cr_kN": 22.9,
+    "C0r_kN": 15.6,
+    "limit_speed": 5000.0,
+    "mass_kg": 0.266,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6010ZZC3": {
+    "baz": "6010",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6010-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6010-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6010-2Z%2FC3",
+    "d": 50.0,
+    "D": 80.0,
+    "B": 16.0,
+    "Cr_kN": 22.9,
+    "C0r_kN": 15.6,
+    "ref_speed": 18000.0,
+    "limit_speed": 9000.0,
+    "mass_kg": 0.268
+  },
+  "SKF 60112RSC3": {
+    "baz": "6011",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6011-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6011-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6011-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2RS1%2FC3",
+    "d": 55.0,
+    "D": 90.0,
+    "B": 18.0,
+    "Cr_kN": 29.6,
+    "C0r_kN": 21.2,
+    "limit_speed": 4500.0,
+    "mass_kg": 0.386,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6011ZZC3": {
+    "baz": "6011",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6011-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6011-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6011-2Z%2FC3",
+    "d": 55.0,
+    "D": 90.0,
+    "B": 18.0,
+    "Cr_kN": 29.6,
+    "C0r_kN": 21.2,
+    "ref_speed": 16000.0,
+    "limit_speed": 8000.0,
+    "mass_kg": 0.39
+  },
+  "SKF 60122RSC3": {
+    "baz": "6012",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6012-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6012-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6012-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2RS1%2FC3",
+    "d": 60.0,
+    "D": 95.0,
+    "B": 18.0,
+    "Cr_kN": 30.7,
+    "C0r_kN": 23.2,
+    "limit_speed": 4300.0,
+    "mass_kg": 0.414,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6012ZZC3": {
+    "baz": "6012",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6012-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6012-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6012-2Z%2FC3",
+    "d": 60.0,
+    "D": 95.0,
+    "B": 18.0,
+    "Cr_kN": 30.7,
+    "C0r_kN": 23.2,
+    "ref_speed": 15000.0,
+    "limit_speed": 7500.0,
+    "mass_kg": 0.419
+  },
+  "SKF 60132RSC3": {
+    "baz": "6013",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6013-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6013-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6013-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2RS1%2FC3",
+    "d": 65.0,
+    "D": 100.0,
+    "B": 18.0,
+    "Cr_kN": 31.9,
+    "C0r_kN": 25.0,
+    "ref_speed": 14000.0,
+    "limit_speed": 4000.0,
+    "mass_kg": 0.441,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6013ZZC3": {
+    "baz": "6013",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6013-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6013-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6013-2Z%2FC3",
+    "d": 65.0,
+    "D": 100.0,
+    "B": 18.0,
+    "Cr_kN": 31.9,
+    "C0r_kN": 25.0,
+    "ref_speed": 14000.0,
+    "limit_speed": 7000.0,
+    "mass_kg": 0.449
+  },
+  "SKF 60142RSC3": {
+    "baz": "6014",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6014-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6014-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6014-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2RS1%2FC3",
+    "d": 70.0,
+    "D": 110.0,
+    "B": 20.0,
+    "Cr_kN": 39.7,
+    "C0r_kN": 31.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 3600.0,
+    "mass_kg": 0.617,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6014ZZC3": {
+    "baz": "6014",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6014-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6014-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6014-2Z%2FC3",
+    "d": 70.0,
+    "D": 110.0,
+    "B": 20.0,
+    "Cr_kN": 39.7,
+    "C0r_kN": 31.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.625
+  },
+  "SKF 60152RSC3": {
+    "baz": "6015",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6015-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6015-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6015-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2RS1%2FC3",
+    "d": 75.0,
+    "D": 115.0,
+    "B": 20.0,
+    "Cr_kN": 41.6,
+    "C0r_kN": 33.5,
+    "ref_speed": 12000.0,
+    "limit_speed": 3400.0,
+    "mass_kg": 0.651,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6015ZZC3": {
+    "baz": "6015",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6015-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6015-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6015-2Z%2FC3",
+    "d": 75.0,
+    "D": 115.0,
+    "B": 20.0,
+    "Cr_kN": 41.6,
+    "C0r_kN": 33.5,
+    "ref_speed": 12000.0,
+    "limit_speed": 6000.0,
+    "mass_kg": 0.66
+  },
+  "SKF 62002RSC3": {
+    "baz": "6200",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6200-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6200-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6200-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH%2FC3",
+    "d": 10.0,
+    "D": 30.0,
+    "B": 9.0,
+    "Cr_kN": 5.4,
+    "C0r_kN": 2.36,
+    "ref_speed": 56000.0,
+    "limit_speed": 17000.0,
+    "mass_kg": 0.0317,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6200ZZC3": {
+    "baz": "6200",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6200-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6200-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2Z%2FC3",
+    "d": 10.0,
+    "D": 30.0,
+    "B": 9.0,
+    "Cr_kN": 5.4,
+    "C0r_kN": 2.36,
+    "ref_speed": 56000.0,
+    "limit_speed": 28000.0,
+    "mass_kg": 0.0327
+  },
+  "SKF 62012RS1": {
+    "baz": "6201",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6201-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6201-2RS1",
+    "d": 12,
+    "D": 32,
+    "B": 10,
+    "mass_kg": 0.0375,
+    "kaynak_olcu": "https://www.emarketplace.in.skf.com/deep-groove-ball-bearing/6201-2rs1",
+    "kaynak_marka": "https://www.emarketplace.in.skf.com/deep-groove-ball-bearing/6201-2rs1",
+    "not": "6201-2RS1 SKF tarafından 6201-2RSH ile değiştirilmiş olarak gösteriliyor. Kod/ad çelişkisi: kod 62012RS1, ad 6201 2RS/C3 (FOTO BAKINIZ). Kod esas alındı; SKF Hindistan resmi mağazasında 6201-2RS1, Normal boşluk. C3 yazılmadı; Cr/C0/sürat bulunmadı. Global ürün URL’si arama/değişim ekranı olduğundan o ekrandaki diğer ürün değerleri kullanılmadı."
+  },
+  "SKF 62012RSC3": {
+    "baz": "6201",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6201-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6201-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6201-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2RSH%2FC3",
+    "d": 12.0,
+    "D": 32.0,
+    "B": 10.0,
+    "Cr_kN": 7.28,
+    "C0r_kN": 3.1,
+    "ref_speed": 50000.0,
+    "limit_speed": 15000.0,
+    "mass_kg": 0.0365,
+    "not": "6201-2RS1/C3 SKF tarafından 6201-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6201ZZC3": {
+    "baz": "6201",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6201-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6201-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6201-2Z%2FC3",
+    "d": 12.0,
+    "D": 32.0,
+    "B": 10.0,
+    "Cr_kN": 7.28,
+    "C0r_kN": 3.1,
+    "ref_speed": 50000.0,
+    "limit_speed": 26000.0,
+    "mass_kg": 0.0375
+  },
+  "SKF 62022RSC3": {
+    "baz": "6202",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6202-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6202-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6202-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH%2FC3",
+    "d": 15.0,
+    "D": 35.0,
+    "B": 11.0,
+    "Cr_kN": 8.06,
+    "C0r_kN": 3.75,
+    "ref_speed": 43000.0,
+    "limit_speed": 13000.0,
+    "mass_kg": 0.046,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6202ZZC3": {
+    "baz": "6202",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6202-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6202-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2Z%2FC3",
+    "d": 15.0,
+    "D": 35.0,
+    "B": 11.0,
+    "Cr_kN": 8.06,
+    "C0r_kN": 3.75,
+    "ref_speed": 43000.0,
+    "limit_speed": 22000.0,
+    "mass_kg": 0.0465
+  },
+  "SKF 62032RSC3": {
+    "baz": "6203",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6203-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6203-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6203-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6203-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6203-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6203-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6203-2RSH%2FC3",
+    "d": 17.0,
+    "D": 40.0,
+    "B": 12.0,
+    "Cr_kN": 9.95,
+    "C0r_kN": 4.75,
+    "ref_speed": 38000.0,
+    "limit_speed": 12000.0,
+    "mass_kg": 0.0651,
+    "not": "6203-2RS1/C3 SKF tarafından 6203-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 62042RSC3": {
+    "baz": "6204",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6204-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6204-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6204-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH%2FC3",
+    "d": 20.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 13.5,
+    "C0r_kN": 6.55,
+    "ref_speed": 32000.0,
+    "limit_speed": 10000.0,
+    "mass_kg": 0.106,
+    "not": "6204-2RS1/C3 SKF tarafından 6204-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6204ZZC3": {
+    "baz": "6204",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6204-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6204-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2Z%2FC3",
+    "d": 20.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 13.5,
+    "C0r_kN": 6.55,
+    "ref_speed": 32000.0,
+    "limit_speed": 17000.0,
+    "mass_kg": 0.107
+  },
+  "SKF 62052RSC3": {
+    "baz": "6205",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6205-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6205-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6205-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2RSH%2FC3",
+    "d": 25.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 14.8,
+    "C0r_kN": 7.8,
+    "ref_speed": 28000.0,
+    "limit_speed": 8500.0,
+    "mass_kg": 0.129,
+    "not": "6205-2RS1/C3 SKF tarafından 6205-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6205ZZC3": {
+    "baz": "6205",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6205-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6205-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6205-2Z%2FC3",
+    "d": 25.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 14.8,
+    "C0r_kN": 7.8,
+    "ref_speed": 28000.0,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.131
+  },
+  "SKF 62062RSC3": {
+    "baz": "6206",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6206-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6206-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6206-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6206-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6206-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6206-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6206-2RS1%2FC3",
+    "d": 30.0,
+    "D": 62.0,
+    "B": 16.0,
+    "Cr_kN": 20.3,
+    "C0r_kN": 11.2,
+    "limit_speed": 8000.0,
+    "mass_kg": 0.2,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 62072RSC3": {
+    "baz": "6207",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6207-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6207-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6207-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2RS1%2FC3",
+    "d": 35.0,
+    "D": 72.0,
+    "B": 17.0,
+    "Cr_kN": 27.0,
+    "C0r_kN": 15.3,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.29,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6207ZZC3": {
+    "baz": "6207",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6207-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6207-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6207-2Z%2FC3",
+    "d": 35.0,
+    "D": 72.0,
+    "B": 17.0,
+    "Cr_kN": 27.0,
+    "C0r_kN": 15.3,
+    "ref_speed": 20000.0,
+    "limit_speed": 10000.0,
+    "mass_kg": 0.293
+  },
+  "SKF 62082RSC3": {
+    "baz": "6208",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6208-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6208-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6208-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2RS1%2FC3",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 18.0,
+    "Cr_kN": 32.5,
+    "C0r_kN": 19.0,
+    "limit_speed": 5600.0,
+    "mass_kg": 0.365,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6208ZZC3": {
+    "baz": "6208",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6208-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6208-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z%2FC3",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 18.0,
+    "Cr_kN": 32.5,
+    "C0r_kN": 19.0,
+    "ref_speed": 18000.0,
+    "limit_speed": 9000.0,
+    "mass_kg": 0.371
+  },
+  "SKF 62092RSC3": {
+    "baz": "6209",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6209-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6209-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6209-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2RS1%2FC3",
+    "d": 45.0,
+    "D": 85.0,
+    "B": 19.0,
+    "Cr_kN": 35.1,
+    "C0r_kN": 21.6,
+    "limit_speed": 5000.0,
+    "mass_kg": 0.418,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6209ZZC3": {
+    "baz": "6209",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6209-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6209-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6209-2Z%2FC3",
+    "d": 45.0,
+    "D": 85.0,
+    "B": 19.0,
+    "Cr_kN": 35.1,
+    "C0r_kN": 21.6,
+    "ref_speed": 17000.0,
+    "limit_speed": 8500.0,
+    "mass_kg": 0.42
+  },
+  "SKF 62102RSC3": {
+    "baz": "6210",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6210-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6210-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6210-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1%2FC3",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 20.0,
+    "Cr_kN": 37.1,
+    "C0r_kN": 23.2,
+    "ref_speed": 15000.0,
+    "limit_speed": 4800.0,
+    "mass_kg": 0.459,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6210ZZC3": {
+    "baz": "6210",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6210-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6210-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2Z%2FC3",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 20.0,
+    "Cr_kN": 37.1,
+    "C0r_kN": 23.2,
+    "ref_speed": 15000.0,
+    "limit_speed": 8000.0,
+    "mass_kg": 0.467
+  },
+  "SKF 62112RSC3": {
+    "baz": "6211",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6211-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6211-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6211-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1%2FC3",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 21.0,
+    "Cr_kN": 46.2,
+    "C0r_kN": 29.0,
+    "limit_speed": 4300.0,
+    "mass_kg": 0.616,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6211ZZC3": {
+    "baz": "6211",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6211-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6211-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z%2FC3",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 21.0,
+    "Cr_kN": 46.2,
+    "C0r_kN": 29.0,
+    "ref_speed": 14000.0,
+    "limit_speed": 7000.0,
+    "mass_kg": 0.618
+  },
+  "SKF 62122RSC3": {
+    "baz": "6212",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6212-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6212-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6212-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2RS1%2FC3",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 22.0,
+    "Cr_kN": 55.3,
+    "C0r_kN": 36.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 4000.0,
+    "mass_kg": 0.787,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6212ZZC3": {
+    "baz": "6212",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6212-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6212-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z%2FC3",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 22.0,
+    "Cr_kN": 55.3,
+    "C0r_kN": 36.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.797
+  },
+  "SKF 62132RSC3": {
+    "baz": "6213",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6213-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6213-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6213-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2RS1%2FC3",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 23.0,
+    "Cr_kN": 58.5,
+    "C0r_kN": 40.5,
+    "ref_speed": 12000.0,
+    "limit_speed": 3600.0,
+    "mass_kg": 1.02,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6213ZZC3": {
+    "baz": "6213",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6213-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6213-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z%2FC3",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 23.0,
+    "Cr_kN": 58.5,
+    "C0r_kN": 40.5,
+    "ref_speed": 12000.0,
+    "limit_speed": 6000.0,
+    "mass_kg": 1.03
+  },
+  "SKF 62142RSC3": {
+    "baz": "6214",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6214-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6214-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6214-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1%2FC3",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 24.0,
+    "Cr_kN": 63.7,
+    "C0r_kN": 45.0,
+    "ref_speed": 11000.0,
+    "limit_speed": 3400.0,
+    "mass_kg": 1.1,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6214ZZC3": {
+    "baz": "6214",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6214-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6214-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2Z%2FC3",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 24.0,
+    "Cr_kN": 63.7,
+    "C0r_kN": 45.0,
+    "ref_speed": 11000.0,
+    "limit_speed": 5600.0,
+    "mass_kg": 1.1
+  },
+  "SKF 62152RSC3": {
+    "baz": "6215",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6215-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6215-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6215-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2RS1%2FC3",
+    "d": 75.0,
+    "D": 130.0,
+    "B": 25.0,
+    "Cr_kN": 68.9,
+    "C0r_kN": 49.0,
+    "limit_speed": 3200.0,
+    "mass_kg": 1.19,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6215ZZC3": {
+    "baz": "6215",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6215-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6215-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6215-2Z%2FC3",
+    "d": 75.0,
+    "D": 130.0,
+    "B": 25.0,
+    "Cr_kN": 68.9,
+    "C0r_kN": 49.0,
+    "ref_speed": 10000.0,
+    "limit_speed": 5300.0,
+    "mass_kg": 1.2
+  },
+  "SKF 62162RSC3": {
+    "baz": "6216",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6216-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6216-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6216-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6216-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6216-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6216-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6216-2RS1%2FC3",
+    "d": 80.0,
+    "D": 140.0,
+    "B": 26.0,
+    "Cr_kN": 72.8,
+    "C0r_kN": 55.0,
+    "ref_speed": 9500.0,
+    "limit_speed": 3000.0,
+    "mass_kg": 1.47,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6217ZZC3": {
+    "baz": "6217",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6217-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6217-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6217-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6217-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6217-2Z%2FC3",
+    "d": 85.0,
+    "D": 150.0,
+    "B": 28.0,
+    "Cr_kN": 87.1,
+    "C0r_kN": 64.0,
+    "ref_speed": 9000.0,
+    "limit_speed": 4500.0,
+    "mass_kg": 1.83
+  },
+  "SKF 63012RSC3": {
+    "baz": "6301",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6301-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6301-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6301-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2RSH%2FC3",
+    "d": 12.0,
+    "D": 37.0,
+    "B": 12.0,
+    "Cr_kN": 10.1,
+    "C0r_kN": 4.15,
+    "ref_speed": 45000.0,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.0602,
+    "not": "6301-2RS1/C3 SKF tarafından 6301-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6301ZZC3": {
+    "baz": "6301",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6301-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6301-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z%2FC3",
+    "d": 12.0,
+    "D": 37.0,
+    "B": 12.0,
+    "Cr_kN": 10.1,
+    "C0r_kN": 4.15,
+    "ref_speed": 45000.0,
+    "limit_speed": 22000.0,
+    "mass_kg": 0.0605
+  },
+  "SKF 63022RSC3": {
+    "baz": "6302",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6302-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6302-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6302-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2RSH%2FC3",
+    "d": 15.0,
+    "D": 42.0,
+    "B": 13.0,
+    "Cr_kN": 11.9,
+    "C0r_kN": 5.4,
+    "ref_speed": 38000.0,
+    "limit_speed": 12000.0,
+    "mass_kg": 0.0822,
+    "not": "6302-2RS1/C3 SKF tarafından 6302-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6302ZZC3": {
+    "baz": "6302",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6302-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6302-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6302-2Z%2FC3",
+    "d": 15.0,
+    "D": 42.0,
+    "B": 13.0,
+    "Cr_kN": 11.9,
+    "C0r_kN": 5.4,
+    "ref_speed": 38000.0,
+    "limit_speed": 19000.0,
+    "mass_kg": 0.084
+  },
+  "SKF 63032RSC3": {
+    "baz": "6303",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6303-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6303-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6303-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH%2FC3",
+    "d": 17.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 14.3,
+    "C0r_kN": 6.55,
+    "ref_speed": 34000.0,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.112,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6303ZZC3": {
+    "baz": "6303",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6303-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6303-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2Z%2FC3",
+    "d": 17.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 14.3,
+    "C0r_kN": 6.55,
+    "ref_speed": 34000.0,
+    "limit_speed": 17000.0,
+    "mass_kg": 0.112
+  },
+  "SKF 63042RSC3": {
+    "baz": "6304",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6304-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH%2FC3",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6304-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RS1%2FC3",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6304-2RSH/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH%2FC3",
+    "d": 20.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 7.8,
+    "ref_speed": 30000.0,
+    "limit_speed": 9500.0,
+    "mass_kg": 0.144,
+    "not": "6304-2RS1/C3 SKF tarafından 6304-2RSH/C3 ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6304ZZC3": {
+    "baz": "6304",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6304-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6304-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z%2FC3",
+    "d": 20.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 7.8,
+    "ref_speed": 30000.0,
+    "limit_speed": 15000.0,
+    "mass_kg": 0.146
+  },
+  "SKF 63052RSC3": {
+    "baz": "6305",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6305-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6305-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6305-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1%2FC3",
+    "d": 25.0,
+    "D": 62.0,
+    "B": 17.0,
+    "Cr_kN": 23.4,
+    "C0r_kN": 11.6,
+    "limit_speed": 7500.0,
+    "mass_kg": 0.227,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6305ZZC3": {
+    "baz": "6305",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6305-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6305-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2Z%2FC3",
+    "d": 25.0,
+    "D": 62.0,
+    "B": 17.0,
+    "Cr_kN": 23.4,
+    "C0r_kN": 11.6,
+    "ref_speed": 24000.0,
+    "limit_speed": 13000.0,
+    "mass_kg": 0.228
+  },
+  "SKF 63062RSC3": {
+    "baz": "6306",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6306-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6306-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6306-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2RS1%2FC3",
+    "d": 30.0,
+    "D": 72.0,
+    "B": 19.0,
+    "Cr_kN": 29.6,
+    "C0r_kN": 16.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.352,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6306ZZC3": {
+    "baz": "6306",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6306-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6306-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z%2FC3",
+    "d": 30.0,
+    "D": 72.0,
+    "B": 19.0,
+    "Cr_kN": 29.6,
+    "C0r_kN": 16.0,
+    "ref_speed": 20000.0,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.353
+  },
+  "SKF 63072RSC3": {
+    "baz": "6307",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6307-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6307-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6307-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2RS1%2FC3",
+    "d": 35.0,
+    "D": 80.0,
+    "B": 21.0,
+    "Cr_kN": 35.1,
+    "C0r_kN": 19.0,
+    "limit_speed": 6000.0,
+    "mass_kg": 0.458,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6307ZZC3": {
+    "baz": "6307",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6307-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6307-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6307-2Z%2FC3",
+    "d": 35.0,
+    "D": 80.0,
+    "B": 21.0,
+    "Cr_kN": 35.1,
+    "C0r_kN": 19.0,
+    "ref_speed": 19000.0,
+    "limit_speed": 9500.0,
+    "mass_kg": 0.46
+  },
+  "SKF 63082RSC3": {
+    "baz": "6308",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6308-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6308-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6308-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1%2FC3",
+    "d": 40.0,
+    "D": 90.0,
+    "B": 23.0,
+    "Cr_kN": 42.3,
+    "C0r_kN": 24.0,
+    "limit_speed": 5000.0,
+    "mass_kg": 0.63,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6308ZZC3": {
+    "baz": "6308",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6308-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6308-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2Z%2FC3",
+    "d": 40.0,
+    "D": 90.0,
+    "B": 23.0,
+    "Cr_kN": 42.3,
+    "C0r_kN": 24.0,
+    "ref_speed": 17000.0,
+    "limit_speed": 8500.0,
+    "mass_kg": 0.635
+  },
+  "SKF 63092RSC3": {
+    "baz": "6309",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6309-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6309-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6309-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2RS1%2FC3",
+    "d": 45.0,
+    "D": 100.0,
+    "B": 25.0,
+    "Cr_kN": 55.3,
+    "C0r_kN": 31.5,
+    "limit_speed": 4500.0,
+    "mass_kg": 0.841,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6309ZZC3": {
+    "baz": "6309",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6309-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6309-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6309-2Z%2FC3",
+    "d": 45.0,
+    "D": 100.0,
+    "B": 25.0,
+    "Cr_kN": 55.3,
+    "C0r_kN": 31.5,
+    "ref_speed": 15000.0,
+    "limit_speed": 7500.0,
+    "mass_kg": 0.85
+  },
+  "SKF 63102RSC3": {
+    "baz": "6310",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6310-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6310-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6310-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2RS1%2FC3",
+    "d": 50.0,
+    "D": 110.0,
+    "B": 27.0,
+    "Cr_kN": 65.0,
+    "C0r_kN": 38.0,
+    "limit_speed": 4300.0,
+    "mass_kg": 1.08,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6310ZZC3": {
+    "baz": "6310",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6310-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6310-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6310-2Z%2FC3",
+    "d": 50.0,
+    "D": 110.0,
+    "B": 27.0,
+    "Cr_kN": 65.0,
+    "C0r_kN": 38.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 6700.0,
+    "mass_kg": 1.09
+  },
+  "SKF 63112RSC3": {
+    "baz": "6311",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6311-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6311-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6311-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2RS1%2FC3",
+    "d": 55.0,
+    "D": 120.0,
+    "B": 29.0,
+    "Cr_kN": 74.1,
+    "C0r_kN": 45.0,
+    "ref_speed": 12000.0,
+    "limit_speed": 3800.0,
+    "mass_kg": 1.38,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6311ZZC3": {
+    "baz": "6311",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6311-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6311-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6311-2Z%2FC3",
+    "d": 55.0,
+    "D": 120.0,
+    "B": 29.0,
+    "Cr_kN": 74.1,
+    "C0r_kN": 45.0,
+    "ref_speed": 12000.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 1.39
+  },
+  "SKF 63122RSC3": {
+    "baz": "6312",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6312-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6312-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6312-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2RS1%2FC3",
+    "d": 60.0,
+    "D": 130.0,
+    "B": 31.0,
+    "Cr_kN": 85.2,
+    "C0r_kN": 52.0,
+    "ref_speed": 11000.0,
+    "limit_speed": 3400.0,
+    "mass_kg": 1.72,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6312ZZC3": {
+    "baz": "6312",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6312-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6312-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6312-2Z%2FC3",
+    "d": 60.0,
+    "D": 130.0,
+    "B": 31.0,
+    "Cr_kN": 85.2,
+    "C0r_kN": 52.0,
+    "ref_speed": 11000.0,
+    "limit_speed": 5600.0,
+    "mass_kg": 1.73
+  },
+  "SKF 63132RSC3": {
+    "baz": "6313",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6313-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6313-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6313-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2RS1%2FC3",
+    "d": 65.0,
+    "D": 140.0,
+    "B": 33.0,
+    "Cr_kN": 97.5,
+    "C0r_kN": 60.0,
+    "ref_speed": 10000.0,
+    "limit_speed": 3200.0,
+    "mass_kg": 2.1,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6313ZZC3": {
+    "baz": "6313",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6313-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6313-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6313-2Z%2FC3",
+    "d": 65.0,
+    "D": 140.0,
+    "B": 33.0,
+    "Cr_kN": 97.5,
+    "C0r_kN": 60.0,
+    "ref_speed": 10000.0,
+    "limit_speed": 5300.0,
+    "mass_kg": 2.13
+  },
+  "SKF 63142RSC3": {
+    "baz": "6314",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6314-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6314-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6314-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2RS1%2FC3",
+    "d": 70.0,
+    "D": 150.0,
+    "B": 35.0,
+    "Cr_kN": 111.0,
+    "C0r_kN": 68.0,
+    "ref_speed": 9500.0,
+    "limit_speed": 3000.0,
+    "mass_kg": 2.56,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6314ZZC3": {
+    "baz": "6314",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6314-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6314-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z%2FC3",
+    "d": 70.0,
+    "D": 150.0,
+    "B": 35.0,
+    "Cr_kN": 111.0,
+    "C0r_kN": 68.0,
+    "ref_speed": 9500.0,
+    "limit_speed": 5000.0,
+    "mass_kg": 2.58
+  },
+  "SKF 63152RSC3": {
+    "baz": "6315",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6315-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6315-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6315-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2RS1%2FC3",
+    "d": 75.0,
+    "D": 160.0,
+    "B": 37.0,
+    "Cr_kN": 119.0,
+    "C0r_kN": 76.5,
+    "ref_speed": 9000.0,
+    "limit_speed": 2800.0,
+    "mass_kg": 3.08,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6315ZZC3": {
+    "baz": "6315",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6315-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6315-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6315-2Z%2FC3",
+    "d": 75.0,
+    "D": 160.0,
+    "B": 37.0,
+    "Cr_kN": 119.0,
+    "C0r_kN": 76.5,
+    "ref_speed": 9000.0,
+    "limit_speed": 4500.0,
+    "mass_kg": 3.09
+  },
+  "SKF 63162RSC3": {
+    "baz": "6316",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6316-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6316-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6316-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2RS1%2FC3",
+    "d": 80.0,
+    "D": 170.0,
+    "B": 39.0,
+    "Cr_kN": 130.0,
+    "C0r_kN": 86.5,
+    "ref_speed": 8500.0,
+    "limit_speed": 2600.0,
+    "mass_kg": 3.64,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6316ZZC3": {
+    "baz": "6316",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6316-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6316-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6316-2Z%2FC3",
+    "d": 80.0,
+    "D": 170.0,
+    "B": 39.0,
+    "Cr_kN": 130.0,
+    "C0r_kN": 86.5,
+    "ref_speed": 8500.0,
+    "limit_speed": 4300.0,
+    "mass_kg": 3.68
+  },
+  "SKF 63172RSC3": {
+    "baz": "6317",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6317-2RSH/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2RSH%2FC3",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6317-2RS1/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2RS1%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6317-2RS1/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2RS1%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2RS1%2FC3",
+    "d": 85.0,
+    "D": 180.0,
+    "B": 41.0,
+    "Cr_kN": 140.0,
+    "C0r_kN": 96.5,
+    "ref_speed": 8000.0,
+    "limit_speed": 2400.0,
+    "mass_kg": 4.28,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6317ZZC3": {
+    "baz": "6317",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6317-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6317-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6317-2Z%2FC3",
+    "d": 85.0,
+    "D": 180.0,
+    "B": 41.0,
+    "Cr_kN": 140.0,
+    "C0r_kN": 96.5,
+    "ref_speed": 8000.0,
+    "limit_speed": 4000.0,
+    "mass_kg": 4.3
+  },
+  "SKF 6318ZZC3": {
+    "baz": "6318",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6318-2Z/C3",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6318-2Z%2FC3",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6318-2Z/C3",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6318-2Z%2FC3",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6318-2Z%2FC3",
+    "d": 90.0,
+    "D": 190.0,
+    "B": 43.0,
+    "Cr_kN": 151.0,
+    "C0r_kN": 108.0,
+    "ref_speed": 7500.0,
+    "limit_speed": 3800.0,
+    "mass_kg": 5.04
+  },
+  "URB 22207MBW33C3": {
+    "baz": "22207",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 35.0,
+    "D": 72.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22207-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22207-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22208MBW33C3": {
+    "baz": "22208",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22208-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22208-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22210MBW33C3": {
+    "baz": "22210",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 23.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22210-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22210-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22212CW33C3": {
+    "baz": "22212",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 28.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22212-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22212-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22213MBW33C3": {
+    "baz": "22213",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22213-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22213-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22214MBW33C3": {
+    "baz": "22214",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22214-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22214-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22215": {
+    "baz": "22215",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 75.0,
+    "D": 130.0,
+    "B": 31.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22215-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22215-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 22217MB33C3": {
+    "baz": "22217",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 85.0,
+    "D": 150.0,
+    "B": 36.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=22217-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 22217-E1-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 23024MBW33C3": {
+    "baz": "23024",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 120.0,
+    "D": 180.0,
+    "B": 46.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23024-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23024-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 23044": {
+    "baz": "23044",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 220.0,
+    "D": 340.0,
+    "B": 90.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23044-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23044-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 23048": {
+    "baz": "23048",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 240.0,
+    "D": 360.0,
+    "B": 92.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23048-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23048-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 23218": {
+    "baz": "23218",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 90.0,
+    "D": 160.0,
+    "B": 52.4,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23218-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23218-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 24026": {
+    "baz": "24026",
+    "tip": "oynak_makarali",
+    "W33": false,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 130.0,
+    "D": 200.0,
+    "B": 69.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24026-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24026-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 24028CW33C3": {
+    "baz": "24028",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 140.0,
+    "D": 210.0,
+    "B": 69.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24028-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24028-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 24032CW33C3": {
+    "baz": "24032",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "çelik",
+    "d": 160.0,
+    "D": 240.0,
+    "B": 80.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=24032-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 24032-BE-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 60112RSC3": {
+    "baz": "6011",
+    "tip": "sabit_bilyali",
+    "d": 55.0,
+    "D": 90.0,
+    "B": 18.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=6011&lang=en&pageSize=100",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 6011; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "ZKL 23028MBW33": {
+    "baz": "23028",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": false,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "kafes": "pirinç",
+    "d": 140.0,
+    "D": 210.0,
+    "B": 53.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23028-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23028-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "ZKL 23126EW33JC3": {
+    "baz": "23126",
+    "tip": "oynak_makarali",
+    "W33": true,
+    "C3": true,
+    "P6": false,
+    "E1": false,
+    "T41A": false,
+    "konik_delik": false,
+    "d": 130.0,
+    "D": 210.0,
+    "B": 64.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=23126-E1&lang=en&pageSize=100",
+    "not": "Sonek bayrakları kod metninden, kafes varsa ürün adından; false = kodda yazmıyor (fiziksel doğrulama değil). ISO standart ölçü, baz kod aynı. Ölçü referansı: 23126-E1-XL-TVPB; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "SKF 6004ZZ": {
+    "baz": "6004",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6004-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6004-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6004-2Z",
+    "d": 20.0,
+    "D": 42.0,
+    "B": 12.0,
+    "Cr_kN": 9.95,
+    "C0r_kN": 5.0,
+    "ref_speed": 38000.0,
+    "limit_speed": 19000.0,
+    "mass_kg": 0.0721
+  },
+  "SKF 6006ZZ": {
+    "baz": "6006",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6006-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6006-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6006-2Z",
+    "d": 30.0,
+    "D": 55.0,
+    "B": 13.0,
+    "Cr_kN": 13.8,
+    "C0r_kN": 8.3,
+    "ref_speed": 28000.0,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.118
+  },
+  "SKF 62002RS": {
+    "baz": "6200",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6200-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6200-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6200-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6200-2RSH",
+    "d": 10.0,
+    "D": 30.0,
+    "B": 9.0,
+    "Cr_kN": 5.4,
+    "C0r_kN": 2.36,
+    "limit_speed": 17000.0,
+    "mass_kg": 0.032,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 62022RS": {
+    "baz": "6202",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6202-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6202-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6202-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6202-2RSH",
+    "d": 15.0,
+    "D": 35.0,
+    "B": 11.0,
+    "Cr_kN": 8.06,
+    "C0r_kN": 3.75,
+    "limit_speed": 13000.0,
+    "mass_kg": 0.0454,
+    "not": "6202-2RS1 SKF tarafından 6202-2RSH ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 62042RS": {
+    "baz": "6204",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6204-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6204-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6204-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6204-2RSH",
+    "d": 20.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 13.5,
+    "C0r_kN": 6.55,
+    "limit_speed": 10000.0,
+    "mass_kg": 0.106,
+    "not": "6204-2RS1 SKF tarafından 6204-2RSH ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6208ZZ": {
+    "baz": "6208",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6208-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6208-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6208-2Z",
+    "d": 40.0,
+    "D": 80.0,
+    "B": 18.0,
+    "Cr_kN": 32.5,
+    "C0r_kN": 19.0,
+    "ref_speed": 18000.0,
+    "limit_speed": 9000.0,
+    "mass_kg": 0.367
+  },
+  "SKF 62102RS": {
+    "baz": "6210",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6210-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6210-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6210-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RSH",
+    "d": 50.0,
+    "D": 90.0,
+    "B": 20.0,
+    "Cr_kN": 37.1,
+    "C0r_kN": 23.2,
+    "limit_speed": 4800.0,
+    "mass_kg": 0.463,
+    "SKF_alternatif_resmi": [
+      {
+        "designation_resmi": "6210-2RS1",
+        "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1",
+        "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6210-2RS1",
+        "d": 50.0,
+        "D": 90.0,
+        "B": 20.0,
+        "Cr_kN": 37.1,
+        "C0r_kN": 23.2,
+        "limit_speed": 4800.0,
+        "mass_kg": 0.459
+      }
+    ],
+    "not": "Her iki resmi sayfa da mevcut: 6210-2RSH, 6210-2RS1; designation_resmi için yayındaki 2RSH seçildi, alternatif tam verisi SKF_alternatif_resmi içinde. SKF bu iki sayfada hangisinin diğerinin yerine geçtiğini söylemiyor; yalnız birinin güncel olduğu doğrulanamadı."
+  },
+  "SKF 62112RS": {
+    "baz": "6211",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6211-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RSH",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6211-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6211-2RS1",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2RS1",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 21.0,
+    "Cr_kN": 46.2,
+    "C0r_kN": 29.0,
+    "limit_speed": 4300.0,
+    "mass_kg": 0.616,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6211ZZ": {
+    "baz": "6211",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6211-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6211-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6211-2Z",
+    "d": 55.0,
+    "D": 100.0,
+    "B": 21.0,
+    "Cr_kN": 46.2,
+    "C0r_kN": 29.0,
+    "ref_speed": 14000.0,
+    "limit_speed": 7000.0,
+    "mass_kg": 0.618
+  },
+  "SKF 6212ZZ": {
+    "baz": "6212",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6212-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6212-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6212-2Z",
+    "d": 60.0,
+    "D": 110.0,
+    "B": 22.0,
+    "Cr_kN": 55.3,
+    "C0r_kN": 36.0,
+    "ref_speed": 13000.0,
+    "limit_speed": 6300.0,
+    "mass_kg": 0.789
+  },
+  "SKF 6213ZZ": {
+    "baz": "6213",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6213-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6213-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6213-2Z",
+    "d": 65.0,
+    "D": 120.0,
+    "B": 23.0,
+    "Cr_kN": 58.5,
+    "C0r_kN": 40.5,
+    "ref_speed": 12000.0,
+    "limit_speed": 6000.0,
+    "mass_kg": 1.03
+  },
+  "SKF 62142RS": {
+    "baz": "6214",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6214-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RSH",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6214-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6214-2RS1",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6214-2RS1",
+    "d": 70.0,
+    "D": 125.0,
+    "B": 24.0,
+    "Cr_kN": 63.7,
+    "C0r_kN": 45.0,
+    "limit_speed": 3400.0,
+    "mass_kg": 1.1,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 63032RS": {
+    "baz": "6303",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6303-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6303-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6303-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6303-2RSH",
+    "d": 17.0,
+    "D": 47.0,
+    "B": 14.0,
+    "Cr_kN": 14.3,
+    "C0r_kN": 6.55,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.112,
+    "not": "6303-2RS1 SKF tarafından 6303-2RSH ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 63042RS": {
+    "baz": "6304",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6304-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6304-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6304-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2RSH",
+    "d": 20.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 7.8,
+    "limit_speed": 9500.0,
+    "mass_kg": 0.144,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6304ZZ": {
+    "baz": "6304",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6304-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6304-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6304-2Z",
+    "d": 20.0,
+    "D": 52.0,
+    "B": 15.0,
+    "Cr_kN": 16.8,
+    "C0r_kN": 7.8,
+    "ref_speed": 30000.0,
+    "limit_speed": 15000.0,
+    "mass_kg": 0.146
+  },
+  "SKF 63052RS": {
+    "baz": "6305",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6305-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RSH",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6305-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6305-2RS1",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6305-2RS1",
+    "d": 25.0,
+    "D": 62.0,
+    "B": 17.0,
+    "Cr_kN": 23.4,
+    "C0r_kN": 11.6,
+    "limit_speed": 7500.0,
+    "mass_kg": 0.227,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6306ZZ": {
+    "baz": "6306",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6306-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6306-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6306-2Z",
+    "d": 30.0,
+    "D": 72.0,
+    "B": 19.0,
+    "Cr_kN": 29.6,
+    "C0r_kN": 16.0,
+    "ref_speed": 20000.0,
+    "limit_speed": 11000.0,
+    "mass_kg": 0.353
+  },
+  "SKF 63082RS": {
+    "baz": "6308",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6308-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RSH",
+        "urun_sayfasi": false
+      },
+      {
+        "designation": "6308-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6308-2RS1",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6308-2RS1",
+    "d": 40.0,
+    "D": 90.0,
+    "B": 23.0,
+    "Cr_kN": 42.3,
+    "C0r_kN": 24.0,
+    "limit_speed": 5000.0,
+    "mass_kg": 0.63,
+    "not": "2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6314ZZ": {
+    "baz": "6314",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6314-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6314-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6314-2Z",
+    "d": 70.0,
+    "D": 150.0,
+    "B": 35.0,
+    "Cr_kN": 111.0,
+    "C0r_kN": 68.0,
+    "ref_speed": 9500.0,
+    "limit_speed": 5000.0,
+    "mass_kg": 2.58
+  },
+  "URB 32215": {
+    "baz": "32215",
+    "tip": "konik_makarali",
+    "d": 75.0,
+    "D": 130.0,
+    "T": 33.25,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=32215-A&lang=en&pageSize=100",
+    "B": 31,
+    "C": 27,
+    "r1s_2s_min": 2,
+    "r3s_4s_min": 1.5,
+    "r5_min": 0.6,
+    "kaynak_olcu_B_C": "https://www.urbgroup.com/wp-content/uploads/2024/12/Tapered-roller-bearings.pdf",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 32215-A; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. B iç bilezik, C dış bilezik, T toplam genişlik; B/C resmi URB 32215 A / 32220 A katalog satırından. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "URB 32220": {
+    "baz": "32220",
+    "tip": "konik_makarali",
+    "d": 100.0,
+    "D": 180.0,
+    "T": 49.0,
+    "kaynak_olcu": "https://medias.schaeffler.com/occ/v2/schaeffler-global/schaeffler/search/searchpage/pagedata?q=32220-A&lang=en&pageSize=100",
+    "B": 46,
+    "C": 39,
+    "r1s_2s_min": 3,
+    "r3s_4s_min": 2.5,
+    "r5_min": 1,
+    "kaynak_olcu_B_C": "https://www.urbgroup.com/wp-content/uploads/2024/12/Tapered-roller-bearings.pdf",
+    "not": "ISO standart ölçü, baz kod aynı. Ölçü referansı: 32220-XL; Schaeffler yük/hız/kütlesi bu markaya aktarılmadı. B iç bilezik, C dış bilezik, T toplam genişlik; B/C resmi URB 32215 A / 32220 A katalog satırından. Markanın tam sonekli varyantına ait resmi yük/hız/kütle eşleşmesi doğrulanamadı; benzer katalog varyantlarından aktarılmadı."
+  },
+  "SKF 60022RS": {
+    "baz": "6002",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6002-2RSH",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH",
+        "urun_sayfasi": true
+      },
+      {
+        "designation": "6002-2RS1",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RS1",
+        "urun_sayfasi": false
+      }
+    ],
+    "designation_resmi": "6002-2RSH",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6002-2RSH",
+    "d": 15.0,
+    "D": 32.0,
+    "B": 9.0,
+    "Cr_kN": 5.85,
+    "C0r_kN": 2.85,
+    "limit_speed": 14000.0,
+    "mass_kg": 0.0298,
+    "not": "6002-2RS1 SKF tarafından 6002-2RSH ile değiştirilmiş olarak gösteriliyor. 2RSH/2RS1 adaylarından yalnız tam ürün sayfası açılan varyant kullanıldı; arama sonuçlarındaki başka varyantların verileri alınmadı."
+  },
+  "SKF 6301ZZ": {
+    "baz": "6301",
+    "tip": "sabit_bilyali",
+    "SKF_varyant_kontrol": [
+      {
+        "designation": "6301-2Z",
+        "url": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z",
+        "urun_sayfasi": true
+      }
+    ],
+    "designation_resmi": "6301-2Z",
+    "kaynak_olcu": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z",
+    "kaynak_marka": "https://www.skf.com/group/products/rolling-bearings/ball-bearings/deep-groove-ball-bearings/productid-6301-2Z",
+    "d": 12.0,
+    "D": 37.0,
+    "B": 12.0,
+    "Cr_kN": 10.1,
+    "C0r_kN": 4.15,
+    "ref_speed": 45000.0,
+    "limit_speed": 22000.0,
+    "mass_kg": 0.0605
+  }
+}

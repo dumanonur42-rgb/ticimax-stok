@@ -1,0 +1,158 @@
+# Rulman teknik veri toplama günlüğü
+
+Toplama zamanı (UTC): 2026-11-10T22:21:23.647361+00:00
+
+## Kapsam ve birimler
+- Kaynak: `parca/rulman.jsonl.gz`, 214 satır. Ticimax’a erişilmedi; commit yapılmadı.
+- Ölçüler mm; yükler kN; hızlar r/min; kütle kg. Bulunmayan alanlar yoktur, sıfır/null ile doldurulmadı.
+- SKF: mevcut Chrome CDP üzerinden tek sayfa, sıralı gezinme ve sayfalar arası 1 saniye bekleme. Yalnız gerçek ürün h1 başlığı ve etiketli teknik değerler okundu. Arama/değişim sayfasındaki benzer ürünler teknik kaynak sayılmadı.
+- 2RS için her boyut/boşlukta 2RSH ve 2RS1 ayrı kontrol edildi. `SKF_varyant_kontrol` her adayın URL’sini ve ürün sayfası bulunup bulunmadığını tutar. Global site kaldırılmış 6201-2RS1 için resmi SKF Hindistan mağazası kullanıldı.
+- Non-SKF: resmi Schaeffler aynı baz kod sınıflandırmalarındaki yalnız sınır ölçüleri. 6917 için NTN resmi kataloğu. Konik B/C için resmi URB kataloğu. Başka marka yük/hız/kütlesi kopyalanmadı.
+- KH1630PP: resmi aramada bu tam yazım bulunmadı. Güncel INA KH16-PP kaydı + açık distribütör eşad referansı kullanıldı. INA marka verileri ayrı grupta, kullanım kararı verilmedi. Uzunluk L olduğundan B alanı yok.
+- SKF özet ürün sayfalarında Pu ve ilave d1/D1/D2/r ölçüleri bulunmadığı için eklenmedi; değerler tahmin edilmedi.
+- Sonek boolean alanları kodda yazılı olup olmadığını belirtir; kafes yalnız ürün adı açıkça söylüyorsa yazıldı. Kodda olmayan W33/C3 fiziksel olarak yok kabul edilmemeli.
+
+## Diğer marka resmi katalog araştırması
+- URB resmi alan adı urb.ro → urbgroup.com. Kataloglar bulundu: https://www.urbgroup.com/wp-content/uploads/2024/12/Spherical-roller-bearings.pdf ; https://www.urbgroup.com/wp-content/uploads/2024/12/Tapered-roller-bearings.pdf ; https://www.urbgroup.com/wp-content/uploads/2024/12/Deep-Grove-ball-bearing.pdf . Örn. 22208 MBW33 satırı var ama giriş MBW33C3; 22207 MBW33C3 yerine CW33; 23044 için MBW33. Tam ürün/sonek eşleşmesi ve URB-C etiketi doğrulanmadan marka performansı eklenmedi.
+- ZKL resmi katalog: https://www.zkl.cz/getmedia/0c3989ae-e08c-4da0-958b-dab059fe394b/ZKL_ROLLING_BEARINGS.pdf.aspx?ext=.pdf . 23028EW33MH / 23126EW33MH görülüyor; giriş 23028MBW33 / 23126EW33JC3 ile aynı olduğu varsayılmadı.
+- KBC: kbcbearings.com ve kbcbearing.com bağlantı hatası, kbcbearings.co.kr sertifika alan adı hatası; bulunan üçüncü taraf kataloglar resmi URL şartı nedeniyle marka değer kaynağı yapılmadı.
+
+## Mükerrerler
+- Aynı kod birden fazla satır: yok.
+- Aynı ürün adı, farklı kod: yok.
+- Aynı marka + doğrulanmış resmi designation, farklı kod: yok.
+- Aynı baz kodun farklı marka/kafes/konik delik/kapama/boşluk çeşitleri mükerrer sayılmadı. SKF 62012RS1 ile SKF 62012RSC3 adları aynı ana ifadeyi içeriyor ama resmi varyantları farklı; kod/ad çelişkisi nedeniyle olası operatör mükerreri olarak elle kontrol edilmeli.
+
+## Eksikler / özel durumlar
+- SKF 62012RS1: kod/ad C3 çelişkisi; resmi 6201-2RS1 mağaza kaydı normal boşluk, d/D/B ve kütle var; yük/hız bulunamadı.
+- SKF 62102RS: 6210-2RSH ve 6210-2RS1 ikisi de gerçek ürün sayfası. Hangisinin tek güncel varyant olduğu resmi sayfalarda belirtilmiyor. Yayındaki 2RSH ana kayda seçildi; 2RS1 tam verisi ayrı alternatif grupta korundu (kütleleri farklı).
+
+## Veri özeti
+- Ürün: 214
+- d/D/B bulunan: 213
+- Ana ürün Cr_kN bulunan: 120
+- d/D/B eksik: RUL KH1630PP
+- Kaynak ham sayfa/API/PDF arşivi: `/home/ubuntu/work/bearing_sources/` (repo dışında). Yeniden üretim betikleri `/home/ubuntu/work/collect_bearings.py` ve `/home/ubuntu/work/build_bearings.py`.
+
+## SKF varyant kayıtları
+- `SKF 60002RSC3` → `6000-2RSH/C3`; 6000-2RSH/C3: ürün / 6000-2RS1/C3: arama/değişim
+- `SKF 6000ZZC3` → `6000-2Z/C3`; 6000-2Z/C3: ürün
+- `SKF 60012RSC3` → `6001-2RSH/C3`; 6001-2RSH/C3: ürün / 6001-2RS1/C3: arama/değişim
+- `SKF 6001ZZC3` → `6001-2Z/C3`; 6001-2Z/C3: ürün
+- `SKF 60022RSC3` → `6002-2RSH/C3`; 6002-2RSH/C3: ürün / 6002-2RS1/C3: arama/değişim
+- `SKF 6002ZZC3` → `6002-2Z/C3`; 6002-2Z/C3: ürün
+- `SKF 60032RSC3` → `6003-2RSH/C3`; 6003-2RSH/C3: ürün / 6003-2RS1/C3: arama/değişim
+- `SKF 6003ZZC3` → `6003-2Z/C3`; 6003-2Z/C3: ürün
+- `SKF 60042RSC3` → `6004-2RSH/C3`; 6004-2RSH/C3: ürün / 6004-2RS1/C3: arama/değişim
+- `SKF 6004ZZC3` → `6004-2Z/C3`; 6004-2Z/C3: ürün
+- `SKF 60052RSC3` → `6005-2RSH/C3`; 6005-2RSH/C3: ürün / 6005-2RS1/C3: arama/değişim
+- `SKF 6005ZZC3` → `6005-2Z/C3`; 6005-2Z/C3: ürün
+- `SKF 60062RSC3` → `6006-2RS1/C3`; 6006-2RSH/C3: arama/değişim / 6006-2RS1/C3: ürün
+- `SKF 6006ZZC3` → `6006-2Z/C3`; 6006-2Z/C3: ürün
+- `SKF 60072RSC3` → `6007-2RS1/C3`; 6007-2RSH/C3: arama/değişim / 6007-2RS1/C3: ürün
+- `SKF 6007ZZC3` → `6007-2Z/C3`; 6007-2Z/C3: ürün
+- `SKF 60082RSC3` → `6008-2RS1/C3`; 6008-2RSH/C3: arama/değişim / 6008-2RS1/C3: ürün
+- `SKF 6008ZZC3` → `6008-2Z/C3`; 6008-2Z/C3: ürün
+- `SKF 60092RSC3` → `6009-2RS1/C3`; 6009-2RSH/C3: arama/değişim / 6009-2RS1/C3: ürün
+- `SKF 6009ZZC3` → `6009-2Z/C3`; 6009-2Z/C3: ürün
+- `SKF 60102RSC3` → `6010-2RS1/C3`; 6010-2RSH/C3: arama/değişim / 6010-2RS1/C3: ürün
+- `SKF 6010ZZC3` → `6010-2Z/C3`; 6010-2Z/C3: ürün
+- `SKF 60112RSC3` → `6011-2RS1/C3`; 6011-2RSH/C3: arama/değişim / 6011-2RS1/C3: ürün
+- `SKF 6011ZZC3` → `6011-2Z/C3`; 6011-2Z/C3: ürün
+- `SKF 60122RSC3` → `6012-2RS1/C3`; 6012-2RSH/C3: arama/değişim / 6012-2RS1/C3: ürün
+- `SKF 6012ZZC3` → `6012-2Z/C3`; 6012-2Z/C3: ürün
+- `SKF 60132RSC3` → `6013-2RS1/C3`; 6013-2RSH/C3: arama/değişim / 6013-2RS1/C3: ürün
+- `SKF 6013ZZC3` → `6013-2Z/C3`; 6013-2Z/C3: ürün
+- `SKF 60142RSC3` → `6014-2RS1/C3`; 6014-2RSH/C3: arama/değişim / 6014-2RS1/C3: ürün
+- `SKF 6014ZZC3` → `6014-2Z/C3`; 6014-2Z/C3: ürün
+- `SKF 60152RSC3` → `6015-2RS1/C3`; 6015-2RSH/C3: arama/değişim / 6015-2RS1/C3: ürün
+- `SKF 6015ZZC3` → `6015-2Z/C3`; 6015-2Z/C3: ürün
+- `SKF 62002RSC3` → `6200-2RSH/C3`; 6200-2RSH/C3: ürün / 6200-2RS1/C3: arama/değişim
+- `SKF 6200ZZC3` → `6200-2Z/C3`; 6200-2Z/C3: ürün
+- `SKF 62012RS1` → `6201-2RS1`; 6201-2RS1: arama/değişim
+- `SKF 62012RSC3` → `6201-2RSH/C3`; 6201-2RSH/C3: ürün / 6201-2RS1/C3: arama/değişim
+- `SKF 6201ZZC3` → `6201-2Z/C3`; 6201-2Z/C3: ürün
+- `SKF 62022RSC3` → `6202-2RSH/C3`; 6202-2RSH/C3: ürün / 6202-2RS1/C3: arama/değişim
+- `SKF 6202ZZC3` → `6202-2Z/C3`; 6202-2Z/C3: ürün
+- `SKF 62032RSC3` → `6203-2RSH/C3`; 6203-2RSH/C3: ürün / 6203-2RS1/C3: arama/değişim
+- `SKF 62042RSC3` → `6204-2RSH/C3`; 6204-2RSH/C3: ürün / 6204-2RS1/C3: arama/değişim
+- `SKF 6204ZZC3` → `6204-2Z/C3`; 6204-2Z/C3: ürün
+- `SKF 62052RSC3` → `6205-2RSH/C3`; 6205-2RSH/C3: ürün / 6205-2RS1/C3: arama/değişim
+- `SKF 6205ZZC3` → `6205-2Z/C3`; 6205-2Z/C3: ürün
+- `SKF 62062RSC3` → `6206-2RS1/C3`; 6206-2RSH/C3: arama/değişim / 6206-2RS1/C3: ürün
+- `SKF 62072RSC3` → `6207-2RS1/C3`; 6207-2RSH/C3: arama/değişim / 6207-2RS1/C3: ürün
+- `SKF 6207ZZC3` → `6207-2Z/C3`; 6207-2Z/C3: ürün
+- `SKF 62082RSC3` → `6208-2RS1/C3`; 6208-2RSH/C3: arama/değişim / 6208-2RS1/C3: ürün
+- `SKF 6208ZZC3` → `6208-2Z/C3`; 6208-2Z/C3: ürün
+- `SKF 62092RSC3` → `6209-2RS1/C3`; 6209-2RSH/C3: arama/değişim / 6209-2RS1/C3: ürün
+- `SKF 6209ZZC3` → `6209-2Z/C3`; 6209-2Z/C3: ürün
+- `SKF 62102RSC3` → `6210-2RS1/C3`; 6210-2RSH/C3: arama/değişim / 6210-2RS1/C3: ürün
+- `SKF 6210ZZC3` → `6210-2Z/C3`; 6210-2Z/C3: ürün
+- `SKF 62112RSC3` → `6211-2RS1/C3`; 6211-2RSH/C3: arama/değişim / 6211-2RS1/C3: ürün
+- `SKF 6211ZZC3` → `6211-2Z/C3`; 6211-2Z/C3: ürün
+- `SKF 62122RSC3` → `6212-2RS1/C3`; 6212-2RSH/C3: arama/değişim / 6212-2RS1/C3: ürün
+- `SKF 6212ZZC3` → `6212-2Z/C3`; 6212-2Z/C3: ürün
+- `SKF 62132RSC3` → `6213-2RS1/C3`; 6213-2RSH/C3: arama/değişim / 6213-2RS1/C3: ürün
+- `SKF 6213ZZC3` → `6213-2Z/C3`; 6213-2Z/C3: ürün
+- `SKF 62142RSC3` → `6214-2RS1/C3`; 6214-2RSH/C3: arama/değişim / 6214-2RS1/C3: ürün
+- `SKF 6214ZZC3` → `6214-2Z/C3`; 6214-2Z/C3: ürün
+- `SKF 62152RSC3` → `6215-2RS1/C3`; 6215-2RSH/C3: arama/değişim / 6215-2RS1/C3: ürün
+- `SKF 6215ZZC3` → `6215-2Z/C3`; 6215-2Z/C3: ürün
+- `SKF 62162RSC3` → `6216-2RS1/C3`; 6216-2RSH/C3: arama/değişim / 6216-2RS1/C3: ürün
+- `SKF 6217ZZC3` → `6217-2Z/C3`; 6217-2Z/C3: ürün
+- `SKF 63012RSC3` → `6301-2RSH/C3`; 6301-2RSH/C3: ürün / 6301-2RS1/C3: arama/değişim
+- `SKF 6301ZZC3` → `6301-2Z/C3`; 6301-2Z/C3: ürün
+- `SKF 63022RSC3` → `6302-2RSH/C3`; 6302-2RSH/C3: ürün / 6302-2RS1/C3: arama/değişim
+- `SKF 6302ZZC3` → `6302-2Z/C3`; 6302-2Z/C3: ürün
+- `SKF 63032RSC3` → `6303-2RSH/C3`; 6303-2RSH/C3: ürün / 6303-2RS1/C3: arama/değişim
+- `SKF 6303ZZC3` → `6303-2Z/C3`; 6303-2Z/C3: ürün
+- `SKF 63042RSC3` → `6304-2RSH/C3`; 6304-2RSH/C3: ürün / 6304-2RS1/C3: arama/değişim
+- `SKF 6304ZZC3` → `6304-2Z/C3`; 6304-2Z/C3: ürün
+- `SKF 63052RSC3` → `6305-2RS1/C3`; 6305-2RSH/C3: arama/değişim / 6305-2RS1/C3: ürün
+- `SKF 6305ZZC3` → `6305-2Z/C3`; 6305-2Z/C3: ürün
+- `SKF 63062RSC3` → `6306-2RS1/C3`; 6306-2RSH/C3: arama/değişim / 6306-2RS1/C3: ürün
+- `SKF 6306ZZC3` → `6306-2Z/C3`; 6306-2Z/C3: ürün
+- `SKF 63072RSC3` → `6307-2RS1/C3`; 6307-2RSH/C3: arama/değişim / 6307-2RS1/C3: ürün
+- `SKF 6307ZZC3` → `6307-2Z/C3`; 6307-2Z/C3: ürün
+- `SKF 63082RSC3` → `6308-2RS1/C3`; 6308-2RSH/C3: arama/değişim / 6308-2RS1/C3: ürün
+- `SKF 6308ZZC3` → `6308-2Z/C3`; 6308-2Z/C3: ürün
+- `SKF 63092RSC3` → `6309-2RS1/C3`; 6309-2RSH/C3: arama/değişim / 6309-2RS1/C3: ürün
+- `SKF 6309ZZC3` → `6309-2Z/C3`; 6309-2Z/C3: ürün
+- `SKF 63102RSC3` → `6310-2RS1/C3`; 6310-2RSH/C3: arama/değişim / 6310-2RS1/C3: ürün
+- `SKF 6310ZZC3` → `6310-2Z/C3`; 6310-2Z/C3: ürün
+- `SKF 63112RSC3` → `6311-2RS1/C3`; 6311-2RSH/C3: arama/değişim / 6311-2RS1/C3: ürün
+- `SKF 6311ZZC3` → `6311-2Z/C3`; 6311-2Z/C3: ürün
+- `SKF 63122RSC3` → `6312-2RS1/C3`; 6312-2RSH/C3: arama/değişim / 6312-2RS1/C3: ürün
+- `SKF 6312ZZC3` → `6312-2Z/C3`; 6312-2Z/C3: ürün
+- `SKF 63132RSC3` → `6313-2RS1/C3`; 6313-2RSH/C3: arama/değişim / 6313-2RS1/C3: ürün
+- `SKF 6313ZZC3` → `6313-2Z/C3`; 6313-2Z/C3: ürün
+- `SKF 63142RSC3` → `6314-2RS1/C3`; 6314-2RSH/C3: arama/değişim / 6314-2RS1/C3: ürün
+- `SKF 6314ZZC3` → `6314-2Z/C3`; 6314-2Z/C3: ürün
+- `SKF 63152RSC3` → `6315-2RS1/C3`; 6315-2RSH/C3: arama/değişim / 6315-2RS1/C3: ürün
+- `SKF 6315ZZC3` → `6315-2Z/C3`; 6315-2Z/C3: ürün
+- `SKF 63162RSC3` → `6316-2RS1/C3`; 6316-2RSH/C3: arama/değişim / 6316-2RS1/C3: ürün
+- `SKF 6316ZZC3` → `6316-2Z/C3`; 6316-2Z/C3: ürün
+- `SKF 63172RSC3` → `6317-2RS1/C3`; 6317-2RSH/C3: arama/değişim / 6317-2RS1/C3: ürün
+- `SKF 6317ZZC3` → `6317-2Z/C3`; 6317-2Z/C3: ürün
+- `SKF 6318ZZC3` → `6318-2Z/C3`; 6318-2Z/C3: ürün
+- `SKF 6004ZZ` → `6004-2Z`; 6004-2Z: ürün
+- `SKF 6006ZZ` → `6006-2Z`; 6006-2Z: ürün
+- `SKF 62002RS` → `6200-2RSH`; 6200-2RSH: ürün / 6200-2RS1: arama/değişim
+- `SKF 62022RS` → `6202-2RSH`; 6202-2RSH: ürün / 6202-2RS1: arama/değişim
+- `SKF 62042RS` → `6204-2RSH`; 6204-2RSH: ürün / 6204-2RS1: arama/değişim
+- `SKF 6208ZZ` → `6208-2Z`; 6208-2Z: ürün
+- `SKF 62102RS` → `6210-2RSH`; 6210-2RSH: ürün / 6210-2RS1: ürün
+- `SKF 62112RS` → `6211-2RS1`; 6211-2RSH: arama/değişim / 6211-2RS1: ürün
+- `SKF 6211ZZ` → `6211-2Z`; 6211-2Z: ürün
+- `SKF 6212ZZ` → `6212-2Z`; 6212-2Z: ürün
+- `SKF 6213ZZ` → `6213-2Z`; 6213-2Z: ürün
+- `SKF 62142RS` → `6214-2RS1`; 6214-2RSH: arama/değişim / 6214-2RS1: ürün
+- `SKF 63032RS` → `6303-2RSH`; 6303-2RSH: ürün / 6303-2RS1: arama/değişim
+- `SKF 63042RS` → `6304-2RSH`; 6304-2RSH: ürün / 6304-2RS1: arama/değişim
+- `SKF 6304ZZ` → `6304-2Z`; 6304-2Z: ürün
+- `SKF 63052RS` → `6305-2RS1`; 6305-2RSH: arama/değişim / 6305-2RS1: ürün
+- `SKF 6306ZZ` → `6306-2Z`; 6306-2Z: ürün
+- `SKF 63082RS` → `6308-2RS1`; 6308-2RSH: arama/değişim / 6308-2RS1: ürün
+- `SKF 6314ZZ` → `6314-2Z`; 6314-2Z: ürün
+- `SKF 60022RS` → `6002-2RSH`; 6002-2RSH: ürün / 6002-2RS1: arama/değişim
+- `SKF 6301ZZ` → `6301-2Z`; 6301-2Z: ürün
