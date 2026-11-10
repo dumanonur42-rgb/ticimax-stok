@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yatak teknik çizimleri</title>
+<style>
+body{margin:0;background:#eef1f6;color:#16203a;font:13px Arial,sans-serif}article{box-sizing:border-box;max-width:460px;padding:8px;margin:0 auto 12px;background:white}h2{font-size:14px;margin:6px 0}small{display:block;color:#64718a}button{display:block;width:100%;text-align:left;border:0;border-top:1px solid #edf0f5;background:white;color:#16203a;padding:5px;font:inherit}button span{float:right;font-weight:bold}.selected{color:#d0101e}.selected text{fill:#d0101e}.selected line,.selected path{stroke:#d0101e}.missing{padding:24px 0;color:#9b1c1c}svg{overflow:visible}
+</style>
+<div id="out"></div>
+<script src="../yatakli.js"></script><script src="../yatak.js"></script>
+<script>
+fetch('../fixtures/yatak.json').then(function(r){return r.json()}).then(function(fixtures){
+ var params=new URLSearchParams(location.search),index=params.get('case'),width=params.get('w');
+ if(width)document.body.style.width=width+'px';
+ fixtures.forEach(function(c,i){
+  if(index!==null&&i!==Number(index))return;
+  var article=document.createElement('article'),heading=document.createElement('h2'),note=document.createElement('small');
+  heading.textContent=c.title;note.textContent=c.path+' · '+(c.eksik?'eksik':'doğrulanmış karşılaştırma');
+  article.appendChild(heading);article.appendChild(note);
+  var result=window.YDRAW.yatak.draw(c,{id:'preview'+i,dim:'#0a2350'});
+  if(result){
+   var drawing=document.createElement('div');drawing.innerHTML=result.svg;article.appendChild(drawing);
+   result.keys.forEach(function(key){var button=document.createElement('button'),value=document.createElement('span');button.textContent=key.l;value.textContent=key.v;button.appendChild(value);
+    button.onclick=function(){drawing.querySelectorAll('.hl').forEach(function(g){g.classList.toggle('selected',g.getAttribute('data-k')===key.k)})};article.appendChild(button)});
+  }else{var missing=document.createElement('div');missing.className='missing';missing.textContent='Gerekli ölçüler eksik veya seri çizimsiz: çizim gösterilmez.';article.appendChild(missing)}
+  document.getElementById('out').appendChild(article);
+ });document.body.setAttribute('data-ready','true');
+});
+</script></html>
