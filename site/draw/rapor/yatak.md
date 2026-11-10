@@ -134,3 +134,61 @@ SN360, UCFB460, insert360, UCFL360 ve FRB460 görüntüleri ayrıca gözle incel
 - preview/yatak/frb-10110-460.png
 
 Görseller ürün sayfası entegrasyonunu veya üretim toleranslarını doğrulamaz.
+
+## Kalite revizyonu
+
+Referanslar: preview/yatakli/ucp-201-fag-yatakli-rulman-17867-460.png ve
+preview/bilyali/w360-c0.png. Bu referans dosyalar ve modülleri değiştirilmedi.
+
+- Ölçü gruplarındaki harf önekleri kaldırıldı: yalnız sayı; çaplar ø ile.
+  UCFB'nin D ölçüsü gövde genişliği olduğu için çap işareti almaz.
+- SN: taban ayakları, eksendeki kapak/alt gövde ayrımı, kapak cıvataları,
+  J/N taban delikleri, gizli D yuva çizgisi ve d1 mil açıklığı yeniden çizildi.
+  Kesitte taranmış gövde, D yüksekliğinde yuva boşluğu, iki yanda kademeli keçe
+  kanalları ve eksen var. D ölçüsü boşluğun içinde dikey; gövdeyi çaprazlayan
+  eski D kılavuzu yok. H/H1/H2, A/A1 ve g ayrı dış ölçü hatlarına taşındı.
+- UCFB: gövde taralı, küresel yatak yuvasına oturan dış bilezik ve asimetrik
+  iç bilezik kesitleri ayrı dolu taralı profiller. Bilye ve vida detayı var.
+  S deliğinin kılavuzu sol tarafa, j ölçüsü sağ tarafa alındı; kesişmezler.
+- SUC/UC: küresel dış bilezik, bilyeye oturan yay biçimli bilezik kanalları,
+  B genişliğinde asimetrik iç bilezik, kesitte vida deliği ve ön görünüşte
+  setuskur çizildi. B/C/S ve ød/øD yalnız spec değerlerini gösterir.
+- FRB: ön görünüşte iki çaplı halka, kesitte B genişliğinde taralı dikdörtgenler.
+- UCPA ve S-SB dalları aynı ortak dolu bilezik/bilye/küresel yuva çizicisini kullanır.
+  Gövde ve insert taramalarının yönleri farklıdır.
+
+Profil, bilye adedi/çapı, kanal ve vida şekli ölçülendirilmemiş şematik detaydır;
+yeni ürün ölçüsü veya tolerans türetilmedi. Araştırma verisi ve gerçek fixture'lar
+değişmedi; eksik verili gerçek UCPA/S-SB ürünleri halen null döner.
+
+### Son kontroller
+
+```text
+PASS: legacy fixtures 725; yatak.match=true: 0
+PASS: yatak fixtures 48; drawings 26; null 22
+PASS: competing modules baglanti=0, bilyali=0, eksenel=0, kece=0, konik=0, lineer=0, makarali=0
+PASS: 30 SVG contracts; keys/data-k, prefix IDs, missing/error/duplicate cases, immutable delegation
+PASS: SVG XML valid
+PASS: numeric-only dimensions, diameter prefixes, filled hatched races, balls and set screws
+SCREENSHOTS: captured selected fixtures at 460/360
+TEXT OVERLAPS: []
+PASS: preview key button highlights dimension group
+PASS: 8 explicitly synthetic UCPA/S-SB viewport captures
+TEXT OVERLAPS: []
+```
+
+Mevcut42 ürünün84 PNG'sinin tamamı yeniden üretildi. Değişmeyen delegasyon
+çizimleri piksel olarak aynı kaldığından git farkı oluşturmayabilir.
+UCPA/SSBF/SSBP/SSBT için sekiz ek test PNG'si eklendi: contract-*-460.png,
+contract-*-360.png. Bunların başlıkları **SENTETİK TEST, gerçek ürün değil**;
+preview/yatak.html?contract=UCPA&w=360 gibi adreslerle tekrar açılır.
+
+SN, SSUCFB, SUC ve FRB 360px'te; UCFB/insert 460px'te; dört sentetik dal
+360px'te ayrıca gözle incelendi. Son çap işareti değişikliğinden sonraki
+Chrome text kutusu kontrolünde de kesişme yok.
+
+İstenen 460px kanıtları:
+- preview/yatak/sn-506-460.png
+- preview/yatak/ssucfb-205-460.png
+- preview/yatak/suc-205-460.png
+- preview/yatak/frb-10110-460.png

@@ -15,6 +15,7 @@ function check(result, id) {
   result.keys.forEach(k => {
     const group = result.svg.match(new RegExp('<g class="hl" data-k="' + k.k + '">([\\s\\S]*?)</g>'));
     assert(group && group[1].includes('<text') && group[1].includes('<line'), k.k);
+    [...group[1].matchAll(/<text[^>]*>([^<]+)<\/text>/g)].forEach(m=>assert(/^(?:ø)?\d+(?:,\d+)?$/.test(m[1]),'numeric dimension only: '+m[1]));
   });
   [...result.svg.matchAll(/\bid="([^"]+)"/g)].forEach(m => assert(m[1].startsWith(id)));
   svgs.push(result.svg); checks++;
@@ -33,6 +34,15 @@ fixtures.forEach((c,i) => {
   Object.keys(conflicts).forEach(k => {if(window.YDRAW[k].match(c))conflicts[k].push(c.path)});
   if(!r)return;
   rendered++; check(r,id);
+  const series=c.specs[0].v;
+  if(['SUC','UC','SSUCFB','SUCFB'].includes(series)){
+    assert(r.svg.includes('data-part="inner-race"')&&r.svg.includes('data-part="outer-race"')&&r.svg.includes('data-part="ball"')&&r.svg.includes('data-part="set-screw"'));
+    assert((r.svg.match(/fill="url\(#/g)||[]).length>=4,'solid hatched races');
+  }
+  if(['SSUCFB','SUCFB'].includes(series))assert(r.svg.includes('>'+ 'ø'+c.specs.find(s=>s.l.endsWith('(s)')).v.replace(' mm','')+'</text>'),'flange hole diameter');
+  if(['SUC','UC','SN','FRB'].includes(series)){
+    assert(new RegExp('data-k="D">[\\s\\S]*?<text[^>]*>ø'+c.specs.find(s=>s.l.endsWith('(D)')).v.replace(' mm','')+'</text>').test(r.svg),'diameter prefix');
+  }
   assert(mod.draw(c,{id:'red'+i,dim:'#d0101e'}).svg.includes('#d0101e'));
   r.keys.forEach(k => assert(c.specs.some(s => s.v === k.v), c.path + ' non-spec value ' + k.v));
   const letters = r.keys.map(k => k.k);
@@ -65,3 +75,4 @@ console.log('PASS: yatak fixtures '+fixtures.length+'; drawings '+rendered+'; nu
 console.log('PASS: competing modules '+Object.keys(conflicts).map(k=>k+'=0').join(', '));
 console.log('PASS: '+checks+' SVG contracts; keys/data-k, prefix IDs, missing/error/duplicate cases, immutable delegation');
 console.log(xml.stdout.trim());
+console.log('PASS: numeric-only dimensions, diameter prefixes, filled hatched races, balls and set screws');
