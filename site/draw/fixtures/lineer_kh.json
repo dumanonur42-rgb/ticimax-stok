@@ -1,0 +1,11 @@
+[
+  {"title":"KH1630PP Lineer Rulman 16x24x30 mm","crumbs":["Anasayfa","LİNEER","LİNEER RULMANLAR"],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"24 mm"},{"l":"Uzunluk (L)","v":"30 mm"}],"expected":{"match":true,"keys":["d","D","L"]}},
+  {"title":"KH1630PP eksik L","crumbs":["LİNEER RULMANLAR"],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"24 mm"}],"expected":{"match":true,"keys":null}},
+  {"title":"LM16UU Lineer Rulman","crumbs":["Anasayfa","LİNEER","LİNEER RULMANLAR"],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"28 mm"},{"l":"Uzunluk (L)","v":"37 mm"}],"expected":{"match":false,"keys":null}},
+  {"title":"INA KH16-PP","crumbs":[],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"24 mm"},{"l":"Uzunluk (L)","v":"30 mm"}],"expected":{"match":true,"keys":["d","D","L"]}},
+  {"title":"KH 1630 PP","crumbs":[],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"24 mm"},{"l":"Uzunluk (L)","v":"30 mm"}],"expected":{"match":true,"keys":["d","D","L"]}},
+  {"title":"INA KH kompakt burç","crumbs":["LİNEER RULMANLAR"],"specs":[{"l":"İç Çap (d)","v":"16 mm"},{"l":"Dış Çap (D)","v":"24 mm"},{"l":"Uzunluk (L)","v":"30 mm"}],"expected":{"match":true,"keys":["d","D","L"]}},
+  {"title":"KH1630PP boş teknik liste","specs":[],"expected":{"match":true,"keys":null}},
+  {"title":"KH1630PP geçersiz çap","specs":[{"l":"İç Çap (d)","v":"-16 mm"},{"l":"Dış Çap (D)","v":"24 mm"},{"l":"Uzunluk (L)","v":"30 mm"}],"expected":{"match":true,"keys":null}},
+  {"title":"SCE16UU Lineer Rulman","crumbs":["LİNEER RULMANLAR"],"specs":[],"expected":{"match":false,"keys":null}}
+]

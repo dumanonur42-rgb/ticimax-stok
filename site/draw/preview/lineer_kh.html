@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KH kompakt lineer rulman</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#16203a;font-family:Arial,sans-serif}main{width:460px;max-width:100%;margin:auto}h1{font-size:16px;margin:12px}p{font-size:12px;margin:12px}.drawing svg{display:block}.keys{display:flex;gap:6px;margin:12px}.keys button{flex:1;padding:8px 2px;border:1px solid #d4dbe7;background:#f7f9fc;color:#0a2350;font:12px Arial;cursor:pointer}.keys b{display:block;margin-top:4px}.hl.on{color:#d0101e!important}
+</style></head><body><main><h1>KH1630PP Lineer Rulman</h1><p>Kapalı kompakt KH serisi · ölçüler mm</p><div class="drawing"></div><div class="keys"></div><p>İç yapı şematiktir; ölçü kartına tıklayarak vurgulayın.</p></main>
+<script src="../lineer_kh.js"></script><script>
+fetch('../fixtures/lineer_kh.json').then(function(r){return r.json()}).then(function(fixtures){
+  var result=window.YDRAW.lineer_kh.draw(fixtures[0],{id:'kh-preview',dim:'#0a2350'});
+  document.querySelector('.drawing').innerHTML=result.svg;
+  result.keys.forEach(function(key){var button=document.createElement('button');button.setAttribute('data-k',key.k);button.innerHTML=key.l+'<b>'+key.v+'</b>';button.onclick=function(){document.querySelectorAll('.hl').forEach(function(g){g.classList.toggle('on',g.getAttribute('data-k')===key.k)})};document.querySelector('.keys').appendChild(button)});
+});
+</script></body></html>
