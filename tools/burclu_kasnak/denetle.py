@@ -28,6 +28,30 @@ def value(x):
     return format(x, '.12g').replace('.', ',')
 
 
+def generic_sentences(html):
+    text = BeautifulSoup(html, 'html.parser').get_text(' ', strip=True)
+    text = re.sub(r'\s+', ' ', text)
+    return {sentence.strip() for sentence in re.split(r'(?<=[.!?])\s+', text)
+            if len(sentence.strip()) >= 40
+            and not re.search(r'\d|\bSP[ZABC]\b', sentence, re.I)}
+
+
+def sentence_counts(products):
+    counts = Counter()
+    for product in products:
+        counts.update(generic_sentences(product['ACIKLAMA']))
+    return counts
+
+
+def audit_sentences(counts, total):
+    limit = total * 30 // 100
+    repeated = [(sentence, count) for sentence, count in counts.items() if count > limit]
+    if repeated:
+        raise ValueError(f'Genel cümle sıklığı %30 sınırını aşıyor (en fazla {limit}/{total} ürün):\n' +
+                         '\n'.join(f'{count}/{total}: {sentence}' for sentence, count in
+                                   sorted(repeated, key=lambda item: (-item[1], item[0]))))
+
+
 def pairs(container, tag):
     output = []
     for cell in container.find_all(tag, recursive=False):
@@ -162,12 +186,23 @@ def audit(products, sources, images, urls, expected_count=519):
 
 
 def main():
-    result = audit(load(REPO / 'urunler.jsonl'), load(ROOT / 'veri.jsonl'),
+    products = load(REPO / 'urunler.jsonl')
+    result = audit(products, load(ROOT / 'veri.jsonl'),
                    load(ROOT / 'gorsel_map.jsonl'), set((REPO / 'katurl.txt').read_text().splitlines()))
+    counts = sentence_counts(products)
+    print('EN SIK 10 GENEL CÜMLE (HTML arındırılmış; ≥40 karakter; ölçü/kod/sayı yok):')
+    for sentence, count in sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:10]:
+        ratio = format(count / len(products) * 100, '.2f').replace('.', ',')
+        print(f'{count}/{len(products)} (%{ratio}): {sentence}')
+    audit_sentences(counts, len(products))
+    result['genel_cumle_en_fazla'] = max(counts.values(), default=0)
+    result['genel_cumle_siniri'] = len(products) * 30 // 100
+    result['genel_cumle_ilk10'] = sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:10]
     (ROOT / 'icerik_denetim.json').write_text(json.dumps(result, ensure_ascii=False, indent=2))
     print('PASS: 519 satır; 519 benzersiz kod; 17 alan doğru sırada; kaynak/görsel/bayrak eşleşmeleri')
     print(f'PASS: açıklama {result["minimum_aciklama"]}–{result["maksimum_aciklama"]} karakter; SEO 60/155; anahtar kelimeler ≤950; tekrar yok')
     print(f'PASS: {result["uzun_paragraf"]} benzersiz uzun paragraf; tekrar eden uzun paragraf 0')
+    print(f'PASS: genel cümle en fazla {result["genel_cumle_en_fazla"]}/{len(products)} üründe; %30 sınırı ≤{result["genel_cumle_siniri"]} ürün')
     print('PASS: müşteri alanlarında yasak kelime 0; U+0307/mojibake 0; kaynak alanları ve bayraklar yasak kelimeden muaf')
     print('PASS: 519 JPEG 500x500; katurl.txt iç linkleri; önyazı = teknik liste = kaynak veri; boş ölçü 0')
     print(f'PASS: {result["govde_farkli"]} gövde farklı; {result["govde_dogrulanmadi"]} doğrulanmadı; {result["eksik"]} eksik; {result["cizim_yok"]} cizim_yok; 11 teknik_kaynak null korundu')

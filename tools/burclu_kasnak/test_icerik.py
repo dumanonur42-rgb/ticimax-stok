@@ -1,7 +1,7 @@
 import unittest
 
-from denetle import ROOT, REPO, audit, load
-from icerik import build, keywords, overview, technical
+from denetle import ROOT, REPO, audit, audit_sentences, generic_sentences, load, sentence_counts
+from icerik import BODY_NOTES, TYPES, build, keywords, overview, technical
 
 
 class ContentTest(unittest.TestCase):
@@ -61,6 +61,51 @@ class ContentTest(unittest.TestCase):
             product['ACIKLAMA'] += repeated
         with self.assertRaisesRegex(ValueError, 'Tekrarlanan uzun paragraf'):
             audit(products, rows, images, self.urls, expected_count=2)
+
+    def test_generic_sentence_filter(self):
+        sentence = 'Mil bağlantısı için uyumlu burcun iç çapı esas alınır.'
+        html = '<p>Mil <strong>bağlantısı</strong> için uyumlu burcun iç çapı esas alınır.</p>'
+        self.assertEqual(generic_sentences(html), {sentence})
+        for prefix in ('42 mm ölçüsünde ', 'SPA profilinde ', 'SPZ profilinde ',
+                       'SPB profilinde ', 'SPC profilinde ', 'SPA1003 kodunda '):
+            self.assertEqual(generic_sentences('<p>' + prefix + sentence + '</p>'), set())
+        self.assertEqual(generic_sentences('x' * 38 + '.'), set())
+        self.assertEqual(generic_sentences('x' * 39 + '.'), {'x' * 39 + '.'})
+        self.assertEqual(generic_sentences('<p>Kayış &amp; burç uyumu birlikte kontrol edilmelidir.</p>'),
+                         {'Kayış & burç uyumu birlikte kontrol edilmelidir.'})
+
+    def test_sentence_products_not_occurrences(self):
+        first = 'Mil bağlantısı için uyumlu burcun iç çapı esas alınır.'
+        second = 'Kayış uzunluğu ve kanal sayısı ayrı bilgiler olarak değerlendirilir!'
+        third = 'Yalnız fotoğrafa göre montaj uyumu varsayılmadan teknik bilgiler kontrol edilir?'
+        products = [{'ACIKLAMA': f'<p>{first} {second} {third}</p><p>{first}</p>'},
+                    {'ACIKLAMA': f'<p>{first}</p>'}]
+        counts = sentence_counts(products)
+        self.assertEqual(counts, {first: 2, second: 1, third: 1})
+
+    def test_sentence_empty(self):
+        self.assertEqual(generic_sentences(''), set())
+        self.assertEqual(generic_sentences('<p> </p>'), set())
+        self.assertEqual(sentence_counts([]), {})
+        audit_sentences({}, 0)
+
+    def test_sentence_frequency_boundary(self):
+        sentence = 'Mil bağlantısı için uyumlu burcun iç çapı esas alınır.'
+        products = [{'ACIKLAMA': f'<p>{sentence}</p>' if i < 155 else ''} for i in range(519)]
+        audit_sentences(sentence_counts(products), len(products))
+        products[155]['ACIKLAMA'] = f'<p>{sentence}</p>'
+        with self.assertRaisesRegex(ValueError, 'en fazla 155/519'):
+            audit_sentences(sentence_counts(products), len(products))
+        audit_sentences({sentence: 3}, 10)
+        with self.assertRaisesRegex(ValueError, 'en fazla 3/10'):
+            audit_sentences({sentence: 4}, 10)
+
+    def test_generated_sentence_distribution(self):
+        self.assertEqual(set(BODY_NOTES), set(TYPES))
+        products = [build(row, self.images[row['kod']]) for row in self.rows]
+        counts = sentence_counts(products)
+        self.assertTrue(counts)
+        audit_sentences(counts, len(products))
 
 
 if __name__ == '__main__':

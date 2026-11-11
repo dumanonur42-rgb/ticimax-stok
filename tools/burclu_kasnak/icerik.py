@@ -26,6 +26,17 @@ TYPES = {
     8: 'Dolu gövde, göbek bir yanda içeride',
     9: 'Dolu gövde, kanallı kısım ile göbek toplamı kasnak genişliğidir',
 }
+BODY_NOTES = {
+    1: 'Bir yana taşan göbeğin mil üzerindeki diğer parçalara göre konumu montaj öncesinde kontrol edilir.',
+    2: 'Göbeğin içeride kaldığı yüzde, mil bağlantısına erişim ve çevredeki parçalarla yerleşim birlikte incelenir.',
+    3: 'İki yanda içeride kalan göbek için burca erişim ve kasnak yüzlerinin yerleşimi birlikte değerlendirilir.',
+    4: 'Kollu gövdenin iki yana taşan göbeği için mil üzerindeki yerleşim ve komşu parçalara olan mesafe kontrol edilir.',
+    5: 'Kollu gövdede göbeğin içeride kalması, bağlantıya erişimin montaj düzeni üzerinden kontrol edilmesini gerektirir.',
+    6: 'Diskli gövdede iki yanda içeride kalan göbeğin konumu, mil bağlantısı ve kasnak yüzleriyle birlikte incelenir.',
+    7: 'Diskli gövdenin iki yana taşan göbeğinde, komşu parçalarla yerleşim montajdan önce gözden geçirilir.',
+    8: 'İçeride kalan göbek tarafında burç bağlantısına erişim, kasnağın mildeki yerleşimine göre değerlendirilir.',
+    9: 'Kanallı kısım ile göbeğin toplam genişliği, mil üzerindeki eksenel yer ihtiyacı kontrolünde dikkate alınır.',
+}
 
 
 def number(value):
@@ -81,7 +92,7 @@ def description(row, name, specs):
     cap_notes = (
         'Kısıtlı yerleşim alanında dış çap kadar kasnağın eksenel yer ihtiyacı ve burca erişim mesafesi de önemlidir.'
         if row['P'] < 125 else
-        'Mevcut bir kasnağın yerine seçim yapılırken yalnız dış görünüşe bakmak yerine anma çapı ve bağlantı ölçüleri karşılaştırılmalıdır.'
+        f'{diameter} mm anma çapını eşleştirmek tek başına yeterli değildir; değiştirme işleminde bağlantı ölçüleri de karşılaştırılmalıdır.'
         if row['P'] < 500 else
         'Bu çap aralığında koruyucu muhafazanın boşluğu, montaj yolu ve sökme sırasında gerekli erişim alanı ayrıca gözden geçirilmelidir.'
     )
@@ -94,7 +105,7 @@ def description(row, name, specs):
     )
     body = TYPES.get(row['tip'])
     body_note = (f'{ref} için gövde tanımı Tip {row["tip"]}: {body[0].lower() + body[1:]}. '
-                 'Göbek konumu, kasnak yüzleriyle mil üzerindeki diğer parçalar arasındaki yerleşim açısından değerlendirilir.'
+                 f'{BODY_NOTES[row["tip"]]}'
                  if body else
                  f'{ref} için gövde tipi doğrulanmış değildir. Fotoğraftan gövde tipi veya eksik teknik ölçü çıkarılmamalı; '
                  'yerleşim kararı verilmeden önce bu bilgiler ayrıca doğrulanmalıdır.')
@@ -107,28 +118,33 @@ def description(row, name, specs):
     shaft = (f'Bu {ref} ölçüsünde belirtilen maksimum mil çapı {number(row["maks_mil"])} mm sınırıdır; '
              'bu değer, her burcun bu iç çapta olduğu anlamına gelmez.' if row['maks_mil'] is not None else
              f'{ref} için maksimum mil çapı kaynak teknik bilgide belirtilmemiştir; bu sınır burç kodundan veya fotoğraftan tahmin edilmez.')
+    connection = f'{bush} numaralı konik burç' if bush else f'{ref} için seçilecek konik burç'
+    bush_selection = (f'{link("burc", "Konik burçlar")} arasından {bush} modeli seçilirken '
+                      'iç çapın mil ölçüsüyle uyumu ayrıca kontrol edilmelidir.' if bush else
+                      f'{ref} montajında kullanılacak bağlantı elemanı için '
+                      f'{link("burc", "konik burçlar")} kategorisindeki model ve iç çap bilgileri birlikte doğrulanmalıdır.')
     paragraphs = [
         f'{ref} Burçlu V Kasnak, {diameter} mm anma çapında ve {n} kanallı bir kayış aktarma elemanıdır. '
-        f'{profile_notes[p]} Seçimde kasnağın karşı elemanla geometrik uyumu ve mile bağlantısı birlikte ele alınır. '
-        'Anma çapı, milin gireceği deliğin çapı değildir.',
+        f'{profile_notes[p]} {diameter} mm anma çapı mil deliğini tanımlamaz; '
+        f'{p} profilinin karşı kasnakla uyumu ve burcun mile uygunluğu ayrıca değerlendirilir.',
         f'{outside} {cap_notes} {body_note}',
     ]
     sections = [
         ('Kullanım Alanları', f'{ref}; fan, pompa, konveyör ve benzeri kayışla hareket iletilen makine düzenlerinde, '
          f'ölçüleri mevcut sisteme uyuyorsa değerlendirilebilir. {channel_notes} '
-         'Uygunluk, yalnız makinenin adına göre değil karşı kasnak, kayış kesiti, mil bağlantısı ve montaj alanı birlikte incelenerek belirlenir. '
-         f'Diğer ölçüler için {link("kasnak", "kasnaklar")} kategorisi karşılaştırmaya yardımcı olur.'),
-        ('Konik Burç ve Montaj', f'{bush_note} Konik burç, sıkma sırasında konik yüzeyler üzerinden kasnak ile mil arasında bağlantı kurar. '
+         f'{p} profilindeki {n} kanallı bu kasnağın uygunluğu, makine adından önce karşı kasnak, kayış kesiti, mil bağlantısı ve montaj alanı üzerinden değerlendirilir. '
+         f'{ref} ile karşılaştırılacak diğer kasnak ölçüleri {link("kasnak", "kasnaklar")} kategorisinde incelenebilir.'),
+        ('Konik Burç ve Montaj', f'{bush_note} {connection} sıkılırken konik yüzeyler üzerinden kasnak ile mil arasında bağlantı kurulur. '
          f'{ref} montajından önce temas yüzeyleri, kama bağlantısı ve hizalama kontrol edilmelidir; sıkma işlemi kullanılan burcun üretici talimatına göre yapılır. '
-         f'Burç kendi model ve iç çapıyla tanımlanan ayrı bir bağlantı elemanıdır. {link("burc", "Konik burçlar")} içinden seçim yaparken bu iki bilgi birlikte okunmalıdır.'),
+         f'{bush_selection}'),
         ('Kayış Seçimi', f'{ref} için {p} dar V kayışı seçilirken profil, kayış uzunluğundan ayrı değerlendirilir. '
          f'{n} kanal bilgisi kayışın uzunluğunu belirlemez; uzunluk seçimi karşı kasnağın çapına ve iki mil arasındaki mesafeye de bağlıdır. '
-         'Mevcut bir sistemde kayış üzerindeki kesit ve uzunluk işareti kontrol edilmeli, gerginlik yalnız elle hissedilerek ayarlanmamalıdır. '
-         f'{link("dar", "SPZ, SPA, SPB ve SPC dar V kayışları")} arasından doğru kesitle ilerlenebilir.'),
+         f'{p} kayışlı bir sistemde kayış üzerindeki kesit ve uzunluk işareti kontrol edilmeli, gerginlik yalnız elle hissedilerek ayarlanmamalıdır. '
+         f'{link("dar", "Dar V kayışları")} arasından {p} kesiti ile ilerlenmelidir.'),
         ('Kısa SSS', f'<strong>Anma çapı mil çapı mıdır?</strong> Hayır; {ref} üzerindeki {diameter} mm değeri kasnağın anma çapını belirtir. '
-         f'{shaft} Mil bağlantısı için uyumlu burcun iç çapı esas alınır.'),
+         f'{shaft}'),
         (None, f'<strong>Yalnız fotoğrafa göre seçim yapılır mı?</strong> {ref} için seçimde teknik ölçüler esas alınmalıdır. '
-         'Fotoğraf temsilî olabilir; kanal adedi, gövde biçimi ve burç kodu teknik listeyle karşılaştırılmadan montaj uyumu varsayılmamalıdır. '
+         f'{n} kanallı {p} kasnağın fotoğrafı temsilî olabilir; gövde biçimi ve burç bağlantısı teknik bilgilerle doğrulanmadan montaj uyumu varsayılmamalıdır. '
          'Satış birimi adettir.'),
     ]
     html = '<div class="urunTabAlt"><h2>' + escape(name) + '</h2>'
