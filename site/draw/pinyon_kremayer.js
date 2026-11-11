@@ -84,7 +84,8 @@
     var p = pen(opt), d = 'M30 178 L30 110', i, x, w = Math.min(82,82*o.hs.n/o.he.n), h = Math.min(82,82*o.he.n/o.hs.n), left = 373-w/2, top = 178-h, pitch = 178-h*o.hp.n/o.he.n;
     p.text(145,17,'YAN GÖRÜNÜŞ',10); p.text(373,17,'KESİT A-A',10);
     for (i=0;i<7;i++) { x=30+i*32; d+=' L'+(x+7)+' 88 L'+(x+18)+' 88 L'+(x+25)+' 110 L'+(x+32)+' 110'; }
-    p.path(d+' L254 178 Z'); p.axis(24,99,263,99);
+    var sidePitch=178-90*o.hp.n/o.he.n;
+    p.path(d+' L254 178 Z'); p.axis(24,sidePitch,263,sidePitch);
     p.add('<path d="M137 83 L132 108 L144 131 L132 156 L139 184 M146 83 L141 108 L153 131 L141 156 L148 184" fill="none" stroke="white" stroke-width="5"/>');
     p.path('M137 83 L132 108 L144 131 L132 156 L139 184 M146 83 L141 108 L153 131 L141 156 L148 184');
     p.path('M'+left+' '+top+' H'+(left+w)+' V178 H'+left+' Z',true); p.axis(left-10,pitch,left+w+10,pitch);
@@ -92,7 +93,7 @@
     p.dim('L',o.L,30,214,254,214,142,238,'L '+f(o.L.n),[[30,178],[254,178]]);
     p.dim('hs',o.hs,left,208,left+w,208,373,231,'hs '+f(o.hs.n),[[left,178],[left+w,178]]);
     p.dim('he',o.he,305,top,305,178,301,top-13,'he '+f(o.he.n),[[left,top],[left,178]]);
-    p.dim('hp',o.hp,441,pitch,441,178,425,253,'hp '+f(o.hp.n),[[left+w,pitch],[left+w,178]]);
+    p.dim('hp',o.hp,277,sidePitch,277,178,266,249,'hp '+f(o.hp.n),[[254,sidePitch],[254,178]]);
     return p.result();
   }
   (window.YDRAW = window.YDRAW || {}).pinyon_kremayer = {

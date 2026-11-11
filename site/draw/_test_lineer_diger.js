@@ -1,10 +1,17 @@
 var fs=require('fs'), path=require('path'), vm=require('vm'), assert=require('assert');
 var root=__dirname, sandbox={window:{}}, totals={};
 fs.readdirSync(root).filter(function(f) { return /\.js$/.test(f) && f.charAt(0)!=='_'; }).sort().forEach(function(f) { vm.runInNewContext(fs.readFileSync(path.join(root,f),'utf8'),sandbox,{filename:f}); });
-['pinyon_kremayer','vidali_mil'].forEach(function(name) {
+['pinyon_kremayer','vidali_mil','mafsal','tasiyici'].forEach(function(name) {
   var source=fs.readFileSync(path.join(root,name+'.js'),'utf8');
   assert(!/\b(?:let|const)\b|=>|`/.test(source),'ES5: '+name);
   var fixtures=JSON.parse(fs.readFileSync(path.join(root,'fixtures',name+'.json'),'utf8')), api=sandbox.window.YDRAW[name], results=[], positive=0, empty=0, negative=0;
+  if(name==='mafsal' || name==='tasiyici') {
+    assert.strictEqual(api.match({}),false); assert.strictEqual(api.draw({}),null);
+    var contradictory=JSON.parse(JSON.stringify(fixtures.find(function(c) { return c.expect.draw; }).ctx));
+    var measured=contradictory.specs.find(function(s) { return /\((d|Dw)\)$/.test(s.l); });
+    contradictory.specs.push({l:measured.l,v:'999 mm'});
+    assert.strictEqual(api.draw(contradictory),null,'çelişen kaynak ölçüsü');
+  }
   fixtures.forEach(function(f,i) {
     var ctx=f.ctx, id=name+'-'+i, out;
     ctx.num=function(v) { var m=String(v).replace(',','.').match(/[\d.]+/); return m ? Number(m[0]) : NaN; };
@@ -42,8 +49,8 @@ fs.readdirSync(root).filter(function(f) { return /\.js$/.test(f) && f.charAt(0)!
       }
       if(dimensionGroups.A && dimensionGroups.Ph) {
         close(endpoints('A').y1,72); close(endpoints('A').y2,192);
-        close(endpoints('W').x1,119-60*number('W')/number('A'));
-        close(endpoints('W').x2,119+60*number('W')/number('A'));
+        var w=endpoints('W');
+        close(Math.sqrt(Math.pow(w.x2-w.x1,2)+Math.pow(w.y2-w.y1,2)),120*number('W')/number('A'));
         close(endpoints('B').x2-endpoints('B').x1,120*number('B')/number('A'));
         close(endpoints('D').y1,132-60*number('D')/number('A'));
         close(endpoints('D').y2,132+60*number('D')/number('A'));
@@ -76,11 +83,21 @@ console.log('Loader: ilk match; null fallback yok; 0_vidali_mil öncelik kaydı 
 if(process.argv[2]) {
   var contexts=JSON.parse(fs.readFileSync(process.argv[2],'utf8')), own=0;
   contexts.forEach(function(ctx) {
-    var matches=sandbox.window.YDRAW.vidali_mil.match(ctx)||sandbox.window.YDRAW.pinyon_kremayer.match(ctx);
+    var matches=['vidali_mil','pinyon_kremayer','mafsal','tasiyici'].some(function(k) { return sandbox.window.YDRAW[k].match(ctx); });
     if(matches) own++;
     else assert(!sandbox.window.YDRAW['0_vidali_mil'].match(ctx));
   });
-  assert.strictEqual(own,78);
-  console.log('Kapsam: 208 bağlamda yalnız 78 hedef ürün yeni modüllere ait');
+  assert.strictEqual(own,116);
+  console.log('Kapsam: 208 bağlamda yalnız 116 hedef ürün dört modüle ait');
+  var combined=[];
+  contexts.forEach(function(ctx,i) {
+    ctx.num=function(v) { var n=String(v).replace(',','.').match(/[\d.]+/); return n ? Number(n[0]) : NaN; };
+    var selected=Object.keys(sandbox.window.YDRAW).sort().find(function(k) { return sandbox.window.YDRAW[k].match(ctx); }),result=selected ? sandbox.window.YDRAW[selected].draw(ctx,{id:'all-'+i,dim:'#0a2350'}) : null;
+    combined.push({kod:ctx.kod,modul:selected==='0_vidali_mil' ? 'vidali_mil' : selected || 'Yok',sonuc:result ? 'null değil' : selected ? 'null' : 'modül yok',cagrildi:!!selected,keys:result ? result.keys.map(function(k) { return k.k; }) : []});
+  });
+  var lock=combined.find(function(r) { return r.kod==='ORK KK S060'; });
+  assert.strictEqual(lock.modul,'baglanti'); assert.strictEqual(lock.sonuc,'null');
+  console.log('S060: baglanti.match=true; draw=null (kilit renderer koşulsuz null)');
+  fs.writeFileSync(path.join(root,'preview','lineer_diger-total.json'),JSON.stringify(combined,null,2)+'\n');
 }
 fs.writeFileSync(path.join(root,'preview','lineer_diger-summary.json'),JSON.stringify(totals,null,2)+'\n');

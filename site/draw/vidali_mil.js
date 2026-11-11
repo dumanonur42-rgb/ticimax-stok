@@ -84,7 +84,8 @@
     p.axis(265,cy,417,cy);
     p.hidden('M382 '+(cy-body-3)+' l-4 12 M389 '+(cy-body-3)+' l-4 12 M382 '+(cy+body-9)+' l-4 12 M389 '+(cy+body-9)+' l-4 12');
     p.dim('A',o.A,22,cy-rr,22,cy+rr,37,52,'A Ø'+f(o.A.n),[[cx,cy-rr],[cx,cy+rr]]);
-    p.dim('W',o.W,cx-pitch,216,cx+pitch,216,119,240,'W Ø'+f(o.W.n),[[cx-pitch,cy],[cx+pitch,cy]]);
+    var wa=angles[1]*PI/180,wx=pitch*Math.cos(wa),wy=pitch*Math.sin(wa),nx=Math.sin(wa),ny=-Math.cos(wa);
+    p.dim('W',o.W,cx+wx+82*nx,cy+wy+82*ny,cx-wx+82*nx,cy-wy+82*ny,cx+105*nx,cy+105*ny+5,'W Ø'+f(o.W.n),[[cx+wx,cy+wy],[cx-wx,cy-wy]]);
     p.lead('X',o.X,cx+(pitch+hole)*.707,cy-(pitch+hole)*.707,208,54,'X Ø'+f(o.X.n));
     p.dim('d',o.d,cx-bore,cy,cx+bore,cy,cx,cy-7,'Ø'+f(o.d.n));
     p.dim('B',o.B,flange,47,shoulder,47,(flange+shoulder)/2,33,'B '+f(o.B.n),[[flange,cy-rr],[shoulder,cy-rr]]);
