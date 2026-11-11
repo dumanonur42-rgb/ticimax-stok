@@ -51,5 +51,5 @@ function draw(ctx,opt){
   S.push('</g><g fill="#16203a" font-size="11" font-weight="bold" text-anchor="middle">',text(cx,214,'ÖN GÖRÜNÜŞ'),text((x+xe)/2,214,'KESİT A-A'),'</g></svg>');
   return {svg:S.join(''),keys:['d','D','L'].map(function(k){return {k:k,l:labels[k],v:f(v[k])+' mm'}})};
 }
-(window.YDRAW=window.YDRAW||{}).lineer_kh={match:match,draw:draw};
+(window.YDRAW=window.YDRAW||{})["0_lineer_kh"]={match:match,draw:draw};
 })();
