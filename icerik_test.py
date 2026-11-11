@@ -78,6 +78,33 @@ class Catalogue(unittest.TestCase):
         b['ACIKLAMA']=a['ACIKLAMA']
         self.assertEqual(len(c.sentence_repetitions([a,b])['exact']),1)
 
+    def test_natural_sections_and_wording(self):
+        for record in self.records:
+            soup=c.BeautifulSoup(record['ACIKLAMA'],'html.parser')
+            self.assertEqual(c.wording_issues(soup),[])
+            self.assertNotIn('olarak verilir',soup.get_text())
+            sections=soup.select('.ysc')
+            self.assertLessEqual(len(sections),4)
+            self.assertGreaterEqual(len(sections),2)
+            usage=next(s for s in sections if s.h3.get_text()=='Kullanım Alanları')
+            self.assertEqual(len(c.re.split(r'(?<=[.!?])\s+',usage.p.get_text(' ',strip=True))),3)
+        raw=next(p for p in self.products if p['kod']=='ORK YR SUCF205')
+        m=c.model(raw,self.tech[raw['kod']],self.labels)
+        sentence=c.measurement_sentence(m)
+        self.assertIn('25 mm mile takılan SUCF 205',sentence)
+        self.assertIn("34,1 mm'dir",sentence)
+        self.assertEqual(c.measurement_sentence(dict(m,values={})), '')
+
+    def test_wording_errors(self):
+        for text in ['rulman rulman','rulmanlar ve yataklı rulmanlar']:
+            soup=c.BeautifulSoup('<p>'+text+'</p>','html.parser')
+            self.assertIn('word_repetition',c.wording_issues(soup))
+        soup=c.BeautifulSoup('<p>Ölçüsü olarak verilir.</p>','html.parser')
+        self.assertIn('as_given',c.wording_issues(soup))
+        anchor='<a href="https://www.yamansarulman.com/dokum-yataklari">döküm yatakları</a>'
+        self.assertIn('duplicate_link_text',c.wording_issues(c.BeautifulSoup(anchor+anchor,'html.parser')))
+        self.assertEqual(c.wording_issues(c.BeautifulSoup('<p><a href="https://www.yamansarulman.com/rulman-keceleri-ve-yatak-keceleri-736">rulman keçeleri ve yatak keçeleri</a></p>','html.parser')),[])
+
     def test_complete_audit(self):
         models = [c.model(p, self.tech[p['kod']], self.labels) for p in self.products]
         drawings = json.loads((c.ROOT / 'icerik-denetim/drawings.json').read_text())

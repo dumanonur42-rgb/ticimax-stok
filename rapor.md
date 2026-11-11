@@ -9,18 +9,22 @@ Fotoğraflar kabul edilen içerikleri değiştirilmeden ürün adı ASCII slug b
 ~~~json
 {
   "products": 281,
-  "plain_text_min": 424,
-  "plain_text_max": 1736,
+  "plain_text_min": 541,
+  "plain_text_max": 1700,
   "seo_title_max": 52,
   "seo_description_max": 121,
   "keywords_max": 481,
   "duplicate_long_paragraphs": 0,
   "duplicate_long_sentences": 0,
   "forbidden_words": 0,
+  "as_given_phrases": 0,
+  "duplicate_link_texts": 0,
+  "wrong_link_texts": 0,
+  "word_repetitions": 0,
   "duplicate_sentences_80": 0,
   "duplicate_sentence_extras_80": 0,
-  "repeated_templates_80": 3,
-  "repeated_template_extras_80": 18,
+  "repeated_templates_80": 53,
+  "repeated_template_extras_80": 279,
   "new_categories": 0,
   "combining_dot": 0,
   "em_dash": 0,
@@ -198,9 +202,12 @@ Diğer ürünlerin kategorileri korundu. Başlıklar, ONYAZI, SEO ve teknik list
 Yalnız açıklama paragraflarındaki cümleler sayılır; teknik liste, başlık ve ONYAZI hariçtir.
 Eşik 80 ve üzeri karakterdir. Boşluklar ve Türkçe harf durumu normalleştirilir.
 Birebir tekrar eden cümle grubu: 0. Fazladan ürün kullanımı: 0.
-Ürün kodu ve sayısal/kod değerleri maskelenmiş tekrar grubu: 3. Fazladan ürün kullanımı: 18.
+Ürün kodu ve sayısal/kod değerleri maskelenmiş tekrar grubu: 53. Fazladan ürün kullanımı: 279.
 Cümle uzunluğu eşiği özgün cümlede ölçülür; bir cümlenin aynı üründeki tekrarı ürünler arası tekrar sayılmaz.
 1800 karakter alt sınırı kaldırıldı. Genel bakım, montaj ve servis dolgu havuzları kaldırıldı.
+Ölçüler dört anlatım varyantıyla tek cümlede birleştirilir. Tek cümlelik ara başlıklar birleştirildi.
+Kullanım Alanları üç doğal cümleden oluşur; bağlantı etiketleri hedef kategori adlarıdır.
+Yeni dil kontrolleri: olarak verilir ifadesi, yinelenen/yanlış bağlantı etiketi ve ardışık/bağlaçlı kelime tekrarı sıfır.
 Montaj/yağlama bölümleri yalnız setuskur, cıvata veya yağlama deliği gibi somut bilgilerle oluşturulur.
 
 ## Uygulama notları
@@ -294,6 +301,56 @@ Girdiler /home/ubuntu/work/yatak içindedir. Teknik araştırma ve çizim dosyal
 
 ## Maskelenmiş tekrarlanan cümle kalıpları
 
+- dış çapı {değer} mm olan {ürün} bileziğinin iç çap {değer} mm ve bilezik genişliği {değer} mm'dir. | ürün: 20
 - rulman / manşon / bilezik: {değer} / {değer} / sr {değer} ({değer} adet); {değer} / {değer} / sr {değer} ({değer} adet). | ürün: 17
 - rulman / manşon: {değer} {değer} / h {değer}; {değer} ek / h {değer}; {değer} {değer} / h {değer}; {değer} ek / h {değer}; c {değer} k / h {değer} e. | ürün: 2
 - rulman / manşon: {değer} {değer} / h {değer}; {değer} ek / h {değer}; {değer} {değer} / h {değer}; {değer} ek / h {değer}; c {değer} {değer} / h {değer} e. | ürün: 2
+- {değer} mm manşonlu mile uygun {ürün} gövdesinin rulman yuvası çapı {değer} mm, merkez yüksekliği {değer} mm, taban yüksekliği {değer} mm, toplam yükseklik {değer} mm, cıvata aralığı {değer} mm, taban uzunluğu {değer} mm, toplam genişlik {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve kapak cıvatası aralığı {değer} mm'dir. | ürün: 3
+- {değer} mm mile takılan {ürün} modelinin dış çap {değer} mm, insert iç bilezik genişliği {değer} mm, dış bilezik genişliği {değer} mm ve insert iç bilezik ucu - merkez {değer} mm'dir. | ürün: 4
+- {değer} mm mile takılan {ürün} modelinin flanş boyu {değer} mm, flanş genişliği {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {değer} mm mile takılan {ürün} modelinin flanş dış çapı {değer} mm, cıvata dairesi {değer} mm, pilot çapı {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {değer} mm mile takılan {ürün} modelinin flanş kenarı {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {değer} mm mile takılan {ürün} modelinin gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gergi deliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {değer} mm mile takılan {ürün} modelinin gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {değer} mm mile takılan {ürün} modelinin merkez yüksekliği {değer} mm, toplam yükseklik {değer} mm, taban uzunluğu {değer} mm, cıvata aralığı {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {değer} mm mile takılan {ürün} modelinin toplam boy {değer} mm, merkez - alt uç {değer} mm, üst gövde genişliği {değer} mm, alt gövde genişliği {değer} mm, montaj yüzeyi - merkez {değer} mm, gövde derinliği {değer} mm, cıvata deliği {değer} mm, taban kalınlığı {değer} mm, merkez - delik hattı {değer} mm, delik hatları arası {değer} mm, cıvata aralığı {değer} mm ve montaj derinliği {değer} mm'dir. | ürün: 5
+- {ürün} kodunda f dört delikli kare flanşı belirtir; uc, setuskurlu inserti tanımlar. | ürün: 24
+- {ürün} kodunda fb üç delikli flanşı belirtir; uc, setuskurlu inserti tanımlar. | ürün: 18
+- {ürün} kodunda fc merkezleme pilotlu yuvarlak flanşı belirtir; uc, setuskurlu inserti tanımlar. | ürün: 20
+- {ürün} kodunda fl iki delikli oval flanşı belirtir; uc, setuskurlu inserti tanımlar. | ürün: 20
+- {ürün} kodunda pa üstten dişli tabanlı ayaklı gövdeyi belirtir; uc, setuskurlu inserti tanımlar. | ürün: 10
+- {ürün} kodunda sbf dar iç bilezikli insert ile kare flanşı belirtir; sb, dar iç bilezikli inserti tanımlar. | ürün: 5
+- {ürün} kodunda sbp dar iç bilezikli insert ile ayaklı gövdeyi belirtir; sb, dar iç bilezikli inserti tanımlar. | ürün: 5
+- {ürün} kodunda sbt dar iç bilezikli insert ile gergi gövdesini belirtir; sb, dar iç bilezikli inserti tanımlar. | ürün: 5
+- {ürün} kodunda t kızak üzerinde hareket eden gergi gövdesini belirtir; uc, setuskurlu inserti tanımlar. | ürün: 20
+- {ürün} modelinde dış çap {değer} mm, iç çap {değer} mm ve bilezik genişliği {değer} mm'dir. | ürün: 9
+- {ürün} modelinde manşonlu mil çapı {değer} mm, rulman yuvası çapı {değer} mm, merkez yüksekliği {değer} mm, taban yüksekliği {değer} mm, toplam yükseklik {değer} mm, cıvata aralığı {değer} mm, taban uzunluğu {değer} mm, toplam genişlik {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve kapak cıvatası aralığı {değer} mm'dir. | ürün: 6
+- {ürün} modelinde mil çapı {değer} mm, dış çap {değer} mm, insert iç bilezik genişliği {değer} mm, dış bilezik genişliği {değer} mm ve insert iç bilezik ucu - merkez {değer} mm'dir. | ürün: 4
+- {ürün} modelinde mil çapı {değer} mm, flanş boyu {değer} mm, flanş genişliği {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {ürün} modelinde mil çapı {değer} mm, flanş dış çapı {değer} mm, cıvata dairesi {değer} mm, pilot çapı {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {ürün} modelinde mil çapı {değer} mm, flanş kenarı {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} modelinde mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gergi deliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 3
+- {ürün} modelinde mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} modelinde mil çapı {değer} mm, merkez yüksekliği {değer} mm, toplam yükseklik {değer} mm, taban uzunluğu {değer} mm, cıvata aralığı {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} modelinde mil çapı {değer} mm, toplam boy {değer} mm, merkez - alt uç {değer} mm, üst gövde genişliği {değer} mm, alt gövde genişliği {değer} mm, montaj yüzeyi - merkez {değer} mm, gövde derinliği {değer} mm, cıvata deliği {değer} mm, taban kalınlığı {değer} mm, merkez - delik hattı {değer} mm, delik hatları arası {değer} mm, cıvata aralığı {değer} mm ve montaj derinliği {değer} mm'dir. | ürün: 5
+- {ürün} modelinin dış çap {değer} mm, iç çap {değer} mm ve bilezik genişliği {değer} mm'dir. | ürün: 3
+- {ürün} modelinin manşonlu mil çapı {değer} mm, rulman yuvası çapı {değer} mm, merkez yüksekliği {değer} mm, taban yüksekliği {değer} mm, toplam yükseklik {değer} mm, cıvata aralığı {değer} mm, taban uzunluğu {değer} mm, toplam genişlik {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve kapak cıvatası aralığı {değer} mm'dir. | ürün: 7
+- {ürün} modelinin mil çapı {değer} mm, dış çap {değer} mm, insert iç bilezik genişliği {değer} mm, dış bilezik genişliği {değer} mm ve insert iç bilezik ucu - merkez {değer} mm'dir. | ürün: 2
+- {ürün} modelinin mil çapı {değer} mm, flanş boyu {değer} mm, flanş genişliği {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} modelinin mil çapı {değer} mm, flanş dış çapı {değer} mm, cıvata dairesi {değer} mm, pilot çapı {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} modelinin mil çapı {değer} mm, flanş kenarı {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} modelinin mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gergi deliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} modelinin mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} modelinin mil çapı {değer} mm, merkez yüksekliği {değer} mm, toplam yükseklik {değer} mm, taban uzunluğu {değer} mm, cıvata aralığı {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} modelinin mil çapı {değer} mm, toplam boy {değer} mm, merkez - alt uç {değer} mm, üst gövde genişliği {değer} mm, alt gövde genişliği {değer} mm, montaj yüzeyi - merkez {değer} mm, gövde derinliği {değer} mm, cıvata deliği {değer} mm, taban kalınlığı {değer} mm, merkez - delik hattı {değer} mm, delik hatları arası {değer} mm, cıvata aralığı {değer} mm ve montaj derinliği {değer} mm'dir. | ürün: 3
+- {ürün} ölçülerine bakıldığında dış çap {değer} mm, iç çap {değer} mm ve bilezik genişliği {değer} mm'dir. | ürün: 11
+- {ürün} ölçülerine bakıldığında manşonlu mil çapı {değer} mm, rulman yuvası çapı {değer} mm, merkez yüksekliği {değer} mm, taban yüksekliği {değer} mm, toplam yükseklik {değer} mm, cıvata aralığı {değer} mm, taban uzunluğu {değer} mm, toplam genişlik {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve kapak cıvatası aralığı {değer} mm'dir. | ürün: 4
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, dış çap {değer} mm, insert iç bilezik genişliği {değer} mm, dış bilezik genişliği {değer} mm ve insert iç bilezik ucu - merkez {değer} mm'dir. | ürün: 3
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, flanş boyu {değer} mm, flanş genişliği {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, flanş dış çapı {değer} mm, cıvata dairesi {değer} mm, pilot çapı {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, flanş kenarı {değer} mm, cıvata aralığı {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gergi deliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, gövde yüksekliği {değer} mm, toplam uzunluk {değer} mm, kızak ucu - merkez {değer} mm, kızak yüksekliği {değer} mm, gövde genişliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 2
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, merkez yüksekliği {değer} mm, toplam yükseklik {değer} mm, taban uzunluğu {değer} mm, cıvata aralığı {değer} mm, taban genişliği {değer} mm, cıvata deliği {değer} mm ve iç bilezik genişliği {değer} mm'dir. | ürün: 5
+- {ürün} ölçülerine bakıldığında mil çapı {değer} mm, toplam boy {değer} mm, merkez - alt uç {değer} mm, üst gövde genişliği {değer} mm, alt gövde genişliği {değer} mm, montaj yüzeyi - merkez {değer} mm, gövde derinliği {değer} mm, cıvata deliği {değer} mm, taban kalınlığı {değer} mm, merkez - delik hattı {değer} mm, delik hatları arası {değer} mm, cıvata aralığı {değer} mm ve montaj derinliği {değer} mm'dir. | ürün: 4
+- {ürün}, gövdesiz bir insert rulmandır; uc, setuskurlu mil bağlantısını tanımlar. | ürün: 13

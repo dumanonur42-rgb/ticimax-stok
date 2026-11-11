@@ -141,6 +141,29 @@ def properties(m,f):
     return p+[('Satış Birimi','Adet'),('Marka',m['brand'])]
 
 
+def measurement_sentence(m):
+    values=m['values']
+    if not values:
+        return ''
+    names={letter:tr_lower(label.split(' (')[0]).replace('mil bil.','insert iç bilezik').replace('yuva bil.','dış bilezik')
+           for letter,label in m['labels']}
+    facts={letter:names[letter]+' '+number(values[letter])+' mm' for letter in names if letter in values}
+    def join(parts):
+        return ', '.join(parts[:-1])+' ve '+parts[-1] if len(parts)>1 else parts[0]
+    c=m['code']
+    variant=int(m['num'].split('x')[0].replace(',',''))%4
+    main='D' if m['kind']=='FRB' else 'd1' if m['kind']=='SN' else 'd'
+    rest=[text for letter,text in facts.items() if letter!=main]
+    if variant==1 and main in values and rest:
+        n=number(values[main])
+        subject=(f'{n} mm mile takılan {c} modelinin' if main=='d' else
+                 f'{n} mm manşonlu mile uygun {c} gövdesinin' if main=='d1' else
+                 f'Dış çapı {n} mm olan {c} bileziğinin')
+        return subject+' '+join(rest)+"'dir."
+    prefix=[c+" modelinin ",c+" için ",c+" modelinde ",c+" ölçülerine bakıldığında "][variant]
+    return prefix+join(list(facts.values()))+"'dir."
+
+
 def prose(m,f):
     c,k=m['code'],m['kind']
     rows=['']*7
@@ -149,20 +172,11 @@ def prose(m,f):
         shape,meaning=SHAPES[k]
         dtype=('Komple Paslanmaz 'if m['stainless']else'Plastik Gövdeli Paslanmaz ')+shape+' Yataklı Rulman'
         seo=('Paslanmaz 'if m['stainless']else'Plastik ')+{'UCPA':'Taban Bağlantılı','UCFC':'Yuvarlak Flanşlı'}.get(k,shape)+' Rulman'
-        rows[0]=f'{c}: {meaning} belirtir. '
+        insert='SB, dar iç bilezikli inserti' if k.startswith('S-SB') else 'UC, setuskurlu inserti'
+        rows[0]=f'{c} kodunda {meaning} belirtir; {insert} tanımlar. '
+        material='PBT termoplastik' if 'PBT' in f.get('malzeme_govde','') else 'Plastik'
         rows[0]+=('SS, gövde ve insertin paslanmaz olduğunu gösterir. ' if m['stainless']
-                  else 'Gövde plastik, insert paslanmazdır. ')
-        rows[0]+=('SB, dar iç bilezikli insert tipidir.' if k.startswith('S-SB')
-                  else 'UC, setuskurla mile bağlanan insertin kodudur.')
-        material='PBT termoplastik' if 'PBT' in f.get('malzeme_govde','') else 'plastik'
-        if m['stainless']:
-            rows[1]=[f'{c} paslanmaz gövdesiyle nemli ortamlara uygundur.',
-                     f'{c} gövdesi ve inserti korozyona dayanıklı paslanmaz yapıdadır.',
-                     f'{c}, yıkamalı hatlarda paslanmaz gövde avantajı sunar.'][variant]
-        else:
-            rows[1]=[f'{c}, {material} gövde ile paslanmaz inserti birleştirir.',
-                     f'{c} ünitesinin {material} gövdesi nemden paslanmaz.',
-                     f'{c} için {material} gövde yıkamalı hatlara uygundur.'][variant]
+                  else f'{material} gövde korozyona uğramaz; insert paslanmaz çeliktir. ')
         geometry={
             'UCP':'Ayaklı gövde tabana bağlanır.',
             'UCF':'Kare flanş, milin geçtiği bağlantı yüzeyine oturur.',
@@ -174,25 +188,25 @@ def prose(m,f):
             'S-SBF':'Kare flanş, dar iç bilezikli inserti taşır.',
             'S-SBP':'Ayaklı gövde, dar iç bilezikli inserti taşır.',
             'S-SBT':'Gergi gövdesi, dar iç bilezikli insertin konumunu ayarlar.'}
-        rows[1]+=' '+geometry[k]+' Insert, küresel dış yüzeyiyle gövdeye oturur.'
+        rows[1]=geometry[k]+' Insert, küresel dış yüzeyiyle gövdeye oturur.'
         rows[3]=['İç bilezik, setuskur vidalarıyla mile sabitlenir.',
                  'Mil bağlantısı, insert üzerindeki setuskurla yapılır.',
                  'Setuskur, iç bileziği mil üzerindeki konumunda tutar.'][variant]
         if f.get('civata'):
             rows[3]+=' Bağlantı cıvatası '+clean(f['civata'])+' olarak belirtilir.'
-        rows[5]=[f'{c}, gıda ve içecek hatlarında kullanılır.',
-                 f'{c} için paketleme ve taşıma hatları kullanım alanlarıdır.',
-                 f'{c}, nemli üretim alanlarında mil yataklamasında kullanılır.'][variant]
+        rows[5]=[f'{c}, gıda ve içecek hatlarında mil yataklaması için kullanılır. Nemli ortamlarda çalışan konveyörler de bu tip ünitelerin kullanım alanıdır.',
+                 f'{c}, paketleme makineleri ve taşıma hatlarında görev alır. Yıkama yapılan üretim alanlarında korozyona dayanıklı yapısı avantaj sağlar.',
+                 f'{c}, nemli üretim alanlarında dönen milleri yataklar. Gıda işleme ve içecek dolum hatlarında bu bağlantı düzeniyle karşılaşılır.'][variant]
     elif k=='INSERT':
         dtype=('Paslanmaz 'if m['series']=='SUC'else'ETAZON ')+'Setuskurlu Insert Rulman'
         seo=('Paslanmaz 'if m['series']=='SUC'else'ETAZON ')+'Insert Rulman'
-        rows[0]=f'{c}, gövdesiz bir insert rulmandır. UC, setuskurlu mil bağlantısını tanımlar.'
+        rows[0]=f'{c}, gövdesiz bir insert rulmandır; UC, setuskurlu mil bağlantısını tanımlar.'
         if m['series']=='SUC':rows[0]+=' S öneki paslanmaz yapıyı belirtir.'
         rows[1]=f'{c} küresel dış yüzeyiyle yatak gövdesine oturur. İç bilezik mille döner; bilyeler yükü dış bileziğe taşır.'
         rows[3]='İç bilezik setuskurla mile bağlanır.'
         if f.get('ds_ayar_vidasi'):rows[3]+=' Setuskur vidası '+clean(f['ds_ayar_vidasi'])+' ölçüsündedir.'
-        rows[5]=f'{c}, '+('nemli gıda ve içecek hatlarında kullanılan paslanmaz inserttir.'
-                             if m['series']=='SUC' else 'konveyör ve tarım makinelerinde gövde içindeki rulmanı yeniler.')
+        rows[5]=f'{c}, '+('gıda ve içecek hatlarındaki paslanmaz yataklarda kullanılır. Nemli konveyörlerde rulman kısmının yenilenmesini sağlar.'
+                             if m['series']=='SUC' else 'konveyör ve tarım makinelerinde kullanılır. Gövdesi korunacak bir ünitenin rulman kısmı bu insertle yenilenir.')
     elif k=='SN':
         dtype='İki Parçalı Ayaklı Rulman Yatağı';seo='İki Parçalı Rulman Yatağı'
         rows[0]=f'{c}, iki parçalı ayaklı gövdedir. SN ailesi, manşonlu rulman montajında kullanılır.'
@@ -202,26 +216,22 @@ def prose(m,f):
         rows[3]=' '.join(label+' '+clean(f[key])+'.' for key,label in [
             ('t_kapak_civatasi','Kapak cıvatası'),('S_taban_civatasi','Taban cıvatası')]if f.get(key))
         if f.get('yaglama_deligi'):rows[4]=f'{c} yağlama deliği '+clean(f['yaglama_deligi'])+' dişlidir.'
-        rows[5]=f'{c}, konveyör tamburlarında, fanlarda ve uzun millerde kullanılır.'
+        rows[5]=f'{c}, konveyör tamburlarında ve fan millerinde kullanılır. Uzun millerin yataklanmasında iki parçalı gövde, rulmana erişimi kolaylaştırır.'
     elif k=='FRB':
         dtype='Rulman Tespit Bileziği';seo=dtype
         rows[0]=f'{c}, kapalı çelik tespit halkasıdır. FRB, rulmanı gövdede eksenel konumda tutan bileziği belirtir.'
         rows[1]=[f'{c}, dış bilezik ile gövdenin yuva omzu arasına oturur.',
                  f'{c}, sabit yatak tarafında rulmanın eksenel konumunu belirler.',
                  f'{c} halkası rulmanın dış bileziğini gövde omzuna karşı konumlandırır.'][variant]
-        rows[5]=f'{c}, iki parçalı yatakların sabit tarafında kullanılır.'
+        rows[5]=f'{c}, iki parçalı yatakların sabit tarafında kullanılır. Konveyör ve fan millerinde rulmanın gövde içindeki eksenel konumunu korur.'
     else:
         dtype='Kauçuk Yatak Keçesi';seo=dtype
         rows[0]=f'{c}, SN tipi yatakların mil girişinde kullanılan keçe ailesindendir.'
         rows[1]=[f'{c}, kir girişini azaltır ve gresin yatakta tutulmasına yardımcı olur.',
                  f'{c}, gövdenin mil geçişindeki sızdırmazlık düzenini tamamlar.',
                  f'{c}, yatak gövdesi ile mil arasındaki geçişi korur.'][variant]
-        rows[5]=f'{c}, konveyör ve fan yataklarının mil girişlerinde kullanılır.'
-    facts=[]
-    for letter,label in m['labels']:
-        if letter in m['values']:
-            facts.append(label.split(' (')[0]+' '+number(m['values'][letter])+' mm olarak verilir.')
-    rows[2]=c+': '+' '.join(facts) if facts else ''
+        rows[5]=f'{c}, konveyör ve fan yataklarının mil girişlerinde kullanılır. Tozlu çalışma alanlarında yatak bölgesinin korunmasına yardımcı olur.'
+    rows[2]=measurement_sentence(m)
     matches=[]
     for key,label in [('insert_kodu','Insert'),('govde_kodu','Gövde'),
                       ('rulman_manson_tespit_bilezigi_secimleri','Rulman / manşon / bilezik'),
@@ -269,6 +279,86 @@ def keywords(m,f):
     return ', '.join(result)
 
 
+LINK_NAMES = {
+    'paslanmaz-plastik-yatakli-rulman':'paslanmaz plastik yataklı rulman',
+    'paslanmaz-yatakli-rulman':'paslanmaz yataklı rulman',
+    'rulman-yataklari-ve-insert-737':'rulman yatakları ve insert',
+    'yatakli-rulman':'yataklı rulman',
+    'dokum-yataklari':'döküm yatakları',
+    'oynak-makarali-rulmanlar':'oynak makaralı rulmanlar',
+    'rulman-ve-yatak-aksesuarlari-735':'rulman ve yatak aksesuarları',
+    'rulman-keceleri-ve-yatak-keceleri-736':'rulman keçeleri ve yatak keçeleri',
+}
+
+
+def linked_sections(m,rows):
+    k=m['kind']
+    if k in SHAPES:
+        urls=['paslanmaz-plastik-yatakli-rulman' if m['plastic'] else 'paslanmaz-yatakli-rulman',
+              'rulman-yataklari-ve-insert-737']
+    elif k=='INSERT':
+        urls=['rulman-yataklari-ve-insert-737','paslanmaz-yatakli-rulman' if m['series']=='SUC' else 'yatakli-rulman']
+    elif k=='SN':urls=['dokum-yataklari','oynak-makarali-rulmanlar']
+    elif k=='FRB':urls=['rulman-ve-yatak-aksesuarlari-735','dokum-yataklari']
+    else:urls=['rulman-keceleri-ve-yatak-keceleri-736','dokum-yataklari']
+    anchors=['<a href="https://www.yamansarulman.com/'+url+'">'+LINK_NAMES[url]+'</a>'for url in urls]
+    if k=='TSN':
+        sections=[('Keçenin Görevi',rows[0]+' '+rows[1]+' Diğer keçeler '+anchors[0]+' bölümündedir.'),
+                  ('Mil Çapı ve Uyum',' '.join(r for r in [rows[2],rows[6]]if r))]
+    elif k=='FRB':
+        sections=[('Yapı ve Görevi',rows[0]+' '+rows[1]+' Diğer aksesuarlar '+anchors[0]+' bölümündedir.'),
+                  ('Ölçüler ve Eşleşmeler',' '.join(r for r in [rows[2],rows[6]]if r))]
+    else:
+        structure=rows[0]+' '+rows[1]
+        connection=' '.join(r for r in [rows[2],rows[3],rows[4]]if r)
+        if k=='SN':
+            structure+=' Gövde seçenekleri '+anchors[0]+' sayfasındadır.'
+        else:
+            connection+=(' Diğer insertler ' if k=='INSERT' else ' Diğer gövde tipleri ')+anchors[0]+' bölümündedir.'
+        sections=[('Yapı ve Çalışma',structure),('Ölçüler ve Bağlantı',connection)]
+        if rows[6]:
+            matches=rows[6]
+            if k in SHAPES or k=='INSERT':
+                matches+=' İç bilezik mille döner; dış bilezik gövdeye oturur.'
+            sections.append(('Parça Eşleşmeleri',matches))
+    if k in SHAPES:
+        related='Insert seçenekleri '+anchors[1]+' bölümündedir.'
+    elif k=='INSERT':
+        related='Komple üniteler '+anchors[1]+' bölümündedir.'
+    elif k=='SN':
+        related='Rulman tiplerini '+anchors[1]+' arasında inceleyebilirsiniz.'
+    else:
+        related='Gövde seçeneklerini '+anchors[1]+' arasında bulabilirsiniz.'
+    sections.append(('Kullanım Alanları',rows[5]+' '+related))
+    return [(heading,text)for heading,text in sections if text]
+
+
+def wording_issues(soup):
+    issues=[]
+    anchors=soup.select('a[href]')
+    names=[tr_lower(a.get_text(' ',strip=True))for a in anchors]
+    if len(set(names))!=len(names):
+        issues.append('duplicate_link_text')
+    for anchor in anchors:
+        slug=anchor['href'].rsplit('/',1)[-1]
+        if anchor.get_text(' ',strip=True)!=LINK_NAMES.get(slug):
+            issues.append('wrong_link_text')
+    for paragraph in soup.select('p'):
+        text=tr_lower(paragraph.get_text(' ',strip=True))
+        if 'olarak verilir' in text:
+            issues.append('as_given')
+        if re.search(r'\b(\w+)\s+\1\b',text):
+            issues.append('word_repetition')
+        scrubbed=BeautifulSoup(str(paragraph),'html.parser')
+        for anchor in scrubbed.select('a'):
+            anchor.replace_with(anchor.get_text(' ',strip=True).split()[-1])
+        text=tr_lower(scrubbed.get_text(' ',strip=True))
+        coordinated=re.finditer(r'\b(\w+)\s+ve\s+(?:\w+\s+){0,3}\1\b',text)
+        if any(match[1] not in ['mm','kg','kn'] for match in coordinated):
+            issues.append('word_repetition')
+    return issues
+
+
 def create_record(raw,tech,image,labels,index):
     m=model(raw,tech,labels);f=tech['alanlar'];k=m['kind'];c=m['code'];vals=m['values']
     dtype,seo,paragraphs=prose(m,f)
@@ -281,14 +371,8 @@ def create_record(raw,tech,image,labels,index):
     overview += [('Marka',m['brand'])]
     cells=['<td><strong>'+html.escape(label)+'</strong> '+html.escape(value)+'</td>'for label,value in overview]
     intro='<table><tbody>'+''.join('<tr>'+''.join(cells[i:i+3])+'</tr>'for i in range(0,len(cells),3))+'</tbody></table>'
-    if k in SHAPES:links=[('paslanmaz-plastik-yatakli-rulman'if m['plastic']else'paslanmaz-yatakli-rulman','aynı ailedeki yataklı rulmanlar'),('yatakli-rulman','yataklı rulmanlar')]
-    elif k=='INSERT':links=[('rulman-yataklari-ve-insert-737','rulman yatakları ve insertler'),('yatakli-rulman','yataklı rulman çeşitleri')]
-    elif k=='SN':links=[('dokum-yataklari','döküm yatakları'),('oynak-makarali-rulmanlar','oynak makaralı rulmanlar')]
-    elif k=='FRB':links=[('rulman-ve-yatak-aksesuarlari-735','rulman ve yatak aksesuarları'),('dokum-yataklari','yatak gövdeleri')]
-    else:links=[('rulman-keceleri-ve-yatak-keceleri-736','rulman ve yatak keçeleri'),('dokum-yataklari','yatak gövdeleri')]
-    paragraphs[5]+=' İlgili ürünler: '+ ' ve '.join('<a href="https://www.yamansarulman.com/'+url+'">'+anchor+'</a>'for url,anchor in links)+'.'
     description='<div class="urunTabAlt"><div class="ydsc"><div class="ym"><h2>'+html.escape(title)+'</h2>'
-    description+=''.join('<div class="ysc"><h3>'+h+'</h3><p>'+v+'</p></div>'for h,v in zip(TOPICS,paragraphs)if v)
+    description+=''.join('<div class="ysc"><h3>'+h+'</h3><p>'+v+'</p></div>'for h,v in linked_sections(m,paragraphs))
     description+='</div><aside class="ya"><h3>Ürün Özellikleri</h3><ul>'+''.join('<li><strong>'+html.escape(a)+':</strong> '+html.escape(b)+'</li>'for a,b in p)+'</ul></aside></div></div>'
     sd=c+' '+tr_lower(seo)+'.'
     for letter,label in m['labels'][:3]:
@@ -350,7 +434,7 @@ def audit(records,models,drawings,output):
     for line in (REPO/'site_kategoriler.txt').read_text().splitlines():
         p=line.split('\t',1)[-1].strip().split('>');known.update('>'.join(p[:i])for i in range(1,len(p)+1))
     known.add(PLASTIC)
-    ps={};ss={};sizes=[]
+    ps={};ss={};sizes=[];language_counts=collections.Counter()
     for r,m,d in zip(records,models,drawings):
         c=r['kod'];text=json.dumps(r,ensure_ascii=False)
         for key in ['kod','URUNADI','MARKA','KATEGORI','ONYAZI','ACIKLAMA','ANAHTARKELIME','SEO_SAYFABASLIK','SEO_SAYFAACIKLAMA','SEO_ANAHTARKELIME','resim','resim_seviye','resim_kaynak']:assert isinstance(r[key],str)and r[key].strip(),(c,key)
@@ -361,6 +445,9 @@ def audit(records,models,drawings,output):
         customer=' '.join(str(v)for k,v in r.items()if k not in ['kod','teknik_kaynak','resim_kaynak'])
         assert not re.search(r'\b(?:FK|PEER|NTN|TOJO|CRAFT|SKF|SNR)\b|tek başına|anlamına gelmez|katalogla doğrulan|Görsel aynı tip',customer,re.I),c
         soup=BeautifulSoup(r['ACIKLAMA'],'html.parser');size=len(soup.get_text(' ',strip=True));sizes.append(size)
+        issues=wording_issues(soup)
+        language_counts.update(issues)
+        assert not issues,(c,issues)
         assert 'Kullanım Alanları' in soup.get_text()
         assert not re.search(r'bakım listesi|bakım listesine|sökülen parçaları|el takımı|konumunu kaydet|sağlam bağlantı elemanları|bakım kayıtları|servis sırasında çevredeki|söküm öncesi|yedek parçaları koduyla',soup.get_text(),re.I),c
         links=[a['href']for a in soup.select('a[href]')];assert 2<=len(links)<=4 and all(u in allowed for u in links),(c,links)
@@ -389,6 +476,10 @@ def audit(records,models,drawings,output):
                 seo_description_max=max(len(r['SEO_SAYFAACIKLAMA'])for r in records),
                 keywords_max=max(len(r['ANAHTARKELIME'])for r in records),
                 duplicate_long_paragraphs=0,duplicate_long_sentences=0,forbidden_words=0,
+                as_given_phrases=language_counts['as_given'],
+                duplicate_link_texts=language_counts['duplicate_link_text'],
+                wrong_link_texts=language_counts['wrong_link_text'],
+                word_repetitions=language_counts['word_repetition'],
                 duplicate_sentences_80=len(repetitions['exact']),
                 duplicate_sentence_extras_80=sum(v['products']-1 for v in repetitions['exact']),
                 repeated_templates_80=len(repetitions['masked']),
@@ -427,6 +518,9 @@ def report(records,models,drawings,result,out):
       'Ürün kodu ve sayısal/kod değerleri maskelenmiş tekrar grubu: '+str(result['repeated_templates_80'])+'. Fazladan ürün kullanımı: '+str(result['repeated_template_extras_80'])+'.',
       'Cümle uzunluğu eşiği özgün cümlede ölçülür; bir cümlenin aynı üründeki tekrarı ürünler arası tekrar sayılmaz.',
       '1800 karakter alt sınırı kaldırıldı. Genel bakım, montaj ve servis dolgu havuzları kaldırıldı.',
+      'Ölçüler dört anlatım varyantıyla tek cümlede birleştirilir. Tek cümlelik ara başlıklar birleştirildi.',
+      'Kullanım Alanları üç doğal cümleden oluşur; bağlantı etiketleri hedef kategori adlarıdır.',
+      'Yeni dil kontrolleri: olarak verilir ifadesi, yinelenen/yanlış bağlantı etiketi ve ardışık/bağlaçlı kelime tekrarı sıfır.',
       'Montaj/yağlama bölümleri yalnız setuskur, cıvata veya yağlama deliği gibi somut bilgilerle oluşturulur.',
       '','## Uygulama notları','',
       '- TSN girdisindeki TAKIM birimi istenen biçimde Satış Birimi: Adet olarak yazıldı.',
