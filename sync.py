@@ -525,7 +525,8 @@ def main():
     print(f"Toplam {len(rows)} benzersiz urun cekildi.")
 
     # XML
-    (OUT / "ticimax_urunler.xml").write_text(ek_urunleri_ekle(build_xml(rows)), encoding="utf-8")
+    xml = re.sub(r">\s+<", "><", ek_urunleri_ekle(build_xml(rows)))
+    (OUT / "ticimax_urunler.xml").write_text(xml, encoding="utf-8")
 
     # Ticimax ornek sablonuna uygun Excel
     build_excel(rows, OUT / "ticimax_urunler.xlsx")
