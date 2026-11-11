@@ -14,12 +14,14 @@ REPO = "dumanonur42-rgb/ticimax-stok"
 DAL = "pc-senkron"
 RD = "https://b4b.rulman.com.tr"
 MD = "https://b2b.madte.com.tr"
+OR = "https://b2b.orkapt.com"
 MADTE_KOK = ['22', '25', '28', '34', '141', '329', '343', '368', '385', '420', '423', '439', '539', '547',
              '567', '599', '650', '652', '762']
 ESIK = 0.90
 LOG = []
 CANLI = {"adimlar": {"madte": {"ad": "Madte", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"},
-                     "rd": {"ad": "Rulman Dünyası", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"}},
+                     "rd": {"ad": "Rulman Dünyası", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"},
+                     "orka": {"ad": "Orka", "durum": "bekliyor", "yuzde": 0, "metin": "Sırada"}},
          "bitti": False, "ozet": "", "pid": os.getpid()}
 
 
@@ -197,7 +199,7 @@ def cerez_kaydet(s):
     try:
         c = s.komut("Network.getAllCookies")["cookies"]
         c = [{k: x[k] for k in ("name", "value", "domain", "path", "secure", "httpOnly", "expires", "sameSite") if k in x}
-             for x in c if "rulman.com.tr" in x["domain"] or "madte.com.tr" in x["domain"]]
+             for x in c if "rulman.com.tr" in x["domain"] or "madte.com.tr" in x["domain"] or "orkapt.com" in x["domain"]]
         for x in c:
             if x.get("expires", -1) <= 0: x.pop("expires", None)
         gizli_yaz("cerez.dat", json.dumps(c).encode())
@@ -484,6 +486,7 @@ def giris_penceresi():
     s.git(RD + "/", 2)
     if not gizli_oku("madte_link.dat"):
         s.komut("Target.createTarget", url=MD + "/")
+    s.komut("Target.createTarget", url=OR + "/")
     try:
         while t.proc.poll() is None:
             time.sleep(3)
@@ -538,7 +541,7 @@ $sure = New-Object Windows.Forms.Label; $sure.ForeColor = [Drawing.Color]::FromA
 $sure.TextAlign = 'MiddleRight'; $sure.SetBounds(400, 44, 140, 20); $ust.Controls.Add($sure)
 $genel = New-Object Windows.Forms.Label; $genel.Font = F 11 'Bold'; $genel.SetBounds(20, 84, 520, 44); $f.Controls.Add($genel)
 $satir = @{}; $y = 134
-foreach ($a in 'madte', 'rd') {
+foreach ($a in 'madte', 'rd', 'orka') {
   $ad = New-Object Windows.Forms.Label; $ad.Font = F 11 'Bold'; $ad.ForeColor = $lacivert; $ad.SetBounds(20, $y, 300, 22)
   $dr = New-Object Windows.Forms.Label; $dr.Font = F 10 'Bold'; $dr.TextAlign = 'MiddleRight'; $dr.SetBounds(300, $y, 240, 22)
   $pb = New-Object Windows.Forms.ProgressBar; $pb.SetBounds(20, ($y + 26), 520, 18); $pb.Style = 'Continuous'
@@ -565,7 +568,7 @@ $t.Add_Tick({
   $simdi = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
   if ($d.baslangic) { $sn = [int]($simdi - $d.baslangic); $sure.Text = 'Süre: {0}:{1:00}' -f [int][math]::Floor($sn / 60), ($sn % 60) }
   $hataVar = $false; $bekle = $false
-  foreach ($a in 'madte', 'rd') {
+  foreach ($a in 'madte', 'rd', 'orka') {
     $x = $d.adimlar.$a; $s = $satir[$a]; $e = $etiket[[string]$x.durum]; if (-not $e) { $e = $etiket.bekliyor }
     $s[0].Text = $x.ad; $s[1].Text = $e[0]; $s[1].ForeColor = $e[1]; $s[3].Text = $x.metin
     $yz = [int]$x.yuzde; if ($yz -gt 100) { $yz = 100 }; $s[2].Value = $yz
@@ -705,7 +708,8 @@ def adim_metin(ad, d):
     if d.get("durum") == "iptal":
         return "İptal edildi. Siteye bir şey gönderilmedi, eski fiyatlar korundu."
     if d.get("durum") == "giris_gerekli":
-        return "Giriş yapılamadı, fiyatlar değişmedi." + (" Madte uygulamasını bir kez açın." if ad == "madte" else "")
+        return "Giriş yapılamadı, fiyatlar değişmedi." + (" Madte uygulamasını bir kez açın." if ad == "madte" else
+                                                   " Orka (b2b.orkapt.com) girişini bir kez yapın." if ad == "orka" else "")
     return f"Hata: {d.get('hata', '')[:150]} · Eski fiyatlar korundu, siteye bir şey gitmedi."
 
 
@@ -718,7 +722,7 @@ def calis(elle=False):
     durum = {"zaman": datetime.datetime.now().isoformat(timespec="seconds"), "elle": elle}
     t, s = tarayici_ac(); IPTAL["tarayici"] = t
     try:
-        for ad, f in (("madte", madte_adim), ("rd", rd_adim)):
+        for ad, f in (("madte", madte_adim), ("rd", rd_adim), ("orka", orka_adim)):
             if "--sadece-rd" in sys.argv and ad == "madte":
                 ekran(ad, kontrol=False, durum="atlandi", metin="Bu sefer çalıştırılmadı"); continue
             if iptal_bak():
@@ -745,8 +749,8 @@ def calis(elle=False):
 
 
 def ozet(durum):
-    d = {a: (durum.get(a) or {}) for a in ("madte", "rd")}
-    sat = [f"{isim}: {adim_metin(ad, d[ad])}" for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dünyası")) if d[ad]]
+    d = {a: (durum.get(a) or {}) for a in ("madte", "rd", "orka")}
+    sat = [f"{isim}: {adim_metin(ad, d[ad])}" for ad, isim in (("madte", "Madte"), ("rd", "Rulman Dünyası"), ("orka", "Orka")) if d[ad]]
     if sat and all(x.get("durum") in ("tamam", None) for x in d.values()) and any(d.values()):
         sat.append("Ticimax bir sonraki okumada (10 saatte bir) siteye geçirir.")
     return "\n".join(sat)
@@ -810,6 +814,148 @@ def madte_adim(s):
     d["durum"] = "tamam"; return d
 
 
+# ---------- Orka (b2b.orkapt.com, Akilli B2B) ----------
+ORKA_JS = """(async (p) => { const bek = ms => new Promise(z => setTimeout(z, ms));
+ for (let t = 0; t < 4; t++) { try {
+  const r = await fetch('/Arama/_Prbx?q=%20&page=' + p + '&Cat=-1&_StokBoxCount=500&Paging=false',
+    {credentials: 'include', headers: {'X-Requested-With': 'XMLHttpRequest'}});
+  if (/giris|login/i.test(r.url)) return {hata: 'giris'};
+  if (r.ok) { const d = new DOMParser().parseFromString(await r.text(), 'text/html');
+   const tx = e => e ? e.textContent.replace(/\\s+/g, ' ').trim() : '';
+   const out = [];
+   for (const tr of d.querySelectorAll('.tbody > .tr')) {
+    const td = [...tr.children].filter(e => e.classList.contains('td'));
+    if (td.length < 9) continue;
+    out.push([tx(td[2]), tx(td[0]), tx(td[3]), tx(td[7]), tx(td[td.length - 2])]); }
+   return {urunler: out}; } } catch (e) {}
+  await bek(8000 * (t + 1)); } return null; })(%s)"""
+
+
+def orka_girisli(s):
+    s.git(OR + "/", 5)
+    u = (s.js("location.href") or "").lower()
+    return "giris" not in u and "login" not in u
+
+
+def orka_cek(s):
+    if not orka_girisli(s): raise GirisYok("Orka girisi yok")
+    urunler = {}; toplam = onceki("orka_toplam", 5900)
+    ekran("orka", durum="calisiyor", yuzde=1, metin=f"Giriş tamam. Yaklaşık {sayi(toplam)} ürün çekilecek.")
+    for p in range(60):
+        if iptal_bak(): raise Iptal()
+        r = s.js(ORKA_JS % p, 600)
+        if r is None: raise RuntimeError(f"Orka sayfa {p} cekilemedi")
+        if r.get("hata"): raise GirisYok("Orka girisi yok")
+        yeni = [u for u in r["urunler"] if u[0] and u[0] not in urunler]
+        for u in yeni: urunler[u[0]] = u
+        ekran("orka", yuzde=min(90, int(90 * len(urunler) / max(toplam, 1))),
+              metin=f"{sayi(len(urunler))} / {sayi(toplam)} ürün çekildi")
+        if not yeni: break
+        time.sleep(5)  # Orka hizli istekte oturumu kapatiyor
+    log("Orka", len(urunler)); onceki_yaz("orka_toplam", len(urunler))
+    return urunler
+
+
+def orka_tl(t):
+    """'1.234,56 TL' / '59.71 TL' / kademeli '999,99 TL (+ 10) 950,00 TL' -> ilk (1 adet) fiyat."""
+    m = re.search(r"\d{1,3}(?:\.\d{3})+,\d+|\d+,\d+|\d+(?:\.\d+)?", t or "")
+    if not m: return None
+    v = m.group(0)
+    return float(v.replace(".", "").replace(",", ".")) if "," in v else float(v)
+
+
+def orka_hesap(u, n):
+    """Pesin x2 (%100); paket/kolide adet >1000 ise x3. Min = 1 paket pesin tutarini karsilayan ilk adet."""
+    p = orka_tl(u[3])
+    if not p or p <= 0: return None
+    sat = round(p * (3 if n > 1000 else 2) / n, 2)
+    mn = max(1, math.ceil(p / sat - 1e-9)) if n > 1 else None
+    st = re.match(r"(\d+)", (u[1] or "").replace(".", ""))
+    return sat, (int(st.group(1)) if st else 0) * n, mn
+
+
+def orka_xml(site, urunler):
+    e = lambda x: escape(str(x if x is not None else ""))
+    L = ['<?xml version="1.0" encoding="UTF-8"?>', "<Urunler>"]; say = {"eslesen": 0, "kayip": 0, "fiyatsiz": 0}
+    for bkod, (skod, kid, uid, ad, n) in site.items():
+        u = urunler.get(bkod)
+        if not u: say["kayip"] += 1; continue
+        h = orka_hesap(u, n)
+        if not h: say["fiyatsiz"] += 1; continue
+        sat, stok, mn = h; say["eslesen"] += 1
+        L += ["  <Urun>", f"    <UrunKartiID>{kid}</UrunKartiID>", f"    <UrunAdi>{e(ad)}</UrunAdi>", "    <Tedarikci>Orka</Tedarikci>"]
+        if mn: L += [f"    <{t}>{mn}</{t}>" for t in ("MinSiparisAdedi", "UrunAdediMinimumDeger", "UrunAdediVarsayilanDeger", "UyeAlisMin", "BayiAlisMin")]
+        L += ["    <UrunSecenek>", "      <Secenek>", f"        <VaryasyonID>{uid}</VaryasyonID>",
+              f"        <StokKodu>{e(skod)}</StokKodu>", f"        <StokAdedi>{stok}</StokAdedi>"]
+        L += [f"        <{t}>{para(sat)}</{t}>" for t in ("SatisFiyati", "IndirimliFiyat", "IndirimliFiyatTL", "FiyatTL")]
+        L += ["        <KDVDahil>false</KDVDahil>", "        <KdvOrani>20</KdvOrani>", "        <ParaBirimi>TL</ParaBirimi>",
+              "      </Secenek>", "    </UrunSecenek>", "  </Urun>"]
+    L.append("</Urunler>")
+    say["yeni"] = sorted(k for k in urunler if k not in site)
+    return "\n".join(L) + "\n", say
+
+
+def orka_adet(u):
+    """Paket/koli icindeki adet: '600 000 ADET(19,56 KG)', '5 AD/1 PKT'."""
+    if (u[4] or "").strip().upper() in ("", "ADET"): return 1
+    m = re.search(r"(\d+(?: \d{3})*)\s*AD(?:ET)?\s*(?:/\s*1\s*(?:PKT|KOLİ|TK)|\()", u[2] or "")
+    return int(m.group(1).replace(" ", "")) if m else 1
+
+
+def orka_ekler_guncelle(eski_xml, urunler):
+    """ekler/orka.xml.gz (sitede yeni acilan Orka urunleri) fiyat/stok/min adet."""
+    say = {"eslesen": 0, "kayip": 0, "fiyatsiz": 0, "degisen": 0}
+
+    def tag(b, t, v):
+        return re.sub(rf"<{t}>[^<]*</{t}>", f"<{t}>{v}</{t}>", b)
+
+    def bir(m):
+        b = m.group(0); k = re.search(r"<StokKodu>(.*?)</StokKodu>", b)
+        u = urunler.get(html.unescape(k.group(1))) if k else None
+        if not u: say["kayip"] += 1; return b
+        h = orka_hesap(u, orka_adet(u))
+        if not h: say["fiyatsiz"] += 1; return b
+        sat, stok, mn = h; say["eslesen"] += 1; y = b
+        for t in ("SatisFiyati", "IndirimliFiyat", "IndirimliFiyatTL", "FiyatTL"): y = tag(y, t, para(sat))
+        y = tag(y, "StokAdedi", stok)
+        for t in ("MinSiparisAdedi", "UrunAdediMinimumDeger", "UrunAdediVarsayilanDeger", "UyeAlisMin", "BayiAlisMin"):
+            y = tag(y, t, mn or 1)
+        say["degisen"] += y != b
+        return y
+    return re.sub(r"  <Urun>.*?</Urun>", bir, eski_xml, flags=re.S), say
+
+
+def orka_adim(s):
+    site = json.loads(gzip.decompress(gh_oku(DAL, "pc/orka_site.json.gz")))
+    urunler = orka_cek(s)
+    ekran("orka", yuzde=92, metin="Fiyat ve stoklar hesaplanıyor, kontrol ediliyor…")
+    xml, say = orka_xml(site, urunler)
+    d = {"durum": "yayinlanmadi", "orka_toplam": len(urunler), "site": len(site), "eslesen": say["eslesen"],
+         "kayip": say["kayip"], "fiyatsiz": say["fiyatsiz"], "yeni_sayi": len(say["yeni"])}
+    if say["eslesen"] < ESIK * len(site):
+        d["hata"] = "eslesen urun cok az, eski XML korundu"; return d
+    try:
+        d.update(rd_fark(gzip.decompress(gh_oku(DAL, "durum/orka_guncelle.xml.gz")).decode("utf-8"), xml))
+    except Exception as e:  # noqa: BLE001
+        log("Orka fark hesaplanamadi", e)
+    ekran("orka", yuzde=96, metin="Dosya siteye gönderiliyor…")
+    b = io.BytesIO()
+    with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(xml.encode("utf-8"))
+    gh_yaz(DAL, "durum/orka_guncelle.xml.gz", b.getvalue(), f"Orka gunluk fiyat/stok {time.strftime('%Y-%m-%d')}")
+    gh_yaz(DAL, "durum/orka_yeni_urunler.txt", "\n".join(say["yeni"]).encode(), "Orka yeni urun listesi")
+    eski = gzip.decompress(gh_oku("main", "ekler/orka.xml.gz")).decode("utf-8")
+    yeni, es = orka_ekler_guncelle(eski, urunler)
+    d.update({"yeni_" + a: v for a, v in es.items()})
+    if es["eslesen"] >= ESIK * (es["eslesen"] + es["kayip"] + es["fiyatsiz"]) and es["degisen"]:
+        b = io.BytesIO()
+        with gzip.GzipFile(fileobj=b, mode="wb", mtime=0) as g: g.write(yeni.encode("utf-8"))
+        gh_yaz("main", "ekler/orka.xml.gz", b.getvalue(), f"Orka yeni urunler fiyat/stok {time.strftime('%Y-%m-%d')}")
+        if ELLE:
+            try: gh("POST", "/actions/workflows/gunluk-stok.yml/dispatches", {"ref": "main"})
+            except Exception as e: log("Talha tetiklenemedi", e)  # noqa: BLE001
+    d["durum"] = "tamam"; return d
+
+
 ELLE = False
 
 
@@ -842,7 +988,7 @@ def main():
     try:
         durum = calis(elle)
         durum["log"] = LOG[-60:]
-        log("BITTI", json.dumps({a: (durum.get(a) or {}).get("durum") for a in ("rd", "madte")}))
+        log("BITTI", json.dumps({a: (durum.get(a) or {}).get("durum") for a in ("rd", "madte", "orka")}))
         try:
             gh_yaz(DAL, "durum/son.json", json.dumps(durum, ensure_ascii=False, indent=1).encode(), "PC senkron durumu")
         except Exception as e:  # noqa: BLE001
