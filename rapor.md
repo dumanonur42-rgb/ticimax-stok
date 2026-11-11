@@ -87,10 +87,11 @@ Bu yollar mevcut `site_kategoriler.txt` içinde yoktur; tüm ilgili kayıtlarda 
 
 ## Metin, satış birimi ve anahtar kelimeler
 
-`tools/gen.py` metin/ölçü üretimi korundu. Son ek talep doğrultusunda `specs()` içinde Marka'dan hemen sonra
+İlk teslimde `tools/gen.py` metin/ölçü üretimi korundu. Ek talep doğrultusunda `specs()` içinde Marka'dan hemen sonra
 `Satış Birimi: Adet` eklendi. Uygulama alanlarındaki `paketleme` sözcükleri, istenen `paket` regex'ine takılmaması
-için aynı anlamdaki `ambalajlama` ile değiştirildi. Bunlar dışında gen.py metni/mantığı değiştirilmedi;
-kaynakla doğrulanmış bir değer hatası saptanmadı.
+için aynı anlamdaki `ambalajlama` ile değiştirildi. Son cümle-tekrarı düzeltmesinde tedarik, tip kodu,
+senkron dönüş ve montaj cümleleri mevcut ürün koduyla; HTD diş açıklaması mevcut profille ilişkilendirildi.
+Yeni teknik iddia veya tahmini ölçü eklenmedi; kaynakla doğrulanmış bir değer hatası saptanmadı.
 
 `denetle.py`, URUNADI ve açıklama paragraflarında `koli|paket|\bPKT\b|\d+\s*AD\b` ifadesini reddeder;
 teknik listede `Satış Birimi: Adet` bulunmasını da zorunlu kılar. 915 girdinin birimi ADET'tir.
@@ -117,11 +118,12 @@ Bu yerel yaklaşık ürün sayfalarıdır; canlı Ticimax entegrasyonu yapılmad
 
 ## Denetim özeti
 
-Çalıştırma (Node PATH'i hazır olmalı; bu ortamda `source ~/.nvm/nvm.sh`):
+Çalıştırma:
 
 ```sh
+export PATH="$HOME/.nvm/versions/node/v24.22.2/bin:$PATH"
 python3 tools/assemble.py
-python3 -m unittest discover -s tools -p test_delivery.py -v
+(cd tools && python3 -m unittest test_delivery)
 python3 tools/denetle.py
 python3 tools/onizleme.py
 ```
@@ -131,7 +133,7 @@ Görsel yeniden üretimi için `python3 tools/gorsel.py`; Pillow, NumPy, SciPy g
 
 ```text
 ASSEMBLE: 915 records, 915 unique image paths
-Ran 5 tests in 0.244s
+Ran 7 tests in 0.301s
 OK
 RECORDS: 915; unique kod: 915; unique resim: 915
 DRAW: 908/915; NULL: 7
@@ -143,10 +145,35 @@ Denetim zorunlu alanlar, uzunluk sınırları, tedarikçi adları, Unicode/mojib
 görsel biçimi/boyutu/dosyası, benzersizlik, kategori bayrağı, marka, link izin listesi ve 2–4 link sınırını kapsar.
 Negatif testlerde bu kuralların reddetmesi, boş veri, slug çakışması ve alan sırası kontrol edildi.
 
-Birden çok üründe birebir aynı `<p>` paragrafları (bilgilendirme; ürün başına sayılır), ilk beş:
+### Tekrarlanan paragraflar ve cümleler
 
-| Ürün sayısı | Paragraf |
-| ---: | --- |
-| 7 | Aynı diş sayısı ve aynı H profilindeki ürünlerde profil/hatve paragrafı (ürün kodu ve ölçüler diğer paragraflarda ayrışır) |
+Birden çok üründe birebir aynı `<p>` paragrafları bilgilendirme amaçlı ve ürün başına sayılır.
+İlk beş paragrafın her biri **7 üründe (%0,77)** bulunur; bunlar farklı bölüm çaplarını içeren
+H profil/hatve paragraflarıdır. Burç, pilot delik ve flanş paragrafları önceki yerel `56fb90d`
+düzeltmesinde ürüne özgü hale getirilmişti; en çok tekrar eden paragraf yine 7 ürünle sınırlıdır.
 
-Burç, pilot delik ve flanş paragrafları ürün kodu ve diş sayısı içerecek şekilde ürüne özgü hale getirildi; en çok tekrar eden paragraf 7 ürünle sınırlı.
+HTML etiketleri kaldırılır, blok sınırları korunur ve `. ! ?` işaretlerinde cümleler ayrılır;
+noktalı virgül cümle sınırı değildir. Boşluklar normalize edilir. En az 40 karakterlik her cümle,
+aynı üründe kaç kez geçerse geçsin bir kez sayılır. **%30'u aşan (915 üründe en az 275)**
+muaf olmayan tekrar denetimi başarısız kılar. Bağlantı taşıyan cümleler de aynı sınıra tabidir.
+
+Muaf olmayan en sık beş cümle:
+
+| Ürün sayısı | Ürün yüzdesi | Cümle |
+| ---: | ---: | --- |
+| 241 | %26,34 | Flanşlı yapı, hizalama toleransı dar olan sistemlerde kayış ömrünü korur. |
+| 236 | %25,79 | Genellikle iki kasnaklı sistemde en az bir kasnağın flanşlı olması önerilir. |
+| 233 | %25,46 | Özellikle dikey eksenli veya uzun mesafeli tahriklerde flanşlı kasnak kayışı yerinde tutar. |
+| 218 | %23,83 | Bu kasnak yalnızca H profilli trapez dişli zaman kayışlarıyla eşleşir; T5/T10 veya HTD kayışlarla hatve farklı olduğundan birlikte kullanılamaz. |
+| 218 | %23,83 | H profili, ISO 5296 standardında tanımlı inç hatveli trapez (H); diş hatvesi 12,7 mm'dir. |
+
+Saf kod bilgisi olan “Koddaki F harfi kasnağın flanşlı olduğunu belirtir.” cümlesi
+710 üründe (%77,60) bulunur ve açıkça muaf tutulur. Muafiyet yalnızca bilinen F/AL kod açıklamalarına uygulanır.
+
+Kayış bağlantıları `pick(k, 'kayis_link', ...)` ile **5 deterministik şablon** kullanır:
+198, 191, 186, 181 ve 159 ürün (en yüksek **%21,64**).
+Burç bağlantıları da **5 deterministik şablon** kullanır: 38, 37, 32, 27 ve 25 ürün
+(tüm 915 ürün içinde en yüksek **%4,15**). Bağlantılar `katurl.txt` izin listesinde kalır;
+her üründe 3 veya 4 bağlantı vardır. En kısa ACIKLAMA metni **2031 karakterdir**.
+Yeni testler cümle sınırlarını, noktalı virgülün korunmasını, ürün başına tek sayımı,
+boş veriyi, 274/275 eşiğini, tam %30 sınırını, dar kod muafiyetini ve bağlantılı cümle reddini kapsar.

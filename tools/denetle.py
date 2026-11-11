@@ -47,7 +47,7 @@ class Content(HTMLParser):
         if tag == 'strong':
             self.strong = False
         if tag in ('p', 'div', 'li', 'h2', 'h3', 'td'):
-            self.text.append(' ')
+            self.text.append('\n')
 
     def handle_data(self, data):
         self.text.append(data)
@@ -81,6 +81,33 @@ console.log(JSON.stringify(contexts.map(function(c,i){
                             input=json.dumps(contexts(records)), text=True,
                             capture_output=True, check=True)
     return json.loads(result.stdout)
+
+
+def sentences(source):
+    for block in ''.join(Content(source).text).splitlines():
+        for sentence in re.split(r'(?<=[.!?])', block):
+            sentence = ' '.join(sentence.split())
+            if len(sentence) >= 40:
+                yield sentence
+
+
+def exempt_fact(sentence):
+    return sentence in ('Koddaki F harfi kasnağın flanşlı olduğunu belirtir.',
+                        'F harfi kasnağın flanşlı olduğunu belirtir.',
+                        'AL eki alüminyum gövdeyi ifade eder.')
+
+
+def sentence_counts(records):
+    counts = collections.Counter()
+    for record in records:
+        counts.update(sorted(set(sentences(record.get('ACIKLAMA') or ''))))
+    return counts
+
+
+def repetition_errors(counts, total):
+    return [f'sentence repeated in {count}/{total} products ({100 * count / total:.2f}%): {sentence}'
+            for sentence, count in counts.items()
+            if total and count * 10 > total * 3 and not exempt_fact(sentence)]
 
 
 def audit(records):
@@ -149,7 +176,9 @@ def audit(records):
             fail('MARKA != Yamansa')
         if record['KATEGORI'] not in categories and record['yeni_kategori'] is not True:
             fail('unknown KATEGORI requires yeni_kategori=true')
-        paragraphs.update(set(parsed.paragraphs))
+        paragraphs.update(sorted(set(parsed.paragraphs)))
+    counts = sentence_counts(records)
+    errors.extend(repetition_errors(counts, len(records)))
     drawn = drawings(records)
     reasons = collections.Counter(r['reason'] for r in drawn if not r['svg'])
     print(f'RECORDS: {len(records)}; unique kod: {len(codes)}; unique resim: {len(images)}')
@@ -160,6 +189,14 @@ def audit(records):
     for paragraph, count in paragraphs.most_common(5):
         if count > 1:
             print(f'  {count}: {paragraph[:160]}')
+    print('SENTENCES (non-exempt, >=40 characters; top 5 product counts and percentages):')
+    non_exempt = collections.Counter({sentence: count for sentence, count in counts.items()
+                                     if not exempt_fact(sentence)})
+    for sentence, count in non_exempt.most_common(5):
+        print(f'  {count}/{len(records)} ({100 * count / len(records):.2f}%): {sentence}')
+    for sentence, count in counts.items():
+        if exempt_fact(sentence):
+            print(f'EXEMPT CODE FACT: {count}/{len(records)} ({100 * count / len(records):.2f}%): {sentence}')
     for error in errors:
         print('FAIL: ' + error, file=sys.stderr)
     print(f'{"FAIL" if errors else "PASS"}: {len(errors)} validation errors')

@@ -202,7 +202,7 @@ def aciklama(d, nm):
     intro = intro % (c, p, z, fl, t, d['w'] or wc, dims)
     intro = intro.replace('kasnakdır', 'kasnaktır').replace('kasnaktır', 'kasnaktır')
     if d['mat']: intro += ' Gövde malzemesi %s.' % d['mat'].lower()
-    intro += ' Ürün Yamansa güvencesiyle stoktan tedarik edilir.' if (d['stok'] or '0') not in ('0', '') else ' Ürün Yamansa güvencesiyle tedarik edilir.'
+    intro += (' %s, Yamansa güvencesiyle stoktan tedarik edilir.' if (d['stok'] or '0') not in ('0', '') else ' %s, Yamansa güvencesiyle tedarik edilir.') % c
     s = []
     code_p = '<b>%s</b> ürün kodunda <b>%s</b> diş sayısını, <b>%s</b> diş profilini, <b>%s</b> ise kayış genişliğini gösterir' % (c, z, p, wc)
     if p in ('XL', 'L', 'H'): code_p += ' (inç cinsinden yüzde birlik değer: %s = %s mm)' % (wc, d['w'])
@@ -210,21 +210,27 @@ def aciklama(d, nm):
     code_p += '. '
     if d['flans']: code_p += 'Koddaki <b>F</b> harfi kasnağın flanşlı olduğunu belirtir. '
     if d['mat'] == 'Alüminyum': code_p += '<b>AL</b> eki alüminyum gövdeyi ifade eder. '
-    if d['tip']: code_p += 'Üretici tablosunda tip kodu <b>%s</b> olarak verilmiştir.' % d['tip']
+    if d['tip']: code_p += 'Üretici tablosunda %s için tip kodu <b>%s</b> olarak verilmiştir.' % (c, d['tip'])
     s.append(('Ürün Kodu Ne Anlatıyor?', code_p))
     if p in ('XL', 'L', 'H'):
         pr = '%s profili, %s standardında tanımlı %s; diş hatvesi %s mm\'dir. Bu kasnak yalnızca %s profilli trapez dişli zaman kayışlarıyla eşleşir; T5/T10 veya HTD kayışlarla hatve farklı olduğundan birlikte kullanılamaz.' % (p, STD[p], PROFTXT[p], PITCH[p], p)
     elif p in ('T5', 'T10'):
         pr = '%s, %s standardındaki %s profilidir ve hatvesi %s mm\'dir. Metrik trapez dişler, kayışın kasnakta kaymadan senkron dönmesini sağlar; %s kasnağa yalnızca %s profilli kayış takılmalıdır.' % (p, STD[p], PROFTXT[p], PITCH[p], c, p)
     else:
-        pr = '%s, yuvarlak (HTD) diş formuna sahip ve hatvesi %s mm olan bir profildir. Yuvarlak diş yapısı, kayış dişine geniş temas yüzeyi sağlayarak trapez profillere göre daha yüksek tork iletimine elverişlidir. %s kasnak, %s HTD zaman kayışlarıyla birlikte kullanılır.' % (p, PITCH[p], c, p)
+        pr = '%s, yuvarlak (HTD) diş formuna sahip ve hatvesi %s mm olan bir profildir. %s profilindeki yuvarlak diş yapısı, kayış dişine geniş temas yüzeyi sağlayarak trapez profillere göre daha yüksek tork iletimine elverişlidir. %s kasnak, %s HTD zaman kayışlarıyla birlikte kullanılır.' % (p, PITCH[p], p, c, p)
     if 'Dp' in D: pr += ' Hesaplamalarda esas alınan bölüm çapı %s mm\'dir; kayışın hatve hattı bu çap üzerinde döner.' % D['Dp']
     s.append(('%s Diş Profili ve Hatve' % p, pr))
     if btk:
         bp = pick(k, 'b', ['%s dişli %s, konik burç (taper bush) ile mile bağlanır. ', '%s kodlu %s dişli kasnağın mile bağlantısı konik burç (taper bush) ile yapılır. ', 'Konik burç (taper bush) yuvalı %s, %s dişli gövdesiyle mile burç üzerinden sabitlenir. '])
         bp = bp % ((z, c) if bp.startswith('%s dişli') else (c, z))
         if d['burc']: bp += 'Kullanılacak burç tipi <b>%s</b>' % d['burc'] + (" olup bu burçla elde edilebilecek maksimum delik ölçüsü %s mm'dir. " % d['maxd'] if d['maxd'] else ' olarak belirtilmiştir. ')
-        bp += 'Burç ayrı olarak seçilir; mil çapınıza uygun delikli burç ile kasnak, kama kanalı açmaya veya tornalamaya gerek kalmadan mile sıkıca oturur. Uygun burçlar için %s sayfasına bakabilirsiniz.' % a(L_KB, 'konik burçlar')
+        bp += 'Burç ayrı olarak seçilir; mil çapınıza uygun delikli burç ile kasnak, kama kanalı açmaya veya tornalamaya gerek kalmadan mile sıkıca oturur.'
+        bp += pick(k, 'burc_link', [
+            ' Uygun burçlar için %s sayfasına bakabilirsiniz.',
+            ' Burç seçeneklerini %s kategorisinde inceleyebilirsiniz.',
+            ' Mil bağlantısına uygun burç seçimi için %s sayfasını ziyaret edebilirsiniz.',
+            ' Burç arayışınızı %s kategorisinde sürdürebilirsiniz.',
+            ' Uyumlu burç seçeneklerine %s sayfasından ulaşabilirsiniz.']) % a(L_KB, 'konik burçlar')
         s.append(('Konik Burç ile Bağlantı', bp))
     else:
         bp = ''
@@ -251,13 +257,19 @@ def aciklama(d, nm):
           '8M': 'yüksek torklu güç aktarımı, takım tezgâhı iş milleri, pompa ve kompresör tahrikleri, ağır konveyörler ve tarım makineleri'}[p]
     up = pick(k, 'u', ['%s dişli bu %s; %s gibi alanlarda kullanılır.', 'Bu ölçüdeki %s dişli %s başlıca %s için tercih edilir.',
                        '%s dişe sahip %s, %s gibi uygulamalarda güç ve hareket aktarır.']) % (z, t, ua)
-    up += ' Kaymasız ve senkron dönüş gereken her tahrikte V kayışa göre daha hassas zamanlama sağlar. Uyumlu kayışlar için %s ve %s kategorilerine, diğer ölçüler için %s sayfasına göz atabilirsiniz.' % (a(L_ZK, 'zaman kayışları'), a(L_TK, 'triger kayışı'), a(L_KAS, 'kasnaklar'))
+    up += ' %s, kaymasız ve senkron dönüş gereken tahriklerde V kayışa göre daha hassas zamanlama sağlar.' % c
+    up += pick(k, 'kayis_link', [
+        ' Uyumlu kayışlar için %s ve %s kategorilerine, diğer ölçüler için %s sayfasına göz atabilirsiniz.',
+        ' Kayış seçeneklerini %s ve %s kategorilerinde, diğer kasnak ölçülerini ise %s sayfasında inceleyebilirsiniz.',
+        ' İlgili %s ve %s kategorilerinden kayış seçeneklerine, %s sayfasından farklı kasnak ölçülerine ulaşabilirsiniz.',
+        ' Kayış arayışınızı %s ve %s kategorilerinde sürdürebilir, başka kasnak ölçüleri için %s sayfasını ziyaret edebilirsiniz.',
+        ' Kayış seçimi için %s ve %s kategorilerine bakabilir, diğer kasnak ölçülerini %s sayfasında bulabilirsiniz.']) % (a(L_ZK, 'zaman kayışları'), a(L_TK, 'triger kayışı'), a(L_KAS, 'kasnaklar'))
     s.append(('Kullanım Alanları', up))
     mp = 'Kasnak seçerken diş profili ve hatvenin kayışla aynı olduğundan, kayış genişliğinin (%s mm) kasnak diş genişliğini aşmadığından emin olun.' % (d['w'] or wc)
     if 'Dp' in D: mp += ' Çevrim oranı, iki kasnağın diş sayıları oranına eşittir; %s dişli kasnak ile 2 kat devir düşürmek için %d dişli karşı kasnak gerekir.' % (z, int(z) * 2)
-    mp += pick(k, 'm', [' Montajda iki kasnağın aynı düzlemde olmasına dikkat edin; eksen kaçıklığı kayışın kenarından aşınmasına yol açar.',
-                        ' Kayışı kasnağa zorla, levyeyle geçirmeyin; motor tablasını gevşetip kayışı yerleştirdikten sonra gerginliği ayarlayın.',
-                        ' Kayış gerginliğini üretici değerine göre ayarlayın; aşırı gerginlik rulmanları, yetersiz gerginlik diş atlamasını artırır.'])
+    mp += pick(k, 'm', [' %s montajında iki kasnağın aynı düzlemde olmasına dikkat edin; eksen kaçıklığı kayışın kenarından aşınmasına yol açar.',
+                        ' %s için kayışı kasnağa zorla, levyeyle geçirmeyin; motor tablasını gevşetip kayışı yerleştirdikten sonra gerginliği ayarlayın.',
+                        ' %s için kayış gerginliğini üretici değerine göre ayarlayın; aşırı gerginlik rulmanları, yetersiz gerginlik diş atlamasını artırır.']) % c
     s.append(('Seçim ve Montaj İpuçları', mp))
     spec = specs(d)
     html = '<div class="urunTabAlt"><div class="ydsc"><div class="ym"><h2>%s</h2><p>%s</p>' % (nm, intro)

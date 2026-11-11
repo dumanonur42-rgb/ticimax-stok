@@ -19,7 +19,8 @@ class DeliveryTests(unittest.TestCase):
 
     def check(self, records, expected):
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()), \
-                patch.object(denetle, 'drawings', return_value=[]):
+                patch.object(denetle, 'drawings', return_value=[]), \
+                patch.object(denetle, 'sentence_counts', return_value={}):
             self.assertEqual(denetle.audit(records), expected)
 
     def test_normal_empty_and_required(self):
@@ -74,6 +75,29 @@ class DeliveryTests(unittest.TestCase):
         record = copy.deepcopy(self.sample)
         record['ACIKLAMA'] = '<ul><li><strong>Diş Sayısı:</strong> 16</li></ul>'
         self.assertEqual(denetle.contexts([record])[0]['specs'], [{'l': 'Diş Sayısı', 'v': '16'}])
+
+    def test_sentence_extraction_and_product_counts(self):
+        first = 'Bu kasnak için uzun bir cümle; noktalı virgül cümleyi bölmemelidir.'
+        second = 'Diğer kasnak ölçüleri için kategori sayfasını inceleyebilirsiniz!'
+        source = '<p><b>Bu kasnak</b> için uzun bir cümle; noktalı virgül cümleyi bölmemelidir. ' + second + '</p>'
+        self.assertEqual(list(denetle.sentences(source)), [first, second])
+        self.assertEqual(list(denetle.sentences('<p>' + first + second + '</p>')), [first, second])
+        self.assertEqual(list(denetle.sentences('<p>kısa.</p>')), [])
+        self.assertEqual(denetle.sentence_counts([]), {})
+        counts = denetle.sentence_counts([{'ACIKLAMA': source + source}, {'ACIKLAMA': source}])
+        self.assertEqual(counts, {first: 2, second: 2})
+
+    def test_sentence_threshold_exemption_and_links(self):
+        sentence = 'Kaymasız ve senkron dönüş gereken tahriklerde zamanlama önemlidir.'
+        self.assertEqual(denetle.repetition_errors({sentence: 274}, 915), [])
+        self.assertEqual(len(denetle.repetition_errors({sentence: 275}, 915)), 1)
+        self.assertEqual(denetle.repetition_errors({sentence: 3}, 10), [])
+        fact = 'Koddaki F harfi kasnağın flanşlı olduğunu belirtir.'
+        self.assertEqual(denetle.repetition_errors({fact: 915}, 915), [])
+        self.assertFalse(denetle.exempt_fact(fact + ' Başka genel bir iddia.'))
+        linked = '<p>Uyumlu kayışlar için <a href="/kasnaklar">kategori sayfasını</a> inceleyebilirsiniz.</p>'
+        counts = denetle.sentence_counts([{'ACIKLAMA': linked}] * 915)
+        self.assertEqual(len(denetle.repetition_errors(counts, 915)), 1)
 
     def test_assembly_collision_suffix_and_field_order(self):
         with tempfile.TemporaryDirectory() as directory:
