@@ -1,0 +1,1613 @@
+[
+  {
+    "kod": "ORK BMT CY16B2",
+    "ctx": {
+      "kod": "ORK BMT CY16B2",
+      "title": "CY16B2 Bilyalı Masaüstü Taşıyıcı",
+      "path": "/cy16b2-bilyali-masaustu-tasiyici",
+      "productId": 163,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ölçü (Dp)",
+          "v": "5/8 inç"
+        },
+        {
+          "l": "Gövde Tipi",
+          "v": "Yuvarlak model"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ölçü (Dp)",
+          "v": "5/8 inç"
+        },
+        {
+          "l": "Gövde Tipi",
+          "v": "Yuvarlak model"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT CY25A",
+    "ctx": {
+      "kod": "ORK BMT CY25A",
+      "title": "CY25A Bilyalı Masaüstü Taşıyıcı 25,4 mm",
+      "path": "/cy25a-bilyali-masaustu-tasiyici-25-4-mm",
+      "productId": 164,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "25,4 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "İki cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Bilya Malzemesi",
+          "v": "Karbon çeliği"
+        },
+        {
+          "l": "Önerilen Yük Kapasitesi",
+          "v": "25 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "25,4 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "İki cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Bilya Malzemesi",
+          "v": "Karbon çeliği"
+        },
+        {
+          "l": "Önerilen Yük Kapasitesi",
+          "v": "25 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT IA19",
+    "ctx": {
+      "kod": "ORK BMT IA19",
+      "title": "IA19 Bilyalı Masaüstü Taşıyıcı 19 mm",
+      "path": "/ia19-bilyali-masaustu-tasiyici-19-mm",
+      "productId": 165,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Tabla bağlantılı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "80 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Tabla bağlantılı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "80 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT IA25",
+    "ctx": {
+      "kod": "ORK BMT IA25",
+      "title": "IA25 Bilyalı Masaüstü Taşıyıcı",
+      "path": "/ia25-bilyali-masaustu-tasiyici",
+      "productId": 166,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Tabla bağlantılı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "130 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Tabla bağlantılı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "130 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT NL8H",
+    "ctx": {
+      "kod": "ORK BMT NL8H",
+      "title": "NL-8H Komple Plastik Bilyalı Masaüstü Taşıyıcı 8 mm",
+      "path": "/nl-8h-komple-plastik-bilyali-masaustu-tasiyici-8-mm",
+      "productId": 167,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Komple plastik"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Yuvaya oturtmalı"
+        },
+        {
+          "l": "Önerilen Yük Kapasitesi",
+          "v": "2 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Komple plastik"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Yuvaya oturtmalı"
+        },
+        {
+          "l": "Önerilen Yük Kapasitesi",
+          "v": "2 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP12AFL",
+    "ctx": {
+      "kod": "ORK BMT SP12AFL",
+      "title": "SP12AFL Cıvatalı Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp12afl-civatali-bilyali-masaustu-tasiyici",
+      "productId": 168,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP12B",
+    "ctx": {
+      "kod": "ORK BMT SP12B",
+      "title": "SP12B Bilyalı Masaüstü Taşıyıcı 12,700 mm",
+      "path": "/sp12b-bilyali-masaustu-tasiyici-12-700-mm",
+      "productId": 169,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "12,700 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşsız, yuvaya oturtmalı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "10 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "12,700 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşsız, yuvaya oturtmalı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "10 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK BMT SP12BF",
+    "ctx": {
+      "kod": "ORK BMT SP12BF",
+      "title": "SP12BF Flanşlı Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp12bf-flansli-bilyali-masaustu-tasiyici",
+      "productId": 170,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP15A",
+    "ctx": {
+      "kod": "ORK BMT SP15A",
+      "title": "SP15A Ağır Seri Bilyalı Masaüstü Taşıyıcı 15 mm",
+      "path": "/sp15a-agir-seri-bilyali-masaustu-tasiyici-15-mm",
+      "productId": 171,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK BMT SP15AFL",
+    "ctx": {
+      "kod": "ORK BMT SP15AFL",
+      "title": "SP15AFL Cıvatalı Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp15afl-civatali-bilyali-masaustu-tasiyici",
+      "productId": 172,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Montaj Tipi",
+          "v": "Cıvata bağlantılı flanş"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP15B",
+    "ctx": {
+      "kod": "ORK BMT SP15B",
+      "title": "SP15B Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp15b-bilyali-masaustu-tasiyici",
+      "productId": 173,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP15C",
+    "ctx": {
+      "kod": "ORK BMT SP15C",
+      "title": "SP15C Paslanmaz Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp15c-paslanmaz-bilyali-masaustu-tasiyici",
+      "productId": 174,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP15P",
+    "ctx": {
+      "kod": "ORK BMT SP15P",
+      "title": "SP15P Plastik Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp15p-plastik-bilyali-masaustu-tasiyici",
+      "productId": 175,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP22B",
+    "ctx": {
+      "kod": "ORK BMT SP22B",
+      "title": "SP22B Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp22b-bilyali-masaustu-tasiyici",
+      "productId": 176,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP22C",
+    "ctx": {
+      "kod": "ORK BMT SP22C",
+      "title": "SP22C Paslanmaz Bilyalı Masaüstü Taşıyıcı 22 mm",
+      "path": "/sp22c-paslanmaz-bilyali-masaustu-tasiyici-22-mm",
+      "productId": 177,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,8 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "9,8 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK BMT SP22P",
+    "ctx": {
+      "kod": "ORK BMT SP22P",
+      "title": "SP22P Plastik Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp22p-plastik-bilyali-masaustu-tasiyici",
+      "productId": 178,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP25B",
+    "ctx": {
+      "kod": "ORK BMT SP25B",
+      "title": "SP25B Bilyalı Masaüstü Taşıyıcı 25 mm",
+      "path": "/sp25b-bilyali-masaustu-tasiyici-25-mm",
+      "productId": 179,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "46 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "7 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "46 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "7 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK BMT SP30B",
+    "ctx": {
+      "kod": "ORK BMT SP30B",
+      "title": "SP30B Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp30b-bilyali-masaustu-tasiyici",
+      "productId": 180,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "55 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "55 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP30C",
+    "ctx": {
+      "kod": "ORK BMT SP30C",
+      "title": "SP30C Paslanmaz Bilyalı Masaüstü Taşıyıcı 30 mm",
+      "path": "/sp30c-paslanmaz-bilyali-masaustu-tasiyici-30-mm",
+      "productId": 181,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "55 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "37 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "55 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "37 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK BMT SP30P",
+    "ctx": {
+      "kod": "ORK BMT SP30P",
+      "title": "SP30P Plastik Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp30p-plastik-bilyali-masaustu-tasiyici",
+      "productId": 182,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Malzemesi",
+          "v": "Plastik"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP45B",
+    "ctx": {
+      "kod": "ORK BMT SP45B",
+      "title": "SP45B Bilyalı Masaüstü Taşıyıcı",
+      "path": "/sp45b-bilyali-masaustu-tasiyici",
+      "productId": 183,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor"
+    }
+  },
+  {
+    "kod": "ORK BMT SP60B",
+    "ctx": {
+      "kod": "ORK BMT SP60B",
+      "title": "SP60B Bilyalı Masaüstü Taşıyıcı 60 mm",
+      "path": "/sp60b-bilyali-masaustu-tasiyici-60-mm",
+      "productId": 184,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "117 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Ana Bilya Çapı (Dw)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Flanş Çapı (D1)",
+          "v": "117 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Ölçü (b)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşlı, yuvaya oturtmalı"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "NEG yabancı aile",
+    "ctx": {
+      "kod": "ORK LA HGH20HA",
+      "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
+      "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
+      "productId": 1,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "LİNEER ARABALAR"
+      ],
+      "specs": [
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "H1",
+          "v": "4,6 mm"
+        },
+        {
+          "l": "N",
+          "v": "12 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "B1",
+          "v": "6 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "L1",
+          "v": "65,2 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "K1",
+          "v": "12,6 mm"
+        },
+        {
+          "l": "K2",
+          "v": "6 mm"
+        },
+        {
+          "l": "G",
+          "v": "12 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        },
+        {
+          "l": "T",
+          "v": "8 mm"
+        },
+        {
+          "l": "H2",
+          "v": "6 mm"
+        },
+        {
+          "l": "H3",
+          "v": "6 mm"
+        },
+        {
+          "l": "Ray Genişliği (WR)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ray Yüksekliği (HR)",
+          "v": "17,5 mm"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        },
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        }
+      ]
+    },
+    "negative": true,
+    "expect": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG gerekli ölçü eksik",
+    "ctx": {
+      "kod": "ORK BMT SP12B",
+      "title": "SP12B Bilyalı Masaüstü Taşıyıcı 12,700 mm",
+      "path": "/sp12b-bilyali-masaustu-tasiyici-12-700-mm",
+      "productId": 169,
+      "crumbs": [
+        "Anasayfa",
+        "BİLYALI MASAÜSTÜ TAŞIYICILAR"
+      ],
+      "specs": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşsız, yuvaya oturtmalı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "10 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Gövde Çapı (D)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Toplam Yükseklik (H)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Montaj Tipi",
+          "v": "Flanşsız, yuvaya oturtmalı"
+        },
+        {
+          "l": "Yük Kapasitesi",
+          "v": "10 kg"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG boş ölçüler",
+    "ctx": {
+      "title": "CY16B2 Bilyalı Masaüstü Taşıyıcı",
+      "path": "/empty",
+      "crumbs": [],
+      "specs": [],
+      "onyazi": []
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  }
+]

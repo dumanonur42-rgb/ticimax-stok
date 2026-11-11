@@ -1,0 +1,2468 @@
+[
+  {
+    "kod": "ORK PM SSPHS06R",
+    "ctx": {
+      "kod": "ORK PM SSPHS06R",
+      "title": "SSPHS06R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs06r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 189,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "39 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "11 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "39 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "11 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS08R",
+    "ctx": {
+      "kod": "ORK PM SSPHS08R",
+      "title": "SSPHS08R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs08r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 190,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "15,88 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "12,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M8×1,25"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "11,6 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "15,88 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "12,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M8×1,25"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "11,6 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS10R",
+    "ctx": {
+      "kod": "ORK PM SSPHS10R",
+      "title": "SSPHS10R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs10r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 191,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "19,05 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "10,5 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "43 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "56 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "6,5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "17 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M10×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "19,05 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "10,5 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "43 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "56 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "6,5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "17 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M10×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS12R",
+    "ctx": {
+      "kod": "ORK PM SSPHS12R",
+      "title": "SSPHS12R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs12r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 192,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "22,23 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "6,5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M12×1,75"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "13,4 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "22,23 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "6,5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "19 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "17,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M12×1,75"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "13,4 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS14R",
+    "ctx": {
+      "kod": "ORK PM SSPHS14R",
+      "title": "SSPHS14R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs14r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 193,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "14/18 boyutlarında SSPHS/SSPOS baz seri katalog satırı yok"
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS16R",
+    "ctx": {
+      "kod": "ORK PM SSPHS16R",
+      "title": "SSPHS16R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs16r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 194,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "28,58 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "64 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "27 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "15 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M16×2,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "21,6 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "28,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "28,58 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "64 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "27 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "15 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M16×2,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "21,6 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "28,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS18R",
+    "ctx": {
+      "kod": "ORK PM SSPHS18R",
+      "title": "SSPHS18R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs18r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 195,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "14/18 boyutlarında SSPHS/SSPOS baz seri katalog satırı yok"
+    }
+  },
+  {
+    "kod": "ORK PM SSPHS20R",
+    "ctx": {
+      "kod": "ORK PM SSPHS20R",
+      "title": "SSPHS20R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs20r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 196,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "34,93 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "77 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "33 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "102 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "27,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "34 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M20×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "31,5 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "42,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "34,93 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "77 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "33 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "102 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "27,5 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "34 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M20×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "31,5 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "42,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS06R",
+    "ctx": {
+      "kod": "ORK PM SSPOS06R",
+      "title": "SSPOS06R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos06r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 197,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6×1,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "6 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "45 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6×1,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS08R",
+    "ctx": {
+      "kod": "ORK PM SSPOS08R",
+      "title": "SSPOS08R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos08r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 198,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "15,88 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "42 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "53 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M8×1,25"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "11,6 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "15,88 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "42 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "53 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "14 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M8×1,25"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "11,6 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS10R",
+    "ctx": {
+      "kod": "ORK PM SSPOS10R",
+      "title": "SSPOS10R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos10r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 199,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "19,05 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "10,5 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "29 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "61 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M10×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "19,05 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "10,5 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "29 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "61 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M10×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS12R",
+    "ctx": {
+      "kod": "ORK PM SSPOS12R",
+      "title": "SSPOS12R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos12r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 200,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "22,23 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "54 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "33 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "69 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M12×1,75"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "22,23 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "54 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "33 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "69 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M12×1,75"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "10 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "14,5 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS14R",
+    "ctx": {
+      "kod": "ORK PM SSPOS14R",
+      "title": "SSPOS14R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos14r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 201,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "14/18 boyutlarında SSPHS/SSPOS baz seri katalog satırı yok"
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS16R",
+    "ctx": {
+      "kod": "ORK PM SSPOS16R",
+      "title": "SSPOS16R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos16r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 202,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "28,58 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "86 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M16×2,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "13,4 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "21 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "28,58 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "86 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M16×2,0"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "13,4 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS18R",
+    "ctx": {
+      "kod": "ORK PM SSPOS18R",
+      "title": "SSPOS18R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos18r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 203,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "14/18 boyutlarında SSPHS/SSPOS baz seri katalog satırı yok"
+    }
+  },
+  {
+    "kod": "ORK PM SSPOS20R",
+    "ctx": {
+      "kod": "ORK PM SSPOS20R",
+      "title": "SSPOS20R Dış Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/sspos20r-dis-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 204,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "34,93 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "103 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "16 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M20×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "24 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "Dış dişli"
+        },
+        {
+          "l": "İç Çap (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "34,93 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (h)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Ölçü (L1)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Ölçü (L2)",
+          "v": "103 mm"
+        },
+        {
+          "l": "Ölçü (L7)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "16 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M20×1,5"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "17 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "24 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "NEG yabancı aile",
+    "ctx": {
+      "kod": "ORK LA HGH20HA",
+      "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
+      "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
+      "productId": 1,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "LİNEER ARABALAR"
+      ],
+      "specs": [
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "H1",
+          "v": "4,6 mm"
+        },
+        {
+          "l": "N",
+          "v": "12 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "B1",
+          "v": "6 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "L1",
+          "v": "65,2 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "K1",
+          "v": "12,6 mm"
+        },
+        {
+          "l": "K2",
+          "v": "6 mm"
+        },
+        {
+          "l": "G",
+          "v": "12 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        },
+        {
+          "l": "T",
+          "v": "8 mm"
+        },
+        {
+          "l": "H2",
+          "v": "6 mm"
+        },
+        {
+          "l": "H3",
+          "v": "6 mm"
+        },
+        {
+          "l": "Ray Genişliği (WR)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ray Yüksekliği (HR)",
+          "v": "17,5 mm"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        },
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        }
+      ]
+    },
+    "negative": true,
+    "expect": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG gerekli ölçü eksik",
+    "ctx": {
+      "kod": "ORK PM SSPHS06R",
+      "title": "SSPHS06R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/ssphs06r-ic-disli-paslanmaz-rot-basi-mafsal",
+      "productId": 189,
+      "crumbs": [
+        "Anasayfa",
+        "RULMAN",
+        "MAFSAL RULMANLARI"
+      ],
+      "specs": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "39 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "11 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Malzeme",
+          "v": "Paslanmaz"
+        },
+        {
+          "l": "Diş Tipi",
+          "v": "İç dişli"
+        },
+        {
+          "l": "Bilezik Genişliği (B)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Küre Çapı (dk)",
+          "v": "12,70 mm"
+        },
+        {
+          "l": "Gövde Genişliği (C1)",
+          "v": "6,75 mm"
+        },
+        {
+          "l": "Başlık Çapı (d2)",
+          "v": "18 mm"
+        },
+        {
+          "l": "Ölçü (h1)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Ölçü (L3)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Ölçü (L4)",
+          "v": "39 mm"
+        },
+        {
+          "l": "Ölçü (L5)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Ölçü (W)",
+          "v": "11 mm"
+        },
+        {
+          "l": "Ölçü (d3)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Ölçü (d4)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Eğilme Açısı (α)",
+          "v": "13 °"
+        },
+        {
+          "l": "Bağlantı Dişi (G)",
+          "v": "M6"
+        },
+        {
+          "l": "Dinamik Yük (C)",
+          "v": "4,3 kN"
+        },
+        {
+          "l": "Statik Yük (C0)",
+          "v": "7,2 kN"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG boş ölçüler",
+    "ctx": {
+      "title": "SSPHS06R İç Dişli Paslanmaz Rot Başı Mafsal",
+      "path": "/empty",
+      "crumbs": [],
+      "specs": [],
+      "onyazi": []
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  }
+]

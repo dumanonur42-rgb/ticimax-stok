@@ -1,0 +1,22 @@
+{
+  "pinyon_kremayer": {
+    "positive": 41,
+    "null": 6,
+    "negative": 3
+  },
+  "vidali_mil": {
+    "positive": 22,
+    "null": 9,
+    "negative": 3
+  },
+  "mafsal": {
+    "positive": 12,
+    "null": 4,
+    "negative": 3
+  },
+  "tasiyici": {
+    "positive": 6,
+    "null": 16,
+    "negative": 3
+  }
+}
