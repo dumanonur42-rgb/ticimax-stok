@@ -39,6 +39,45 @@ class Catalogue(unittest.TestCase):
         with self.assertRaises(KeyError):
             c.create_record({}, {}, {}, self.labels, 0)
 
+    def test_category_decisions(self):
+        expected = {c.PLASTIC:72, c.STAINLESS:79, c.INSERT:13,
+                    c.BASE+'DÖKÜM YATAKLARI':20,
+                    'RULMAN>MANŞON SOMUN VE PUL>TESPİT BİLEZİKLERİ':62,
+                    'RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ':35}
+        self.assertEqual(dict(c.collections.Counter(r['KATEGORI'] for r in self.records)), expected)
+        for raw in self.products:
+            m = c.model(raw, self.tech[raw['kod']], self.labels)
+            record = next(r for r in self.records if r['kod'] == raw['kod'])
+            self.assertEqual((record['KATEGORI'],record['EK_KATEGORILER']),c.categories(m))
+            self.assertFalse(record['yeni_kategori'])
+
+    def test_no_generic_sections(self):
+        for raw in self.products:
+            m = c.model(raw, self.tech[raw['kod']], self.labels)
+            _, _, paragraphs = c.prose(m, self.tech[raw['kod']]['alanlar'])
+            if m['kind'] in ['TSN','FRB']:
+                self.assertFalse(paragraphs[3])
+                self.assertFalse(paragraphs[4])
+            if m['kind'] == 'SN':
+                self.assertIn(self.tech[raw['kod']]['alanlar']['yaglama_deligi'],paragraphs[4])
+        raw = next(p for p in self.products if p['kod']=='ORK TSN 508')
+        r, _ = c.create_record(raw,self.tech[raw['kod']],self.images[raw['kod']],self.labels,0)
+        text = c.BeautifulSoup(r['ACIKLAMA'],'html.parser').get_text()
+        self.assertLess(len(text),1800)
+        self.assertIn('35 mm',text)
+        self.assertNotIn('<h3>Montaj</h3>',r['ACIKLAMA'])
+
+    def test_sentence_repetitions(self):
+        self.assertEqual(c.sentence_repetitions([]),{'exact':[],'masked':[]})
+        sentence = 'SUCF 205 için mil çapı 25 mm ve gövde genişliği 28 mm olan bu veri cümlesi yalnız denetim örneğidir.'
+        a = dict(kod='A',URUNADI='SUCF 205 Plastik Test',ACIKLAMA='<p>'+sentence+'</p>')
+        b = dict(kod='B',URUNADI='SUCF 206 Plastik Test',ACIKLAMA='<p>'+sentence.replace('205','206').replace('25 mm','30 mm')+'</p>')
+        result=c.sentence_repetitions([a,b])
+        self.assertEqual(len(result['exact']),0)
+        self.assertEqual(len(result['masked']),1)
+        b['ACIKLAMA']=a['ACIKLAMA']
+        self.assertEqual(len(c.sentence_repetitions([a,b])['exact']),1)
+
     def test_complete_audit(self):
         models = [c.model(p, self.tech[p['kod']], self.labels) for p in self.products]
         drawings = json.loads((c.ROOT / 'icerik-denetim/drawings.json').read_text())

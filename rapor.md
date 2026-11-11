@@ -9,14 +9,19 @@ Fotoğraflar kabul edilen içerikleri değiştirilmeden ürün adı ASCII slug b
 ~~~json
 {
   "products": 281,
-  "plain_text_min": 2921,
-  "plain_text_max": 3780,
+  "plain_text_min": 424,
+  "plain_text_max": 1736,
   "seo_title_max": 52,
   "seo_description_max": 121,
   "keywords_max": 481,
   "duplicate_long_paragraphs": 0,
   "duplicate_long_sentences": 0,
   "forbidden_words": 0,
+  "duplicate_sentences_80": 0,
+  "duplicate_sentence_extras_80": 0,
+  "repeated_templates_80": 3,
+  "repeated_template_extras_80": 18,
+  "new_categories": 0,
   "combining_dot": 0,
   "em_dash": 0,
   "drawings": 165,
@@ -177,14 +182,26 @@ Doğrulanmış kaynağı hiç olmayan ürünlerde teknik_kaynak boş listedir; k
 - RULMAN>MANŞON SOMUN VE PUL>TESPİT BİLEZİKLERİ: 62
 - RULMAN>RULMAN KEÇELERİ VE YATAK KEÇELERİ: 35
 - RULMAN>YATAKLI RULMAN>DÖKÜM YATAKLARI: 20
-- RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN: 64
-- RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 100
+- RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN: 79
+- RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN>PASLANMAZ PLASTİK YATAKLI RULMAN: 72
+- RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT: 13
 
-Yeni kategori önerisi yok. Komple paslanmaz ürünler mevcut PASLANMAZ YATAKLI RULMAN üst yolundadır.
-Kategori doğrulama sınırlaması: HTTP ve Chrome kategori istekleri HTTP403/bot kontrolü verdi; web metin servisi breadcrumb yerine ana sayfa döndürdü.
-Plastik kategori URLsi ve paslanmaz-rulmanlar URLsi katurl.txt içinde mevcut; ancak tam breadcrumb doğrulanamadı.
-Yol uydurulmadı: plastik üniteler ve SUC insertler mevcut RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT yolunda.
-SUC ikinci paslanmaz kategori yolu doğrulanamadığından EK_KATEGORILER boş bırakıldı. Özel plastik breadcrumb ve SUC ikinci kategori yolu teyit bekler.
+Yeni kategori sayısı: 0. Yeni kategori önerisi yok.
+Kategori eşlemeleri son kullanıcı kararıyla güncellendi. Plastik kategorinin tam yolu kullanıcı tarafından sitede doğrulandı.
+SUCF/SUCFB/SUCFC/SUCFL/SUCP/SUCPA/SUCT: RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN>PASLANMAZ PLASTİK YATAKLI RULMAN; ek kategori RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT.
+SSUC*/SSB*: RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN; ek kategori RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT.
+Gövdesiz SUC insert: RULMAN>YATAKLI RULMAN>RULMAN YATAKLARI VE INSERT; ek kategori RULMAN>YATAKLI RULMAN>PASLANMAZ YATAKLI RULMAN.
+Diğer ürünlerin kategorileri korundu. Başlıklar, ONYAZI, SEO ve teknik listeler değiştirilmedi.
+
+## Cümle tekrar denetimi
+
+Yalnız açıklama paragraflarındaki cümleler sayılır; teknik liste, başlık ve ONYAZI hariçtir.
+Eşik 80 ve üzeri karakterdir. Boşluklar ve Türkçe harf durumu normalleştirilir.
+Birebir tekrar eden cümle grubu: 0. Fazladan ürün kullanımı: 0.
+Ürün kodu ve sayısal/kod değerleri maskelenmiş tekrar grubu: 3. Fazladan ürün kullanımı: 18.
+Cümle uzunluğu eşiği özgün cümlede ölçülür; bir cümlenin aynı üründeki tekrarı ürünler arası tekrar sayılmaz.
+1800 karakter alt sınırı kaldırıldı. Genel bakım, montaj ve servis dolgu havuzları kaldırıldı.
+Montaj/yağlama bölümleri yalnız setuskur, cıvata veya yağlama deliği gibi somut bilgilerle oluşturulur.
 
 ## Uygulama notları
 
@@ -274,3 +291,9 @@ Mevcut image-env içinde beautifulsoup4, Pillow ve playwright kullanılır; Node
 python icerik.py --output /home/ubuntu/work/orkapt-yatak
 python icerik_test.py
 Girdiler /home/ubuntu/work/yatak içindedir. Teknik araştırma ve çizim dosyaları değiştirilmedi; ana checkout orkapt-girdi olarak korundu.
+
+## Maskelenmiş tekrarlanan cümle kalıpları
+
+- rulman / manşon / bilezik: {değer} / {değer} / sr {değer} ({değer} adet); {değer} / {değer} / sr {değer} ({değer} adet). | ürün: 17
+- rulman / manşon: {değer} {değer} / h {değer}; {değer} ek / h {değer}; {değer} {değer} / h {değer}; {değer} ek / h {değer}; c {değer} k / h {değer} e. | ürün: 2
+- rulman / manşon: {değer} {değer} / h {değer}; {değer} ek / h {değer}; {değer} {değer} / h {değer}; {değer} ek / h {değer}; c {değer} {değer} / h {değer} e. | ürün: 2
