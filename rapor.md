@@ -336,16 +336,30 @@ B2B adından alınan kesin bilgiler için kaynak izi `parca/lineer_diger.jsonl.g
 | ORK YKKM 2000 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 | ORK YKKM 800 | eksik: tam kodlu üretici kaynağı bulunamadı; voltaj, güç, hız, modül, kumanda, görev çevrimi ve dişli verileri yazılmadı |
 
-## Yeni iki modül: draw/lineer_diger
+## Dört yeni modül: draw/lineer_diger
 
 Ayrı worktree: `/home/ubuntu/repos/ticimax-stok-draw`, dal `draw/lineer_diger`, site-assets tabanlı. Yeni kod yalnız draw dalında; ürün dalındaki bu tablo, `veri/ek-cizim-sonuclari.json` ile doğrulanmış ek sonuçları birleştirir. `veri/draw-keys.json` ve eski lineer kontrol logu yalnız mevcut lineer.js testidir; yeni modülleri ölçmez.
 
-| Modül | Ürün | SVG | null |
-|---|---:|---:|---:|
-| pinyon_kremayer | 47 | 41 | 6 |
-| vidali_mil | 31 | 22 | 9 |
+| Modül | Ürün | SVG | null | Modül yok |
+|---|---:|---:|---:|---:|
+| lineer | 77 | 77 | 0 | 0 |
+| pinyon_kremayer | 47 | 41 | 6 | 0 |
+| vidali_mil | 31 | 22 | 9 | 0 |
+| mafsal | 16 | 12 | 4 | 0 |
+| tasiyici | 22 | 6 | 16 | 0 |
+| baglanti (S060) | 1 | 0 | 1 | 0 |
+| Yok: motor kızağı / kaynak teli / kapı motoru | 14 | 0 | 0 | 14 |
+| **Toplam** | **208** | **158** | **36** | **14** |
 
-Birleşik kapsam: **140 SVG, 15 eksik veriden null, 53 modül yok = 208 ürün.** Düz pinyon 40/40, kremayer 1/7; VM 6/6, SFU 8/9, DSG 4/5, TBR 4/4, SAC 0/7.
+Birleşik kapsam: **158 SVG, 36 null, 14 modül yok = 208 ürün.** Düz pinyon 40/40, kremayer 1/7; VM 6/6, SFU 8/9, DSG 4/5, TBR 4/4, SAC 0/7. SSPHS 6/8, SSPOS 6/8; BMT flanşlı yuvaya oturtmalı 5 SVG, flanşsız yuvaya oturtmalı 1 SVG. Motor kızağı, kaynak teli ve kapı motoru için modül yazılmadı.
+
+**Son doğrulama kaynağı:** draw dalında `site/draw/preview/lineer_diger-total.json`, 208 gerçek ctx üzerinde doğrudan alfabetik ilk-match çağrısının sonucudur. Bu bölüm ve aşağıdaki 208 satır bu güncel çıktıya göre yenilendi. Yukarıda adı geçen `veri/ek-cizim-sonuclari.json` önceki iki modül aşamasının arşiv sonucudur; güncel toplamı temsil etmez. Ürün verileri değiştirilmedi.
+
+**Yeni loader kontrolü:** 16 mafsal ve 22 taşıyıcı mevcut modüllerle çakışmıyor; alias gerekmedi. bilyali.js mafsalı dışlar. Dört yeni modül toplam 116 gerçek üründe doğru ilk-match API’sini seçti.
+
+**S060:** baglanti.match=true, draw=null. `baglanti.js` içindeki `kilit:function(){return null}` koşulsuz devre dışıdır; yorumdaki eski neden d/D/L kaynak çelişkisidir. Ürün dalında d=60/D=90 çözülmüş olsa da mevcut renderer bunu hiç okumaz. Bu brief kapsamında baglanti.js değiştirilmedi.
+
+**Son görsel kontrol:** SFU W karşılıklı gerçek delik merkezlerinden uzatılan, delik çapı doğrultusuna paralel bir ölçüdür; flanş A’dan ayrıdır. Kremayer hp yan görünüşte alt yüzey ile kesik bölüm çizgisi arasındadır. Açılan 360 px PNG’ler: `vidali_mil/ORK_VMS_SFU1605-360.png`, `pinyon_kremayer/ORK_KR__M225251000-360.png`, `mafsal/ORK_PM_SSPHS06R-360.png`, `mafsal/ORK_PM_SSPOS20R-360.png`, `tasiyici/ORK_BMT_SP12B-360.png`, `tasiyici/ORK_BMT_SP60B-360.png`. Yeni modül raporları `site/draw/rapor/mafsal.md` ve `tasiyici.md` içindedir. Saplı/cıvatalı BMT geometrisi için kaynaklı montaj ölçüleri yetersizdir; bu tiplerde sayı uydurulmadı ve PNG üretilmedi.
 
 **Loader:** `site/yg.js:26–29` alfabetik ilk match ile durur; draw null sonucunda devam etmez. LİNEER breadcrumb eski lineer.match’i tetikler ve yeni vidalı mil modülünü gölgeler. Başka dosya değiştirmeden, vidali_mil aynı API’yi canonical `vidali_mil` yanında sıralamada önce gelen `0_vidali_mil` anahtarına da kaydeder. Match yalnız beş hedef alt tip içindir. 208 gerçek ctx üzerinde yalnız 78 hedefin yeni ailelere girdiği, 78’inin de loader’da doğru yeni API’yi seçtiği test edildi. Build.py yeni dosyaları otomatik içerir; bundle kopya dizinde üretildi, repo loader/build/bundle dosyalarına dokunulmadı.
 
@@ -357,7 +371,10 @@ Modül raporları: draw worktree içinde `site/draw/rapor/pinyon_kremayer.md`, `
 pinyon_kremayer: 41 başarılı; 6 null; 3 negatif başarılı
 vidali_mil: 22 başarılı; 9 null; 3 negatif başarılı
 Loader: ilk match; null fallback yok; 0_vidali_mil öncelik kaydı doğrulandı
-Kapsam: 208 bağlamda yalnız 78 hedef ürün yeni modüllere ait
+mafsal: 12 başarılı; 4 null; 3 negatif başarılı
+tasiyici: 6 başarılı; 16 null; 3 negatif başarılı
+Kapsam: 208 bağlamda yalnız 116 hedef ürün dört modüle ait
+S060: baglanti.match=true; draw=null (kilit renderer koşulsuz null)
 ```
 
 ## 208 ürün çizim sonuçları (yeni modüller dahil)
@@ -526,48 +543,48 @@ Kapsam: 208 bağlamda yalnız 78 hedef ürün yeni modüllere ait
 | ORK PD M532 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
 | ORK PD M534 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
 | ORK PD M536 | pinyon_kremayer | null değil | De, Dp, Z, m | True |  |
-| ORK BMT CY16B2 | Yok | modül yok | [] | False |  |
-| ORK BMT CY25A | Yok | modül yok | [] | False |  |
-| ORK BMT IA19 | Yok | modül yok | [] | False |  |
-| ORK BMT IA25 | Yok | modül yok | [] | False |  |
-| ORK BMT NL8H | Yok | modül yok | [] | False |  |
-| ORK BMT SP12AFL | Yok | modül yok | [] | False |  |
-| ORK BMT SP12B | Yok | modül yok | [] | False |  |
-| ORK BMT SP12BF | Yok | modül yok | [] | False |  |
-| ORK BMT SP15A | Yok | modül yok | [] | False |  |
-| ORK BMT SP15AFL | Yok | modül yok | [] | False |  |
-| ORK BMT SP15B | Yok | modül yok | [] | False |  |
-| ORK BMT SP15C | Yok | modül yok | [] | False |  |
-| ORK BMT SP15P | Yok | modül yok | [] | False |  |
-| ORK BMT SP22B | Yok | modül yok | [] | False |  |
-| ORK BMT SP22C | Yok | modül yok | [] | False |  |
-| ORK BMT SP22P | Yok | modül yok | [] | False |  |
-| ORK BMT SP25B | Yok | modül yok | [] | False |  |
-| ORK BMT SP30B | Yok | modül yok | [] | False |  |
-| ORK BMT SP30C | Yok | modül yok | [] | False |  |
-| ORK BMT SP30P | Yok | modül yok | [] | False |  |
-| ORK BMT SP45B | Yok | modül yok | [] | False |  |
-| ORK BMT SP60B | Yok | modül yok | [] | False |  |
+| ORK BMT CY16B2 | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT CY25A | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT IA19 | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT IA25 | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT NL8H | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP12AFL | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP12B | tasiyici | null değil | Dw, D, H, h | True |  |
+| ORK BMT SP12BF | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP15A | tasiyici | null değil | Dw, D, D1, b, H, h | True |  |
+| ORK BMT SP15AFL | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP15B | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP15C | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP15P | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP22B | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP22C | tasiyici | null değil | Dw, D, D1, b, H, h | True |  |
+| ORK BMT SP22P | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP25B | tasiyici | null değil | Dw, D, D1, b, H, h | True |  |
+| ORK BMT SP30B | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP30C | tasiyici | null değil | Dw, D, D1, b, H, h | True |  |
+| ORK BMT SP30P | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP45B | tasiyici | null | [] | True | Dw/D/h/H veya flanşlı tipte D1/b eksik; montaj kesiti belirlenemiyor |
+| ORK BMT SP60B | tasiyici | null değil | Dw, D, D1, b, H, h | True |  |
 | ORK GKT MG208 | Yok | modül yok | [] | False |  |
 | ORK GKT MG210 | Yok | modül yok | [] | False |  |
 | ORK GKT MG212 | Yok | modül yok | [] | False |  |
-| ORK KK S060 | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS06R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS08R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS10R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS12R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS14R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS16R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS18R | Yok | modül yok | [] | False |  |
-| ORK PM SSPHS20R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS06R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS08R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS10R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS12R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS14R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS16R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS18R | Yok | modül yok | [] | False |  |
-| ORK PM SSPOS20R | Yok | modül yok | [] | False |  |
+| ORK KK S060 | baglanti | null | [] | True | kilit renderer koşulsuz null; eski d/D/L çelişkisi nedeniyle çizim devre dışı |
+| ORK PM SSPHS06R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPHS08R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPHS10R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPHS12R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPHS14R | mafsal | null | [] | True | 14/18 boyutunda baz seri katalog satırı yok |
+| ORK PM SSPHS16R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPHS18R | mafsal | null | [] | True | 14/18 boyutunda baz seri katalog satırı yok |
+| ORK PM SSPHS20R | mafsal | null değil | d2, d, dk, L4, h1, G, B, C1, L3 | True |  |
+| ORK PM SSPOS06R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
+| ORK PM SSPOS08R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
+| ORK PM SSPOS10R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
+| ORK PM SSPOS12R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
+| ORK PM SSPOS14R | mafsal | null | [] | True | 14/18 boyutunda baz seri katalog satırı yok |
+| ORK PM SSPOS16R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
+| ORK PM SSPOS18R | mafsal | null | [] | True | 14/18 boyutunda baz seri katalog satırı yok |
+| ORK PM SSPOS20R | mafsal | null değil | d2, d, dk, L2, h, G, B, C1, L1 | True |  |
 | ORK YKKM 1000 | Yok | modül yok | [] | False |  |
 | ORK YKKM 1500 | Yok | modül yok | [] | False |  |
 | ORK YKKM 2000 | Yok | modül yok | [] | False |  |
