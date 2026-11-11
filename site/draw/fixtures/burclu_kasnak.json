@@ -1,0 +1,2503 @@
+[
+  {
+    "kod": "ORK BK SPZ0631",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPA1003",
+    "path": "/fixture/ORK-BK-SPA1003",
+    "title": "ORKA BURÇLU KASNAK SPA 100*3 (1610)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPA"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "105,5 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 2 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1610"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "42 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "50 mm"
+      },
+      {
+        "l": "Boşluk Çapı (J)",
+        "v": "66 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "25 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPB1254",
+    "path": "/fixture/ORK-BK-SPB1254",
+    "title": "ORKA BURÇLU KASNAK SPB 125*4 (2012)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "125 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "132 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 3 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "2012"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "50 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "82 mm"
+      },
+      {
+        "l": "Boşluk Çapı (J)",
+        "v": "82 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "32 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "25 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/4-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPB8005",
+    "path": "/fixture/ORK-BK-SPB8005",
+    "title": "ORKA BURÇLU KASNAK SPB 8005",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "5"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "800 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "807 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 4 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "754 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "102 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "1 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/5-kanal/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPA3554",
+    "path": "/fixture/ORK-BK-SPA3554",
+    "title": "ORKA BURÇLU KASNAK SPA 355*4 (3020)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPA"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "355 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "360,5 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 5 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "3020"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "75 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "65 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "320 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "51 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "159 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "7 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "7 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/4-kanal/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPA1802",
+    "path": "/fixture/ORK-BK-SPA1802",
+    "title": "ORKA BURÇLU KASNAK SPA 180*2 (2012)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPA"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "2"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "180 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "185,5 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 6 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "2012"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "50 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "146 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "32 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "108 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "10 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "1,5 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "1,5 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/2-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPA1801",
+    "path": "/fixture/ORK-BK-SPA1801",
+    "title": "ORKA BURÇLU KASNAK SPA 180*1 (1610)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPA"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "180 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "185,5 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 7 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1610"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "42 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "145 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "92 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "6 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "5 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/1-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "M": "Göbek Taşması (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPA0713",
+    "path": "/fixture/ORK-BK-SPA0713",
+    "title": "ORKA BURÇLU KASNAK SPA 71*3 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPA"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "71 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "76,5 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 8 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "50 mm"
+      },
+      {
+        "l": "Boşluk Çapı (J)",
+        "v": "40 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "28 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)"
+    }
+  },
+  {
+    "kod": "ORK BK SPZ0561",
+    "path": "/fixture/ORK-BK-SPZ0561",
+    "title": "ORKA BURÇLU KASNAK SPZ 56*1 (1008)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "60 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 9 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1008"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "25 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "37 mm"
+      },
+      {
+        "l": "Boşluk Çapı (J)",
+        "v": "32 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "12 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "K": "Göbek Girintisi (K)"
+    }
+  },
+  {
+    "kod": "ORK BK SPC100010",
+    "path": "/fixture/ORK-BK-SPC100010",
+    "title": "ORKA BURÇLU KASNAK SPC 1000*10 (5050)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "10"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "1000 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "1009,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 5 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "5050"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "125 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "264 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "937 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "127 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "267 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "68,5 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "68,5 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/10-kanal-2/",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "KYS BK SPB1803",
+    "path": "/fixture/KYS-BK-SPB1803",
+    "title": "KYS BURÇLU KASNAK SPB 180*3 (2517)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "180 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "187 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 2 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "2517"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Boşluk Çapı (J)",
+        "v": "137 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "18 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://www.kys.com.tr/tr/urunler/burclu-v-kasnaklar?tablo=spb-3",
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Boşluk Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPC1403",
+    "path": "/fixture/ORK-BK-SPC1403",
+    "title": "BURÇLU KASNAK SPC 140*3",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "140 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1404",
+    "path": "/fixture/ORK-BK-SPC1404",
+    "title": "BURÇLU KASNAK SPC 140*4",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "140 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1503",
+    "path": "/fixture/ORK-BK-SPC1503",
+    "title": "BURÇLU KASNAK SPC 150*3 (2517)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "150 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "2517"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1504",
+    "path": "/fixture/ORK-BK-SPC1504",
+    "title": "BURÇLU KASNAK SPC 150*4-2517",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "150 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "2517"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1603",
+    "path": "/fixture/ORK-BK-SPC1603",
+    "title": "ORKA BURÇLU KASNAK SPC 160*3-2517",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "160 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "2517"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1604",
+    "path": "/fixture/ORK-BK-SPC1604",
+    "title": "BURÇLU KASNAK SPC 160*4-2517",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "160 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "2517"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1703",
+    "path": "/fixture/ORK-BK-SPC1703",
+    "title": "BURÇLU KASNAK SPC 170*3-3020",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "170 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "3020"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1704",
+    "path": "/fixture/ORK-BK-SPC1704",
+    "title": "BURÇLU KASNAK SPC 170*4-3020",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "170 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "3020"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPC1803",
+    "path": "/fixture/ORK-BK-SPC1803",
+    "title": "BURÇLU KASNAK SPC 180*3-3020",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "3"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "180 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "3020"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPZ2361",
+    "path": "/fixture/ORK-BK-SPZ2361",
+    "title": "BURÇLU KASNAK SPZ 236*1",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "236 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "ORK BK SPZ2362",
+    "path": "/fixture/ORK-BK-SPZ2362",
+    "title": "BURÇLU KASNAK SPZ 236*2",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "2"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "236 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": null,
+    "expected": "null",
+    "reason": "Zorunlu O, F, L ve tip eksik; gövde grubu atanmadı"
+  },
+  {
+    "kod": "HTK SPA-4-100",
+    "path": "/htk-spa-4x100-burclu-v-kasnak-4-kanalli-100-89590",
+    "title": "HTK SPA-4-100 Kanallı V Kasnak 100 mm 4 Kanal Burç 1615",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Marka",
+        "v": " HTK"
+      },
+      {
+        "l": "Ürün Kodu",
+        "v": " SPA-4-100"
+      },
+      {
+        "l": "Profil",
+        "v": " SPA"
+      },
+      {
+        "l": "Kanal sayısı",
+        "v": " 4"
+      },
+      {
+        "l": "Hatve çapı (P)",
+        "v": " 100 mm"
+      },
+      {
+        "l": "Dış çap (O)",
+        "v": " 105,5 mm"
+      },
+      {
+        "l": "Tipi",
+        "v": " 2"
+      },
+      {
+        "l": "Burç No",
+        "v": " 1615"
+      },
+      {
+        "l": "Maksimum delik",
+        "v": " 42 mm"
+      },
+      {
+        "l": "F",
+        "v": " 65 mm"
+      },
+      {
+        "l": "K",
+        "v": " 70 mm"
+      },
+      {
+        "l": "L",
+        "v": " 38 mm"
+      },
+      {
+        "l": "M",
+        "v": " 27 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "K": "K",
+      "L": "L",
+      "M": "M"
+    }
+  },
+  {
+    "kod": "HTK SPA-1-75",
+    "path": "/htk-spa-1x075-burclu-v-kasnak-1-kanalli-75-89520",
+    "title": "HTK SPA-1-75 Kanallı V Kasnak 75 mm 1 Kanal Burç 1108",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Marka",
+        "v": " HTK"
+      },
+      {
+        "l": "Ürün Kodu",
+        "v": " SPA-1-75"
+      },
+      {
+        "l": "Profil",
+        "v": " SPA"
+      },
+      {
+        "l": "Kanal sayısı",
+        "v": " 1"
+      },
+      {
+        "l": "Hatve çapı (P)",
+        "v": " 75 mm"
+      },
+      {
+        "l": "Dış çap (O)",
+        "v": " 80,5 mm"
+      },
+      {
+        "l": "Tipi",
+        "v": " 1"
+      },
+      {
+        "l": "Burç No",
+        "v": " 1108"
+      },
+      {
+        "l": "Maksimum delik",
+        "v": " 28 mm"
+      },
+      {
+        "l": "F",
+        "v": " 20 mm"
+      },
+      {
+        "l": "L",
+        "v": " 22 mm"
+      },
+      {
+        "l": "M",
+        "v": " 2 mm"
+      },
+      {
+        "l": "N",
+        "v": " 62 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "L": "L",
+      "M": "M",
+      "N": "N"
+    }
+  },
+  {
+    "kod": "HTK SPB-1-125",
+    "path": "/htk-spb-1x125-burclu-v-kasnak-1-kanalli-125-89649",
+    "title": "HTK SPB-1-125 Kanallı V Kasnak 125 mm 1 Kanal Burç 1610",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Marka",
+        "v": " HTK"
+      },
+      {
+        "l": "Ürün Kodu",
+        "v": " SPB-1-125"
+      },
+      {
+        "l": "Profil",
+        "v": " SPB"
+      },
+      {
+        "l": "Kanal sayısı",
+        "v": " 1"
+      },
+      {
+        "l": "Hatve çapı (P)",
+        "v": " 125 mm"
+      },
+      {
+        "l": "Dış çap (O)",
+        "v": " 132 mm"
+      },
+      {
+        "l": "Tipi",
+        "v": " 1"
+      },
+      {
+        "l": "Burç No",
+        "v": " 1610"
+      },
+      {
+        "l": "Maksimum delik",
+        "v": " 42 mm"
+      },
+      {
+        "l": "F",
+        "v": " 25 mm"
+      },
+      {
+        "l": "L",
+        "v": " 25 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "expected": "svg",
+    "reason": "",
+    "expected_labels": {
+      "F": "F",
+      "L": "L"
+    }
+  },
+  {
+    "kod": "Burçlu Triger Kasnak",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "Burçlu Triger Kasnak",
+    "crumbs": [],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Ürün ailesi dışında"
+  },
+  {
+    "kod": "Kör V Kasnak",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "Kör V Kasnak",
+    "crumbs": [],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Ürün ailesi dışında"
+  },
+  {
+    "kod": "6307 ZZ C3 Rulman",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "6307 ZZ C3 Rulman",
+    "crumbs": [],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Ürün ailesi dışında"
+  },
+  {
+    "kod": "Burçlu Zaman Kasnak",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "Burçlu Zaman Kasnak",
+    "crumbs": [],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Ürün ailesi dışında"
+  },
+  {
+    "kod": "Dolu-delikli Burçlu Kasnak",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "Dolu-delikli Burçlu Kasnak",
+    "crumbs": [],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Ürün ailesi dışında"
+  },
+  {
+    "kod": "Eksik: Profil",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Profil"
+  },
+  {
+    "kod": "Eksik: Kanal Sayısı",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Kanal Sayısı"
+  },
+  {
+    "kod": "Eksik: Anma Çapı (P)",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Anma Çapı (P)"
+  },
+  {
+    "kod": "Eksik: Dış Çap (O)",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Dış Çap (O)"
+  },
+  {
+    "kod": "Eksik: Kasnak Genişliği (F)",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Kasnak Genişliği (F)"
+  },
+  {
+    "kod": "Eksik: Göbek Uzunluğu (L)",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Göbek Uzunluğu (L)"
+  },
+  {
+    "kod": "Eksik: Gövde Tipi",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Zorunlu alan eksik: Gövde Tipi"
+  },
+  {
+    "kod": "Çelişen F",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      },
+      {
+        "l": "F",
+        "v": "99 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Çelişen/geçersiz teknik veri"
+  },
+  {
+    "kod": "Geçersiz kanal",
+    "path": "/fixture/ORK-BK-SPZ0631",
+    "title": "ORKA BURÇLU KASNAK SPZ 63*1 (1108)",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPZ"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "1"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "63 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "67 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 1 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "1108"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "28 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "56 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "6 mm"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "-2"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/3-kanal/",
+    "expected": "null",
+    "reason": "Çelişen/geçersiz teknik veri"
+  },
+  {
+    "kod": "Boş ctx",
+    "title": "",
+    "crumbs": [],
+    "specs": [],
+    "onyazi": [],
+    "expected": "null",
+    "reason": "Boş veri"
+  },
+  {
+    "kod": "ORK BK SPC4256",
+    "title": "SPC 425x6 Burçlu V Kasnak 6 Kanallı 4040 Burç Ø425 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-425x6-burclu-v-kasnak-6-kanalli-4040-burc-425-mm",
+    "tip": 6,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "425 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "434,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 6 – Diskli gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "369 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "102 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPC5306",
+    "title": "SPC 530x6 Burçlu V Kasnak 6 Kanallı 5050 Burç Ø530 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-530x6-burclu-v-kasnak-6-kanalli-5050-burc-530-mm",
+    "tip": 5,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "530 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "539,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 5 – Kollu gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "5050"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "125 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "474 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "114 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "265 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "17,5 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Kaynak K/L/M korunur; eksenel oran şematiktir",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "ORK BK SPB1064",
+    "title": "SPB 106x4 Burçlu V Kasnak 4 Kanallı 1610 Burç Ø106 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spb-106x4-burclu-v-kasnak-4-kanalli-1610-burc-106-mm",
+    "tip": 8,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "4"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "106 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "113 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 8 – Dolu gövde, göbek bir yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "1610"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "42 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "null",
+    "reason": "Zorunlu F ve L eksik"
+  },
+  {
+    "kod": "SCHEMATIC_RECESS",
+    "title": "SPC 425x6 Burçlu V Kasnak 6 Kanallı 4040 Burç Ø425 mm",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "path": "/spc-425x6-burclu-v-kasnak-6-kanalli-4040-burc-425-mm",
+    "tip": 6,
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPC"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "6"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "425 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "434,6 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 6 – Diskli gövde, göbek iki yanda içeride"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "162 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "369 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "200 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Disk Kalınlığı (E)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (K)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Göbek Girintisi (M)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Satış Birimi",
+        "v": "Adet"
+      }
+    ],
+    "onyazi": [],
+    "expected": "svg",
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "E": "Disk Kalınlığı (E)",
+      "K": "Göbek Girintisi (K)",
+      "M": "Göbek Girintisi (M)"
+    }
+  },
+  {
+    "kod": "SCHEMATIC_PROJECTION",
+    "path": "/fixture/ORK-BK-SPB8005",
+    "title": "ORKA BURÇLU KASNAK SPB 8005",
+    "crumbs": [
+      "KASNAKLAR",
+      "BURÇLU V KASNAKLAR"
+    ],
+    "specs": [
+      {
+        "l": "Profil",
+        "v": "SPB"
+      },
+      {
+        "l": "Kanal Sayısı",
+        "v": "5"
+      },
+      {
+        "l": "Anma Çapı (P)",
+        "v": "800 mm"
+      },
+      {
+        "l": "Dış Çap (O)",
+        "v": "807 mm"
+      },
+      {
+        "l": "Gövde Tipi",
+        "v": "Tip 4 – gövde"
+      },
+      {
+        "l": "Burç No",
+        "v": "4040"
+      },
+      {
+        "l": "Maks. Mil Çapı",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kasnak Genişliği (F)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Jant İç Çapı (J)",
+        "v": "754 mm"
+      },
+      {
+        "l": "Göbek Uzunluğu (L)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Göbek Çapı (N)",
+        "v": "210 mm"
+      },
+      {
+        "l": "Göbek Taşması (M)",
+        "v": "1 mm"
+      }
+    ],
+    "onyazi": [],
+    "data": null,
+    "teknik_kaynak": "https://orkapt.com/service/5-kanal/",
+    "expected": "svg",
+    "reason": "Geometrik yerleşim şematik; ölçü yazısı girdiden",
+    "expected_labels": {
+      "F": "Kasnak Genişliği (F)",
+      "J": "Jant İç Çapı (J)",
+      "L": "Göbek Uzunluğu (L)",
+      "N": "Göbek Çapı (N)",
+      "M": "Göbek Taşması (M)"
+    }
+  }
+]
