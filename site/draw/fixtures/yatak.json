@@ -1,0 +1,2309 @@
+[
+  {
+    "path": "/ornek-frb-10110",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "110 mm"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Bilezik Genişliği (B)",
+        "v": "10 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-frb-10120",
+    "title": "FRB 10120 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10120"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "120 mm"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "110 mm"
+      },
+      {
+        "l": "Bilezik Genişliği (B)",
+        "v": "10 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK FRB 10120",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sn-506",
+    "title": "SN 506 RULMAN YATAĞI",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "RULMAN YATAĞI"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SN"
+      },
+      {
+        "l": "Numara",
+        "v": "506"
+      },
+      {
+        "l": "Manşonlu Mil Çapı (d1)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Rulman Yuvası Çapı (D)",
+        "v": "62 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "50 mm"
+      },
+      {
+        "l": "Taban Yüksekliği (H1)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "150 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "185 mm"
+      },
+      {
+        "l": "Toplam Genişlik (A)",
+        "v": "77 mm"
+      },
+      {
+        "l": "Taban Genişliği (A1)",
+        "v": "52 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Kapak Cıvatası Aralığı (g)",
+        "v": "30 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK RY SN 506",
+    "kaynak": [
+      "https://www.ntn.co.jp/japan/products/catalog/pdf/2203_g01.pdf#page=6",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=54",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=82",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=55"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sn-507",
+    "title": "SN 507 RULMAN YATAĞI",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "RULMAN YATAĞI"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SN"
+      },
+      {
+        "l": "Numara",
+        "v": "507"
+      },
+      {
+        "l": "Manşonlu Mil Çapı (d1)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Rulman Yuvası Çapı (D)",
+        "v": "72 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "50 mm"
+      },
+      {
+        "l": "Taban Yüksekliği (H1)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "95 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "150 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "185 mm"
+      },
+      {
+        "l": "Toplam Genişlik (A)",
+        "v": "82 mm"
+      },
+      {
+        "l": "Taban Genişliği (A1)",
+        "v": "52 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "15 mm"
+      },
+      {
+        "l": "Kapak Cıvatası Aralığı (g)",
+        "v": "33 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK RY SN 507",
+    "kaynak": [
+      "https://www.ntn.co.jp/japan/products/catalog/pdf/2203_g01.pdf#page=6",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=54",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=82",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=55"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-tsn-506",
+    "title": "TSN 506 YATAK KEÇESİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAK KEÇESİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "TSN"
+      },
+      {
+        "l": "Numara",
+        "v": "506"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK TSN 506",
+    "kaynak": [
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=16",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=18",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://www.skf.com/us/products/mounted-bearings/bearing-housings/housing_accessories/seal-details",
+      "https://www.skf.com/binaries/pub12/Images/13186%20EN%20-%2004%20SNLN_tcm_12-107274.pdf",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=54"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-tsn-507",
+    "title": "TSN 507 YATAK KEÇESİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAK KEÇESİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "TSN"
+      },
+      {
+        "l": "Numara",
+        "v": "507"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "30 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK TSN 507",
+    "kaynak": [
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=16",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=18",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://www.skf.com/us/products/mounted-bearings/bearing-housings/housing_accessories/seal-details",
+      "https://www.skf.com/binaries/pub12/Images/13186%20EN%20-%2004%20SNLN_tcm_12-107274.pdf",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf#page=54"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbf-205",
+    "title": "SSBF 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBF"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBF205",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbf-207",
+    "title": "SSBF 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBF"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBF207",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbp-205",
+    "title": "SSBP 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBP"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBP205",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbp-207",
+    "title": "SSBP 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBP"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBP207",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbt-205",
+    "title": "SSBT 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBT"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBT205",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssbt-207",
+    "title": "SSBT 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSBT"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SSBT207",
+    "kaynak": [],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-ssucf-205",
+    "title": "SSUCF 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCF"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Flanş Kenarı (L)",
+        "v": "95 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "27 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCF205",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCF200/740.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552904573.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucf-207",
+    "title": "SSUCF 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCF"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Flanş Kenarı (L)",
+        "v": "117 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "92 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "34 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCF207",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCF200/740.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552904573.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfb-205",
+    "title": "SSUCFB 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFB"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Toplam Boy (w)",
+        "v": "121 mm"
+      },
+      {
+        "l": "Merkez - Alt Uç (A)",
+        "v": "86 mm"
+      },
+      {
+        "l": "Üst Gövde Genişliği (b)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Alt Gövde Genişliği (D)",
+        "v": "64 mm"
+      },
+      {
+        "l": "Montaj Yüzeyi - Merkez (i)",
+        "v": "17 mm"
+      },
+      {
+        "l": "Gövde Derinliği (l)",
+        "v": "29 mm"
+      },
+      {
+        "l": "Cıvata Deliği (s)",
+        "v": "9,9 mm"
+      },
+      {
+        "l": "Taban Kalınlığı (g)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Merkez - Delik Hattı (h)",
+        "v": "46 mm"
+      },
+      {
+        "l": "Delik Hatları Arası (j)",
+        "v": "28,6 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (e)",
+        "v": "41,3 mm"
+      },
+      {
+        "l": "Montaj Derinliği (Z)",
+        "v": "36,8 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFB205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=89"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfb-207",
+    "title": "SSUCFB 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFB"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Toplam Boy (w)",
+        "v": "156 mm"
+      },
+      {
+        "l": "Merkez - Alt Uç (A)",
+        "v": "108,5 mm"
+      },
+      {
+        "l": "Üst Gövde Genişliği (b)",
+        "v": "95 mm"
+      },
+      {
+        "l": "Alt Gövde Genişliği (D)",
+        "v": "82,5 mm"
+      },
+      {
+        "l": "Montaj Yüzeyi - Merkez (i)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Gövde Derinliği (l)",
+        "v": "37 mm"
+      },
+      {
+        "l": "Cıvata Deliği (s)",
+        "v": "13,1 mm"
+      },
+      {
+        "l": "Taban Kalınlığı (g)",
+        "v": "13,5 mm"
+      },
+      {
+        "l": "Merkez - Delik Hattı (h)",
+        "v": "60,3 mm"
+      },
+      {
+        "l": "Delik Hatları Arası (j)",
+        "v": "31,8 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (e)",
+        "v": "50,8 mm"
+      },
+      {
+        "l": "Montaj Derinliği (Z)",
+        "v": "46,4 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFB207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=89"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfc-205",
+    "title": "SSUCFC 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFC"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Flanş Dış Çapı (L)",
+        "v": "115 mm"
+      },
+      {
+        "l": "Cıvata Dairesi (J)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Pilot Çapı (H3)",
+        "v": "70 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFC205",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCFC200/743.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552905309.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfc-207",
+    "title": "SSUCFC 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFC"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Flanş Dış Çapı (L)",
+        "v": "135 mm"
+      },
+      {
+        "l": "Cıvata Dairesi (J)",
+        "v": "110 mm"
+      },
+      {
+        "l": "Pilot Çapı (H3)",
+        "v": "90 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFC207",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCFC200/743.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552905309.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfl-205",
+    "title": "SSUCFL 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFL"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Flanş Boyu (H)",
+        "v": "130 mm"
+      },
+      {
+        "l": "Flanş Genişliği (L)",
+        "v": "68 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "99 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "27 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFL205",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCFL200/741.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552906208.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucfl-207",
+    "title": "SSUCFL 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCFL"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Flanş Boyu (H)",
+        "v": "161 mm"
+      },
+      {
+        "l": "Flanş Genişliği (L)",
+        "v": "90 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "130 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "34 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCFL207",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCFL200/741.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552906208.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucp-205",
+    "title": "SSUCP 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCP"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "36,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "71 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "140 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "105 mm"
+      },
+      {
+        "l": "Taban Genişliği (A)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "13 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCP205",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCP200/739.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552898766.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssucp-207",
+    "title": "SSUCP 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCP"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "47,6 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "93 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "167 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "127 mm"
+      },
+      {
+        "l": "Taban Genişliği (A)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "17 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCP207",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCP200/739.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552898766.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssuct-205",
+    "title": "SSUCT 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCT"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "24 mm"
+      },
+      {
+        "l": "Gövde Yüksekliği (H)",
+        "v": "89 mm"
+      },
+      {
+        "l": "Kızak Yüksekliği (H2)",
+        "v": "51 mm"
+      },
+      {
+        "l": "Toplam Uzunluk (L)",
+        "v": "97 mm"
+      },
+      {
+        "l": "Kızak Ucu - Merkez (L1)",
+        "v": "62 mm"
+      },
+      {
+        "l": "Gergi Deliği (N)",
+        "v": "19 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCT205",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCT200/742.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552907563.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-ssuct-207",
+    "title": "SSUCT 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SSUCT"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "30 mm"
+      },
+      {
+        "l": "Gövde Yüksekliği (H)",
+        "v": "102 mm"
+      },
+      {
+        "l": "Kızak Yüksekliği (H2)",
+        "v": "64 mm"
+      },
+      {
+        "l": "Toplam Uzunluk (L)",
+        "v": "129 mm"
+      },
+      {
+        "l": "Kızak Ucu - Merkez (L1)",
+        "v": "78 mm"
+      },
+      {
+        "l": "Gergi Deliği (N)",
+        "v": "22 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SSUCT207",
+    "kaynak": [
+      "https://www.fk-bearing.com/cn/products/SS-UCT200/742.html",
+      "https://www.fk-bearing.com/cn/data/upload/image/20190318/1552907563.jpg"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-suc-205",
+    "title": "SUC 205 INSERT RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "INSERT RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUC"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "52 mm"
+      },
+      {
+        "l": "Mil Bil. Genişliği (B)",
+        "v": "34,1 mm"
+      },
+      {
+        "l": "Yuva Bil. Genişliği (C)",
+        "v": "17 mm"
+      },
+      {
+        "l": "Mil Bil. Ucu - Merkez (S)",
+        "v": "14,3 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUC205",
+    "kaynak": [
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=121",
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=114"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-suc-207",
+    "title": "SUC 207 INSERT RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "INSERT RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUC"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "72 mm"
+      },
+      {
+        "l": "Mil Bil. Genişliği (B)",
+        "v": "42,9 mm"
+      },
+      {
+        "l": "Yuva Bil. Genişliği (C)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Mil Bil. Ucu - Merkez (S)",
+        "v": "17,5 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUC207",
+    "kaynak": [
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=121",
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=114"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucf-205",
+    "title": "SUCF 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCF"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Flanş Kenarı (L)",
+        "v": "95 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "70 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "28 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCF205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=94"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucf-207",
+    "title": "SUCF 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCF"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Flanş Kenarı (L)",
+        "v": "117 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "92 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "33 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCF207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=94"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucfb-205",
+    "title": "SUCFB 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFB"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Toplam Boy (w)",
+        "v": "123,8 mm"
+      },
+      {
+        "l": "Merkez - Alt Uç (A)",
+        "v": "89,5 mm"
+      },
+      {
+        "l": "Üst Gövde Genişliği (b)",
+        "v": "68,7 mm"
+      },
+      {
+        "l": "Alt Gövde Genişliği (D)",
+        "v": "68,7 mm"
+      },
+      {
+        "l": "Montaj Yüzeyi - Merkez (i)",
+        "v": "16,7 mm"
+      },
+      {
+        "l": "Gövde Derinliği (l)",
+        "v": "28,2 mm"
+      },
+      {
+        "l": "Cıvata Deliği (s)",
+        "v": "9,9 mm"
+      },
+      {
+        "l": "Taban Kalınlığı (g)",
+        "v": "9,5 mm"
+      },
+      {
+        "l": "Merkez - Delik Hattı (h)",
+        "v": "46 mm"
+      },
+      {
+        "l": "Delik Hatları Arası (j)",
+        "v": "28,6 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (e)",
+        "v": "41,3 mm"
+      },
+      {
+        "l": "Montaj Derinliği (Z)",
+        "v": "36,5 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCFB205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=95"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucfb-207",
+    "title": "SUCFB 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFB"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Toplam Boy (w)",
+        "v": "156 mm"
+      },
+      {
+        "l": "Merkez - Alt Uç (A)",
+        "v": "92,1 mm"
+      },
+      {
+        "l": "Üst Gövde Genişliği (b)",
+        "v": "95 mm"
+      },
+      {
+        "l": "Alt Gövde Genişliği (D)",
+        "v": "89 mm"
+      },
+      {
+        "l": "Montaj Yüzeyi - Merkez (i)",
+        "v": "21 mm"
+      },
+      {
+        "l": "Gövde Derinliği (l)",
+        "v": "37 mm"
+      },
+      {
+        "l": "Cıvata Deliği (s)",
+        "v": "13,1 mm"
+      },
+      {
+        "l": "Taban Kalınlığı (g)",
+        "v": "16 mm"
+      },
+      {
+        "l": "Merkez - Delik Hattı (h)",
+        "v": "60,3 mm"
+      },
+      {
+        "l": "Delik Hatları Arası (j)",
+        "v": "31,8 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (e)",
+        "v": "50,8 mm"
+      },
+      {
+        "l": "Montaj Derinliği (Z)",
+        "v": "46,4 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCFB207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=95"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucfc-205",
+    "title": "SUCFC 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFC"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCFC205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-sucfc-207",
+    "title": "SUCFC 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFC"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCFC207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-sucfl-205",
+    "title": "SUCFL 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFL"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCFL205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-sucfl-207",
+    "title": "SUCFL 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCFL"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCFL207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-sucp-205",
+    "title": "SUCP 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCP"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "36,5 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "71 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "140 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "105 mm"
+      },
+      {
+        "l": "Taban Genişliği (A)",
+        "v": "38 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "11 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCP205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=92"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucp-207",
+    "title": "SUCP 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCP"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Merkez Yüksekliği (H)",
+        "v": "47,6 mm"
+      },
+      {
+        "l": "Toplam Yükseklik (H2)",
+        "v": "94 mm"
+      },
+      {
+        "l": "Taban Uzunluğu (L)",
+        "v": "167 mm"
+      },
+      {
+        "l": "Cıvata Aralığı (J)",
+        "v": "127 mm"
+      },
+      {
+        "l": "Taban Genişliği (A)",
+        "v": "48 mm"
+      },
+      {
+        "l": "Cıvata Deliği (N)",
+        "v": "14 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK YR SUCP207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=92"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-sucpa-205",
+    "title": "SUCPA 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCPA"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCPA205",
+    "kaynak": [
+      "https://eshop.ntn-snr.com/en/product/SUCPA205-SNR/SUCPA205",
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=119"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-sucpa-207",
+    "title": "SUCPA 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCPA"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCPA207",
+    "kaynak": [
+      "https://eshop.ntn-snr.com/en/product/SUCPA205-SNR/SUCPA205",
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=119"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-suct-205",
+    "title": "SUCT 205 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCT"
+      },
+      {
+        "l": "Numara",
+        "v": "205"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "25 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "28,6 mm"
+      },
+      {
+        "l": "Gövde Yüksekliği (H)",
+        "v": "89 mm"
+      },
+      {
+        "l": "Kızak Yüksekliği (H2)",
+        "v": "47,6 mm"
+      },
+      {
+        "l": "Toplam Uzunluk (L)",
+        "v": "100 mm"
+      },
+      {
+        "l": "Kızak Ucu - Merkez (L1)",
+        "v": "65,1 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "34,1 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCT205",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=97"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-suct-207",
+    "title": "SUCT 207 YATAKLI RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "YATAKLI RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "SUCT"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Gövde Genişliği (A)",
+        "v": "40,5 mm"
+      },
+      {
+        "l": "Gövde Yüksekliği (H)",
+        "v": "103,2 mm"
+      },
+      {
+        "l": "Kızak Yüksekliği (H2)",
+        "v": "68,3 mm"
+      },
+      {
+        "l": "Toplam Uzunluk (L)",
+        "v": "131,8 mm"
+      },
+      {
+        "l": "Kızak Ucu - Merkez (L1)",
+        "v": "81 mm"
+      },
+      {
+        "l": "İç Bilezik Genişliği (B)",
+        "v": "42,9 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK YR SUCT207",
+    "kaynak": [
+      "https://peerbearing.com/wp-content/uploads/peer_mounted_units_catalog.pdf#page=97"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "path": "/ornek-uc-207",
+    "title": "UC 207 INSERT RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "INSERT RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "UC"
+      },
+      {
+        "l": "Numara",
+        "v": "207"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "35 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "72 mm"
+      },
+      {
+        "l": "Mil Bil. Genişliği (B)",
+        "v": "42,9 mm"
+      },
+      {
+        "l": "Yuva Bil. Genişliği (C)",
+        "v": "20 mm"
+      },
+      {
+        "l": "Mil Bil. Ucu - Merkez (S)",
+        "v": "17,5 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "RUL UC207",
+    "kaynak": [
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=93"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-uc-209",
+    "title": "UC 209 INSERT RULMAN",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "INSERT RULMAN"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "UC"
+      },
+      {
+        "l": "Numara",
+        "v": "209"
+      },
+      {
+        "l": "Mil Çapı (d)",
+        "v": "45 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "85 mm"
+      },
+      {
+        "l": "Mil Bil. Genişliği (B)",
+        "v": "49,2 mm"
+      },
+      {
+        "l": "Yuva Bil. Genişliği (C)",
+        "v": "22 mm"
+      },
+      {
+        "l": "Mil Bil. Ucu - Merkez (S)",
+        "v": "19 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "RUL UC209",
+    "kaynak": [
+      "https://www.craft-bearings.com/uploads/files/b64cebd8fb9b4c798a8cf85d9359838e.pdf#page=93"
+    ],
+    "expected": {
+      "match": true,
+      "draw": true
+    }
+  },
+  {
+    "path": "/ornek-negatif-eski-etiket",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap",
+        "v": "110 mm"
+      },
+      {
+        "l": "İç Çap",
+        "v": "101 mm"
+      },
+      {
+        "l": "Bilezik Genişliği",
+        "v": "10 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    },
+    "negatif": "eski-etiket"
+  },
+  {
+    "path": "/ornek-negatif-bilinmeyen-seri",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "XYZ"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "110 mm"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Bilezik Genişliği (B)",
+        "v": "10 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    },
+    "negatif": "bilinmeyen-seri"
+  },
+  {
+    "path": "/ornek-negatif-eksik-olcu",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "110 mm"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "101 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    },
+    "negatif": "eksik-olcu"
+  },
+  {
+    "path": "/ornek-negatif-cakisan-olcu",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "110 mm"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Bilezik Genişliği (B)",
+        "v": "10 mm"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "999 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    },
+    "negatif": "cakisan-olcu"
+  },
+  {
+    "path": "/ornek-negatif-inc-birimi",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [
+      {
+        "l": "Seri",
+        "v": "FRB"
+      },
+      {
+        "l": "Numara",
+        "v": "10110"
+      },
+      {
+        "l": "Dış Çap (D)",
+        "v": "1 inch"
+      },
+      {
+        "l": "İç Çap (d1)",
+        "v": "101 mm"
+      },
+      {
+        "l": "Bilezik Genişliği (B)",
+        "v": "10 mm"
+      }
+    ],
+    "onyazi": [],
+    "eksik": true,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": true,
+      "draw": false
+    },
+    "negatif": "inc-birimi"
+  },
+  {
+    "path": "/ornek-negatif-bos",
+    "title": "FRB 10110 TESPİT BİLEZİĞİ",
+    "crumbs": [
+      "Anasayfa",
+      "RULMAN",
+      "TESPİT BİLEZİĞİ"
+    ],
+    "specs": [],
+    "onyazi": [],
+    "eksik": false,
+    "kod": "ORK FRB 10110",
+    "kaynak": [
+      "https://www.skf.com/group/products/mounted-bearings/bearing-housings/housing_accessories",
+      "https://search.skf.com/prod/search-skfcom/rest/apps/skfcom/searchers/dynamic_table?system=metric&language=en&locale=en&category=Bearing+housing+accessories&contentstack_taxonomy_uid=bltdac2bc7d8c5dae7a&limit=2000&pageSize=2000&hits=2000&count=2000&num=2000",
+      "https://cdn.skfmediahub.skf.com/api/public/0901d196801106cc/pdf_preview_medium/0901d196801106cc_pdf_preview_medium.pdf"
+    ],
+    "expected": {
+      "match": false,
+      "draw": false
+    },
+    "negatif": "bos"
+  }
+]

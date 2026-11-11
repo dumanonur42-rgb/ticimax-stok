@@ -1,0 +1,3956 @@
+[
+  {
+    "kod": "ORK KR M320201000",
+    "ctx": {
+      "kod": "ORK KR M320201000",
+      "title": "M320201000 Düz Kremayer Modül 3 20×20×1000 mm",
+      "path": "/m320201000-duz-kremayer-modul-3-20-20-1000-mm",
+      "productId": 109,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "3"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "9,42 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "3"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "9,42 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KR M550503000",
+    "ctx": {
+      "kod": "ORK KR M550503000",
+      "title": "M550503000 Düz Kremayer Modül 5 50×50×3000 mm",
+      "path": "/m550503000-duz-kremayer-modul-5-50-50-3000-mm",
+      "productId": 110,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "15,71 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "15,71 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KRKA M410053010",
+    "ctx": {
+      "kod": "ORK KRKA M410053010",
+      "title": "M410053010 Kapı Altı Kremayer Modül 4 30×10×1005 mm",
+      "path": "/m410053010-kapi-alti-kremayer-modul-4-30-10-1005-mm",
+      "productId": 111,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1005 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1005 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KRKA M410053012",
+    "ctx": {
+      "kod": "ORK KRKA M410053012",
+      "title": "M410053012 Kapı Altı Kremayer Modül 4 30×12×1005 mm",
+      "path": "/m410053012-kapi-alti-kremayer-modul-4-30-12-1005-mm",
+      "productId": 112,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1005 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1005 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KRKA M41005308",
+    "ctx": {
+      "kod": "ORK KRKA M41005308",
+      "title": "M41005308 Kapı Altı Kremayer Modül 4",
+      "path": "/m41005308-kapi-alti-kremayer-modul-4",
+      "productId": 113,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KRKA M422222010",
+    "ctx": {
+      "kod": "ORK KRKA M422222010",
+      "title": "M422222010 Kapı Altı Kremayer Modül 4 22×22×2010 mm",
+      "path": "/m422222010-kapi-alti-kremayer-modul-4-22-22-2010-mm",
+      "productId": 114,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "2010 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "12,57 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "2010 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "hp/he/hs kesit ölçüleri eksik; bazı kodlarda L de yok"
+    }
+  },
+  {
+    "kod": "ORK KRÖ M225251000",
+    "ctx": {
+      "kod": "ORK KRÖ M225251000",
+      "title": "M225251000 Düz Kremayer Modül 2 25×25×1000 mm",
+      "path": "/m225251000-duz-kremayer-modul-2-25-25-1000-mm",
+      "productId": 115,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "2"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "159"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "6,28 mm"
+        },
+        {
+          "l": "Ölçü (hp)",
+          "v": "22,5 mm"
+        },
+        {
+          "l": "Ölçü (he)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Ölçü (hs)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "2"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "159"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "6,28 mm"
+        },
+        {
+          "l": "Ölçü (hp)",
+          "v": "22,5 mm"
+        },
+        {
+          "l": "Ölçü (he)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Ölçü (hs)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M416",
+    "ctx": {
+      "kod": "ORK PD M416",
+      "title": "M416 Düz Pinyon Dişli Modül 4 - 16 Diş 72 mm",
+      "path": "/m416-duz-pinyon-disli-modul-4-16-dis-72-mm",
+      "productId": 123,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "16"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "72 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "64 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "16"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "72 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "64 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M417",
+    "ctx": {
+      "kod": "ORK PD M417",
+      "title": "M417 Düz Pinyon Dişli Modül 4 - 17 Diş 76 mm",
+      "path": "/m417-duz-pinyon-disli-modul-4-17-dis-76-mm",
+      "productId": 124,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "17"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "76 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "68 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "17"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "76 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "68 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M418",
+    "ctx": {
+      "kod": "ORK PD M418",
+      "title": "M418 Düz Pinyon Dişli Modül 4 - 18 Diş 80 mm",
+      "path": "/m418-duz-pinyon-disli-modul-4-18-dis-80-mm",
+      "productId": 125,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "18"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "72 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "18"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "72 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M419",
+    "ctx": {
+      "kod": "ORK PD M419",
+      "title": "M419 Düz Pinyon Dişli Modül 4 - 19 Diş 84 mm",
+      "path": "/m419-duz-pinyon-disli-modul-4-19-dis-84-mm",
+      "productId": 126,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "19"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "76 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "19"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "76 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "15 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M421",
+    "ctx": {
+      "kod": "ORK PD M421",
+      "title": "M421 Düz Pinyon Dişli Modül 4 - 21 Diş 92 mm",
+      "path": "/m421-duz-pinyon-disli-modul-4-21-dis-92-mm",
+      "productId": 127,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "21"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "92 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "70 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "21"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "92 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "84 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "70 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M423",
+    "ctx": {
+      "kod": "ORK PD M423",
+      "title": "M423 Düz Pinyon Dişli Modül 4 - 23 Diş 100 mm",
+      "path": "/m423-duz-pinyon-disli-modul-4-23-dis-100-mm",
+      "productId": 128,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "23"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "92 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "23"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "92 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M424",
+    "ctx": {
+      "kod": "ORK PD M424",
+      "title": "M424 Düz Pinyon Dişli Modül 4 - 24 Diş 104 mm",
+      "path": "/m424-duz-pinyon-disli-modul-4-24-dis-104-mm",
+      "productId": 129,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "24"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "104 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "96 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "24"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "104 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "96 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M426",
+    "ctx": {
+      "kod": "ORK PD M426",
+      "title": "M426 Düz Pinyon Dişli Modül 4 - 26 Diş 112 mm",
+      "path": "/m426-duz-pinyon-disli-modul-4-26-dis-112-mm",
+      "productId": 130,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "26"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "112 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "104 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "26"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "112 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "104 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M427",
+    "ctx": {
+      "kod": "ORK PD M427",
+      "title": "M427 Düz Pinyon Dişli Modül 4 - 27 Diş 116 mm",
+      "path": "/m427-duz-pinyon-disli-modul-4-27-dis-116-mm",
+      "productId": 131,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "27"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "116 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "108 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "27"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "116 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "108 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M428",
+    "ctx": {
+      "kod": "ORK PD M428",
+      "title": "M428 Düz Pinyon Dişli Modül 4 - 28 Diş 120 mm",
+      "path": "/m428-duz-pinyon-disli-modul-4-28-dis-120-mm",
+      "productId": 132,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "28"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "112 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "28"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "112 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M429",
+    "ctx": {
+      "kod": "ORK PD M429",
+      "title": "M429 Düz Pinyon Dişli Modül 4 - 29 Diş 124 mm",
+      "path": "/m429-duz-pinyon-disli-modul-4-29-dis-124-mm",
+      "productId": 133,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "29"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "124 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "116 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "29"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "124 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "116 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M431",
+    "ctx": {
+      "kod": "ORK PD M431",
+      "title": "M431 Düz Pinyon Dişli Modül 4 - 31 Diş 132 mm",
+      "path": "/m431-duz-pinyon-disli-modul-4-31-dis-132-mm",
+      "productId": 134,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "31"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "132 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "124 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "31"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "132 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "124 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M432",
+    "ctx": {
+      "kod": "ORK PD M432",
+      "title": "M432 Düz Pinyon Dişli Modül 4 - 32 Diş 136 mm",
+      "path": "/m432-duz-pinyon-disli-modul-4-32-dis-136-mm",
+      "productId": 135,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "32"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "136 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "128 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "32"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "136 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "128 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M433",
+    "ctx": {
+      "kod": "ORK PD M433",
+      "title": "M433 Düz Pinyon Dişli Modül 4 - 33 Diş 140 mm",
+      "path": "/m433-duz-pinyon-disli-modul-4-33-dis-140-mm",
+      "productId": 136,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "33"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "132 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "33"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "132 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M434",
+    "ctx": {
+      "kod": "ORK PD M434",
+      "title": "M434 Düz Pinyon Dişli Modül 4 - 34 Diş 144 mm",
+      "path": "/m434-duz-pinyon-disli-modul-4-34-dis-144-mm",
+      "productId": 137,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "34"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "144 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "136 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "34"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "144 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "136 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M435",
+    "ctx": {
+      "kod": "ORK PD M435",
+      "title": "M435 Düz Pinyon Dişli Modül 4 - 35 Diş 148 mm",
+      "path": "/m435-duz-pinyon-disli-modul-4-35-dis-148-mm",
+      "productId": 138,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "35"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "148 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "35"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "148 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M436",
+    "ctx": {
+      "kod": "ORK PD M436",
+      "title": "M436 Düz Pinyon Dişli Modül 4 - 36 Diş 152 mm",
+      "path": "/m436-duz-pinyon-disli-modul-4-36-dis-152-mm",
+      "productId": 139,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "36"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "152 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "144 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "36"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "152 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "144 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M437",
+    "ctx": {
+      "kod": "ORK PD M437",
+      "title": "M437 Düz Pinyon Dişli Modül 4 - 37 Diş 156 mm",
+      "path": "/m437-duz-pinyon-disli-modul-4-37-dis-156-mm",
+      "productId": 140,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "37"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "156 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "148 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "37"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "156 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "148 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M438",
+    "ctx": {
+      "kod": "ORK PD M438",
+      "title": "M438 Düz Pinyon Dişli Modül 4 - 38 Diş 160 mm",
+      "path": "/m438-duz-pinyon-disli-modul-4-38-dis-160-mm",
+      "productId": 141,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "38"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "152 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "38"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "152 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M439",
+    "ctx": {
+      "kod": "ORK PD M439",
+      "title": "M439 Düz Pinyon Dişli Modül 4 - 39 Diş 164 mm",
+      "path": "/m439-duz-pinyon-disli-modul-4-39-dis-164-mm",
+      "productId": 142,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "39"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "164 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "156 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "39"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "164 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "156 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M440",
+    "ctx": {
+      "kod": "ORK PD M440",
+      "title": "M440 Düz Pinyon Dişli Modül 4 - 40 Diş 168 mm",
+      "path": "/m440-duz-pinyon-disli-modul-4-40-dis-168-mm",
+      "productId": 143,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "40"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "168 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "40"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "168 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M441",
+    "ctx": {
+      "kod": "ORK PD M441",
+      "title": "M441 Düz Pinyon Dişli Modül 4 - 41 Diş 172 mm",
+      "path": "/m441-duz-pinyon-disli-modul-4-41-dis-172-mm",
+      "productId": 144,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "41"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "172 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "164 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "41"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "172 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "164 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M442",
+    "ctx": {
+      "kod": "ORK PD M442",
+      "title": "M442 Düz Pinyon Dişli Modül 4 - 42 Diş 176 mm",
+      "path": "/m442-duz-pinyon-disli-modul-4-42-dis-176-mm",
+      "productId": 145,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "42"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "176 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "168 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "42"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "176 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "168 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M443",
+    "ctx": {
+      "kod": "ORK PD M443",
+      "title": "M443 Düz Pinyon Dişli Modül 4 - 43 Diş 180 mm",
+      "path": "/m443-duz-pinyon-disli-modul-4-43-dis-180-mm",
+      "productId": 146,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "43"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "172 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "43"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "172 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M444",
+    "ctx": {
+      "kod": "ORK PD M444",
+      "title": "M444 Düz Pinyon Dişli Modül 4 - 44 Diş 184 mm",
+      "path": "/m444-duz-pinyon-disli-modul-4-44-dis-184-mm",
+      "productId": 147,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "44"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "184 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "176 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "44"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "184 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "176 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M445",
+    "ctx": {
+      "kod": "ORK PD M445",
+      "title": "M445 Düz Pinyon Dişli Modül 4 - 45 Diş 188 mm",
+      "path": "/m445-duz-pinyon-disli-modul-4-45-dis-188-mm",
+      "productId": 148,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "45"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "188 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "45"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "188 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M446",
+    "ctx": {
+      "kod": "ORK PD M446",
+      "title": "M446 Düz Pinyon Dişli Modül 4 - 46 Diş 192 mm",
+      "path": "/m446-duz-pinyon-disli-modul-4-46-dis-192-mm",
+      "productId": 149,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "46"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "192 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "184 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "46"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "192 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "184 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M447",
+    "ctx": {
+      "kod": "ORK PD M447",
+      "title": "M447 Düz Pinyon Dişli Modül 4 - 47 Diş 196 mm",
+      "path": "/m447-duz-pinyon-disli-modul-4-47-dis-196-mm",
+      "productId": 150,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "47"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "196 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "188 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "47"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "196 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "188 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M448",
+    "ctx": {
+      "kod": "ORK PD M448",
+      "title": "M448 Düz Pinyon Dişli Modül 4 - 48 Diş 200 mm",
+      "path": "/m448-duz-pinyon-disli-modul-4-48-dis-200-mm",
+      "productId": 151,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "48"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "200 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "192 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "48"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "200 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "192 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M449",
+    "ctx": {
+      "kod": "ORK PD M449",
+      "title": "M449 Düz Pinyon Dişli Modül 4 - 49 Diş 204 mm",
+      "path": "/m449-duz-pinyon-disli-modul-4-49-dis-204-mm",
+      "productId": 152,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "49"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "204 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "196 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "49"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "204 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "196 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M450",
+    "ctx": {
+      "kod": "ORK PD M450",
+      "title": "M450 Düz Pinyon Dişli Modül 4 - 50 Diş 208 mm",
+      "path": "/m450-duz-pinyon-disli-modul-4-50-dis-208-mm",
+      "productId": 153,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "50"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "208 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "200 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "4"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "50"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "208 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "200 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M520",
+    "ctx": {
+      "kod": "ORK PD M520",
+      "title": "M520 Düz Pinyon Dişli Modül 5 - 20 Diş 110 mm",
+      "path": "/m520-duz-pinyon-disli-modul-5-20-dis-110-mm",
+      "productId": 154,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "20"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "20"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M522",
+    "ctx": {
+      "kod": "ORK PD M522",
+      "title": "M522 Düz Pinyon Dişli Modül 5 - 22 Diş 120 mm",
+      "path": "/m522-duz-pinyon-disli-modul-5-22-dis-120-mm",
+      "productId": 155,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "22"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "22"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M524",
+    "ctx": {
+      "kod": "ORK PD M524",
+      "title": "M524 Düz Pinyon Dişli Modül 5 - 24 Diş 130 mm",
+      "path": "/m524-duz-pinyon-disli-modul-5-24-dis-130-mm",
+      "productId": 156,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "24"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "130 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "90 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "24"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "130 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "120 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "90 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M526",
+    "ctx": {
+      "kod": "ORK PD M526",
+      "title": "M526 Düz Pinyon Dişli Modül 5 - 26 Diş 140 mm",
+      "path": "/m526-duz-pinyon-disli-modul-5-26-dis-140-mm",
+      "productId": 157,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "26"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "130 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "26"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "130 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M528",
+    "ctx": {
+      "kod": "ORK PD M528",
+      "title": "M528 Düz Pinyon Dişli Modül 5 - 28 Diş 150 mm",
+      "path": "/m528-duz-pinyon-disli-modul-5-28-dis-150-mm",
+      "productId": 158,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "28"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "150 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "28"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "150 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "140 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M530",
+    "ctx": {
+      "kod": "ORK PD M530",
+      "title": "M530 Düz Pinyon Dişli Modül 5 - 30 Diş 160 mm",
+      "path": "/m530-duz-pinyon-disli-modul-5-30-dis-160-mm",
+      "productId": 159,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "30"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "150 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "30"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "150 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "100 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M532",
+    "ctx": {
+      "kod": "ORK PD M532",
+      "title": "M532 Düz Pinyon Dişli Modül 5 - 32 Diş 170 mm",
+      "path": "/m532-duz-pinyon-disli-modul-5-32-dis-170-mm",
+      "productId": 160,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "32"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "170 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "32"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "170 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "160 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M534",
+    "ctx": {
+      "kod": "ORK PD M534",
+      "title": "M534 Düz Pinyon Dişli Modül 5 - 34 Diş 180 mm",
+      "path": "/m534-duz-pinyon-disli-modul-5-34-dis-180-mm",
+      "productId": 161,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "34"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "170 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "34"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "170 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK PD M536",
+    "ctx": {
+      "kod": "ORK PD M536",
+      "title": "M536 Düz Pinyon Dişli Modül 5 - 36 Diş 190 mm",
+      "path": "/m536-duz-pinyon-disli-modul-5-36-dis-190-mm",
+      "productId": 162,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "PİNYON DİŞLİLER",
+        "DÜZ PİNYONLAR"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "36"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "190 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "5"
+        },
+        {
+          "l": "Diş Sayısı (Z)",
+          "v": "36"
+        },
+        {
+          "l": "Dış Çap (De)",
+          "v": "190 mm"
+        },
+        {
+          "l": "Bölüm Dairesi Çapı (Dp)",
+          "v": "180 mm"
+        },
+        {
+          "l": "Ölçü (d)",
+          "v": "110 mm"
+        },
+        {
+          "l": "Ölçü (D)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "NEG yabancı aile",
+    "ctx": {
+      "kod": "ORK LA HGH20HA",
+      "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
+      "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
+      "productId": 1,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "LİNEER ARABALAR"
+      ],
+      "specs": [
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "H1",
+          "v": "4,6 mm"
+        },
+        {
+          "l": "N",
+          "v": "12 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "B1",
+          "v": "6 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "L1",
+          "v": "65,2 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "K1",
+          "v": "12,6 mm"
+        },
+        {
+          "l": "K2",
+          "v": "6 mm"
+        },
+        {
+          "l": "G",
+          "v": "12 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        },
+        {
+          "l": "T",
+          "v": "8 mm"
+        },
+        {
+          "l": "H2",
+          "v": "6 mm"
+        },
+        {
+          "l": "H3",
+          "v": "6 mm"
+        },
+        {
+          "l": "Ray Genişliği (WR)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ray Yüksekliği (HR)",
+          "v": "17,5 mm"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        },
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        }
+      ]
+    },
+    "negative": true,
+    "expect": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG gerekli ölçü eksik",
+    "ctx": {
+      "kod": "ORK KR M320201000",
+      "title": "M320201000 Düz Kremayer Modül 3 20×20×1000 mm",
+      "path": "/m320201000-duz-kremayer-modul-3-20-20-1000-mm",
+      "productId": 109,
+      "crumbs": [
+        "Anasayfa",
+        "KREMAYER RAYLAR VE PİNYON DİŞLİLER",
+        "KREMAYER RAYLAR",
+        "DÜZ KREMAYERLER"
+      ],
+      "specs": [
+        {
+          "l": "Modül (m)",
+          "v": "3"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "9,42 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Modül (m)",
+          "v": "3"
+        },
+        {
+          "l": "Hatve (p)",
+          "v": "9,42 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (a)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Kesit Ölçüsü (b)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "1000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG boş ölçüler",
+    "ctx": {
+      "title": "M320201000 Düz Kremayer Modül 3 20×20×1000 mm",
+      "path": "/empty",
+      "crumbs": [],
+      "specs": [],
+      "onyazi": []
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  }
+]

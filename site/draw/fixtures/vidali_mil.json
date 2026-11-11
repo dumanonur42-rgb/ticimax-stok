@@ -1,0 +1,2844 @@
+[
+  {
+    "kod": "ETA VMS SFU2005",
+    "ctx": {
+      "kod": "ETA VMS SFU2005",
+      "title": "ETAZON SFU2005 Bilyalı Vidalı Mil Somunu 20 mm",
+      "path": "/etazon-sfu2005-bilyali-vidali-mil-somunu-20-mm",
+      "productId": 53,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "58 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "58 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ETA VMS SFU2505",
+    "ctx": {
+      "kod": "ETA VMS SFU2505",
+      "title": "ETAZON SFU2505 Bilyalı Vidalı Mil Somunu 25 mm",
+      "path": "/etazon-sfu2505-bilyali-vidali-mil-somunu-25-mm",
+      "productId": 54,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ETA VMS SFU3210",
+    "ctx": {
+      "kod": "ETA VMS SFU3210",
+      "title": "ETAZON SFU3210 Bilyalı Vidalı Mil Somunu 32 mm",
+      "path": "/etazon-sfu3210-bilyali-vidali-mil-somunu-32-mm",
+      "productId": 55,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "ETAZON"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK ADM SAC164000",
+    "ctx": {
+      "kod": "ORK ADM SAC164000",
+      "title": "SAC164000 Alt Destekli Mil 16 mm - 4 Metre",
+      "path": "/sac164000-alt-destekli-mil-16-mm-4-metre",
+      "productId": 56,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC204000",
+    "ctx": {
+      "kod": "ORK ADM SAC204000",
+      "title": "SAC204000 Alt Destekli Mil 20 mm - 4 Metre",
+      "path": "/sac204000-alt-destekli-mil-20-mm-4-metre",
+      "productId": 57,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC253000",
+    "ctx": {
+      "kod": "ORK ADM SAC253000",
+      "title": "SAC253000 Alt Destekli Mil 25 mm - 3 Metre",
+      "path": "/sac253000-alt-destekli-mil-25-mm-3-metre",
+      "productId": 58,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC254000",
+    "ctx": {
+      "kod": "ORK ADM SAC254000",
+      "title": "SAC254000 Alt Destekli Mil 25 mm - 4 Metre",
+      "path": "/sac254000-alt-destekli-mil-25-mm-4-metre",
+      "productId": 59,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC303000",
+    "ctx": {
+      "kod": "ORK ADM SAC303000",
+      "title": "SAC303000 Alt Destekli Mil 30 mm - 3 Metre",
+      "path": "/sac303000-alt-destekli-mil-30-mm-3-metre",
+      "productId": 60,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "3000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC304000",
+    "ctx": {
+      "kod": "ORK ADM SAC304000",
+      "title": "SAC304000 Alt Destekli Mil 30 mm - 4 Metre",
+      "path": "/sac304000-alt-destekli-mil-30-mm-4-metre",
+      "productId": 61,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK ADM SAC404000",
+    "ctx": {
+      "kod": "ORK ADM SAC404000",
+      "title": "SAC404000 Alt Destekli Mil 40 mm - 4 Metre",
+      "path": "/sac404000-alt-destekli-mil-40-mm-4-metre",
+      "productId": 62,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "ALT DESTEKLİ MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "SAC destek kesitinin B/H/h ölçüleri yok; SBR geometrisi varsayılmadı"
+    }
+  },
+  {
+    "kod": "ORK LR TBR16UU",
+    "ctx": {
+      "kod": "ORK LR TBR16UU",
+      "title": "TBR16UU Açık Flanşlı Lineer Rulman 16 mm",
+      "path": "/tbr16uu-acik-flansli-lineer-rulman-16-mm",
+      "productId": 88,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "TBR SERİSİ"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "42 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M5"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "26 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "42 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M5"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK LR TBR20UU",
+    "ctx": {
+      "kod": "ORK LR TBR20UU",
+      "title": "TBR20UU Açık Flanşlı Lineer Rulman 20 mm",
+      "path": "/tbr20uu-acik-flansli-lineer-rulman-20-mm",
+      "productId": 89,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "TBR SERİSİ"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "68 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "54 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "34 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "37 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "68 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "54 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "34 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "37 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK LR TBR25UU",
+    "ctx": {
+      "kod": "ORK LR TBR25UU",
+      "title": "TBR25UU Açık Flanşlı Lineer Rulman 25 mm",
+      "path": "/tbr25uu-acik-flansli-lineer-rulman-25-mm",
+      "productId": 90,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "TBR SERİSİ"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "82 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "41 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "41 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "82 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "41 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "41 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK LR TBR30UU",
+    "ctx": {
+      "kod": "ORK LR TBR30UU",
+      "title": "TBR30UU Açık Flanşlı Lineer Rulman 30 mm",
+      "path": "/tbr30uu-acik-flansli-lineer-rulman-30-mm",
+      "productId": 91,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "TBR SERİSİ"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "91 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "45,5 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (W)",
+          "v": "91 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (G)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (A)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (L)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (B)",
+          "v": "75 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (D)",
+          "v": "45,5 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C)",
+          "v": "60 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (S1)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 1605",
+    "ctx": {
+      "kod": "ORK VM 1605",
+      "title": "1605 Bilyalı Vidalı Mil 16 mm - 4000 mm",
+      "path": "/1605-bilyali-vidali-mil-16-mm-4000-mm",
+      "productId": 92,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 2005",
+    "ctx": {
+      "kod": "ORK VM 2005",
+      "title": "2005 Bilyalı Vidalı Mil 20 mm - 4000 mm",
+      "path": "/2005-bilyali-vidali-mil-20-mm-4000-mm",
+      "productId": 93,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 2505",
+    "ctx": {
+      "kod": "ORK VM 2505",
+      "title": "2505 Bilyalı Vidalı Mil 25 mm - 5700 mm",
+      "path": "/2505-bilyali-vidali-mil-25-mm-5700-mm",
+      "productId": 94,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 3210",
+    "ctx": {
+      "kod": "ORK VM 3210",
+      "title": "3210 Bilyalı Vidalı Mil 32 mm - 5700 mm",
+      "path": "/3210-bilyali-vidali-mil-32-mm-5700-mm",
+      "productId": 95,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 4010",
+    "ctx": {
+      "kod": "ORK VM 4010",
+      "title": "4010 Bilyalı Vidalı Mil 40 mm - 5700 mm",
+      "path": "/4010-bilyali-vidali-mil-40-mm-5700-mm",
+      "productId": 96,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VM 5010",
+    "ctx": {
+      "kod": "ORK VM 5010",
+      "title": "5010 Bilyalı Vidalı Mil 50 mm - 5700 mm",
+      "path": "/5010-bilyali-vidali-mil-50-mm-5700-mm",
+      "productId": 97,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "5700 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU1605",
+    "ctx": {
+      "kod": "ORK VMS SFU1605",
+      "title": "SFU1605 Bilyalı Vidalı Mil Somunu 16 mm",
+      "path": "/sfu1605-bilyali-vidali-mil-somunu-16-mm",
+      "productId": 98,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "5,5 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU2005",
+    "ctx": {
+      "kod": "ORK VMS SFU2005",
+      "title": "SFU2005 Bilyalı Vidalı Mil Somunu 20 mm",
+      "path": "/sfu2005-bilyali-vidali-mil-somunu-20-mm",
+      "productId": 99,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "58 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "58 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU2505",
+    "ctx": {
+      "kod": "ORK VMS SFU2505",
+      "title": "SFU2505 Bilyalı Vidalı Mil Somunu 25 mm",
+      "path": "/sfu2505-bilyali-vidali-mil-somunu-25-mm",
+      "productId": 100,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "6,6 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "3,175 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU3210",
+    "ctx": {
+      "kod": "ORK VMS SFU3210",
+      "title": "SFU3210 Bilyalı Vidalı Mil Somunu 32 mm",
+      "path": "/sfu3210-bilyali-vidali-mil-somunu-32-mm",
+      "productId": 101,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "80 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M6"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU4010",
+    "ctx": {
+      "kod": "ORK VMS SFU4010",
+      "title": "SFU4010 Bilyalı Vidalı Mil Somunu 40 mm",
+      "path": "/sfu4010-bilyali-vidali-mil-somunu-40-mm",
+      "productId": 102,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "63 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "93 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "70 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M8"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Somun Gövde Çapı (D)",
+          "v": "63 mm"
+        },
+        {
+          "l": "Flanş Çapı (A)",
+          "v": "93 mm"
+        },
+        {
+          "l": "Flanş Kalınlığı (B)",
+          "v": "14 mm"
+        },
+        {
+          "l": "Delik Dairesi Çapı (W)",
+          "v": "78 mm"
+        },
+        {
+          "l": "Bağlantı Delik Çapı (X)",
+          "v": "9 mm"
+        },
+        {
+          "l": "Flanş Yüksekliği (H)",
+          "v": "70 mm"
+        },
+        {
+          "l": "Yağlama Dişi (Q)",
+          "v": "M8"
+        },
+        {
+          "l": "Bilya Çapı (Da)",
+          "v": "6,35 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VMS SFU5010",
+    "ctx": {
+      "kod": "ORK VMS SFU5010",
+      "title": "SFU5010 Bilyalı Vidalı Mil Somunu 50 mm",
+      "path": "/sfu5010-bilyali-vidali-mil-somunu-50-mm",
+      "productId": 103,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "BİLYALI SOMUNLAR"
+      ],
+      "specs": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Mil Çapı (d)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "10 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "Yalnız -4 kaynakları bulundu; ikinci varyantta ortak montaj ölçüleri kanıtlanamadı"
+    }
+  },
+  {
+    "kod": "ORK VSG DSG16H",
+    "ctx": {
+      "kod": "ORK VSG DSG16H",
+      "title": "DSG16H Alüminyum Somun Gövdesi - 16 mm Mil İçin",
+      "path": "/dsg16h-aluminyum-somun-govdesi-16-mm-mil-icin",
+      "productId": 104,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİL SOMUN GÖVDESİ"
+      ],
+      "specs": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "52 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M5"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M5"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "16 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "28 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "52 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M5"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "38 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M5"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VSG DSG20H",
+    "ctx": {
+      "kod": "ORK VSG DSG20H",
+      "title": "DSG20H Alüminyum Somun Gövdesi - 20 mm Mil İçin",
+      "path": "/dsg20h-aluminyum-somun-govdesi-20-mm-mil-icin",
+      "productId": 105,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİL SOMUN GÖVDESİ"
+      ],
+      "specs": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M6"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "36 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "44 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "22 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "12 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M6"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "47 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VSG DSG25H",
+    "ctx": {
+      "kod": "ORK VSG DSG25H",
+      "title": "DSG25H Alüminyum Somun Gövdesi - 25 mm Mil İçin",
+      "path": "/dsg25h-aluminyum-somun-govdesi-25-mm-mil-icin",
+      "productId": 106,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİL SOMUN GÖVDESİ"
+      ],
+      "specs": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M6"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "25 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "48 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "13 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M6"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "51 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M6"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VSG DSG32H",
+    "ctx": {
+      "kod": "ORK VSG DSG32H",
+      "title": "DSG32H Alüminyum Somun Gövdesi - 32 mm Mil İçin",
+      "path": "/dsg32h-aluminyum-somun-govdesi-32-mm-mil-icin",
+      "productId": 107,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİL SOMUN GÖVDESİ"
+      ],
+      "specs": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "86 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "17 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M8"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "32 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Somun Yuva Çapı (D)",
+          "v": "50 mm"
+        },
+        {
+          "l": "Gövde Genişliği (B)",
+          "v": "86 mm"
+        },
+        {
+          "l": "Gövde Yüksekliği (H)",
+          "v": "62 mm"
+        },
+        {
+          "l": "Eksen Yüksekliği (h)",
+          "v": "31 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (E)",
+          "v": "17 mm"
+        },
+        {
+          "l": "Gövde Uzunluğu (L)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C1)",
+          "v": "8 mm"
+        },
+        {
+          "l": "Gövde Ölçüsü (C2)",
+          "v": "24 mm"
+        },
+        {
+          "l": "Bağlantı Aralığı (P)",
+          "v": "66 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (X)",
+          "v": "M8"
+        },
+        {
+          "l": "Bağlantı Aralığı (W)",
+          "v": "65 mm"
+        },
+        {
+          "l": "Bağlantı Dişi (Y)",
+          "v": "M8"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": true,
+      "reason": ""
+    }
+  },
+  {
+    "kod": "ORK VSG DSG40H",
+    "ctx": {
+      "kod": "ORK VSG DSG40H",
+      "title": "DSG40H Alüminyum Somun Gövdesi - 40 mm Mil İçin",
+      "path": "/dsg40h-aluminyum-somun-govdesi-40-mm-mil-icin",
+      "productId": 108,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİL SOMUN GÖVDESİ"
+      ],
+      "specs": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Uyumlu Mil Çapı (d)",
+          "v": "40 mm"
+        },
+        {
+          "l": "Malzeme",
+          "v": "Alüminyum"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "expect": {
+      "match": true,
+      "draw": false,
+      "reason": "DSG40H H/h/L kaynakları çelişkili, kesit verisi eksik"
+    }
+  },
+  {
+    "kod": "NEG yabancı aile",
+    "ctx": {
+      "kod": "ORK LA HGH20HA",
+      "title": "HGH 20HA Dar Uzun Lineer Araba 20 mm",
+      "path": "/hgh-20ha-dar-uzun-lineer-araba-20-mm",
+      "productId": 1,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "LİNEER ARABALAR"
+      ],
+      "specs": [
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "H1",
+          "v": "4,6 mm"
+        },
+        {
+          "l": "N",
+          "v": "12 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "B1",
+          "v": "6 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "L1",
+          "v": "65,2 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "K1",
+          "v": "12,6 mm"
+        },
+        {
+          "l": "K2",
+          "v": "6 mm"
+        },
+        {
+          "l": "G",
+          "v": "12 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        },
+        {
+          "l": "T",
+          "v": "8 mm"
+        },
+        {
+          "l": "H2",
+          "v": "6 mm"
+        },
+        {
+          "l": "H3",
+          "v": "6 mm"
+        },
+        {
+          "l": "Ray Genişliği (WR)",
+          "v": "20 mm"
+        },
+        {
+          "l": "Ray Yüksekliği (HR)",
+          "v": "17,5 mm"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        },
+        {
+          "l": "Yükseklik (H)",
+          "v": "30 mm"
+        },
+        {
+          "l": "Genişlik (W)",
+          "v": "44 mm"
+        },
+        {
+          "l": "B",
+          "v": "32 mm"
+        },
+        {
+          "l": "C",
+          "v": "50 mm"
+        },
+        {
+          "l": "Uzunluk (L)",
+          "v": "92,2 mm"
+        },
+        {
+          "l": "Vida (M x l)",
+          "v": "M5 x 6"
+        }
+      ]
+    },
+    "negative": true,
+    "expect": {
+      "match": false,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG gerekli ölçü eksik",
+    "ctx": {
+      "kod": "ORK VM 1605",
+      "title": "1605 Bilyalı Vidalı Mil 16 mm - 4000 mm",
+      "path": "/1605-bilyali-vidali-mil-16-mm-4000-mm",
+      "productId": 92,
+      "crumbs": [
+        "Anasayfa",
+        "LİNEER",
+        "VİDALI MİLLER"
+      ],
+      "specs": [
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "onyazi": [
+        {
+          "l": "Vida Adımı (Ph)",
+          "v": "5 mm"
+        },
+        {
+          "l": "Boy (L)",
+          "v": "4000 mm"
+        },
+        {
+          "l": "Marka",
+          "v": "Yamansa"
+        }
+      ],
+      "cizim_modulu": null
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  },
+  {
+    "kod": "NEG boş ölçüler",
+    "ctx": {
+      "title": "ETAZON SFU2005 Bilyalı Vidalı Mil Somunu 20 mm",
+      "path": "/empty",
+      "crumbs": [],
+      "specs": [],
+      "onyazi": []
+    },
+    "negative": true,
+    "expect": {
+      "match": true,
+      "draw": false
+    }
+  }
+]

@@ -23,7 +23,7 @@ function lab(ctx,res,def){var r=def;[ctx.specs||[],ctx.onyazi||[]].forEach(funct
 function model(ctx){var t=up(ctx.title)+' '+up((ctx.path||'').replace(/[-\/]/g,' '));var m='';(ctx.specs||[]).forEach(function(s){if(up(s.l)=='MODEL')m=up(s.v)});return m+' | '+t}
 function subtype(ctx){
  var all=up((ctx.crumbs||[]).join(' / ')+' '+ctx.title),m=model(ctx);
- if(/KONIK|KAM MAKARA|KECE|ZINCIR|LINEER|YATAKLI|KAPLIN|TANE BILYA|BILYA\b|MANSON|SEGMAN|BURC|SOMUN|PUL\b/.test(all))return null;
+ if(/KONIK|KAM MAKARA|KECE|ZINCIR|LINEER|YATAKLI|KAPLIN|TANE BILYA|BILYA\b|MANSON|SEGMAN|BURC|SOMUN|PUL\b/.test(all.replace(/\bKONIK DELIK(?:LI)?\b/g,'')))return null;
  if(/OYNAK MAKARALI/.test(all)){if(/\b(222|223|230|231|232|240|241)\d{2}\b/.test(m))return 'sf';return null}
  if(/SILINDIRIK MAKARALI/.test(all)){var s=m.match(/\b(NUP|NJ|NU|NN|N)\s?-?\d{3,5}/);return s?('cy_'+s[1].toLowerCase()):null}
  if(/IGNELI/.test(all)){

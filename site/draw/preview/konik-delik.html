@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konik delik aile regresyonu</title>
+<style>body{margin:0;font:14px Arial,sans-serif;color:#222}.drawing{width:100%;max-width:460px}.drawing svg{display:block;width:100%;height:auto}h1{font-size:15px;margin:8px}p{margin:8px}</style>
+<h1></h1><div class="drawing"></div><p></p>
+<script src="../bilyali.js"></script><script src="../makarali.js"></script><script src="../konik.js"></script>
+<script>
+fetch('../fixtures/konik-delik.json').then(function(r){return r.json()}).then(function(a){
+ var index=Number(new URLSearchParams(location.search).get('case')||0),ctx=a[index],family=null,result=null;
+ ctx.num=function(v){var m=String(v||'').replace(',','.').match(/-?\d+(?:\.\d+)?/);return m?parseFloat(m[0]):NaN};
+ Object.keys(window.YDRAW).some(function(k){if(window.YDRAW[k].match(ctx)){var r=window.YDRAW[k].draw(ctx,{id:'bore-'+index,dim:'#0a2350'});if(r){family=k;result=r;return true}}return false});
+ document.querySelector('h1').textContent=ctx.title;
+ document.querySelector('.drawing').innerHTML=result?result.svg:'';
+ document.querySelector('p').textContent=family||'Çizim yok';
+ document.body.dataset.ready='true';
+});
+</script></html>
