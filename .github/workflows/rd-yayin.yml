@@ -3,7 +3,7 @@ name: RD XML yayini
 on:
   push:
     branches: [pc-senkron]
-    paths: ["durum/rd_guncelle.xml.gz"]
+    paths: ["durum/rd_guncelle.xml.gz", "durum/orka_guncelle.xml.gz"]
   workflow_dispatch:
 
 permissions:
@@ -45,7 +45,27 @@ jobs:
           sys.exit(1 if hata else 0)
           PY
           mv rd_guncelle.xml.yeni rd_guncelle.xml
-          cp rd_guncelle.xml rd_test.xml  # Connect "rdtest" gorevi bu adresi okuyor
+          python3 - <<'PY'
+          import gzip, re, subprocess, sys
+          s = open("rd_guncelle.xml", encoding="utf-8").read()
+          try:
+              o = gzip.decompress(subprocess.run(["git", "show", "origin/pc-senkron:durum/orka_guncelle.xml.gz"], capture_output=True, check=True).stdout).decode("utf-8")
+          except Exception as e:
+              print("Orka dosyasi yok:", e); o = ""
+          ou = re.findall(r"  <Urun>.*?</Urun>", o, re.S)
+          ids = re.findall(r"<UrunKartiID>(.*?)</UrunKartiID>", o)
+          kod = set(re.findall(r"<StokKodu>(.*?)</StokKodu>", o))
+          hata = []
+          if ou and len(ou) < 2000: hata.append("Orka urun sayisi az %d" % len(ou))
+          if len(ids) != len(set(ids)) or any(i.startswith("RD") for i in ids): hata.append("Orka ID")
+          if set(re.findall(r"<Tedarikci>(.*?)</Tedarikci>", o)) - {"Orka"}: hata.append("Orka tedarikci")
+          if kod & set(re.findall(r"<StokKodu>(.*?)</StokKodu>", s)): hata.append("RD ile ortak StokKodu")
+          if "<Aciklama>" in o or "<Resim>" in o: hata.append("Orka icerik alani var")
+          if hata: print("Orka eklenmedi:", hata); ou = []
+          print("Orka:", len(ou), "urun")
+          i = s.rfind("</Urunler>")
+          open("rd_test.xml", "w", encoding="utf-8").write(s[:i] + "".join(u + "\n" for u in ou) + s[i:])
+          PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add rd_guncelle.xml rd_test.xml
