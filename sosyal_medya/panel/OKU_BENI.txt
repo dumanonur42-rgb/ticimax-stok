@@ -1,0 +1,29 @@
+YAMANSA SOSYAL MEDYA PANELİ
+
+KURULUM (tek dosya, 2 adım – Chrome/Opera vb. kurmanız gerekmez, tarayıcı uygulamanın içinde gelir)
+1) YamansaPanel_Kurulum.exe'ye çift tıklayın, İleri > Kur.
+   Windows "Bilinmeyen yayımcı" uyarısı verirse: Ek bilgi > Yine de çalıştır.
+   Uygulama masaüstüne ve Başlat menüsüne "Yamansa Sosyal Medya Paneli" olarak eklenir.
+2) Panel açılınca HESAPLAR sayfasında "KURULUMU BAŞLAT" deyin: önce Facebook, sonra Instagram
+   giriş penceresi açılır; kendiniz giriş yapın. Giriş algılanınca pencere kendiliğinden kapanır,
+   otomatik başlatma kurulur. Bitti – paneli kapatabilirsiniz.
+
+ZAMANLAYICI
+   Saatler 09:00 / 12:30 / 18:30 (Zamanlayıcı sayfasından değiştirilebilir).
+   Panel kapalıyken de arka plan ajanı paylaşımları atar; sistem tepsisinde (saatin yanında)
+   Yamansa simgesi görünür, sağ tık > Paneli aç / Ajanı durdur.
+   PC UYKU MODUNDAYSA: Görev Zamanlayıcı paylaşım saatlerinde PC'yi uyandırır, paylaşır, PC tekrar
+   uyur. Bunun için Güç Seçenekleri > Gelişmiş > Uyku > "Uyandırma zamanlayıcılarına izin ver"
+   ETKİN olmalı (kurulum bunu otomatik açmayı dener). Dizüstü kapağı kapalıyken çoğu model uyanmaz;
+   TAMAMEN KAPALI PC hiçbir yazılımla uyandırılamaz.
+   Kaçırılan paylaşımlar PC açılınca 3 saat içindeyse (Gecikme toleransı) telafi edilir.
+
+FACEBOOK GRUPLARI
+   Grup turları varsayılan KAPALI; açmadan önce "Deneme turu" ile bakın.
+
+KALDIRMA
+   Ayarlar > Uygulamalar > Yamansa Sosyal Medya Paneli > Kaldır. Arka plan ajanı ve zamanlanmış
+   görevler silinir; ayarlar/loglar/giriş profili (%LOCALAPPDATA%\YamansaPanel) korunur.
+
+Veriler: %LOCALAPPDATA%\YamansaPanel (ayarlar, loglar, ekran görüntüleri, tarayıcı profili)
+Destek: WhatsApp 0552 610 93 63 · www.yamansarulman.com

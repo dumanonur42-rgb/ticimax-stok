@@ -1,2 +1,9 @@
 .env
 __pycache__/
+
+# sosyal medya otomasyon çalışma dosyaları
+sosyal_medya/otomasyon/shots/
+sosyal_medya/otomasyon/gunluk_log.json
+sosyal_medya/grup_paylasim/shots/
+sosyal_medya/grup_paylasim/paylasim_log.json
+sosyal_medya/grup_paylasim/son_paylasim.png

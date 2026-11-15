@@ -1,0 +1,121 @@
+name: Yamansa Panel Windows kurulum
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "sosyal_medya/panel/**"
+      - ".github/workflows/panel-exe.yml"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bağımlılıklar
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r sosyal_medya/panel/requirements.txt pyinstaller
+      - name: Görev Zamanlayıcı – yönetici olmayan (standart) hesapla görev kaydı testi
+        timeout-minutes: 5
+        run: |
+          $dir = "C:\Users\Public\yamansa_std"
+          New-Item -ItemType Directory -Force $dir | Out-Null
+          Copy-Item sosyal_medya\panel\gorev.py, sosyal_medya\panel\ci_gorev_standart.py $dir
+          $sifre = "Yt!" + [guid]::NewGuid().ToString("N").Substring(0, 16)
+          $sec = ConvertTo-SecureString $sifre -AsPlainText -Force
+          New-LocalUser -Name yamansastd -Password $sec -PasswordNeverExpires -AccountNeverExpires | Out-Null
+          Add-LocalGroupMember -Group Users -Member yamansastd
+          $cred = New-Object System.Management.Automation.PSCredential("yamansastd", $sec)
+          $py = (Get-Command python).Source
+          $p = Start-Process -FilePath $py -ArgumentList "-X","utf8","$dir\ci_gorev_standart.py" -Credential $cred -WorkingDirectory $dir -LoadUserProfile -Wait -PassThru -RedirectStandardOutput "$dir\out.txt" -RedirectStandardError "$dir\err.txt"
+          Get-Content "$dir\out.txt" -ErrorAction SilentlyContinue
+          Get-Content "$dir\err.txt" -ErrorAction SilentlyContinue
+          Remove-LocalUser yamansastd
+          Write-Host "standart kullanici testi exit: $($p.ExitCode)"
+          if ($p.ExitCode -ne 0) { exit 1 }
+      - name: PyInstaller
+        working-directory: sosyal_medya/panel
+        run: python -m PyInstaller --noconfirm --clean YamansaPanel.spec
+      - name: Chromium'u pakete göm (kullanıcı hiçbir tarayıcı kurmaz) + gereksiz dil dosyalarını at
+        working-directory: sosyal_medya/panel
+        run: |
+          $env:PLAYWRIGHT_BROWSERS_PATH = "$PWD\dist\YamansaPanel\_internal\tarayicilar"
+          python -m playwright install chromium --no-shell
+          Get-ChildItem $env:PLAYWRIGHT_BROWSERS_PATH | Format-Table Name, LastWriteTime -AutoSize | Out-String | Write-Host
+          # Chromium 'locales': yalnızca tr + en-US kalsın (~50 dil dosyası gereksiz)
+          Get-ChildItem $env:PLAYWRIGHT_BROWSERS_PATH -Recurse -Directory -Filter locales | ForEach-Object {
+            Get-ChildItem $_.FullName -Filter *.pak | Where-Object { $_.BaseName -notin @("tr", "en-US") } | Remove-Item
+          }
+          $mb = [math]::Round((Get-ChildItem dist\YamansaPanel -Recurse | Measure-Object Length -Sum).Sum / 1MB)
+          Write-Host "Paket boyutu: $mb MB"
+      - name: Duman testi (--dogrula, --ajan-tek, --durdur)
+        working-directory: sosyal_medya/panel/dist/YamansaPanel
+        timeout-minutes: 8
+        run: |
+          function Calistir($arg, $sn) {
+            $p = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList $arg -PassThru
+            if (-not $p.WaitForExit($sn * 1000)) {
+              Write-Host "$arg : $sn sn icinde bitmedi, olduruluyor (muhtemelen hata penceresi)"
+              Get-Process | Where-Object { $_.MainWindowTitle } | Format-Table Id, ProcessName, MainWindowTitle -AutoSize | Out-String | Write-Host
+              Stop-Process -Id $p.Id -Force
+              return 99
+            }
+            return $p.ExitCode
+          }
+          $kod = Calistir '--dogrula' 120
+          Write-Host "dogrula exit: $kod"
+          Get-Content dogrula.txt -ErrorAction SilentlyContinue
+          Remove-Item dogrula.txt -ErrorAction SilentlyContinue
+          if ($kod -ne 0) { exit 1 }
+          $kod = Calistir '--ajan-tek' 180
+          Write-Host "ajan-tek exit: $kod"
+          Get-Content "$env:LOCALAPPDATA\YamansaPanel\ajan.log" -ErrorAction SilentlyContinue
+          if ($kod -gt 1) { exit 1 }
+          $kod = Calistir '--durdur' 60
+          Write-Host "durdur exit: $kod"
+          if ($kod -ne 0) { exit 1 }
+          (Get-Item .\YamansaPanel.exe).VersionInfo | Format-List FileDescription, ProductName, FileVersion, CompanyName | Out-String | Write-Host
+      - name: Inno Setup – tek dosya YamansaPanel_Kurulum.exe
+        working-directory: sosyal_medya/panel
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          & $iscc /Qp kurulum.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          $mb = [math]::Round((Get-Item dist\YamansaPanel_Kurulum.exe).Length / 1MB)
+          Write-Host "Kurulum dosyasi: $mb MB"
+      - name: Kurulum testi (sessiz kur -> kurulu exe --dogrula -> sessiz kaldır)
+        working-directory: sosyal_medya/panel/dist
+        timeout-minutes: 10
+        run: |
+          $p = Start-Process -FilePath .\YamansaPanel_Kurulum.exe -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/LOG=kur.log' -PassThru -Wait
+          Write-Host "kurulum exit: $($p.ExitCode)"
+          Get-Content kur.log -Tail 15
+          if ($p.ExitCode -ne 0) { exit 1 }
+          $hedef = "$env:LOCALAPPDATA\Programs\YamansaPanel"
+          if (-not (Test-Path "$hedef\YamansaPanel.exe")) { Write-Host "kurulu exe yok"; exit 1 }
+          if (-not (Test-Path "$hedef\_internal\tarayicilar")) { Write-Host "kurulu Chromium yok"; exit 1 }
+          Push-Location $hedef
+          $q = Start-Process -FilePath .\YamansaPanel.exe -ArgumentList '--dogrula' -PassThru
+          if (-not $q.WaitForExit(120000)) { Stop-Process -Id $q.Id -Force; Write-Host "dogrula bitmedi"; exit 1 }
+          Get-Content dogrula.txt
+          Pop-Location
+          if ($q.ExitCode -ne 0) { exit 1 }
+          $u = Start-Process -FilePath "$hedef\unins000.exe" -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART' -PassThru -Wait
+          Write-Host "kaldirma exit: $($u.ExitCode)"
+          Start-Sleep -Seconds 3
+          if (Test-Path "$hedef\YamansaPanel.exe") { Write-Host "kaldirma sonrasi exe kaldi"; exit 1 }
+          schtasks /Query /TN YamansaAjan 2>$null; if ($LASTEXITCODE -eq 0) { Write-Host "YamansaAjan gorevi silinmedi"; exit 1 }
+          Write-Host "Kurulum/kaldirma testi OK"
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YamansaPanel_Kurulum
+          path: sosyal_medya/panel/dist/YamansaPanel_Kurulum.exe
