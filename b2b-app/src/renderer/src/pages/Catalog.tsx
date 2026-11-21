@@ -19,7 +19,7 @@ import {
   type CopyColumn
 } from '@shared/copy'
 import { StockPill } from '@/components/StockPill'
-import { boxIdentity, brandOrigin, canonBox } from '@shared/identity'
+import { brandOrigin, canonBox } from '@shared/identity'
 import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { useApp, useCart } from '@/store/app'
 
@@ -743,7 +743,7 @@ export function Catalog(): ReactNode {
                   box.trim(),
                   locationLabel({ shelf: '', qty: location.qty }, p.unit)
                 ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
-                const firstLocation = locationEntries[0]
+                const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
                 const brand = brandOrigin(p.brand)
                 return (
                   <div
@@ -776,11 +776,8 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {firstLocation ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
-                          <b className="mono shelf-summary-name">{firstLocation.location.shelf}</b>
-                          {boxIdentity(firstLocation.box) !== boxIdentity(p.box) && firstLocation.box && <small className="shelf-summary-box">{firstLocation.box}</small>}
-                          {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, p.unit)}</small>}
-                          {locationEntries.length > 1 && <small className="shelf-more-pill">+{locationEntries.length - 1}</small>}
+                        {shelfNames ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+                          <b className="mono shelf-summary-name">{shelfNames}</b>
                         </div> : <span className="faint">—</span>}
                       </div>
                     )}
