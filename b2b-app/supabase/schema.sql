@@ -575,6 +575,7 @@ declare cid bigint; res jsonb; adm boolean := is_admin();
 begin
   if not is_member() then raise exception 'Oturum açılmamış.'; end if;
   cid := case when adm or has_perm('all_orders') then p_customer else my_customer_id() end;
+  if not (adm or has_perm('all_orders')) and cid is null then cid := -1; end if;
   select jsonb_build_object(
     'openOrders', (select count(*) from orders where status in ('beklemede','onaylandi','hazirlaniyor') and (cid is null or customer_id = cid)),
     'ordersToday', (select count(*) from orders where (created_at at time zone 'Europe/Istanbul')::date = (now() at time zone 'Europe/Istanbul')::date and (cid is null or customer_id = cid)),
