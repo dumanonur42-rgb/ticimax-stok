@@ -5,7 +5,7 @@ import { Network } from '@capacitor/network'
 import type { Database, CustomerRow, OrderItemRow, OrderRow, ProfileRow } from '@desktopDatabase'
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@desktopConfig'
 import { isAuthApiError, isAuthRetryableFetchError } from '@supabase/supabase-js'
-import { DEFAULT_SETTINGS, SHARED_SETTING_KEYS } from './defaults'
+import { cacheShowPricesToDealers, DEFAULT_SETTINGS, SHARED_SETTING_KEYS } from './defaults'
 import { loginEmail } from './loginEmail'
 import { clearLocalCatalog, getState, setState, unlockCatalogStorage } from './idb'
 import { CART_STORAGE_KEY, secureStorage } from './secureStorage'
@@ -341,6 +341,7 @@ export async function loadSettings(): Promise<Settings> {
       ;(settings as unknown as Record<string, unknown>)[row.key] = row.value
     }
   }
+  cacheShowPricesToDealers(settings.show_prices_to_dealers !== false)
   try {
     const cached = JSON.parse(localStorage.getItem(MIN_VERSION_CACHE) ?? '{}') as Record<string, unknown>
     for (const key of MIN_VERSION_KEYS) {

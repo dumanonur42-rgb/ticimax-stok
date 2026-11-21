@@ -1,5 +1,21 @@
 import { SUPPORT_PHONE, type Settings } from '@shared/types'
 
+const SHOW_PRICES_CACHE = 'yb2b.showPricesToDealers'
+
+export function cachedShowPricesToDealers(): boolean {
+  try {
+    return typeof localStorage !== 'undefined' && localStorage.getItem(SHOW_PRICES_CACHE) === 'true'
+  } catch {
+    return false
+  }
+}
+
+export function cacheShowPricesToDealers(value: boolean): void {
+  try {
+    localStorage.setItem(SHOW_PRICES_CACHE, String(value))
+  } catch {}
+}
+
 export const DEFAULT_SETTINGS: Settings = {
   company_name: 'Yamansa Rulman',
   company_phone: SUPPORT_PHONE,

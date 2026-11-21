@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { boxIdentity, normalize } from '@shared/identity'
 import type { Customer, PaymentType, Product, Settings, Session } from '@shared/types'
-import { DEFAULT_SETTINGS } from '../lib/defaults'
+import { cachedShowPricesToDealers, DEFAULT_SETTINGS } from '../lib/defaults'
 import type { DimensionFilters } from '../lib/search'
 import { CART_STORAGE_KEY, secureStorage } from '../lib/secureStorage'
 
@@ -149,7 +149,7 @@ export const useApp = create<AppState>((set) => ({
   tab: 'home',
   themePreference: readThemePreference(),
   session: null,
-  settings: DEFAULT_SETTINGS,
+  settings: { ...DEFAULT_SETTINGS, show_prices_to_dealers: cachedShowPricesToDealers() },
   customers: [],
   products: [],
   catalogBrands: [],
