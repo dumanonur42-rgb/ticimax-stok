@@ -370,6 +370,7 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
   let unchanged = 0
   let deactivated = 0
   const seen = new Set<string>()
+  const matchedExistingIds = new Set<number>()
   const batch: ProductInsert[] = []
   const rekeyed: ProductInsert[] = []
   const inBatch = new Map<string, ProductInsert>()
@@ -500,6 +501,7 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
     const { i, skuRaw, sku_norm, brand, box, locationBox: boxForShelf, shelf, stockVal } = line
     const row = parsed.rows[i]
     const ex = lookup(productKey(skuRaw, brand, box), sku_norm, brand)
+    if (opts.mode === 'replace' && ex) matchedExistingIds.add(ex.id)
     const key_norm = productKey(skuRaw, brand, box)
     const repeat = seen.has(key_norm)
     seen.add(key_norm)
@@ -680,7 +682,7 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
       Object.defineProperty(failure, 'cause', { value: error })
       throw failure
     }
-    must(await sb.rpc('purge_products_except', { p_keep: [...new Set(ids)] }))
+    must(await sb.rpc('purge_products_except', { p_keep: [...new Set([...matchedExistingIds, ...ids])] }))
     await (testDeps.pullProducts ?? pullProducts)(true)
   } else {
     for (let i = 0; i < rekeyed.length; i += BATCH) {
