@@ -17,6 +17,8 @@ import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
 import { findRefreshedCartProduct } from '@shared/cart'
+import { productsToClipboard } from '@shared/copy'
+import type { Product } from '@shared/types'
 
 /**
  * Headless sanity run: `electron . --selfcheck`.
@@ -233,6 +235,209 @@ export async function runSelfCheck(): Promise<number> {
   const t0 = performance.now()
   const db = getDb()
   let ok = await storageSelfCheck()
+  const copyProduct = (overrides: Partial<Product>): Product => ({
+    id: 1,
+    sku: '6205 2RS',
+    name: '6205 2RS',
+    brand: 'SKF',
+    category: '',
+    type: '',
+    seal: '',
+    d_inner: 25,
+    d_outer: 52,
+    width: 15,
+    stock: 12,
+    unit: 'Adet',
+    price: 3.2,
+    currency: 'EUR',
+    list_price: null,
+    card_price: null,
+    min_order: 1,
+    shelf: 'D7 / D8',
+    locations: [
+      { shelf: 'D7', qty: 4, box: 'Kutulu' },
+      { shelf: 'D8', qty: 8, box: 'Kutusuz' }
+    ],
+    box: 'Kutulu',
+    barcode: '',
+    image: '',
+    description: 'Deep groove & <sealed> bearing',
+    equivalents: '',
+    active: 1,
+    updated_at: '2026-11-21T00:00:00.000Z',
+    ...overrides
+  })
+  const copySamples = [
+    copyProduct({
+      stock: 14,
+      box: 'Kutulu Kutusuz',
+      locations: [
+        { shelf: 'D7', qty: 4, box: 'Kutulu' },
+        { shelf: 'D7', qty: 2, box: 'Kutusuz' },
+        { shelf: 'D8', qty: 8, box: 'Kutusuz' }
+      ]
+    }),
+    copyProduct({
+      id: 2,
+      sku: '1209',
+      name: 'Konik makaralı rulman',
+      brand: 'FAG GERMANY',
+      d_inner: 45,
+      d_outer: 85,
+      width: 19,
+      stock: 6,
+      price: 8.7,
+      shelf: 'E4 / E5',
+      locations: [
+        { shelf: 'E4', qty: 2, box: 'Kutulu' },
+        { shelf: 'E5', qty: 3, box: 'Kutulu' }
+      ]
+    }),
+    copyProduct({
+      id: 3,
+      sku: '6203',
+      name: '6203',
+      brand: 'FAG',
+      d_inner: null,
+      d_outer: null,
+      width: null,
+      stock: 2,
+      price: null,
+      shelf: '',
+      locations: [],
+      box: '',
+      description: ''
+    })
+  ]
+  const copyColumns = ['shelf', 'sku', 'name', 'brand', 'size', 'stock', 'box', 'description', 'price'] as const
+  const clipboardOutput = productsToClipboard(copySamples, [...copyColumns], {
+    canShelf: true,
+    showPrices: true,
+    date: new Date(2026, 10, 21)
+  })
+  const permissionOutput = productsToClipboard([copySamples[0]], ['shelf', 'sku', 'price'], {
+    canShelf: false,
+    showPrices: false,
+    date: new Date(2026, 10, 21)
+  })
+  const markupOutput = productsToClipboard([copyProduct({
+    sku: ' 6205 *2RS*_ ',
+    description: 'A*_~`B'
+  })], ['sku', 'description'], {
+    canShelf: true,
+    showPrices: true,
+    date: new Date(2026, 10, 21)
+  })
+  const normalizedNameOutput = productsToClipboard([copyProduct({
+    sku: '6205-2RS',
+    name: '6205 2RS'
+  })], ['sku', 'name'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const emptyColumnsOutput = productsToClipboard([copySamples[2]], ['sku', 'shelf', 'box', 'price', 'stock'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const zeroStockOutput = productsToClipboard([copyProduct({
+    stock: 0,
+    shelf: '',
+    locations: [],
+    box: '',
+    price: null
+  })], ['sku', 'shelf', 'stock', 'box', 'price'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const singleShelfOutput = productsToClipboard([copyProduct({
+    stock: 3,
+    shelf: 'A1',
+    locations: [{ shelf: 'A1', qty: 3, box: '' }],
+    box: ''
+  })], ['sku', 'shelf'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const sizesOmitted = !productsToClipboard([copySamples[2]], ['sku', 'size'], {
+    canShelf: true,
+    showPrices: true
+  }).html.includes('Ölçü (d×D×B)')
+  const boldTokens = clipboardOutput.text.match(/\*[^*\n]+\*/g) ?? []
+  const thirdProductText = clipboardOutput.text.split('\n\n')[2] ?? ''
+  const copySelfcheckOk =
+    clipboardOutput.text.startsWith('*6205 2RS* · SKF') &&
+    !clipboardOutput.text.includes('Yamansa Rulman · Ürün listesi') &&
+    !clipboardOutput.text.includes('21.11.2026') &&
+    !clipboardOutput.text.includes('Ürün adı: 6205 2RS') &&
+    !normalizedNameOutput.text.includes('Ürün adı:') &&
+    !clipboardOutput.html.includes('Yamansa Rulman · Ürün listesi') &&
+    !clipboardOutput.html.includes('21.11.2026') &&
+    clipboardOutput.text.includes('Raf:\n- D7 · Kutulu · 4 adet\n- D7 · Kutusuz · 2 adet\n- D8 · Kutusuz · 8 adet') &&
+    clipboardOutput.html.includes('D7 · Kutulu · 4 adet<br style="mso-data-placement:same-cell">D7 · Kutusuz · 2 adet<br style="mso-data-placement:same-cell">D8 · Kutusuz · 8 adet') &&
+    singleShelfOutput.text.includes('Raf: A1 · 3 adet') &&
+    thirdProductText.startsWith('*6203* · FAG') &&
+    thirdProductText.includes('Stok: 2 adet') &&
+    !thirdProductText.includes('Raf:') &&
+    !thirdProductText.includes('Kutu durumu:') &&
+    !thirdProductText.includes('Fiyat:') &&
+    !thirdProductText.includes('—') &&
+    clipboardOutput.text.includes('Fiyat: €3,20') &&
+    !clipboardOutput.text.includes('Fiyat sorunuz') &&
+    zeroStockOutput.text.includes('Stok: 0 adet') &&
+    emptyColumnsOutput.html.includes('Ürün kodu') &&
+    emptyColumnsOutput.html.includes('Stok') &&
+    !emptyColumnsOutput.html.includes('Raf') &&
+    !emptyColumnsOutput.html.includes('Kutu durumu') &&
+    !emptyColumnsOutput.html.includes('Fiyat') &&
+    !emptyColumnsOutput.text.includes('Raf:') &&
+    !emptyColumnsOutput.text.includes('Kutu durumu:') &&
+    !emptyColumnsOutput.text.includes('Fiyat:') &&
+    clipboardOutput.text.includes('Raf:\n- E4 · Kutulu\n- E5 · Kutulu') &&
+    clipboardOutput.text.includes('FAG (Almanya)') &&
+    clipboardOutput.text.includes('*6205 2RS*') &&
+    clipboardOutput.text.includes('Açıklama: Deep groove & <sealed> bearing') &&
+    markupOutput.text.includes('*6205 2RS*') &&
+    markupOutput.text.includes('Açıklama: AB') &&
+    boldTokens.every((token) => token[1] !== ' ' && token[token.length - 2] !== ' ') &&
+    !permissionOutput.text.includes('Raf:') &&
+    !permissionOutput.text.includes('Fiyat:') &&
+    !permissionOutput.text.includes('Marka:') &&
+    permissionOutput.html.includes('Ürün kodu') &&
+    !permissionOutput.html.includes('Raf') &&
+    !permissionOutput.html.includes('Fiyat') &&
+    clipboardOutput.html.includes('&lt;sealed&gt;') &&
+    !clipboardOutput.html.includes('<sealed>') &&
+    !clipboardOutput.html.includes('Fiyat sorunuz') &&
+    !clipboardOutput.html.includes('—') &&
+    /<td style="[^"]*text-align:right;"><\/td>/.test(clipboardOutput.html) &&
+    !clipboardOutput.text.includes('\t') &&
+    clipboardOutput.text.split('\n').every((line) => line === line.trimEnd()) &&
+    sizesOmitted
+  if (!copySelfcheckOk) {
+    console.error('clipboard column, formatting or escaping failed')
+    ok = false
+  }
+  console.log(`clipboard table/text generation: ${copySelfcheckOk ? 'ok' : 'failed'}`)
+  if (process.env.B2B_COPY_PREVIEW === '1') {
+    const preview = productsToClipboard(copySamples, [...copyColumns], {
+      canShelf: true,
+      showPrices: true,
+      date: new Date(2026, 10, 21)
+    })
+    writeFileSync('/home/ubuntu/pw/copy_preview.html', preview.html, 'utf8')
+    writeFileSync('/home/ubuntu/pw/copy_preview.txt', preview.text, 'utf8')
+    const escapePreviewText = (value: string): string =>
+      value.replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[character]!)
+    const whatsappLines = preview.text.split('\n').map((line) =>
+      escapePreviewText(line).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>')
+    ).join('<br>')
+    writeFileSync('/home/ubuntu/pw/copy_preview_whatsapp.html',
+      `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WhatsApp kopyalama önizlemesi</title></head><body style="margin:0;background:#efeae2;font-family:Arial,sans-serif;color:#111b21"><main style="box-sizing:border-box;width:390px;max-width:100%;min-height:100vh;margin:0 auto;padding:20px 0;background:#efeae2"><div style="box-sizing:border-box;width:100%;padding:10px 12px;border-radius:10px 0 10px 10px;background:#d9fdd3;box-shadow:0 1px 1px #0002;font-size:14px;line-height:1.42;overflow-wrap:anywhere">${whatsappLines}</div></main></body></html>`,
+      'utf8')
+    console.log('clipboard previews: /home/ubuntu/pw/copy_preview.html, /home/ubuntu/pw/copy_preview.txt, /home/ubuntu/pw/copy_preview_whatsapp.html')
+  }
   const cardPricingOk =
     cardPrice(null, 1, 5) === null &&
     cardPrice(0, 1, 5) === null &&
@@ -302,6 +507,7 @@ export async function runSelfCheck(): Promise<number> {
   const replaceFixture = join(app.getPath('temp'), `selfcheck-replace-${Date.now()}.xlsx`)
   let importWarningsOk = false
   let importerRekeyOk = false
+  let releaseDeletedKeysOk = false
   let replaceOrderOk = false
   try {
     const warningRows: string[][] = [
@@ -359,6 +565,53 @@ export async function runSelfCheck(): Promise<number> {
       defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
     }, { pullProducts: async () => 0 })
     importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
+    const releaseCalls: string[] = []
+    const releasedNorms: string[][] = []
+    const releaseCloud = (() => ({
+      from: (table: string) => ({
+        upsert: (rows: ProductInsert[], options: { onConflict?: string }) => {
+          releaseCalls.push(`upsert:${table}:${options.onConflict}`)
+          const data = rows.map((row) => ({ id: row.id ?? rekeyId }))
+          return {
+            data, error: null, status: 200,
+            select: async () => ({ data, error: null, status: 200 })
+          }
+        },
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: async () => ({ data: { id: 1, ...row }, error: null, status: 201 })
+          })
+        })
+      }),
+      rpc: async (name: string, args: { p_norms?: string[] }) => {
+        releaseCalls.push(`rpc:${name}`)
+        if (name === 'release_deleted_keys') releasedNorms.push(args.p_norms ?? [])
+        return { data: 0, error: null, status: 200 }
+      }
+    })) as unknown as typeof cloud
+    const expectedRekeyNorm = productKey(rekeySku, rekeyBrand, canonBox('4 Kutulu 4 Kutusuz'))
+    const releasePrecedesIdUpsert = (calls: string[]): boolean => {
+      const releaseIndex = calls.indexOf('rpc:release_deleted_keys')
+      const idUpsertIndex = calls.indexOf('upsert:products:id')
+      return releaseIndex >= 0 && idUpsertIndex > releaseIndex
+    }
+    let callStart = releaseCalls.length
+    const mergeRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: mergeRekeyPreview.token, mapping: mergeRekeyPreview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const mergeReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[0]?.length === 1 && releasedNorms[0][0] === expectedRekeyNorm
+    callStart = releaseCalls.length
+    const replaceRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: replaceRekeyPreview.token, mapping: replaceRekeyPreview.suggestedMapping, mode: 'replace', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const replaceReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[1]?.length === 1 && releasedNorms[1][0] === expectedRekeyNorm
+    releaseDeletedKeysOk = mergeReleaseOk && replaceReleaseOk
     db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
 
     const replaceUnchangedId = 8_765_433
@@ -456,6 +709,11 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`importer rekey planning: ${importerRekeyOk ? 'ok' : 'failed'}`)
+  if (!releaseDeletedKeysOk) {
+    console.error('importer did not release rekey targets before ID upserts')
+    ok = false
+  }
+  console.log(`release deleted product keys before rekey: ${releaseDeletedKeysOk ? 'ok' : 'failed'}`)
   if (!replaceOrderOk) {
     console.error('replace import did not upload and preserve ids before purging')
     ok = false

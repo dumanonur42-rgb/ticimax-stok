@@ -521,6 +521,15 @@ export function registerIpc(): void {
     if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > 2 * 1024 * 1024) throw new Error('Kopyalanacak metin çok büyük.')
     clipboard.writeText(text)
   })
+  handle('clipboard:write', ({ text, html }) => {
+    requireRole()
+    if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > 2 * 1024 * 1024 ||
+      (html !== undefined && (typeof html !== 'string' || Buffer.byteLength(html, 'utf8') > 2 * 1024 * 1024))) {
+      throw new Error('Kopyalanacak içerik çok büyük.')
+    }
+    if (html === undefined) clipboard.write({ text })
+    else clipboard.write({ text, html })
+  })
 
   handle('products:search', (f) => {
     const s = requireRole()

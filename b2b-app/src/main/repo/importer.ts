@@ -668,6 +668,9 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
     }
     const ids: number[] = []
     try {
+      if (rekeyed.length > 0) {
+        must(await sb.rpc('release_deleted_keys', { p_norms: [...new Set(rekeyed.map((row) => row.key_norm))] }))
+      }
       for (let i = 0; i < rekeyed.length; i += BATCH) {
         const rows = must(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }).select('id'))
         ids.push(...rows.map((row) => row.id))
@@ -685,6 +688,9 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
     must(await sb.rpc('purge_products_except', { p_keep: [...new Set([...matchedExistingIds, ...ids])] }))
     await (testDeps.pullProducts ?? pullProducts)(true)
   } else {
+    if (rekeyed.length > 0) {
+      must(await sb.rpc('release_deleted_keys', { p_norms: [...new Set(rekeyed.map((row) => row.key_norm))] }))
+    }
     for (let i = 0; i < rekeyed.length; i += BATCH) {
       mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
     }
