@@ -641,6 +641,12 @@ img { max-width: 100%; }
 .detail-product-brand { display: block; color: var(--muted); font-size: .9rem; }
 .detail-product-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
 .detail-list { display: grid; gap: 0 14px; }
+.detail-shelves { display: grid; gap: 6px; margin-top: 12px; }
+.detail-shelves h3 { margin: 0; color: var(--muted); font-size: .8rem; }
+.detail-shelf-line { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: .8rem; }
+.detail-shelf-line b { min-width: 0; overflow-wrap: anywhere; }
+.detail-shelf-line strong { margin-left: auto; white-space: nowrap; }
+.detail-shelf-line.selected { border-color: var(--accent); background: var(--surface-2); }
 .cart-line { padding: 10px 12px; }
 .cart-line-name { margin: 3px 0 0; font-size: .78rem; }
 .cart-line-bottom { margin-top: 5px; }

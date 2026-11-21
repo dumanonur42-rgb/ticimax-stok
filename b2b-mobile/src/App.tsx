@@ -25,6 +25,7 @@ import { readProducts } from './lib/idb'
 import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { SystemInsets } from './lib/systemInsets'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
+import { indexProductVariants, productVariantKey } from './lib/productVariants'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
@@ -85,6 +86,7 @@ export default function App(): ReactNode {
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const appReadyNotified = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
+  const productVariants = useMemo(() => indexProductVariants(products), [products])
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
@@ -575,7 +577,7 @@ export default function App(): ReactNode {
         </header>
         <main className="main-content" key={tab}>
           {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} catalogStatus={homeCatalogStatus} onRetryCatalog={() => void syncNow()} onNavigate={setTab} onToast={showToast} />}
-          {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
+          {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
           {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
@@ -588,7 +590,7 @@ export default function App(): ReactNode {
           onApply={state.setCatalogFilters}
           onClose={() => setSheet(null)}
         />}
-        {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
+        {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} variantIndex={productVariants} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
         {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} onRefresh={() => setOrderRefresh((n) => n + 1)} onToast={showToast} />}
         {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
         {toast && <div className="toast" role="status">{toast}</div>}
@@ -719,8 +721,8 @@ function WhatsAppIcon(): ReactNode {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
 }
 
-function ProductsPage({ entries, settings, session, loading, onToast }: {
-  entries: SearchEntry[]; settings: Settings; session: Session; loading: boolean; onToast: (message: string) => void
+function ProductsPage({ entries, variantIndex, settings, session, loading, onToast }: {
+  entries: SearchEntry[]; variantIndex: Map<string, Product[]>; settings: Settings; session: Session; loading: boolean; onToast: (message: string) => void
 }): ReactNode {
   const setSheet = useApp((state) => state.setSheet)
   const setSelectedProduct = useApp((state) => state.setSelectedProduct)
@@ -806,8 +808,8 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
               const product = results[item.index]
               return (
                 view === 'table'
-                  ? <ProductTableRow key={item.key} product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} index={item.index} start={item.start} measure={virtualizer.measureElement} />
-                  : <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}><ProductCard product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} /></div>
+                  ? <ProductTableRow key={item.key} product={product} variantIndex={variantIndex} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} index={item.index} start={item.start} measure={virtualizer.measureElement} />
+                  : <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}><ProductCard product={product} variantIndex={variantIndex} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} /></div>
               )
             })}
           </div>
@@ -817,24 +819,25 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
   )
 }
 
-function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
-  product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
+function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
 }): ReactNode {
-  const catalogProducts = useApp((state) => state.products)
-  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
   const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
+  const locations = shelfBreakdown(product)
+  const brand = brandOrigin(product.brand)
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
-    <div role="cell" className="brand-col" title={product.brand}>{brandOrigin(product.brand).base || '—'}{brandOrigin(product.brand).origin && <small> · {brandOrigin(product.brand).origin}</small>}</div>
+    <div role="cell" className="brand-col" title={product.brand}>{brand.base || '—'}{brand.origin && <small> · {brand.origin}</small>}</div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
-    {canShelf && <div role="cell" className="shelf-col" title={[product.shelf, otherShelfText].filter(Boolean).join(' · ')} aria-label={`Raf bilgisi: ${[...shelfBreakdown(product).map((location) => `${location.shelf}, ${location.qty === null ? 'adet bilinmiyor' : `${num(location.qty)} adet`}`), otherShelfText].filter(Boolean).join('; ')}`}>
-      {shelfBreakdown(product).map((location, locationIndex) => <span className="shelf-badge" key={`${location.shelf}-${locationIndex}`}>{location.shelf}{location.qty !== null && ` · ${num(location.qty)}`}</span>)}
+    {canShelf && <div role="cell" className="shelf-col" title={[product.shelf, otherShelfText].filter(Boolean).join(' · ')} aria-label={`Raf bilgisi: ${[...locations.map((location) => `${location.shelf}, ${location.qty === null ? 'adet bilinmiyor' : `${num(location.qty)} adet`}`), otherShelfText].filter(Boolean).join('; ')}`}>
+      {locations.map((location, locationIndex) => <span className="shelf-badge" key={`${location.shelf}-${locationIndex}`}>{location.shelf}{location.qty !== null && ` · ${num(location.qty)}`}</span>)}
       {otherShelfText && <small className="muted">{otherShelfText}</small>}
     </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
@@ -931,22 +934,23 @@ function ProductCartActions({ product, onToast, onAdded }: {
   )
 }
 
-function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
-  product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
+function ProductCard({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const catalogProducts = useApp((state) => state.products)
-  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
   const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
+  const locations = shelfBreakdown(product)
+  const brand = brandOrigin(product.brand)
   return (
     <article className="product-card">
       <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
-        <div className="product-brand">{brandOrigin(product.brand).base || 'Marka belirtilmemiş'}{brandOrigin(product.brand).origin && <small> · {brandOrigin(product.brand).origin}</small>}</div>
+        <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && shelfBreakdown(product).map((location, index) => <span className="shelf-badge" key={`${location.shelf}-${index}`}>Raf <b>{location.shelf}</b>{location.qty !== null && ` · ${num(location.qty)} adet`}</span>)}{canShelf && otherShelfText && <small className="muted" aria-label={`Diğer varyant rafları: ${otherShelfText}`}>{otherShelfText}</small>}</div>}
+        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && locations.map((location, index) => <span className="shelf-badge" key={`${location.shelf}-${index}`}>Raf <b>{location.shelf}</b>{location.qty !== null && ` · ${num(location.qty)} adet`}</span>)}{canShelf && otherShelfText && <small className="muted" aria-label={`Diğer varyant rafları: ${otherShelfText}`}>{otherShelfText}</small>}</div>}
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
@@ -1023,13 +1027,14 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
   )
 }
 
-function ProductDetail({ product, settings, session, onClose, onToast }: {
-  product: Product; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
+function ProductDetail({ product, variantIndex, settings, session, onClose, onToast }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const catalogProducts = useApp((state) => state.products)
-  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
+  const brand = brandOrigin(product.brand)
+  const variantLocations = variants.flatMap((variant) => shelfBreakdown(variant).map((location, index) => ({ variant, location, index })))
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
@@ -1053,14 +1058,13 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
     <Sheet title="Ürün bilgisi" onClose={onClose}>
       <div className="detail-product-header">
         <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
-        {product.brand.trim() && <strong className="detail-product-brand">{brandOrigin(product.brand).base}{brandOrigin(product.brand).origin && <small> · Menşei: {brandOrigin(product.brand).origin}</small>}</strong>}
+        {product.brand.trim() && <strong className="detail-product-brand">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</strong>}
         <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
         {hasDimensions && <DetailRow label="Ölçü d × D × B" value={`${dimensionText} mm`} />}
         {product.min_order > 0 && <DetailRow label="Min. sipariş" value={`${num(product.min_order)} ${product.unit || 'Adet'}`} />}
-        {canShelf && variants.flatMap((variant) => shelfBreakdown(variant).map((location) => `${location.box || variant.box || 'Kutu durumu belirtilmemiş'} · ${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`)).length > 0 && <DetailRow label="Raflar" value={variants.flatMap((variant) => shelfBreakdown(variant).map((location) => `${location.box || variant.box || 'Kutu durumu belirtilmemiş'} · ${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`)).join(' / ')} />}
         {showPrices && <DetailRow label="Fiyat" value={displayPrice(product.price, product.currency)} />}
         {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={displayPrice(product.list_price, product.currency)} />}
         <DetailRow label="Kategori" value={product.category} />
@@ -1070,6 +1074,22 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
         <DetailRow label="Eşdeğerler" value={product.equivalents} />
         <DetailRow label="Açıklama" value={product.description} />
       </dl>
+      {canShelf ? <section className="detail-shelves" aria-label="Raflar">
+        <h3>Raflar</h3>
+        {variantLocations.map(({ variant, location, index }) => {
+          const box = location.box || variant.box
+          const qty = location.qty === null ? '' : `${num(location.qty)} adet`
+          const shelf = location.shelf || 'Raf belirtilmemiş'
+          return <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={`${variant.id}-${location.shelf}-${index}`} aria-label={`${box || 'Kutu durumu belirtilmemiş'}, Raf ${shelf}${qty ? `, ${qty}` : ''}`}>
+            <BoxBadge box={box} compact /><b>{shelf}</b>{qty && <strong>{qty}</strong>}
+          </div>
+        })}
+      </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
+        <h3>Kutu durumları</h3>
+        {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
+          <BoxBadge box={variant.box} compact /><strong>{num(variant.stock)} adet</strong>
+        </div>)}
+      </section> : null}
       <div className="product-actions detail-actions">
         <ProductCartActions key={product.id} product={product} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
