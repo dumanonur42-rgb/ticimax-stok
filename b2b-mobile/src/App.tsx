@@ -6,21 +6,31 @@ import { Network } from '@capacitor/network'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
-  Check, ClipboardList, Copy, Home, Minus,
+  Check, ClipboardList, Copy, Home, Minus, ChevronDown,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, Download,
   Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles,
   Monitor, Moon, Sun
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
-import { normalize } from '@shared/identity'
+import { brandOrigin, normalize } from '@shared/identity'
+import {
+  availableCopyColumns,
+  COPY_COLUMN_LABELS,
+  COPY_COLUMN_PRESETS,
+  copyPresetFor,
+  loadCopyColumns,
+  productsToClipboard,
+  saveCopyColumns,
+  type CopyColumn
+} from '@shared/copy'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
 import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
-import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
+import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { SystemInsets } from './lib/systemInsets'
@@ -30,7 +40,6 @@ import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
-import { brandOrigin } from '@shared/identity'
 import { shelfBreakdown } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
@@ -1035,31 +1044,88 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
+  const [savedCopyColumns, setSavedCopyColumns] = useState(() => ({
+    userId: session.user.id,
+    columns: loadCopyColumns(session.user.id)
+  }))
+  const [copySheetOpen, setCopySheetOpen] = useState(false)
+  useEffect(() => {
+    if (savedCopyColumns.userId !== session.user.id) {
+      setSavedCopyColumns({ userId: session.user.id, columns: loadCopyColumns(session.user.id) })
+    }
+  }, [session.user.id, savedCopyColumns.userId])
+  useEffect(() => {
+    if (savedCopyColumns.userId === session.user.id) saveCopyColumns(session.user.id, savedCopyColumns.columns)
+  }, [savedCopyColumns, session.user.id])
   const brand = brandOrigin(product.brand)
   const variantLocations = variants.flatMap((variant) => shelfBreakdown(variant).map((location, index) => ({ variant, location, index })))
+  const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
+  const copyResult = (): { html: string; text: string } => productsToClipboard([product], savedCopyColumns.columns, { canShelf, showPrices })
   const copy = async (): Promise<void> => {
-    const value = productsToTsv([product], { canShelf, showPrices })
     try {
-      await navigator.clipboard.writeText(value)
+      const value = copyResult()
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([value.html], { type: 'text/html' }),
+        'text/plain': new Blob([value.text], { type: 'text/plain' })
+      })])
     } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = value
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.append(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      textarea.remove()
+      const value = copyResult()
+      try {
+        await navigator.clipboard.writeText(value.text)
+      } catch {
+        const textarea = document.createElement('textarea')
+        textarea.value = value.text
+        textarea.style.position = 'fixed'
+        textarea.style.opacity = '0'
+        document.body.append(textarea)
+        textarea.select()
+        document.execCommand('copy')
+        textarea.remove()
+      }
     }
     onToast('Ürün bilgisi kopyalandı.')
   }
+  const share = async (): Promise<void> => {
+    if (typeof navigator.share !== 'function') {
+      onToast('Bu cihazda paylaşım desteklenmiyor.')
+      return
+    }
+    try {
+      await navigator.share({ text: copyResult().text })
+    } catch (reason) {
+      if (!(reason instanceof DOMException) || reason.name !== 'AbortError') onToast(userFacingError(reason))
+    }
+  }
+  const setCopyColumns = (columns: CopyColumn[]): void => {
+    setSavedCopyColumns({
+      userId: session.user.id,
+      columns: [...new Set<CopyColumn>(['sku', ...columns])]
+    })
+  }
+  const selectedCopyPreset = copyPresetFor(savedCopyColumns.columns)
   return (
+    <>
     <Sheet title="Ürün bilgisi" onClose={onClose}>
       <div className="detail-product-header">
-        <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
+        <div className="detail-heading">
+          <strong className="product-sku">{product.sku}</strong>
+          <div className="detail-copy-actions">
+            <button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button>
+            <button
+              className="icon-button"
+              aria-label="Kopyalanacak sütunları ayarla"
+              aria-haspopup="dialog"
+              aria-expanded={copySheetOpen}
+              onClick={() => setCopySheetOpen(true)}
+            >
+              <ChevronDown size={17} aria-hidden />
+            </button>
+            <button className="button secondary compact" onClick={() => void share()}><Send size={16} /> Paylaş</button>
+          </div>
+        </div>
         {product.brand.trim() && <strong className="detail-product-brand">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</strong>}
         <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
@@ -1096,6 +1162,40 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
         <ProductCartActions key={product.id} product={product} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
     </Sheet>
+    {copySheetOpen && <Sheet title="Kopyalanacak sütunlar" onClose={() => setCopySheetOpen(false)}>
+      <section className="copy-options-section">
+        <div className="copy-column-presets" aria-label="Sütun ön ayarları">
+          {(['musteri', 'depo'] as const).map((preset) => (
+            <button
+              key={preset}
+              className={`button compact${selectedCopyPreset === preset ? ' primary' : ' secondary'}`}
+              aria-pressed={selectedCopyPreset === preset}
+              onClick={() => setCopyColumns(COPY_COLUMN_PRESETS[preset].columns)}
+            >
+              {COPY_COLUMN_PRESETS[preset].label}
+            </button>
+          ))}
+        </div>
+        <div className="copy-column-options">
+          {availableColumns.map((column) => (
+            <label key={column} className="copy-column-option">
+              <input
+                type="checkbox"
+                checked={savedCopyColumns.columns.includes(column)}
+                disabled={column === 'sku'}
+                onChange={(event) => setCopyColumns(
+                  event.target.checked
+                    ? [...savedCopyColumns.columns, column]
+                    : savedCopyColumns.columns.filter((item) => item !== column)
+                )}
+              />
+              <span>{COPY_COLUMN_LABELS[column]}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+    </Sheet>}
+    </>
   )
 }
 
