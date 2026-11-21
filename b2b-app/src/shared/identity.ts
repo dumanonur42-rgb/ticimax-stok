@@ -179,13 +179,33 @@ export const DEFAULT_BRAND_ALIASES: Record<string, string> = {
 }
 
 export function mergeBrandAliases(value: unknown): Record<string, string> {
-  const aliases = Object.fromEntries(Object.entries(DEFAULT_BRAND_ALIASES).map(([from, to]) => [normalize(from), to]))
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return aliases
-  for (const [from, to] of Object.entries(value)) {
-    const key = normalize(from)
-    if (!key || typeof to !== 'string') continue
-    if (!to.trim()) delete aliases[key]
-    else aliases[key] = canonBrand(to)
+  const defaults = Object.fromEntries(Object.entries(DEFAULT_BRAND_ALIASES).map(([from, to]) => [normalize(from), to]))
+  const aliases = { ...defaults }
+  const saved = new Map<string, string>()
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    for (const [from, to] of Object.entries(value)) {
+      const key = normalize(from)
+      if (!key || typeof to !== 'string') continue
+      if (!to.trim()) {
+        delete aliases[key]
+        saved.delete(key)
+      } else {
+        const target = canonBrand(to)
+        aliases[key] = target
+        saved.set(key, target)
+      }
+    }
+  }
+  for (const [key, target] of Object.entries(aliases)) {
+    const targetKey = normalize(target)
+    if (targetKey === key) {
+      delete aliases[key]
+      continue
+    }
+    const reverse = saved.get(targetKey)
+    if (defaults[key] !== undefined && !saved.has(key) && reverse && normalize(reverse) === key) {
+      delete aliases[key]
+    }
   }
   return aliases
 }
