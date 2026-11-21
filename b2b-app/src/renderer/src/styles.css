@@ -2096,26 +2096,16 @@ dialog.update-dialog {
   min-width: 0;
   display: flex;
   align-items: center;
-  gap: 3px;
   overflow: hidden;
   white-space: nowrap;
   line-height: 1.2;
 }
 .shelf-summary-name {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
   color: var(--text);
   font-size: .78rem;
-  text-overflow: ellipsis;
-}
-.shelf-summary-qty,
-.shelf-summary-box {
-  flex: 0 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--text-muted);
-  font-size: .68rem;
   text-overflow: ellipsis;
 }
 .shelf-more-pill {
