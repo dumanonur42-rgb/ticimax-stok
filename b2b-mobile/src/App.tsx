@@ -3,6 +3,7 @@ import { AppLauncher } from '@capacitor/app-launcher'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
 import { Network } from '@capacitor/network'
+import { Share } from '@capacitor/share'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
@@ -1089,15 +1090,36 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
     onToast('Ürün bilgisi kopyalandı.')
   }
   const share = async (): Promise<void> => {
-    if (typeof navigator.share !== 'function') {
-      onToast('Bu cihazda paylaşım desteklenmiyor.')
-      return
+    const text = copyResult().text
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await Share.share({ text })
+        return
+      } catch (reason) {
+        if (reason instanceof DOMException && reason.name === 'AbortError') return
+      }
+    }
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ text })
+        return
+      } catch (reason) {
+        if (reason instanceof DOMException && reason.name === 'AbortError') return
+      }
     }
     try {
-      await navigator.share({ text: copyResult().text })
-    } catch (reason) {
-      if (!(reason instanceof DOMException) || reason.name !== 'AbortError') onToast(userFacingError(reason))
+      await navigator.clipboard.writeText(text)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.append(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      textarea.remove()
     }
+    onToast('Metin kopyalandı.')
   }
   const setCopyColumns = (columns: CopyColumn[]): void => {
     setSavedCopyColumns({
