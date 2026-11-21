@@ -1,4 +1,4 @@
-import { normalize } from '@shared/identity'
+import { brandOrigin, normalize } from '@shared/identity'
 import type { Product } from '@shared/types'
 
 export interface SearchEntry {
@@ -23,7 +23,7 @@ export function indexProducts(products: Product[]): SearchEntry[] {
     product,
     sku: normalize(product.sku),
     skuCompact: normalize(product.sku),
-    brand: normalize(product.brand),
+    brand: normalize(brandOrigin(product.brand).base),
     haystack: [
       product.sku,
       product.brand,

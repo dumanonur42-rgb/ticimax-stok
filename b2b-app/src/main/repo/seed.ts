@@ -375,6 +375,7 @@ export async function seedDemo(target: number): Promise<number> {
       card_price: Math.round(price * 1.08 * 100) / 100,
       min_order: 1,
       shelf: `${String.fromCharCode(65 + Math.floor(rand() * 8))}-${Math.floor(rand() * 40) + 1}`,
+      locations: [],
       box: '',
       barcode: '',
       image: '',

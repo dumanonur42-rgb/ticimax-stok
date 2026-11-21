@@ -1,4 +1,5 @@
 import type { SyncStatus, User } from '@shared/types'
+import { brandOrigin } from '@shared/identity'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 import { getDb, normalizeText } from '../db'
 import { pullSettings } from '../repo/settings'
@@ -22,6 +23,7 @@ let pulling: Promise<number> | null = null
 let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pending: 0, failed: 0 }
 let connectionChecked = false
 let onNewOrder: ((o: OrderRow) => void) | null = null
+let onSettingsUpdated: (() => void) | null = null
 let storagePolicy = { canSeeShelf: false, hidePrices: false }
 
 export function onSyncEvent(l: Listener): void {
@@ -32,12 +34,28 @@ export function onNewOrderRow(cb: ((o: OrderRow) => void) | null): void {
   onNewOrder = cb
 }
 
-export function setStoragePolicy(user: User, showPricesToDealers: boolean): void {
+export function onSettingsSync(cb: (() => void) | null): void {
+  onSettingsUpdated = cb
+}
+
+export function setStoragePolicy(user: User, showPricesToDealers: boolean): boolean {
   const next = {
     canSeeShelf: user.role === 'admin' || user.role === 'ara' || user.perms.includes('shelf'),
     hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices')
   }
+  const changed = next.canSeeShelf !== storagePolicy.canSeeShelf || next.hidePrices !== storagePolicy.hidePrices
+  if (!storagePolicy.hidePrices && next.hidePrices) {
+    try {
+      getDb().exec('UPDATE products SET price = NULL, list_price = NULL, card_price = NULL')
+    } catch {}
+  }
+  if (storagePolicy.canSeeShelf && !next.canSeeShelf) {
+    try {
+      getDb().exec("UPDATE products SET shelf = '', locations = '[]'")
+    } catch {}
+  }
   storagePolicy = next
+  return changed
 }
 
 export function syncStatus(): SyncStatus {
@@ -79,10 +97,10 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
-const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
-  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
+const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, brand_base, category, type, seal, d_inner, d_outer, width, stock, unit,
+  price, currency, list_price, card_price, min_order, shelf, locations, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
+  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@brand_base,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
+  @currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 export function upsertLocal(rows: ProductRow[]): void {
@@ -105,6 +123,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         name_norm: r.name_norm,
         brand: r.brand,
         brand_norm: normalizeText(r.brand),
+        brand_base: brandOrigin(r.brand).base,
         category: r.category,
         type: r.type,
         seal: r.seal,
@@ -119,6 +138,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         card_price: storagePolicy.hidePrices || r.card_price === null ? null : Number(r.card_price),
         min_order: Number(r.min_order),
         shelf: storagePolicy.canSeeShelf ? r.shelf : '',
+        locations: storagePolicy.canSeeShelf ? JSON.stringify(r.locations ?? []) : '[]',
         box: r.box,
         box_norm: normalizeText(r.box),
         barcode: r.barcode,
@@ -177,7 +197,7 @@ export async function pullProducts(full = false): Promise<number> {
       if (!rows.length) break
       const tail = rows[rows.length - 1]
       last = tail.updated_at
-      if (rows.length > 0) {
+      if (rows.length === PAGE) {
         next = fetchPage(tail.updated_at, tail.id)
         next.catch(() => undefined) // surfaces via the await above, not as an unhandled rejection
       }
@@ -230,11 +250,17 @@ export function startRealtime(): void {
       onNewOrder?.(p.new as OrderRow)
     })
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, () => listener('orders'))
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => listener('users'))
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, (change) => {
+      const profile = (change.new as { id?: string } | null)?.id ? change.new as { id: string } : change.old as { id?: string } | null
+      listener('users', profile?.id ? { id: profile.id } : undefined)
+    })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'customers' }, () => listener('customers'))
     .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
       pullSettings()
-        .then(() => listener('settings'))
+        .then(() => {
+          onSettingsUpdated?.()
+          listener('settings')
+        })
         .catch((error) => console.warn('Ayarlar eşitlenemedi.', error))
     })
     .subscribe((state) => {
@@ -268,15 +294,23 @@ export function stopRealtime(): void {
   }
   if (timer) clearInterval(timer)
   timer = null
+  if (pullTimer) clearTimeout(pullTimer)
+  pullTimer = null
 }
 
+let pollInFlight = false
 /** Polling fallback for new-order notifications when the realtime socket is down. */
 export async function pollOrders(): Promise<void> {
-  if (!onNewOrder) return
-  const seen = Number(getState('last_order_id') ?? '0')
-  const rows = must(await cloud().from('orders').select('*').gt('id', seen).order('id').limit(50))
-  for (const r of rows) onNewOrder(r)
-  setStatus({ online: true })
+  if (!onNewOrder || pollInFlight) return
+  pollInFlight = true
+  try {
+    const seen = Number(getState('last_order_id') ?? '0')
+    const rows = must(await cloud().from('orders').select('*').gt('id', seen).order('id').limit(50))
+    for (const r of rows) onNewOrder(r)
+    setStatus({ online: true })
+  } finally {
+    pollInFlight = false
+  }
 }
 
 export function markOrderSeen(id: number): void {

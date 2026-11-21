@@ -55,10 +55,12 @@ export interface ApiMap {
   'traffic:recent': [TrafficRecentQuery, TrafficRecentPage]
   'stock:log': [StockLogQuery, StockLogPage]
   'clipboard:writeText': [string, void]
+  'clipboard:write': [{ text: string; html?: string }, void]
 
   'products:search': [ProductFilter, ProductPage]
   'products:facets': [ProductFilter, Facets]
   'products:get': [number, Product | null]
+  'products:variants': [number, Product[]]
   'products:bySkus': [string[], Product[]]
   'products:save': [Partial<Product> & ProductInput, Product]
   'products:delete': [number, void]

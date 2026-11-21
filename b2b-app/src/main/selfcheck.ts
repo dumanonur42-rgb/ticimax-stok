@@ -1,19 +1,24 @@
-import type { ProductRow } from './cloud/database.types'
+import type { ProductInsert, ProductRow } from './cloud/database.types'
 import Database from 'better-sqlite3-multiple-ciphers'
 import { app } from 'electron'
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
+import * as XLSX from 'xlsx'
+import { classifyCloudError, cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { pullProducts, upsertLocal } from './cloud/sync'
 import { dbPath, getDb, normalize, normalizeText, openDatabaseForSelfCheck, productKey, wipeProducts } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, suggestMapping } from './repo/importer'
+import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, runImport, suggestMapping } from './repo/importer'
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { isLocalSetting } from './repo/settings'
-import { boxMentions, canonBrand } from '@shared/identity'
+import { boxIdentity, boxMentions, boxParts, brandAliasEntries, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
+import { findRefreshedCartProduct } from '@shared/cart'
+import { productsToClipboard } from '@shared/copy'
+import type { Product } from '@shared/types'
 
 /**
  * Headless sanity run: `electron . --selfcheck`.
@@ -190,9 +195,298 @@ async function storageSelfCheck(): Promise<boolean> {
 }
 
 export async function runSelfCheck(): Promise<number> {
+  if (process.env.B2B_OFFLINE_IMPORT_FILE) {
+    app.setPath('userData', join(app.getPath('temp'), `yamansa-import-plan-${Date.now()}`))
+    const path = process.env.B2B_OFFLINE_IMPORT_FILE
+    const reportPath = process.env.B2B_OFFLINE_IMPORT_REPORT ?? '/home/ubuntu/pw/yeni_liste_dryrun.txt'
+    const preview = previewFile(path)
+    if (!preview.suggestedMapping.sku) throw new Error('Dosyada ürün kodu / adı kolonu eşlenemedi.')
+    const result = await runImport({
+      token: preview.token,
+      mapping: preview.suggestedMapping,
+      mode: 'replace',
+      deactivateMissing: false,
+      defaultCurrency: preview.suggestedCurrency ?? 'TRY',
+      defaultBrand: '',
+      defaultCategory: '',
+      dryRun: true
+    }, { pullProducts: async () => 0 })
+    const summary = result.dryRunSummary
+    if (!summary) throw new Error('Deneme planı özeti oluşturulamadı.')
+    const lines = [
+      `Dosya: ${result.filename}`,
+      `Satır sayısı: ${preview.totalRows}`,
+      `Ürün: ${summary.products}`,
+      `Birden fazla rafı olan ürün: ${summary.multiLocationProducts}`,
+      `Farklı raflarda bulunan varyant: ${summary.variantsWithDifferentShelves}`,
+      `Uyarı türleri: kutu/adet=${summary.warningsByType.boxCountMismatch}, boş DURUM=${summary.warningsByType.missingBoxState}, benzer marka=${summary.warningsByType.similarBrands}`,
+      '',
+      `Kontrol edilmesi gerekenler (${result.warnings.length}):`,
+      ...result.warnings.map((warning) => `- ${warning}`),
+      '',
+      `Hatalar (${result.errors.length}):`,
+      ...result.errors.map((error) => `- ${error}`)
+    ]
+    writeFileSync(reportPath, `${lines.join('\n')}\n`, 'utf8')
+    console.log(lines.join('\n'))
+    console.log(`offline import report: ${reportPath}`)
+    return 0
+  }
   const t0 = performance.now()
   const db = getDb()
   let ok = await storageSelfCheck()
+  const copyProduct = (overrides: Partial<Product>): Product => ({
+    id: 1,
+    sku: '6205 2RS',
+    name: '6205 2RS',
+    brand: 'SKF',
+    category: '',
+    type: '',
+    seal: '',
+    d_inner: 25,
+    d_outer: 52,
+    width: 15,
+    stock: 12,
+    unit: 'adet',
+    price: 3.2,
+    currency: 'EUR',
+    list_price: null,
+    card_price: null,
+    min_order: 1,
+    shelf: 'D7 / D8',
+    locations: [
+      { shelf: 'D7', qty: 4, box: 'Kutulu' },
+      { shelf: 'D8', qty: 8, box: 'Kutusuz' }
+    ],
+    box: 'Kutulu',
+    barcode: '',
+    image: '',
+    description: 'Deep groove & <sealed> bearing',
+    equivalents: '',
+    active: 1,
+    updated_at: '2026-11-21T00:00:00.000Z',
+    ...overrides
+  })
+  const copySamples = [
+    copyProduct({
+      stock: 14,
+      box: 'Kutulu Kutusuz',
+      locations: [
+        { shelf: 'D7', qty: 4, box: 'Kutulu' },
+        { shelf: 'D7', qty: 2, box: 'Kutusuz' },
+        { shelf: 'D8', qty: 8, box: 'Kutusuz' }
+      ]
+    }),
+    copyProduct({
+      id: 2,
+      sku: '1209',
+      name: 'Konik makaralı rulman',
+      brand: 'FAG GERMANY',
+      d_inner: 45,
+      d_outer: 85,
+      width: 19,
+      stock: 6,
+      price: 8.7,
+      shelf: 'E4 / E5',
+      locations: [
+        { shelf: 'E4', qty: 2, box: 'Kutulu' },
+        { shelf: 'E5', qty: 3, box: 'Kutulu' }
+      ]
+    }),
+    copyProduct({
+      id: 3,
+      sku: '6203',
+      name: '6203',
+      brand: 'FAG',
+      d_inner: null,
+      d_outer: null,
+      width: null,
+      stock: 2,
+      price: null,
+      shelf: '',
+      locations: [],
+      box: '',
+      description: ''
+    })
+  ]
+  const copyColumns = ['shelf', 'sku', 'name', 'brand', 'size', 'stock', 'box', 'description', 'price'] as const
+  const clipboardOutput = productsToClipboard(copySamples, [...copyColumns], {
+    canShelf: true,
+    showPrices: true,
+    date: new Date(2026, 10, 21)
+  })
+  const permissionOutput = productsToClipboard([copySamples[0]], ['shelf', 'sku', 'price'], {
+    canShelf: false,
+    showPrices: false,
+    date: new Date(2026, 10, 21)
+  })
+  const markupOutput = productsToClipboard([copyProduct({
+    sku: ' 6205 *2RS*_ ',
+    description: 'A*_~`B'
+  })], ['sku', 'description'], {
+    canShelf: true,
+    showPrices: true,
+    date: new Date(2026, 10, 21)
+  })
+  const normalizedNameOutput = productsToClipboard([copyProduct({
+    sku: '6205-2RS',
+    name: '6205 2RS'
+  })], ['sku', 'name'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const mixedNameOutput = productsToClipboard(copySamples.slice(0, 2), ['sku', 'name'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const firstNameRow = mixedNameOutput.html.match(/<tr style="background:#fff;">([\s\S]*?)<\/tr>/)?.[1] ?? ''
+  const emptyColumnsOutput = productsToClipboard([copySamples[2]], ['sku', 'shelf', 'box', 'price', 'stock'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const zeroStockOutput = productsToClipboard([copyProduct({
+    stock: 0,
+    unit: '  ',
+    shelf: '',
+    locations: [],
+    box: '',
+    price: null
+  })], ['sku', 'shelf', 'stock', 'box', 'price'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const singleShelfOutput = productsToClipboard([copyProduct({
+    stock: 3,
+    shelf: 'A1',
+    locations: [{ shelf: 'A1', qty: 3, box: '' }],
+    box: ''
+  })], ['sku', 'shelf'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const stockOnlyOutput = productsToClipboard([copySamples[0]], ['sku', 'stock'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const boxOnlyOutput = productsToClipboard([copySamples[0]], ['sku', 'box'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const unitOutput = productsToClipboard([copyProduct({
+    unit: 'Kutu',
+    stock: 3,
+    box: 'Kutulu',
+    shelf: 'A1',
+    locations: [{ shelf: 'A1', qty: 3, box: 'Kutulu' }]
+  })], ['sku', 'shelf', 'stock', 'box'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const partialDimensionsOutput = productsToClipboard([copyProduct({
+    d_inner: 25,
+    d_outer: null,
+    width: null
+  })], ['sku', 'size'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const sizesOmitted = !productsToClipboard([copySamples[2]], ['sku', 'size'], {
+    canShelf: true,
+    showPrices: true
+  }).html.includes('Ölçü (d×D×B)')
+  const boldTokens = clipboardOutput.text.match(/\*[^*\n]+\*/g) ?? []
+  const thirdProductText = clipboardOutput.text.split('\n\n')[2] ?? ''
+  const copySelfcheckOk =
+    clipboardOutput.text.startsWith('*6205 2RS* · SKF') &&
+    !clipboardOutput.text.includes('Yamansa Rulman · Ürün listesi') &&
+    !clipboardOutput.text.includes('21.11.2026') &&
+    !clipboardOutput.text.includes('Ürün adı: 6205 2RS') &&
+    !normalizedNameOutput.text.includes('Ürün adı:') &&
+    !normalizedNameOutput.html.includes('Ürün adı') &&
+    mixedNameOutput.html.includes('>Ürün adı</th>') &&
+    /<td[^>]*>6205 2RS<\/td><td[^>]*><\/td>/.test(firstNameRow) &&
+    !clipboardOutput.html.includes('Yamansa Rulman · Ürün listesi') &&
+    !clipboardOutput.html.includes('21.11.2026') &&
+    clipboardOutput.text.includes('Raf:\n- D7 · Kutulu · 4 adet\n- D7 · Kutusuz · 2 adet\n- D8 · Kutusuz · 8 adet') &&
+    clipboardOutput.html.includes('D7 · Kutulu · 4 adet<br style="mso-data-placement:same-cell">D7 · Kutusuz · 2 adet<br style="mso-data-placement:same-cell">D8 · Kutusuz · 8 adet') &&
+    singleShelfOutput.text.includes('Raf: A1 · 3 adet') &&
+    stockOnlyOutput.text.includes('Stok: 14 adet') &&
+    !stockOnlyOutput.text.includes('Kutu durumu:') &&
+    boxOnlyOutput.text.includes('Kutu durumu: Kutulu Kutusuz') &&
+    !boxOnlyOutput.text.includes('Stok:') &&
+    unitOutput.text.includes('Stok: 3 Kutu · Kutulu') &&
+    unitOutput.text.includes('Raf: A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('>3 Kutu</td>') &&
+    partialDimensionsOutput.text.includes('Ölçü: 25 × — × — mm') &&
+    partialDimensionsOutput.html.includes('25 × — × — mm') &&
+    thirdProductText.startsWith('*6203* · FAG') &&
+    thirdProductText.includes('Stok: 2 adet') &&
+    !thirdProductText.includes('Raf:') &&
+    !thirdProductText.includes('Kutu durumu:') &&
+    !thirdProductText.includes('Fiyat:') &&
+    !thirdProductText.includes('—') &&
+    clipboardOutput.text.includes('Fiyat: 3,20 €') &&
+    clipboardOutput.text.includes('Ölçü: 25 × 52 × 15 mm') &&
+    clipboardOutput.text.includes('Stok: 14 adet · Kutulu Kutusuz') &&
+    clipboardOutput.html.includes('3,20 €') &&
+    !clipboardOutput.html.includes('€3,20') &&
+    !clipboardOutput.text.includes('Fiyat sorunuz') &&
+    zeroStockOutput.text.includes('Stok: 0 adet') &&
+    emptyColumnsOutput.html.includes('Ürün kodu') &&
+    emptyColumnsOutput.html.includes('Stok') &&
+    !emptyColumnsOutput.html.includes('Raf') &&
+    !emptyColumnsOutput.html.includes('Kutu durumu') &&
+    !emptyColumnsOutput.html.includes('Fiyat') &&
+    !emptyColumnsOutput.text.includes('Raf:') &&
+    !emptyColumnsOutput.text.includes('Kutu durumu:') &&
+    !emptyColumnsOutput.text.includes('Fiyat:') &&
+    clipboardOutput.text.includes('Raf:\n- E4 · Kutulu\n- E5 · Kutulu') &&
+    clipboardOutput.text.includes('FAG (Almanya)') &&
+    clipboardOutput.text.includes('*6205 2RS*') &&
+    clipboardOutput.text.includes('Açıklama: Deep groove & <sealed> bearing') &&
+    markupOutput.text.includes('*6205 2RS*') &&
+    markupOutput.text.includes('Açıklama: AB') &&
+    boldTokens.every((token) => token[1] !== ' ' && token[token.length - 2] !== ' ') &&
+    !permissionOutput.text.includes('Raf:') &&
+    !permissionOutput.text.includes('Fiyat:') &&
+    !permissionOutput.text.includes('Marka:') &&
+    permissionOutput.html.includes('Ürün kodu') &&
+    !permissionOutput.html.includes('Raf') &&
+    !permissionOutput.html.includes('Fiyat') &&
+    clipboardOutput.html.includes('&lt;sealed&gt;') &&
+    !clipboardOutput.html.includes('<sealed>') &&
+    !clipboardOutput.html.includes('Fiyat sorunuz') &&
+    !clipboardOutput.html.includes('—') &&
+    /<td style="[^"]*text-align:right;"><\/td>/.test(clipboardOutput.html) &&
+    !clipboardOutput.text.includes('\t') &&
+    clipboardOutput.text.split('\n').every((line) => line === line.trimEnd()) &&
+    sizesOmitted
+  if (!copySelfcheckOk) {
+    console.error('clipboard column, formatting or escaping failed')
+    ok = false
+  }
+  console.log(`clipboard table/text generation: ${copySelfcheckOk ? 'ok' : 'failed'}`)
+  if (process.env.B2B_COPY_PREVIEW === '1') {
+    const preview = productsToClipboard(copySamples, [...copyColumns], {
+      canShelf: true,
+      showPrices: true,
+      date: new Date(2026, 10, 21)
+    })
+    writeFileSync('/home/ubuntu/pw/copy_preview.html', preview.html, 'utf8')
+    writeFileSync('/home/ubuntu/pw/copy_preview.txt', preview.text, 'utf8')
+    const escapePreviewText = (value: string): string =>
+      value.replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[character]!)
+    const whatsappLines = preview.text.split('\n').map((line) =>
+      escapePreviewText(line).replace(/\*([^*\n]+)\*/g, '<strong>$1</strong>')
+    ).join('<br>')
+    writeFileSync('/home/ubuntu/pw/copy_preview_whatsapp.html',
+      `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WhatsApp kopyalama önizlemesi</title></head><body style="margin:0;background:#efeae2;font-family:Arial,sans-serif;color:#111b21"><main style="box-sizing:border-box;width:390px;max-width:100%;min-height:100vh;margin:0 auto;padding:20px 0;background:#efeae2"><div style="box-sizing:border-box;width:100%;padding:10px 12px;border-radius:10px 0 10px 10px;background:#d9fdd3;box-shadow:0 1px 1px #0002;font-size:14px;line-height:1.42;overflow-wrap:anywhere">${whatsappLines}</div></main></body></html>`,
+      'utf8')
+    console.log('clipboard previews: /home/ubuntu/pw/copy_preview.html, /home/ubuntu/pw/copy_preview.txt, /home/ubuntu/pw/copy_preview_whatsapp.html')
+  }
   const cardPricingOk =
     cardPrice(null, 1, 5) === null &&
     cardPrice(0, 1, 5) === null &&
@@ -207,6 +501,20 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`card price visibility: ${cardPricingOk ? 'ok' : 'failed'}`)
+  const cartLine = { id: 10, sku: ' 6205 ', brand: 'FAG', box: 'Kutulu' }
+  const cartProducts = [
+    { id: 11, sku: '6205', brand: 'SKF', box: 'Kutulu' },
+    { id: 12, sku: '6205', brand: 'FAG', box: 'Kutusuz' },
+    { id: 13, sku: '6205', brand: 'FAG', box: 'Kutulu' }
+  ]
+  const cartRefreshOk = findRefreshedCartProduct(cartLine, cartProducts)?.id === 13 &&
+    findRefreshedCartProduct(cartLine, cartProducts.slice(0, 2)) === undefined &&
+    findRefreshedCartProduct(cartLine, [{ ...cartProducts[0], id: 10 }])?.id === 10
+  if (!cartRefreshOk) {
+    console.error('cart refresh matched the wrong product identity')
+    ok = false
+  }
+  console.log(`cart refresh product identity: ${cartRefreshOk ? 'ok' : 'failed'}`)
 
   const currencyFixture = join(app.getPath('temp'), `selfcheck-import-${Date.now()}.csv`)
   let previewCurrencyOk = false
@@ -229,6 +537,237 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`import currency detection and parsing: ${currencyParsingOk ? 'ok' : 'failed'}`)
+  const cloudErrorCases = [
+    [503, undefined, 'retryable'],
+    [undefined, 'PGRST002', 'retryable'],
+    [400, undefined, 'rejected'],
+    [undefined, '23505', 'rejected'],
+    [undefined, '42501', 'rejected']
+  ] as const
+  const cloudErrorsOk = cloudErrorCases.every(([status, code, want]) => classifyCloudError({ status, code }, status) === want) &&
+    classifyCloudError({ code: '', message: '<html>gateway unavailable</html>' }, 503) === 'retryable'
+  if (!cloudErrorsOk) {
+    console.error('cloud outage classification failed')
+    ok = false
+  }
+  console.log(`cloud error retry classification: ${cloudErrorsOk ? 'ok' : 'failed'}`)
+  const warningFixture = join(app.getPath('temp'), `selfcheck-warnings-${Date.now()}.xlsx`)
+  const rekeyFixture = join(app.getPath('temp'), `selfcheck-rekey-${Date.now()}.xlsx`)
+  const replaceFixture = join(app.getPath('temp'), `selfcheck-replace-${Date.now()}.xlsx`)
+  let importWarningsOk = false
+  let importerRekeyOk = false
+  let releaseDeletedKeysOk = false
+  let replaceOrderOk = false
+  try {
+    const warningRows: string[][] = [
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
+      ['QA-WARN-A', 'RODAMAX', '4', '2 KUTULU', 'A'],
+      ['QA-WARN-A', 'RODAMAX', '2', '', 'B'],
+      ['QA-WARN-B', 'RODAMAXX', '1', 'Kutusuz', 'C'],
+      ['QA-WARN-C', 'SKF', '2184', '273 KOLİ ADEDİ', 'D']
+    ]
+    for (let i = 0; i < 55; i++) {
+      warningRows.push([`QA-WARN-M${i}`, 'RODAMAX', '4', '1 Kutulu', 'M'])
+      warningRows.push([`QA-WARN-E${i}`, 'RODAMAX', '1', 'Kutulu', 'E'])
+      warningRows.push([`QA-WARN-E${i}`, 'RODAMAX', '1', '', 'F'])
+    }
+    const sheet = XLSX.utils.aoa_to_sheet(warningRows)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, sheet, 'Sayfa1')
+    XLSX.writeFile(workbook, warningFixture)
+    const preview = previewFile(warningFixture)
+    const planned = await runImport({
+      token: preview.token, mapping: preview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
+    }, { pullProducts: async () => 0 })
+    importWarningsOk = planned.dryRunSummary?.warningsByType.boxCountMismatch === 56 &&
+      planned.dryRunSummary.warningsByType.missingBoxState === 56 &&
+      planned.dryRunSummary.warningsByType.similarBrands <= 50 &&
+      planned.warnings.some((warning) => warning.includes('"2 KUTULU"') && warning.includes('toplamı 2, ADET 4')) &&
+      planned.warnings.some((warning) => warning.includes('kutu durumu boş') && warning.includes('Satır 2')) &&
+      planned.warnings.some((warning) => warning.includes('Benzer markalar') && warning.includes('RODAMAXX')) &&
+      !planned.warnings.some((warning) => warning.includes('QA-WARN-C'))
+
+    const rekeyId = 8_765_432
+    const rekeySku = 'QA-REKEY'
+    const rekeyBrand = 'SKF'
+    const rekeyKey = `${normalize(rekeySku)}|${normalize(rekeyBrand)}|${normalize('4 Kutulu 4 Kutusuz')}`
+    db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
+    upsertLocal([{
+      id: rekeyId, sku: rekeySku, sku_norm: normalize(rekeySku), key_norm: rekeyKey,
+      name: rekeySku, name_norm: normalizeText(rekeySku), brand: rekeyBrand, category: '', type: '', seal: '',
+      d_inner: null, d_outer: null, width: null, stock: 8, unit: 'Adet', price: 0, currency: 'TRY',
+      list_price: null, card_price: null, min_order: 1, shelf: '', locations: [], box: '',
+      barcode: '', image: '', description: '', equivalents: '', active: true, deleted: false,
+      updated_at: new Date().toISOString()
+    }])
+    const rekeySheet = XLSX.utils.aoa_to_sheet([
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
+      [rekeySku, rekeyBrand, '8', '4 Kutulu 4 Kutusuz', 'R']
+    ])
+    const rekeyWorkbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(rekeyWorkbook, rekeySheet, 'Sayfa1')
+    XLSX.writeFile(rekeyWorkbook, rekeyFixture)
+    const rekeyPreview = previewFile(rekeyFixture)
+    const rekeyResult = await runImport({
+      token: rekeyPreview.token, mapping: rekeyPreview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
+    }, { pullProducts: async () => 0 })
+    importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
+    const releaseCalls: string[] = []
+    const releasedNorms: string[][] = []
+    const releaseCloud = (() => ({
+      from: (table: string) => ({
+        upsert: (rows: ProductInsert[], options: { onConflict?: string }) => {
+          releaseCalls.push(`upsert:${table}:${options.onConflict}`)
+          const data = rows.map((row) => ({ id: row.id ?? rekeyId }))
+          return {
+            data, error: null, status: 200,
+            select: async () => ({ data, error: null, status: 200 })
+          }
+        },
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: async () => ({ data: { id: 1, ...row }, error: null, status: 201 })
+          })
+        })
+      }),
+      rpc: async (name: string, args: { p_norms?: string[] }) => {
+        releaseCalls.push(`rpc:${name}`)
+        if (name === 'release_deleted_keys') releasedNorms.push(args.p_norms ?? [])
+        return { data: 0, error: null, status: 200 }
+      }
+    })) as unknown as typeof cloud
+    const expectedRekeyNorm = productKey(rekeySku, rekeyBrand, canonBox('4 Kutulu 4 Kutusuz'))
+    const releasePrecedesIdUpsert = (calls: string[]): boolean => {
+      const releaseIndex = calls.indexOf('rpc:release_deleted_keys')
+      const idUpsertIndex = calls.indexOf('upsert:products:id')
+      return releaseIndex >= 0 && idUpsertIndex > releaseIndex
+    }
+    let callStart = releaseCalls.length
+    const mergeRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: mergeRekeyPreview.token, mapping: mergeRekeyPreview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const mergeReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[0]?.length === 1 && releasedNorms[0][0] === expectedRekeyNorm
+    callStart = releaseCalls.length
+    const replaceRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: replaceRekeyPreview.token, mapping: replaceRekeyPreview.suggestedMapping, mode: 'replace', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const replaceReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[1]?.length === 1 && releasedNorms[1][0] === expectedRekeyNorm
+    releaseDeletedKeysOk = mergeReleaseOk && replaceReleaseOk
+    db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
+
+    const replaceUnchangedId = 8_765_433
+    const replaceChangedId = 8_765_434
+    const replaceAbsentId = 8_765_435
+    const replaceBrand = 'SKF'
+    const replaceUnchangedSku = 'QA-REPLACE-UNCHANGED'
+    const replaceChangedSku = 'QA-REPLACE-CHANGED'
+    const replaceAbsentSku = 'QA-REPLACE-ABSENT'
+    const replaceUnchangedKey = productKey(replaceUnchangedSku, replaceBrand, 'Kutulu')
+    const replaceChangedKey = productKey(replaceChangedSku, replaceBrand, 'Kutulu')
+    const replaceIdsByKey = new Map([[replaceUnchangedKey, replaceUnchangedId], [replaceChangedKey, replaceChangedId]])
+    const replaceRows: ProductRow[] = [
+      [replaceUnchangedId, replaceUnchangedSku, 1],
+      [replaceChangedId, replaceChangedSku, 1],
+      [replaceAbsentId, replaceAbsentSku, 1]
+    ].map(([id, sku, stock]) => ({
+      id: Number(id), sku: String(sku), sku_norm: normalize(String(sku)),
+      key_norm: productKey(String(sku), replaceBrand, 'Kutulu'),
+      name: String(sku), name_norm: normalizeText(String(sku)), brand: replaceBrand, category: '', type: '', seal: '',
+      d_inner: null, d_outer: null, width: null, stock: Number(stock), unit: 'Adet', price: 1, currency: 'TRY',
+      list_price: null, card_price: null, min_order: 1, shelf: '', locations: [], box: 'Kutulu',
+      barcode: '', image: '', description: '', equivalents: '', active: true, deleted: false,
+      updated_at: new Date().toISOString()
+    }))
+    upsertLocal(replaceRows)
+    const replaceWorkbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(replaceWorkbook, XLSX.utils.aoa_to_sheet([
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu'],
+      [replaceUnchangedSku, replaceBrand, '1', 'Kutulu'],
+      [replaceChangedSku, replaceBrand, '2', 'Kutulu']
+    ]), 'Sayfa1')
+    XLSX.writeFile(replaceWorkbook, replaceFixture)
+    const replacePreview = previewFile(replaceFixture)
+    const replaceCalls: string[] = []
+    let purgeKeep: number[] = []
+    const fakeCloud = (() => ({
+      from: (table: string) => ({
+        upsert: (rows: ProductInsert[], options: { onConflict?: string }) => ({
+          select: async () => {
+            replaceCalls.push(`upsert:${table}:${options.onConflict}`)
+            const data = rows
+              .map((row) => ({ id: row.id ?? replaceIdsByKey.get(row.key_norm) ?? 99 }))
+              .filter((row) => row.id !== replaceUnchangedId)
+            return { data, error: null, status: 200 }
+          }
+        }),
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: async () => {
+              replaceCalls.push(`insert:${table}`)
+              return { data: { id: 1, ...row }, error: null, status: 201 }
+            }
+          })
+        })
+      }),
+      rpc: async (name: string, args: { p_keep?: number[] }) => {
+        replaceCalls.push(`rpc:${name}`)
+        if (name === 'purge_products_except') purgeKeep = args.p_keep ?? []
+        return { data: 0, error: null, status: 200 }
+      }
+    })) as unknown as typeof cloud
+    await runImport({
+      token: replacePreview.token, mapping: replacePreview.suggestedMapping, mode: 'replace', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, {
+      cloud: fakeCloud,
+      pullProducts: async (full) => {
+        replaceCalls.push(`pull:${full === true}`)
+        return 0
+      }
+    })
+    replaceOrderOk = replaceCalls.indexOf('upsert:products:key_norm') < replaceCalls.indexOf('rpc:purge_products_except') &&
+      replaceCalls.indexOf('rpc:purge_products_except') < replaceCalls.indexOf('pull:true') &&
+      purgeKeep.includes(replaceUnchangedId) &&
+      purgeKeep.includes(replaceChangedId) &&
+      !purgeKeep.includes(replaceAbsentId)
+    db.prepare('DELETE FROM products WHERE id IN (?, ?, ?)').run(replaceUnchangedId, replaceChangedId, replaceAbsentId)
+  } catch (error) {
+    console.error('import warning fixture failed', error)
+  } finally {
+    if (existsSync(warningFixture)) unlinkSync(warningFixture)
+    if (existsSync(rekeyFixture)) unlinkSync(rekeyFixture)
+    if (existsSync(replaceFixture)) unlinkSync(replaceFixture)
+    db.prepare('DELETE FROM products WHERE sku = ?').run('QA-REKEY')
+    db.prepare("DELETE FROM products WHERE sku LIKE 'QA-REPLACE-%'").run()
+  }
+  if (!importWarningsOk) {
+    console.error('import warning generation failed')
+    ok = false
+  }
+  console.log(`import warning generation: ${importWarningsOk ? 'ok' : 'failed'}`)
+  if (!importerRekeyOk) {
+    console.error('importer rekey planning failed')
+    ok = false
+  }
+  console.log(`importer rekey planning: ${importerRekeyOk ? 'ok' : 'failed'}`)
+  if (!releaseDeletedKeysOk) {
+    console.error('importer did not release rekey targets before ID upserts')
+    ok = false
+  }
+  console.log(`release deleted product keys before rekey: ${releaseDeletedKeysOk ? 'ok' : 'failed'}`)
+  if (!replaceOrderOk) {
+    console.error('replace import did not upload and preserve ids before purging')
+    ok = false
+  }
+  console.log(`replace import upload-before-purge: ${replaceOrderOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {
@@ -255,6 +794,7 @@ export async function runSelfCheck(): Promise<number> {
       card_price: null,
       min_order: 1,
       shelf: `A-${(i % 40) + 1}`,
+      locations: [],
       box: '',
       barcode: '',
       image: '',
@@ -304,7 +844,7 @@ export async function runSelfCheck(): Promise<number> {
     ['kutusuz', 'Kutusuz'],
     ['KUTULU', 'Kutulu'],
     ['orj kağıt', 'Orjinal Kağıt'],
-    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Orjinal Kağıt 1 Kutusuz'],
+    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Kutusuz 1 Orjinal Kağıt'],
     ['2KUTULU 1KUTUSZ', '2 Kutulu 1 Kutusuz'],
     ['33 KUTULU – 1 KUTUSUZ', '33 Kutulu 1 Kutusuz'],
     ['', '']
@@ -316,6 +856,64 @@ export async function runSelfCheck(): Promise<number> {
       ok = false
     }
   }
+  const boxIdentityOk =
+    ['KUTULU', 'KUTULI', 'KUTU', 'KUTULLU'].every((value) => canonBox(value) === 'Kutulu') &&
+    ['KUTUSUZ', 'KUTUSZ', 'KUTSUZ', 'KUTUUSZ', 'KUTUUSUZ'].every((value) => canonBox(value) === 'Kutusuz') &&
+    canonBox('2 KUTULU 1 KUTUSUZ 3 KUTULU') === '5 Kutulu 1 Kutusuz' &&
+    canonBox('2 KUTULU') === 'Kutulu' &&
+    boxIdentity('4 Kutulu 2 Kutusuz') === boxIdentity('1 Kutusuz 2 Kutulu') &&
+    boxIdentity('ORJ 10 LU PAKET') !== boxIdentity('ORJ 20 LU PAKET') &&
+    boxIdentity("10'LU PAKET") !== boxIdentity("20'LU PAKET") &&
+    boxParts('ORJ 10 LU PAKET')?.[0]?.count === null &&
+    productKey('A', 'SKF', 'Kutulu') !== productKey('A', 'SKF', 'Kutulu ve Kutusuz')
+  const brandAliasRows = brandAliasEntries({
+    GMBKORE: 'GMB KOREA',
+    HICJAPON: 'HIC JAPAN',
+    GNUTTIILTAY: 'GNUTTI İTALY',
+    UNKNOWNKEY: 'TARGET',
+    'MiXeD Source': 'Target'
+  })
+  const savedHoffmanAliases = { HOFFMANN: 'HOFFMAN' }
+  const savedHoffman = resolveBrand('HOFFMAN', new Map<string, string>(), savedHoffmanAliases)
+  const savedHoffmann = resolveBrand('HOFFMANN', new Map<string, string>(), savedHoffmanAliases)
+  const brandIdentityOk =
+    brandOrigin('FAG GERMANY').base === 'FAG' && brandOrigin('FAG GERMANY').origin === 'Almanya' &&
+    brandOrigin('GERMANY').origin === '' &&
+    mergeBrandAliases({}).HOFFMAN === 'HOFFMANN' &&
+    mergeBrandAliases({}).HOFFMAN === DEFAULT_BRAND_ALIASES.HOFFMAN &&
+    !('HOFFMANN' in mergeBrandAliases({})) &&
+    mergeBrandAliases(savedHoffmanAliases).HOFFMANN === 'HOFFMAN' &&
+    mergeBrandAliases(savedHoffmanAliases).HOFFMAN === undefined &&
+    savedHoffman === 'HOFFMAN' &&
+    savedHoffmann === 'HOFFMAN' &&
+    resolveBrand(savedHoffman, new Map<string, string>(), savedHoffmanAliases) === savedHoffman &&
+    resolveBrand('HOFFMAN', new Map<string, string>(), {}) === 'HOFFMANN' &&
+    resolveBrand('HOFFMANN', new Map<string, string>(), {}) === 'HOFFMANN' &&
+    !('SELF' in mergeBrandAliases({ SELF: 'SELF' })) &&
+    brandAliasRows.find(({ key }) => key === 'GMBKORE')?.source === 'GMB KORE' &&
+    brandAliasRows.find(({ key }) => key === 'HICJAPON')?.source === 'HIC JAPON' &&
+    brandAliasRows.find(({ key }) => key === 'GNUTTIILTAY')?.source === 'GNUTTI ILTAY' &&
+    brandAliasRows.find(({ key }) => key === 'UNKNOWNKEY')?.source === 'UNKNOWNKEY' &&
+    brandAliasRows.find(({ key }) => key === 'MIXEDSOURCE')?.source === 'MiXeD Source'
+  const shelfFallbackOk = shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'A', qty: 2, box: 'Kutulu' }, { shelf: 'B', qty: 3, box: 'Kutusuz' }]
+  }).length === 2 && shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'A', qty: 2, box: 'Kutulu' }, { shelf: 'B', qty: 3, box: 'Kutusuz' }]
+  }).every((location) => location.qty === null) && shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'X', qty: 7, box: 'Kutusuz' }]
+  }).every((location) => location.qty === null) && shelfBreakdown({
+    shelf: 'A', stock: 7, box: 'Kutulu', locations: []
+  })[0]?.qty === 7
+  const locationLabelOk = locationLabel({ shelf: 'D7', qty: 1 }) === 'D7 · 1 adet' &&
+    locationLabel({ shelf: 'D7', qty: null }, 'kutu') === 'D7'
+  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk || !locationLabelOk) {
+    console.error('box identity, brand-origin/alias identity, or shelf fallback failed')
+    ok = false
+  }
+  console.log(`box identity, brand origin, shelf fallback, location label: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk && locationLabelOk ? 'ok' : 'failed'}`)
   if (productKey('51120', 'SKF', 'ORJ KAGIT') !== productKey('51120', 'SKF', 'Orjinal Kağıt')) {
     console.error('box canonicalisation not part of productKey')
     ok = false
@@ -396,6 +994,7 @@ export async function runSelfCheck(): Promise<number> {
     card_price: null,
     min_order: 1,
     shelf: '',
+    locations: [],
     box,
     barcode: '',
     image: '',

@@ -2,6 +2,8 @@ import type { Product, Session, Settings, PaymentType } from '@shared/types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
+import { toEur } from '@/lib/format'
+import { findRefreshedCartProduct } from '@shared/cart'
 
 export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help' | 'activity'
 
@@ -62,6 +64,7 @@ export const useApp = create<AppState>()((set, get) => ({
 export interface CartLine {
   product_id: number
   sku: string
+  box: string
   name: string
   brand: string
   qty: number
@@ -96,21 +99,24 @@ export const useCart = create<CartState>()(
       payment: 'pesin',
       add: (p, qty) => {
         const step = qty ?? Math.max(1, p.min_order || 1)
+        const eurUnit = toEur(p.price ?? 0, p.currency) ?? 0
+        const eurCard = p.card_price != null ? toEur(p.card_price, p.currency) : null
         set((s) => {
           const ex = s.lines.find((l) => l.product_id === p.id)
-          if (ex) return { lines: s.lines.map((l) => (l.product_id === p.id ? { ...l, qty: l.qty + step } : l)) }
+          if (ex) return { lines: s.lines.map((l) => (l.product_id === p.id ? { ...l, box: p.box, qty: l.qty + step, unit_price: eurUnit, card_price: eurCard, currency: 'EUR' } : l)) }
           return {
             lines: [
               ...s.lines,
               {
                 product_id: p.id,
                 sku: p.sku,
+                box: p.box,
                 name: p.name,
                 brand: p.brand,
                 qty: step,
-                unit_price: p.price ?? 0,
-                card_price: p.card_price,
-                currency: p.currency,
+                unit_price: eurUnit,
+                card_price: eurCard,
+                currency: 'EUR',
                 stock: p.stock,
                 min_order: p.min_order || 1
               }
@@ -130,15 +136,27 @@ export const useCart = create<CartState>()(
       setPayment: (payment) => set({ payment }),
       refreshFrom: (products) =>
         set((s) => {
-          const byId = new Map(products.map((product) => [product.id, product]))
-          const bySkuAndBrand = new Map(products.map((product) => [`${product.sku}\u0000${product.brand}`, product]))
-          const bySku = new Map(products.map((product) => [product.sku, product]))
           return {
             lines: s.lines.map((line) => {
-              const product = byId.get(line.product_id) ?? bySkuAndBrand.get(`${line.sku}\u0000${line.brand}`) ?? bySku.get(line.sku)
+              const product = findRefreshedCartProduct({ id: line.product_id, sku: line.sku, brand: line.brand, box: line.box ?? '' }, products)
               return product
-                ? { ...line, product_id: product.id, unit_price: product.price ?? 0, card_price: product.card_price, currency: product.currency, stock: product.stock, name: product.name, sku: product.sku }
-                : line
+                ? {
+                    ...line,
+                    product_id: product.id,
+                    box: product.box,
+                    unit_price: toEur(product.price ?? 0, product.currency) ?? 0,
+                    card_price: product.card_price != null ? toEur(product.card_price, product.currency) : null,
+                    currency: 'EUR',
+                    stock: product.stock,
+                    name: product.name,
+                    sku: product.sku
+                  }
+                : {
+                    ...line,
+                    unit_price: toEur(line.unit_price, line.currency) ?? 0,
+                    card_price: line.card_price != null ? toEur(line.card_price, line.currency) : null,
+                    currency: 'EUR'
+                  }
             })
           }
         })

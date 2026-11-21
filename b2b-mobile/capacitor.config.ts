@@ -11,7 +11,8 @@ const config: CapacitorConfig = {
       '@capacitor/app',
       '@capacitor/app-launcher',
       '@capacitor/network',
-      '@capacitor/keyboard'
+      '@capacitor/keyboard',
+      '@capacitor/share'
     ]
   },
   plugins: {
@@ -25,6 +26,7 @@ const config: CapacitorConfig = {
       '@capacitor/app',
       '@capacitor/app-launcher',
       '@capacitor/network',
+      '@capacitor/share',
       '@capawesome/capacitor-app-update',
       '@capgo/capacitor-updater'
     ],

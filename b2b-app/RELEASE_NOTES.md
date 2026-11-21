@@ -4,6 +4,23 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.30
+
+- Aynı ürünün bütün rafları, kutu durumu ve adediyle ürün detayında görünür.
+- Kutulu / kutusuz ayrımı düzeltildi; karışık kutu durumları ve yazım hataları tanınır.
+- Ayarlar'a Marka eşleştirme eklendi; ülke ekli markalarda menşei gösterilir.
+- Kopyala: sütunlar tek tek seçilebilir; Excel ve e-postada tablo, WhatsApp'ta düzenli liste olarak yapışır.
+- Stok Aktar: sunucu yanıt vermezse hiçbir şey silinmez; değişiklikler bekletilip sunucu açılınca gönderilir.
+- Katalogda Raf sütunu sadeleşti, sarı raf etiketi yenilendi.
+
+## 1.0.29
+
+- Tüm ürün fiyatları, sepet, siparişler ve çıktılar canlı döviz kurları üzerinden otomatik olarak Euro (€) cinsinden gösterilir.
+- Uygulama açıkken veya yeniden başlatıldığında mevcut oturum korunur; yalnızca "Oturumu kapat" seçildiğinde yeniden giriş istenir.
+- Fiyat gizleme açıkken katalog eşitleme ve görüntüleme sorunları giderildi.
+- [yönetici] Stok Aktar "Değiştir" modunda geçersiz dosya seçildiğinde mevcut katalog korunur; hata durumunda otomatik geri yükleme yapılır.
+- [yönetici] Sipariş fiyatları, iskonto ve KDV doğrulaması ile kullanıcı ve cari kayıt güvenliği güçlendirildi.
+
 ## 1.0.28
 
 - Ürün listesi yüklendikten sonra ürün araması kullanılabilir.

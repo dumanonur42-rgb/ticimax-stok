@@ -1,10 +1,13 @@
 import type { Product } from '@shared/types'
+import { boxParts, brandOrigin, normalize } from '@shared/identity'
 import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
+import { hasPerm } from '@shared/perms'
 
 export function ProductDrawer({
   product,
@@ -19,12 +22,19 @@ export function ProductDrawer({
   showPrices: boolean
   threshold: number
 }): ReactNode {
+  const brand = brandOrigin(product.brand)
   const add = useCart((s) => s.add)
   const toast = useApp((s) => s.toast)
+  const session = useApp((s) => s.session)
   const cardPct = useApp((s) => s.settings?.card_price_pct ?? 0)
   const cp = cardPrice(product.price, product.card_price, cardPct)
   const [qty, setQty] = useState(String(Math.max(1, product.min_order || 1)))
   const [equivalents, setEquivalents] = useState<Product[]>([])
+  const [variants, setVariants] = useState<Product[]>([])
+  const canSeeShelf = hasPerm(session?.user ?? null, 'shelf')
+  const shelfRows = (variants.length ? variants : [product]).flatMap((variant) =>
+    shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
+  )
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
 
@@ -49,6 +59,7 @@ export function ProductDrawer({
       brand: product.brand
     }).catch(() => undefined)
     setQty(String(Math.max(1, product.min_order || 1)))
+    api('products:variants', product.id).then(setVariants).catch(() => setVariants([product]))
     const skus = product.equivalents
       .split(/[,;\n]/)
       .map((s) => s.trim())
@@ -119,7 +130,7 @@ export function ProductDrawer({
           <div>
             <h3 style={{ marginBottom: 4 }}>{product.name}</h3>
             <div className="row wrap small">
-              {product.brand && <span className="badge info">{product.brand}</span>}
+              {product.brand && <span className="badge info">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</span>}
               {product.box && <span className="badge neutral">{product.box}</span>}
               {product.category && <span className="badge neutral">{product.category}</span>}
               {product.type && <span className="badge neutral">{product.type}</span>}
@@ -128,15 +139,40 @@ export function ProductDrawer({
             </div>
           </div>
 
-          {product.shelf && (
-            <div className="shelf-card" role="group" aria-label="Raf konumu">
+          {canSeeShelf ? (
+            <section className="shelf-card shelf-card-locations" role="group" aria-label="Raflar">
               <MapPin size={22} aria-hidden />
-              <div>
-                <span className="shelf-card-label">Raf</span>
-                <b className="shelf-card-value mono">{product.shelf}</b>
+              <div className="shelf-card-content">
+                <span className="shelf-card-label">Raflar</span>
+                <div className="shelf-location-table" role="table" aria-label="Raf konumları">
+                  <div className="shelf-location-header" role="row">
+                    <span role="columnheader">Raf</span>
+                    <span role="columnheader">Kutu durumu</span>
+                    <span role="columnheader">Adet</span>
+                  </div>
+                  {shelfRows.map(({ variant, location, index }) => (
+                    <div
+                      className={`shelf-location-row${variant.id === product.id ? ' selected' : ''}`}
+                      key={`${variant.id}-${location.shelf}-${index}`}
+                      role="row"
+                      aria-label={`${locationLabel(location, variant.unit)}${location.box || variant.box ? ` · ${location.box || variant.box}` : ''}`}
+                    >
+                      <span className="shelf-location-shelf" role="cell">
+                        <b className="mono">{location.shelf || 'Raf belirtilmemiş'}</b>
+                        {variant.id === product.id && <small className="shelf-current-tag">Bu ürün</small>}
+                      </span>
+                      <span className="shelf-location-box" role="cell"><BoxParts value={location.box || variant.box} /></span>
+                      <strong className="shelf-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            </section>
+          ) : variants.length > 1 ? (
+            <section className="shelf-card" role="group" aria-label="Kutu durumları">
+              <div><span className="shelf-card-label">Kutu durumları</span><div>{(variants.length ? variants : [product]).map((variant) => <span key={variant.id}>{variant.box || 'Belirtilmemiş'} · {num(variant.stock)} adet</span>)}</div></div>
+            </section>
+          ) : null}
 
           {(product.d_inner != null || product.d_outer != null || product.width != null) && (
             <div className="dims" role="group" aria-label="Ölçüler">
@@ -217,7 +253,7 @@ export function ProductDrawer({
                   .map((s) => s.trim())
                   .filter(Boolean)
                   .map((s) => {
-                    const found = equivalents.find((e) => e.sku.replace(/[^A-Za-z0-9]/g, '').toUpperCase() === s.replace(/[^A-Za-z0-9]/g, '').toUpperCase())
+                    const found = equivalents.find((e) => normalize(e.sku) === normalize(s))
                     return (
                       <span key={s} className={`chip ${found ? '' : 'faint'}`} style={{ padding: '3px 10px' }} title={found ? `Stokta: ${num(found.stock)}` : 'Stok listesinde yok'}>
                         {s}
@@ -261,4 +297,12 @@ export function ProductDrawer({
       </aside>
     </>
   )
+}
+
+function BoxParts({ value }: { value: string }): ReactNode {
+  const parts = boxParts(value)
+  if (!parts) return value ? <span className="box-tag">{value}</span> : <span className="faint">Kutu durumu belirtilmemiş</span>
+  return <span className="row wrap">{parts.map(({ count, state }, index) => <span key={`${state}-${index}`} className={`box-tag ${state === 'Kutulu' ? 'kutulu' : state === 'Kutusuz' ? 'kutusuz' : ''}`}>
+    {count === null ? '' : `${num(count)} `}{state}
+  </span>)}</span>
 }

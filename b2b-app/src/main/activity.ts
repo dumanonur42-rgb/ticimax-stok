@@ -51,11 +51,11 @@ export function logActivity(event: ActivityEvent): void {
 }
 
 export async function flushActivity(): Promise<void> {
-  const owner = activeUser
-  if (!owner) return
+  if (!queue.length) return
   if (flushing) return flushing
   const drain = async (): Promise<void> => {
-    while (activeUser === owner) {
+    while (queue.length > 0) {
+      const owner = queue[0].owner
       const batch = queue.filter((item) => item.owner === owner).slice(0, 20)
       if (!batch.length) return
       try {
@@ -79,8 +79,11 @@ export async function flushActivity(): Promise<void> {
 const timer = setInterval(() => void flushActivity(), 10_000)
 timer.unref()
 app.on('before-quit', (event) => {
-  if (quittingAfterFlush) return
+  if (quittingAfterFlush || queue.length === 0) return
   event.preventDefault()
   quittingAfterFlush = true
-  void flushActivity().finally(() => app.quit())
+  Promise.race([
+    flushActivity(),
+    new Promise<void>((resolve) => setTimeout(resolve, 3_000))
+  ]).finally(() => app.quit())
 })

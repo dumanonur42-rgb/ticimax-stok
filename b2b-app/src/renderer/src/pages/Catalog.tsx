@@ -1,15 +1,26 @@
-import type { Facets, Perm, Product, ProductFilter } from '@shared/types'
+import type { CatalogProduct, Facets, Perm, Product, ProductFilter } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, ChevronLeft, Copy, Download, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronDown, ChevronLeft, Copy, Download, Filter, MapPin, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
 import { LoadError } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
-import { money, num, productsToTsv } from '@/lib/format'
+import { money, num } from '@/lib/format'
+import {
+  availableCopyColumns,
+  COPY_COLUMN_LABELS,
+  COPY_COLUMN_PRESETS,
+  copyPresetFor,
+  loadCopyColumns,
+  productsToClipboard,
+  saveCopyColumns,
+  type CopyColumn
+} from '@shared/copy'
 import { StockPill } from '@/components/StockPill'
-import { canonBox } from '@shared/identity'
+import { brandOrigin, canonBox } from '@shared/identity'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
@@ -106,7 +117,7 @@ export function Catalog(): ReactNode {
   const [facetMore, setFacetMore] = useState<Partial<Record<FacetKey, boolean>>>({})
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
-  const [rows, setRows] = useState<Map<number, Product>>(new Map())
+  const [rows, setRows] = useState<Map<number, CatalogProduct>>(new Map())
   const [picked, setPicked] = useState<Map<number, Product>>(new Map())
   const [loading, setLoading] = useState(false)
   const [loadError, setLoadError] = useState('')
@@ -114,10 +125,38 @@ export function Catalog(): ReactNode {
   const [editing, setEditing] = useState<Product | 'new' | null>(null)
   const [activeIdx, setActiveIdx] = useState(0)
   const [version, setVersion] = useState(0)
+  const copyUserId = session?.user.id ?? ''
+  const [savedCopyColumns, setSavedCopyColumns] = useState(() => ({
+    userId: copyUserId,
+    columns: loadCopyColumns(copyUserId)
+  }))
+  const [copyMenuOpen, setCopyMenuOpen] = useState(false)
   const pendingPages = useRef(new Set<number>())
   const bodyRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   const selectAllRef = useRef<HTMLInputElement>(null)
+  const copyButtonRef = useRef<HTMLButtonElement>(null)
+  const copyPopoverRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (savedCopyColumns.userId !== copyUserId) {
+      setSavedCopyColumns({ userId: copyUserId, columns: loadCopyColumns(copyUserId) })
+    }
+  }, [copyUserId, savedCopyColumns.userId])
+  useEffect(() => {
+    if (copyUserId && savedCopyColumns.userId === copyUserId) saveCopyColumns(copyUserId, savedCopyColumns.columns)
+  }, [copyUserId, savedCopyColumns])
+  useEffect(() => {
+    if (!copyMenuOpen) return
+    copyPopoverRef.current?.querySelector<HTMLElement>('button, input')?.focus()
+    const onPointerDown = (event: PointerEvent): void => {
+      if (event.target instanceof Node && !copyPopoverRef.current?.contains(event.target) && !copyButtonRef.current?.contains(event.target)) {
+        setCopyMenuOpen(false)
+      }
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [copyMenuOpen])
 
   const fullFilter = useMemo<ProductFilter>(() => ({ ...filter, q: dq }), [filter, dq])
   const hasActiveFilter = Boolean(
@@ -136,7 +175,7 @@ export function Catalog(): ReactNode {
     Promise.all([api('products:search', { ...fullFilter, offset: 0, limit: PAGE }), api('products:facets', fullFilter)])
       .then(([page, f]) => {
         if (cancelled) return
-        const m = new Map<number, Product>()
+        const m = new Map<number, CatalogProduct>()
         page.items.forEach((p, i) => m.set(i, p))
         setRows(m)
         setTotal(page.total)
@@ -248,12 +287,25 @@ export function Catalog(): ReactNode {
   const copyProducts = async (products: Product[]): Promise<void> => {
     if (!products.length) return
     try {
-      await api('clipboard:writeText', productsToTsv(products, { canShelf, showPrices }))
-      toast(`${products.length} ürün kopyalandı`, 'success')
+      const value = productsToClipboard(products, savedCopyColumns.columns, { canShelf, showPrices })
+      await api('clipboard:write', value)
+      const preset = copyPresetFor(savedCopyColumns.columns)
+      const suffix = preset === 'ozel' ? 'Özel' : COPY_COLUMN_PRESETS[preset].label
+      toast(`${products.length} ürün kopyalandı · ${suffix}`, 'success')
     } catch (e) {
       toast((e as Error).message, 'error')
     }
   }
+
+  const setCopyColumns = (next: CopyColumn[]): void => {
+    setSavedCopyColumns({
+      userId: copyUserId,
+      columns: [...new Set<CopyColumn>(['sku', ...next])]
+    })
+  }
+
+  const copySelectionLabel = copyPresetFor(savedCopyColumns.columns)
+  const availableColumns = availableCopyColumns(Array.from(picked.values()), { canShelf, showPrices })
 
   const toggleSort = (s: SortKey): void =>
     setFilter((f) => ({ ...f, sort: s, sortDir: f.sort === s && f.sortDir === 'asc' ? 'desc' : 'asc' }))
@@ -267,7 +319,8 @@ export function Catalog(): ReactNode {
   const setRange = (key: RangeKey, idx: 0 | 1, raw: string): void =>
     setFilter((f) => {
       const r: [number | null, number | null] = [...(f[key] ?? [null, null])] as [number | null, number | null]
-      r[idx] = raw.trim() === '' ? null : Number(raw.replace(',', '.'))
+      const parsed = Number(raw.replace(',', '.'))
+      r[idx] = raw.trim() === '' || !Number.isFinite(parsed) ? null : parsed
       return { ...f, [key]: r[0] == null && r[1] == null ? undefined : r }
     })
 
@@ -287,10 +340,10 @@ export function Catalog(): ReactNode {
   }
 
   const onGridKey = (e: React.KeyboardEvent): void => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'c') {
       if (window.getSelection()?.toString()) return
       e.preventDefault()
-      void copyProducts(picked.size > 0 ? Array.from(picked.values()) : [rows.get(activeIdx)].filter((p): p is Product => !!p))
+      void copyProducts(picked.size > 0 ? Array.from(picked.values()) : [rows.get(activeIdx)].filter((p): p is CatalogProduct => !!p))
       return
     }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
@@ -545,9 +598,67 @@ export function Catalog(): ReactNode {
           <div className="toolbar selection-toolbar" role="status" aria-live="polite">
             <strong>{num(picked.size)} ürün seçildi</strong>
             <span className="spacer" />
-            <button className="btn sm" onClick={() => void copyProducts(Array.from(picked.values()))}>
-              <Copy size={14} aria-hidden /> Kopyala
-            </button>
+            <div className="copy-split">
+              <button className="btn sm" onClick={() => void copyProducts(Array.from(picked.values()))}>
+                <Copy size={14} aria-hidden /> Kopyala
+              </button>
+              <button
+                ref={copyButtonRef}
+                className="btn sm copy-split-caret"
+                aria-label="Kopyalanacak sütunları ayarla"
+                aria-haspopup="dialog"
+                aria-expanded={copyMenuOpen}
+                onClick={() => setCopyMenuOpen((open) => !open)}
+              >
+                <ChevronDown size={14} aria-hidden />
+              </button>
+              {copyMenuOpen && <div
+                ref={copyPopoverRef}
+                className="copy-column-popover"
+                role="dialog"
+                aria-label="Kopyalanacak sütunlar"
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    setCopyMenuOpen(false)
+                    copyButtonRef.current?.focus()
+                  }
+                }}
+              >
+                <strong>Kopyalanacak sütunlar</strong>
+                <div className="copy-presets" aria-label="Sütun ön ayarları">
+                  {(['musteri', 'depo'] as const).map((preset) => (
+                    <button
+                      key={preset}
+                      type="button"
+                      className={`btn sm${copySelectionLabel === preset ? ' active' : ''}`}
+                      aria-pressed={copySelectionLabel === preset}
+                      onClick={() => setCopyColumns(COPY_COLUMN_PRESETS[preset].columns)}
+                    >
+                      {COPY_COLUMN_PRESETS[preset].label}
+                    </button>
+                  ))}
+                </div>
+                <div className="copy-column-options">
+                  {availableColumns.map((column) => (
+                    <label key={column} className="copy-column-option">
+                      <input
+                        type="checkbox"
+                        checked={savedCopyColumns.columns.includes(column)}
+                        disabled={column === 'sku'}
+                        onChange={(event) => setCopyColumns(
+                          event.target.checked
+                            ? [...savedCopyColumns.columns, column]
+                            : savedCopyColumns.columns.filter((item) => item !== column)
+                        )}
+                      />
+                      <span>{COPY_COLUMN_LABELS[column]}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>}
+            </div>
             <button className="btn sm ghost" onClick={() => setPicked(new Map())}>
               Seçimi temizle
             </button>
@@ -620,6 +731,20 @@ export function Catalog(): ReactNode {
                       <div className="cell faint">…</div>
                     </div>
                   )
+                const locations = shelfBreakdown(p)
+                const locationEntries = [
+                  ...locations.map((location) => ({ location, box: location.box || p.box })),
+                  ...p.others.flatMap((other) => shelfBreakdown({
+                    shelf: other.shelf, stock: other.stock, box: other.box, locations: []
+                  }).map((location) => ({ location, box: location.box || other.box })))
+                ]
+                const locationTitle = locationEntries.map(({ location, box }) => [
+                  location.shelf.trim(),
+                  box.trim(),
+                  locationLabel({ shelf: '', qty: location.qty }, p.unit)
+                ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
+                const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))]
+                const brand = brandOrigin(p.brand)
                 return (
                   <div
                     key={v.key}
@@ -651,13 +776,15 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {p.shelf ? (
-                          <span className="shelf-tag" title={p.shelf}>
-                            {p.shelf}
+                        {shelfNames.length > 0 ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+                          <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+                          <span className="shelf-summary-text">
+                            {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+                              {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+                              {shelf}
+                            </span>)}
                           </span>
-                        ) : (
-                          <span className="faint">—</span>
-                        )}
+                        </div> : <span className="faint">—</span>}
                       </div>
                     )}
                     <div className="cell sku" role="gridcell" title={`${p.sku} · ${p.name}`}>
@@ -665,7 +792,7 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('brand') && (
                       <div className="cell muted truncate" role="gridcell" title={p.brand}>
-                        {p.brand}
+                        {brand.base}{brand.origin && <small className="muted"> · {brand.origin}</small>}
                       </div>
                     )}
                     {has.has('dims') && (

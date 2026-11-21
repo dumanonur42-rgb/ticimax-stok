@@ -1,5 +1,6 @@
 /** Hand-maintained mirror of supabase/schema.sql for typed supabase-js queries. */
 import type { ActivityKind, ActivityPlatform, Currency, OrderStatus, PaymentType, UserRole } from '@shared/types'
+import type { ProductLocation } from '@shared/types'
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
@@ -26,6 +27,7 @@ export type ProductRow = {
   card_price: number | null
   min_order: number
   shelf: string
+  locations: ProductLocation[]
   box: string
   barcode: string
   image: string
@@ -214,6 +216,8 @@ export interface Database {
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
       soft_delete_all_products: { Args: Record<string, never>; Returns: undefined }
       purge_all_products: { Args: Record<string, never>; Returns: number }
+      purge_products_except: { Args: { p_keep: number[] }; Returns: number }
+      release_deleted_keys: { Args: { p_norms: string[] }; Returns: number }
       merge_products: { Args: { p_target: number; p_sources: number[]; p_patch: Record<string, unknown> }; Returns: ProductRow }
       bulk_update_products: { Args: { p_rows: unknown[] }; Returns: ProductRow[] }
       apply_op: { Args: { p_id: string; p_kind: string; p_payload: Record<string, unknown> }; Returns: OpReceipt }

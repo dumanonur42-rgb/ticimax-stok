@@ -2,11 +2,12 @@ import type { ApiArgs, ApiChannel, ApiResult, AppEvent } from '@shared/api'
 import { hasPerm } from '@shared/perms'
 import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, ActivitySummary, ActivityPerson, ActivityPlatform, StockLogQuery, StockLogRow, TrafficRecentQuery, TrafficSummaryQuery, TrafficSite, TrafficSource, TrafficSummary, Order, Perm, Session } from '@shared/types'
 import { app, BrowserWindow, clipboard, dialog, ipcMain, nativeTheme, net, shell } from 'electron'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 import { discardFailedOps, flush, outboxCounts, setOutboxUser } from './cloud/outbox'
-import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
+import { cloud, getStoredValue, isTransientCloudError, SESSION_CACHE_STORAGE_KEY, setStoredValue } from './cloud/client'
+import { toUser } from './cloud/map'
 import { flushActivity, logActivity, setActivitySession } from './activity'
-import { onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
+import { onSettingsSync, onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
 import { dbPath, deleteLocalDatabase, wipeProducts } from './db'
 import { setBackgroundMode, startAdminNotifications, stopAdminNotifications } from './notify'
 import { deleteCustomer, getCustomer, listCustomers, saveCustomer, updateMyCompany } from './repo/customers'
@@ -23,6 +24,7 @@ import {
   getProduct,
   mergeProducts,
   productFacets,
+  productVariants,
   productsBySkus,
   purgeAllProducts,
   quickEntry,
@@ -31,8 +33,8 @@ import {
   similarProducts
 } from './repo/products'
 import { seedDemo } from './repo/seed'
-import { getSettings, isLocalSetting, pullSettings, setLocalSettings, setSettings } from './repo/settings'
-import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, isTransientRestoreError, listUsers, login, logout, registerUser, revealPassword, saveUser } from './repo/users'
+import { getSettings, isLocalSetting, pullSettings, setLiveExchangeRates, setLocalSettings, setSettings } from './repo/settings'
+import { approveUser, changePassword, createDealerAccount, currentSession, deleteUser, isTransientRestoreError, listUsers, login, logout, registerUser, rememberedSession, revealPassword, saveUser, trySilentReauth } from './repo/users'
 import { requestUpdateCheck, updateState } from './updater'
 
 let session: Session | null = null
@@ -40,6 +42,32 @@ let sessionExpiredNotice: string | null = null
 const SESSION_EXPIRED_MESSAGE = 'Oturumunuz kapandı, lütfen yeniden giriş yapın.'
 let sessionCheckTimer: ReturnType<typeof setInterval> | null = null
 let sessionCheckInFlight = false
+let exchangeRateTimer: ReturnType<typeof setInterval> | null = null
+
+export async function refreshLiveExchangeRates(): Promise<void> {
+  const endpoints = [
+    'https://open.er-api.com/v6/latest/EUR',
+    'https://api.frankfurter.app/latest?from=EUR&to=TRY,USD'
+  ]
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(8000) })
+      if (!res.ok) continue
+      const data = (await res.json()) as { rates?: { TRY?: unknown; USD?: unknown } }
+      const eurToTry = Number(data?.rates?.TRY)
+      const eurToUsd = Number(data?.rates?.USD)
+      if (Number.isFinite(eurToTry) && eurToTry > 1 && Number.isFinite(eurToUsd) && eurToUsd > 0.1) {
+        const rate_eur = Math.round(eurToTry * 10000) / 10000
+        const rate_usd = Math.round((eurToTry / eurToUsd) * 10000) / 10000
+        setLiveExchangeRates(rate_eur, rate_usd)
+        broadcast('settings:changed')
+        return
+      }
+    } catch {
+      // try next provider
+    }
+  }
+}
 
 const EXTERNAL_HOSTS = new Set(['wa.me', 'api.whatsapp.com', 'github.com', 'www.microsoft.com'])
 
@@ -129,14 +157,61 @@ function requirePerm(perm: Perm): Session {
   return s
 }
 
-/** Shelf location is internal warehouse data; only accounts with the shelf ability see it. */
-function hideShelf<T extends { shelf: string }>(items: T[]): T[] {
+/** Shelf location is internal warehouse data; only accounts with the shelf ability see it. Prices are also stripped when hidden. */
+function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; list_price?: number | null; card_price?: number | null }>(items: T[]): T[] {
   const s = requireRole()
-  return hasPerm(s.user, 'shelf') ? items : items.map((p) => ({ ...p, shelf: '' }))
+  const canSeeShelf = hasPerm(s.user, 'shelf')
+  const canSeePrices = getSettings().show_prices_to_dealers || hasPerm(s.user, 'prices')
+  if (canSeeShelf && canSeePrices) return items
+  return items.map((p) => ({
+    ...p,
+    ...(canSeeShelf ? {} : { shelf: '', locations: [] }),
+    ...(canSeePrices ? {} : { price: null, list_price: null, card_price: null })
+  }))
 }
 
 export function currentRole(): Session['user']['role'] | null {
   return session?.user.role ?? null
+}
+
+async function refreshSessionProfile(userId: string): Promise<void> {
+  const current = session
+  if (!current || current.user.id !== userId) return
+  const result = await cloud().from('profiles').select('*').eq('id', userId).maybeSingle()
+  if (session !== current) return
+  if (result.error) {
+    if (!net.isOnline() || isTransientCloudError(result.error, result.status)) return
+    console.warn('Kullanıcı profili eşitlenemedi.', result.error)
+    return
+  }
+  if (!result.data || !result.data.active || !result.data.approved) {
+    expireSession()
+    return
+  }
+  const user = toUser(result.data)
+  const previous = current.user
+  const changed = previous.username !== user.username ||
+    previous.display_name !== user.display_name ||
+    previous.role !== user.role ||
+    previous.customer_id !== user.customer_id ||
+    previous.active !== user.active ||
+    previous.approved !== user.approved ||
+    JSON.stringify(previous.perms) !== JSON.stringify(user.perms)
+  if (!changed) return
+  const updated = { ...current, user }
+  session = updated
+  setStoredValue(SESSION_CACHE_STORAGE_KEY, JSON.stringify(updated))
+  const policyChanged = setStoragePolicy(user, getSettings().show_prices_to_dealers)
+  broadcast('session:changed')
+  if (previous.role === 'admin' && user.role !== 'admin') stopAdminNotifications()
+  else if (previous.role !== 'admin' && user.role === 'admin') {
+    void startAdminNotifications(user.id, getSettings().background_notifications)
+  }
+  if (policyChanged) {
+    void pullProducts(true)
+      .then(() => broadcast('products:changed'))
+      .catch(() => broadcast('products:changed'))
+  }
 }
 
 /**
@@ -152,16 +227,18 @@ async function activate(s: Session, restored = false): Promise<void> {
     if (sessionCheckInFlight || !session) return
     sessionCheckInFlight = true
     const userId = session.user.id
-    void cloud().auth.getSession().then(({ data, error }) => {
+    void cloud().auth.getSession().then(async ({ data, error }) => {
       if (session?.user.id !== userId) return
-      if (error) {
-        if (!isTransientRestoreError(error)) expireSession()
-      } else if ((!data.session && net.isOnline()) || (data.session && data.session.user.id !== userId)) {
-        expireSession()
+      if (error || !data.session || data.session.user.id !== userId) {
+        if (!net.isOnline() || isTransientRestoreError(error)) return
+        const reauthedId = await trySilentReauth().catch(() => null)
+        if (reauthedId !== userId) {
+          if (!rememberedSession(userId)) expireSession()
+          return
+        }
       }
-    }).catch((error) => {
-      if (!isTransientRestoreError(error)) expireSession()
-    }).finally(() => {
+      await refreshSessionProfile(userId)
+    }).catch(() => undefined).finally(() => {
       sessionCheckInFlight = false
     })
   }, 30_000)
@@ -171,9 +248,14 @@ async function activate(s: Session, restored = false): Promise<void> {
   logActivity({ kind: 'login', ...(restored ? { detail: { restored: true } } : {}) })
   try {
     await pullSettings()
+    if (session?.user.id === s.user.id) {
+      setStoragePolicy(session.user, getSettings().show_prices_to_dealers)
+    }
   } catch (e) {
     console.error('settings pull failed', e)
   }
+  void refreshLiveExchangeRates()
+  broadcast('session:changed')
   // The product mirror can take a while on a fresh install; the UI opens right away and refreshes on products:changed.
   void (async () => {
     try {
@@ -242,16 +324,42 @@ export function restoreSession(): Promise<Session | null> {
 }
 
 export function registerIpc(): void {
+  void refreshLiveExchangeRates()
+  if (exchangeRateTimer) clearInterval(exchangeRateTimer)
+  exchangeRateTimer = setInterval(() => void refreshLiveExchangeRates(), 30 * 60_000)
+  exchangeRateTimer.unref?.()
+
   cloud().auth.onAuthStateChange((event) => {
     if (event !== 'SIGNED_OUT') return
-    setTimeout(expireSession, 0)
+    setTimeout(() => {
+      if (!session) return
+      void trySilentReauth().then((reauthedId) => {
+        if (!reauthedId && !rememberedSession(null)) expireSession()
+      }).catch(() => undefined)
+    }, 0)
+  })
+
+  onSettingsSync(() => {
+    if (!session) return
+    const changed = setStoragePolicy(session.user, getSettings().show_prices_to_dealers)
+    if (changed) {
+      pullProducts(true)
+        .then(() => broadcast('products:changed'))
+        .catch(() => broadcast('products:changed'))
+    }
   })
 
   onSyncEvent((event, payload) => {
     if (event === 'status') broadcast('sync:changed', payload)
     else if (event === 'products') broadcast('products:changed')
     else if (event === 'orders') broadcast('orders:changed')
-    else if (event === 'users') broadcast('users:changed')
+    else if (event === 'users') {
+      broadcast('users:changed')
+      const changedUserId = (payload as { id?: string } | undefined)?.id
+      if (changedUserId && changedUserId === session?.user.id) {
+        void refreshSessionProfile(changedUserId).catch((error) => console.warn('Kullanıcı profili eşitlenemedi.', error))
+      }
+    }
     else if (event === 'customers') broadcast('customers:changed')
     else if (event === 'settings') broadcast('settings:changed')
   })
@@ -264,8 +372,9 @@ export function registerIpc(): void {
   handle('auth:logout', async () => {
     await flushActivity()
     await flush()
-    const pending = outboxCounts().pending
-    if (pending > 0) throw new Error(`Gönderilmemiş ${pending} kayıt var. İnternet bağlantısı gelince tekrar çıkış yapın.`)
+    const counts = outboxCounts()
+    const unsent = counts.pending + counts.failed
+    if (unsent > 0) throw new Error(`Gönderilmemiş veya hatalı ${unsent} kayıt var. Senkron kutusunu kontrol edip tekrar çıkış yapın.`)
     deactivate()
     await logout()
     deleteLocalDatabase()
@@ -289,6 +398,7 @@ export function registerIpc(): void {
       const { error } = await cloud().rpc('prune_logs')
       if (error) throw error
     } catch (error) {
+      lastPruneDay = ''
       console.warn('Log cleanup failed.', error)
     }
   })
@@ -402,7 +512,7 @@ export function registerIpc(): void {
     return { rows, hasMore: rows.length === limit }
   })
   handle('auth:session', async () => {
-    if (restoring) await restoring
+    if (!session) await restoreSession()
     return { session, notice: session ? null : sessionExpiredNotice }
   })
   handle('auth:changePassword', ({ current, next }) => changePassword(requireRole().user.username, current, next))
@@ -411,11 +521,20 @@ export function registerIpc(): void {
     if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > 2 * 1024 * 1024) throw new Error('Kopyalanacak metin çok büyük.')
     clipboard.writeText(text)
   })
+  handle('clipboard:write', ({ text, html }) => {
+    requireRole()
+    if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > 2 * 1024 * 1024 ||
+      (html !== undefined && (typeof html !== 'string' || Buffer.byteLength(html, 'utf8') > 2 * 1024 * 1024))) {
+      throw new Error('Kopyalanacak içerik çok büyük.')
+    }
+    if (html === undefined) clipboard.write({ text })
+    else clipboard.write({ text, html })
+  })
 
   handle('products:search', (f) => {
     const s = requireRole()
     const r = searchProducts(s.user.role === 'admin' ? f : { ...f, includeInactive: false })
-    return { ...r, items: hideShelf(r.items) }
+    return { ...r, items: sanitizeProducts(r.items) }
   })
   handle('products:facets', (f) => {
     requireRole()
@@ -424,11 +543,12 @@ export function registerIpc(): void {
   handle('products:get', (id) => {
     requireRole()
     const p = getProduct(id)
-    return p ? hideShelf([p])[0] : p
+    return p ? sanitizeProducts([p])[0] : p
   })
+  handle('products:variants', (id) => sanitizeProducts(productVariants(id)))
   handle('products:bySkus', (skus) => {
     requireRole()
-    return hideShelf(productsBySkus(skus))
+    return sanitizeProducts(productsBySkus(skus))
   })
   handle('products:save', async (p) => {
     requireRole('admin')
@@ -476,17 +596,22 @@ export function registerIpc(): void {
     requirePerm('export')
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), 'urunler.xlsx', 'xlsx', 'Excel')
     if (!path) return null
-    productsToXlsx(hideShelf(allProductsForExport(f)), path)
+    productsToXlsx(sanitizeProducts(allProductsForExport(f)), path)
     return path
   })
 
   // Customers, orders and users are read straight from the cloud; RLS scopes dealers to their own rows.
-  handle('customers:list', ({ q }) => {
-    requireRole()
-    return listCustomers(q)
+  handle('customers:list', async ({ q }) => {
+    const s = requireRole()
+    const all = await listCustomers(q)
+    if (s.user.role === 'admin' || hasPerm(s.user, 'all_orders')) return all
+    return s.user.customer_id !== null ? all.filter((c) => c.id === s.user.customer_id) : []
   })
   handle('customers:get', (id) => {
-    requireRole()
+    const s = requireRole()
+    if (s.user.role !== 'admin' && !hasPerm(s.user, 'all_orders') && s.user.customer_id !== id) {
+      throw new Error('Bu işlem için yetkiniz yok.')
+    }
     return getCustomer(id)
   })
   handle('customers:profile', async (p) => {
@@ -517,12 +642,19 @@ export function registerIpc(): void {
   })
 
   handle('orders:list', (o) => {
-    requireRole()
-    return listOrders(o)
+    const s = requireRole()
+    const canSeeAll = s.user.role === 'admin' || hasPerm(s.user, 'all_orders')
+    if (!canSeeAll && s.user.customer_id === null) return []
+    const scopedOpts = canSeeAll ? o : { ...o, customer_id: s.user.customer_id ?? undefined }
+    return listOrders(scopedOpts)
   })
   const scopedOrder = async (id: number): Promise<Order | null> => {
-    requireRole()
-    return getOrder(id)
+    const s = requireRole()
+    const o = await getOrder(id)
+    if (!o) return null
+    const canSeeAll = s.user.role === 'admin' || hasPerm(s.user, 'all_orders')
+    if (!canSeeAll && o.customer_id !== s.user.customer_id) throw new Error('Bu siparişi görüntüleme yetkiniz yok.')
+    return o
   }
   handle('orders:get', (id) => scopedOrder(id))
   handle('orders:create', async (input) => {
@@ -538,6 +670,7 @@ export function registerIpc(): void {
     const s = requireRole()
     if (s.user.role !== 'admin' && status !== 'iptal') throw new Error('Sipariş durumunu yalnızca yöneticiler değiştirebilir.')
     const r = await setOrderStatus(id, status)
+    logActivity({ kind: 'order', order_id: r.id, detail: { order_no: r.order_no, status } })
     pullProducts().catch(() => undefined)
     broadcast('orders:changed')
     return r
@@ -556,8 +689,25 @@ export function registerIpc(): void {
     if (!o) throw new Error('Sipariş bulunamadı.')
     const parent = BrowserWindow.fromWebContents(e.sender) ?? undefined
     const win = new BrowserWindow({ show: false, parent, webPreferences: { sandbox: true } })
-    await win.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(orderHtml(o, getSettings())))
-    win.webContents.print({ printBackground: true }, () => win.destroy())
+    const cleanup = (): void => {
+      if (!win.isDestroyed()) win.destroy()
+    }
+    const timeout = setTimeout(cleanup, 60_000)
+    win.webContents.once('did-fail-load', () => {
+      clearTimeout(timeout)
+      cleanup()
+    })
+    try {
+      await win.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(orderHtml(o, getSettings())))
+      win.webContents.print({ printBackground: true }, () => {
+        clearTimeout(timeout)
+        cleanup()
+      })
+    } catch (err) {
+      clearTimeout(timeout)
+      cleanup()
+      throw err
+    }
   })
 
   handle('users:list', () => {
@@ -592,6 +742,14 @@ export function registerIpc(): void {
     const shared = Object.keys(patch).some((k) => !isLocalSetting(k))
     if (shared && s.user.role !== 'admin') throw new Error('Bu ayarı yalnızca yönetici değiştirebilir.')
     const out = shared ? await setSettings(patch) : setLocalSettings(patch)
+    if (session) {
+      const changed = setStoragePolicy(session.user, out.show_prices_to_dealers)
+      if (changed) {
+        pullProducts(true)
+          .then(() => broadcast('products:changed'))
+          .catch(() => broadcast('products:changed'))
+      }
+    }
     nativeTheme.themeSource = out.theme === 'dark' || out.theme === 'contrast' ? 'dark' : out.theme === 'light' ? 'light' : 'system'
     if (patch.background_notifications !== undefined && s.user.role === 'admin') setBackgroundMode(out.background_notifications)
     broadcast('settings:changed')
@@ -601,7 +759,7 @@ export function registerIpc(): void {
   handle('dashboard:stats', async () => {
     requireRole()
     const s = await dashboardStats()
-    return { ...s, lowStock: hideShelf(s.lowStock) }
+    return { ...s, lowStock: sanitizeProducts(s.lowStock) }
   })
 
   handle('import:pick', async (_a, e) => {
@@ -627,6 +785,7 @@ export function registerIpc(): void {
     return importLogs()
   })
   handle('import:template', async (_a, e) => {
+    requirePerm('export')
     const path = await saveDialog(BrowserWindow.fromWebContents(e.sender), 'stok-sablonu.xlsx', 'xlsx', 'Excel')
     if (!path) return null
     templateXlsx(path)
@@ -635,8 +794,9 @@ export function registerIpc(): void {
 
   handle('app:info', () => ({ version: app.getVersion(), dbPath: dbPath(), platform: process.platform }))
   handle('app:checkUpdates', () => requestUpdateCheck())
-  handle('app:openPath', (p) => {
-    shell.showItemInFolder(p)
+  handle('app:openPath', () => {
+    requireAdmin()
+    void shell.openPath(dirname(dbPath()))
   })
   handle('app:openExternal', async (url) => {
     if (!isAllowedExternal(url)) throw new Error('Bu bağlantı açılamaz.')

@@ -16,6 +16,7 @@ function tokenFile(): string {
 }
 
 export const SESSION_CACHE_STORAGE_KEY = 'yamansa-b2b-profile-session'
+export const SESSION_LOGIN_STORAGE_KEY = 'yamansa-b2b-login-credentials'
 
 function readStorage(file: string): Record<string, string> {
   if (!existsSync(file)) return {}
@@ -43,7 +44,7 @@ function readStorage(file: string): Record<string, string> {
 }
 
 function writeStorage(file: string, all: Record<string, string>): void {
-  const temporaryFile = `${file}.tmp`
+  const temporaryFile = `${file}.${process.pid}.tmp`
   mkdirSync(dirname(file), { recursive: true })
   writeFileSync(temporaryFile, encryptAtRest(JSON.stringify(all)), { mode: 0o600 })
   renameSync(temporaryFile, file)
@@ -110,18 +111,34 @@ export async function quiesceAuth(): Promise<void> {
   try {
     await client.auth.stopAutoRefresh()
   } catch {}
-  try {
-    await client.auth.getSession()
-  } catch {}
 }
 
 const CONNECTIVITY_RE = /fetch failed|ENOTFOUND|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|network|Failed to fetch|aborted|cancelled|timeout|socket hang up/i
+export const SERVER_UNAVAILABLE_MESSAGE = 'Sunucu şu an yanıt vermiyor, hiçbir şey değiştirilmedi. Birkaç dakika sonra tekrar deneyin.'
 
 /** True when the failure says nothing about the request itself, only that the server could not be reached. */
 export function isConnectivityError(e: unknown): boolean {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
   const name = e instanceof Error ? e.name : typeof e === 'object' && e && 'name' in e ? String((e as { name: unknown }).name) : ''
   return CONNECTIVITY_RE.test(msg) || /AuthRetryableFetchError|TimeoutError|AbortError|ConnectivityError/.test(name)
+}
+
+export function classifyCloudError(e: unknown, responseStatus?: number): 'retryable' | 'rejected' | 'unknown' {
+  if (isConnectivityError(e)) return 'retryable'
+  const fields = typeof e === 'object' && e !== null ? e as { status?: unknown; statusCode?: unknown; code?: unknown } : {}
+  const status = Number(responseStatus ?? fields.status ?? fields.statusCode)
+  const code = typeof fields.code === 'string' ? fields.code.toUpperCase() : ''
+  if (status >= 500 || code === 'PGRST002' || code === 'PGRST003') return 'retryable'
+  if ((status >= 400 && status < 500) || /^(22|23|42|P0)/.test(code)) return 'rejected'
+  return 'unknown'
+}
+
+export function isTransientCloudError(e: unknown, responseStatus?: number): boolean {
+  return classifyCloudError(e, responseStatus) === 'retryable'
+}
+
+export function isRejectedCloudError(e: unknown, responseStatus?: number): boolean {
+  return classifyCloudError(e, responseStatus) === 'rejected'
 }
 
 /** The user-facing "no connection" error; keeps its identity so callers up the stack can still tell it apart. */
@@ -140,9 +157,10 @@ export function ephemeralCloud(): Cloud {
 }
 
 /** Translate PostgREST/GoTrue failures into the Turkish messages the UI shows. */
-export function cloudError(e: unknown): Error {
+export function cloudError(e: unknown, responseStatus?: number): Error {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
   if (isConnectivityError(e)) return new ConnectivityError()
+  if (isTransientCloudError(e, responseStatus)) return new Error(SERVER_UNAVAILABLE_MESSAGE)
   if (/Invalid login credentials/i.test(msg)) return new Error('Kullanıcı adı veya şifre hatalı.')
   if (/already registered|already been registered|duplicate key value.*profiles_username/i.test(msg)) {
     return new Error('Bu kullanıcı adı zaten alınmış.')
@@ -156,12 +174,12 @@ export function cloudError(e: unknown): Error {
 }
 
 /** Unwrap a supabase-js response, throwing a user-facing error on failure. */
-export function must<R extends { data: unknown; error: { message: string } | null }>(r: R): NonNullable<R['data']> {
-  if (r.error) throw cloudError(r.error)
+export function must<R extends { data: unknown; error: { message: string } | null; status?: number }>(r: R): NonNullable<R['data']> {
+  if (r.error || (r.status !== undefined && r.status >= 500)) throw cloudError(r.error ?? new Error('Sunucu yanıtı alınamadı.'), r.status)
   if (r.data === null || r.data === undefined) throw new Error('Kayıt bulunamadı.')
   return r.data as NonNullable<R['data']>
 }
 
-export function mustVoid(r: { error: { message: string } | null }): void {
-  if (r.error) throw cloudError(r.error)
+export function mustVoid(r: { error: { message: string } | null; status?: number }): void {
+  if (r.error || (r.status !== undefined && r.status >= 500)) throw cloudError(r.error ?? new Error('Sunucu yanıtı alınamadı.'), r.status)
 }

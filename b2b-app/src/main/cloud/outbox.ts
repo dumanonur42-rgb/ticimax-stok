@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { getDb } from '../db'
-import { cloud, cloudError, isConnectivityError } from './client'
+import { classifyCloudError, cloud, cloudError } from './client'
 import type { OpReceipt, ProductInsert, ProductRow } from './database.types'
 import { markOffline, markOnline, notifyOutbox, upsertLocal } from './sync'
 
@@ -126,7 +126,7 @@ export async function submit(payload: OpPayload): Promise<SubmitResult> {
 }
 
 /**
- * Send waiting ops oldest-first. Stops at the first connectivity problem (retried later); an op the cloud
+ * Send waiting ops oldest-first. Stops at the first transient problem (retried later); an op the cloud
  * rejects outright is parked as failed and the rest continue. Returns the receipts obtained in this run.
  */
 export function flush(): Promise<Map<string, OpReceipt>> {
@@ -152,7 +152,7 @@ export function flush(): Promise<Map<string, OpReceipt>> {
       const op = db.prepare('SELECT * FROM outbox WHERE id = ? AND failed = 0').get(id) as OutboxRow | undefined
       if (!op) continue
       const payload = JSON.parse(op.payload) as Record<string, unknown>
-      const { data, error } = await sb.rpc('apply_op', { p_id: op.id, p_kind: op.kind, p_payload: payload })
+      const { data, error, status } = await sb.rpc('apply_op', { p_id: op.id, p_kind: op.kind, p_payload: payload })
       if (!error && data) {
         const full = { kind: op.kind, ...payload } as OpPayload
         db.transaction(() => {
@@ -164,15 +164,18 @@ export function flush(): Promise<Map<string, OpReceipt>> {
         done.set(op.id, data)
         continue
       }
-      const message = error ? cloudError(error).message : 'Sunucudan yanıt alınamadı.'
-      if (error && isConnectivityError(error)) {
+      const classification = classifyCloudError(error, status)
+      const message = classification === 'retryable'
+        ? cloudError(error ?? new Error('Sunucu yanıtı alınamadı.'), status).message
+        : error ? cloudError(error, status).message : 'Sunucudan yanıt alınamadı.'
+      if (classification === 'retryable') {
         // Nothing reached the server (or its answer was lost): keep the op untouched and try again later.
         db.prepare('UPDATE outbox SET error = ? WHERE id = ?').run(message, op.id)
         markOffline(message)
         scheduleRetry()
         break
       }
-      const permanent = !!error && isPermanent(error.code)
+      const permanent = classification === 'rejected'
       const attempts = op.attempts + 1
       const park = permanent || attempts >= MAX_ATTEMPTS
       db.prepare('UPDATE outbox SET attempts = ?, failed = ?, error = ? WHERE id = ?').run(attempts, park ? 1 : 0, message, op.id)
@@ -193,11 +196,6 @@ export function flush(): Promise<Map<string, OpReceipt>> {
     flushing = null
   })
   return flushing
-}
-
-/** SQLSTATE classes that will not succeed on retry: data / integrity / syntax-privilege errors and `raise exception`. */
-function isPermanent(code: string): boolean {
-  return /^(22|23|42|P0)/.test(code)
 }
 
 function scheduleRetry(): void {
@@ -324,6 +322,7 @@ function applyLocal(payload: OpPayload, opId: string): void {
       card_price: p.card_price,
       min_order: p.min_order,
       shelf: p.shelf,
+      locations: p.locations ?? [],
       box: p.box,
       barcode: p.barcode,
       image: p.image,
@@ -368,6 +367,7 @@ function applyLocal(payload: OpPayload, opId: string): void {
           card_price: null,
           min_order: 1,
           shelf: r.shelf,
+          locations: [{ shelf: r.shelf, qty: r.stock, box: r.box }],
           box: r.box,
           barcode: '',
           image: '',

@@ -10,8 +10,9 @@ const CHANNEL_TAG = 'b2b-mobile-channel'
 const CHANNEL_URL = `https://github.com/dumanonur42-rgb/ticimax-stok/releases/download/${CHANNEL_TAG}`
 const MANIFEST_URL = `${CHANNEL_URL}/live-update.json`
 const ANDROID_LATEST_URL = `${CHANNEL_URL}/android-latest.json`
-const ANDROID_RELEASES_PAGE = `https://github.com/dumanonur42-rgb/ticimax-stok/releases/tag/${CHANNEL_TAG}`
+const ANDROID_RELEASES_PAGE = 'https://github.com/dumanonur42-rgb/ticimax-stok/releases?q=b2b-android-v'
 const CHANNEL_CHECK_CACHE = 'yb2b.mobileChannelCheckedAt'
+const LAST_ANDROID_APK_URL = 'yb2b.lastAndroidApkUrl'
 const PENDING_FLEXIBLE_UPDATE = 'yb2b.pendingFlexibleUpdate'
 
 export interface AndroidUpdate {
@@ -58,10 +59,11 @@ export async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
   const latest = await fetchChannelJson<AndroidChannelManifest>(ANDROID_LATEST_URL)
   if (!/^\d+\.\d+\.\d+$/.test(latest.version) ||
     !Number.isInteger(latest.versionCode) ||
-    !/^https:\/\/github\.com\/dumanonur42-rgb\/ticimax-stok\/releases\/download\//.test(latest.apkUrl) ||
+    !/^https:\/\/github\.com\/dumanonur42-rgb\/ticimax-stok\/releases\/download\/b2b-android-v[^/]+\/[^/?#]+\.apk$/i.test(latest.apkUrl) ||
     !/^[a-f\d]{64}$/i.test(latest.sha256)) {
     throw new Error('Invalid Android update manifest')
   }
+  localStorage.setItem(LAST_ANDROID_APK_URL, latest.apkUrl)
   localStorage.setItem(CHANNEL_CHECK_CACHE, String(Date.now()))
   return compareVersions(latest.version, APP_VERSION) > 0
     ? { version: latest.version, url: latest.apkUrl, notes: '' }
@@ -69,6 +71,12 @@ export async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
 }
 
 export function androidReleasesPage(): string {
+  try {
+    const cached = localStorage.getItem(LAST_ANDROID_APK_URL)
+    if (cached && /^https:\/\/github\.com\/dumanonur42-rgb\/ticimax-stok\/releases\/download\/b2b-android-v[^/]+\/[^/?#]+\.apk$/i.test(cached)) return cached
+  } catch {
+    // Use the filtered release list when local storage is unavailable.
+  }
   return ANDROID_RELEASES_PAGE
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "yamansa-rulman-b2b-android",
   "private": true,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -23,6 +23,7 @@
     "@capacitor/ios": "^7.6.9",
     "@capacitor/keyboard": "^7.0.6",
     "@capacitor/network": "^7.0.4",
+    "@capacitor/share": "^7.0.4",
     "@capawesome/capacitor-app-update": "7.2.0",
     "@capgo/capacitor-updater": "7.51.23",
     "@supabase/supabase-js": "^2.116.0",

@@ -78,15 +78,24 @@ export function orderToXlsx(order: Order, path: string): void {
 const esc = (s: unknown): string =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
 
-const money = (n: number, cur: string): string =>
-  new Intl.NumberFormat('tr-TR', { style: 'currency', currency: cur }).format(n)
+const eurFmt = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+function moneyEur(n: number, cur: string, s: Settings): string {
+  const val = Number(n) || 0
+  if (cur === 'EUR') return eurFmt.format(val)
+  const rEur = Number(s.rate_eur) > 0 ? Number(s.rate_eur) : 38.5
+  const rUsd = Number(s.rate_usd) > 0 ? Number(s.rate_usd) : 35.5
+  if (cur === 'TRY') return eurFmt.format(val / rEur)
+  if (cur === 'USD') return eurFmt.format((val * rUsd) / rEur)
+  return eurFmt.format(val)
+}
 
 export function orderHtml(order: Order, s: Settings): string {
   const items = (order.items ?? [])
     .map(
       (i, n) => `<tr><td>${n + 1}</td><td>${esc(i.sku)}</td><td>${esc(i.name)}</td><td class="r">${i.qty}</td>
-      <td class="r">${money(i.unit_price, order.currency)}</td><td class="r">${i.discount_pct ? i.discount_pct + '%' : '-'}</td>
-      <td class="r">${money(i.line_total, order.currency)}</td></tr>`
+      <td class="r">${moneyEur(i.unit_price, order.currency, s)}</td><td class="r">${i.discount_pct ? i.discount_pct + '%' : '-'}</td>
+      <td class="r">${moneyEur(i.line_total, order.currency, s)}</td></tr>`
     )
     .join('')
   return `<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>${esc(order.order_no)}</title>
@@ -103,9 +112,9 @@ th{background:#f0f0f0}.r{text-align:right}.tot td{font-weight:bold}
 <table><thead><tr><th>#</th><th>Stok Kodu</th><th>Ürün</th><th class="r">Miktar</th><th class="r">Birim Fiyat</th><th class="r">İsk.</th><th class="r">Tutar</th></tr></thead>
 <tbody>${items}</tbody>
 <tfoot>
-<tr><td colspan="6" class="r">Ara Toplam</td><td class="r">${money(order.subtotal + order.discount, order.currency)}</td></tr>
-<tr><td colspan="6" class="r">İskonto</td><td class="r">-${money(order.discount, order.currency)}</td></tr>
-<tr><td colspan="6" class="r">KDV %${order.vat_pct}</td><td class="r">${money(order.vat, order.currency)}</td></tr>
-<tr class="tot"><td colspan="6" class="r">Genel Toplam</td><td class="r">${money(order.total, order.currency)}</td></tr>
+<tr><td colspan="6" class="r">Ara Toplam</td><td class="r">${moneyEur(order.subtotal + order.discount, order.currency, s)}</td></tr>
+<tr><td colspan="6" class="r">İskonto</td><td class="r">-${moneyEur(order.discount, order.currency, s)}</td></tr>
+<tr><td colspan="6" class="r">KDV %${order.vat_pct}</td><td class="r">${moneyEur(order.vat, order.currency, s)}</td></tr>
+<tr class="tot"><td colspan="6" class="r">Genel Toplam</td><td class="r">${moneyEur(order.total, order.currency, s)}</td></tr>
 </tfoot></table></body></html>`
 }

@@ -60,6 +60,7 @@ create table if not exists public.products (
   card_price numeric,
   min_order numeric not null default 1,
   shelf text not null default '',
+  locations jsonb not null default '[]'::jsonb,
   box text not null default '',
   barcode text not null default '',
   image text not null default '',
@@ -69,6 +70,7 @@ create table if not exists public.products (
   deleted boolean not null default false,
   updated_at timestamptz not null default now()
 );
+alter table public.products add column if not exists locations jsonb not null default '[]'::jsonb;
 create index if not exists products_updated_at on public.products (updated_at, id);
 -- v1.0.8: code-only identity -> code + brand + box
 alter table public.products add column if not exists box text not null default '';
@@ -385,6 +387,31 @@ begin
   return n;
 end $$;
 
+create or replace function public.purge_products_except(p_keep bigint[]) returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if coalesce(array_length(p_keep, 1), 0) = 0 then raise exception 'Boş liste ile katalog silinemez.'; end if;
+  delete from products where not (id = any(p_keep));
+  get diagnostics n = row_count;
+  insert into settings (key, value) values ('catalog_generation', to_jsonb(1))
+    on conflict (key) do update set value = to_jsonb(coalesce((settings.value)::text::integer, 0) + 1);
+  return n;
+end $$;
+
+create or replace function public.release_deleted_keys(p_norms text[]) returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  update products set key_norm = key_norm || '~' || id
+    where deleted and key_norm = any (coalesce(p_norms, '{}')) and key_norm not like '%~%';
+  get diagnostics n = row_count;
+  return n;
+end $$;
+revoke execute on function public.release_deleted_keys(text[]) from anon;
+
 -- Merges duplicate products into one: order lines are re-pointed to the surviving row, stock is summed,
 -- the surviving row takes the chosen field values (p_patch) and the sources are soft-deleted.
 -- Source key_norm values get a "~<id>" suffix so the survivor may adopt one of their identities.
@@ -573,6 +600,7 @@ declare cid bigint; res jsonb; adm boolean := is_admin();
 begin
   if not is_member() then raise exception 'Oturum açılmamış.'; end if;
   cid := case when adm or has_perm('all_orders') then p_customer else my_customer_id() end;
+  if not (adm or has_perm('all_orders')) and cid is null then cid := -1; end if;
   select jsonb_build_object(
     'openOrders', (select count(*) from orders where status in ('beklemede','onaylandi','hazirlaniyor') and (cid is null or customer_id = cid)),
     'ordersToday', (select count(*) from orders where (created_at at time zone 'Europe/Istanbul')::date = (now() at time zone 'Europe/Istanbul')::date and (cid is null or customer_id = cid)),

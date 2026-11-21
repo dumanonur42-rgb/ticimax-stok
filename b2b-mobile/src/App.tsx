@@ -3,32 +3,45 @@ import { AppLauncher } from '@capacitor/app-launcher'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
 import { Network } from '@capacitor/network'
+import { Share } from '@capacitor/share'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import {
-  Check, ClipboardList, Copy, Home, Minus,
+  Check, ClipboardList, Copy, Home, Minus, ChevronDown,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, Download,
-  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles,
+  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, MapPin, Sparkles,
   Monitor, Moon, Sun
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
-import { normalize } from '@shared/identity'
+import { brandOrigin, normalize } from '@shared/identity'
+import {
+  availableCopyColumns,
+  COPY_COLUMN_LABELS,
+  COPY_COLUMN_PRESETS,
+  copyPresetFor,
+  loadCopyColumns,
+  productsToClipboard,
+  saveCopyColumns,
+  type CopyColumn
+} from '@shared/copy'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
 import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
-import { displayPrice, money, num, productsToTsv, STATUS_LABEL } from './lib/format'
+import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
 import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { SystemInsets } from './lib/systemInsets'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
+import { indexProductVariants, productVariantKey } from './lib/productVariants'
 import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
+import { locationLabel, shelfBreakdown, type ShelfBreakdownItem } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -75,6 +88,7 @@ export default function App(): ReactNode {
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
+  const [copySheetOpen, setCopySheetOpen] = useState(false)
   const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
   const dark = themePreference === 'dark' || (themePreference === 'system' && systemDark)
   const syncRetryCount = useRef(0)
@@ -82,7 +96,9 @@ export default function App(): ReactNode {
   const syncRetryTimer = useRef<number | null>(null)
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const appReadyNotified = useRef(false)
+  const copySheetOpenRef = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
+  const productVariants = useMemo(() => indexProductVariants(products), [products])
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
@@ -293,6 +309,7 @@ export default function App(): ReactNode {
         const storeCurrentVersion = info.currentVersionName || currentVersion
         const storeForced = !!minimum && compareVersions(storeCurrentVersion, minimum) < 0
         if (storeForced && active) setRequiredUpdate({ platform, version: minimum, url: androidReleasesPage() })
+        else if (!forced && active) setRequiredUpdate(null)
         if (info.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE) {
           if (storeForced) await AppUpdate.performImmediateUpdate()
           else await AppUpdate.startFlexibleUpdate()
@@ -397,6 +414,11 @@ export default function App(): ReactNode {
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
     const goBack = (exitAtHome: boolean): void => {
+      if (copySheetOpenRef.current) {
+        copySheetOpenRef.current = false
+        setCopySheetOpen(false)
+        return
+      }
       const current = useApp.getState()
       if (current.sheet) current.setSheet(null)
       else if (current.tab !== 'home') current.setTab('home')
@@ -412,6 +434,13 @@ export default function App(): ReactNode {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [platform])
+
+  useEffect(() => {
+    if (sheet !== 'detail' && copySheetOpenRef.current) {
+      copySheetOpenRef.current = false
+      setCopySheetOpen(false)
+    }
+  }, [sheet])
 
   useEffect(() => {
     if (!toast) return
@@ -571,7 +600,7 @@ export default function App(): ReactNode {
         </header>
         <main className="main-content" key={tab}>
           {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} catalogStatus={homeCatalogStatus} onRetryCatalog={() => void syncNow()} onNavigate={setTab} onToast={showToast} />}
-          {tab === 'products' && <ProductsPage entries={searchIndex} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
+          {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
           {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
@@ -584,7 +613,23 @@ export default function App(): ReactNode {
           onApply={state.setCatalogFilters}
           onClose={() => setSheet(null)}
         />}
-        {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
+        {sheet === 'detail' && selectedProduct && <ProductDetail
+          product={selectedProduct}
+          variantIndex={productVariants}
+          settings={settings}
+          session={session}
+          copySheetOpen={copySheetOpen}
+          onCopySheetOpenChange={(open) => {
+            copySheetOpenRef.current = open
+            setCopySheetOpen(open)
+          }}
+          onClose={() => {
+            copySheetOpenRef.current = false
+            setCopySheetOpen(false)
+            setSheet(null)
+          }}
+          onToast={showToast}
+        />}
         {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} onRefresh={() => setOrderRefresh((n) => n + 1)} onToast={showToast} />}
         {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
         {toast && <div className="toast" role="status">{toast}</div>}
@@ -715,8 +760,8 @@ function WhatsAppIcon(): ReactNode {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
 }
 
-function ProductsPage({ entries, settings, session, loading, onToast }: {
-  entries: SearchEntry[]; settings: Settings; session: Session; loading: boolean; onToast: (message: string) => void
+function ProductsPage({ entries, variantIndex, settings, session, loading, onToast }: {
+  entries: SearchEntry[]; variantIndex: Map<string, Product[]>; settings: Settings; session: Session; loading: boolean; onToast: (message: string) => void
 }): ReactNode {
   const setSheet = useApp((state) => state.setSheet)
   const setSelectedProduct = useApp((state) => state.setSelectedProduct)
@@ -802,8 +847,8 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
               const product = results[item.index]
               return (
                 view === 'table'
-                  ? <ProductTableRow key={item.key} product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} index={item.index} start={item.start} measure={virtualizer.measureElement} />
-                  : <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}><ProductCard product={product} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} /></div>
+                  ? <ProductTableRow key={item.key} product={product} variantIndex={variantIndex} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} index={item.index} start={item.start} measure={virtualizer.measureElement} />
+                  : <div key={item.key} data-index={item.index} ref={virtualizer.measureElement} className="virtual-row" style={{ transform: `translateY(${item.start}px)` }}><ProductCard product={product} variantIndex={variantIndex} settings={settings} showPrices={showPrices} canShelf={canShelf} onOpen={() => onOpen(product)} onToast={onToast} /></div>
               )
             })}
           </div>
@@ -813,20 +858,51 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
   )
 }
 
-function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
-  product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
+type VariantShelfRow = { variant: Product; location: ShelfBreakdownItem; index: number }
+
+function variantShelfRows(variants: Product[]): VariantShelfRow[] {
+  return variants.flatMap((variant) =>
+    shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
+  )
+}
+
+function shelfRowsLabel(rows: VariantShelfRow[]): string {
+  return rows.map(({ variant, location }) => [
+    location.shelf.trim(),
+    (location.box || variant.box).trim(),
+    location.qty === null ? '' : locationLabel({ shelf: '', qty: location.qty }, variant.unit)
+  ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
+}
+
+function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
 }): ReactNode {
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
+  const locationTitle = shelfRowsLabel(locationRows)
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))]
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
+  const brand = brandOrigin(product.brand)
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
-    <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
+    <div role="cell" className="brand-col" title={product.brand}>{brand.base || '—'}{brand.origin && <small> · {brand.origin}</small>}</div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
-    {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
+    {canShelf && <div role="cell" className="shelf-col" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+      {shelfNames.length > 0 && <div className="shelf-summary">
+        <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+        <span className="shelf-summary-text">
+          {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+            {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+            {shelf}
+          </span>)}
+        </span>
+      </div>}
+    </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
     <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
   </div>
@@ -921,19 +997,35 @@ function ProductCartActions({ product, onToast, onAdded }: {
   )
 }
 
-function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
-  product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
+function ProductCard({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
+  const locationTitle = shelfRowsLabel(locationRows)
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))]
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
+  const brand = brandOrigin(product.brand)
   return (
     <article className="product-card">
       <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
-        <div className="product-brand">{product.brand || 'Marka belirtilmemiş'}</div>
+        <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>}
+        {(box || (canShelf && shelfNames.length > 0)) && <div className="product-flags">
+          <BoxBadge box={box} />
+          {canShelf && shelfNames.length > 0 && <div className="product-shelf-summary shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+            <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+            <span className="shelf-summary-text">
+              {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+                {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+                {shelf}
+              </span>)}
+            </span>
+          </div>}
+        </div>}
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
@@ -968,7 +1060,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
       if (!entry.brand) continue
       const brand = counts.get(entry.brand)
       if (brand) brand.count++
-      else counts.set(entry.brand, { label: entry.product.brand, count: 1 })
+      else counts.set(entry.brand, { label: brandOrigin(entry.product.brand).base, count: 1 })
     }
     return [...counts.entries()].sort((a, b) => b[1].count - a[1].count || a[1].label.localeCompare(b[1].label, 'tr'))
   }, [entries])
@@ -1010,21 +1102,83 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
   )
 }
 
-function ProductDetail({ product, settings, session, onClose, onToast }: {
-  product: Product; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
+function ProductDetail({ product, variantIndex, settings, session, copySheetOpen, onCopySheetOpenChange, onClose, onToast }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; session: Session
+  copySheetOpen: boolean; onCopySheetOpenChange: (open: boolean) => void; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
+  const matchedVariants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const variants = [product, ...matchedVariants.filter((variant) => variant.id !== product.id)]
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
+  const [savedCopyColumns, setSavedCopyColumns] = useState(() => ({
+    userId: session.user.id,
+    columns: loadCopyColumns(session.user.id)
+  }))
+  useEffect(() => {
+    if (savedCopyColumns.userId !== session.user.id) {
+      setSavedCopyColumns({ userId: session.user.id, columns: loadCopyColumns(session.user.id) })
+    }
+  }, [session.user.id, savedCopyColumns.userId])
+  useEffect(() => {
+    if (savedCopyColumns.userId === session.user.id) saveCopyColumns(session.user.id, savedCopyColumns.columns)
+  }, [savedCopyColumns, session.user.id])
+  const brand = brandOrigin(product.brand)
+  const variantLocations = variantShelfRows(variants)
+  const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
+  const copyResult = (): { html: string; text: string } => productsToClipboard([product], savedCopyColumns.columns, { canShelf, showPrices })
   const copy = async (): Promise<void> => {
-    const value = productsToTsv([product], { canShelf, showPrices })
     try {
-      await navigator.clipboard.writeText(value)
+      const value = copyResult()
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([value.html], { type: 'text/html' }),
+        'text/plain': new Blob([value.text], { type: 'text/plain' })
+      })])
+    } catch {
+      const value = copyResult()
+      try {
+        await navigator.clipboard.writeText(value.text)
+      } catch {
+        const textarea = document.createElement('textarea')
+        textarea.value = value.text
+        textarea.style.position = 'fixed'
+        textarea.style.opacity = '0'
+        document.body.append(textarea)
+        textarea.select()
+        document.execCommand('copy')
+        textarea.remove()
+      }
+    }
+    onToast('Ürün bilgisi kopyalandı.')
+  }
+  const share = async (): Promise<void> => {
+    const text = copyResult().text
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await Share.share({ text })
+        return
+      } catch (reason) {
+        const message = typeof reason === 'object' && reason !== null && 'message' in reason
+          ? String(reason.message)
+          : ''
+        if ((reason instanceof DOMException && reason.name === 'AbortError') || /cancel/i.test(message)) return
+      }
+    }
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ text })
+        return
+      } catch (reason) {
+        if (reason instanceof DOMException && reason.name === 'AbortError') return
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text)
     } catch {
       const textarea = document.createElement('textarea')
-      textarea.value = value
+      textarea.value = text
       textarea.style.position = 'fixed'
       textarea.style.opacity = '0'
       document.body.append(textarea)
@@ -1032,20 +1186,42 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
       document.execCommand('copy')
       textarea.remove()
     }
-    onToast('Ürün bilgisi kopyalandı.')
+    onToast('Metin kopyalandı.')
   }
+  const setCopyColumns = (columns: CopyColumn[]): void => {
+    setSavedCopyColumns({
+      userId: session.user.id,
+      columns: [...new Set<CopyColumn>(['sku', ...columns])]
+    })
+  }
+  const selectedCopyPreset = copyPresetFor(savedCopyColumns.columns)
   return (
+    <>
     <Sheet title="Ürün bilgisi" onClose={onClose}>
       <div className="detail-product-header">
-        <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
-        {product.brand.trim() && <strong className="detail-product-brand">{product.brand}</strong>}
+        <div className="detail-heading">
+          <strong className="product-sku">{product.sku}</strong>
+          <div className="detail-copy-actions">
+            <button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button>
+            <button
+              className="icon-button"
+              aria-label="Kopyalanacak sütunları ayarla"
+              aria-haspopup="dialog"
+              aria-expanded={copySheetOpen}
+              onClick={() => onCopySheetOpenChange(true)}
+            >
+              <ChevronDown size={17} aria-hidden />
+            </button>
+            <button className="button secondary compact" onClick={() => void share()}><Send size={16} /> Paylaş</button>
+          </div>
+        </div>
+        {product.brand.trim() && <strong className="detail-product-brand">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</strong>}
         <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
         {hasDimensions && <DetailRow label="Ölçü d × D × B" value={`${dimensionText} mm`} />}
         {product.min_order > 0 && <DetailRow label="Min. sipariş" value={`${num(product.min_order)} ${product.unit || 'Adet'}`} />}
-        {canShelf && <DetailRow label="Raf" value={product.shelf} />}
         {showPrices && <DetailRow label="Fiyat" value={displayPrice(product.price, product.currency)} />}
         {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={displayPrice(product.list_price, product.currency)} />}
         <DetailRow label="Kategori" value={product.category} />
@@ -1055,10 +1231,70 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
         <DetailRow label="Eşdeğerler" value={product.equivalents} />
         <DetailRow label="Açıklama" value={product.description} />
       </dl>
+      {canShelf ? <section className="detail-shelves" aria-label="Raflar">
+        <h3>Raflar</h3>
+        <div className="detail-location-table" role="table" aria-label="Raf konumları">
+          <div className="detail-location-header" role="row">
+            <span role="columnheader">Raf</span>
+            <span role="columnheader">Kutu durumu</span>
+            <span role="columnheader">Adet</span>
+          </div>
+          {variantLocations.map(({ variant, location, index }) => {
+            const box = location.box || variant.box
+            return <div className={`detail-location-row${variant.id === product.id ? ' selected' : ''}`} key={`${variant.id}-${location.shelf}-${index}`} role="row" aria-label={shelfRowsLabel([{ variant, location, index }])}>
+              <span className="detail-location-shelf" role="cell">
+                <b>{location.shelf || 'Raf belirtilmemiş'}</b>
+                {variant.id === product.id && <small className="detail-location-current">Bu ürün</small>}
+              </span>
+              <span className="detail-location-box" role="cell"><BoxBadge box={box} compact /></span>
+              <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+            </div>
+          })}
+        </div>
+      </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
+        <h3>Kutu durumları</h3>
+        {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
+          <BoxBadge box={variant.box} compact /><strong>{num(variant.stock)} adet</strong>
+        </div>)}
+      </section> : null}
       <div className="product-actions detail-actions">
         <ProductCartActions key={product.id} product={product} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
     </Sheet>
+    {copySheetOpen && <Sheet title="Kopyalanacak sütunlar" onClose={() => onCopySheetOpenChange(false)}>
+      <section className="copy-options-section">
+        <div className="copy-column-presets" aria-label="Sütun ön ayarları">
+          {(['musteri', 'depo'] as const).map((preset) => (
+            <button
+              key={preset}
+              className={`button compact${selectedCopyPreset === preset ? ' primary' : ' secondary'}`}
+              aria-pressed={selectedCopyPreset === preset}
+              onClick={() => setCopyColumns(COPY_COLUMN_PRESETS[preset].columns)}
+            >
+              {COPY_COLUMN_PRESETS[preset].label}
+            </button>
+          ))}
+        </div>
+        <div className="copy-column-options">
+          {availableColumns.map((column) => (
+            <label key={column} className="copy-column-option">
+              <input
+                type="checkbox"
+                checked={savedCopyColumns.columns.includes(column)}
+                disabled={column === 'sku'}
+                onChange={(event) => setCopyColumns(
+                  event.target.checked
+                    ? [...savedCopyColumns.columns, column]
+                    : savedCopyColumns.columns.filter((item) => item !== column)
+                )}
+              />
+              <span>{COPY_COLUMN_LABELS[column]}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+    </Sheet>}
+    </>
   )
 }
 

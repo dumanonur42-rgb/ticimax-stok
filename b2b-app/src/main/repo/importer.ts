@@ -1,5 +1,5 @@
-import type { Currency, ImportLog, ImportOptions, ImportPreview, ImportResult, ProductInput } from '@shared/types'
-import { readFileSync } from 'node:fs'
+import type { Currency, ImportLog, ImportOptions, ImportPreview, ImportResult, ProductInput, ProductLocation } from '@shared/types'
+import { readFileSync, statSync } from 'node:fs'
 import { basename, extname } from 'node:path'
 import { randomUUID } from 'node:crypto'
 import Papa from 'papaparse'
@@ -7,17 +7,24 @@ import * as XLSX from 'xlsx'
 import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { pullProducts } from '../cloud/sync'
-import { canonBox, canonBrand } from '@shared/identity'
+import { boxParts, boxIdentity, brandOrigin, canonBox, canonBrand } from '@shared/identity'
+import { parseProductLocations } from '@shared/locations'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { brandSpellings, resolveBrand } from './products'
+
+const PACKAGING_STATE_WORDS = new Set(['KUTULU', 'KUTUSUZ', 'ORJINAL', 'POSET', 'KAGIT', 'LEKELI', 'AMBALAJ', 'SARGI'])
 
 interface Parsed {
   filename: string
   headers: string[]
   rows: string[][]
+  createdAt?: number
 }
 
 const pending = new Map<string, Parsed>()
+const MAX_PENDING_PREVIEWS = 10
+const PREVIEW_TTL_MS = 30 * 60_000
+const MAX_IMPORT_BYTES = 50 * 1024 * 1024
 const UNREADABLE_FILE_ERROR = 'Dosya okunamadı. Lütfen geçerli bir Excel (.xlsx, .xls) ya da CSV dosyası seçin.'
 
 type Field = keyof ProductInput
@@ -56,10 +63,10 @@ const HEADER_HINTS: [Field, RegExp][] = [
   ['currency', /^(para ?birimi|döviz|doviz|currency|pb)$/i],
   ['min_order', /^(min(imum)? ?sipariş|min ?adet|koli ?içi|paket)$/i],
   ['shelf', /^(raf|raf ?no|raf ?kodu|lokasyon|konum|shelf)$/i],
-  ['box', /^(kutu ?durumu|kutu|ambalaj|paket ?durumu|packaging|box)$/i],
+  ['box', /^(durum|kutu ?durumu|kutu|ambalaj|paket ?durumu|packaging|box)$/i],
   ['barcode', /^(barkod|barcode|ean|gtin)$/i],
   ['image', /^(görsel|gorsel|resim|image|foto)$/i],
-  ['description', /^(açıklama|aciklama|description|detay|not|notlar|açıklama ?2|uzun ?açıklama|durum|ek ?bilgi)$/i],
+  ['description', /^(açıklama|aciklama|description|detay|not|notlar|açıklama ?2|uzun ?açıklama|ek ?bilgi)$/i],
   ['equivalents', /^(muadil|muadiller|eşdeğer|esdeger|karşılık|karsilik|equivalent|alternatif)$/i]
 ]
 
@@ -123,6 +130,10 @@ export function parseBox(raw: string | undefined): string {
 }
 
 function parseFile(path: string): Parsed {
+  const stat = statSync(path)
+  if (stat.size > MAX_IMPORT_BYTES) {
+    throw new Error('Dosya boyutu çok büyük (maksimum 50 MB).')
+  }
   const ext = extname(path).toLowerCase()
   const filename = basename(path)
   let matrix: string[][]
@@ -180,8 +191,17 @@ function parseFile(path: string): Parsed {
 
 export function previewFile(path: string): ImportPreview {
   const parsed = parseFile(path)
+  const now = Date.now()
+  for (const [k, v] of pending) {
+    if (now - (v.createdAt ?? 0) > PREVIEW_TTL_MS) pending.delete(k)
+  }
+  while (pending.size >= MAX_PENDING_PREVIEWS) {
+    const oldest = pending.keys().next().value
+    if (oldest) pending.delete(oldest)
+    else break
+  }
   const token = randomUUID()
-  pending.set(token, parsed)
+  pending.set(token, { ...parsed, createdAt: now })
   const suggestedMapping = suggestMapping(parsed.headers)
   const priceCurrencyHints = Object.fromEntries(parsed.headers.map((header, index) => [
     header,
@@ -229,11 +249,72 @@ function parseCurrency(v: string | undefined, fallback: Currency): Currency {
   return fallback
 }
 
-type LocalRow = Omit<ProductInsert, 'active' | 'deleted'> & { id: number; active: number }
+type LocalRow = Omit<ProductInsert, 'active' | 'deleted' | 'locations'> & { id: number; active: number; locations: string | ProductLocation[] }
 
 const BATCH = 500
 
-export async function runImport(opts: ImportOptions): Promise<ImportResult> {
+function locationBox(raw: string): string {
+  const parts = boxParts(raw)
+  if (!parts) return canonBox(raw)
+  const merged = new Map<string, { count: number | null; state: string; index: number }>()
+  for (const part of parts) {
+    const key = normalize(part.state)
+    const previous = merged.get(key)
+    if (previous) previous.count = previous.count === null && part.count === null ? null : (previous.count ?? 0) + (part.count ?? 0)
+    else merged.set(key, { ...part, index: merged.size })
+  }
+  return [...merged.values()]
+    .sort((a, b) => (a.state === 'Kutulu' ? 0 : a.state === 'Kutusuz' ? 1 : 2) - (b.state === 'Kutulu' ? 0 : b.state === 'Kutusuz' ? 1 : 2) || a.index - b.index)
+    .map(({ count, state }) => `${count === null ? '' : `${count} `}${state}`)
+    .join(' ')
+}
+
+function mergeLocations(current: ProductLocation[], incoming: ProductLocation[]): ProductLocation[] {
+  const result = [...current]
+  for (const location of incoming) {
+    const existing = result.find((item) =>
+      normalize(item.shelf) === normalize(location.shelf) &&
+      normalize(boxIdentity(item.box)) === normalize(boxIdentity(location.box))
+    )
+    if (existing) {
+      existing.qty += location.qty
+      existing.box = locationBox(`${existing.box} ${location.box}`)
+    } else result.push({ ...location })
+  }
+  return result
+}
+
+function joinedShelves(locations: ProductLocation[]): string {
+  const seen = new Set<string>()
+  return locations.map((location) => location.shelf.trim()).filter((shelf) => {
+    const key = normalize(shelf)
+    if (!key || seen.has(key)) return false
+    seen.add(key)
+    return true
+  }).join(' / ')
+}
+
+function editDistanceOne(a: string, b: string): boolean {
+  if (Math.abs(a.length - b.length) > 1) return false
+  let i = 0
+  let j = 0
+  let edits = 0
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      i++
+      j++
+      continue
+    }
+    if (++edits > 1) return false
+    if (a.length > b.length) i++
+    else if (b.length > a.length) j++
+    else { i++; j++ }
+  }
+  if (i < a.length || j < b.length) edits++
+  return edits === 1
+}
+
+export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: typeof pullProducts; cloud?: typeof cloud } = {}): Promise<ImportResult> {
   const parsed = pending.get(opts.token)
   if (!parsed) throw new Error('İçe aktarma oturumu bulunamadı, dosyayı yeniden seçin.')
   if (!parsed.rows.length) throw new Error('Dosya okunamadı. Lütfen Excel (.xlsx) ya da CSV dosyası seçin.')
@@ -249,12 +330,13 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
   if (idx('sku') < 0) throw new Error('"Stok Kodu" sütunu eşlenmeli.')
 
   const fileBrandCounts = brandCountsFromRows(parsed.rows, idx('sku'), idx('brand'), opts.defaultBrand)
-  await pullProducts()
+  const spellings = brandSpellings(fileBrandCounts, opts.mode !== 'replace')
+  await (testDeps.pullProducts ?? pullProducts)()
   const db = getDb()
   const existing = new Map<string, LocalRow>()
   const bySku = new Map<string, LocalRow[]>()
   for (const r of db.prepare('SELECT * FROM products').all() as LocalRow[]) {
-    existing.set(r.key_norm, r)
+    existing.set(productKey(r.sku, resolveBrand(r.brand, spellings), r.box), r)
     bySku.set(r.sku_norm, [...(bySku.get(r.sku_norm) ?? []), r])
   }
   const has = (f: Field): boolean => idx(f) >= 0
@@ -275,18 +357,20 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     const variants = bySku.get(sku_norm)
     if (!variants?.length) return undefined
     if (!has('brand') && !has('box')) return variants.length === 1 ? variants[0] : undefined
-    const free = variants.filter((v) => !claimed.has(v.id) && !v.box && (!has('brand') || normalize(v.brand) === normalize(brand)))
+    const free = variants.filter((v) => !claimed.has(v.id) && !v.box && (!has('brand') || normalize(resolveBrand(v.brand, spellings)) === normalize(brand)))
     if (free.length !== 1) return undefined
     claimed.add(free[0].id)
     return free[0]
   }
 
   const errors: string[] = []
+  const warnings: string[] = []
   let inserted = 0
   let updated = 0
   let unchanged = 0
   let deactivated = 0
   const seen = new Set<string>()
+  const matchedExistingIds = new Set<number>()
   const batch: ProductInsert[] = []
   const rekeyed: ProductInsert[] = []
   const inBatch = new Map<string, ProductInsert>()
@@ -299,22 +383,22 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       return false
     }
     prev.stock += rec.stock
-    if (rec.shelf && prev.shelf && normalize(rec.shelf) !== normalize(prev.shelf)) prev.shelf = `${prev.shelf} / ${rec.shelf}`
-    else if (rec.shelf && !prev.shelf) prev.shelf = rec.shelf
+    prev.locations = mergeLocations(parseProductLocations(prev.locations), parseProductLocations(rec.locations))
+    prev.shelf = joinedShelves(prev.locations) || prev.shelf
+    const locationBoxes = prev.locations.map((location) => location.box).filter(Boolean)
+    if (locationBoxes.length) prev.box = canonBox(locationBoxes.join(' '))
     if (rec.description && !prev.description) prev.description = rec.description
     if (rec.price && !prev.price) prev.price = rec.price
     return true
   }
   let lastShelf = ''
-  const spellings = brandSpellings(fileBrandCounts, opts.mode !== 'replace')
-
   const fromLocal = (ex: LocalRow): ProductInsert => ({
     sku: ex.sku,
     sku_norm: ex.sku_norm,
-    key_norm: ex.key_norm,
+    key_norm: productKey(ex.sku, resolveBrand(ex.brand, spellings), ex.box),
     name: ex.name,
     name_norm: ex.name_norm,
-    brand: ex.brand,
+    brand: resolveBrand(ex.brand, spellings),
     category: ex.category,
     type: ex.type,
     seal: ex.seal,
@@ -329,6 +413,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     card_price: ex.card_price,
     min_order: ex.min_order,
     shelf: ex.shelf,
+    locations: parseProductLocations(ex.locations),
     box: ex.box,
     barcode: ex.barcode,
     image: ex.image,
@@ -344,6 +429,8 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     sku_norm: string
     brand: string
     box: string
+    rawBox: string
+    locationBox: string
     shelf: string
     stockVal: number | null
   }
@@ -362,14 +449,60 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     if (stockRaw && /[A-Za-zÇĞİÖŞÜçğıöşü]/.test(stockRaw)) {
       errors.push(`Satır ${i + 2}: ${skuRaw} adet hücresi "${stockRaw}" sayı değil, ${stockVal ?? 'mevcut/0'} alındı.`)
     }
-    lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(col(row, 'box')), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
+    const boxRaw = col(row, 'box') ?? ''
+    lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(boxRaw), rawBox: boxRaw, locationBox: locationBox(boxRaw), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
   })
 
+  const bySkuBrand = new Map<string, Line[]>()
+  const boxWarnings: string[] = []
+  const emptyStateWarnings: string[] = []
+  const similarBrandWarnings: string[] = []
   for (const line of lines) {
-    const { i, skuRaw, sku_norm, brand, box, stockVal } = line
+    const key = `${line.sku_norm}|${normalize(line.brand)}`
+    bySkuBrand.set(key, [...(bySkuBrand.get(key) ?? []), line])
+    const parts = boxParts(parsed.rows[line.i] ? col(parsed.rows[line.i], 'box') ?? '' : '')
+    const hasPackagingState = line.rawBox.split(/[^A-Za-zÇĞİÖŞÜçğıöşü0-9]+/).some((word) => PACKAGING_STATE_WORDS.has(normalize(word)))
+    if (line.stockVal !== null && parts?.length && parts.every((part) => part.count !== null) && hasPackagingState) {
+      const total = parts.reduce((sum, part) => sum + (part.count ?? 0), 0)
+      if (total !== line.stockVal) boxWarnings.push(`Satır ${line.i + 2}: ${line.skuRaw} · ${line.brand || 'markasız'} — kutu durumu "${line.rawBox}" toplamı ${total}, ADET ${line.stockVal}.`)
+    }
+  }
+  for (const grouped of bySkuBrand.values()) {
+    const labelled = grouped.filter((line) => line.box)
+    if (!labelled.length) continue
+    for (const empty of grouped.filter((line) => !line.box)) {
+      const labels = [...new Set(labelled.map((line) => line.box))]
+      const refs = [...new Set(labelled.map((line) => line.i + 2))]
+      emptyStateWarnings.push(`Satır ${empty.i + 2}: ${empty.skuRaw} · ${empty.brand || 'markasız'} — kutu durumu boş; aynı ürünün "${labels.join(' / ')}" satırı da var (${refs.map((row) => `Satır ${row}`).join(', ')}). Ayrı ürün olarak kaydedilecek.`)
+    }
+  }
+  const brandCounts = new Map<string, { label: string; count: number }>()
+  for (const line of lines) if (line.brand) {
+    const key = normalize(line.brand)
+    const entry = brandCounts.get(key)
+    if (entry) entry.count++
+    else brandCounts.set(key, { label: line.brand, count: 1 })
+  }
+  const brands = [...brandCounts.entries()].filter(([key]) => key.length >= 5)
+  for (let i = 0; i < brands.length && similarBrandWarnings.length < 50; i++) {
+    for (let j = i + 1; j < brands.length && similarBrandWarnings.length < 50; j++) {
+      const [aKey, a] = brands[i]
+      const [bKey, b] = brands[j]
+      if (!editDistanceOne(aKey, bKey)) continue
+      const aOrigin = brandOrigin(a.label)
+      const bOrigin = brandOrigin(b.label)
+      if (normalize(aOrigin.base) === normalize(bOrigin.base) && (aOrigin.origin || bOrigin.origin)) continue
+      similarBrandWarnings.push(`Benzer markalar: "${a.label}" (${a.count} satır) ve "${b.label}" (${b.count} satır). Aynıysa Ayarlar › Marka eşleştirme'den birleştirin.`)
+    }
+  }
+  warnings.push(...boxWarnings, ...emptyStateWarnings, ...similarBrandWarnings)
+
+  for (const line of lines) {
+    const { i, skuRaw, sku_norm, brand, box, locationBox: boxForShelf, shelf, stockVal } = line
     const row = parsed.rows[i]
-    const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm, brand)
-    const key_norm = ex ? ex.key_norm : productKey(skuRaw, brand, box)
+    const ex = lookup(productKey(skuRaw, brand, box), sku_norm, brand)
+    if (opts.mode === 'replace' && ex) matchedExistingIds.add(ex.id)
+    const key_norm = productKey(skuRaw, brand, box)
     const repeat = seen.has(key_norm)
     seen.add(key_norm)
 
@@ -383,19 +516,27 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       }
       if (repeat) {
         const prev = inBatch.get(key_norm)
-        if (prev) prev.stock += stockVal ?? 0
+        if (prev) {
+          prev.stock += stockVal ?? 0
+          const location = { shelf: has('shelf') ? shelf || ex.shelf : ex.shelf, qty: stockVal ?? 0, box: has('box') ? boxForShelf : ex.box }
+          prev.locations = mergeLocations(prev.locations, [location])
+          prev.shelf = joinedShelves(prev.locations) || prev.shelf
+          prev.box = canonBox(prev.locations.map((item) => item.box).filter(Boolean).join(' ')) || prev.box
+        }
         else {
-          fold({ ...fromLocal(ex), stock: ex.stock + (stockVal ?? 0) })
+          const location = { shelf: has('shelf') ? shelf || ex.shelf : ex.shelf, qty: stockVal ?? 0, box: has('box') ? boxForShelf : ex.box }
+          fold({ ...fromLocal(ex), stock: ex.stock + (stockVal ?? 0), shelf: location.shelf, locations: [location] })
           updated++
         }
         continue
       }
       const newStock = stockVal ?? ex.stock
-      if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && cardVal == null && ex.active) {
+      const location = { shelf: has('shelf') ? shelf || ex.shelf : ex.shelf, qty: stockVal ?? 0, box: has('box') ? boxForShelf : ex.box }
+      if (newStock === ex.stock && (priceVal == null || priceVal === ex.price) && (cardVal == null || cardVal === ex.card_price) && normalize(location.shelf) === normalize(ex.shelf) && ex.active) {
         unchanged++
         continue
       }
-      fold({ ...fromLocal(ex), stock: newStock, price: priceVal ?? ex.price, card_price: cardVal ?? ex.card_price })
+      fold({ ...fromLocal(ex), stock: newStock, shelf: location.shelf, locations: [location], price: priceVal ?? ex.price, card_price: cardVal ?? ex.card_price })
       updated++
       continue
     }
@@ -422,6 +563,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       card_price: cardVal,
       min_order: parseNumber(col(row, 'min_order')) ?? 1,
       shelf: line.shelf,
+      locations: [{ shelf: line.shelf, qty: stockVal ?? 0, box: boxForShelf }],
       box,
       barcode: (col(row, 'barcode') ?? '').trim(),
       image: (col(row, 'image') ?? '').trim(),
@@ -453,6 +595,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
         ...(has('card_price') ? { card_price: record.card_price } : {}),
         ...(has('min_order') ? { min_order: record.min_order } : {}),
         ...(has('shelf') ? { shelf: record.shelf } : {}),
+        ...(has('shelf') ? { locations: record.locations } : {}),
         ...(has('box') ? { box: record.box } : {}),
         ...(has('barcode') ? { barcode: record.barcode } : {}),
         ...(has('image') ? { image: record.image } : {}),
@@ -463,7 +606,8 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       seen.add(out.key_norm)
       if (out.key_norm !== ex.key_norm) {
         // Brand/box changed: update the same cloud row instead of inserting a sibling under the new key.
-        if (existing.has(out.key_norm)) {
+        const other = existing.get(out.key_norm)
+        if (other && other.id !== ex.id) {
           errors.push(`Satır ${i + 2}: ${skuRaw} (${out.brand} / ${out.box}) zaten ayrı bir ürün olarak kayıtlı, satır atlandı.`)
           continue
         }
@@ -483,8 +627,17 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     }
   }
 
-  const sb = cloud()
   if (opts.dryRun) {
+    const plannedProducts = [...rekeyed, ...batch]
+    const variantGroups = new Map<string, ProductInsert[]>()
+    for (const product of plannedProducts) {
+      const key = `${product.sku_norm}|${normalize(product.brand)}`
+      variantGroups.set(key, [...(variantGroups.get(key) ?? []), product])
+    }
+    const variantsWithDifferentShelves = [...variantGroups.values()]
+      .filter((products) => new Set(products.map((product) => boxIdentity(product.box))).size > 1 &&
+        new Set(products.flatMap((product) => product.locations.map((location) => normalize(location.shelf))).filter(Boolean)).size > 1)
+      .reduce((total, products) => total + products.length, 0)
     return {
       id: 0,
       filename: parsed.filename,
@@ -494,19 +647,56 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       deactivated: 0,
       mode: opts.mode,
       created_at: new Date().toISOString(),
-      errors: errors.slice(0, 200)
+      errors: errors.slice(0, 200),
+      warnings,
+      dryRunSummary: {
+        products: inserted + updated + unchanged,
+        multiLocationProducts: plannedProducts.filter((product) => product.locations.length > 1).length,
+        variantsWithDifferentShelves,
+        warningsByType: {
+          boxCountMismatch: boxWarnings.length,
+          missingBoxState: emptyStateWarnings.length,
+          similarBrands: similarBrandWarnings.length
+        }
+      }
     }
   }
+  const sb = (testDeps.cloud ?? cloud)()
   if (opts.mode === 'replace') {
-    // Hard delete + catalog_generation bump, so every installation drops its cache and re-pulls the new list.
-    must(await sb.rpc('purge_all_products'))
-    getDb().exec('DELETE FROM products')
-  }
-  for (let i = 0; i < rekeyed.length; i += BATCH) {
-    mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
-  }
-  for (let i = 0; i < batch.length; i += BATCH) {
-    mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+    if (batch.length + rekeyed.length === 0) {
+      throw new Error('Dosyada içe aktarılacak geçerli stok kodlu ürün bulunamadı. Mevcut katalog korunarak işlem iptal edildi.')
+    }
+    const ids: number[] = []
+    try {
+      if (rekeyed.length > 0) {
+        must(await sb.rpc('release_deleted_keys', { p_norms: [...new Set(rekeyed.map((row) => row.key_norm))] }))
+      }
+      for (let i = 0; i < rekeyed.length; i += BATCH) {
+        const rows = must(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }).select('id'))
+        ids.push(...rows.map((row) => row.id))
+      }
+      for (let i = 0; i < batch.length; i += BATCH) {
+        const rows = must(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }).select('id'))
+        ids.push(...rows.map((row) => row.id))
+      }
+    } catch (error) {
+      const failure = new Error('Yükleme yarıda kesildi; eski katalog silinmedi. Tekrar deneyin.')
+      failure.name = error instanceof Error ? error.name : 'Error'
+      Object.defineProperty(failure, 'cause', { value: error })
+      throw failure
+    }
+    must(await sb.rpc('purge_products_except', { p_keep: [...new Set([...matchedExistingIds, ...ids])] }))
+    await (testDeps.pullProducts ?? pullProducts)(true)
+  } else {
+    if (rekeyed.length > 0) {
+      must(await sb.rpc('release_deleted_keys', { p_norms: [...new Set(rekeyed.map((row) => row.key_norm))] }))
+    }
+    for (let i = 0; i < rekeyed.length; i += BATCH) {
+      mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
+    }
+    for (let i = 0; i < batch.length; i += BATCH) {
+      mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+    }
   }
   if (opts.deactivateMissing && opts.mode !== 'replace') {
     deactivated = must(await sb.rpc('deactivate_products_not_in', { p_norms: [...seen] }))
@@ -519,8 +709,8 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       .single()
   )
   pending.delete(opts.token)
-  await pullProducts(opts.mode === 'replace')
-  return { ...log, errors: errors.slice(0, 200) }
+  if (opts.mode !== 'replace') await (testDeps.pullProducts ?? pullProducts)()
+  return { ...log, errors: errors.slice(0, 200), warnings }
 }
 
 export async function importLogs(): Promise<ImportLog[]> {

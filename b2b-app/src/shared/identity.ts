@@ -20,45 +20,125 @@ export function canonBrand(raw: string): string {
   return raw.replace(/\s+/g, ' ').trim().toLocaleUpperCase('tr-TR')
 }
 
-/** Spellings of the same packaging state map to one display label. */
-const BOX_ALIASES: ReadonlyArray<[RegExp, string]> = [
-  [/^KUTUL[UI]$|^KUTU$/, 'Kutulu'],
-  [/^KUTU?S?U?S?Z$|^KUTUSUZ$|^KUTUUSZ$|^KUTSUZ$/, 'Kutusuz'],
-  [/^OR[IJ]{1,2}(INAL)?KAGIT$/, 'Orjinal Kağıt'],
-  [/^POSET(LI)?$/, 'Poşet'],
-  [/^KAGIT(LI)?$/, 'Kağıt']
-]
-
-/** Word-level spellings inside combined labels ("2 Kutulu 1 Kutusz", "Orj Poşet"). */
-const BOX_WORDS: ReadonlyArray<[RegExp, string]> = [
-  [/^KUTUL[UI]$/, 'Kutulu'],
-  [/^KUTU?S?U?S?Z$|^KUTUUSZ$|^KUTSUZ$/, 'Kutusuz'],
-  [/^OR[IJ]{1,2}(INAL)?$/, 'Orjinal'],
-  [/^POSET(LI)?$/, 'Poşet'],
-  [/^KAGIT(LI)?$/, 'Kağıt']
-]
-
-/** Words dropped from a packaging label ("3 adet kutulu" → "Kutulu"). */
+const KUTULU_ALIASES = new Set(['KUTULU', 'KUTULI', 'KUTU', 'KUTULLU'])
+const KUTUSUZ_ALIASES = new Set(['KUTUSUZ', 'KUTUSZ', 'KUTSUZ', 'KUTUUSZ', 'KUTUUSUZ'])
 const BOX_NOISE = /\b(adet|ad\.?|tane|tn\.?)\b/gi
+const BOX_STATE_ALIASES = new Map<string, string>([
+  ['ORJ', 'Orjinal'],
+  ['ORJINAL', 'Orjinal'],
+  ['ORIGINAL', 'Orjinal'],
+  ['ORJKAGIT', 'Orjinal Kağıt'],
+  ['ORJINALKAGIT', 'Orjinal Kağıt'],
+  ['ORIGINALKAGIT', 'Orjinal Kağıt'],
+  ['POSET', 'Poşet'],
+  ['POSETLI', 'Poşet'],
+  ['KAGIT', 'Kağıt'],
+  ['KAGITLI', 'Kağıt']
+])
 
-/** Canonical packaging label: known spellings unified, unknown ones tidied ("10'LU  PAKET" → "10'lu Paket"). */
-export function canonBox(raw: string): string {
+function canonicalBoxText(raw: string): string {
   const text = raw
     .replace(BOX_NOISE, ' ')
     .replace(/(\d)([A-Za-zÇĞİÖŞÜçğıöşü])/g, '$1 $2')
     .replace(/[\s\-–—,;/|:=()[\]]+/g, ' ')
     .trim()
   if (!text) return ''
-  const key = normalize(text)
-  for (const [re, label] of BOX_ALIASES) if (re.test(key)) return label
-  return text
-    .split(' ')
-    .map((w) => {
-      const wk = normalize(w)
-      for (const [re, label] of BOX_WORDS) if (re.test(wk)) return label
-      const lower = w.toLocaleLowerCase('tr-TR')
-      return lower.charAt(0).toLocaleUpperCase('tr-TR') + lower.slice(1)
+  return text.split(' ').map((word) => {
+    const key = normalize(word)
+    if (KUTULU_ALIASES.has(key)) return 'Kutulu'
+    if (KUTUSUZ_ALIASES.has(key)) return 'Kutusuz'
+    return BOX_STATE_ALIASES.get(key) ?? titleWord(word)
+  }).join(' ')
+}
+
+function titleWord(word: string): string {
+  const lower = word.toLocaleLowerCase('tr-TR')
+  return lower.charAt(0).toLocaleUpperCase('tr-TR') + lower.slice(1)
+}
+
+function parseCanonicalBox(text: string): { count: number | null; state: string }[] | null {
+  if (!text) return null
+  const tokens = text.split(' ')
+  const countToken = (value: string): boolean => /^\d+(?:[.,]\d+)?$/.test(value)
+  const packSizeNumber = (index: number): boolean => countToken(tokens[index]) && ['LU', 'LI'].includes(normalize(tokens[index + 1] ?? ''))
+  const isCount = (index: number): boolean => countToken(tokens[index]) && !packSizeNumber(index)
+  const knownStateToken = (value: string): boolean => value === 'Kutulu' || value === 'Kutusuz'
+  const countIndexes = tokens.map((_, index) => isCount(index) ? index : -1).filter((index) => index >= 0)
+  if (countIndexes.length) {
+    const parts: { count: number | null; state: string }[] = []
+    let i = 0
+    while (i < tokens.length) {
+      let count: number | null = null
+      if (isCount(i)) {
+        count = Number(tokens[i++].replace(',', '.'))
+        if (!Number.isFinite(count)) return null
+      }
+      const state: string[] = []
+      while (i < tokens.length && !isCount(i)) state.push(tokens[i++])
+      if (!state.length || state.some((word) => knownStateToken(word) && state.length > 1)) return null
+      parts.push({ count, state: state.join(' ') })
+    }
+    return parts.length ? parts : null
+  }
+  if (tokens.every(knownStateToken)) return tokens.map((state) => ({ count: null, state }))
+  if (tokens.some(knownStateToken)) return null
+  return [{ count: null, state: text }]
+}
+
+/** Parse a label only when it is a complete sequence of count/state groups. */
+export function boxParts(label: string): { count: number | null; state: string }[] | null {
+  return parseCanonicalBox(canonicalBoxText(label))
+}
+
+function canonicalParts(parts: { count: number | null; state: string }[]): { count: number | null; state: string }[] {
+  const merged: { count: number | null; state: string }[] = []
+  const indexByState = new Map<string, number>()
+  for (const part of parts) {
+    const key = normalize(part.state)
+    const index = indexByState.get(key)
+    if (index === undefined) {
+      indexByState.set(key, merged.length)
+      merged.push({ ...part })
+    } else {
+      const previous = merged[index]
+      previous.count = previous.count === null && part.count === null
+        ? null
+        : (previous.count ?? 0) + (part.count ?? 0)
+    }
+  }
+  const known = (state: string): number => state === 'Kutulu' ? 0 : state === 'Kutusuz' ? 1 : 2
+  return merged.map((part, index) => ({ part, index }))
+    .sort((a, b) => known(a.part.state) - known(b.part.state) || a.index - b.index)
+    .map(({ part }) => part)
+}
+
+function renderParts(parts: { count: number | null; state: string }[]): string {
+  if (parts.length === 1) return parts[0].state
+  return parts.map(({ count, state }) => `${count === null ? '' : `${count} `}${state}`).join(' ')
+}
+
+/** Canonical packaging label: known spellings unified and parseable state groups ordered and combined. */
+export function canonBox(raw: string): string {
+  const text = canonicalBoxText(raw)
+  if (!text) return ''
+  const parts = parseCanonicalBox(text)
+  return parts ? renderParts(canonicalParts(parts)) : text
+}
+
+/** Product identity ignores quantities in parseable packaging labels but preserves the full unparsed label. */
+export function boxIdentity(label: string): string {
+  const canonical = canonBox(label)
+  const parts = parseCanonicalBox(canonical)
+  if (!parts) return canonical
+  const seen = new Set<string>()
+  return canonicalParts(parts)
+    .filter(({ state }) => {
+      const key = normalize(state)
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
     })
+    .map(({ state }) => state)
     .join(' ')
 }
 
@@ -81,5 +161,107 @@ export function boxMentions(label: string, word: string): boolean {
 
 /** Product identity: the same code with a different brand or packaging ("Kutulu" / "Kutusuz") is a different product. */
 export function productKey(sku: string, brand: string, box: string): string {
-  return `${normalize(sku)}|${normalize(brand)}|${normalize(canonBox(box))}`
+  return `${normalize(sku)}|${normalize(brand)}|${normalize(boxIdentity(box))}`
+}
+
+export const DEFAULT_BRAND_ALIASES: Record<string, string> = {
+  HOFFMAN: 'HOFFMANN',
+  DURKOOP: 'DURKOPP',
+  DURBALL: 'DURBAL',
+  KYO: 'KOYO',
+  DTEC: 'D-TECH',
+  'D-TEC': 'D-TECH',
+  'GNUTTI ILTAY': 'GNUTTI İTALY',
+  'HIC JAPON': 'HIC JAPAN',
+  'JAF JAPON': 'JAF JAPAN',
+  'JBS JAPON': 'JBS JAPAN',
+  'GMB KORE': 'GMB KOREA'
+}
+
+export function mergeBrandAliases(value: unknown): Record<string, string> {
+  const defaults = Object.fromEntries(Object.entries(DEFAULT_BRAND_ALIASES).map(([from, to]) => [normalize(from), to]))
+  const aliases = { ...defaults }
+  const saved = new Map<string, string>()
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    for (const [from, to] of Object.entries(value)) {
+      const key = normalize(from)
+      if (!key || typeof to !== 'string') continue
+      if (!to.trim()) {
+        delete aliases[key]
+        saved.delete(key)
+      } else {
+        const target = canonBrand(to)
+        aliases[key] = target
+        saved.set(key, target)
+      }
+    }
+  }
+  for (const [key, target] of Object.entries(aliases)) {
+    const targetKey = normalize(target)
+    if (targetKey === key) {
+      delete aliases[key]
+      continue
+    }
+    const reverse = saved.get(targetKey)
+    if (defaults[key] !== undefined && !saved.has(key) && reverse && normalize(reverse) === key) {
+      delete aliases[key]
+    }
+  }
+  return aliases
+}
+
+export interface BrandAliasEntry {
+  key: string
+  source: string
+  target: string
+}
+
+export function brandAliasEntries(value: unknown): BrandAliasEntry[] {
+  const aliases = mergeBrandAliases(value)
+  const sourceLabels = new Map<string, string>()
+  for (const source of Object.keys(DEFAULT_BRAND_ALIASES)) {
+    const key = normalize(source)
+    if (!sourceLabels.has(key) || source.length > sourceLabels.get(key)!.length) sourceLabels.set(key, source)
+  }
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    for (const [source, target] of Object.entries(value)) {
+      const key = normalize(source)
+      if (!key || !aliases[key] || typeof target !== 'string') continue
+      const original = source.trim()
+      if (original && original !== key) sourceLabels.set(key, original)
+    }
+  }
+  return Object.entries(aliases)
+    .map(([key, target]) => ({ key, source: sourceLabels.get(key) ?? key, target }))
+    .sort((a, b) => a.source.localeCompare(b.source) || a.key.localeCompare(b.key))
+}
+
+const ORIGIN_NAMES = new Map<string, string>([
+  ['GERMANY', 'Almanya'],
+  ['JAPAN', 'Japonya'],
+  ['JAPON', 'Japonya'],
+  ['ITALY', 'İtalya'],
+  ['ITALYA', 'İtalya'],
+  ['USA', 'ABD'],
+  ['ENGLAND', 'İngiltere'],
+  ['CIN', 'Çin'],
+  ['CHINA', 'Çin'],
+  ['KORE', 'Kore'],
+  ['KOREA', 'Kore'],
+  ['INDIA', 'Hindistan'],
+  ['ROMANYA', 'Romanya'],
+  ['TURK', 'Türkiye'],
+  ['TURKEY', 'Türkiye'],
+  ['FRANCE', 'Fransa'],
+  ['SWEDEN', 'İsveç']
+])
+
+export function brandOrigin(brand: string): { base: string; origin: string } {
+  const value = brand.replace(/\s+/g, ' ').trim()
+  const suffix = /^(.*?)\s*(?:\(([^()]+)\)|([^\s()]+))$/.exec(value)
+  if (!suffix) return { base: value, origin: '' }
+  const country = normalize(suffix[2] ?? suffix[3] ?? '')
+  const origin = ORIGIN_NAMES.get(country)
+  const base = suffix[1].trim()
+  return origin && base ? { base, origin } : { base: value, origin: '' }
 }

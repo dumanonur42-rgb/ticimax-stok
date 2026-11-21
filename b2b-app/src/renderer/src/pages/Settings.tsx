@@ -6,14 +6,16 @@ import { Confirm, Field, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
+import { brandAliasEntries, DEFAULT_BRAND_ALIASES, normalize } from '@shared/identity'
 import './settings.css'
 
-type Tab = 'gorunum' | 'profil' | 'firma' | 'kullanicilar' | 'veri' | 'sifre'
+type Tab = 'gorunum' | 'profil' | 'firma' | 'marka' | 'kullanicilar' | 'veri' | 'sifre'
 
 const SECTIONS: { id: Tab; label: string; hint: string; icon: LucideIcon; admin?: boolean; dealer?: boolean }[] = [
   { id: 'gorunum', label: 'Görünüm & Erişilebilirlik', hint: 'Tema, yazı ve kullanım', icon: Monitor },
   { id: 'profil', label: 'Firma bilgileri', hint: 'Firma ve iletişim bilgileri', icon: Building2, dealer: true },
   { id: 'firma', label: 'Firma & Fiyat', hint: 'Şirket ve fiyat ayarları', icon: Building2, admin: true },
+  { id: 'marka', label: 'Marka eşleştirme', hint: 'Yazım farklılıklarını birleştirin', icon: Pencil, admin: true },
   { id: 'kullanicilar', label: 'Kullanıcılar', hint: 'Hesaplar ve yetkiler', icon: UsersIcon, admin: true },
   { id: 'veri', label: 'Bulut & Veri', hint: 'Eşitleme ve yerel kopya', icon: Database, admin: true },
   { id: 'sifre', label: 'Şifre', hint: 'Giriş güvenliği', icon: LockKeyhole }
@@ -73,12 +75,64 @@ export function SettingsPage(): ReactNode {
           {tab === 'gorunum' && settings && <Appearance s={settings} />}
           {tab === 'profil' && <MyCompany />}
           {tab === 'firma' && settings && <Company s={settings} />}
+          {tab === 'marka' && settings && <BrandAliases s={settings} />}
           {tab === 'kullanicilar' && <section className="settings-group"><header><h3>Kullanıcılar</h3><p>Hesapları ve erişim yetkilerini yönetin.</p></header><Users /></section>}
           {tab === 'veri' && <Data />}
           {tab === 'sifre' && <Password />}
         </div>
       </div>
     </div>
+  )
+}
+
+function BrandAliases({ s }: { s: S }): ReactNode {
+  const { updateSettings, toast } = useApp()
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [busy, setBusy] = useState(false)
+  const aliases = brandAliasEntries(s.brand_aliases)
+  const save = async (next: Record<string, string>): Promise<void> => {
+    setBusy(true)
+    try {
+      await updateSettings({ brand_aliases: next })
+      toast('Marka eşleştirmeleri kaydedildi.', 'success')
+    } catch (error) {
+      toast((error as Error).message, 'error')
+    } finally {
+      setBusy(false)
+    }
+  }
+  const add = (): void => {
+    const source = from.trim()
+    const key = normalize(source)
+    if (!key || !to.trim()) return
+    const next = Object.fromEntries(Object.entries(s.brand_aliases).filter(([existing]) => normalize(existing) !== key))
+    save({ ...next, [source]: to.trim() })
+    setFrom('')
+    setTo('')
+  }
+  const remove = (key: string): void => {
+    const next = Object.fromEntries(Object.entries(s.brand_aliases).filter(([source]) => normalize(source) !== key))
+    if (Object.keys(DEFAULT_BRAND_ALIASES).some((name) => normalize(name) === key)) next[key] = ''
+    save(next)
+  }
+  return (
+    <section className="settings-group">
+      <header><p>Yazım farklılıkları marka kimliğinde birleştirilir. Değişiklikler bir sonraki Stok Aktar işleminde uygulanır.</p></header>
+      <div className="grid g3">
+        <Field label="Dosyadaki marka">{(id) => <input id={id} className="input" value={from} onChange={(event) => setFrom(event.target.value)} />}</Field>
+        <Field label="Gösterilecek marka">{(id) => <input id={id} className="input" value={to} onChange={(event) => setTo(event.target.value)} />}</Field>
+        <button className="btn primary" onClick={add} disabled={busy || !from.trim() || !to.trim()}><Plus size={16} aria-hidden /> Eşleştirme ekle</button>
+      </div>
+      <ul className="grid" aria-label="Marka eşleştirmeleri">
+        {aliases.map(({ key, source, target }) => (
+          <li key={key} className="row wrap">
+            <strong>{source}</strong><span aria-hidden>→</span><span>{target}</span>
+            <button className="btn small danger" onClick={() => remove(key)} disabled={busy} aria-label={`${source} eşleştirmesini kaldır`}><Trash2 size={14} aria-hidden /> Kaldır</button>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 
@@ -307,7 +361,7 @@ function Users(): ReactNode {
                         <button
                           className="btn ghost icon sm"
                           aria-label={`${u.username} şifresini kopyala`}
-                          onClick={() => void navigator.clipboard.writeText(revealed[u.id] ?? '').then(() => toast('Şifre kopyalandı.', 'success'))}
+                          onClick={() => void api('clipboard:writeText', revealed[u.id] ?? '').then(() => toast('Şifre kopyalandı.', 'success'))}
                         >
                           <Copy size={14} aria-hidden />
                         </button>
@@ -622,7 +676,7 @@ function Password(): ReactNode {
   const [visible, setVisible] = useState(false)
   const [capsLock, setCapsLock] = useState(false)
   const submit = async (): Promise<void> => {
-    if (next.length < 4) return toast('Yeni şifre en az 4 karakter olmalı.', 'error')
+    if (next.length < 6) return toast('Yeni şifre en az 6 karakter olmalı.', 'error')
     if (next !== again) return toast('Şifreler eşleşmiyor.', 'error')
     try {
       await api('auth:changePassword', { current, next })

@@ -1,15 +1,54 @@
 import type { Currency, OrderStatus, Product } from '@shared/types'
+import { DEFAULT_COPY_COLUMNS, productsToClipboard } from '@shared/copy'
+import { useApp } from '@/store/app'
 
-const fmtCache = new Map<string, Intl.NumberFormat>()
+const eurFmt = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const liveRates = { eur: 38.5, usd: 35.5 }
 
-export function money(n: number | null | undefined, cur: Currency = 'TRY'): string {
-  if (n == null) return 'Fiyat sorunuz'
-  let f = fmtCache.get(cur)
-  if (!f) {
-    f = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: cur, maximumFractionDigits: 2 })
-    fmtCache.set(cur, f)
+async function pullLiveRatesInRenderer(): Promise<void> {
+  const urls = [
+    'https://open.er-api.com/v6/latest/EUR',
+    'https://api.frankfurter.app/latest?from=EUR&to=TRY,USD'
+  ]
+  for (const url of urls) {
+    try {
+      const res = await fetch(url)
+      if (!res.ok) continue
+      const data = (await res.json()) as { rates?: { TRY?: unknown; USD?: unknown } }
+      const tryRate = Number(data?.rates?.TRY)
+      const usdRate = Number(data?.rates?.USD)
+      if (Number.isFinite(tryRate) && tryRate > 1 && Number.isFinite(usdRate) && usdRate > 0.1) {
+        liveRates.eur = tryRate
+        liveRates.usd = tryRate / usdRate
+        return
+      }
+    } catch {
+      // ignore
+    }
   }
-  return f.format(n)
+}
+
+if (typeof window !== 'undefined') {
+  void pullLiveRatesInRenderer()
+  setInterval(() => void pullLiveRatesInRenderer(), 30 * 60_000)
+}
+
+export function toEur(n: number | null | undefined, cur: Currency = 'EUR'): number | null {
+  if (n == null || !Number.isFinite(Number(n))) return null
+  const val = Number(n)
+  if (cur === 'EUR') return val
+  const st = useApp.getState?.()?.settings
+  const rEur = Number(st?.rate_eur) > 0 ? Number(st?.rate_eur) : liveRates.eur
+  const rUsd = Number(st?.rate_usd) > 0 ? Number(st?.rate_usd) : liveRates.usd
+  if (cur === 'TRY') return rEur > 0 ? val / rEur : val
+  if (cur === 'USD') return rEur > 0 ? (val * rUsd) / rEur : val
+  return val
+}
+
+export function money(n: number | null | undefined, cur: Currency = 'EUR'): string {
+  const eurVal = toEur(n, cur)
+  if (eurVal == null) return 'Fiyat sorunuz'
+  return eurFmt.format(eurVal)
 }
 
 const numFmt = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 2 })
@@ -49,22 +88,7 @@ export const ROLE_HINT = {
 } as const
 
 export function productsToTsv(products: Product[], opts: { canShelf: boolean; showPrices: boolean }): string {
-  const clean = (value: string): string => value.replace(/[\t\r\n]+/g, ' ').trim()
-  const columns: { label: string; value: (product: Product) => string }[] = []
-  if (opts.canShelf) columns.push({ label: 'Raf', value: (p) => p.shelf })
-  columns.push(
-    { label: 'Ürün Kodu', value: (p) => p.sku },
-    { label: 'Marka', value: (p) => p.brand }
-  )
-  if (products.some((p) => p.d_inner != null || p.d_outer != null || p.width != null))
-    columns.push({ label: 'd×D×B', value: (p) => `${num(p.d_inner)}×${num(p.d_outer)}×${num(p.width)}` })
-  columns.push(
-    { label: 'Stok', value: (p) => num(p.stock) },
-    { label: 'Kutu durumu', value: (p) => p.box },
-    { label: 'Açıklama', value: (p) => p.description }
-  )
-  if (opts.showPrices) columns.push({ label: 'Fiyat', value: (p) => money(p.price, p.currency) })
-  return [columns.map((c) => c.label), ...products.map((p) => columns.map((c) => clean(c.value(p))))].map((row) => row.join('\t')).join('\r\n')
+  return productsToClipboard(products, DEFAULT_COPY_COLUMNS, opts).text
 }
 
 export function stockLevel(stock: number, threshold: number): { cls: 'ok' | 'low' | 'out'; label: string } {
