@@ -88,6 +88,7 @@ export default function App(): ReactNode {
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
+  const [copySheetOpen, setCopySheetOpen] = useState(false)
   const [systemDark, setSystemDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
   const dark = themePreference === 'dark' || (themePreference === 'system' && systemDark)
   const syncRetryCount = useRef(0)
@@ -95,6 +96,7 @@ export default function App(): ReactNode {
   const syncRetryTimer = useRef<number | null>(null)
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const appReadyNotified = useRef(false)
+  const copySheetOpenRef = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
 
@@ -415,6 +417,11 @@ export default function App(): ReactNode {
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
     const goBack = (exitAtHome: boolean): void => {
+      if (copySheetOpenRef.current) {
+        copySheetOpenRef.current = false
+        setCopySheetOpen(false)
+        return
+      }
       const current = useApp.getState()
       if (current.sheet) current.setSheet(null)
       else if (current.tab !== 'home') current.setTab('home')
@@ -430,6 +437,13 @@ export default function App(): ReactNode {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [platform])
+
+  useEffect(() => {
+    if (sheet !== 'detail' && copySheetOpenRef.current) {
+      copySheetOpenRef.current = false
+      setCopySheetOpen(false)
+    }
+  }, [sheet])
 
   useEffect(() => {
     if (!toast) return
@@ -602,7 +616,23 @@ export default function App(): ReactNode {
           onApply={state.setCatalogFilters}
           onClose={() => setSheet(null)}
         />}
-        {sheet === 'detail' && selectedProduct && <ProductDetail product={selectedProduct} variantIndex={productVariants} settings={settings} session={session} onClose={() => setSheet(null)} onToast={showToast} />}
+        {sheet === 'detail' && selectedProduct && <ProductDetail
+          product={selectedProduct}
+          variantIndex={productVariants}
+          settings={settings}
+          session={session}
+          copySheetOpen={copySheetOpen}
+          onCopySheetOpenChange={(open) => {
+            copySheetOpenRef.current = open
+            setCopySheetOpen(open)
+          }}
+          onClose={() => {
+            copySheetOpenRef.current = false
+            setCopySheetOpen(false)
+            setSheet(null)
+          }}
+          onToast={showToast}
+        />}
         {sheet === 'order' && selectedOrderId !== null && <OrderDetail id={selectedOrderId} settings={settings} onClose={() => setSheet(null)} onRefresh={() => setOrderRefresh((n) => n + 1)} onToast={showToast} />}
         {sheet === 'update' && update && <UpdateSheet update={update} onClose={() => setSheet(null)} />}
         {toast && <div className="toast" role="status">{toast}</div>}
@@ -1039,8 +1069,9 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
   )
 }
 
-function ProductDetail({ product, variantIndex, settings, session, onClose, onToast }: {
-  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
+function ProductDetail({ product, variantIndex, settings, session, copySheetOpen, onCopySheetOpenChange, onClose, onToast }: {
+  product: Product; variantIndex: Map<string, Product[]>; settings: Settings; session: Session
+  copySheetOpen: boolean; onCopySheetOpenChange: (open: boolean) => void; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
@@ -1049,7 +1080,6 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
     userId: session.user.id,
     columns: loadCopyColumns(session.user.id)
   }))
-  const [copySheetOpen, setCopySheetOpen] = useState(false)
   useEffect(() => {
     if (savedCopyColumns.userId !== session.user.id) {
       setSavedCopyColumns({ userId: session.user.id, columns: loadCopyColumns(session.user.id) })
@@ -1141,7 +1171,7 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
               aria-label="Kopyalanacak sütunları ayarla"
               aria-haspopup="dialog"
               aria-expanded={copySheetOpen}
-              onClick={() => setCopySheetOpen(true)}
+              onClick={() => onCopySheetOpenChange(true)}
             >
               <ChevronDown size={17} aria-hidden />
             </button>
@@ -1184,7 +1214,7 @@ function ProductDetail({ product, variantIndex, settings, session, onClose, onTo
         <ProductCartActions key={product.id} product={product} onToast={onToast} onAdded={() => window.setTimeout(onClose, 320)} />
       </div>
     </Sheet>
-    {copySheetOpen && <Sheet title="Kopyalanacak sütunlar" onClose={() => setCopySheetOpen(false)}>
+    {copySheetOpen && <Sheet title="Kopyalanacak sütunlar" onClose={() => onCopySheetOpenChange(false)}>
       <section className="copy-options-section">
         <div className="copy-column-presets" aria-label="Sütun ön ayarları">
           {(['musteri', 'depo'] as const).map((preset) => (
