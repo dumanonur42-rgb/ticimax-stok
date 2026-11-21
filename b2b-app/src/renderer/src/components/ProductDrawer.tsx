@@ -22,6 +22,7 @@ export function ProductDrawer({
   showPrices: boolean
   threshold: number
 }): ReactNode {
+  const brand = brandOrigin(product.brand)
   const add = useCart((s) => s.add)
   const toast = useApp((s) => s.toast)
   const session = useApp((s) => s.session)
@@ -126,7 +127,7 @@ export function ProductDrawer({
           <div>
             <h3 style={{ marginBottom: 4 }}>{product.name}</h3>
             <div className="row wrap small">
-              {product.brand && <span className="badge info">{brandOrigin(product.brand).base}{brandOrigin(product.brand).origin && <small> · Menşei: {brandOrigin(product.brand).origin}</small>}</span>}
+              {product.brand && <span className="badge info">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</span>}
               {product.box && <span className="badge neutral">{product.box}</span>}
               {product.category && <span className="badge neutral">{product.category}</span>}
               {product.type && <span className="badge neutral">{product.type}</span>}

@@ -12,6 +12,8 @@ import { parseProductLocations } from '@shared/locations'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { brandSpellings, resolveBrand } from './products'
 
+const PACKAGING_STATE_WORDS = new Set(['KUTULU', 'KUTUSUZ', 'ORJINAL', 'POSET', 'KAGIT', 'LEKELI', 'AMBALAJ', 'SARGI'])
+
 interface Parsed {
   filename: string
   headers: string[]
@@ -312,7 +314,7 @@ function editDistanceOne(a: string, b: string): boolean {
   return edits === 1
 }
 
-export async function runImport(opts: ImportOptions): Promise<ImportResult> {
+export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: typeof pullProducts } = {}): Promise<ImportResult> {
   const parsed = pending.get(opts.token)
   if (!parsed) throw new Error('İçe aktarma oturumu bulunamadı, dosyayı yeniden seçin.')
   if (!parsed.rows.length) throw new Error('Dosya okunamadı. Lütfen Excel (.xlsx) ya da CSV dosyası seçin.')
@@ -329,7 +331,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
 
   const fileBrandCounts = brandCountsFromRows(parsed.rows, idx('sku'), idx('brand'), opts.defaultBrand)
   const spellings = brandSpellings(fileBrandCounts, opts.mode !== 'replace')
-  if (!opts.dryRun) await pullProducts()
+  await (testDeps.pullProducts ?? pullProducts)()
   const db = getDb()
   const existing = new Map<string, LocalRow>()
   const bySku = new Map<string, LocalRow[]>()
@@ -363,7 +365,6 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
 
   const errors: string[] = []
   const warnings: string[] = []
-  const addWarning = (warning: string): void => { if (warnings.length < 50) warnings.push(warning) }
   let inserted = 0
   let updated = 0
   let unchanged = 0
@@ -427,6 +428,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     sku_norm: string
     brand: string
     box: string
+    rawBox: string
     locationBox: string
     shelf: string
     stockVal: number | null
@@ -447,17 +449,21 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       errors.push(`Satır ${i + 2}: ${skuRaw} adet hücresi "${stockRaw}" sayı değil, ${stockVal ?? 'mevcut/0'} alındı.`)
     }
     const boxRaw = col(row, 'box') ?? ''
-    lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(boxRaw), locationBox: locationBox(boxRaw), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
+    lines.push({ i, skuRaw, sku_norm, brand, box: parseBox(boxRaw), rawBox: boxRaw, locationBox: locationBox(boxRaw), shelf: has('shelf') ? shelfCell || lastShelf : '', stockVal })
   })
 
   const bySkuBrand = new Map<string, Line[]>()
+  const boxWarnings: string[] = []
+  const emptyStateWarnings: string[] = []
+  const similarBrandWarnings: string[] = []
   for (const line of lines) {
     const key = `${line.sku_norm}|${normalize(line.brand)}`
     bySkuBrand.set(key, [...(bySkuBrand.get(key) ?? []), line])
     const parts = boxParts(parsed.rows[line.i] ? col(parsed.rows[line.i], 'box') ?? '' : '')
-    if (line.stockVal !== null && parts?.length && parts.every((part) => part.count !== null)) {
+    const hasPackagingState = line.rawBox.split(/[^A-Za-zÇĞİÖŞÜçğıöşü0-9]+/).some((word) => PACKAGING_STATE_WORDS.has(normalize(word)))
+    if (line.stockVal !== null && parts?.length && parts.every((part) => part.count !== null) && hasPackagingState) {
       const total = parts.reduce((sum, part) => sum + (part.count ?? 0), 0)
-      if (total !== line.stockVal) addWarning(`Satır ${line.i + 2}: ${line.skuRaw} · ${line.brand || 'markasız'} — kutu durumu "${line.box}" toplamı ${total}, ADET ${line.stockVal}.`)
+      if (total !== line.stockVal) boxWarnings.push(`Satır ${line.i + 2}: ${line.skuRaw} · ${line.brand || 'markasız'} — kutu durumu "${line.rawBox}" toplamı ${total}, ADET ${line.stockVal}.`)
     }
   }
   for (const grouped of bySkuBrand.values()) {
@@ -466,7 +472,7 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     for (const empty of grouped.filter((line) => !line.box)) {
       const labels = [...new Set(labelled.map((line) => line.box))]
       const refs = [...new Set(labelled.map((line) => line.i + 2))]
-      addWarning(`Satır ${empty.i + 2}: ${empty.skuRaw} · ${empty.brand || 'markasız'} — kutu durumu boş; aynı ürünün "${labels.join(' / ')}" satırı da var (${refs.map((row) => `Satır ${row}`).join(', ')}). Ayrı ürün olarak kaydedilecek.`)
+      emptyStateWarnings.push(`Satır ${empty.i + 2}: ${empty.skuRaw} · ${empty.brand || 'markasız'} — kutu durumu boş; aynı ürünün "${labels.join(' / ')}" satırı da var (${refs.map((row) => `Satır ${row}`).join(', ')}). Ayrı ürün olarak kaydedilecek.`)
     }
   }
   const brandCounts = new Map<string, { label: string; count: number }>()
@@ -477,17 +483,18 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
     else brandCounts.set(key, { label: line.brand, count: 1 })
   }
   const brands = [...brandCounts.entries()].filter(([key]) => key.length >= 5)
-  for (let i = 0; i < brands.length && warnings.length < 50; i++) {
-    for (let j = i + 1; j < brands.length && warnings.length < 50; j++) {
+  for (let i = 0; i < brands.length && similarBrandWarnings.length < 50; i++) {
+    for (let j = i + 1; j < brands.length && similarBrandWarnings.length < 50; j++) {
       const [aKey, a] = brands[i]
       const [bKey, b] = brands[j]
       if (!editDistanceOne(aKey, bKey)) continue
       const aOrigin = brandOrigin(a.label)
       const bOrigin = brandOrigin(b.label)
       if (normalize(aOrigin.base) === normalize(bOrigin.base) && (aOrigin.origin || bOrigin.origin)) continue
-      addWarning(`Benzer markalar: "${a.label}" (${a.count} satır) ve "${b.label}" (${b.count} satır). Aynıysa Ayarlar › Marka eşleştirme'den birleştirin.`)
+      similarBrandWarnings.push(`Benzer markalar: "${a.label}" (${a.count} satır) ve "${b.label}" (${b.count} satır). Aynıysa Ayarlar › Marka eşleştirme'den birleştirin.`)
     }
   }
+  warnings.push(...boxWarnings, ...emptyStateWarnings, ...similarBrandWarnings)
 
   for (const line of lines) {
     const { i, skuRaw, sku_norm, brand, box, locationBox: boxForShelf, shelf, stockVal } = line
@@ -597,7 +604,8 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
       seen.add(out.key_norm)
       if (out.key_norm !== ex.key_norm) {
         // Brand/box changed: update the same cloud row instead of inserting a sibling under the new key.
-        if (existing.get(out.key_norm)?.id !== ex.id) {
+        const other = existing.get(out.key_norm)
+        if (other && other.id !== ex.id) {
           errors.push(`Satır ${i + 2}: ${skuRaw} (${out.brand} / ${out.box}) zaten ayrı bir ürün olarak kayıtlı, satır atlandı.`)
           continue
         }
@@ -644,9 +652,9 @@ export async function runImport(opts: ImportOptions): Promise<ImportResult> {
         multiLocationProducts: plannedProducts.filter((product) => product.locations.length > 1).length,
         variantsWithDifferentShelves,
         warningsByType: {
-          boxCountMismatch: warnings.filter((warning) => warning.includes('kutu durumu "') && warning.includes('toplamı')).length,
-          missingBoxState: warnings.filter((warning) => warning.includes('kutu durumu boş')).length,
-          similarBrands: warnings.filter((warning) => warning.startsWith('Benzer markalar:')).length
+          boxCountMismatch: boxWarnings.length,
+          missingBoxState: emptyStateWarnings.length,
+          similarBrands: similarBrandWarnings.length
         }
       }
     }
