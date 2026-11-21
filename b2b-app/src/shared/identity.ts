@@ -165,7 +165,7 @@ export function productKey(sku: string, brand: string, box: string): string {
 }
 
 export const DEFAULT_BRAND_ALIASES: Record<string, string> = {
-  HOFFMANN: 'HOFFMAN',
+  HOFFMAN: 'HOFFMANN',
   DURKOOP: 'DURKOPP',
   DURBALL: 'DURBAL',
   KYO: 'KOYO',
@@ -188,6 +188,32 @@ export function mergeBrandAliases(value: unknown): Record<string, string> {
     else aliases[key] = canonBrand(to)
   }
   return aliases
+}
+
+export interface BrandAliasEntry {
+  key: string
+  source: string
+  target: string
+}
+
+export function brandAliasEntries(value: unknown): BrandAliasEntry[] {
+  const aliases = mergeBrandAliases(value)
+  const sourceLabels = new Map<string, string>()
+  for (const source of Object.keys(DEFAULT_BRAND_ALIASES)) {
+    const key = normalize(source)
+    if (!sourceLabels.has(key) || source.length > sourceLabels.get(key)!.length) sourceLabels.set(key, source)
+  }
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    for (const [source, target] of Object.entries(value)) {
+      const key = normalize(source)
+      if (!key || !aliases[key] || typeof target !== 'string') continue
+      const original = source.trim()
+      if (original && original !== key) sourceLabels.set(key, original)
+    }
+  }
+  return Object.entries(aliases)
+    .map(([key, target]) => ({ key, source: sourceLabels.get(key) ?? key, target }))
+    .sort((a, b) => a.source.localeCompare(b.source) || a.key.localeCompare(b.key))
 }
 
 const ORIGIN_NAMES = new Map<string, string>([

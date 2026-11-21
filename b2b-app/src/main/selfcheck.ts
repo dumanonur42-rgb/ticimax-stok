@@ -11,7 +11,7 @@ import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders
 import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, runImport, suggestMapping } from './repo/importer'
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { isLocalSetting } from './repo/settings'
-import { boxIdentity, boxMentions, boxParts, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
+import { boxIdentity, boxMentions, boxParts, brandAliasEntries, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
 import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
@@ -866,9 +866,24 @@ export async function runSelfCheck(): Promise<number> {
     boxIdentity("10'LU PAKET") !== boxIdentity("20'LU PAKET") &&
     boxParts('ORJ 10 LU PAKET')?.[0]?.count === null &&
     productKey('A', 'SKF', 'Kutulu') !== productKey('A', 'SKF', 'Kutulu ve Kutusuz')
+  const brandAliasRows = brandAliasEntries({
+    GMBKORE: 'GMB KOREA',
+    HICJAPON: 'HIC JAPAN',
+    GNUTTIILTAY: 'GNUTTI İTALY',
+    UNKNOWNKEY: 'TARGET',
+    'MiXeD Source': 'Target'
+  })
   const brandIdentityOk =
     brandOrigin('FAG GERMANY').base === 'FAG' && brandOrigin('FAG GERMANY').origin === 'Almanya' &&
-    brandOrigin('GERMANY').origin === '' && mergeBrandAliases({}).HOFFMANN === DEFAULT_BRAND_ALIASES.HOFFMANN
+    brandOrigin('GERMANY').origin === '' &&
+    mergeBrandAliases({}).HOFFMAN === 'HOFFMANN' &&
+    mergeBrandAliases({}).HOFFMAN === DEFAULT_BRAND_ALIASES.HOFFMAN &&
+    !('HOFFMANN' in mergeBrandAliases({})) &&
+    brandAliasRows.find(({ key }) => key === 'GMBKORE')?.source === 'GMB KORE' &&
+    brandAliasRows.find(({ key }) => key === 'HICJAPON')?.source === 'HIC JAPON' &&
+    brandAliasRows.find(({ key }) => key === 'GNUTTIILTAY')?.source === 'GNUTTI ILTAY' &&
+    brandAliasRows.find(({ key }) => key === 'UNKNOWNKEY')?.source === 'UNKNOWNKEY' &&
+    brandAliasRows.find(({ key }) => key === 'MIXEDSOURCE')?.source === 'MiXeD Source'
   const shelfFallbackOk = shelfBreakdown({
     shelf: 'A / B', stock: 7, box: 'Kutulu',
     locations: [{ shelf: 'A', qty: 2, box: 'Kutulu' }, { shelf: 'B', qty: 3, box: 'Kutusuz' }]
