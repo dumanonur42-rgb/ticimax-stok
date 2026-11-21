@@ -1518,6 +1518,72 @@ textarea.input {
   padding-bottom: 6px;
   background: var(--bg-selected);
 }
+.copy-split {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+.copy-split > .btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.copy-split-caret {
+  min-width: 30px;
+  margin-left: -1px;
+  padding: 0 6px !important;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.copy-column-popover {
+  position: absolute;
+  z-index: 80;
+  top: calc(100% + 7px);
+  right: 0;
+  width: min(340px, calc(100vw - 28px));
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.copy-column-popover > strong {
+  font-size: .92rem;
+}
+.copy-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.copy-column-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+.copy-column-option {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 5px;
+  border-radius: 6px;
+  font-size: .82rem;
+  cursor: pointer;
+}
+.copy-column-option:hover {
+  background: var(--bg-hover);
+}
+.copy-column-option input {
+  flex: 0 0 auto;
+  accent-color: var(--primary);
+}
+.copy-column-option input:focus-visible,
+.copy-column-popover button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
 .toolbar {
   display: flex;
   align-items: center;

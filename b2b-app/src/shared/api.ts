@@ -55,6 +55,7 @@ export interface ApiMap {
   'traffic:recent': [TrafficRecentQuery, TrafficRecentPage]
   'stock:log': [StockLogQuery, StockLogPage]
   'clipboard:writeText': [string, void]
+  'clipboard:write': [{ text: string; html?: string }, void]
 
   'products:search': [ProductFilter, ProductPage]
   'products:facets': [ProductFilter, Facets]
