@@ -14,7 +14,7 @@ import {
   Monitor, Moon, Sun
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
-import { boxIdentity, brandOrigin, normalize } from '@shared/identity'
+import { brandOrigin, normalize } from '@shared/identity'
 import {
   availableCopyColumns,
   COPY_COLUMN_LABELS,
@@ -883,10 +883,9 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
   const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
   const locationTitle = shelfRowsLabel(locationRows)
-  const firstLocation = locationRows[0]
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const firstBox = firstLocation ? (firstLocation.location.box || firstLocation.variant.box).trim() : ''
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
   const brand = brandOrigin(product.brand)
@@ -897,11 +896,8 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
     {canShelf && <div role="cell" className="shelf-col" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
-      {firstLocation && <div className="shelf-summary">
-        <b className="shelf-summary-name">{firstLocation.location.shelf}</b>
-        {firstBox && boxIdentity(firstBox) !== boxIdentity(box) && <small className="shelf-summary-box"> · {firstBox}</small>}
-        {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, firstLocation.variant.unit)}</small>}
-        {locationRows.length > 1 && <small className="shelf-summary-more">+{locationRows.length - 1}</small>}
+      {shelfNames && <div className="shelf-summary">
+        <b className="shelf-summary-name">{shelfNames}</b>
       </div>}
     </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
@@ -1004,11 +1000,10 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
   const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
   const locationTitle = shelfRowsLabel(locationRows)
-  const firstLocation = locationRows[0]
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const firstBox = firstLocation ? (firstLocation.location.box || firstLocation.variant.box).trim() : ''
   const brand = brandOrigin(product.brand)
   return (
     <article className="product-card">
@@ -1016,15 +1011,12 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
         <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && firstLocation)) && <div className="product-flags">
+        {(box || (canShelf && shelfNames)) && <div className="product-flags">
           <BoxBadge box={box} />
-          {canShelf && firstLocation && <div className="product-shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+          {canShelf && shelfNames && <div className="product-shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
             <span className="product-shelf-summary-text">
-              <b className="shelf-summary-name">{firstLocation.location.shelf}</b>
-              {firstBox && boxIdentity(firstBox) !== boxIdentity(box) && <small className="shelf-summary-box"> · {firstBox}</small>}
-              {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, firstLocation.variant.unit)}</small>}
+              <b className="shelf-summary-name">{shelfNames}</b>
             </span>
-            {locationRows.length > 1 && <small className="shelf-summary-more">+{locationRows.length - 1}</small>}
           </div>}
         </div>}
         {product.description && <p className="product-description">{product.description}</p>}
