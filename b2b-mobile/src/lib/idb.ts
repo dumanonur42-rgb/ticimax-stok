@@ -205,7 +205,10 @@ function schedulePersist(): Promise<void> {
     rejectPersist = reject
     timer = window.setTimeout(() => {
       timer = null
-      void flushBuckets(operationEpoch).then(resolve, reject).finally(() => {
+      void flushBuckets(operationEpoch).then(
+        () => resolvePersist?.(),
+        (error) => rejectPersist?.(error)
+      ).finally(() => {
         persist = null
         resolvePersist = null
         rejectPersist = null
