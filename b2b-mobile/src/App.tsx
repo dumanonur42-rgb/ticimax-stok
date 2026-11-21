@@ -1127,6 +1127,7 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   }, [savedCopyColumns, session.user.id])
   const brand = brandOrigin(product.brand)
   const variantLocations = variantShelfRows(variants)
+  const hideShelfQuantities = variantLocations.length > 0 && variantLocations.every(({ location }) => location.qty === null)
   const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
@@ -1236,11 +1237,11 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
       </dl>
       {canShelf ? <section className="detail-shelves" aria-label="Raflar">
         <h3>Raflar</h3>
-        <div className="detail-location-table" role="table" aria-label="Raf konumları">
+        <div className={`detail-location-table${hideShelfQuantities ? ' without-qty' : ''}`} role="table" aria-label="Raf konumları">
           <div className="detail-location-header" role="row">
             <span role="columnheader">Raf</span>
             <span role="columnheader">Kutu durumu</span>
-            <span role="columnheader">Adet</span>
+            {!hideShelfQuantities && <span role="columnheader">Adet</span>}
           </div>
           {variantLocations.map(({ variant, location, index }) => {
             const box = location.box || variant.box
@@ -1250,10 +1251,11 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
                 {variant.id === product.id && <small className="detail-location-current">Bu ürün</small>}
               </span>
               <span className="detail-location-box" role="cell"><BoxBadge box={box} compact /></span>
-              <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+              {!hideShelfQuantities && <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>}
             </div>
           })}
         </div>
+        {hideShelfQuantities && <p className="detail-location-summary">Toplam {num(product.stock)} {product.unit.trim() || 'adet'} · raf dağılımı belli değil</p>}
       </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
         <h3>Kutu durumları</h3>
         {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
