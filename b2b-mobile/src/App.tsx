@@ -10,7 +10,7 @@ import {
   Check, ClipboardList, Copy, Home, Minus, ChevronDown,
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, Download,
-  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, Sparkles,
+  Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, MapPin, Sparkles,
   Monitor, Moon, Sun
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
@@ -883,7 +883,7 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
   const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
   const locationTitle = shelfRowsLabel(locationRows)
-  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))]
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
@@ -896,8 +896,14 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
     {canShelf && <div role="cell" className="shelf-col" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
-      {shelfNames && <div className="shelf-summary">
-        <b className="shelf-summary-name">{shelfNames}</b>
+      {shelfNames.length > 0 && <div className="shelf-summary">
+        <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+        <span className="shelf-summary-text">
+          {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+            {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+            {shelf}
+          </span>)}
+        </span>
       </div>}
     </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
@@ -1000,7 +1006,7 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
   const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
   const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
   const locationTitle = shelfRowsLabel(locationRows)
-  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
+  const shelfNames = [...new Set(locationRows.map(({ location }) => location.shelf.trim()).filter(Boolean))]
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
@@ -1011,11 +1017,15 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
         <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && shelfNames)) && <div className="product-flags">
+        {(box || (canShelf && shelfNames.length > 0)) && <div className="product-flags">
           <BoxBadge box={box} />
-          {canShelf && shelfNames && <div className="product-shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
-            <span className="product-shelf-summary-text">
-              <b className="shelf-summary-name">{shelfNames}</b>
+          {canShelf && shelfNames.length > 0 && <div className="product-shelf-summary shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+            <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+            <span className="shelf-summary-text">
+              {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+                {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+                {shelf}
+              </span>)}
             </span>
           </div>}
         </div>}
