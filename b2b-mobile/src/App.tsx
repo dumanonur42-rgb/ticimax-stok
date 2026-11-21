@@ -41,7 +41,7 @@ import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
-import { locationLabel, shelfBreakdown, type ShelfBreakdownItem } from '@shared/locations'
+import { locationLabel, shelfBreakdown, shelfQuantitySummary, type ShelfBreakdownItem } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -1127,7 +1127,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   }, [savedCopyColumns, session.user.id])
   const brand = brandOrigin(product.brand)
   const variantLocations = variantShelfRows(variants)
-  const hideShelfQuantities = variantLocations.length > 0 && variantLocations.every(({ location }) => location.qty === null)
+  const shelfQuantities = shelfQuantitySummary(variantLocations)
+  const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
@@ -1255,7 +1256,7 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
             </div>
           })}
         </div>
-        {hideShelfQuantities && <p className="detail-location-summary">Toplam {num(product.stock)} {product.unit.trim() || 'adet'} · raf dağılımı belli değil</p>}
+        {shelfQuantities.notes.map(({ variantId, label }) => <p className="detail-location-summary" key={variantId}>{label}</p>)}
       </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
         <h3>Kutu durumları</h3>
         {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
