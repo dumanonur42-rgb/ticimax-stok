@@ -30,6 +30,8 @@ let dirty = new Set<number>()
 let versions = new Map<number, number>()
 let persist: Promise<void> | null = null
 let timer: number | null = null
+let resolvePersist: (() => void) | null = null
+let rejectPersist: ((reason?: unknown) => void) | null = null
 export let lastCatalogDecryptMs = 0
 
 export function hasLegacyCatalog(): Promise<boolean> {
@@ -199,9 +201,15 @@ function schedulePersist(): Promise<void> {
   if (persist) return persist
   const operationEpoch = epoch
   persist = new Promise((resolve, reject) => {
+    resolvePersist = resolve
+    rejectPersist = reject
     timer = window.setTimeout(() => {
       timer = null
-      void flushBuckets(operationEpoch).then(resolve, reject).finally(() => { persist = null })
+      void flushBuckets(operationEpoch).then(resolve, reject).finally(() => {
+        persist = null
+        resolvePersist = null
+        rejectPersist = null
+      })
     }, 25)
   })
   return persist
@@ -259,8 +267,14 @@ export async function unlockCatalogStorage(): Promise<void> {
 export async function clearLocalCatalog(): Promise<void> {
   locked = true
   epoch++
-  if (timer !== null) window.clearTimeout(timer)
-  timer = null
+  if (timer !== null) {
+    window.clearTimeout(timer)
+    timer = null
+    resolvePersist?.()
+    resolvePersist = null
+    rejectPersist = null
+    persist = null
+  }
   await persist?.catch(() => undefined)
   await keyPromise?.catch(() => undefined)
   persist = null
