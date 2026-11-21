@@ -1,7 +1,7 @@
 import type { CatalogProduct, Facets, Perm, Product, ProductFilter } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ArrowDown, ArrowUp, ChevronDown, ChevronLeft, Copy, Download, Filter, Plus, Search, X } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronDown, ChevronLeft, Copy, Download, Filter, MapPin, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { ProductDrawer } from '@/components/ProductDrawer'
 import { ProductEditor } from '@/components/ProductEditor'
@@ -743,7 +743,7 @@ export function Catalog(): ReactNode {
                   box.trim(),
                   locationLabel({ shelf: '', qty: location.qty }, p.unit)
                 ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
-                const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))].join(', ')
+                const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))]
                 const brand = brandOrigin(p.brand)
                 return (
                   <div
@@ -776,8 +776,14 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {shelfNames ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
-                          <b className="mono shelf-summary-name">{shelfNames}</b>
+                        {shelfNames.length > 0 ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+                          <MapPin className="shelf-summary-icon" size={12} aria-hidden="true" />
+                          <span className="shelf-summary-text">
+                            {shelfNames.map((shelf, index) => <span key={`${shelf}-${index}`}>
+                              {index > 0 && <span className="shelf-summary-separator" aria-hidden="true"> · </span>}
+                              {shelf}
+                            </span>)}
+                          </span>
                         </div> : <span className="faint">—</span>}
                       </div>
                     )}
