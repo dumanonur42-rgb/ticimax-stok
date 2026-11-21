@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
-import { locationLabel, shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 
 export function ProductDrawer({
@@ -35,7 +35,8 @@ export function ProductDrawer({
   const shelfRows = (variants.length ? variants : [product]).flatMap((variant) =>
     shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
   )
-  const hideShelfQuantities = shelfRows.length > 0 && shelfRows.every(({ location }) => location.qty === null)
+  const shelfQuantities = shelfQuantitySummary(shelfRows)
+  const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
 
@@ -167,7 +168,7 @@ export function ProductDrawer({
                     </div>
                   ))}
                 </div>
-                {hideShelfQuantities && <p className="shelf-location-summary">Toplam {num(product.stock)} {product.unit.trim() || 'adet'} · raf dağılımı belli değil</p>}
+                {shelfQuantities.notes.map(({ variantId, label }) => <p className="shelf-location-summary" key={variantId}>{label}</p>)}
               </div>
             </section>
           ) : variants.length > 1 ? (

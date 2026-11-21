@@ -12,7 +12,7 @@ import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, pr
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { isLocalSetting } from './repo/settings'
 import { boxIdentity, boxMentions, boxParts, brandAliasEntries, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
-import { locationLabel, shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
@@ -906,14 +906,36 @@ export async function runSelfCheck(): Promise<number> {
     locations: [{ shelf: 'X', qty: 7, box: 'Kutusuz' }]
   }).every((location) => location.qty === null) && shelfBreakdown({
     shelf: 'A', stock: 7, box: 'Kutulu', locations: []
-  })[0]?.qty === 7
+  })[0]?.qty === 7 && shelfBreakdown({
+    shelf: 'C', stock: 20, box: 'Kutusuz',
+    locations: [{ shelf: 'C', qty: 19, box: 'Kutusuz' }]
+  })[0]?.qty === 20
+  const kutulu = { id: 1, box: 'Kutulu', stock: 10, unit: 'adet', shelf: 'A / B', locations: [] }
+  const kutusuz = { id: 2, box: 'Kutusuz', stock: 20, unit: 'adet', shelf: 'C', locations: [] }
+  const variantShelfRows = [kutulu, kutusuz].flatMap((variant) =>
+    shelfBreakdown(variant).map((location) => ({ variant, location }))
+  )
+  const variantShelfSummary = shelfQuantitySummary(variantShelfRows)
+  const variantShelfSummaryOk = variantShelfRows.find(({ location }) => location.shelf === 'C')?.location.qty === 20 &&
+    variantShelfRows.filter(({ variant }) => variant.id === kutulu.id).every(({ location }) => location.qty === null) &&
+    !variantShelfSummary.hideQuantityColumn &&
+    variantShelfSummary.notes.length === 1 &&
+    variantShelfSummary.notes[0]?.label === 'Kutulu toplam 10 adet · raf dağılımı belli değil'
+  const singleVariant = { id: 3, box: 'Kutulu', stock: 2, unit: 'adet', shelf: 'K1 / YENİ DEPO TAHTA RAF', locations: [] }
+  const singleVariantRows = shelfBreakdown(singleVariant).map((location) => ({ variant: singleVariant, location }))
+  const singleVariantSummary = shelfQuantitySummary(singleVariantRows)
+  const singleVariantSummaryOk = singleVariantRows.length === 2 &&
+    singleVariantRows.every(({ location }) => location.qty === null) &&
+    singleVariantSummary.hideQuantityColumn &&
+    singleVariantSummary.notes.length === 1 &&
+    singleVariantSummary.notes[0]?.label === 'Toplam 2 adet · raf dağılımı belli değil'
   const locationLabelOk = locationLabel({ shelf: 'D7', qty: 1 }) === 'D7 · 1 adet' &&
     locationLabel({ shelf: 'D7', qty: null }, 'kutu') === 'D7'
-  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk || !locationLabelOk) {
-    console.error('box identity, brand-origin/alias identity, or shelf fallback failed')
+  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk || !variantShelfSummaryOk || !singleVariantSummaryOk || !locationLabelOk) {
+    console.error('box identity, brand-origin/alias identity, shelf fallback, or shelf quantity summary failed')
     ok = false
   }
-  console.log(`box identity, brand origin, shelf fallback, location label: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk && locationLabelOk ? 'ok' : 'failed'}`)
+  console.log(`box identity, brand origin, shelf fallback, shelf quantity summary, location label: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk && variantShelfSummaryOk && singleVariantSummaryOk && locationLabelOk ? 'ok' : 'failed'}`)
   if (productKey('51120', 'SKF', 'ORJ KAGIT') !== productKey('51120', 'SKF', 'Orjinal Kağıt')) {
     console.error('box canonicalisation not part of productKey')
     ok = false
