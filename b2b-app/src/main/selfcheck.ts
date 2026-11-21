@@ -335,6 +335,11 @@ export async function runSelfCheck(): Promise<number> {
     canShelf: true,
     showPrices: true
   })
+  const mixedNameOutput = productsToClipboard(copySamples.slice(0, 2), ['sku', 'name'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const firstNameRow = mixedNameOutput.html.match(/<tr style="background:#fff;">([\s\S]*?)<\/tr>/)?.[1] ?? ''
   const emptyColumnsOutput = productsToClipboard([copySamples[2]], ['sku', 'shelf', 'box', 'price', 'stock'], {
     canShelf: true,
     showPrices: true
@@ -397,6 +402,9 @@ export async function runSelfCheck(): Promise<number> {
     !clipboardOutput.text.includes('21.11.2026') &&
     !clipboardOutput.text.includes('Ürün adı: 6205 2RS') &&
     !normalizedNameOutput.text.includes('Ürün adı:') &&
+    !normalizedNameOutput.html.includes('Ürün adı') &&
+    mixedNameOutput.html.includes('>Ürün adı</th>') &&
+    /<td[^>]*>6205 2RS<\/td><td[^>]*><\/td>/.test(firstNameRow) &&
     !clipboardOutput.html.includes('Yamansa Rulman · Ürün listesi') &&
     !clipboardOutput.html.includes('21.11.2026') &&
     clipboardOutput.text.includes('Raf:\n- D7 · Kutulu · 4 adet\n- D7 · Kutusuz · 2 adet\n- D8 · Kutusuz · 8 adet') &&
@@ -421,7 +429,8 @@ export async function runSelfCheck(): Promise<number> {
     clipboardOutput.text.includes('Fiyat: 3,20 €') &&
     clipboardOutput.text.includes('Ölçü: 25 × 52 × 15 mm') &&
     clipboardOutput.text.includes('Stok: 14 adet · Kutulu Kutusuz') &&
-    clipboardOutput.html.includes('€3,20') &&
+    clipboardOutput.html.includes('3,20 €') &&
+    !clipboardOutput.html.includes('€3,20') &&
     !clipboardOutput.text.includes('Fiyat sorunuz') &&
     zeroStockOutput.text.includes('Stok: 0 adet') &&
     emptyColumnsOutput.html.includes('Ürün kodu') &&
