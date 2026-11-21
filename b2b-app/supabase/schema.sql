@@ -400,6 +400,18 @@ begin
   return n;
 end $$;
 
+create or replace function public.release_deleted_keys(p_norms text[]) returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  update products set key_norm = key_norm || '~' || id
+    where deleted and key_norm = any (coalesce(p_norms, '{}')) and key_norm not like '%~%';
+  get diagnostics n = row_count;
+  return n;
+end $$;
+revoke execute on function public.release_deleted_keys(text[]) from anon;
+
 -- Merges duplicate products into one: order lines are re-pointed to the surviving row, stock is summed,
 -- the surviving row takes the chosen field values (p_patch) and the sources are soft-deleted.
 -- Source key_norm values get a "~<id>" suffix so the survivor may adopt one of their identities.

@@ -507,6 +507,7 @@ export async function runSelfCheck(): Promise<number> {
   const replaceFixture = join(app.getPath('temp'), `selfcheck-replace-${Date.now()}.xlsx`)
   let importWarningsOk = false
   let importerRekeyOk = false
+  let releaseDeletedKeysOk = false
   let replaceOrderOk = false
   try {
     const warningRows: string[][] = [
@@ -564,6 +565,53 @@ export async function runSelfCheck(): Promise<number> {
       defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
     }, { pullProducts: async () => 0 })
     importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
+    const releaseCalls: string[] = []
+    const releasedNorms: string[][] = []
+    const releaseCloud = (() => ({
+      from: (table: string) => ({
+        upsert: (rows: ProductInsert[], options: { onConflict?: string }) => {
+          releaseCalls.push(`upsert:${table}:${options.onConflict}`)
+          const data = rows.map((row) => ({ id: row.id ?? rekeyId }))
+          return {
+            data, error: null, status: 200,
+            select: async () => ({ data, error: null, status: 200 })
+          }
+        },
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: async () => ({ data: { id: 1, ...row }, error: null, status: 201 })
+          })
+        })
+      }),
+      rpc: async (name: string, args: { p_norms?: string[] }) => {
+        releaseCalls.push(`rpc:${name}`)
+        if (name === 'release_deleted_keys') releasedNorms.push(args.p_norms ?? [])
+        return { data: 0, error: null, status: 200 }
+      }
+    })) as unknown as typeof cloud
+    const expectedRekeyNorm = productKey(rekeySku, rekeyBrand, canonBox('4 Kutulu 4 Kutusuz'))
+    const releasePrecedesIdUpsert = (calls: string[]): boolean => {
+      const releaseIndex = calls.indexOf('rpc:release_deleted_keys')
+      const idUpsertIndex = calls.indexOf('upsert:products:id')
+      return releaseIndex >= 0 && idUpsertIndex > releaseIndex
+    }
+    let callStart = releaseCalls.length
+    const mergeRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: mergeRekeyPreview.token, mapping: mergeRekeyPreview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const mergeReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[0]?.length === 1 && releasedNorms[0][0] === expectedRekeyNorm
+    callStart = releaseCalls.length
+    const replaceRekeyPreview = previewFile(rekeyFixture)
+    await runImport({
+      token: replaceRekeyPreview.token, mapping: replaceRekeyPreview.suggestedMapping, mode: 'replace', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, { cloud: releaseCloud, pullProducts: async () => 0 })
+    const replaceReleaseOk = releasePrecedesIdUpsert(releaseCalls.slice(callStart)) &&
+      releasedNorms[1]?.length === 1 && releasedNorms[1][0] === expectedRekeyNorm
+    releaseDeletedKeysOk = mergeReleaseOk && replaceReleaseOk
     db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
 
     const replaceUnchangedId = 8_765_433
@@ -661,6 +709,11 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`importer rekey planning: ${importerRekeyOk ? 'ok' : 'failed'}`)
+  if (!releaseDeletedKeysOk) {
+    console.error('importer did not release rekey targets before ID upserts')
+    ok = false
+  }
+  console.log(`release deleted product keys before rekey: ${releaseDeletedKeysOk ? 'ok' : 'failed'}`)
   if (!replaceOrderOk) {
     console.error('replace import did not upload and preserve ids before purging')
     ok = false
