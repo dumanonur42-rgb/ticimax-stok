@@ -1126,7 +1126,10 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
         await Share.share({ text })
         return
       } catch (reason) {
-        if (reason instanceof DOMException && reason.name === 'AbortError') return
+        const message = typeof reason === 'object' && reason !== null && 'message' in reason
+          ? String(reason.message)
+          : ''
+        if ((reason instanceof DOMException && reason.name === 'AbortError') || /cancel/i.test(message)) return
       }
     }
     if (typeof navigator.share === 'function') {
