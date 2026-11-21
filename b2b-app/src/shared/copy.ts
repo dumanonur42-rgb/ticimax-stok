@@ -99,7 +99,7 @@ export function productsToClipboard(
       shelf: shelfLines.join('\n'),
       shelfLines,
       sku: product.sku,
-      name: product.name,
+      name: normalize(product.name) === normalize(product.sku) ? '' : product.name,
       brand: brandLabel(product.brand),
       size: sizeLabel(product),
       stock: quantity(product.stock),
@@ -243,7 +243,7 @@ function htmlTable(
       const align = numeric ? 'text-align:right;' : ''
       const value = column === 'shelf'
         ? productValues.shelfLines.map(valueForHtml).join('<br style="mso-data-placement:same-cell">')
-        : valueForHtml(productValues[column])
+        : valueForHtml(column === 'price' ? productValues.priceText : productValues[column])
       return `<td style="${cellStyle}${bold}${align}">${value}</td>`
     }).join('')
     return `<tr style="background:${index % 2 ? '#F4F7FB' : '#fff'};">${cells}</tr>`
