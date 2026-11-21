@@ -291,6 +291,7 @@ export default function App(): ReactNode {
       if (forced && active) setRequiredUpdate({ platform, version: minimum, ...(platform === 'android' ? { url: androidReleasesPage() } : {}) })
       if (navigator.onLine === false) return
       if (platform === 'ios') {
+        if (!forced && active) setRequiredUpdate(null)
         try { await AppUpdate.getAppUpdateInfo({ country: 'TR' }) } catch { /* Store lookup is unavailable until release. */ }
         return
       }
@@ -299,6 +300,7 @@ export default function App(): ReactNode {
         const storeCurrentVersion = info.currentVersionName || currentVersion
         const storeForced = !!minimum && compareVersions(storeCurrentVersion, minimum) < 0
         if (storeForced && active) setRequiredUpdate({ platform, version: minimum, url: androidReleasesPage() })
+        else if (!forced && active) setRequiredUpdate(null)
         if (info.updateAvailability === AppUpdateAvailability.UPDATE_AVAILABLE) {
           if (storeForced) await AppUpdate.performImmediateUpdate()
           else await AppUpdate.startFlexibleUpdate()
