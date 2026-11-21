@@ -4,7 +4,8 @@ import type { ActivityEvent, ActivityKind, ActivityListQuery, ActivityRow, Activ
 import { app, BrowserWindow, clipboard, dialog, ipcMain, nativeTheme, net, shell } from 'electron'
 import { dirname, join } from 'node:path'
 import { discardFailedOps, flush, outboxCounts, setOutboxUser } from './cloud/outbox'
-import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
+import { cloud, getStoredValue, isTransientCloudError, SESSION_CACHE_STORAGE_KEY, setStoredValue } from './cloud/client'
+import { toUser } from './cloud/map'
 import { flushActivity, logActivity, setActivitySession } from './activity'
 import { onSettingsSync, onSyncEvent, pullProducts, setStoragePolicy, startRealtime, stopRealtime, syncStatus } from './cloud/sync'
 import { dbPath, deleteLocalDatabase, wipeProducts } from './db'
@@ -173,6 +174,46 @@ export function currentRole(): Session['user']['role'] | null {
   return session?.user.role ?? null
 }
 
+async function refreshSessionProfile(userId: string): Promise<void> {
+  const current = session
+  if (!current || current.user.id !== userId) return
+  const result = await cloud().from('profiles').select('*').eq('id', userId).maybeSingle()
+  if (session !== current) return
+  if (result.error) {
+    if (!net.isOnline() || isTransientCloudError(result.error, result.status)) return
+    console.warn('Kullanıcı profili eşitlenemedi.', result.error)
+    return
+  }
+  if (!result.data || !result.data.active || !result.data.approved) {
+    expireSession()
+    return
+  }
+  const user = toUser(result.data)
+  const previous = current.user
+  const changed = previous.username !== user.username ||
+    previous.display_name !== user.display_name ||
+    previous.role !== user.role ||
+    previous.customer_id !== user.customer_id ||
+    previous.active !== user.active ||
+    previous.approved !== user.approved ||
+    JSON.stringify(previous.perms) !== JSON.stringify(user.perms)
+  if (!changed) return
+  const updated = { ...current, user }
+  session = updated
+  setStoredValue(SESSION_CACHE_STORAGE_KEY, JSON.stringify(updated))
+  const policyChanged = setStoragePolicy(user, getSettings().show_prices_to_dealers)
+  broadcast('session:changed')
+  if (previous.role === 'admin' && user.role !== 'admin') stopAdminNotifications()
+  else if (previous.role !== 'admin' && user.role === 'admin') {
+    void startAdminNotifications(user.id, getSettings().background_notifications)
+  }
+  if (policyChanged) {
+    void pullProducts(true)
+      .then(() => broadcast('products:changed'))
+      .catch(() => broadcast('products:changed'))
+  }
+}
+
 /**
  * Runs after sign-in / session restore: shared settings + product mirror pull,
  * realtime listeners, tray notifications (admin).
@@ -191,9 +232,12 @@ async function activate(s: Session, restored = false): Promise<void> {
       if (error || !data.session || data.session.user.id !== userId) {
         if (!net.isOnline() || isTransientRestoreError(error)) return
         const reauthedId = await trySilentReauth().catch(() => null)
-        if (reauthedId === userId) return
-        if (!rememberedSession(userId)) expireSession()
+        if (reauthedId !== userId) {
+          if (!rememberedSession(userId)) expireSession()
+          return
+        }
       }
+      await refreshSessionProfile(userId)
     }).catch(() => undefined).finally(() => {
       sessionCheckInFlight = false
     })
@@ -309,7 +353,13 @@ export function registerIpc(): void {
     if (event === 'status') broadcast('sync:changed', payload)
     else if (event === 'products') broadcast('products:changed')
     else if (event === 'orders') broadcast('orders:changed')
-    else if (event === 'users') broadcast('users:changed')
+    else if (event === 'users') {
+      broadcast('users:changed')
+      const changedUserId = (payload as { id?: string } | undefined)?.id
+      if (changedUserId && changedUserId === session?.user.id) {
+        void refreshSessionProfile(changedUserId).catch((error) => console.warn('Kullanıcı profili eşitlenemedi.', error))
+      }
+    }
     else if (event === 'customers') broadcast('customers:changed')
     else if (event === 'settings') broadcast('settings:changed')
   })

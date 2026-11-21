@@ -314,7 +314,7 @@ function editDistanceOne(a: string, b: string): boolean {
   return edits === 1
 }
 
-export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: typeof pullProducts } = {}): Promise<ImportResult> {
+export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: typeof pullProducts; cloud?: typeof cloud } = {}): Promise<ImportResult> {
   const parsed = pending.get(opts.token)
   if (!parsed) throw new Error('İçe aktarma oturumu bulunamadı, dosyayı yeniden seçin.')
   if (!parsed.rows.length) throw new Error('Dosya okunamadı. Lütfen Excel (.xlsx) ya da CSV dosyası seçin.')
@@ -499,7 +499,7 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
   for (const line of lines) {
     const { i, skuRaw, sku_norm, brand, box, locationBox: boxForShelf, shelf, stockVal } = line
     const row = parsed.rows[i]
-    const ex = opts.mode === 'replace' ? undefined : lookup(productKey(skuRaw, brand, box), sku_norm, brand)
+    const ex = lookup(productKey(skuRaw, brand, box), sku_norm, brand)
     const key_norm = productKey(skuRaw, brand, box)
     const repeat = seen.has(key_norm)
     seen.add(key_norm)
@@ -659,31 +659,29 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
       }
     }
   }
-  const sb = cloud()
+  const sb = (testDeps.cloud ?? cloud)()
   if (opts.mode === 'replace') {
     if (batch.length + rekeyed.length === 0) {
       throw new Error('Dosyada içe aktarılacak geçerli stok kodlu ürün bulunamadı. Mevcut katalog korunarak işlem iptal edildi.')
     }
-    const backup = [...existing.values()].map(fromLocal)
-    // Hard delete + catalog_generation bump, so every installation drops its cache and re-pulls the new list.
-    must(await sb.rpc('purge_all_products'))
-    getDb().exec('DELETE FROM products')
+    const ids: number[] = []
     try {
       for (let i = 0; i < rekeyed.length; i += BATCH) {
-        mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
+        const rows = must(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }).select('id'))
+        ids.push(...rows.map((row) => row.id))
       }
       for (let i = 0; i < batch.length; i += BATCH) {
-        mustVoid(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }))
+        const rows = must(await sb.from('products').upsert(batch.slice(i, i + BATCH), { onConflict: 'key_norm' }).select('id'))
+        ids.push(...rows.map((row) => row.id))
       }
-    } catch (err) {
-      for (let i = 0; i < backup.length; i += BATCH) {
-        try {
-          await sb.from('products').upsert(backup.slice(i, i + BATCH), { onConflict: 'key_norm' })
-        } catch {}
-      }
-      await pullProducts(true).catch(() => undefined)
-      throw err
+    } catch (error) {
+      const failure = new Error('Yükleme yarıda kesildi; eski katalog silinmedi. Tekrar deneyin.')
+      failure.name = error instanceof Error ? error.name : 'Error'
+      Object.defineProperty(failure, 'cause', { value: error })
+      throw failure
     }
+    must(await sb.rpc('purge_products_except', { p_keep: [...new Set(ids)] }))
+    await (testDeps.pullProducts ?? pullProducts)(true)
   } else {
     for (let i = 0; i < rekeyed.length; i += BATCH) {
       mustVoid(await sb.from('products').upsert(rekeyed.slice(i, i + BATCH), { onConflict: 'id' }))
@@ -703,7 +701,7 @@ export async function runImport(opts: ImportOptions, testDeps: { pullProducts?: 
       .single()
   )
   pending.delete(opts.token)
-  await pullProducts(opts.mode === 'replace')
+  if (opts.mode !== 'replace') await (testDeps.pullProducts ?? pullProducts)()
   return { ...log, errors: errors.slice(0, 200), warnings }
 }
 

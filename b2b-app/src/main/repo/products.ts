@@ -26,13 +26,13 @@ import { getSettings } from './settings'
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
   list_price, card_price, min_order, shelf, locations, box, barcode, image, description, equivalents, active, updated_at`
 
-type LocalProductRow = Omit<Product, 'locations'> & { locations: string | ProductLocation[] | null }
+export type LocalProductRow = Omit<Product, 'locations'> & { locations: string | ProductLocation[] | null }
 
 function mapProductRow(row: LocalProductRow): Product {
   return { ...row, locations: parseProductLocations(row.locations) }
 }
 
-function mapProductRows(rows: LocalProductRow[]): Product[] {
+export function mapProductRows(rows: LocalProductRow[]): Product[] {
   return rows.map(mapProductRow)
 }
 

@@ -1,7 +1,8 @@
-import type { DashboardStats, FacetValue, Product } from '@shared/types'
+import type { DashboardStats, FacetValue } from '@shared/types'
 import { cloud, must } from '../cloud/client'
 import { toImportLog, toOrder } from '../cloud/map'
 import { getDb } from '../db'
+import { mapProductRows, type LocalProductRow } from './products'
 import { getSettings } from './settings'
 
 /** Product figures come from the local mirror; order/user figures from the cloud (RLS scopes dealers to their own). */
@@ -23,9 +24,11 @@ export async function dashboardStats(): Promise<DashboardStats> {
       .prepare(`SELECT brand value, COUNT(*) count FROM products WHERE active=1 AND brand<>'' GROUP BY brand ORDER BY count DESC LIMIT 8`)
       .all() as FacetValue[],
     recentOrders: (o.recentOrders ?? []).map((r) => toOrder(r)),
-    lowStock: db
-      .prepare('SELECT * FROM products WHERE active=1 AND stock > 0 AND stock <= ? ORDER BY stock, sku LIMIT 10')
-      .all(s.low_stock_threshold) as Product[],
+    lowStock: mapProductRows(
+      db
+        .prepare('SELECT * FROM products WHERE active=1 AND stock > 0 AND stock <= ? ORDER BY stock, sku LIMIT 10')
+        .all(s.low_stock_threshold) as LocalProductRow[]
+    ),
     lastImport: o.lastImport ? toImportLog(o.lastImport) : null
   }
 }

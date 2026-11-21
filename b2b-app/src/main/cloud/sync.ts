@@ -250,7 +250,10 @@ export function startRealtime(): void {
       onNewOrder?.(p.new as OrderRow)
     })
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, () => listener('orders'))
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => listener('users'))
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, (change) => {
+      const profile = (change.new as { id?: string } | null)?.id ? change.new as { id: string } : change.old as { id?: string } | null
+      listener('users', profile?.id ? { id: profile.id } : undefined)
+    })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'customers' }, () => listener('customers'))
     .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
       pullSettings()

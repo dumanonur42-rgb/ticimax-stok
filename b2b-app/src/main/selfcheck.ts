@@ -1,4 +1,4 @@
-import type { ProductRow } from './cloud/database.types'
+import type { ProductInsert, ProductRow } from './cloud/database.types'
 import Database from 'better-sqlite3-multiple-ciphers'
 import { app } from 'electron'
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
@@ -16,6 +16,7 @@ import { shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
+import { findRefreshedCartProduct } from '@shared/cart'
 
 /**
  * Headless sanity run: `electron . --selfcheck`.
@@ -246,6 +247,20 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`card price visibility: ${cardPricingOk ? 'ok' : 'failed'}`)
+  const cartLine = { id: 10, sku: ' 6205 ', brand: 'FAG', box: 'Kutulu' }
+  const cartProducts = [
+    { id: 11, sku: '6205', brand: 'SKF', box: 'Kutulu' },
+    { id: 12, sku: '6205', brand: 'FAG', box: 'Kutusuz' },
+    { id: 13, sku: '6205', brand: 'FAG', box: 'Kutulu' }
+  ]
+  const cartRefreshOk = findRefreshedCartProduct(cartLine, cartProducts)?.id === 13 &&
+    findRefreshedCartProduct(cartLine, cartProducts.slice(0, 2)) === undefined &&
+    findRefreshedCartProduct(cartLine, [{ ...cartProducts[0], id: 10 }])?.id === 10
+  if (!cartRefreshOk) {
+    console.error('cart refresh matched the wrong product identity')
+    ok = false
+  }
+  console.log(`cart refresh product identity: ${cartRefreshOk ? 'ok' : 'failed'}`)
 
   const currencyFixture = join(app.getPath('temp'), `selfcheck-import-${Date.now()}.csv`)
   let previewCurrencyOk = false
@@ -284,8 +299,10 @@ export async function runSelfCheck(): Promise<number> {
   console.log(`cloud error retry classification: ${cloudErrorsOk ? 'ok' : 'failed'}`)
   const warningFixture = join(app.getPath('temp'), `selfcheck-warnings-${Date.now()}.xlsx`)
   const rekeyFixture = join(app.getPath('temp'), `selfcheck-rekey-${Date.now()}.xlsx`)
+  const replaceFixture = join(app.getPath('temp'), `selfcheck-replace-${Date.now()}.xlsx`)
   let importWarningsOk = false
   let importerRekeyOk = false
+  let replaceOrderOk = false
   try {
     const warningRows: string[][] = [
       ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
@@ -343,12 +360,73 @@ export async function runSelfCheck(): Promise<number> {
     }, { pullProducts: async () => 0 })
     importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
     db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
+
+    const replaceId = 8_765_433
+    const replaceSku = 'QA-REPLACE'
+    const replaceBrand = 'SKF'
+    const replaceKey = productKey(replaceSku, replaceBrand, 'Kutulu')
+    upsertLocal([{
+      id: replaceId, sku: replaceSku, sku_norm: normalize(replaceSku), key_norm: replaceKey,
+      name: replaceSku, name_norm: normalizeText(replaceSku), brand: replaceBrand, category: '', type: '', seal: '',
+      d_inner: null, d_outer: null, width: null, stock: 1, unit: 'Adet', price: 1, currency: 'TRY',
+      list_price: null, card_price: null, min_order: 1, shelf: '', locations: [], box: 'Kutulu',
+      barcode: '', image: '', description: '', equivalents: '', active: true, deleted: false,
+      updated_at: new Date().toISOString()
+    }])
+    const replaceWorkbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(replaceWorkbook, XLSX.utils.aoa_to_sheet([
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu'],
+      [replaceSku, replaceBrand, '2', 'Kutulu']
+    ]), 'Sayfa1')
+    XLSX.writeFile(replaceWorkbook, replaceFixture)
+    const replacePreview = previewFile(replaceFixture)
+    const replaceCalls: string[] = []
+    const fakeCloud = (() => ({
+      from: (table: string) => ({
+        upsert: (rows: ProductInsert[], options: { onConflict?: string }) => ({
+          select: async () => {
+            replaceCalls.push(`upsert:${table}:${options.onConflict}`)
+            return { data: rows.map((row) => ({ id: row.id ?? replaceId })), error: null, status: 200 }
+          }
+        }),
+        insert: (row: Record<string, unknown>) => ({
+          select: () => ({
+            single: async () => {
+              replaceCalls.push(`insert:${table}`)
+              return { data: { id: 1, ...row }, error: null, status: 201 }
+            }
+          })
+        })
+      }),
+      rpc: async (name: string, args: { p_keep?: number[] }) => {
+        replaceCalls.push(`rpc:${name}`)
+        if (name === 'purge_products_except' && args.p_keep?.includes(replaceId)) replaceCalls.push('kept-existing-id')
+        return { data: 0, error: null, status: 200 }
+      }
+    })) as unknown as typeof cloud
+    await runImport({
+      token: replacePreview.token, mapping: replacePreview.suggestedMapping, mode: 'replace', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: false
+    }, {
+      cloud: fakeCloud,
+      pullProducts: async (full) => {
+        replaceCalls.push(`pull:${full === true}`)
+        return 0
+      }
+    })
+    replaceOrderOk = replaceCalls.indexOf('upsert:products:key_norm') < replaceCalls.indexOf('rpc:purge_products_except') &&
+      replaceCalls.indexOf('rpc:purge_products_except') < replaceCalls.indexOf('pull:true') &&
+      replaceCalls.includes('kept-existing-id') &&
+      (db.prepare('SELECT id FROM products WHERE id = ?').get(replaceId) as { id: number } | undefined)?.id === replaceId
+    db.prepare('DELETE FROM products WHERE id = ?').run(replaceId)
   } catch (error) {
     console.error('import warning fixture failed', error)
   } finally {
     if (existsSync(warningFixture)) unlinkSync(warningFixture)
     if (existsSync(rekeyFixture)) unlinkSync(rekeyFixture)
+    if (existsSync(replaceFixture)) unlinkSync(replaceFixture)
     db.prepare('DELETE FROM products WHERE sku = ?').run('QA-REKEY')
+    db.prepare("DELETE FROM products WHERE sku = 'QA-REPLACE'").run()
   }
   if (!importWarningsOk) {
     console.error('import warning generation failed')
@@ -360,6 +438,11 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`importer rekey planning: ${importerRekeyOk ? 'ok' : 'failed'}`)
+  if (!replaceOrderOk) {
+    console.error('replace import did not upload and preserve ids before purging')
+    ok = false
+  }
+  console.log(`replace import upload-before-purge: ${replaceOrderOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {
