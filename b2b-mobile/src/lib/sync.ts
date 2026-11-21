@@ -124,7 +124,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       setState('catalog_generation', currentGeneration),
       setState('product_storage_policy', policy.signature)
     ])
-    changed = policyChanged ? Math.max(1, products.length) : products.length
+    changed = Math.max(1, products.length)
   } else {
     let time = new Date(new Date(storedTime).getTime() - 5 * 60_000).toISOString()
     let id = 0
