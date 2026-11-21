@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { boxIdentity, normalize } from '@shared/identity'
 import type { Customer, PaymentType, Product, Settings, Session } from '@shared/types'
 import { DEFAULT_SETTINGS } from '../lib/defaults'
 import type { DimensionFilters } from '../lib/search'
@@ -86,11 +87,12 @@ export const useCart = create<CartState>()(persist((set) => ({
   setCustomer: (customerId) => set({ customerId }),
   refresh: (products) => set((state) => {
     const byId = new Map(products.map((product) => [product.id, product]))
-    const bySkuAndBrand = new Map(products.map((product) => [`${product.sku}\u0000${product.brand}`, product]))
-    const bySku = new Map(products.map((product) => [product.sku, product]))
+    const identity = (sku: string, brand: string, box: string): string =>
+      `${normalize(sku)}\u0000${normalize(brand)}\u0000${normalize(boxIdentity(box))}`
+    const byProductIdentity = new Map(products.map((product) => [identity(product.sku, product.brand, product.box), product]))
     return {
       lines: state.lines.map((line) => {
-        const product = byId.get(line.product_id) ?? bySkuAndBrand.get(`${line.sku}\u0000${line.brand}`) ?? bySku.get(line.sku)
+        const product = byId.get(line.product_id) ?? byProductIdentity.get(identity(line.sku, line.brand, line.box))
         return product
           ? {
               ...line,
