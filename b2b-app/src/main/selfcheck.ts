@@ -12,7 +12,7 @@ import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, pr
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { isLocalSetting } from './repo/settings'
 import { boxIdentity, boxMentions, boxParts, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
-import { shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
@@ -881,11 +881,13 @@ export async function runSelfCheck(): Promise<number> {
   }).every((location) => location.qty === null) && shelfBreakdown({
     shelf: 'A', stock: 7, box: 'Kutulu', locations: []
   })[0]?.qty === 7
-  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk) {
+  const locationLabelOk = locationLabel({ shelf: 'D7', qty: 1 }) === 'D7 · 1 adet' &&
+    locationLabel({ shelf: 'D7', qty: null }, 'kutu') === 'D7'
+  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk || !locationLabelOk) {
     console.error('box identity, brand-origin/alias identity, or shelf fallback failed')
     ok = false
   }
-  console.log(`box identity, brand origin, shelf fallback: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk ? 'ok' : 'failed'}`)
+  console.log(`box identity, brand origin, shelf fallback, location label: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk && locationLabelOk ? 'ok' : 'failed'}`)
   if (productKey('51120', 'SKF', 'ORJ KAGIT') !== productKey('51120', 'SKF', 'Orjinal Kağıt')) {
     console.error('box canonicalisation not part of productKey')
     ok = false

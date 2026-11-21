@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
-import { shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 
 export function ProductDrawer({
@@ -32,6 +32,9 @@ export function ProductDrawer({
   const [equivalents, setEquivalents] = useState<Product[]>([])
   const [variants, setVariants] = useState<Product[]>([])
   const canSeeShelf = hasPerm(session?.user ?? null, 'shelf')
+  const shelfRows = (variants.length ? variants : [product]).flatMap((variant) =>
+    shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
+  )
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
 
@@ -137,16 +140,32 @@ export function ProductDrawer({
           </div>
 
           {canSeeShelf ? (
-            <section className="shelf-card" role="group" aria-label="Raflar">
+            <section className="shelf-card shelf-card-locations" role="group" aria-label="Raflar">
               <MapPin size={22} aria-hidden />
-              <div><span className="shelf-card-label">Raflar</span>
-                {(variants.length ? variants : [product]).map((variant) => shelfBreakdown(variant).map((location, index) =>
-                  <div className={`shelf-location-line${variant.id === product.id ? ' selected' : ''}`} key={`${variant.id}-${location.shelf}-${index}`}>
-                    <BoxParts value={location.box || variant.box} />
-                    <b className="mono">{location.shelf || 'Raf belirtilmemiş'}</b>
-                    {location.qty !== null && <strong>{num(location.qty)} adet</strong>}
+              <div className="shelf-card-content">
+                <span className="shelf-card-label">Raflar</span>
+                <div className="shelf-location-table" role="table" aria-label="Raf konumları">
+                  <div className="shelf-location-header" role="row">
+                    <span role="columnheader">Raf</span>
+                    <span role="columnheader">Kutu durumu</span>
+                    <span role="columnheader">Adet</span>
                   </div>
-                ))}
+                  {shelfRows.map(({ variant, location, index }) => (
+                    <div
+                      className={`shelf-location-row${variant.id === product.id ? ' selected' : ''}`}
+                      key={`${variant.id}-${location.shelf}-${index}`}
+                      role="row"
+                      aria-label={`${locationLabel(location, variant.unit)}${location.box || variant.box ? ` · ${location.box || variant.box}` : ''}`}
+                    >
+                      <span className="shelf-location-shelf" role="cell">
+                        <b className="mono">{location.shelf || 'Raf belirtilmemiş'}</b>
+                        {variant.id === product.id && <small className="shelf-current-tag">Bu ürün</small>}
+                      </span>
+                      <span className="shelf-location-box" role="cell"><BoxParts value={location.box || variant.box} /></span>
+                      <strong className="shelf-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
           ) : variants.length > 1 ? (
