@@ -3,14 +3,16 @@ import Database from 'better-sqlite3-multiple-ciphers'
 import { app } from 'electron'
 import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
+import * as XLSX from 'xlsx'
+import { classifyCloudError, cloud, getStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 import { pullProducts, upsertLocal } from './cloud/sync'
 import { dbPath, getDb, normalize, normalizeText, openDatabaseForSelfCheck, productKey, wipeProducts } from './db'
 import { createOrder, getOrder, listOrders, setOrderStatus } from './repo/orders'
-import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, suggestMapping } from './repo/importer'
+import { brandCountsFromRows, inferCurrencyFromValues, parseBox, parseNumber, previewFile, runImport, suggestMapping } from './repo/importer'
 import { brandSpellings, duplicateGroups, getProduct, productFacets, resolveBrand, saveProduct, searchProducts } from './repo/products'
 import { isLocalSetting } from './repo/settings'
-import { boxMentions, canonBrand } from '@shared/identity'
+import { boxIdentity, boxMentions, boxParts, brandOrigin, canonBrand, canonBox, DEFAULT_BRAND_ALIASES, mergeBrandAliases } from '@shared/identity'
+import { shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
@@ -190,6 +192,43 @@ async function storageSelfCheck(): Promise<boolean> {
 }
 
 export async function runSelfCheck(): Promise<number> {
+  if (process.env.B2B_OFFLINE_IMPORT_FILE) {
+    app.setPath('userData', join(app.getPath('temp'), `yamansa-import-plan-${Date.now()}`))
+    const path = process.env.B2B_OFFLINE_IMPORT_FILE
+    const reportPath = process.env.B2B_OFFLINE_IMPORT_REPORT ?? '/home/ubuntu/pw/yeni_liste_dryrun.txt'
+    const preview = previewFile(path)
+    if (!preview.suggestedMapping.sku) throw new Error('Dosyada ürün kodu / adı kolonu eşlenemedi.')
+    const result = await runImport({
+      token: preview.token,
+      mapping: preview.suggestedMapping,
+      mode: 'replace',
+      deactivateMissing: false,
+      defaultCurrency: preview.suggestedCurrency ?? 'TRY',
+      defaultBrand: '',
+      defaultCategory: '',
+      dryRun: true
+    })
+    const summary = result.dryRunSummary
+    if (!summary) throw new Error('Deneme planı özeti oluşturulamadı.')
+    const lines = [
+      `Dosya: ${result.filename}`,
+      `Satır sayısı: ${preview.totalRows}`,
+      `Ürün: ${summary.products}`,
+      `Birden fazla rafı olan ürün: ${summary.multiLocationProducts}`,
+      `Farklı raflarda bulunan varyant: ${summary.variantsWithDifferentShelves}`,
+      `Uyarı türleri: kutu/adet=${summary.warningsByType.boxCountMismatch}, boş DURUM=${summary.warningsByType.missingBoxState}, benzer marka=${summary.warningsByType.similarBrands}`,
+      '',
+      `Kontrol edilmesi gerekenler (${result.warnings.length}):`,
+      ...result.warnings.map((warning) => `- ${warning}`),
+      '',
+      `Hatalar (${result.errors.length}):`,
+      ...result.errors.map((error) => `- ${error}`)
+    ]
+    writeFileSync(reportPath, `${lines.join('\n')}\n`, 'utf8')
+    console.log(lines.join('\n'))
+    console.log(`offline import report: ${reportPath}`)
+    return 0
+  }
   const t0 = performance.now()
   const db = getDb()
   let ok = await storageSelfCheck()
@@ -229,6 +268,50 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`import currency detection and parsing: ${currencyParsingOk ? 'ok' : 'failed'}`)
+  const cloudErrorCases = [
+    [503, undefined, 'retryable'],
+    [undefined, 'PGRST002', 'retryable'],
+    [400, undefined, 'rejected'],
+    [undefined, '23505', 'rejected'],
+    [undefined, '42501', 'rejected']
+  ] as const
+  const cloudErrorsOk = cloudErrorCases.every(([status, code, want]) => classifyCloudError({ status, code }, status) === want) &&
+    classifyCloudError({ code: '', message: '<html>gateway unavailable</html>' }, 503) === 'retryable'
+  if (!cloudErrorsOk) {
+    console.error('cloud outage classification failed')
+    ok = false
+  }
+  console.log(`cloud error retry classification: ${cloudErrorsOk ? 'ok' : 'failed'}`)
+  const warningFixture = join(app.getPath('temp'), `selfcheck-warnings-${Date.now()}.xlsx`)
+  let importWarningsOk = false
+  try {
+    const sheet = XLSX.utils.aoa_to_sheet([
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
+      ['QA-WARN-A', 'RODAMAX', '4', '2 Kutulu', 'A'],
+      ['QA-WARN-A', 'RODAMAX', '2', '', 'B'],
+      ['QA-WARN-B', 'RODAMAXX', '1', 'Kutusuz', 'C']
+    ])
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, sheet, 'Sayfa1')
+    XLSX.writeFile(workbook, warningFixture)
+    const preview = previewFile(warningFixture)
+    const planned = await runImport({
+      token: preview.token, mapping: preview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
+    })
+    importWarningsOk = planned.warnings.some((warning) => warning.includes('toplamı 2, ADET 4')) &&
+      planned.warnings.some((warning) => warning.includes('kutu durumu boş') && warning.includes('Satır 2')) &&
+      planned.warnings.some((warning) => warning.includes('Benzer markalar') && warning.includes('RODAMAXX'))
+  } catch (error) {
+    console.error('import warning fixture failed', error)
+  } finally {
+    if (existsSync(warningFixture)) unlinkSync(warningFixture)
+  }
+  if (!importWarningsOk) {
+    console.error('import warning generation failed')
+    ok = false
+  }
+  console.log(`import warning generation: ${importWarningsOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {
@@ -255,6 +338,7 @@ export async function runSelfCheck(): Promise<number> {
       card_price: null,
       min_order: 1,
       shelf: `A-${(i % 40) + 1}`,
+      locations: [],
       box: '',
       barcode: '',
       image: '',
@@ -304,7 +388,7 @@ export async function runSelfCheck(): Promise<number> {
     ['kutusuz', 'Kutusuz'],
     ['KUTULU', 'Kutulu'],
     ['orj kağıt', 'Orjinal Kağıt'],
-    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Orjinal Kağıt 1 Kutusuz'],
+    ['3 KUTULU 1 ORJ\nKAĞIT 1\nKUTUSUZ', '3 Kutulu 1 Kutusuz 1 Orjinal Kağıt'],
     ['2KUTULU 1KUTUSZ', '2 Kutulu 1 Kutusuz'],
     ['33 KUTULU – 1 KUTUSUZ', '33 Kutulu 1 Kutusuz'],
     ['', '']
@@ -316,6 +400,36 @@ export async function runSelfCheck(): Promise<number> {
       ok = false
     }
   }
+  const boxIdentityOk =
+    ['KUTULU', 'KUTULI', 'KUTU', 'KUTULLU'].every((value) => canonBox(value) === 'Kutulu') &&
+    ['KUTUSUZ', 'KUTUSZ', 'KUTSUZ', 'KUTUUSZ', 'KUTUUSUZ'].every((value) => canonBox(value) === 'Kutusuz') &&
+    canonBox('2 KUTULU 1 KUTUSUZ 3 KUTULU') === '5 Kutulu 1 Kutusuz' &&
+    canonBox('2 KUTULU') === 'Kutulu' &&
+    boxIdentity('4 Kutulu 2 Kutusuz') === boxIdentity('1 Kutusuz 2 Kutulu') &&
+    boxIdentity('ORJ 10 LU PAKET') !== boxIdentity('ORJ 20 LU PAKET') &&
+    boxIdentity("10'LU PAKET") !== boxIdentity("20'LU PAKET") &&
+    boxParts('ORJ 10 LU PAKET')?.[0]?.count === null &&
+    productKey('A', 'SKF', 'Kutulu') !== productKey('A', 'SKF', 'Kutulu ve Kutusuz')
+  const brandIdentityOk =
+    brandOrigin('FAG GERMANY').base === 'FAG' && brandOrigin('FAG GERMANY').origin === 'Almanya' &&
+    brandOrigin('GERMANY').origin === '' && mergeBrandAliases({}).HOFFMANN === DEFAULT_BRAND_ALIASES.HOFFMANN
+  const shelfFallbackOk = shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'A', qty: 2, box: 'Kutulu' }, { shelf: 'B', qty: 3, box: 'Kutusuz' }]
+  }).length === 2 && shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'A', qty: 2, box: 'Kutulu' }, { shelf: 'B', qty: 3, box: 'Kutusuz' }]
+  }).every((location) => location.qty === null) && shelfBreakdown({
+    shelf: 'A / B', stock: 7, box: 'Kutulu',
+    locations: [{ shelf: 'X', qty: 7, box: 'Kutusuz' }]
+  }).every((location) => location.qty === null) && shelfBreakdown({
+    shelf: 'A', stock: 7, box: 'Kutulu', locations: []
+  })[0]?.qty === 7
+  if (!boxIdentityOk || !brandIdentityOk || !shelfFallbackOk) {
+    console.error('box identity, brand-origin/alias identity, or shelf fallback failed')
+    ok = false
+  }
+  console.log(`box identity, brand origin, shelf fallback: ${boxIdentityOk && brandIdentityOk && shelfFallbackOk ? 'ok' : 'failed'}`)
   if (productKey('51120', 'SKF', 'ORJ KAGIT') !== productKey('51120', 'SKF', 'Orjinal Kağıt')) {
     console.error('box canonicalisation not part of productKey')
     ok = false
@@ -396,6 +510,7 @@ export async function runSelfCheck(): Promise<number> {
     card_price: null,
     min_order: 1,
     shelf: '',
+    locations: [],
     box,
     barcode: '',
     image: '',

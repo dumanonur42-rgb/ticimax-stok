@@ -301,9 +301,18 @@ export function Import(): ReactNode {
               <span className="badge ok">{num(trial.inserted)} yeni</span>
               <span className="badge neutral">{num(trial.updated)} güncellenecek</span>
               <span className="badge neutral">{num(trial.unchanged)} değişmeyecek</span>
-              <span className={`badge ${trial.errors.length ? 'low' : 'neutral'}`}>{num(trial.errors.length)} uyarı</span>
+              <span className={`badge ${trial.errors.length ? 'low' : 'neutral'}`}>{num(trial.errors.length)} hata</span>
+              <span className={`badge ${trial.warnings.length ? 'low' : 'neutral'}`}>{num(trial.warnings.length)} kontrol</span>
               <span className="muted small">Henüz hiçbir şey yazılmadı.</span>
             </div>
+          )}
+          {trial && trial.warnings.length > 0 && (
+            <section className="card" role="status">
+              <h3>Kontrol edilmesi gerekenler ({trial.warnings.length})</h3>
+              <ul className="small" style={{ maxHeight: 240, overflow: 'auto' }}>
+                {trial.warnings.map((warning, index) => <li key={index}>{warning}</li>)}
+              </ul>
+            </section>
           )}
         </section>
       )}

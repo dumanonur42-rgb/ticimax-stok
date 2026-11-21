@@ -3,7 +3,7 @@ import { app } from 'electron'
 import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { normalize, productKey } from '@shared/identity'
+import { brandOrigin, normalize, productKey } from '@shared/identity'
 import { decryptAtRest, encryptAtRest, ensureAtRestAvailable } from './storage'
 import { setStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 
@@ -214,6 +214,7 @@ CREATE TABLE IF NOT EXISTS products (
   name_norm TEXT NOT NULL DEFAULT '',
   brand TEXT NOT NULL DEFAULT '',
   brand_norm TEXT NOT NULL DEFAULT '',
+  brand_base TEXT NOT NULL DEFAULT '',
   category TEXT NOT NULL DEFAULT '',
   type TEXT NOT NULL DEFAULT '',
   seal TEXT NOT NULL DEFAULT '',
@@ -226,6 +227,7 @@ CREATE TABLE IF NOT EXISTS products (
   card_price REAL,
   min_order REAL NOT NULL DEFAULT 1,
   shelf TEXT NOT NULL DEFAULT '',
+  locations TEXT NOT NULL DEFAULT '[]',
   box TEXT NOT NULL DEFAULT '',
   box_norm TEXT NOT NULL DEFAULT '',
   barcode TEXT NOT NULL DEFAULT '',
@@ -301,6 +303,20 @@ function ensurePriceNullable(d: DB): void {
   }
 }
 
+function ensureProductColumns(d: DB): void {
+  const cols = new Set((d.prepare('PRAGMA table_info(products)').all() as Array<{ name: string }>).map((col) => col.name))
+  if (!cols.has('locations')) d.exec("ALTER TABLE products ADD COLUMN locations TEXT NOT NULL DEFAULT '[]'")
+  if (!cols.has('brand_base')) {
+    d.exec("ALTER TABLE products ADD COLUMN brand_base TEXT NOT NULL DEFAULT ''")
+    const rows = d.prepare('SELECT id, brand FROM products').all() as Array<{ id: number; brand: string }>
+    const update = d.prepare('UPDATE products SET brand_base = ? WHERE id = ?')
+    d.transaction(() => {
+      for (const row of rows) update.run(brandOrigin(row.brand).base, row.id)
+    })()
+  }
+  d.exec('CREATE INDEX IF NOT EXISTS idx_products_brand_base ON products(brand_base)')
+}
+
 function migrate(d: DB): void {
   d.exec('CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
   const v = (d.prepare("SELECT value FROM sync_state WHERE key = 'mirror_schema'").get() as { value: string } | undefined)?.value
@@ -314,6 +330,7 @@ function migrate(d: DB): void {
     d.prepare("INSERT OR REPLACE INTO sync_state(key, value) VALUES ('mirror_schema', ?)").run(MIRROR_SCHEMA)
   }
   d.exec(SCHEMA)
+  ensureProductColumns(d)
   ensurePriceNullable(d)
 }
 

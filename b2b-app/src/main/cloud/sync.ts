@@ -1,4 +1,5 @@
 import type { SyncStatus, User } from '@shared/types'
+import { brandOrigin } from '@shared/identity'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 import { getDb, normalizeText } from '../db'
 import { pullSettings } from '../repo/settings'
@@ -50,7 +51,7 @@ export function setStoragePolicy(user: User, showPricesToDealers: boolean): bool
   }
   if (storagePolicy.canSeeShelf && !next.canSeeShelf) {
     try {
-      getDb().exec("UPDATE products SET shelf = ''")
+      getDb().exec("UPDATE products SET shelf = '', locations = '[]'")
     } catch {}
   }
   storagePolicy = next
@@ -96,10 +97,10 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
-const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
-  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
+const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, brand_base, category, type, seal, d_inner, d_outer, width, stock, unit,
+  price, currency, list_price, card_price, min_order, shelf, locations, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
+  VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@brand_base,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
+  @currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 export function upsertLocal(rows: ProductRow[]): void {
@@ -122,6 +123,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         name_norm: r.name_norm,
         brand: r.brand,
         brand_norm: normalizeText(r.brand),
+        brand_base: brandOrigin(r.brand).base,
         category: r.category,
         type: r.type,
         seal: r.seal,
@@ -136,6 +138,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         card_price: storagePolicy.hidePrices || r.card_price === null ? null : Number(r.card_price),
         min_order: Number(r.min_order),
         shelf: storagePolicy.canSeeShelf ? r.shelf : '',
+        locations: storagePolicy.canSeeShelf ? JSON.stringify(r.locations ?? []) : '[]',
         box: r.box,
         box_norm: normalizeText(r.box),
         barcode: r.barcode,

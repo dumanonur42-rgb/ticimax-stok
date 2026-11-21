@@ -25,6 +25,7 @@ const empty = (cur: Currency): ProductInput => ({
   card_price: null,
   min_order: 1,
   shelf: '',
+  locations: [],
   box: '',
   barcode: '',
   image: '',

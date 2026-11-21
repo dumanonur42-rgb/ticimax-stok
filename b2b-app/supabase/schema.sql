@@ -60,6 +60,7 @@ create table if not exists public.products (
   card_price numeric,
   min_order numeric not null default 1,
   shelf text not null default '',
+  locations jsonb not null default '[]'::jsonb,
   box text not null default '',
   barcode text not null default '',
   image text not null default '',
@@ -69,6 +70,7 @@ create table if not exists public.products (
   deleted boolean not null default false,
   updated_at timestamptz not null default now()
 );
+alter table public.products add column if not exists locations jsonb not null default '[]'::jsonb;
 create index if not exists products_updated_at on public.products (updated_at, id);
 -- v1.0.8: code-only identity -> code + brand + box
 alter table public.products add column if not exists box text not null default '';

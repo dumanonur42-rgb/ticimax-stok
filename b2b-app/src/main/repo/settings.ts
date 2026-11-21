@@ -1,4 +1,5 @@
 import { SUPPORT_PHONE, type Settings } from '@shared/types'
+import { DEFAULT_BRAND_ALIASES } from '@shared/identity'
 import { cloud, must, mustVoid } from '../cloud/client'
 import { getDb } from '../db'
 
@@ -19,7 +20,8 @@ export const DEFAULT_SETTINGS: Settings = {
   font_scale: 1,
   reduce_motion: false,
   density: 'comfortable',
-  background_notifications: true
+  background_notifications: true,
+  brand_aliases: DEFAULT_BRAND_ALIASES
 }
 
 /** Per-device preferences; everything else is shared company-wide through the cloud `settings` table. */

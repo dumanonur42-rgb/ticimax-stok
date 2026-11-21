@@ -23,6 +23,7 @@ import {
   getProduct,
   mergeProducts,
   productFacets,
+  productVariants,
   productsBySkus,
   purgeAllProducts,
   quickEntry,
@@ -156,14 +157,14 @@ function requirePerm(perm: Perm): Session {
 }
 
 /** Shelf location is internal warehouse data; only accounts with the shelf ability see it. Prices are also stripped when hidden. */
-function sanitizeProducts<T extends { shelf: string; price?: number | null; list_price?: number | null; card_price?: number | null }>(items: T[]): T[] {
+function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; list_price?: number | null; card_price?: number | null }>(items: T[]): T[] {
   const s = requireRole()
   const canSeeShelf = hasPerm(s.user, 'shelf')
   const canSeePrices = getSettings().show_prices_to_dealers || hasPerm(s.user, 'prices')
   if (canSeeShelf && canSeePrices) return items
   return items.map((p) => ({
     ...p,
-    ...(canSeeShelf ? {} : { shelf: '' }),
+    ...(canSeeShelf ? {} : { shelf: '', locations: [] }),
     ...(canSeePrices ? {} : { price: null, list_price: null, card_price: null })
   }))
 }
@@ -485,6 +486,7 @@ export function registerIpc(): void {
     const p = getProduct(id)
     return p ? sanitizeProducts([p])[0] : p
   })
+  handle('products:variants', (id) => sanitizeProducts(productVariants(id)))
   handle('products:bySkus', (skus) => {
     requireRole()
     return sanitizeProducts(productsBySkus(skus))
