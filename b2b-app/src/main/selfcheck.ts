@@ -361,32 +361,49 @@ export async function runSelfCheck(): Promise<number> {
     importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
     db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
 
-    const replaceId = 8_765_433
-    const replaceSku = 'QA-REPLACE'
+    const replaceUnchangedId = 8_765_433
+    const replaceChangedId = 8_765_434
+    const replaceAbsentId = 8_765_435
     const replaceBrand = 'SKF'
-    const replaceKey = productKey(replaceSku, replaceBrand, 'Kutulu')
-    upsertLocal([{
-      id: replaceId, sku: replaceSku, sku_norm: normalize(replaceSku), key_norm: replaceKey,
-      name: replaceSku, name_norm: normalizeText(replaceSku), brand: replaceBrand, category: '', type: '', seal: '',
-      d_inner: null, d_outer: null, width: null, stock: 1, unit: 'Adet', price: 1, currency: 'TRY',
+    const replaceUnchangedSku = 'QA-REPLACE-UNCHANGED'
+    const replaceChangedSku = 'QA-REPLACE-CHANGED'
+    const replaceAbsentSku = 'QA-REPLACE-ABSENT'
+    const replaceUnchangedKey = productKey(replaceUnchangedSku, replaceBrand, 'Kutulu')
+    const replaceChangedKey = productKey(replaceChangedSku, replaceBrand, 'Kutulu')
+    const replaceIdsByKey = new Map([[replaceUnchangedKey, replaceUnchangedId], [replaceChangedKey, replaceChangedId]])
+    const replaceRows: ProductRow[] = [
+      [replaceUnchangedId, replaceUnchangedSku, 1],
+      [replaceChangedId, replaceChangedSku, 1],
+      [replaceAbsentId, replaceAbsentSku, 1]
+    ].map(([id, sku, stock]) => ({
+      id: Number(id), sku: String(sku), sku_norm: normalize(String(sku)),
+      key_norm: productKey(String(sku), replaceBrand, 'Kutulu'),
+      name: String(sku), name_norm: normalizeText(String(sku)), brand: replaceBrand, category: '', type: '', seal: '',
+      d_inner: null, d_outer: null, width: null, stock: Number(stock), unit: 'Adet', price: 1, currency: 'TRY',
       list_price: null, card_price: null, min_order: 1, shelf: '', locations: [], box: 'Kutulu',
       barcode: '', image: '', description: '', equivalents: '', active: true, deleted: false,
       updated_at: new Date().toISOString()
-    }])
+    }))
+    upsertLocal(replaceRows)
     const replaceWorkbook = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(replaceWorkbook, XLSX.utils.aoa_to_sheet([
       ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu'],
-      [replaceSku, replaceBrand, '2', 'Kutulu']
+      [replaceUnchangedSku, replaceBrand, '1', 'Kutulu'],
+      [replaceChangedSku, replaceBrand, '2', 'Kutulu']
     ]), 'Sayfa1')
     XLSX.writeFile(replaceWorkbook, replaceFixture)
     const replacePreview = previewFile(replaceFixture)
     const replaceCalls: string[] = []
+    let purgeKeep: number[] = []
     const fakeCloud = (() => ({
       from: (table: string) => ({
         upsert: (rows: ProductInsert[], options: { onConflict?: string }) => ({
           select: async () => {
             replaceCalls.push(`upsert:${table}:${options.onConflict}`)
-            return { data: rows.map((row) => ({ id: row.id ?? replaceId })), error: null, status: 200 }
+            const data = rows
+              .map((row) => ({ id: row.id ?? replaceIdsByKey.get(row.key_norm) ?? 99 }))
+              .filter((row) => row.id !== replaceUnchangedId)
+            return { data, error: null, status: 200 }
           }
         }),
         insert: (row: Record<string, unknown>) => ({
@@ -400,7 +417,7 @@ export async function runSelfCheck(): Promise<number> {
       }),
       rpc: async (name: string, args: { p_keep?: number[] }) => {
         replaceCalls.push(`rpc:${name}`)
-        if (name === 'purge_products_except' && args.p_keep?.includes(replaceId)) replaceCalls.push('kept-existing-id')
+        if (name === 'purge_products_except') purgeKeep = args.p_keep ?? []
         return { data: 0, error: null, status: 200 }
       }
     })) as unknown as typeof cloud
@@ -416,9 +433,10 @@ export async function runSelfCheck(): Promise<number> {
     })
     replaceOrderOk = replaceCalls.indexOf('upsert:products:key_norm') < replaceCalls.indexOf('rpc:purge_products_except') &&
       replaceCalls.indexOf('rpc:purge_products_except') < replaceCalls.indexOf('pull:true') &&
-      replaceCalls.includes('kept-existing-id') &&
-      (db.prepare('SELECT id FROM products WHERE id = ?').get(replaceId) as { id: number } | undefined)?.id === replaceId
-    db.prepare('DELETE FROM products WHERE id = ?').run(replaceId)
+      purgeKeep.includes(replaceUnchangedId) &&
+      purgeKeep.includes(replaceChangedId) &&
+      !purgeKeep.includes(replaceAbsentId)
+    db.prepare('DELETE FROM products WHERE id IN (?, ?, ?)').run(replaceUnchangedId, replaceChangedId, replaceAbsentId)
   } catch (error) {
     console.error('import warning fixture failed', error)
   } finally {
@@ -426,7 +444,7 @@ export async function runSelfCheck(): Promise<number> {
     if (existsSync(rekeyFixture)) unlinkSync(rekeyFixture)
     if (existsSync(replaceFixture)) unlinkSync(replaceFixture)
     db.prepare('DELETE FROM products WHERE sku = ?').run('QA-REKEY')
-    db.prepare("DELETE FROM products WHERE sku = 'QA-REPLACE'").run()
+    db.prepare("DELETE FROM products WHERE sku LIKE 'QA-REPLACE-%'").run()
   }
   if (!importWarningsOk) {
     console.error('import warning generation failed')
