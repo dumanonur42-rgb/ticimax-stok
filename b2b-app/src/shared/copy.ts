@@ -4,7 +4,7 @@ import type { Currency, Product } from './types'
 
 export type CopyColumn = 'shelf' | 'sku' | 'name' | 'brand' | 'size' | 'stock' | 'box' | 'description' | 'price'
 export type CopyPreset = 'musteri' | 'depo' | 'ozel'
-type ClipboardProductValues = Record<CopyColumn, string> & { shelfLines: string[] }
+type ClipboardProductValues = Record<CopyColumn, string> & { shelfLines: string[]; priceText: string }
 
 export const COPY_COLUMN_LABELS: Record<CopyColumn, string> = {
   shelf: 'Raf',
@@ -84,14 +84,17 @@ export function productsToClipboard(
   const allowed = new Set(availableCopyColumns(products, options))
   const selected = [...new Set<CopyColumn>(['sku', ...columns])].filter((column) => allowed.has(column))
   const values = (product: Product): ClipboardProductValues => {
+    const unit = product.unit.trim() || 'adet'
+    const quantity = (value: number): string => `${numberFormat.format(value)} ${unit}`
     const shelfLines = shelfBreakdown(product)
       .map(({ shelf, qty, box }) => {
         const label = shelf.trim()
         return label
-          ? [label, box.trim(), qty === null ? '' : `${numberFormat.format(qty)} adet`].filter(Boolean).join(' · ')
+          ? [label, box.trim(), qty === null ? '' : quantity(qty)].filter(Boolean).join(' · ')
           : ''
       })
       .filter(Boolean)
+    const price = product.price == null || product.price <= 0 ? null : product.price
     return {
       shelf: shelfLines.join('\n'),
       shelfLines,
@@ -99,10 +102,11 @@ export function productsToClipboard(
       name: product.name,
       brand: brandLabel(product.brand),
       size: sizeLabel(product),
-      stock: `${numberFormat.format(product.stock)} adet`,
+      stock: quantity(product.stock),
       box: product.box.trim(),
       description: product.description,
-      price: product.price == null || product.price <= 0 ? '' : formatMoney(product.price, product.currency)
+      price: price === null ? '' : formatMoney(price, product.currency),
+      priceText: price === null ? '' : formatMoneyText(price, product.currency)
     }
   }
   const productValues = products.map(values)
@@ -115,17 +119,29 @@ export function productsToClipboard(
 }
 
 function formatMoney(value: number, currency: Currency): string {
+  return currencyFormatter(currency).format(value)
+}
+
+function formatMoneyText(value: number, currency: Currency): string {
+  const parts = currencyFormatter(currency).formatToParts(value)
+  const amount = parts.filter((part) => part.type !== 'currency' && part.type !== 'literal').map((part) => part.value).join('')
+  const symbol = parts.find((part) => part.type === 'currency')?.value ?? currency
+  return `${amount} ${symbol}`
+}
+
+function currencyFormatter(currency: Currency): Intl.NumberFormat {
   let formatter = currencyFormats.get(currency)
   if (!formatter) {
     formatter = new Intl.NumberFormat('tr-TR', { style: 'currency', currency, maximumFractionDigits: 2 })
     currencyFormats.set(currency, formatter)
   }
-  return formatter.format(value)
+  return formatter
 }
 
 function sizeLabel(product: Product): string {
-  if (product.d_inner === null || product.d_outer === null || product.width === null) return ''
-  return `${[product.d_inner, product.d_outer, product.width].map((value) => numberFormat.format(value)).join(' × ')} mm`
+  const dimensions = [product.d_inner, product.d_outer, product.width]
+  if (dimensions.every((value) => value === null)) return ''
+  return `${dimensions.map((value) => value === null ? '—' : numberFormat.format(value)).join(' × ')} mm`
 }
 
 function brandLabel(brand: string): string {
@@ -186,7 +202,15 @@ function plainText(
     const brand = columns.includes('brand') ? cleanWhatsAppValue(productValues.brand) : ''
     const lines = sku ? [`*${sku}*${brand ? ` · ${brand}` : ''}`] : []
     for (const column of detailColumns) {
-      if (!columns.includes(column)) continue
+      if (column === 'stock') {
+        const stock = columns.includes('stock') ? productValues.stock : ''
+        const box = columns.includes('box') ? productValues.box : ''
+        if (stock && box) lines.push(...wrapField('Stok', `${stock} · ${box}`))
+        else if (stock) lines.push(...wrapField('Stok', stock))
+        else if (box) lines.push(...wrapField('Kutu durumu', box))
+        continue
+      }
+      if (column === 'box' || !columns.includes(column)) continue
       if (column === 'name' && normalize(productValues.name) === normalize(productValues.sku)) continue
       if (column === 'shelf') {
         const shelves = productValues.shelfLines.map((line) => cleanWhatsAppValue(line)).filter(Boolean)
@@ -194,7 +218,9 @@ function plainText(
         else if (shelves.length > 1) lines.push('Raf:', ...shelves.map((line) => `- ${line}`))
         continue
       }
-      lines.push(...wrapField(COPY_COLUMN_LABELS[column], productValues[column]))
+      const label = column === 'size' ? 'Ölçü' : COPY_COLUMN_LABELS[column]
+      const value = column === 'price' ? productValues.priceText : productValues[column]
+      lines.push(...wrapField(label, value))
     }
     if (lines.length) blocks.push(lines.join('\n'))
   }

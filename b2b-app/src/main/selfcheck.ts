@@ -247,7 +247,7 @@ export async function runSelfCheck(): Promise<number> {
     d_outer: 52,
     width: 15,
     stock: 12,
-    unit: 'Adet',
+    unit: 'adet',
     price: 3.2,
     currency: 'EUR',
     list_price: null,
@@ -341,6 +341,7 @@ export async function runSelfCheck(): Promise<number> {
   })
   const zeroStockOutput = productsToClipboard([copyProduct({
     stock: 0,
+    unit: '  ',
     shelf: '',
     locations: [],
     box: '',
@@ -355,6 +356,32 @@ export async function runSelfCheck(): Promise<number> {
     locations: [{ shelf: 'A1', qty: 3, box: '' }],
     box: ''
   })], ['sku', 'shelf'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const stockOnlyOutput = productsToClipboard([copySamples[0]], ['sku', 'stock'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const boxOnlyOutput = productsToClipboard([copySamples[0]], ['sku', 'box'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const unitOutput = productsToClipboard([copyProduct({
+    unit: 'Kutu',
+    stock: 3,
+    box: 'Kutulu',
+    shelf: 'A1',
+    locations: [{ shelf: 'A1', qty: 3, box: 'Kutulu' }]
+  })], ['sku', 'shelf', 'stock', 'box'], {
+    canShelf: true,
+    showPrices: true
+  })
+  const partialDimensionsOutput = productsToClipboard([copyProduct({
+    d_inner: 25,
+    d_outer: null,
+    width: null
+  })], ['sku', 'size'], {
     canShelf: true,
     showPrices: true
   })
@@ -375,13 +402,26 @@ export async function runSelfCheck(): Promise<number> {
     clipboardOutput.text.includes('Raf:\n- D7 · Kutulu · 4 adet\n- D7 · Kutusuz · 2 adet\n- D8 · Kutusuz · 8 adet') &&
     clipboardOutput.html.includes('D7 · Kutulu · 4 adet<br style="mso-data-placement:same-cell">D7 · Kutusuz · 2 adet<br style="mso-data-placement:same-cell">D8 · Kutusuz · 8 adet') &&
     singleShelfOutput.text.includes('Raf: A1 · 3 adet') &&
+    stockOnlyOutput.text.includes('Stok: 14 adet') &&
+    !stockOnlyOutput.text.includes('Kutu durumu:') &&
+    boxOnlyOutput.text.includes('Kutu durumu: Kutulu Kutusuz') &&
+    !boxOnlyOutput.text.includes('Stok:') &&
+    unitOutput.text.includes('Stok: 3 Kutu · Kutulu') &&
+    unitOutput.text.includes('Raf: A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('>3 Kutu</td>') &&
+    partialDimensionsOutput.text.includes('Ölçü: 25 × — × — mm') &&
+    partialDimensionsOutput.html.includes('25 × — × — mm') &&
     thirdProductText.startsWith('*6203* · FAG') &&
     thirdProductText.includes('Stok: 2 adet') &&
     !thirdProductText.includes('Raf:') &&
     !thirdProductText.includes('Kutu durumu:') &&
     !thirdProductText.includes('Fiyat:') &&
     !thirdProductText.includes('—') &&
-    clipboardOutput.text.includes('Fiyat: €3,20') &&
+    clipboardOutput.text.includes('Fiyat: 3,20 €') &&
+    clipboardOutput.text.includes('Ölçü: 25 × 52 × 15 mm') &&
+    clipboardOutput.text.includes('Stok: 14 adet · Kutulu Kutusuz') &&
+    clipboardOutput.html.includes('€3,20') &&
     !clipboardOutput.text.includes('Fiyat sorunuz') &&
     zeroStockOutput.text.includes('Stok: 0 adet') &&
     emptyColumnsOutput.html.includes('Ürün kodu') &&
