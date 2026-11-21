@@ -1,5 +1,6 @@
 /** Hand-maintained mirror of supabase/schema.sql for typed supabase-js queries. */
 import type { ActivityKind, ActivityPlatform, Currency, OrderStatus, PaymentType, UserRole } from '@shared/types'
+import type { ProductLocation } from '@shared/types'
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
@@ -26,6 +27,7 @@ export type ProductRow = {
   card_price: number | null
   min_order: number
   shelf: string
+  locations: ProductLocation[]
   box: string
   barcode: string
   image: string

@@ -59,6 +59,7 @@ export interface ApiMap {
   'products:search': [ProductFilter, ProductPage]
   'products:facets': [ProductFilter, Facets]
   'products:get': [number, Product | null]
+  'products:variants': [number, Product[]]
   'products:bySkus': [string[], Product[]]
   'products:save': [Partial<Product> & ProductInput, Product]
   'products:delete': [number, void]

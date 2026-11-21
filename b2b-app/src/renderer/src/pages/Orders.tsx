@@ -28,6 +28,10 @@ export function Orders(): ReactNode {
   const isAdmin = session?.user.role === 'admin'
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
 
+  useEffect(() => {
+    if (pageParam != null) setSelectedId(pageParam)
+  }, [pageParam])
+
   const load = useCallback((): void => {
     setOrdersError('')
     api('orders:list', { q, status: status || undefined })

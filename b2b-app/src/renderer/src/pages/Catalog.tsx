@@ -1,4 +1,4 @@
-import type { Facets, Perm, Product, ProductFilter } from '@shared/types'
+import type { CatalogProduct, Facets, Perm, Product, ProductFilter } from '@shared/types'
 import { hasPerm } from '@shared/perms'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { ArrowDown, ArrowUp, ChevronLeft, Copy, Download, Filter, Plus, Search, X } from 'lucide-react'
@@ -9,7 +9,8 @@ import { LoadError } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { money, num, productsToTsv } from '@/lib/format'
 import { StockPill } from '@/components/StockPill'
-import { canonBox } from '@shared/identity'
+import { brandOrigin, canonBox } from '@shared/identity'
+import { shelfBreakdown } from '@shared/locations'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
@@ -106,7 +107,7 @@ export function Catalog(): ReactNode {
   const [facetMore, setFacetMore] = useState<Partial<Record<FacetKey, boolean>>>({})
   const [facets, setFacets] = useState<Facets | null>(null)
   const [total, setTotal] = useState(0)
-  const [rows, setRows] = useState<Map<number, Product>>(new Map())
+  const [rows, setRows] = useState<Map<number, CatalogProduct>>(new Map())
   const [picked, setPicked] = useState<Map<number, Product>>(new Map())
   const [loading, setLoading] = useState(false)
   const [loadError, setLoadError] = useState('')
@@ -136,7 +137,7 @@ export function Catalog(): ReactNode {
     Promise.all([api('products:search', { ...fullFilter, offset: 0, limit: PAGE }), api('products:facets', fullFilter)])
       .then(([page, f]) => {
         if (cancelled) return
-        const m = new Map<number, Product>()
+        const m = new Map<number, CatalogProduct>()
         page.items.forEach((p, i) => m.set(i, p))
         setRows(m)
         setTotal(page.total)
@@ -267,7 +268,8 @@ export function Catalog(): ReactNode {
   const setRange = (key: RangeKey, idx: 0 | 1, raw: string): void =>
     setFilter((f) => {
       const r: [number | null, number | null] = [...(f[key] ?? [null, null])] as [number | null, number | null]
-      r[idx] = raw.trim() === '' ? null : Number(raw.replace(',', '.'))
+      const parsed = Number(raw.replace(',', '.'))
+      r[idx] = raw.trim() === '' || !Number.isFinite(parsed) ? null : parsed
       return { ...f, [key]: r[0] == null && r[1] == null ? undefined : r }
     })
 
@@ -290,7 +292,7 @@ export function Catalog(): ReactNode {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
       if (window.getSelection()?.toString()) return
       e.preventDefault()
-      void copyProducts(picked.size > 0 ? Array.from(picked.values()) : [rows.get(activeIdx)].filter((p): p is Product => !!p))
+      void copyProducts(picked.size > 0 ? Array.from(picked.values()) : [rows.get(activeIdx)].filter((p): p is CatalogProduct => !!p))
       return
     }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
@@ -651,13 +653,13 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {p.shelf ? (
-                          <span className="shelf-tag" title={p.shelf}>
-                            {p.shelf}
-                          </span>
-                        ) : (
-                          <span className="faint">—</span>
-                        )}
+                        {shelfBreakdown(p).length ? <div className="shelf-location-list" title={shelfBreakdown(p).map((location) => `${location.shelf} · ${location.box || p.box}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`).join(' / ')}>
+                          {shelfBreakdown(p).slice(0, 2).map((location, index) => <span className="shelf-tag" key={`${location.shelf}-${index}`} title={`${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`}>
+                            <b className="mono">{location.shelf}</b>{location.qty !== null && <small>{num(location.qty)} adet</small>}
+                          </span>)}
+                          {shelfBreakdown(p).length > 2 && <small className="muted">… +{shelfBreakdown(p).length - 2}</small>}
+                          {p.others.length > 0 && <small className="muted truncate" title={p.others.map((item) => `${item.box || 'Kutu durumu belirtilmemiş'}: ${item.shelf} · ${num(item.stock)} adet`).join(' / ')}>{p.others.slice(0, 2).map((item) => `${item.box || 'Kutusuz'}: ${item.shelf}`).join(' · ')}{p.others.length > 2 ? ` … +${p.others.length - 2}` : ''}</small>}
+                        </div> : <span className="faint">—</span>}
                       </div>
                     )}
                     <div className="cell sku" role="gridcell" title={`${p.sku} · ${p.name}`}>
@@ -665,7 +667,7 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('brand') && (
                       <div className="cell muted truncate" role="gridcell" title={p.brand}>
-                        {p.brand}
+                        {brandOrigin(p.brand).base}{brandOrigin(p.brand).origin && <small className="muted"> · {brandOrigin(p.brand).origin}</small>}
                       </div>
                     )}
                     {has.has('dims') && (

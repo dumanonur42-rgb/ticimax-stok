@@ -1,5 +1,6 @@
 import type {
   BulkProductPatch,
+  CatalogProduct,
   DuplicateGroup,
   Facets,
   FacetValue,
@@ -7,6 +8,7 @@ import type {
   Product,
   ProductFilter,
   ProductInput,
+  ProductLocation,
   ProductPage,
   QuickEntryResult,
   QuickEntryRow
@@ -16,12 +18,60 @@ import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { submit, type PatchOpRow, type QuickEntryOpRow } from '../cloud/outbox'
 import { upsertLocal } from '../cloud/sync'
-import { canonBox, canonBrand } from '@shared/identity'
+import { boxParts, canonBox, canonBrand, mergeBrandAliases } from '@shared/identity'
+import { parseProductLocations } from '@shared/locations'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
 
 const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
-  list_price, card_price, min_order, shelf, box, barcode, image, description, equivalents, active, updated_at`
+  list_price, card_price, min_order, shelf, locations, box, barcode, image, description, equivalents, active, updated_at`
+
+type LocalProductRow = Omit<Product, 'locations'> & { locations: string | ProductLocation[] | null }
+
+function mapProductRow(row: LocalProductRow): Product {
+  return { ...row, locations: parseProductLocations(row.locations) }
+}
+
+function mapProductRows(rows: LocalProductRow[]): Product[] {
+  return rows.map(mapProductRow)
+}
+
+function withCatalogOthers(items: Product[]): CatalogProduct[] {
+  if (!items.length) return []
+  const db = getDb()
+  const skuNorms = [...new Set(items.map((item) => normalize(item.sku)))]
+  const variants = new Map<string, { id: number; box: string; shelf: string; stock: number }[]>()
+  for (let i = 0; i < skuNorms.length; i += 500) {
+    const batch = skuNorms.slice(i, i + 500)
+    const rows = db.prepare(`SELECT id, sku_norm, brand_norm, box, shelf, stock FROM products WHERE active = 1 AND sku_norm IN (${batch.map(() => '?').join(',')})`)
+      .all(...batch) as Array<{ id: number; sku_norm: string; brand_norm: string; box: string; shelf: string; stock: number }>
+    for (const row of rows) {
+      const key = `${row.sku_norm}|${row.brand_norm}`
+      const list = variants.get(key) ?? []
+      list.push({ id: row.id, box: row.box, shelf: row.shelf, stock: Number(row.stock) })
+      variants.set(key, list)
+    }
+  }
+  return items.map((item) => ({
+    ...item,
+    others: (variants.get(`${normalize(item.sku)}|${normalize(item.brand)}`) ?? [])
+      .filter((variant) => variant.id !== item.id)
+      .map(({ box, shelf, stock }) => ({ box, shelf, stock }))
+  }))
+}
+
+function variantOrder(box: string): number {
+  if (!box.trim()) return 4
+  const parts = boxParts(box)
+  if (!parts) return 3
+  const states = new Set(parts.map((part) => normalize(part.state)))
+  const kutulu = states.has('KUTULU')
+  const kutusuz = states.has('KUTUSUZ')
+  if (kutulu && kutusuz) return 2
+  if (kutulu && states.size === 1) return 0
+  if (kutusuz && states.size === 1) return 1
+  return states.size > 1 ? 2 : 3
+}
 
 interface Where {
   sql: string
@@ -103,7 +153,7 @@ function buildWhere(f: ProductFilter, exclude?: keyof ProductFilter): Where {
       params.push(...vals)
     }
   }
-  inList('brand', 'brand')
+  inList('brand_base', 'brand')
   inList('category', 'category')
   inList('type', 'type')
   inList('seal', 'seal')
@@ -160,20 +210,21 @@ export function searchProducts(f: ProductFilter): ProductPage {
     db.prepare(`SELECT COUNT(*) c FROM products p WHERE ${w.sql}`).get(...w.params) as { c: number }
   ).c
   const o = orderBy(f, w)
-  const items = db
+  const rows = db
     .prepare(`SELECT ${COLS} FROM products p WHERE ${w.sql} ORDER BY ${o.sql} LIMIT ? OFFSET ?`)
-    .all(...w.params, ...o.params, limit, offset) as Product[]
-  return { items, total }
+    .all(...w.params, ...o.params, limit, offset) as LocalProductRow[]
+  return { items: withCatalogOthers(mapProductRows(rows)), total }
 }
 
 export function productFacets(f: ProductFilter): Facets {
   const db = getDb()
   const facet = (col: 'brand' | 'category' | 'type' | 'seal'): FacetValue[] => {
     const w = buildWhere(f, col)
+    const column = col === 'brand' ? 'brand_base' : col
     return db
       .prepare(
-        `SELECT p.${col} value, COUNT(*) count FROM products p WHERE ${w.sql} AND p.${col} <> ''
-         GROUP BY p.${col} ORDER BY count DESC, value LIMIT 60`
+        `SELECT p.${column} value, COUNT(*) count FROM products p WHERE ${w.sql} AND p.${column} <> ''
+         GROUP BY p.${column} ORDER BY count DESC, value LIMIT 60`
       )
       .all(...w.params) as FacetValue[]
   }
@@ -181,16 +232,26 @@ export function productFacets(f: ProductFilter): Facets {
 }
 
 export function getProduct(id: number): Product | null {
-  return (getDb().prepare(`SELECT ${COLS} FROM products p WHERE id = ?`).get(id) as Product) ?? null
+  const row = getDb().prepare(`SELECT ${COLS} FROM products p WHERE id = ?`).get(id) as LocalProductRow | undefined
+  return row ? mapProductRow(row) : null
+}
+
+export function productVariants(id: number): Product[] {
+  const product = getProduct(id)
+  if (!product || !product.active) return []
+  const rows = getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.active = 1 AND p.sku_norm = ? AND p.brand_norm = ?`)
+    .all(normalize(product.sku), normalize(product.brand)) as LocalProductRow[]
+  return mapProductRows(rows).sort((a, b) => variantOrder(a.box) - variantOrder(b.box) || a.id - b.id)
 }
 
 /** Every product carrying one of the codes, whatever the brand or packaging. */
 export function productsBySkus(skus: string[]): Product[] {
   if (!skus.length) return []
   const norms = skus.map(normalize)
-  return getDb()
+  const rows = getDb()
     .prepare(`SELECT ${COLS} FROM products p WHERE sku_norm IN (${norms.map(() => '?').join(',')})`)
-    .all(...norms) as Product[]
+    .all(...norms) as LocalProductRow[]
+  return mapProductRows(rows)
 }
 
 /** Exact identity lookup (code + brand + box), keyed by `productKey`. */
@@ -198,18 +259,20 @@ export function productsByKeys(keys: string[]): Map<string, Product> {
   if (!keys.length) return new Map()
   const rows = getDb()
     .prepare(`SELECT ${COLS} FROM products p WHERE key_norm IN (${keys.map(() => '?').join(',')})`)
-    .all(...keys) as Product[]
-  return new Map(rows.map((p) => [productKey(p.sku, p.brand, p.box), p]))
+    .all(...keys) as LocalProductRow[]
+  return new Map(mapProductRows(rows).map((p) => [productKey(p.sku, p.brand, p.box), p]))
 }
 
 /**
  * Brand spelling to store: the catalogue's existing spelling when the same brand is already known under another
  * casing / dotted-i variant ("ına", "İNA" → "INA"), otherwise the tidied input. The most frequent spelling wins.
  */
-export function resolveBrand(raw: string, spellings = brandSpellings()): string {
+export function resolveBrand(raw: string, spellings = brandSpellings(), aliases: unknown = getSettings().brand_aliases): string {
   const c = canonBrand(raw)
   if (!c) return ''
-  return spellings.get(normalize(c)) ?? c
+  const target = mergeBrandAliases(aliases)[normalize(c)] ?? c
+  const canonical = canonBrand(target)
+  return spellings.get(normalize(canonical)) ?? canonical
 }
 
 /** normalized brand → its preferred spelling in the catalogue and import file: most frequent, then least punctuation, shortest. */
@@ -269,6 +332,7 @@ export async function saveProduct(p: Partial<Product> & ProductInput): Promise<P
     card_price: p.card_price ?? null,
     min_order: p.min_order,
     shelf: p.shelf,
+    locations: p.locations ?? [],
     box,
     barcode: p.barcode,
     image: p.image,
@@ -345,7 +409,7 @@ function knownBrands(): Set<string> {
  */
 export function duplicateGroups(limit = 400): DuplicateGroup[] {
   const brands = knownBrands()
-  const rows = getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.active = 1 ORDER BY p.id`).all() as Product[]
+  const rows = mapProductRows(getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.active = 1 ORDER BY p.id`).all() as LocalProductRow[])
   const byDesignation = new Map<string, Product[]>()
   for (const p of rows) {
     const key = designationKey(p.sku, p.brand, brands)
@@ -406,7 +470,7 @@ export function similarProducts(sku: string, brand: string, box: string, exclude
   const exact = productsBySkus([s]).filter((p) => p.id !== excludeId)
   const anchor = tokens.reduce((a, t) => (t.length > a.length ? t : a), '')
   const rows =
-    key.length < 3 ? [] : (getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.sku_norm LIKE ? LIMIT 500`).all(`%${anchor}%`) as Product[])
+    key.length < 3 ? [] : mapProductRows(getDb().prepare(`SELECT ${COLS} FROM products p WHERE p.sku_norm LIKE ? LIMIT 500`).all(`%${anchor}%`) as LocalProductRow[])
   const same = rows.filter((p) => p.id !== excludeId && designationKey(p.sku, p.brand, brands) === key)
   const seen = new Set<number>()
   const me = productKey(s, brand, box)
@@ -535,7 +599,8 @@ export async function purgeAllProducts(): Promise<number> {
 export function allProductsForExport(f: ProductFilter): Product[] {
   const w = buildWhere(f)
   const o = orderBy(f, w)
-  return getDb()
+  const rows = getDb()
     .prepare(`SELECT ${COLS} FROM products p WHERE ${w.sql} ORDER BY ${o.sql}`)
-    .all(...w.params, ...o.params) as Product[]
+    .all(...w.params, ...o.params) as LocalProductRow[]
+  return mapProductRows(rows)
 }

@@ -4,6 +4,14 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.29
+
+- Tüm ürün fiyatları, sepet, siparişler ve çıktılar canlı döviz kurları üzerinden otomatik olarak Euro (€) cinsinden gösterilir.
+- Uygulama açıkken veya yeniden başlatıldığında mevcut oturum korunur; yalnızca "Oturumu kapat" seçildiğinde yeniden giriş istenir.
+- Fiyat gizleme açıkken katalog eşitleme ve görüntüleme sorunları giderildi.
+- [yönetici] Stok Aktar "Değiştir" modunda geçersiz dosya seçildiğinde mevcut katalog korunur; hata durumunda otomatik geri yükleme yapılır.
+- [yönetici] Sipariş fiyatları, iskonto ve KDV doğrulaması ile kullanıcı ve cari kayıt güvenliği güçlendirildi.
+
 ## 1.0.28
 
 - Ürün listesi yüklendikten sonra ürün araması kullanılabilir.

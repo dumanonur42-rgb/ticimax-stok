@@ -1,5 +1,11 @@
 export type Currency = 'TRY' | 'USD' | 'EUR'
 
+export interface ProductLocation {
+  shelf: string
+  qty: number
+  box: string
+}
+
 export interface Product {
   id: number
   sku: string
@@ -19,6 +25,7 @@ export interface Product {
   card_price: number | null
   min_order: number
   shelf: string
+  locations: ProductLocation[]
   /** Packaging state ("Kutulu", "Kutusuz"…). Part of the product identity together with code and brand. */
   box: string
   barcode: string
@@ -126,8 +133,12 @@ export interface MergeInput {
 }
 
 export interface ProductPage {
-  items: Product[]
+  items: CatalogProduct[]
   total: number
+}
+
+export interface CatalogProduct extends Product {
+  others: { box: string; shelf: string; stock: number }[]
 }
 
 export interface FacetValue {
@@ -428,6 +439,7 @@ export interface Settings {
   density: 'comfortable' | 'compact'
   /** Admin devices: keep running in the tray after the window closes and show a Windows notification on new orders. */
   background_notifications: boolean
+  brand_aliases: Record<string, string>
   min_version_android?: string
   min_version_ios?: string
   min_version_windows?: string
@@ -484,4 +496,11 @@ export interface ImportOptions {
 
 export interface ImportResult extends ImportLog {
   errors: string[]
+  warnings: string[]
+  dryRunSummary?: {
+    products: number
+    multiLocationProducts: number
+    variantsWithDifferentShelves: number
+    warningsByType: { boxCountMismatch: number; missingBoxState: number; similarBrands: number }
+  }
 }
