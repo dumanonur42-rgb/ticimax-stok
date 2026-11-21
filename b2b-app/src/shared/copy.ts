@@ -139,8 +139,9 @@ function currencyFormatter(currency: Currency): Intl.NumberFormat {
 }
 
 function sizeLabel(product: Product): string {
-  if (product.d_inner === null || product.d_outer === null || product.width === null) return ''
-  return `${[product.d_inner, product.d_outer, product.width].map((value) => numberFormat.format(value)).join(' × ')} mm`
+  const dimensions = [product.d_inner, product.d_outer, product.width]
+  if (dimensions.every((value) => value === null)) return ''
+  return `${dimensions.map((value) => value === null ? '—' : numberFormat.format(value)).join(' × ')} mm`
 }
 
 function brandLabel(brand: string): string {

@@ -377,6 +377,14 @@ export async function runSelfCheck(): Promise<number> {
     canShelf: true,
     showPrices: true
   })
+  const partialDimensionsOutput = productsToClipboard([copyProduct({
+    d_inner: 25,
+    d_outer: null,
+    width: null
+  })], ['sku', 'size'], {
+    canShelf: true,
+    showPrices: true
+  })
   const sizesOmitted = !productsToClipboard([copySamples[2]], ['sku', 'size'], {
     canShelf: true,
     showPrices: true
@@ -402,6 +410,8 @@ export async function runSelfCheck(): Promise<number> {
     unitOutput.text.includes('Raf: A1 · Kutulu · 3 Kutu') &&
     unitOutput.html.includes('A1 · Kutulu · 3 Kutu') &&
     unitOutput.html.includes('>3 Kutu</td>') &&
+    partialDimensionsOutput.text.includes('Ölçü: 25 × — × — mm') &&
+    partialDimensionsOutput.html.includes('25 × — × — mm') &&
     thirdProductText.startsWith('*6203* · FAG') &&
     thirdProductText.includes('Stok: 2 adet') &&
     !thirdProductText.includes('Raf:') &&
