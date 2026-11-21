@@ -622,6 +622,8 @@ export function Catalog(): ReactNode {
                       <div className="cell faint">…</div>
                     </div>
                   )
+                const locations = shelfBreakdown(p)
+                const brand = brandOrigin(p.brand)
                 return (
                   <div
                     key={v.key}
@@ -653,12 +655,12 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {shelfBreakdown(p).length ? <div className="shelf-location-list" title={shelfBreakdown(p).map((location) => `${location.shelf} · ${location.box || p.box}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`).join(' / ')}>
-                          {shelfBreakdown(p).slice(0, 2).map((location, index) => <span className="shelf-tag" key={`${location.shelf}-${index}`} title={`${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`}>
+                        {locations.length ? <div className="shelf-location-list" title={locations.map((location) => `${location.shelf} · ${location.box || p.box}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`).join(' / ')}>
+                          {locations.slice(0, 2).map((location, index) => <span className="shelf-tag" key={`${location.shelf}-${index}`} title={`${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`}>
                             <b className="mono">{location.shelf}</b>{location.qty !== null && <small>{num(location.qty)} adet</small>}
                           </span>)}
-                          {shelfBreakdown(p).length > 2 && <small className="muted">… +{shelfBreakdown(p).length - 2}</small>}
-                          {p.others.length > 0 && <small className="muted truncate" title={p.others.map((item) => `${item.box || 'Kutu durumu belirtilmemiş'}: ${item.shelf} · ${num(item.stock)} adet`).join(' / ')}>{p.others.slice(0, 2).map((item) => `${item.box || 'Kutusuz'}: ${item.shelf}`).join(' · ')}{p.others.length > 2 ? ` … +${p.others.length - 2}` : ''}</small>}
+                          {locations.length > 2 && <small className="muted">… +{locations.length - 2}</small>}
+                          {p.others.length > 0 && <small className="muted truncate" title={p.others.map((item) => `${item.box || 'Belirtilmemiş'}: ${item.shelf} · ${num(item.stock)} adet`).join(' / ')}>{p.others.slice(0, 2).map((item) => `${item.box || 'Belirtilmemiş'}: ${item.shelf}`).join(' · ')}{p.others.length > 2 ? ` … +${p.others.length - 2}` : ''}</small>}
                         </div> : <span className="faint">—</span>}
                       </div>
                     )}
@@ -667,7 +669,7 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('brand') && (
                       <div className="cell muted truncate" role="gridcell" title={p.brand}>
-                        {brandOrigin(p.brand).base}{brandOrigin(p.brand).origin && <small className="muted"> · {brandOrigin(p.brand).origin}</small>}
+                        {brand.base}{brand.origin && <small className="muted"> · {brand.origin}</small>}
                       </div>
                     )}
                     {has.has('dims') && (

@@ -207,7 +207,7 @@ export async function runSelfCheck(): Promise<number> {
       defaultBrand: '',
       defaultCategory: '',
       dryRun: true
-    })
+    }, { pullProducts: async () => 0 })
     const summary = result.dryRunSummary
     if (!summary) throw new Error('Deneme planı özeti oluşturulamadı.')
     const lines = [
@@ -283,14 +283,23 @@ export async function runSelfCheck(): Promise<number> {
   }
   console.log(`cloud error retry classification: ${cloudErrorsOk ? 'ok' : 'failed'}`)
   const warningFixture = join(app.getPath('temp'), `selfcheck-warnings-${Date.now()}.xlsx`)
+  const rekeyFixture = join(app.getPath('temp'), `selfcheck-rekey-${Date.now()}.xlsx`)
   let importWarningsOk = false
+  let importerRekeyOk = false
   try {
-    const sheet = XLSX.utils.aoa_to_sheet([
+    const warningRows: string[][] = [
       ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
-      ['QA-WARN-A', 'RODAMAX', '4', '2 Kutulu', 'A'],
+      ['QA-WARN-A', 'RODAMAX', '4', '2 KUTULU', 'A'],
       ['QA-WARN-A', 'RODAMAX', '2', '', 'B'],
-      ['QA-WARN-B', 'RODAMAXX', '1', 'Kutusuz', 'C']
-    ])
+      ['QA-WARN-B', 'RODAMAXX', '1', 'Kutusuz', 'C'],
+      ['QA-WARN-C', 'SKF', '2184', '273 KOLİ ADEDİ', 'D']
+    ]
+    for (let i = 0; i < 55; i++) {
+      warningRows.push([`QA-WARN-M${i}`, 'RODAMAX', '4', '1 Kutulu', 'M'])
+      warningRows.push([`QA-WARN-E${i}`, 'RODAMAX', '1', 'Kutulu', 'E'])
+      warningRows.push([`QA-WARN-E${i}`, 'RODAMAX', '1', '', 'F'])
+    }
+    const sheet = XLSX.utils.aoa_to_sheet(warningRows)
     const workbook = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workbook, sheet, 'Sayfa1')
     XLSX.writeFile(workbook, warningFixture)
@@ -298,20 +307,59 @@ export async function runSelfCheck(): Promise<number> {
     const planned = await runImport({
       token: preview.token, mapping: preview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
       defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
-    })
-    importWarningsOk = planned.warnings.some((warning) => warning.includes('toplamı 2, ADET 4')) &&
+    }, { pullProducts: async () => 0 })
+    importWarningsOk = planned.dryRunSummary?.warningsByType.boxCountMismatch === 56 &&
+      planned.dryRunSummary.warningsByType.missingBoxState === 56 &&
+      planned.dryRunSummary.warningsByType.similarBrands <= 50 &&
+      planned.warnings.some((warning) => warning.includes('"2 KUTULU"') && warning.includes('toplamı 2, ADET 4')) &&
       planned.warnings.some((warning) => warning.includes('kutu durumu boş') && warning.includes('Satır 2')) &&
-      planned.warnings.some((warning) => warning.includes('Benzer markalar') && warning.includes('RODAMAXX'))
+      planned.warnings.some((warning) => warning.includes('Benzer markalar') && warning.includes('RODAMAXX')) &&
+      !planned.warnings.some((warning) => warning.includes('QA-WARN-C'))
+
+    const rekeyId = 8_765_432
+    const rekeySku = 'QA-REKEY'
+    const rekeyBrand = 'SKF'
+    const rekeyKey = `${normalize(rekeySku)}|${normalize(rekeyBrand)}|${normalize('4 Kutulu 4 Kutusuz')}`
+    db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
+    upsertLocal([{
+      id: rekeyId, sku: rekeySku, sku_norm: normalize(rekeySku), key_norm: rekeyKey,
+      name: rekeySku, name_norm: normalizeText(rekeySku), brand: rekeyBrand, category: '', type: '', seal: '',
+      d_inner: null, d_outer: null, width: null, stock: 8, unit: 'Adet', price: 0, currency: 'TRY',
+      list_price: null, card_price: null, min_order: 1, shelf: '', locations: [], box: '',
+      barcode: '', image: '', description: '', equivalents: '', active: true, deleted: false,
+      updated_at: new Date().toISOString()
+    }])
+    const rekeySheet = XLSX.utils.aoa_to_sheet([
+      ['Stok Kodu', 'Marka', 'Adet', 'Kutu Durumu', 'Raf'],
+      [rekeySku, rekeyBrand, '8', '4 Kutulu 4 Kutusuz', 'R']
+    ])
+    const rekeyWorkbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(rekeyWorkbook, rekeySheet, 'Sayfa1')
+    XLSX.writeFile(rekeyWorkbook, rekeyFixture)
+    const rekeyPreview = previewFile(rekeyFixture)
+    const rekeyResult = await runImport({
+      token: rekeyPreview.token, mapping: rekeyPreview.suggestedMapping, mode: 'upsert', deactivateMissing: false,
+      defaultCurrency: 'TRY', defaultBrand: '', defaultCategory: '', dryRun: true
+    }, { pullProducts: async () => 0 })
+    importerRekeyOk = rekeyResult.updated === 1 && !rekeyResult.errors.some((error) => error.includes('zaten ayrı bir ürün'))
+    db.prepare('DELETE FROM products WHERE id = ?').run(rekeyId)
   } catch (error) {
     console.error('import warning fixture failed', error)
   } finally {
     if (existsSync(warningFixture)) unlinkSync(warningFixture)
+    if (existsSync(rekeyFixture)) unlinkSync(rekeyFixture)
+    db.prepare('DELETE FROM products WHERE sku = ?').run('QA-REKEY')
   }
   if (!importWarningsOk) {
     console.error('import warning generation failed')
     ok = false
   }
   console.log(`import warning generation: ${importWarningsOk ? 'ok' : 'failed'}`)
+  if (!importerRekeyOk) {
+    console.error('importer rekey planning failed')
+    ok = false
+  }
+  console.log(`importer rekey planning: ${importerRekeyOk ? 'ok' : 'failed'}`)
 
   const count = (db.prepare('SELECT COUNT(*) AS c FROM products').get() as { c: number }).c
   if (count < 10000) {
