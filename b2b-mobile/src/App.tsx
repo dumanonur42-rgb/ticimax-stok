@@ -14,7 +14,7 @@ import {
   Monitor, Moon, Sun
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
-import { brandOrigin, normalize } from '@shared/identity'
+import { boxIdentity, brandOrigin, normalize } from '@shared/identity'
 import {
   availableCopyColumns,
   COPY_COLUMN_LABELS,
@@ -41,7 +41,7 @@ import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
-import { shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown, type ShelfBreakdownItem } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -861,16 +861,34 @@ function ProductsPage({ entries, variantIndex, settings, session, loading, onToa
   )
 }
 
+type VariantShelfRow = { variant: Product; location: ShelfBreakdownItem; index: number }
+
+function variantShelfRows(variants: Product[]): VariantShelfRow[] {
+  return variants.flatMap((variant) =>
+    shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
+  )
+}
+
+function shelfRowsLabel(rows: VariantShelfRow[]): string {
+  return rows.map(({ variant, location }) => [
+    location.shelf.trim(),
+    (location.box || variant.box).trim(),
+    location.qty === null ? '' : locationLabel({ shelf: '', qty: location.qty }, variant.unit)
+  ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
+}
+
 function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
   product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
 }): ReactNode {
-  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
-  const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
+  const locationTitle = shelfRowsLabel(locationRows)
+  const firstLocation = locationRows[0]
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
+  const firstBox = firstLocation ? (firstLocation.location.box || firstLocation.variant.box).trim() : ''
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
-  const locations = shelfBreakdown(product)
   const brand = brandOrigin(product.brand)
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
@@ -878,9 +896,13 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
-    {canShelf && <div role="cell" className="shelf-col" title={[product.shelf, otherShelfText].filter(Boolean).join(' · ')} aria-label={`Raf bilgisi: ${[...locations.map((location) => `${location.shelf}, ${location.qty === null ? 'adet bilinmiyor' : `${num(location.qty)} adet`}`), otherShelfText].filter(Boolean).join('; ')}`}>
-      {locations.map((location, locationIndex) => <span className="shelf-badge" key={`${location.shelf}-${locationIndex}`}>{location.shelf}{location.qty !== null && ` · ${num(location.qty)}`}</span>)}
-      {otherShelfText && <small className="muted">{otherShelfText}</small>}
+    {canShelf && <div role="cell" className="shelf-col" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+      {firstLocation && <div className="shelf-summary">
+        <b className="shelf-summary-name">{firstLocation.location.shelf}</b>
+        {firstBox && boxIdentity(firstBox) !== boxIdentity(box) && <small className="shelf-summary-box"> · {firstBox}</small>}
+        {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, firstLocation.variant.unit)}</small>}
+        {locationRows.length > 1 && <small className="shelf-summary-more">+{locationRows.length - 1}</small>}
+      </div>}
     </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
     <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
@@ -979,12 +1001,14 @@ function ProductCartActions({ product, onToast, onAdded }: {
 function ProductCard({ product, variantIndex, settings, showPrices, canShelf, onOpen, onToast }: {
   product: Product; variantIndex: Map<string, Product[]>; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
-  const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
+  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const locationRows = variantShelfRows([product, ...variants.filter((variant) => variant.id !== product.id)])
+  const locationTitle = shelfRowsLabel(locationRows)
+  const firstLocation = locationRows[0]
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const locations = shelfBreakdown(product)
+  const firstBox = firstLocation ? (firstLocation.location.box || firstLocation.variant.box).trim() : ''
   const brand = brandOrigin(product.brand)
   return (
     <article className="product-card">
@@ -992,7 +1016,17 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
         <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && locations.map((location, index) => <span className="shelf-badge" key={`${location.shelf}-${index}`}>Raf <b>{location.shelf}</b>{location.qty !== null && ` · ${num(location.qty)} adet`}</span>)}{canShelf && otherShelfText && <small className="muted" aria-label={`Diğer varyant rafları: ${otherShelfText}`}>{otherShelfText}</small>}</div>}
+        {(box || (canShelf && firstLocation)) && <div className="product-flags">
+          <BoxBadge box={box} />
+          {canShelf && firstLocation && <div className="product-shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+            <span className="product-shelf-summary-text">
+              <b className="shelf-summary-name">{firstLocation.location.shelf}</b>
+              {firstBox && boxIdentity(firstBox) !== boxIdentity(box) && <small className="shelf-summary-box"> · {firstBox}</small>}
+              {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, firstLocation.variant.unit)}</small>}
+            </span>
+            {locationRows.length > 1 && <small className="shelf-summary-more">+{locationRows.length - 1}</small>}
+          </div>}
+        </div>}
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
@@ -1073,7 +1107,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   product: Product; variantIndex: Map<string, Product[]>; settings: Settings; session: Session
   copySheetOpen: boolean; onCopySheetOpenChange: (open: boolean) => void; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
-  const variants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? [product]
+  const matchedVariants = variantIndex.get(productVariantKey(product.sku, product.brand)) ?? []
+  const variants = [product, ...matchedVariants.filter((variant) => variant.id !== product.id)]
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const [savedCopyColumns, setSavedCopyColumns] = useState(() => ({
@@ -1089,7 +1124,7 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
     if (savedCopyColumns.userId === session.user.id) saveCopyColumns(session.user.id, savedCopyColumns.columns)
   }, [savedCopyColumns, session.user.id])
   const brand = brandOrigin(product.brand)
-  const variantLocations = variants.flatMap((variant) => shelfBreakdown(variant).map((location, index) => ({ variant, location, index })))
+  const variantLocations = variantShelfRows(variants)
   const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
@@ -1199,14 +1234,24 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
       </dl>
       {canShelf ? <section className="detail-shelves" aria-label="Raflar">
         <h3>Raflar</h3>
-        {variantLocations.map(({ variant, location, index }) => {
-          const box = location.box || variant.box
-          const qty = location.qty === null ? '' : `${num(location.qty)} adet`
-          const shelf = location.shelf || 'Raf belirtilmemiş'
-          return <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={`${variant.id}-${location.shelf}-${index}`} aria-label={`${box || 'Kutu durumu belirtilmemiş'}, Raf ${shelf}${qty ? `, ${qty}` : ''}`}>
-            <BoxBadge box={box} compact /><b>{shelf}</b>{qty && <strong>{qty}</strong>}
+        <div className="detail-location-table" role="table" aria-label="Raf konumları">
+          <div className="detail-location-header" role="row">
+            <span role="columnheader">Raf</span>
+            <span role="columnheader">Kutu durumu</span>
+            <span role="columnheader">Adet</span>
           </div>
-        })}
+          {variantLocations.map(({ variant, location, index }) => {
+            const box = location.box || variant.box
+            return <div className={`detail-location-row${variant.id === product.id ? ' selected' : ''}`} key={`${variant.id}-${location.shelf}-${index}`} role="row" aria-label={shelfRowsLabel([{ variant, location, index }])}>
+              <span className="detail-location-shelf" role="cell">
+                <b>{location.shelf || 'Raf belirtilmemiş'}</b>
+                {variant.id === product.id && <small className="detail-location-current">Bu ürün</small>}
+              </span>
+              <span className="detail-location-box" role="cell"><BoxBadge box={box} compact /></span>
+              <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+            </div>
+          })}
+        </div>
       </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
         <h3>Kutu durumları</h3>
         {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
