@@ -387,6 +387,19 @@ begin
   return n;
 end $$;
 
+create or replace function public.purge_products_except(p_keep bigint[]) returns integer
+language plpgsql security definer set search_path = public as $$
+declare n integer;
+begin
+  if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
+  if coalesce(array_length(p_keep, 1), 0) = 0 then raise exception 'Boş liste ile katalog silinemez.'; end if;
+  delete from products where not (id = any(p_keep));
+  get diagnostics n = row_count;
+  insert into settings (key, value) values ('catalog_generation', to_jsonb(1))
+    on conflict (key) do update set value = to_jsonb(coalesce((settings.value)::text::integer, 0) + 1);
+  return n;
+end $$;
+
 -- Merges duplicate products into one: order lines are re-pointed to the surviving row, stock is summed,
 -- the surviving row takes the chosen field values (p_patch) and the sources are soft-deleted.
 -- Source key_norm values get a "~<id>" suffix so the survivor may adopt one of their identities.
