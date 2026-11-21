@@ -29,6 +29,8 @@ import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
+import { brandOrigin } from '@shared/identity'
+import { shelfBreakdown } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -818,17 +820,23 @@ function ProductsPage({ entries, settings, session, loading, onToast }: {
 function ProductTableRow({ product, settings, showPrices, canShelf, onOpen, onToast, index, start, measure }: {
   product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void; index: number; start: number; measure: (node: Element | null) => void
 }): ReactNode {
+  const catalogProducts = useApp((state) => state.products)
+  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
+  const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
   return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
-    <div role="cell" className="brand-col" title={product.brand}>{product.brand || '—'}</div>
+    <div role="cell" className="brand-col" title={product.brand}>{brandOrigin(product.brand).base || '—'}{brandOrigin(product.brand).origin && <small> · {brandOrigin(product.brand).origin}</small>}</div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
-    {canShelf && <div role="cell" className="shelf-col" title={product.shelf}>{product.shelf || '—'}</div>}
+    {canShelf && <div role="cell" className="shelf-col" title={[product.shelf, otherShelfText].filter(Boolean).join(' · ')} aria-label={`Raf bilgisi: ${[...shelfBreakdown(product).map((location) => `${location.shelf}, ${location.qty === null ? 'adet bilinmiyor' : `${num(location.qty)} adet`}`), otherShelfText].filter(Boolean).join('; ')}`}>
+      {shelfBreakdown(product).map((location, locationIndex) => <span className="shelf-badge" key={`${location.shelf}-${locationIndex}`}>{location.shelf}{location.qty !== null && ` · ${num(location.qty)}`}</span>)}
+      {otherShelfText && <small className="muted">{otherShelfText}</small>}
+    </div>}
     <div role="cell" className="add-col"><ProductAddButton variant="table" product={product} qty={Math.max(1, product.min_order)} onToast={onToast} /></div>
     <div role="cell" className="desc-col" title={product.description}>{product.description || '—'}</div>
   </div>
@@ -926,6 +934,9 @@ function ProductCartActions({ product, onToast, onAdded }: {
 function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast }: {
   product: Product; settings: Settings; showPrices: boolean; canShelf: boolean; onOpen: () => void; onToast: (message: string) => void
 }): ReactNode {
+  const catalogProducts = useApp((state) => state.products)
+  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
+  const otherShelfText = variants.filter((variant) => variant.id !== product.id).map((variant) => `${variant.box || 'Kutu durumu belirtilmemiş'}: ${variant.shelf}`).join(' · ')
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
@@ -933,9 +944,9 @@ function ProductCard({ product, settings, showPrices, canShelf, onOpen, onToast 
     <article className="product-card">
       <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
-        <div className="product-brand">{product.brand || 'Marka belirtilmemiş'}</div>
+        <div className="product-brand">{brandOrigin(product.brand).base || 'Marka belirtilmemiş'}{brandOrigin(product.brand).origin && <small> · {brandOrigin(product.brand).origin}</small>}</div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
-        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && product.shelf && <span className="shelf-badge">Raf {product.shelf}</span>}</div>}
+        {(box || (canShelf && product.shelf)) && <div className="product-flags"><BoxBadge box={box} />{canShelf && shelfBreakdown(product).map((location, index) => <span className="shelf-badge" key={`${location.shelf}-${index}`}>Raf <b>{location.shelf}</b>{location.qty !== null && ` · ${num(location.qty)} adet`}</span>)}{canShelf && otherShelfText && <small className="muted" aria-label={`Diğer varyant rafları: ${otherShelfText}`}>{otherShelfText}</small>}</div>}
         {product.description && <p className="product-description">{product.description}</p>}
         {showPrices && <strong className="product-price">{displayPrice(product.price, product.currency)}</strong>}
       </button>
@@ -970,7 +981,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
       if (!entry.brand) continue
       const brand = counts.get(entry.brand)
       if (brand) brand.count++
-      else counts.set(entry.brand, { label: entry.product.brand, count: 1 })
+      else counts.set(entry.brand, { label: brandOrigin(entry.product.brand).base, count: 1 })
     }
     return [...counts.entries()].sort((a, b) => b[1].count - a[1].count || a[1].label.localeCompare(b[1].label, 'tr'))
   }, [entries])
@@ -1015,6 +1026,8 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
 function ProductDetail({ product, settings, session, onClose, onToast }: {
   product: Product; settings: Settings; session: Session; onClose: () => void; onToast: (message: string) => void
 }): ReactNode {
+  const catalogProducts = useApp((state) => state.products)
+  const variants = catalogProducts.filter((candidate) => normalize(candidate.sku) === normalize(product.sku) && normalize(candidate.brand) === normalize(product.brand))
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
@@ -1040,14 +1053,14 @@ function ProductDetail({ product, settings, session, onClose, onToast }: {
     <Sheet title="Ürün bilgisi" onClose={onClose}>
       <div className="detail-product-header">
         <div className="detail-heading"><strong className="product-sku">{product.sku}</strong><button className="button secondary compact" onClick={() => void copy()}><Copy size={16} /> Kopyala</button></div>
-        {product.brand.trim() && <strong className="detail-product-brand">{product.brand}</strong>}
+        {product.brand.trim() && <strong className="detail-product-brand">{brandOrigin(product.brand).base}{brandOrigin(product.brand).origin && <small> · Menşei: {brandOrigin(product.brand).origin}</small>}</strong>}
         <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
       <dl className="detail-list">
         {product.name.trim() && normalize(product.name) !== normalize(product.sku) && <DetailRow label="Ürün adı" value={product.name} />}
         {hasDimensions && <DetailRow label="Ölçü d × D × B" value={`${dimensionText} mm`} />}
         {product.min_order > 0 && <DetailRow label="Min. sipariş" value={`${num(product.min_order)} ${product.unit || 'Adet'}`} />}
-        {canShelf && <DetailRow label="Raf" value={product.shelf} />}
+        {canShelf && variants.flatMap((variant) => shelfBreakdown(variant).map((location) => `${location.box || variant.box || 'Kutu durumu belirtilmemiş'} · ${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`)).length > 0 && <DetailRow label="Raflar" value={variants.flatMap((variant) => shelfBreakdown(variant).map((location) => `${location.box || variant.box || 'Kutu durumu belirtilmemiş'} · ${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`)).join(' / ')} />}
         {showPrices && <DetailRow label="Fiyat" value={displayPrice(product.price, product.currency)} />}
         {product.list_price !== null && showPrices && <DetailRow label="Liste fiyatı" value={displayPrice(product.list_price, product.currency)} />}
         <DetailRow label="Kategori" value={product.category} />

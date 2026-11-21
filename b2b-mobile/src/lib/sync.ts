@@ -8,7 +8,7 @@ import { useApp } from '../store/app'
 const PAGE_SIZE = 1000
 const PRODUCT_COLUMNS = [
   'id', 'sku', 'name', 'brand', 'category', 'type', 'seal', 'd_inner', 'd_outer', 'width',
-  'stock', 'unit', 'price', 'currency', 'list_price', 'card_price', 'min_order', 'shelf',
+  'stock', 'unit', 'price', 'currency', 'list_price', 'card_price', 'min_order', 'shelf', 'locations',
   'box', 'barcode', 'description', 'equivalents', 'active', 'deleted', 'updated_at'
 ].join(',')
 
@@ -61,6 +61,7 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
     card_price: policy.hidePrices || row.card_price == null ? null : Number(row.card_price),
     min_order: Number(row.min_order),
     shelf: policy.canSeeShelf ? row.shelf : '',
+    locations: policy.canSeeShelf ? row.locations ?? [] : [],
     box: row.box,
     barcode: row.barcode,
     image: '',

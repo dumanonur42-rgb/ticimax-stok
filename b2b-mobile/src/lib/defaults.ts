@@ -7,6 +7,7 @@ export const DEFAULT_SETTINGS: Settings = {
   company_address: '',
   company_web: 'yamansarulman.com',
   default_currency: 'TRY',
+  brand_aliases: {},
   rate_usd: 0,
   rate_eur: 0,
   vat_pct: 20,
