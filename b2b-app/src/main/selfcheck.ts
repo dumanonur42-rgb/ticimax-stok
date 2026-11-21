@@ -16,6 +16,7 @@ import { shelfBreakdown } from '@shared/locations'
 import { generateDemoCatalog, seedDemo } from './repo/seed'
 import { listUsers, login, logout } from './repo/users'
 import { cardPrice, priceFor } from '@shared/price'
+import { findRefreshedCartProduct } from '@shared/cart'
 
 /**
  * Headless sanity run: `electron . --selfcheck`.
@@ -246,6 +247,20 @@ export async function runSelfCheck(): Promise<number> {
     ok = false
   }
   console.log(`card price visibility: ${cardPricingOk ? 'ok' : 'failed'}`)
+  const cartLine = { id: 10, sku: ' 6205 ', brand: 'FAG', box: 'Kutulu' }
+  const cartProducts = [
+    { id: 11, sku: '6205', brand: 'SKF', box: 'Kutulu' },
+    { id: 12, sku: '6205', brand: 'FAG', box: 'Kutusuz' },
+    { id: 13, sku: '6205', brand: 'FAG', box: 'Kutulu' }
+  ]
+  const cartRefreshOk = findRefreshedCartProduct(cartLine, cartProducts)?.id === 13 &&
+    findRefreshedCartProduct(cartLine, cartProducts.slice(0, 2)) === undefined &&
+    findRefreshedCartProduct(cartLine, [{ ...cartProducts[0], id: 10 }])?.id === 10
+  if (!cartRefreshOk) {
+    console.error('cart refresh matched the wrong product identity')
+    ok = false
+  }
+  console.log(`cart refresh product identity: ${cartRefreshOk ? 'ok' : 'failed'}`)
 
   const currencyFixture = join(app.getPath('temp'), `selfcheck-import-${Date.now()}.csv`)
   let previewCurrencyOk = false
