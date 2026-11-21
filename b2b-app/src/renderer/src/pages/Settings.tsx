@@ -6,7 +6,7 @@ import { Confirm, Field, Modal } from '@/components/ui'
 import { api, onEvent } from '@/lib/api'
 import { date, ROLE_HINT, ROLE_LABEL } from '@/lib/format'
 import { useApp } from '@/store/app'
-import { DEFAULT_BRAND_ALIASES, mergeBrandAliases, normalize } from '@shared/identity'
+import { brandAliasEntries, DEFAULT_BRAND_ALIASES, normalize } from '@shared/identity'
 import './settings.css'
 
 type Tab = 'gorunum' | 'profil' | 'firma' | 'marka' | 'kullanicilar' | 'veri' | 'sifre'
@@ -90,7 +90,7 @@ function BrandAliases({ s }: { s: S }): ReactNode {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [busy, setBusy] = useState(false)
-  const aliases = mergeBrandAliases(s.brand_aliases)
+  const aliases = brandAliasEntries(s.brand_aliases)
   const save = async (next: Record<string, string>): Promise<void> => {
     setBusy(true)
     try {
@@ -103,31 +103,32 @@ function BrandAliases({ s }: { s: S }): ReactNode {
     }
   }
   const add = (): void => {
-    const key = normalize(from)
+    const source = from.trim()
+    const key = normalize(source)
     if (!key || !to.trim()) return
-    save({ ...s.brand_aliases, [key]: to.trim() })
+    const next = Object.fromEntries(Object.entries(s.brand_aliases).filter(([existing]) => normalize(existing) !== key))
+    save({ ...next, [source]: to.trim() })
     setFrom('')
     setTo('')
   }
   const remove = (key: string): void => {
-    const next = { ...s.brand_aliases }
+    const next = Object.fromEntries(Object.entries(s.brand_aliases).filter(([source]) => normalize(source) !== key))
     if (Object.keys(DEFAULT_BRAND_ALIASES).some((name) => normalize(name) === key)) next[key] = ''
-    else delete next[key]
     save(next)
   }
   return (
     <section className="settings-group">
-      <header><h3>Marka eşleştirme</h3><p>Yazım farklılıkları marka kimliğinde birleştirilir. Değişiklikler bir sonraki Stok Aktar işleminde uygulanır.</p></header>
+      <header><p>Yazım farklılıkları marka kimliğinde birleştirilir. Değişiklikler bir sonraki Stok Aktar işleminde uygulanır.</p></header>
       <div className="grid g3">
         <Field label="Dosyadaki marka">{(id) => <input id={id} className="input" value={from} onChange={(event) => setFrom(event.target.value)} />}</Field>
         <Field label="Gösterilecek marka">{(id) => <input id={id} className="input" value={to} onChange={(event) => setTo(event.target.value)} />}</Field>
         <button className="btn primary" onClick={add} disabled={busy || !from.trim() || !to.trim()}><Plus size={16} aria-hidden /> Eşleştirme ekle</button>
       </div>
       <ul className="grid" aria-label="Marka eşleştirmeleri">
-        {Object.entries(aliases).sort(([a], [b]) => a.localeCompare(b)).map(([source, target]) => (
-          <li key={source} className="row wrap">
+        {aliases.map(({ key, source, target }) => (
+          <li key={key} className="row wrap">
             <strong>{source}</strong><span aria-hidden>→</span><span>{target}</span>
-            <button className="btn small danger" onClick={() => remove(source)} disabled={busy} aria-label={`${source} eşleştirmesini kaldır`}><Trash2 size={14} aria-hidden /> Kaldır</button>
+            <button className="btn small danger" onClick={() => remove(key)} disabled={busy} aria-label={`${source} eşleştirmesini kaldır`}><Trash2 size={14} aria-hidden /> Kaldır</button>
           </li>
         ))}
       </ul>
