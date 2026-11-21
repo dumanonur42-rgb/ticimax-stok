@@ -2216,6 +2216,10 @@ dialog.update-dialog {
   align-items: center;
   gap: 8px;
 }
+.shelf-location-table.without-qty .shelf-location-header,
+.shelf-location-table.without-qty .shelf-location-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+}
 .shelf-location-header {
   padding: 6px 9px;
   border-bottom: 1px solid var(--border-soft);
@@ -2223,7 +2227,7 @@ dialog.update-dialog {
   font-size: .65rem;
   font-weight: 750;
 }
-.shelf-location-header span:last-child {
+.shelf-location-table:not(.without-qty) .shelf-location-header span:last-child {
   text-align: right;
 }
 .shelf-location-row {
@@ -2273,6 +2277,11 @@ dialog.update-dialog {
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+}
+.shelf-location-summary {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: .76rem;
 }
 @keyframes update-spin {
   to {
