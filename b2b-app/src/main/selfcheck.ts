@@ -873,12 +873,23 @@ export async function runSelfCheck(): Promise<number> {
     UNKNOWNKEY: 'TARGET',
     'MiXeD Source': 'Target'
   })
+  const savedHoffmanAliases = { HOFFMANN: 'HOFFMAN' }
+  const savedHoffman = resolveBrand('HOFFMAN', new Map<string, string>(), savedHoffmanAliases)
+  const savedHoffmann = resolveBrand('HOFFMANN', new Map<string, string>(), savedHoffmanAliases)
   const brandIdentityOk =
     brandOrigin('FAG GERMANY').base === 'FAG' && brandOrigin('FAG GERMANY').origin === 'Almanya' &&
     brandOrigin('GERMANY').origin === '' &&
     mergeBrandAliases({}).HOFFMAN === 'HOFFMANN' &&
     mergeBrandAliases({}).HOFFMAN === DEFAULT_BRAND_ALIASES.HOFFMAN &&
     !('HOFFMANN' in mergeBrandAliases({})) &&
+    mergeBrandAliases(savedHoffmanAliases).HOFFMANN === 'HOFFMAN' &&
+    mergeBrandAliases(savedHoffmanAliases).HOFFMAN === undefined &&
+    savedHoffman === 'HOFFMAN' &&
+    savedHoffmann === 'HOFFMAN' &&
+    resolveBrand(savedHoffman, new Map<string, string>(), savedHoffmanAliases) === savedHoffman &&
+    resolveBrand('HOFFMAN', new Map<string, string>(), {}) === 'HOFFMANN' &&
+    resolveBrand('HOFFMANN', new Map<string, string>(), {}) === 'HOFFMANN' &&
+    !('SELF' in mergeBrandAliases({ SELF: 'SELF' })) &&
     brandAliasRows.find(({ key }) => key === 'GMBKORE')?.source === 'GMB KORE' &&
     brandAliasRows.find(({ key }) => key === 'HICJAPON')?.source === 'HIC JAPON' &&
     brandAliasRows.find(({ key }) => key === 'GNUTTIILTAY')?.source === 'GNUTTI ILTAY' &&
