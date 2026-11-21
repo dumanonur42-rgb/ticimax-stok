@@ -19,8 +19,8 @@ import {
   type CopyColumn
 } from '@shared/copy'
 import { StockPill } from '@/components/StockPill'
-import { brandOrigin, canonBox } from '@shared/identity'
-import { shelfBreakdown } from '@shared/locations'
+import { boxIdentity, brandOrigin, canonBox } from '@shared/identity'
+import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { useApp, useCart } from '@/store/app'
 
 const PAGE = 200
@@ -732,6 +732,18 @@ export function Catalog(): ReactNode {
                     </div>
                   )
                 const locations = shelfBreakdown(p)
+                const locationEntries = [
+                  ...locations.map((location) => ({ location, box: location.box || p.box })),
+                  ...p.others.flatMap((other) => shelfBreakdown({
+                    shelf: other.shelf, stock: other.stock, box: other.box, locations: []
+                  }).map((location) => ({ location, box: location.box || other.box })))
+                ]
+                const locationTitle = locationEntries.map(({ location, box }) => [
+                  location.shelf.trim(),
+                  box.trim(),
+                  locationLabel({ shelf: '', qty: location.qty }, p.unit)
+                ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
+                const firstLocation = locationEntries[0]
                 const brand = brandOrigin(p.brand)
                 return (
                   <div
@@ -764,12 +776,11 @@ export function Catalog(): ReactNode {
                     </div>
                     {has.has('shelf') && (
                       <div className="cell shelf-cell" role="gridcell">
-                        {locations.length ? <div className="shelf-location-list" title={locations.map((location) => `${location.shelf} · ${location.box || p.box}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`).join(' / ')}>
-                          {locations.slice(0, 2).map((location, index) => <span className="shelf-tag" key={`${location.shelf}-${index}`} title={`${location.shelf}${location.qty === null ? '' : ` · ${num(location.qty)} adet`}`}>
-                            <b className="mono">{location.shelf}</b>{location.qty !== null && <small>{num(location.qty)} adet</small>}
-                          </span>)}
-                          {locations.length > 2 && <small className="muted">… +{locations.length - 2}</small>}
-                          {p.others.length > 0 && <small className="muted truncate" title={p.others.map((item) => `${item.box || 'Belirtilmemiş'}: ${item.shelf} · ${num(item.stock)} adet`).join(' / ')}>{p.others.slice(0, 2).map((item) => `${item.box || 'Belirtilmemiş'}: ${item.shelf}`).join(' · ')}{p.others.length > 2 ? ` … +${p.others.length - 2}` : ''}</small>}
+                        {firstLocation ? <div className="shelf-summary" title={locationTitle} aria-label={locationTitle || 'Raf bilgisi yok'}>
+                          <b className="mono shelf-summary-name">{firstLocation.location.shelf}</b>
+                          {boxIdentity(firstLocation.box) !== boxIdentity(p.box) && firstLocation.box && <small className="shelf-summary-box">{firstLocation.box}</small>}
+                          {firstLocation.location.qty !== null && <small className="shelf-summary-qty"> · {locationLabel({ shelf: '', qty: firstLocation.location.qty }, p.unit)}</small>}
+                          {locationEntries.length > 1 && <small className="shelf-more-pill">+{locationEntries.length - 1}</small>}
                         </div> : <span className="faint">—</span>}
                       </div>
                     )}

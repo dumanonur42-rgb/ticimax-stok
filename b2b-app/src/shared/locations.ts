@@ -18,6 +18,14 @@ export interface ShelfBreakdownItem {
   box: string
 }
 
+const locationNumber = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 2 })
+
+export function locationLabel(loc: Pick<ShelfBreakdownItem, 'shelf' | 'qty'>, unit = 'adet'): string {
+  const shelf = loc.shelf.trim()
+  const quantity = loc.qty === null ? '' : `${locationNumber.format(loc.qty)} ${unit.trim() || 'adet'}`
+  return [shelf, quantity].filter(Boolean).join(' · ')
+}
+
 export function shelfBreakdown(product: Pick<Product, 'shelf' | 'stock' | 'box' | 'locations'>): ShelfBreakdownItem[] {
   const shelves = product.shelf.split(' / ').map((shelf) => shelf.trim()).filter(Boolean)
   const shelfSet = new Set(shelves.map(normalize))
