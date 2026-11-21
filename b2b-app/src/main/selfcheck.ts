@@ -341,6 +341,7 @@ export async function runSelfCheck(): Promise<number> {
   })
   const zeroStockOutput = productsToClipboard([copyProduct({
     stock: 0,
+    unit: '  ',
     shelf: '',
     locations: [],
     box: '',
@@ -366,6 +367,16 @@ export async function runSelfCheck(): Promise<number> {
     canShelf: true,
     showPrices: true
   })
+  const unitOutput = productsToClipboard([copyProduct({
+    unit: 'Kutu',
+    stock: 3,
+    box: 'Kutulu',
+    shelf: 'A1',
+    locations: [{ shelf: 'A1', qty: 3, box: 'Kutulu' }]
+  })], ['sku', 'shelf', 'stock', 'box'], {
+    canShelf: true,
+    showPrices: true
+  })
   const sizesOmitted = !productsToClipboard([copySamples[2]], ['sku', 'size'], {
     canShelf: true,
     showPrices: true
@@ -387,6 +398,10 @@ export async function runSelfCheck(): Promise<number> {
     !stockOnlyOutput.text.includes('Kutu durumu:') &&
     boxOnlyOutput.text.includes('Kutu durumu: Kutulu Kutusuz') &&
     !boxOnlyOutput.text.includes('Stok:') &&
+    unitOutput.text.includes('Stok: 3 Kutu · Kutulu') &&
+    unitOutput.text.includes('Raf: A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('A1 · Kutulu · 3 Kutu') &&
+    unitOutput.html.includes('>3 Kutu</td>') &&
     thirdProductText.startsWith('*6203* · FAG') &&
     thirdProductText.includes('Stok: 2 adet') &&
     !thirdProductText.includes('Raf:') &&

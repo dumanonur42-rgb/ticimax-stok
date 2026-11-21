@@ -84,11 +84,13 @@ export function productsToClipboard(
   const allowed = new Set(availableCopyColumns(products, options))
   const selected = [...new Set<CopyColumn>(['sku', ...columns])].filter((column) => allowed.has(column))
   const values = (product: Product): ClipboardProductValues => {
+    const unit = product.unit.trim() || 'adet'
+    const quantity = (value: number): string => `${numberFormat.format(value)} ${unit}`
     const shelfLines = shelfBreakdown(product)
       .map(({ shelf, qty, box }) => {
         const label = shelf.trim()
         return label
-          ? [label, box.trim(), qty === null ? '' : `${numberFormat.format(qty)} adet`].filter(Boolean).join(' · ')
+          ? [label, box.trim(), qty === null ? '' : quantity(qty)].filter(Boolean).join(' · ')
           : ''
       })
       .filter(Boolean)
@@ -100,7 +102,7 @@ export function productsToClipboard(
       name: product.name,
       brand: brandLabel(product.brand),
       size: sizeLabel(product),
-      stock: `${numberFormat.format(product.stock)} adet`,
+      stock: quantity(product.stock),
       box: product.box.trim(),
       description: product.description,
       price: price === null ? '' : formatMoney(price, product.currency),
