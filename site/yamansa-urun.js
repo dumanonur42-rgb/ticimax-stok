@@ -2260,7 +2260,7 @@ i.setAttribute('min',m);
 function c(){if(!((parseFloat(String(i.value).replace(',','.'))||0)>=m)){i.value=m;}}
 c();
 if(i.__ym)return;i.__ym=1;
-['change','blur','keyup'].forEach(function(e){i.addEventListener(e,c)});
+['change','blur'].forEach(function(e){i.addEventListener(e,c)});
 var w=i.closest('.RadInput')||i.parentNode;
 w.addEventListener('click',function(){setTimeout(c,0)});
 }
