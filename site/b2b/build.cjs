@@ -108,7 +108,7 @@ const js = `/* Yamansa B2B bayi uygulamasi tanitimi: ust serit baglantisi, menu 
 if(window.__ybB2B)return;window.__ybB2B=1;
 var B=((document.currentScript&&document.currentScript.src)||"").replace(/[^\\/]*$/,"");
 var TOP=${J(TOP)},HEAD=${J(HEAD)},FS=${J(FSTRIP)},LP=${J(LP)};
-var isLP=/^\\/bayi-uygulamasi\\/?$/i.test(location.pathname),ready=false,t0=Date.now();
+var isLP=/^\\/bayi-uygulamasi\\/?$/i.test(location.pathname),ready=false,t0=Date.now(),desk=window.matchMedia("(min-width:1024px)");
 var l=document.createElement("link");l.rel="stylesheet";l.href=B+"b2b.css";l.onload=function(){ready=true;run()};l.onerror=function(){ready=true};
 (document.head||document.documentElement).appendChild(l);
 function ins(sel,pos,html,mark){var el=document.querySelector(sel);if(!el||document.querySelector(mark))return;el.insertAdjacentHTML(pos,html)}
@@ -117,13 +117,53 @@ if(!ready)return;
 ins(".yr-banner","beforeend",TOP,".yb-top-link");
 ins("#divHeaderUyeV2","beforebegin",HEAD,".yb-head-btn");
 ins("footer","beforebegin",FS,".yb-fstrip");
-if(isLP&&!document.querySelector(".yb-lp")){var c=document.querySelector("#yb-lp-root")||document.querySelector("#divIcerik");if(c){c.innerHTML=LP;document.documentElement.classList.add("yb-lp-page")}}
+if(isLP&&desk.matches&&!document.querySelector(".yb-lp")){var c=document.querySelector("#divIcerik");if(c){c.innerHTML=LP;document.documentElement.classList.add("yb-lp-page")}}
 }
-function loop(){run();var done=document.querySelector(".yb-top-link")&&document.querySelector(".yb-head-btn")&&document.querySelector(".yb-fstrip")&&(!isLP||document.querySelector(".yb-lp"));if(!done&&Date.now()-t0<20000)setTimeout(loop,250)}
+function loop(){run();var done=document.querySelector(".yb-top-link")&&document.querySelector(".yb-head-btn")&&document.querySelector(".yb-fstrip")&&(!isLP||!desk.matches||document.querySelector(".yb-lp"));if(!done&&Date.now()-t0<20000)setTimeout(loop,250)}
+if(desk.addEventListener)desk.addEventListener("change",run);
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loop);else loop();
 })();
 `;
 fs.writeFileSync(__dirname + '/b2b.js', js);
+/* Ticimax "Sayfa Yönetimi" > Bayi Uygulaması (adres: bayi-uygulamasi) sayfasının içeriği.
+   Masaüstünde b2b.js bu içeriği tanıtım sayfasıyla değiştirir; telefonda ve betik yüklenemezse bu sade içerik görünür. */
+const PAGE = `<style type="text/css">.yb-fb{max-width:760px;margin:24px auto 40px;padding:0 16px;font-family:Montserrat,Arial,sans-serif;color:#0b1f4b;font-size:15px;line-height:1.7;box-sizing:border-box}
+.yb-fb *{box-sizing:border-box}
+.yb-fb h1{font-size:26px;line-height:1.25;margin:0 0 10px;font-weight:700;color:#0b1f4b}
+.yb-fb h2{font-size:18px;margin:26px 0 10px;font-weight:700;color:#0b1f4b}
+.yb-fb p{margin:0 0 12px}
+.yb-fb ul{margin:0 0 12px;padding:0 0 0 20px}
+.yb-fb li{margin:0 0 6px;list-style:disc}
+.yb-fb a{color:#0d2a78;font-weight:600;text-decoration:underline}
+.yb-fb .yb-fb-dl a{display:block;margin:0 0 10px;padding:13px 16px;border:1px solid #d5dbea;border-radius:12px;background:#fff;text-decoration:none;color:#0b1f4b}
+.yb-fb .yb-fb-dl span{display:block;font-weight:400;font-size:13px;color:#56607a}
+.yb-fb .yb-fb-dl div{margin:0 0 10px;padding:13px 16px;border:1px dashed #d5dbea;border-radius:12px;color:#56607a;font-weight:600}
+@media (min-width:1024px){.yb-fb{visibility:hidden;min-height:70vh;animation:ybfb 0s linear 6s forwards}}
+@keyframes ybfb{to{visibility:visible}}
+</style>
+<div class="yb-fb">
+<h1>Yamansa B2B Bayi Uygulaması</h1>
+<p>Yamansa Rulman bayileri için hazırlanan uygulama ile stok durumunu, size özel bayi fiyatlarını görebilir ve siparişinizi dakikalar içinde verebilirsiniz. Uygulama Android, iPhone ve Windows için hazırlandı; tek hesabınızla hepsinde kullanabilirsiniz.</p>
+<h2>Uygulamada neler var?</h2>
+<ul>
+<li>9.000'den fazla ürünün güncel stok durumu</li>
+<li>Hesabınıza özel bayi fiyatları</li>
+<li>Ürün kodu, ölçü ve markaya göre hızlı arama</li>
+<li>Sepet ve sipariş, sipariş geçmişi</li>
+<li>İnternet yokken de açılan ürün kataloğu</li>
+</ul>
+<h2>İndirin</h2>
+<div class="yb-fb-dl">
+<a href="${PLAY}" target="_blank" rel="noopener">Android – Google Play'den indir<span>Android telefon ve tabletler</span></a>
+<div>iPhone – App Store'da yakında</div>
+<a href="${WIN}" rel="noopener">Windows – Kurulum dosyasını indir<span>Windows 10 ve 11 bilgisayarlar</span></a>
+</div>
+<h2>Bayi hesabı</h2>
+<p>Uygulama yalnızca kayıtlı bayilerimiz içindir. Bayi hesabı açtırmak için bize yazın: <a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>, <a href="tel:+905526109363">0552 610 93 63</a> veya <a href="mailto:info@yamansarulman.com">info@yamansarulman.com</a>.</p>
+</div>
+`;
+fs.writeFileSync(__dirname + '/page-content.html', PAGE);
+
 let css = fs.readFileSync(__dirname + '/b2b.src.css', 'utf8');
 css = css.slice(0, css.indexOf('/* mockup işaretleri */'));
 css += '/* telefon tasarımı onaylanana kadar footer şeridi yalnızca masaüstünde */\n@media (max-width:1023px){.yb-fstrip{display:none!important}}\n';
