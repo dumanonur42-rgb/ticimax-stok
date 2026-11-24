@@ -1,5 +1,6 @@
 import type { Product } from '@shared/types'
 import { boxParts, brandOrigin, normalize } from '@shared/identity'
+import { brandLogo } from '../lib/brandLogos'
 import { Braces, Check, Info, MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
@@ -24,6 +25,7 @@ export function ProductDrawer({
   threshold: number
 }): ReactNode {
   const brand = brandOrigin(product.brand)
+  const logo = brandLogo(brand.base)
   const add = useCart((s) => s.add)
   const toast = useApp((s) => s.toast)
   const session = useApp((s) => s.session)
@@ -178,8 +180,9 @@ export function ProductDrawer({
                 <h3 id="pd-name" className="pd-name">{product.name}</h3>
               </div>
               {product.brand && (
-                <span className="pd-brand">
-                  <b>{brand.base}</b>
+                <span className={`pd-brand${logo ? ' has-logo' : ''}`}>
+                  {logo && <img src={logo.src} alt={logo.emblem ? '' : brand.base} />}
+                  {(!logo || logo.emblem) && <b>{brand.base}</b>}
                   {brand.origin && <small>Menşei: {brand.origin}</small>}
                 </span>
               )}
@@ -273,11 +276,14 @@ export function ProductDrawer({
                         <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
                           <small>Diğer markalarda</small>
                           <ul>
-                            {note.equivalents.map((item) => (
-                              <li key={item.brand}>
-                                <b>{item.brand}</b> <span>{item.code}</span>
-                              </li>
-                            ))}
+                            {note.equivalents.map((item) => {
+                              const mark = brandLogo(item.brand)
+                              return (
+                                <li key={item.brand}>
+                                  {mark && !mark.emblem ? <i><img src={mark.src} alt={item.brand} /></i> : <b>{item.brand}</b>} <span>{item.code}</span>
+                                </li>
+                              )
+                            })}
                           </ul>
                         </div>
                       )}
