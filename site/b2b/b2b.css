@@ -3,7 +3,7 @@
 .yb-top-link svg{flex:none}
 .yb-top-link i{font-style:normal;background:#ffc400;color:#0b1f4b;border-radius:999px;padding:2px 8px;font-size:10.5px;font-weight:800;letter-spacing:.3px}
 #divHeaderUyeV2 .account-title{white-space:nowrap}
-.yb-head-btn{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px 0 7px;margin-right:10px;border-radius:999px;border:1.5px solid rgba(255,196,0,.9);color:#fff!important;font:700 13.5px/1.15 Montserrat,sans-serif;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));white-space:nowrap;box-shadow:0 0 0 4px rgba(255,196,0,.08)}
+.yb-head-btn{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px 0 7px;margin-right:10px;border-radius:999px;border:1.5px solid rgba(255,196,0,.9);color:#fff!important;font:700 13.5px/1.15 Montserrat,sans-serif;text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));white-space:nowrap;flex:0 0 auto;box-shadow:0 0 0 4px rgba(255,196,0,.08)}
 .yb-head-btn img{width:32px;height:32px;border-radius:50%;background:#fff}
 .yb-head-btn small{display:block;font-weight:600;font-size:10px;color:#ffd34d;letter-spacing:.2px;margin-bottom:2px}
 
@@ -52,8 +52,10 @@
 .yb-hero>*{position:relative;z-index:1}
 .yb-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,196,0,.14);border:1px solid rgba(255,196,0,.3);color:#ffd34d;font-weight:700;font-size:11.5px;padding:7px 13px;border-radius:999px;letter-spacing:.6px}
 .yb-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#ffc400;box-shadow:0 0 0 4px rgba(255,196,0,.2)}
-.yb-hero h1{font-size:39px;line-height:1.14;margin:18px 0 16px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.yb-hero h1{font-size:clamp(30px,2.72vw,39px);line-height:1.14;margin:18px 0 16px;font-weight:800;color:#fff;letter-spacing:-.5px}
 .yb-hero h1 span{color:#ffc400;display:block;white-space:nowrap}
+@media (max-width:1279px){.yb-hero h1 span{white-space:normal}}
+@media (max-width:1199px){.yb-hero{padding:44px 36px 92px}.yb-hero h1{font-size:28px}.yb-hero .yb-badge{height:46px;padding:0 13px 0 11px;gap:8px}.yb-hero .yb-badge b{font-size:14px}}
 .yb-hero p.yb-lead{color:#cdd7f2;font-size:16px;line-height:1.65;margin:0 0 26px;max-width:540px}
 .yb-ticks{display:flex;flex-wrap:wrap;gap:8px 22px;margin:22px 0 0;padding:0;list-style:none}
 .yb-ticks li{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#dfe6fa}
