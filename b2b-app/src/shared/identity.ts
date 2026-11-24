@@ -283,7 +283,9 @@ export function brandOrigin(brand: string): { base: string; origin: string; cond
     const candidates: Array<[string, string]> = []
     if (last) candidates.push([last[2] ?? last[3] ?? '', last[1].trim()])
     if (first) candidates.push([first[1] ?? first[2] ?? '', first[3].trim()])
-    const found = candidates.find(([word, rest]) => rest && ((!origin && ORIGIN_NAMES.has(normalize(word))) || (!condition && CONDITION_NAMES.has(normalize(word)))))
+    // The condition goes first: in "ÇIKMA/ÇİN" the country is the only word left that can name the maker.
+    const found = candidates.find(([word, rest]) => rest && !condition && CONDITION_NAMES.has(normalize(word)))
+      ?? candidates.find(([word, rest]) => rest && !origin && ORIGIN_NAMES.has(normalize(word)))
     if (!found) break
     const key = normalize(found[0])
     if (CONDITION_NAMES.has(key)) condition = CONDITION_NAMES.get(key) ?? ''
