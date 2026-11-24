@@ -573,7 +573,7 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const match = text.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
   if (!match) return null
   const prefix = match[1] ?? ''
-  const number = match[2]
+  let number = match[2]
   let rest = match[3]
   const brandName = brandKey(brand)
   let info: TypeInfo | null = null
@@ -587,6 +587,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     if (/^\d+$/.test(digits)) info = numericType(digits, explicit)
+    // "62052RS": the seal's leading 2 is glued to the base number.
+    if (!info && !slash && digits.endsWith('2') && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+      info = numericType(digits.slice(0, -1), explicit)
+      if (info) { number = digits.slice(0, -1); rest = `2${rest}` }
+    }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
     if (info && prefix === 'B' && info.family !== 'acbb') info = null
