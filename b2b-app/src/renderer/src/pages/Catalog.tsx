@@ -20,6 +20,7 @@ import {
 } from '@shared/copy'
 import { StockPill } from '@/components/StockPill'
 import { brandOrigin, canonBox } from '@shared/identity'
+import { brandLogo } from '../lib/brandLogos'
 import { locationLabel, shelfBreakdown } from '@shared/locations'
 import { useApp, useCart } from '@/store/app'
 
@@ -48,7 +49,7 @@ const COLUMNS: Column[] = [
   { key: 'pick', label: '', min: 36 },
   { key: 'shelf', label: 'Raf', min: 240, drop: 4, sort: 'shelf', perm: 'shelf' },
   { key: 'sku', label: 'Ürün Kodu', min: 194, grow: 1.6, sort: 'sku' },
-  { key: 'brand', label: 'Marka', min: 84, grow: 0.6, drop: 5 },
+  { key: 'brand', label: 'Marka', min: 96, grow: 0.6, drop: 5 },
   { key: 'dims', label: 'd × D × B', min: 104, grow: 0.7, drop: 1 },
   { key: 'stock', label: 'Stok', min: 65, grow: 0.4, sort: 'stock', align: 'right' },
   { key: 'box', label: 'Kutu durumu', min: 170, grow: 1, drop: 2 },
@@ -240,6 +241,8 @@ export function Catalog(): ReactNode {
     return COLUMNS.map((column) => {
       if (column.key === 'shelf') return { ...column, min: gridW < 1200 ? 229 : 240 }
       if (column.key === 'sku') return { ...column, min: Math.ceil(178 * scale + 20) }
+      // Logo plate (64) + gap + a short label such as "ÇIKMA" or the country of origin.
+      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 64 : 92)) }
       if (column.key === 'stock') return { ...column, min: compact ? Math.ceil(45 + 20 * scale) : 104 }
       if (column.key === 'price') return { ...column, min: Math.ceil(96 * scale + 50) }
       if (column.key === 'act') return { ...column, min: Math.ceil(72 * scale + 34) }
@@ -745,6 +748,7 @@ export function Catalog(): ReactNode {
                 ].filter(Boolean).join(' · ')).filter(Boolean).join(', ')
                 const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))]
                 const brand = brandOrigin(p.brand)
+                const logo = brandLogo(brand.base)
                 return (
                   <div
                     key={v.key}
@@ -791,8 +795,16 @@ export function Catalog(): ReactNode {
                       {p.sku}
                     </div>
                     {has.has('brand') && (
-                      <div className="cell muted truncate" role="gridcell" title={p.brand}>
-                        {brand.base}{brand.origin && <small className="muted"> · {brand.origin}</small>}
+                      <div className="cell muted brand-cell" role="gridcell" title={p.brand}>
+                        {logo
+                          ? <>
+                            <span className="brand-plate"><img src={logo.src} alt={logo.label ? '' : brand.base} loading="lazy" decoding="async" draggable={false} /></span>
+                            {(logo.label || brand.origin) && <span className="brand-rest">{logo.label}{brand.origin && <small>{logo.label ? ' · ' : ''}{brand.origin}</small>}</span>}
+                          </>
+                          : <>
+                            {brand.base && <span className="brand-plate text">{brand.base}</span>}
+                            {brand.origin && <span className="brand-rest"><small>{brand.origin}</small></span>}
+                          </>}
                       </div>
                     )}
                     {has.has('dims') && (
