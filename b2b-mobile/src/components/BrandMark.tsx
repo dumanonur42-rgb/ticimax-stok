@@ -15,8 +15,8 @@ export function BrandMark({ brand, empty = '', originPrefix = '' }: { brand: str
         </span>
         {!logo.named && !logo.emblem && <span className="brand-rest">{base}</span>}
       </>
-      : <span className="brand-plate text"><span>{base}</span></span>}
-    {origin && <span className="brand-rest origin">{originPrefix}{origin}</span>}
+      : <span className={`brand-plate text${base.length > 6 ? ' long' : ''}`}><span>{base}</span></span>}
+    {origin && originPrefix && <span className="brand-rest origin">{originPrefix}{origin}</span>}
     {condition && <span className="brand-cond">{condition}</span>}
   </span>
 }
