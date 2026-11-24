@@ -99,7 +99,7 @@ img { max-width: 100%; }
   user-select: text;
   -webkit-touch-callout: default;
 }
-.app-shell.dark, .login-screen.dark {
+.app-shell.dark, .login-screen.dark, .required-update.dark {
   --background: #0d1625;
   --surface: #142033;
   --surface-2: #1a2940;
