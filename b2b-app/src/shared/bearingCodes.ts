@@ -373,6 +373,10 @@ interface TypeInfo { family: BearingFamily; type: string; detail?: string; size?
 
 const numericType = (digits: string, explicitBore: number | null): TypeInfo | null => {
   const size = (code: string): string => bore(explicitBore ?? boreFromCode(code))
+  // "230/500", "618/8": a three-digit series followed by the bore in mm.
+  if (digits.length === 3 && explicitBore !== null && /^(160|617|618|619|213|222|223|230|231|232|233|238|239|240|241|302|303|313|320|322|323|329|330|331|332|292|293|294)$/.test(digits)) {
+    return numericType(`${digits}00`, explicitBore)
+  }
   if (digits.length === 3 && /^6[0-3]\d$/.test(digits)) {
     return { family: 'dgbb', type: 'Sabit bilyalı rulman (minyatür)', size: bore(explicitBore ?? Number(digits[2])) }
   }
