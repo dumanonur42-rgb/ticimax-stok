@@ -384,6 +384,7 @@ const numericType = (digits: string, explicitBore: number | null): TypeInfo | nu
     const series = digits.slice(0, 2)
     const code = digits.slice(2)
     if (/^6[0234]$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman', detail: 'En yaygın rulman tipi: radyal yükü ve iki yönde hafif eksenel yükü taşır.', size: size(code) }
+    if (/^6[789]$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman (ince kesitli)', detail: 'Dar kesitli hafif seri; 61700 / 61800 / 61900 serilerinin kısa yazılışıdır.', size: size(code) }
     if (/^(12|13|22|23)$/.test(series)) return { family: 'sabb', type: 'Oynak bilyalı rulman', detail: 'Çift sıra bilyalı; mil eğilmesini ve eksen kaçıklığını kendiliğinden karşılar.', size: size(code) }
     if (/^(42|43)$/.test(series)) return { family: 'dgbb', type: 'Çift sıra sabit bilyalı rulman', size: size(code) }
     if (/^(32|33|52|53)$/.test(series)) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman', detail: 'Radyal yükle birlikte iki yönde eksenel yük taşır.', size: size(code) }
