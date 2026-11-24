@@ -12,7 +12,7 @@ import ts from 'typescript'
 const app = await readFile(new URL('../src/App.tsx', import.meta.url), 'utf8')
 const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8')
 const ast = ts.createSourceFile('App.tsx', app, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
-const functions = ['ProductsPage', 'ProductTableRow', 'variantShelfRows', 'shelfRowsLabel', 'ProductAddButton', 'ProductCartActions', 'ProductCard', 'QuantityStepper', 'Sheet'].map(name => ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === name).getText(ast)).join('\n')
+const functions = ['catalogRowStyle', 'ProductsPage', 'ProductTableRow', 'variantShelfRows', 'shelfRowsLabel', 'ProductAddButton', 'ProductCartActions', 'ProductCard', 'QuantityStepper', 'Sheet'].map(name => ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === name).getText(ast)).join('\n')
 let detailHeader
 function visit(node) {
   if (ts.isJsxElement(node) && node.openingElement.attributes.properties.some(attribute => attribute.name?.getText(ast) === 'className' && attribute.initializer?.getText(ast) === '"detail-product-header"')) detailHeader = node.getText(ast)
