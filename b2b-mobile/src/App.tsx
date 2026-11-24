@@ -86,6 +86,8 @@ export default function App(): ReactNode {
   const [loginBusy, setLoginBusy] = useState(false)
   const [homeCatalogStatus, setHomeCatalogStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [homeOpenOrders, setHomeOpenOrders] = useState<number | null>(null)
+  const [ordersLoaded, setOrdersLoaded] = useState(0)
+  const onOrdersLoaded = useCallback(() => setOrdersLoaded((value) => value + 1), [])
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
@@ -102,6 +104,15 @@ export default function App(): ReactNode {
   const productVariants = useMemo(() => indexProductVariants(products), [products])
 
   useEffect(() => { dismissIOSKeyboard() }, [tab, sheet])
+
+  useEffect(() => {
+    if (!session || !online) return
+    let active = true
+    void dashboardOrders().then((data) => {
+      if (active) setHomeOpenOrders(data.openOrders)
+    }).catch(() => undefined)
+    return () => { active = false }
+  }, [session?.user.id, online, orderRefresh, ordersLoaded])
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
@@ -353,7 +364,6 @@ export default function App(): ReactNode {
     if (!session) return
     void syncNow()
     if (session.user.role === 'admin') void listCustomers().then(setCustomers).catch(() => setCustomers([]))
-    void dashboardOrders().then((data) => setHomeOpenOrders(data.openOrders)).catch(() => setHomeOpenOrders(null))
     const syncDebounced = (): void => debounceSync(() => {
       if (document.visibilityState === 'visible') void syncNow()
     })
@@ -605,7 +615,7 @@ export default function App(): ReactNode {
           {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} catalogStatus={homeCatalogStatus} onRetryCatalog={() => void syncNow()} onNavigate={setTab} onToast={showToast} />}
           {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
-          {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
+          {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} onLoaded={onOrdersLoaded} />}
           {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
         <BottomTabs tab={tab} setTab={setTab} cartLineCount={cartLineCount} />
@@ -1432,8 +1442,8 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
   )
 }
 
-function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRefresh }: {
-  settings: Settings; refreshKey: number; selectedOrderId: number | null; onSelectOrder: (id: number) => void; onRefresh: () => void
+function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRefresh, onLoaded }: {
+  settings: Settings; refreshKey: number; selectedOrderId: number | null; onSelectOrder: (id: number) => void; onRefresh: () => void; onLoaded: () => void
 }): ReactNode {
   const session = useApp((state) => state.session)
   const online = useApp((state) => state.online)
@@ -1466,6 +1476,7 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
           setOrders(data)
           setCachedAt(cached?.updatedAt ?? new Date().toISOString())
           setUsingOfflineCache(false)
+          onLoaded()
         }
       } catch (reason) {
         const cached = await readCachedOrders().catch(() => null)
@@ -1484,7 +1495,7 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
     }
     void load()
     return () => { active = false }
-  }, [refreshKey, online])
+  }, [refreshKey, online, onLoaded])
   const offline = usingOfflineCache || !online || navigator.onLine === false
   return (
     <div className="page orders-page">
