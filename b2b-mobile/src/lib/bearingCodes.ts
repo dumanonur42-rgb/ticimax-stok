@@ -553,7 +553,8 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     return { family: 'nut', type: 'Emniyet pulu (kilit rondelası)', detail: `KM ${Number(digits)} somunuyla birlikte kullanılır.` }
   }
   if (/^(LM|JLM|JM|JHM|HM|LL|JL|L|M|HH|H)$/.test(prefix) && (digits || slash?.[1] || '').length >= 5) {
-    return { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
+    // A leading J marks metric main dimensions within the same cone/cup numbering.
+    return { family: 'other', type: prefix.startsWith('J') ? 'Konik makaralı rulman (J serisi, metrik ölçülü)' : 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
   }
   if (/^(RLS|RMS|LJ|MJ)$/.test(prefix)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : 'Orta seri.' }
   void brand
