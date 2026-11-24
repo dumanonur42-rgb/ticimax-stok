@@ -1,43 +1,47 @@
+import { normalize } from '@shared/identity'
+import fit from './brandLogoFit.json'
+
 const files = import.meta.glob<string>('../assets/brands/*.webp', { eager: true, import: 'default' })
 
 const logos = new Map(
   Object.entries(files).map(([path, url]) => [path.slice(path.lastIndexOf('/') + 1, -5), url])
 )
 
-const ALIASES: Record<string, string> = {
-  ZVL: 'zkl',
-  BOSCH: 'rexroth',
-  STAR: 'rexroth',
-  ASKUBAL: 'ask',
-  STEYER: 'steyr',
-  STYER: 'steyr'
+// Other spellings of the name the logo itself shows.
+const SPELLINGS: Record<string, string> = { ASKUBAL: 'ask', STEYER: 'steyr', STYER: 'steyr' }
+
+// Brands sold under the logo of the group that owns them; the logo does not say their name.
+const OWNERS: Record<string, string> = { BOSCH: 'rexroth', STAR: 'rexroth' }
+
+// Emblems whose lettering is too small to read at plate size: the name is printed beside them.
+const EMBLEMS = new Set(['zkl', 'ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth', 'slf'])
+
+// Wordmarks that do not show the brand's short name legibly ("Nippon Bearing" for NB).
+const UNREADABLE = new Set(['eurosnodi', 'nb', 'schneeberger'])
+
+export interface BrandLogo {
+  src: string
+  /** Size inside a logo plate, as CSS percentages of its inner box; see scripts/brand-logo-fit.py. */
+  size: { width: string; height: string }
+  /** An emblem without readable lettering. */
+  emblem: boolean
+  /** The logo alone says the whole brand, so the name need not be written next to it. */
+  named: boolean
 }
 
-// Emblems whose lettering is too small to read: never shown at chip size.
-const EMBLEMS = new Set(['zkl', 'ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth'])
-
-// Marks that are readable in the drawer but not at list-row height.
-const TINY = new Set(['ask', 'sbc', 'slf', 'zf', 'eurosnodi', 'nb', 'schneeberger'])
-
-/**
- * Logo of the brand named by the first word, e.g. "SKF", "KYK JAPAN" or "GPZ-ZKL".
- * `named` is false when the logo alone does not say the whole brand, so the name must stay visible.
- * `label` is the text a list row shows beside the logo: the part of the name the logo does not say.
- * `said` is the word only the logo shows, to be kept as hidden text so copying and screen readers still get it.
- */
-export function brandLogo(brand: string): { src: string; emblem: boolean; named: boolean; label: string; said: string } | undefined {
-  const text = brand.trim()
-  const upper = text.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I')
-  const words = upper.split(/[^A-Z0-9]+/).filter(Boolean)
+/** Logo of the maker named by the first word of a brand, e.g. "SKF", "İNA" or "GPZ-ZKL". */
+export function brandLogo(brand: string): BrandLogo | undefined {
+  const words = brand.split(/[\s\-/().,&]+/).map(normalize).filter(Boolean)
   if (!words.length) return undefined
-  const alias = ALIASES[words[0]]
-  const key = alias ?? words[0].toLowerCase()
+  const key = (SPELLINGS[words[0]] ?? OWNERS[words[0]] ?? words[0]).toLowerCase()
   const src = logos.get(key)
-  if (!src) return undefined
+  const box = (fit as Record<string, number[]>)[key]
+  if (!src || !box) return undefined
   const emblem = EMBLEMS.has(key)
-  const whole = emblem || alias !== undefined || TINY.has(key)
-  // "SKF(ÇIKMA)", "GPZ-ZKL": everything but the word the logo stands for; upper-casing must not have moved it.
-  const start = upper.length === text.length ? upper.indexOf(words[0]) : -1
-  const label = whole || start < 0 ? text : `${text.slice(0, start)}${text.slice(start + words[0].length)}`.replace(/^[\s\-/.,]+/, '')
-  return { src, emblem, named: !emblem && !alias && words.length === 1, label, said: label === text ? '' : words[0] }
+  return {
+    src,
+    size: { width: `${box[0]}%`, height: `${box[1]}%` },
+    emblem,
+    named: !emblem && !UNREADABLE.has(key) && !(words[0] in OWNERS) && words.length === 1
+  }
 }

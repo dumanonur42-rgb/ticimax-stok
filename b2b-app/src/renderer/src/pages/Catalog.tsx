@@ -241,8 +241,8 @@ export function Catalog(): ReactNode {
     return COLUMNS.map((column) => {
       if (column.key === 'shelf') return { ...column, min: gridW < 1200 ? 229 : 240 }
       if (column.key === 'sku') return { ...column, min: Math.ceil(178 * scale + 20) }
-      // Logo plate (64) + gap + a short label such as "ÇIKMA" or the country of origin.
-      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 64 : 92)) }
+      // Logo plate (68) + gap + a short label such as "ÇIKMA" or the country of origin.
+      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 76 : 96)) }
       if (column.key === 'stock') return { ...column, min: compact ? Math.ceil(45 + 20 * scale) : 104 }
       if (column.key === 'price') return { ...column, min: Math.ceil(96 * scale + 50) }
       if (column.key === 'act') return { ...column, min: Math.ceil(72 * scale + 34) }
@@ -749,6 +749,8 @@ export function Catalog(): ReactNode {
                 const shelfNames = [...new Set(locationEntries.map(({ location }) => location.shelf.trim()).filter(Boolean))]
                 const brand = brandOrigin(p.brand)
                 const logo = brandLogo(brand.base)
+                // A short one-word name fits inside the plate beside an emblem; anything longer goes after it.
+                const brandInside = !!logo?.emblem && /^[^\s\-/().,&]{1,4}$/.test(brand.base)
                 return (
                   <div
                     key={v.key}
@@ -798,14 +800,16 @@ export function Catalog(): ReactNode {
                       <div className="cell muted brand-cell" role="gridcell" title={p.brand}>
                         {logo
                           ? <>
-                            <span className="brand-plate"><img src={logo.src} alt="" loading="lazy" decoding="async" draggable={false} /></span>
-                            {logo.said && <span className="sr-only">{logo.said} </span>}
-                            {(logo.label || brand.origin) && <span className="brand-rest">{logo.label}{brand.origin && <small>{logo.label ? ' · ' : ''}{brand.origin}</small>}</span>}
+                            <span className="brand-plate">
+                              <img src={logo.src} style={logo.size} alt="" loading="lazy" decoding="async" draggable={false} />
+                              {brandInside && <b>{brand.base}</b>}
+                            </span>
+                            {logo.named && <span className="sr-only">{brand.base} </span>}
+                            {!logo.named && !brandInside && <span className="brand-rest">{brand.base}</span>}
                           </>
-                          : <>
-                            {brand.base && <span className="brand-plate text">{brand.base}</span>}
-                            {brand.origin && <span className="brand-rest"><small>{brand.origin}</small></span>}
-                          </>}
+                          : brand.base && <span className="brand-plate text">{brand.base}</span>}
+                        {brand.origin && <span className="brand-rest origin">{brand.origin}</span>}
+                        {brand.condition && <span className="brand-cond">{brand.condition}</span>}
                       </div>
                     )}
                     {has.has('dims') && (

@@ -136,7 +136,7 @@ export function ProductDrawer({
             <X size={18} aria-hidden />
           </button>
         </div>
-        <div className="drawer-body grid" style={{ gap: 16, alignContent: 'start' }}>
+        <div className="drawer-body grid" style={{ gap: 16, alignContent: 'start', gridAutoRows: 'max-content' }}>
           {canSeeShelf ? (
             <section className="shelf-card shelf-card-locations" role="group" aria-label="Raflar">
               <MapPin size={22} aria-hidden />
@@ -181,13 +181,14 @@ export function ProductDrawer({
               </div>
               {product.brand && (
                 <span className={`pd-brand${logo ? ' has-logo' : ''}`}>
-                  {logo && <img src={logo.src} alt={logo.named ? brand.base : ''} />}
+                  {logo && <span className="pd-logo"><img src={logo.src} style={logo.size} alt={logo.named ? brand.base : ''} /></span>}
                   {!logo?.named && <b>{brand.base}</b>}
                   {brand.origin && <small>Menşei: {brand.origin}</small>}
                 </span>
               )}
-              {(tags.length > 0 || !product.active) && (
+              {(tags.length > 0 || brand.condition || !product.active) && (
                 <ul className="pd-tags" aria-label="Özellikler">
+                  {brand.condition && <li className="cond">{brand.condition}</li>}
                   {tags.map((tag) => <li key={tag}>{tag}</li>)}
                   {!product.active && <li className="out">Pasif</li>}
                 </ul>
@@ -280,7 +281,7 @@ export function ProductDrawer({
                               const mark = brandLogo(item.brand)
                               return (
                                 <li key={item.brand}>
-                                  {mark && !mark.emblem ? <i><img src={mark.src} alt={item.brand} /></i> : <b>{item.brand}</b>} <span>{item.code}</span>
+                                  {mark && !mark.emblem ? <i><span className="eq-logo"><img src={mark.src} style={mark.size} alt={item.brand} /></span></i> : <b>{item.brand}</b>} <span>{item.code}</span>
                                 </li>
                               )
                             })}
