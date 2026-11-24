@@ -253,7 +253,7 @@ const RULES: Rule[] = [
   { codes: 'BE BEA', concept: 'angle40e', families: ['acbb'] },
   { codes: 'B', concept: 'angle40', families: ['acbb'] },
   { codes: 'A', concept: 'angle30', families: ['acbb'], brands: ['NSK', 'NTN', 'KOYO', 'NACHI'] },
-  { codes: 'AC ACD', concept: 'angle25', families: ['acbb'] },
+  { codes: 'AC ACD A5 AD', concept: 'angle25', families: ['acbb'] },
   { codes: 'C CD', concept: 'angle15', families: ['acbb'] },
   { codes: 'CB G', concept: 'universal', families: ['acbb'] },
   { codes: 'UA', concept: 'universalUa', families: ['acbb'] },
