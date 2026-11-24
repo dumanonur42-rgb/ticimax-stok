@@ -15,7 +15,7 @@ const context = {
   Minus: 'minus', Plus: 'plus',
   useState: initial => { draft ??= initial; return [draft, value => { draft = value }] },
   useEffect: () => {},
-  props: () => ({ qty, min, sku: '6205', setQty: value => { committed = value } })
+  props: () => ({ qty, min, sku: '6205', setQty: value => { committed = value; qty = value } })
 }
 vm.createContext(context)
 vm.runInContext(ts.transpileModule(stepper.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React } }).outputText, context)
@@ -42,14 +42,27 @@ render().children[0].props.onClick()
 assert.equal(committed, 10)
 for (const value of ['abc', '1,5', '1.5', '-2', '1e2', ' 2 ']) {
   input().onChange({ target: { value } })
-  assert.equal(input().value, '10', `Reject invalid syntax: ${value}`)
+  assert.equal(input().value, value)
+  assert.equal(input()['aria-invalid'], true)
   input().onBlur()
   assert.equal(committed, 10)
+  assert.equal(input().value, '10', `Reject invalid syntax on commit: ${value}`)
+  assert.equal(input()['aria-invalid'], false)
+}
+for (const separator of [',', '.']) {
+  input().onChange({ target: { value: '' } })
+  for (const character of `1${separator}5`) input().onChange({ target: { value: input().value + character } })
+  assert.equal(input().value, `1${separator}5`)
+  input().onBlur()
+  assert.equal(committed, 10, 'Sequential decimal typing must not concatenate into 15')
 }
 input().onChange({ target: { value: '' } })
 assert.equal(input().value, '')
 input().onChange({ target: { value: '1,5' } })
-assert.equal(input().value, '')
+assert.equal(input().value, '1,5')
+input().onBlur()
+assert.equal(committed, 10)
+input().onChange({ target: { value: '' } })
 input().onBlur()
 assert.equal(committed, 5)
 let blurred = false
@@ -64,4 +77,4 @@ function visit(node) {
 visit(ast)
 assert.equal(searches.length, 2)
 for (const search of searches) for (const attribute of ['autoCapitalize="none"', 'autoCorrect="off"', 'spellCheck={false}', 'inputMode="text"']) assert.ok(search.includes(attribute))
-console.log('Inputs: ok (quantity empty/edit/commit/min/step/error; both searches disable correction)')
+console.log('Inputs: ok (quantity empty/edit/commit/min/step/error, pasted and sequentially typed decimals rejected; both searches disable correction)')

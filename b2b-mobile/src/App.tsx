@@ -1376,15 +1376,16 @@ function DetailRow({ label, value }: { label: string; value: string }): ReactNod
 function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (value: number) => void; min: number; sku: string }): ReactNode {
   const [draft, setDraft] = useState(String(qty))
   useEffect(() => { setDraft(String(qty)) }, [qty])
+  const validDraft = /^\d*$/.test(draft)
   const amount = (): number => {
-    const value = Number(draft)
+    const value = validDraft ? Number(draft) : qty
     return Number.isFinite(value) ? Math.max(min, Math.floor(value)) : min
   }
   const commit = (value = amount()): void => {
     setDraft(String(value))
     setQty(value)
   }
-  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} inputMode="numeric" value={draft} onChange={(event) => { if (/^\d*$/.test(event.target.value)) setDraft(event.target.value) }} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
+  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" value={draft} onChange={(event) => setDraft(event.target.value)} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
 }
 
 function CartPage({ session, settings, customers, products, online, onToast, onOrderCreated, onViewOrders }: {
