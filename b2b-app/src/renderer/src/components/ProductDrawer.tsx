@@ -181,8 +181,8 @@ export function ProductDrawer({
               </div>
               {product.brand && (
                 <span className={`pd-brand${logo ? ' has-logo' : ''}`}>
-                  {logo && <img src={logo.src} alt={logo.emblem ? '' : brand.base} />}
-                  {(!logo || logo.emblem) && <b>{brand.base}</b>}
+                  {logo && <img src={logo.src} alt={logo.named ? brand.base : ''} />}
+                  {!logo?.named && <b>{brand.base}</b>}
                   {brand.origin && <small>Menşei: {brand.origin}</small>}
                 </span>
               )}

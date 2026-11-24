@@ -6,18 +6,23 @@ const logos = new Map(
 
 const ALIASES: Record<string, string> = { ZVL: 'zkl', BOSCH: 'rexroth' }
 
-// Emblems whose lettering is too small to read: shown with the brand name, never at chip size.
+// Emblems whose lettering is too small to read: never shown at chip size.
 const EMBLEMS = new Set(['zkl', 'ina', 'dkf', 'urb', 'snfa'])
 
-/** Logo of the brand named by the first word, e.g. "SKF", "KYK JAPAN" or "GPZ-ZKL". */
-export function brandLogo(brand: string): { src: string; emblem: boolean } | undefined {
-  const word = brand
+/**
+ * Logo of the brand named by the first word, e.g. "SKF", "KYK JAPAN" or "GPZ-ZKL".
+ * `named` is false when the logo alone does not say the whole brand, so the name must stay visible.
+ */
+export function brandLogo(brand: string): { src: string; emblem: boolean; named: boolean } | undefined {
+  const words = brand
     .toLocaleUpperCase('tr-TR')
     .replace(/İ/g, 'I')
     .split(/[^A-Z0-9]+/)
-    .find(Boolean)
-  if (!word) return undefined
-  const key = ALIASES[word] ?? word.toLowerCase()
+    .filter(Boolean)
+  if (!words.length) return undefined
+  const key = ALIASES[words[0]] ?? words[0].toLowerCase()
   const src = logos.get(key)
-  return src ? { src, emblem: EMBLEMS.has(key) } : undefined
+  if (!src) return undefined
+  const emblem = EMBLEMS.has(key)
+  return { src, emblem, named: !emblem && words.length === 1 }
 }
