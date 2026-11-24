@@ -671,11 +671,14 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const digits = slash ? slash[1] : number
     let explicit = slash ? Number(slash[2].replace(',', '.')) : null
     // "6902-16 ZZ": a number right after the base code is a special bore, so the standard bore does not apply.
-    const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
-    if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
-    const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
     // "15123/15245", "45284-45220": an inch taper cone and cup, both plain numbers; the second one is never a bore.
     const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^(\d{5})-\d{5}$/.test(text))
+    // FAG 562xx is an insert bearing series, so such a pair cannot be told apart from a cone and cup.
+    if (conePair && brandName === 'FAG' && /^[1357]62\d\d$/.test(digits)) return null
+    if (conePair && !slash) { number = text; rest = '' }
+    const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
+    if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
+    const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
     if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
     if (conePair) info = { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
