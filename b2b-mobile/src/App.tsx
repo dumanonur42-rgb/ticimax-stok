@@ -30,7 +30,7 @@ import { openExternal } from './lib/external'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
-import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
+import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
@@ -38,7 +38,8 @@ import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { SystemInsets } from './lib/systemInsets'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { indexProductVariants, productVariantKey } from './lib/productVariants'
-import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
+import { abortCatalogSync, debounceSync, refreshSettings, startRealtime, syncCatalog } from './lib/sync'
+import { CatalogSyncAbortedError } from './lib/catalogRequest'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
@@ -187,11 +188,12 @@ export default function App(): ReactNode {
       }
       setOnline(true)
       try {
-        setSettings(await loadSettings())
+        await refreshSettings()
       } catch {
         if (!navigator.onLine) setOnline(false)
       }
     } catch (error) {
+      if (error instanceof CatalogSyncAbortedError) return
       setOnline(false)
       if (!useApp.getState().products.length) setHomeCatalogStatus('error')
       console.warn('Catalog sync failed', error)
@@ -252,7 +254,7 @@ export default function App(): ReactNode {
       }).catch(() => undefined)
     }
     const onOnline = (): void => { setOnline(true); void syncNow(); verifySession() }
-    const onOffline = (): void => { setOnline(false); setLoginError('') }
+    const onOffline = (): void => { abortCatalogSync(); setOnline(false); setLoginError('') }
     const onSessionRestored = (event: Event): void => {
       const restored = (event as CustomEvent<Session | null>).detail
       if (restored) {

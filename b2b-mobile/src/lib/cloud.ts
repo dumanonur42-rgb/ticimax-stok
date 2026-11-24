@@ -345,8 +345,10 @@ export async function signOut(): Promise<void> {
   if (error) throw new Error(errorMessage(error))
 }
 
-export async function loadSettings(): Promise<Settings> {
-  const { data, error } = await supabase.from('settings').select('key,value')
+export async function loadSettings(signal?: AbortSignal): Promise<Settings> {
+  const query = supabase.from('settings').select('key,value')
+  const { data, error } = await (signal ? query.abortSignal(signal) : query)
+  if (signal?.aborted) throw new Error('Katalog isteği iptal edildi.')
   if (error) throw new Error(errorMessage(error))
   const settings: Settings = { ...DEFAULT_SETTINGS }
   const remoteKeys = new Set((data ?? []).map((row) => row.key))

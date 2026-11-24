@@ -4,6 +4,7 @@ import { hasPerm } from '@shared/perms'
 import { getState, putProducts, readProducts, removeProducts, replaceProducts, setState } from './idb'
 import { loadSettings, supabase } from './cloud'
 import { useApp } from '../store/app'
+import { catalogRequest, CatalogSyncAbortedError } from './catalogRequest'
 
 const PAGE_SIZE = 1000
 const PRODUCT_COLUMNS = [
@@ -19,6 +20,7 @@ interface ProductStoragePolicy {
 }
 
 let pendingPull: Promise<{ products: Product[]; changed: number }> | null = null
+let pullController: AbortController | null = null
 let realtimeChannel: ReturnType<typeof supabase.channel> | null = null
 let realtimeTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -72,8 +74,8 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
   }
 }
 
-async function generation(): Promise<string> {
-  const { data, error } = await supabase.from('settings').select('value').eq('key', 'catalog_generation').maybeSingle()
+async function generation(signal: AbortSignal): Promise<string> {
+  const { data, error } = await catalogRequest(requestSignal => supabase.from('settings').select('value').eq('key', 'catalog_generation').maybeSingle().abortSignal(requestSignal), signal)
   if (error) throw error
   return data ? String(data.value) : '0'
 }
@@ -86,9 +88,13 @@ function cursorOf(products: Product[]): { time: string; id: number } {
   return latest ? { time: latest.updated_at, id: latest.id } : { time: new Date(0).toISOString(), id: 0 }
 }
 
-async function pull(): Promise<{ products: Product[]; changed: number }> {
-  useApp.getState().setSettings(await loadSettings())
-  const currentGeneration = await generation()
+function assertActive(signal: AbortSignal): void {
+  if (signal.aborted) throw new CatalogSyncAbortedError()
+}
+
+async function pull(signal: AbortSignal): Promise<{ products: Product[]; changed: number }> {
+  useApp.getState().setSettings(await catalogRequest(requestSignal => loadSettings(requestSignal), signal))
+  const currentGeneration = await generation(signal)
   const policy = storagePolicy()
   const [storedGeneration, storedTime, storedPolicy] = await Promise.all([
     getState('catalog_generation'),
@@ -96,6 +102,7 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     getState('product_storage_policy')
   ])
   const policyChanged = storedPolicy !== policy.signature
+  assertActive(signal)
   const full = !storedTime || storedGeneration !== currentGeneration || policyChanged
   let changed = 0
 
@@ -103,20 +110,23 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     const products: Product[] = []
     let afterId = 0
     for (;;) {
-      const { data, error } = await supabase.from('products')
+      const { data, error } = await catalogRequest(requestSignal => supabase.from('products')
         .select(PRODUCT_COLUMNS)
         .eq('active', true)
         .eq('deleted', false)
         .gt('id', afterId)
         .order('id')
-        .limit(PAGE_SIZE)
+        .limit(PAGE_SIZE).abortSignal(requestSignal), signal)
+      assertActive(signal)
       if (error) throw error
       const rows = (data ?? []) as unknown as ProductRow[]
       if (!rows.length) break
       products.push(...rows.map((row) => toProduct(row, policy)))
       afterId = rows[rows.length - 1].id
     }
+    assertActive(signal)
     await replaceProducts(products)
+    assertActive(signal)
     const cursor = cursorOf(products)
     await Promise.all([
       setState('products_cursor_time', cursor.time),
@@ -129,18 +139,20 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
     let time = new Date(new Date(storedTime).getTime() - 5 * 60_000).toISOString()
     let id = 0
     for (;;) {
-      const { data, error } = await supabase.from('products')
+      const { data, error } = await catalogRequest(requestSignal => supabase.from('products')
         .select(PRODUCT_COLUMNS)
         .or(`updated_at.gt.${time},and(updated_at.eq.${time},id.gt.${id})`)
         .order('updated_at')
         .order('id')
-        .limit(PAGE_SIZE)
+        .limit(PAGE_SIZE).abortSignal(requestSignal), signal)
+      assertActive(signal)
       if (error) throw error
       const rows = (data ?? []) as unknown as ProductRow[]
       if (!rows.length) break
       const active = rows.filter((row) => row.active && !row.deleted).map((row) => toProduct(row, policy))
       const removed = rows.filter((row) => !row.active || row.deleted).map((row) => row.id)
       await Promise.all([putProducts(active), removeProducts(removed)])
+      assertActive(signal)
       const last = rows[rows.length - 1]
       time = last.updated_at
       id = last.id
@@ -153,17 +165,24 @@ async function pull(): Promise<{ products: Product[]; changed: number }> {
       ])
     }
   }
-  return { products: await readProducts(), changed }
+  const products = await readProducts()
+  assertActive(signal)
+  return { products, changed }
 }
 
 export function syncCatalog(): Promise<{ products: Product[]; changed: number }> {
   if (pendingPull) return pendingPull
-  pendingPull = pull().finally(() => { pendingPull = null })
+  pullController = new AbortController()
+  pendingPull = pull(pullController.signal).finally(() => { pendingPull = null; pullController = null })
   return pendingPull
 }
 
+export function abortCatalogSync(): void {
+  pullController?.abort()
+}
+
 export async function refreshSettings(): Promise<void> {
-  useApp.getState().setSettings(await loadSettings())
+  useApp.getState().setSettings(await catalogRequest(signal => loadSettings(signal)))
 }
 
 export function startRealtime(onChange: () => void): () => void {
