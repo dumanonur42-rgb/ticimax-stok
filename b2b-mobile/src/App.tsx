@@ -830,7 +830,7 @@ function ProductsPage({ entries, variantIndex, settings, session, loading, onToa
     <div className="page products-page">
       <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><div className="catalog-heading-actions"><div className="view-toggle" role="group" aria-label="Ürün görünümü"><button className={view === 'table' ? 'active' : ''} onClick={() => setProductView('table')} aria-pressed={view === 'table'}><Table2 size={16} />Tablo</button><button className={view === 'card' ? 'active' : ''} onClick={() => setProductView('card')} aria-pressed={view === 'card'}><LayoutGrid size={16} />Kart</button></div><span className="count-pill">{num(results.length)}</span></div></div>
       <div className="search-row">
-        <div className="search-box"><Search size={19} aria-hidden /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'search' : undefined} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
+        <div className="search-box"><Search size={19} aria-hidden /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'search' : undefined} autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="off" inputMode="text" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
         <button className={`filter-button${activeFilters ? ' selected' : ''}`} onClick={() => setSheet('filters')} aria-label={`Filtreler${activeFilters ? `, ${activeFilters} seçili` : ''}`}><SlidersHorizontal size={19} />{activeFilters > 0 && <span>{activeFilters}</span>}</button>
       </div>
       <label className="stock-toggle"><input type="checkbox" checked={inStock} onChange={(event) => setInStock(event.target.checked)} /><span className="switch" /><span>Sadece stoktakiler</span></label>
@@ -1094,7 +1094,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
     <Sheet title="Filtreler" onClose={onClose} footer={
       <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
     }>
-      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'done' : undefined} value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
+      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'done' : undefined} autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="off" inputMode="text" value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
         <div className="brand-options">{visibleBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
         {(hiddenBrandCount > 0 || showAllBrands) && <button type="button" className="show-more-brands" onClick={() => setShowAllBrands((value) => !value)}>{showAllBrands ? 'Daha az göster' : `Tümünü göster (+${num(hiddenBrandCount)})`}</button>}
       </section>
@@ -1308,7 +1308,17 @@ function DetailRow({ label, value }: { label: string; value: string }): ReactNod
 }
 
 function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (value: number) => void; min: number; sku: string }): ReactNode {
-  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => setQty(Math.max(min, qty - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} inputMode="numeric" value={qty} onChange={(event) => setQty(Math.max(min, Number(event.target.value.replace(/\D/g, '')) || min))} /><button type="button" aria-label="Miktarı artır" onClick={() => setQty(qty + min)}><Plus size={16} /></button></div>
+  const [draft, setDraft] = useState(String(qty))
+  useEffect(() => { setDraft(String(qty)) }, [qty])
+  const amount = (): number => {
+    const value = Number(draft)
+    return Number.isFinite(value) ? Math.max(min, Math.floor(value)) : min
+  }
+  const commit = (value = amount()): void => {
+    setDraft(String(value))
+    setQty(value)
+  }
+  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} inputMode="numeric" value={draft} onChange={(event) => setDraft(event.target.value.replace(/\D/g, ''))} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
 }
 
 function CartPage({ session, settings, customers, products, online, onToast, onOrderCreated, onViewOrders }: {
