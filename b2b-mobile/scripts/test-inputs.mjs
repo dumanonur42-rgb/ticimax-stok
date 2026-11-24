@@ -15,11 +15,14 @@ const context = {
   Minus: 'minus', Plus: 'plus',
   useState: initial => { draft ??= initial; return [draft, value => { draft = value }] },
   useEffect: () => {},
+  useRef: initial => refs[refIndex++] ??= { current: initial },
   props: () => ({ qty, min, sku: '6205', setQty: value => { committed = value; qty = value } })
 }
 vm.createContext(context)
 vm.runInContext(ts.transpileModule(stepper.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React } }).outputText, context)
-const render = () => vm.runInContext('QuantityStepper(props())', context)
+const refs = []
+let refIndex = 0
+const render = () => { refIndex = 0; return vm.runInContext('QuantityStepper(props())', context) }
 const input = () => render().children[1].props
 assert.equal(input().value, '1')
 input().onChange({ target: { value: '' } })
@@ -56,6 +59,18 @@ for (const separator of [',', '.']) {
   input().onBlur()
   assert.equal(committed, 10, 'Sequential decimal typing must not concatenate into 15')
 }
+min = 1
+for (const value of ['2', '2,', '2,5']) input().onChange({ target: { value } })
+assert.equal(committed, 10, 'A decimal typed over 10 must not leave its first digit as the amount')
+input().onBlur()
+assert.equal(committed, 10)
+input().onChange({ target: { value: '3' } })
+assert.equal(committed, 3, 'A usable amount applies before blur')
+input().onChange({ target: { value: '' } })
+assert.equal(committed, 10, 'Clearing the field restores the amount from before the edit')
+input().onChange({ target: { value: '10' } })
+input().onBlur()
+min = 5
 input().onChange({ target: { value: '' } })
 assert.equal(input().value, '')
 input().onChange({ target: { value: '1,5' } })
