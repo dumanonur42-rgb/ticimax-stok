@@ -24,8 +24,10 @@ const I = {
   search: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#55607c" stroke-width="2.200" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.600-3.600"/></svg>`
 };
 const fix = (s) => s;
-const badge = (href, icon, small, big, cls='', soon=false) => `<a class="yb-badge ${cls}${soon?' soon':''}" href="${href}">${icon}<span><small>${small}</small><b>${big}</b></span>${soon?'<em>Yakında</em>':''}</a>`;
-const BADGES = badge(PLAY, svgPlay, "GET IT ON", "Google Play") + badge('#', svgApple(), "Download on the", "App Store", '', true) + badge(WIN, svgWin(), "Windows için", "İndir (PC)", 'win');
+const badge = (href, icon, small, big, cls='', soon=false) => soon
+  ? `<span class="yb-badge ${cls} soon" role="img" aria-label="${big} – yakında">${icon}<span><small>${small}</small><b>${big}</b></span><em>Yakında</em></span>`
+  : `<a class="yb-badge ${cls}" href="${href}">${icon}<span><small>${small}</small><b>${big}</b></span></a>`;
+const BADGES = badge(PLAY, svgPlay, "GET IT ON", "Google Play") + badge('', svgApple(), "Download on the", "App Store", '', true) + badge(WIN, svgWin(), "Windows için", "İndir (PC)", 'win');
 const phone = (src, alt) => `<div class="yb-ph"><img src="${src}" alt="${alt}" width="520" height="1156" loading="lazy" decoding="async"></div>`;
 const rows = [['6205 2RS','SKF','25×52×15','124','€3,20',1],['6205 ZZ','FAG','25×52×15','86','€2,95'],['6205 2RS C3','NSK','25×52×15','48','€3,05'],['6205 TN','KOYO','25×52×15','12','€2,70'],['6205 N','ZKL','25×52×15','Az: 2','€2,40'],['6205 2Z','NTN','25×52×15','31','€2,90'],['6205 RS','ORS','25×52×15','210','€1,85']];
 const WINDOW = `<div class="yb-win" aria-hidden="true">
@@ -73,7 +75,7 @@ const LP = fix(`<div class="yb-lp">
 <p class="yb-sub">Aynı kullanıcı adı ve şifreyle bütün cihazlarınızda giriş yapabilirsiniz.</p>
 <div class="yb-plats">
  <div class="yb-plat"><div class="yb-ic">${svgAndroid}</div><b>Android</b><p>Android telefon ve tabletler için Google Play'den indirin.</p>${badge(PLAY, svgPlay, "GET IT ON", "Google Play")}<small>Android 7 ve üzeri</small></div>
- <div class="yb-plat"><div class="yb-ic">${svgApple('#0b1f4b')}</div><b>iPhone</b><p>iPhone sürümü Apple onayında. Yayınlandığında buradan indirebileceksiniz.</p>${badge('#', svgApple(), "Download on the", "App Store", '', true)}<small>Çok yakında</small></div>
+ <div class="yb-plat"><div class="yb-ic">${svgApple('#0b1f4b')}</div><b>iPhone</b><p>iPhone sürümü Apple onayında. Yayınlandığında buradan indirebileceksiniz.</p>${badge('', svgApple(), "Download on the", "App Store", '', true)}<small>Çok yakında</small></div>
  <div class="yb-plat"><div class="yb-ic">${svgWin('#0b1f4b')}</div><b>Windows</b><p>Ofis bilgisayarınız için kurulum dosyasını indirin; güncellemeler kendiliğinden gelir.</p>${badge(WIN, svgWin(), "Windows için", "İndir (PC)")}<small>Windows 10 ve 11</small></div>
 </div>
 
