@@ -647,7 +647,7 @@ const STAINLESS = /^(SS|S)$/
 export function explainProductCode(sku: string, brand: string): CodeExplanation | null {
   const text = sku.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I').replace(/\([^)]*\)?/g, ' ').replace(/\s+/g, ' ').trim()
     // "SL 04 5005 PP": INA writes the series and the size apart.
-    .replace(/^SL ?(\d\d) (\d{4})(?=\s|$)/, 'SL$1$2')
+    .replace(/^SL ?(\d\d) (\d{4})(?=[\s-]|$)/, 'SL$1$2')
   const brandName = brandKey(brand)
   // "0610-012-00": Star / Rexroth linear bushing; the last two digits of the middle group are the shaft diameter.
   const star = /(^|[^A-Z])(STAR|REXROTH|BOSCH)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR')) ? text.match(/^R?(06[0-7]\d)[\s-]?\d(\d\d)[\s-]?\d\d$/) : null
