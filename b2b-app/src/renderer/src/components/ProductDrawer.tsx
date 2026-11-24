@@ -6,7 +6,7 @@ import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
-import { locationLabel, shelfBreakdown } from '@shared/locations'
+import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 
 export function ProductDrawer({
@@ -35,6 +35,8 @@ export function ProductDrawer({
   const shelfRows = (variants.length ? variants : [product]).flatMap((variant) =>
     shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
   )
+  const shelfQuantities = shelfQuantitySummary(shelfRows)
+  const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
 
@@ -144,11 +146,11 @@ export function ProductDrawer({
               <MapPin size={22} aria-hidden />
               <div className="shelf-card-content">
                 <span className="shelf-card-label">Raflar</span>
-                <div className="shelf-location-table" role="table" aria-label="Raf konumları">
+                <div className={`shelf-location-table${hideShelfQuantities ? ' without-qty' : ''}`} role="table" aria-label="Raf konumları">
                   <div className="shelf-location-header" role="row">
                     <span role="columnheader">Raf</span>
                     <span role="columnheader">Kutu durumu</span>
-                    <span role="columnheader">Adet</span>
+                    {!hideShelfQuantities && <span role="columnheader">Adet</span>}
                   </div>
                   {shelfRows.map(({ variant, location, index }) => (
                     <div
@@ -162,10 +164,11 @@ export function ProductDrawer({
                         {variant.id === product.id && <small className="shelf-current-tag">Bu ürün</small>}
                       </span>
                       <span className="shelf-location-box" role="cell"><BoxParts value={location.box || variant.box} /></span>
-                      <strong className="shelf-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+                      {!hideShelfQuantities && <strong className="shelf-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>}
                     </div>
                   ))}
                 </div>
+                {shelfQuantities.notes.map(({ variantId, label }) => <p className="shelf-location-summary" key={variantId}>{label}</p>)}
               </div>
             </section>
           ) : variants.length > 1 ? (

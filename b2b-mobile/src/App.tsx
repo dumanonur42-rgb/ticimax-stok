@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
 import { explainProductCode } from './lib/bearingCodes'
-import { brandOrigin, normalize } from '@shared/identity'
+import { brandLabel, brandOrigin, normalize } from '@shared/identity'
 import {
   availableCopyColumns,
   COPY_COLUMN_LABELS,
@@ -46,7 +46,8 @@ import { CatalogStorageError } from './lib/catalogStorage'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
-import { locationLabel, shelfBreakdown, type ShelfBreakdownItem } from '@shared/locations'
+import { BrandMark } from './components/BrandMark'
+import { locationLabel, shelfBreakdown, shelfQuantitySummary, type ShelfBreakdownItem } from '@shared/locations'
 import { GlobeScene } from './components/GlobeScene'
 import logo from './assets/logo.png'
 import mark from './assets/mark.png'
@@ -1093,10 +1094,10 @@ function ProductTableRow({ product, variantIndex, settings, showPrices, canShelf
   const box = product.box.trim()
   const dimensions = [product.d_inner, product.d_outer, product.width]
   const price = displayPrice(product.price, product.currency)
-  const brand = brandOrigin(product.brand)
-  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
+
+  return <div key={product.id} ref={measure} data-index={index} role="row" tabIndex={0} aria-label={`${product.sku}, ${brandLabel(product.brand)}${box ? `, Kutu: ${box}` : ''}, ayrıntıları aç`} onClick={onOpen} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onOpen() } }} className={`catalog-table-row ${showPrices ? '' : 'no-price'} ${canShelf ? 'has-shelf' : ''} ${index % 2 === 1 ? 'is-alt' : ''}`} style={{ transform: `translateY(${start}px)` }}>
     <div role="cell" className="sku-col"><strong className="table-sku">{product.sku}</strong><div className="sku-subline"><BoxBadge box={box} compact />{dimensions.some((value) => value !== null) && <small>{dimensions.map((value) => value === null ? '—' : num(value)).join('×')} mm</small>}</div></div>
-    <div role="cell" className="brand-col" title={product.brand}>{brand.base || '—'}{brand.origin && <small> · {brand.origin}</small>}</div>
+    <div role="cell" className="brand-col" title={product.brand}><BrandMark brand={product.brand} empty="—" /></div>
     <div role="cell" className="stock-col"><span className={`stock-badge ${stockClass}`}>{num(product.stock)}</span></div>
     <div role="cell" className="box-col">{box ? <BoxBadge box={box} /> : '—'}</div>
     {showPrices && <div role="cell" className="price-col">{product.price === 0 ? <span className="no-price-value">{price}</span> : price}</div>}
@@ -1215,12 +1216,12 @@ function ProductCard({ product, variantIndex, settings, showPrices, canShelf, on
   const threshold = settings.low_stock_threshold
   const stockClass = product.stock <= 0 ? 'out' : product.stock <= threshold ? 'low' : 'ok'
   const box = product.box.trim()
-  const brand = brandOrigin(product.brand)
+
   return (
     <article className="product-card">
-      <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${product.brand}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
+      <button type="button" className="product-main" onClick={onOpen} aria-label={`${product.sku}, ${brandLabel(product.brand)}${box ? `, Kutu: ${box}` : ''} ürün ayrıntıları`}>
         <div className="product-topline"><strong className="product-sku">{product.sku}</strong><span className={`stock-badge ${stockClass}`}>{num(product.stock)} <small>{product.unit || 'Adet'}</small></span></div>
-        <div className="product-brand">{brand.base || 'Marka belirtilmemiş'}{brand.origin && <small> · {brand.origin}</small>}</div>
+        <div className="product-brand"><BrandMark brand={product.brand} empty="Marka belirtilmemiş" /></div>
         {(product.d_inner !== null || product.d_outer !== null || product.width !== null) && <div className="product-dims">{num(product.d_inner)} × {num(product.d_outer)} × {num(product.width)} <small>mm</small></div>}
         {(box || (canShelf && shelfNames.length > 0)) && <div className="product-flags">
           <BoxBadge box={box} />
@@ -1330,9 +1331,11 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   useEffect(() => {
     if (savedCopyColumns.userId === session.user.id) saveCopyColumns(session.user.id, savedCopyColumns.columns)
   }, [savedCopyColumns, session.user.id])
-  const brand = brandOrigin(product.brand)
+
   const codeInfo = useMemo(() => explainProductCode(product.sku, product.brand), [product.sku, product.brand])
   const variantLocations = variantShelfRows(variants)
+  const shelfQuantities = shelfQuantitySummary(variantLocations)
+  const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
   const hasDimensions = dimensionValues.some((value) => value !== null)
@@ -1393,7 +1396,7 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
             <button className="button secondary compact" onClick={() => void share()}><Send size={16} /> Paylaş</button>
           </div>
         </div>
-        {product.brand.trim() && <strong className="detail-product-brand">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</strong>}
+        {product.brand.trim() && <div className="detail-product-brand"><BrandMark brand={product.brand} originPrefix="Menşei: " /></div>}
         <div className="detail-product-badges"><span className={`stock-badge ${product.stock <= 0 ? 'out' : product.stock <= settings.low_stock_threshold ? 'low' : 'ok'}`}>{num(product.stock)} {product.unit || 'Adet'}</span><BoxBadge box={product.box} /></div>
       </div>
       <dl className="detail-list">
@@ -1435,11 +1438,11 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
       </section>}
       {canShelf ? <section className="detail-shelves" aria-label="Raflar">
         <h3>Raflar</h3>
-        <div className="detail-location-table" role="table" aria-label="Raf konumları">
+        <div className={`detail-location-table${hideShelfQuantities ? ' without-qty' : ''}`} role="table" aria-label="Raf konumları">
           <div className="detail-location-header" role="row">
             <span role="columnheader">Raf</span>
             <span role="columnheader">Kutu durumu</span>
-            <span role="columnheader">Adet</span>
+            {!hideShelfQuantities && <span role="columnheader">Adet</span>}
           </div>
           {variantLocations.map(({ variant, location, index }) => {
             const box = location.box || variant.box
@@ -1449,10 +1452,11 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
                 {variant.id === product.id && <small className="detail-location-current">Bu ürün</small>}
               </span>
               <span className="detail-location-box" role="cell"><BoxBadge box={box} compact /></span>
-              <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>
+              {!hideShelfQuantities && <strong className="detail-location-qty" role="cell">{location.qty === null ? '—' : `${num(location.qty)} ${variant.unit.trim() || 'adet'}`}</strong>}
             </div>
           })}
         </div>
+        {shelfQuantities.notes.map(({ variantId, label }) => <p className="detail-location-summary" key={variantId}>{label}</p>)}
       </section> : variants.length > 1 ? <section className="detail-shelves" aria-label="Kutu durumları">
         <h3>Kutu durumları</h3>
         {variants.map((variant) => <div className={`detail-shelf-line${variant.id === product.id ? ' selected' : ''}`} key={variant.id} aria-label={`${variant.box || 'Kutu durumu belirtilmemiş'}, ${num(variant.stock)} adet`}>
@@ -1619,7 +1623,7 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
       <PageTitle title="Sepet" />
       <div className="cart-lines">{cart.lines.map((line) => (
         <article className="cart-line card" key={line.product_id}>
-          <div className="cart-line-head"><div><strong className="product-sku">{line.sku}</strong><span className="cart-brand">{line.brand}</span></div><button className="icon-button danger-icon" onClick={() => cart.remove(line.product_id)} aria-label={`${line.sku} sepetten çıkar`}><Trash2 size={19} /></button></div>
+          <div className="cart-line-head"><div><strong className="product-sku">{line.sku}</strong><span className="cart-brand">{brandLabel(line.brand)}</span></div><button className="icon-button danger-icon" onClick={() => cart.remove(line.product_id)} aria-label={`${line.sku} sepetten çıkar`}><Trash2 size={19} /></button></div>
           {line.name.trim() && normalize(line.name) !== normalize(line.sku) && <div className="cart-line-name">{line.name}</div>}
           {line.qty > line.stock && <span className="stock-warning">Stokta {num(line.stock)} {line.stock === 1 ? 'adet' : 'adet'} var</span>}
           <div className="cart-line-bottom"><QuantityStepper qty={line.qty} setQty={(qty) => cart.setQty(line.product_id, qty)} min={line.min_order} sku={line.sku} />{showPrices && <strong>{displayPrice((lineUnit(line) ?? 0) * line.qty, line.currency)}</strong>}</div>

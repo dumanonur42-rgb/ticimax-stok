@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { access, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { access, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises'
 import { spawn } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -27,16 +27,22 @@ const product = { id: 1, sku: '6205-2RS C3', brand: 'SKF', name: 'Rulman', descr
 const state = { catalogBrands: [], catalogDimensions: {}, setSheet() {}, setSelectedProduct() {}, lines: [], add() {}, setQty() {} }
 const compile = source => ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React } }).outputText
 const boxSource = await readFile(new URL('../src/components/BoxBadge.tsx', import.meta.url), 'utf8')
+const identitySource = await readFile(new URL('../../b2b-app/src/shared/identity.ts', import.meta.url), 'utf8')
+const brandSource = await readFile(new URL('../src/components/BrandMark.tsx', import.meta.url), 'utf8')
+const logoSource = (await readFile(new URL('../src/lib/brandLogos.ts', import.meta.url), 'utf8')).replace(/^const files = import\.meta\.glob.*$/m, 'const files = brandFiles')
+const fit = JSON.parse(await readFile(new URL('../src/lib/brandLogoFit.json', import.meta.url), 'utf8'))
+const brandFiles = Object.fromEntries(await Promise.all((await readdir(new URL('../src/assets/brands/', import.meta.url))).filter(name => name.endsWith('.webp')).map(async name => [`../assets/brands/${name}`, 'data:image/webp;base64,' + (await readFile(new URL(`../src/assets/brands/${name}`, import.meta.url))).toString('base64')])))
+const components = [identitySource, logoSource, brandSource, boxSource].map(source => source.replace(/^import .*$/gm, '').replace(/^export /gm, '')).join('\n')
 function markup(platform, surface, { empty = false, showPrices = true, canShelf = false } = {}) {
   const dark = surface === 'required-dark'
-  const ctx = { React, ...React, ...icons, renderToStaticMarkup, product, dark, mark,
+  const ctx = { React, ...React, ...icons, Map, renderToStaticMarkup, product, dark, mark, fit, brandFiles,
     requiredUpdate: { platform, version: '99.0.0' },
     session: { user: { perms: canShelf ? ['shelf'] : [] } }, settings: { show_prices_to_dealers: showPrices, low_stock_threshold: 5 },
     entries: empty ? [] : [product], variantIndex: new Map(),
     Capacitor: { getPlatform: () => platform }, useApp: select => select(state), useCart: select => select(state),
     useVirtualizer: () => ({ measure() {}, measureElement() {}, getTotalSize: () => 120, getVirtualItems: () => empty ? [] : [{ index: 0, key: 1, start: 0 }] }),
     searchProducts: entries => entries, hasPerm: (user, perm) => user.perms.includes(perm), performance: { now: () => 0 },
-    num: value => String(value), displayPrice: () => '₺125,00', brandOrigin: brand => ({ base: brand }), productVariantKey: () => 'key', boxParts: () => null, shelfBreakdown: () => [], locationLabel: () => '',
+    num: value => String(value), displayPrice: () => '₺125,00', productVariantKey: () => 'key', boxParts: () => null, shelfBreakdown: () => [], locationLabel: () => '',
     localStorage: { getItem: () => null }, onClose() {}, onToast() {}, copy() {}, share() {}, copySheetOpen: false, onCopySheetOpenChange() {}, brand: { base: 'SKF' }
   }
   const expression = surface.startsWith('required-') ? requiredGate : surface === 'catalog'
@@ -44,7 +50,7 @@ function markup(platform, surface, { empty = false, showPrices = true, canShelf 
     : surface === 'card'
       ? '<div className="page"><ProductCard product={product} variantIndex={variantIndex} settings={settings} showPrices={true} canShelf={false} onOpen={()=>{}} onToast={onToast}/><div className="cart-line"><div className="cart-line-bottom"><strong>₺125,00</strong><QuantityStepper qty={1} min={1} sku={product.sku} setQty={()=>{}}/></div></div></div>'
       : `<Sheet title="Ürün bilgisi" onClose={onClose}>${detailHeader}<div className="product-actions detail-actions"><ProductCartActions product={product} onToast={onToast}/></div></Sheet>`
-  vm.runInNewContext(compile(boxSource.replace(/^import .*$/gm, '').replace(/^export /gm, '') + '\n' + functions + '\nglobalThis.markup=renderToStaticMarkup(' + expression + ')'), ctx)
+  vm.runInNewContext(compile(components + '\n' + functions + '\nglobalThis.markup=renderToStaticMarkup(' + expression + ')'), ctx)
   if (surface.startsWith('required-')) return ctx.markup + `<div class="app-shell${dark ? ' dark' : ''}" style="position:fixed;left:-10000px;top:0;width:375px"><button id="primary-reference" class="button primary">Primary</button></div>`
   return `<div class="app-shell"><main class="main-content">${ctx.markup}</main></div>`
 }
@@ -86,10 +92,12 @@ try {
     await cdp('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: true })
     const { frameTree } = await cdp('Page.getFrameTree')
     await cdp('Page.setDocumentContent', { frameId: frameTree.frame.id, html: `<!doctype html><html data-platform="${platform}" data-ios-text-enlarged="${scale > 1}" style="--ios-font-size:${16 * scale}px;--ios-viewport-height:${height}px"><head><meta name="viewport" content="width=device-width,initial-scale=1"><style id="app-styles">${css}</style><style>*{animation:none!important;transition:none!important}</style></head><body>${markup(platform, surface, options)}</body></html>` })
+    await evaluate('Promise.all([...document.images].map(img => img.decode()))')
     const result = await evaluate(`(() => {
       const rect = element => { const r=element.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height} }
       const selector='.view-toggle button,.quantity-stepper button,.quantity-stepper input,.catalog-table-header button,.detail-copy-actions button,.required-update .button'
       const buttons=[...document.querySelectorAll(selector)]
+      const brandImages=[...document.querySelectorAll('.brand-mark img')].map(img=>({loaded:img.complete&&img.naturalWidth>0,rect:rect(img)}))
       const snapshot = () => ({rows:[...document.querySelectorAll('.catalog-table-row')].map(el=>el.getBoundingClientRect().height),columns:[...document.querySelectorAll('.catalog-table-row > [role=cell],.catalog-table-header > [role=columnheader]')].filter(el=>getComputedStyle(el).display!=='none').map(el=>[rect(el).left,rect(el).width]),buttons:buttons.map(el=>({rect:rect(el),background:getComputedStyle(el).backgroundColor,border:getComputedStyle(el).border,padding:getComputedStyle(el).padding})),scrollWidth:document.querySelector('.catalog-scroll')?.scrollWidth})
       const current=snapshot()
       const targetFor=el=>({el,hit:rect(el),label:el.getAttribute('aria-label')||el.textContent.trim()})
@@ -128,8 +136,12 @@ try {
       const update=updateButton?{actual:colours(updateButton),reference:colours(document.getElementById('primary-reference'))}:null
       const sheets=document.getElementById('app-styles').sheet
       for(let i=sheets.cssRules.length-1;i>=0;i--){const rule=sheets.cssRules[i];if(rule.selectorText?.includes('data-platform="ios"')&&!rule.selectorText.includes('data-ios-text-enlarged')&&/quantity-stepper|view-toggle|detail-copy-actions|catalog-table-header|detail-heading/.test(rule.selectorText))sheets.deleteRule(i)}
-      return {current,baseline:snapshot(),targets:targets.map(({hit,label})=>({hit,label})),overlaps,misses,overflow,update,currentLayout,previousLayout}
+      return {current,baseline:snapshot(),targets:targets.map(({hit,label})=>({hit,label})),overlaps,misses,overflow,update,currentLayout,previousLayout,brandImages}
     })()`)
+    if (!surface.startsWith('required-') && !options.empty) {
+      assert.ok(result.brandImages.length > 0, label + ' renders real BrandMark images')
+      assert.ok(result.brandImages.every(image => image.loaded && image.rect.width > 0 && image.rect.height > 0), label + ' brand images decoded at nonzero size')
+    }
     if (platform === 'ios') {
       for (const { hit, label: control } of result.targets) { assert.ok(hit.width >= 43.99, `${label}: ${control} own box width ${hit.width}`); assert.ok(hit.height >= 43.99, `${label}: ${control} own box height ${hit.height}`) }
       assert.deepEqual(result.currentLayout, result.previousLayout, label + ' toggle/detail/header layout unchanged from pre-accessibility-box sizing')

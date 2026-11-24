@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 1.0.10
+
+- Giriş ekranı yenilendi; uygulamadan "Kayıt ol" ile bayilik başvurusu yapılabilir.
+- Ürün detayında kod açıklaması: rulman tipi, ölçüsü, ek kodların anlamı ve diğer markalardaki karşılıkları.
+- Ürünlerde marka logoları ve ülke logoları; "ÇIKMA" ve menşei markadan ayrı gösterilir.
+- Hesap sekmesine "Hesabımı sil" eklendi.
+- Adet kutusu, klavye ve sipariş gönderimiyle ilgili hatalar giderildi.
+
 ## 1.0.8
 
 - Google Play için Android 16 (API 36) hedeflendi; işlevlerde değişiklik yok.
