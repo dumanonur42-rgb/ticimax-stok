@@ -1,5 +1,4 @@
 import { App as CapacitorApp } from '@capacitor/app'
-import { AppLauncher } from '@capacitor/app-launcher'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
 import { Network } from '@capacitor/network'
@@ -27,6 +26,9 @@ import {
   type CopyColumn
 } from '@shared/copy'
 import { hasPerm } from '@shared/perms'
+import { copyToClipboard } from './lib/clipboard'
+import { openExternal } from './lib/external'
+import { dismissIOSKeyboard } from './lib/iosKeyboard'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
@@ -38,7 +40,9 @@ import { purgeLegacyWebDataIfNeeded } from './lib/legacyWebData'
 import { SystemInsets } from './lib/systemInsets'
 import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry } from './lib/search'
 import { indexProductVariants, productVariantKey } from './lib/productVariants'
-import { debounceSync, startRealtime, syncCatalog } from './lib/sync'
+import { abortCatalogSync, debounceSync, refreshSettings, startRealtime, syncCatalog } from './lib/sync'
+import { CatalogSyncAbortedError } from './lib/catalogRequest'
+import { CatalogStorageError } from './lib/catalogStorage'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
@@ -58,7 +62,16 @@ function focusOnEnter(id: string): (event: ReactKeyboardEvent<HTMLInputElement>)
   return (event) => {
     if (event.key !== 'Enter') return
     event.preventDefault()
-    document.getElementById(id)?.focus()
+    const next = document.getElementById(id)
+    if (Capacitor.getPlatform() === 'ios' && next instanceof HTMLInputElement && ['words', 'sentences'].includes(next.autocapitalize) && !next.value) {
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+      const blurredElement = document.activeElement
+      window.setTimeout(() => {
+        if (next.isConnected && !next.disabled && !next.value && document.visibilityState === 'visible' && document.activeElement === blurredElement) next.focus()
+      }, 75)
+      return
+    }
+    next?.focus()
   }
 }
 
@@ -84,12 +97,8 @@ function LoginField({ id, label, icon, optional, error, action, children }: {
   )
 }
 
-function external(url: string): void {
-  if (Capacitor.isNativePlatform()) {
-    void AppLauncher.openUrl({ url }).catch(() => { window.open(url, '_system') })
-    return
-  }
-  window.open(url, '_blank', 'noopener,noreferrer')
+function external(url: string, onToast = useApp.getState().showToast): void {
+  void openExternal(url).catch(() => onToast('Bağlantı açılamadı.'))
 }
 
 export default function App(): ReactNode {
@@ -121,6 +130,8 @@ export default function App(): ReactNode {
   const [loginBusy, setLoginBusy] = useState(false)
   const [homeCatalogStatus, setHomeCatalogStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [homeOpenOrders, setHomeOpenOrders] = useState<number | null>(null)
+  const [ordersLoaded, setOrdersLoaded] = useState(0)
+  const onOrdersLoaded = useCallback(() => setOrdersLoaded((value) => value + 1), [])
   const [update, setUpdate] = useState<AndroidUpdate | null>(null)
   const [requiredUpdate, setRequiredUpdate] = useState<{ platform: 'android' | 'ios'; version: string; url?: string } | null>(null)
   const [orderRefresh, setOrderRefresh] = useState(0)
@@ -136,6 +147,15 @@ export default function App(): ReactNode {
   const backInterceptRef = useRef<(() => void) | null>(null)
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
+
+  useEffect(() => {
+    if (!session || !online) return
+    let active = true
+    void dashboardOrders().then((data) => {
+      if (active) setHomeOpenOrders(data.openOrders)
+    }).catch(() => undefined)
+    return () => { active = false }
+  }, [session?.user.id, online, orderRefresh, ordersLoaded])
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
@@ -156,7 +176,9 @@ export default function App(): ReactNode {
   useEffect(() => {
     if (!Capacitor.isNativePlatform() || appReadyNotified.current) return
     appReadyNotified.current = true
-    void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+    if (Capacitor.getPlatform() === 'android') {
+      void CapacitorUpdater.notifyAppReady().catch((error) => console.warn('Updater startup failed', error))
+    }
   }, [])
 
   const syncNow = useCallback(async () => {
@@ -190,11 +212,17 @@ export default function App(): ReactNode {
       }
       setOnline(true)
       try {
-        setSettings(await loadSettings())
+        await refreshSettings()
       } catch {
         if (!navigator.onLine) setOnline(false)
       }
     } catch (error) {
+      if (error instanceof CatalogSyncAbortedError) return
+      if (error instanceof CatalogStorageError) {
+        if (!useApp.getState().products.length) setHomeCatalogStatus('error')
+        showToast(error.message)
+        return
+      }
       setOnline(false)
       if (!useApp.getState().products.length) setHomeCatalogStatus('error')
       console.warn('Catalog sync failed', error)
@@ -209,7 +237,7 @@ export default function App(): ReactNode {
     } finally {
       setSyncBusy(false)
     }
-  }, [refreshCart, setOnline, setProducts, setSettings, setSyncBusy])
+  }, [refreshCart, setOnline, setProducts, setSettings, setSyncBusy, showToast])
   syncNowRef.current = syncNow
 
   useEffect(() => {
@@ -255,7 +283,7 @@ export default function App(): ReactNode {
       }).catch(() => undefined)
     }
     const onOnline = (): void => { setOnline(true); void syncNow(); verifySession() }
-    const onOffline = (): void => { setOnline(false); setLoginError('') }
+    const onOffline = (): void => { abortCatalogSync(); setOnline(false); setLoginError('') }
     const onSessionRestored = (event: Event): void => {
       const restored = (event as CustomEvent<Session | null>).detail
       if (restored) {
@@ -296,7 +324,7 @@ export default function App(): ReactNode {
   }, [platform, setProducts, setSession, setOnline, setCustomers, clearCart, showToast, setSheet, syncNow])
 
   useEffect(() => {
-    if (!Capacitor.isNativePlatform() || (platform !== 'android' && platform !== 'ios')) return
+    if (Capacitor.getPlatform() !== 'android' || platform !== 'android') return
     let active = true
     let resumeHandle: { remove: () => Promise<void> } | undefined
     let pauseHandle: { remove: () => Promise<void> } | undefined
@@ -315,11 +343,6 @@ export default function App(): ReactNode {
       const forced = !!minimum && compareVersions(currentVersion, minimum) < 0
       if (forced && active) setRequiredUpdate({ platform, version: minimum, ...(platform === 'android' ? { url: androidReleasesPage() } : {}) })
       if (navigator.onLine === false) return
-      if (platform === 'ios') {
-        if (!forced && active) setRequiredUpdate(null)
-        try { await AppUpdate.getAppUpdateInfo({ country: 'TR' }) } catch { /* Store lookup is unavailable until release. */ }
-        return
-      }
       try {
         const info = await AppUpdate.getAppUpdateInfo()
         const storeCurrentVersion = info.currentVersionName || currentVersion
@@ -366,7 +389,6 @@ export default function App(): ReactNode {
     if (!session) return
     void syncNow()
     if (session.user.role === 'admin') void listCustomers().then(setCustomers).catch(() => setCustomers([]))
-    void dashboardOrders().then((data) => setHomeOpenOrders(data.openOrders)).catch(() => setHomeOpenOrders(null))
     const syncDebounced = (): void => debounceSync(() => {
       if (document.visibilityState === 'visible') void syncNow()
     })
@@ -756,7 +778,7 @@ export default function App(): ReactNode {
           {tab === 'home' && <HomePage session={session} settings={settings} openOrders={homeOpenOrders} products={products} catalogStatus={homeCatalogStatus} onRetryCatalog={() => void syncNow()} onNavigate={setTab} onToast={showToast} />}
           {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
-          {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
+          {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} onLoaded={onOrdersLoaded} />}
           {tab === 'account' && <AccountPage session={session} online={online} onLogout={() => void onLogout()} onDeleteAccount={onDeleteAccount} backInterceptRef={backInterceptRef} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
         <BottomTabs tab={tab} setTab={setTab} cartLineCount={cartLineCount} />
@@ -841,7 +863,7 @@ function HomePage({ session, settings, openOrders, products, catalogStatus, onRe
   session: Session; settings: Settings; openOrders: number | null; products: Product[]; catalogStatus: 'loading' | 'ready' | 'error'; onRetryCatalog: () => void; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
 }): ReactNode {
   const openContact = (url: string): void => {
-    try { external(url) } catch { onToast('Bağlantı açılamadı.') }
+    external(url, onToast)
   }
   const openCount = openOrders ?? 0
   const customerName = session.customer?.name ?? settings.company_name
@@ -981,7 +1003,7 @@ function ProductsPage({ entries, variantIndex, settings, session, loading, onToa
     <div className="page products-page">
       <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><div className="catalog-heading-actions"><div className="view-toggle" role="group" aria-label="Ürün görünümü"><button className={view === 'table' ? 'active' : ''} onClick={() => setProductView('table')} aria-pressed={view === 'table'}><Table2 size={16} />Tablo</button><button className={view === 'card' ? 'active' : ''} onClick={() => setProductView('card')} aria-pressed={view === 'card'}><LayoutGrid size={16} />Kart</button></div><span className="count-pill">{num(results.length)}</span></div></div>
       <div className="search-row">
-        <div className="search-box"><Search size={19} aria-hidden /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
+        <div className="search-box"><Search size={19} aria-hidden /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'search' : undefined} autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="off" inputMode="text" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
         <button className={`filter-button${activeFilters ? ' selected' : ''}`} onClick={() => setSheet('filters')} aria-label={`Filtreler${activeFilters ? `, ${activeFilters} seçili` : ''}`}><SlidersHorizontal size={19} />{activeFilters > 0 && <span>{activeFilters}</span>}</button>
       </div>
       <label className="stock-toggle"><input type="checkbox" checked={inStock} onChange={(event) => setInStock(event.target.checked)} /><span className="switch" /><span>Sadece stoktakiler</span></label>
@@ -1245,7 +1267,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
     <Sheet title="Filtreler" onClose={onClose} footer={
       <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
     }>
-      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
+      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'done' : undefined} autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="off" inputMode="text" value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
         <div className="brand-options">{visibleBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
         {(hiddenBrandCount > 0 || showAllBrands) && <button type="button" className="show-more-brands" onClick={() => setShowAllBrands((value) => !value)}>{showAllBrands ? 'Daha az göster' : `Tümünü göster (+${num(hiddenBrandCount)})`}</button>}
       </section>
@@ -1287,28 +1309,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
   const copyResult = (): { html: string; text: string } => productsToClipboard([product], savedCopyColumns.columns, { canShelf, showPrices })
   const copy = async (): Promise<void> => {
-    try {
-      const value = copyResult()
-      await navigator.clipboard.write([new ClipboardItem({
-        'text/html': new Blob([value.html], { type: 'text/html' }),
-        'text/plain': new Blob([value.text], { type: 'text/plain' })
-      })])
-    } catch {
-      const value = copyResult()
-      try {
-        await navigator.clipboard.writeText(value.text)
-      } catch {
-        const textarea = document.createElement('textarea')
-        textarea.value = value.text
-        textarea.style.position = 'fixed'
-        textarea.style.opacity = '0'
-        document.body.append(textarea)
-        textarea.select()
-        document.execCommand('copy')
-        textarea.remove()
-      }
-    }
-    onToast('Ürün bilgisi kopyalandı.')
+    const copied = await copyToClipboard(copyResult())
+    onToast(copied ? 'Ürün bilgisi kopyalandı.' : 'Kopyalanamadı. Lütfen yeniden deneyin.')
   }
   const share = async (): Promise<void> => {
     const text = copyResult().text
@@ -1331,19 +1333,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
         if (reason instanceof DOMException && reason.name === 'AbortError') return
       }
     }
-    try {
-      await navigator.clipboard.writeText(text)
-    } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.append(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      textarea.remove()
-    }
-    onToast('Metin kopyalandı.')
+    const copied = await copyToClipboard({ text })
+    onToast(copied ? 'Metin kopyalandı.' : 'Kopyalanamadı. Lütfen yeniden deneyin.')
   }
   const setCopyColumns = (columns: CopyColumn[]): void => {
     setSavedCopyColumns({
@@ -1487,7 +1478,18 @@ function DetailRow({ label, value }: { label: string; value: string }): ReactNod
 }
 
 function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (value: number) => void; min: number; sku: string }): ReactNode {
-  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => setQty(Math.max(min, qty - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} inputMode="numeric" value={qty} onChange={(event) => setQty(Math.max(min, Number(event.target.value.replace(/\D/g, '')) || min))} /><button type="button" aria-label="Miktarı artır" onClick={() => setQty(qty + min)}><Plus size={16} /></button></div>
+  const [draft, setDraft] = useState(String(qty))
+  useEffect(() => { setDraft(String(qty)) }, [qty])
+  const validDraft = /^\d*$/.test(draft)
+  const amount = (): number => {
+    const value = validDraft ? Number(draft) : qty
+    return Number.isFinite(value) ? Math.max(min, Math.floor(value)) : min
+  }
+  const commit = (value = amount()): void => {
+    setDraft(String(value))
+    setQty(value)
+  }
+  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" value={draft} onChange={(event) => setDraft(event.target.value)} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
 }
 
 function CartPage({ session, settings, customers, products, online, onToast, onOrderCreated, onViewOrders }: {
@@ -1601,8 +1603,8 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
   )
 }
 
-function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRefresh }: {
-  settings: Settings; refreshKey: number; selectedOrderId: number | null; onSelectOrder: (id: number) => void; onRefresh: () => void
+function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRefresh, onLoaded }: {
+  settings: Settings; refreshKey: number; selectedOrderId: number | null; onSelectOrder: (id: number) => void; onRefresh: () => void; onLoaded: () => void
 }): ReactNode {
   const session = useApp((state) => state.session)
   const online = useApp((state) => state.online)
@@ -1635,6 +1637,7 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
           setOrders(data)
           setCachedAt(cached?.updatedAt ?? new Date().toISOString())
           setUsingOfflineCache(false)
+          onLoaded()
         }
       } catch (reason) {
         const cached = await readCachedOrders().catch(() => null)
@@ -1653,7 +1656,7 @@ function OrdersPage({ settings, refreshKey, selectedOrderId, onSelectOrder, onRe
     }
     void load()
     return () => { active = false }
-  }, [refreshKey, online])
+  }, [refreshKey, online, onLoaded])
   const offline = usingOfflineCache || !online || navigator.onLine === false
   return (
     <div className="page orders-page">
@@ -1843,7 +1846,7 @@ function AccountPage({ session, online, onLogout, onDeleteAccount, backIntercept
       </section>
       <div className="account-actions">
         <button className="button danger wide" onClick={onLogout}>Çıkış yap</button>
-        <button className="text-button delete-account-link" onClick={() => setDeleteOpen(true)}>Hesabımı sil</button>
+        <button className="text-button delete-account-link" onClick={() => { dismissIOSKeyboard(); setDeleteOpen(true) }}>Hesabımı sil</button>
       </div>
       {deleteOpen && (
         <Sheet

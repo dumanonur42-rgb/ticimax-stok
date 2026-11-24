@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Capacitor } from '@capacitor/core'
+import { Keyboard, KeyboardResize } from '@capacitor/keyboard'
 import App from './App'
 import { SystemInsets, type SystemInsetsValue } from './lib/systemInsets'
 import './styles.css'
+import { installIOSKeyboardDismissal } from './lib/iosKeyboard'
+import { initializeIOSDynamicType } from './lib/iosDynamicType'
 
 const root = document.documentElement
 const SYSTEM_INSETS_BOOTSTRAP_TIMEOUT_MS = 400
@@ -25,18 +28,23 @@ function scrollFocusedField(): void {
   const loginScreen = activeElement.closest<HTMLElement>('.login-screen')
   if (loginScreen) {
     requestAnimationFrame(() => {
-      const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue('--keyboard')) || 0
-      const safeTop = Number.parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 0
+      const keyboardProperty = Capacitor.getPlatform() === 'ios' ? '--ios-keyboard-height' : '--keyboard'
+      const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue(keyboardProperty)) || 0
+      const safeTop = Number.parseFloat(Capacitor.getPlatform() === 'ios'
+        ? getComputedStyle(loginScreen.querySelector('.login-hero') ?? loginScreen).paddingTop
+        : getComputedStyle(root).getPropertyValue('--safe-top')) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
       const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
       const keyboardTop = keyboard > 0 ? window.innerHeight - keyboard : window.innerHeight
       const visibleBottom = Math.min(viewportBottom, keyboardTop) - 16
       const field = activeElement.getBoundingClientRect()
       const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
-      const targetTop = Math.min(field.top, submit?.top ?? field.top)
-      const targetBottom = Math.max(field.bottom, submit?.bottom ?? field.bottom)
-      if (targetTop >= visibleTop && targetBottom <= visibleBottom) return
-      const needed = Math.max(0, targetBottom - visibleBottom)
+      const pinnedSubmit = Capacitor.getPlatform() === 'ios' && keyboard > 0 && loginScreen.dataset.mode === 'register' && submit
+      const fieldBottom = pinnedSubmit ? Math.min(pinnedSubmit.top - 12, visibleBottom - (pinnedSubmit.bottom - pinnedSubmit.top) - 12) : visibleBottom
+      const targetTop = pinnedSubmit ? field.top : Math.min(field.top, submit?.top ?? field.top)
+      const targetBottom = pinnedSubmit ? field.bottom : Math.max(field.bottom, submit?.bottom ?? field.bottom)
+      if (targetTop >= visibleTop && targetBottom <= fieldBottom) return
+      const needed = Math.max(0, targetBottom - fieldBottom)
       const available = Math.max(0, targetTop - visibleTop)
       const amount = targetTop < visibleTop ? targetTop - visibleTop : Math.min(needed, available)
       if (amount) loginScreen.scrollBy({ top: amount, behavior: 'auto' })
@@ -70,6 +78,53 @@ async function initializeSystemInsets(): Promise<void> {
 }
 
 async function bootstrap(): Promise<void> {
+  if (Capacitor.getPlatform() === 'ios') {
+    initializeIOSDynamicType(scrollFocusedField)
+    installIOSKeyboardDismissal()
+    const updateKeyboard = (height: number): void => {
+      const keyboardHeight = Math.max(0, height)
+      root.style.setProperty('--ios-keyboard-height', `${keyboardHeight}px`)
+      root.style.setProperty('--ios-viewport-height', `${Math.max(0, window.innerHeight - keyboardHeight)}px`)
+      root.dataset.keyboardOpen = String(keyboardHeight > 0)
+      if (keyboardHeight > 0) scrollFocusedField()
+    }
+    let stopped = false
+    let timer: number | undefined
+    const handles: { remove: () => Promise<void> }[] = []
+    const listen = async (pending: Promise<{ remove: () => Promise<void> }>): Promise<void> => {
+      const handle = await pending
+      if (stopped) void handle.remove().catch(() => undefined)
+      else handles.push(handle)
+    }
+    try {
+      await Promise.race([
+        Promise.all([
+          Keyboard.setResizeMode({ mode: KeyboardResize.None }),
+          Keyboard.setAccessoryBarVisible({ isVisible: true }),
+          ...[
+            Keyboard.addListener('keyboardWillShow', ({ keyboardHeight }) => { if (!stopped) updateKeyboard(keyboardHeight) }),
+            Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => { if (!stopped) updateKeyboard(keyboardHeight) }),
+            Keyboard.addListener('keyboardWillHide', () => { if (!stopped) updateKeyboard(0) }),
+            Keyboard.addListener('keyboardDidHide', () => { if (!stopped) updateKeyboard(0) })
+          ].map(listen)
+        ]),
+        new Promise<never>((_, reject) => {
+          timer = window.setTimeout(() => reject(new Error('Keyboard initialization timed out')), 1500)
+        })
+      ])
+    } catch (error) {
+      stopped = true
+      for (const handle of handles) void handle.remove().catch(() => undefined)
+      updateKeyboard(0)
+      console.warn('iOS keyboard initialization failed', error)
+    } finally {
+      window.clearTimeout(timer)
+    }
+    window.addEventListener('resize', () => {
+      updateKeyboard(Number.parseFloat(root.style.getPropertyValue('--ios-keyboard-height')) || 0)
+    })
+    document.addEventListener('focusin', scrollFocusedField)
+  }
   const initialization = initializeSystemInsets().catch(() => {
     root.dataset.keyboardOpen = 'false'
   })

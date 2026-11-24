@@ -4,6 +4,7 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core'
 import { CapacitorUpdater } from '@capgo/capacitor-updater'
 import { compareVersions } from '@shared/version'
 import { cachedMinimumVersion } from './cloud'
+import { networkRequest } from './networkRequest'
 
 const APP_VERSION = __APP_VERSION__
 const CHANNEL_TAG = 'b2b-mobile-channel'
@@ -37,12 +38,14 @@ interface AndroidChannelManifest {
 
 async function fetchChannelJson<T>(url: string): Promise<T> {
   try {
-    const response = await fetch(url, { cache: 'no-store', headers: { Accept: 'application/json' } })
-    if (!response.ok) throw new Error(`Mobile update request failed (${response.status})`)
-    return await response.json() as T
+    return await networkRequest(async signal => {
+      const response = await fetch(url, { signal, cache: 'no-store', headers: { Accept: 'application/json' } })
+      if (!response.ok) throw new Error(`Mobile update request failed (${response.status})`)
+      return await response.json() as T
+    })
   } catch (error) {
     if (!Capacitor.isNativePlatform()) throw error
-    const response = await CapacitorHttp.get({ url, headers: { Accept: 'application/json' }, responseType: 'json' })
+    const response = await networkRequest(() => CapacitorHttp.get({ url, headers: { Accept: 'application/json' }, responseType: 'json', connectTimeout: 10_000, readTimeout: 10_000 }))
     if (response.status < 200 || response.status >= 300) throw new Error(`Mobile update request failed (${response.status})`)
     return response.data as T
   }
@@ -53,6 +56,7 @@ let liveRetryAt = 0
 let liveCheck: Promise<void> | null = null
 
 export async function checkAndroidUpdate(): Promise<AndroidUpdate | null> {
+  if (Capacitor.getPlatform() !== 'android') return null
   const checkedAt = Number(localStorage.getItem(CHANNEL_CHECK_CACHE) ?? 0)
   if (Date.now() - checkedAt < 6 * 60 * 60 * 1000) return null
   const latest = await fetchChannelJson<AndroidChannelManifest>(ANDROID_LATEST_URL)
@@ -80,7 +84,8 @@ export function androidReleasesPage(): string {
 }
 
 export async function checkLiveUpdate(): Promise<void> {
-  if (!Capacitor.isNativePlatform() || navigator.onLine === false || Date.now() < liveRetryAt || liveCheck) return liveCheck ?? undefined
+  if (Capacitor.getPlatform() !== 'android') return
+  if (navigator.onLine === false || Date.now() < liveRetryAt || liveCheck) return liveCheck ?? undefined
   liveCheck = (async () => {
     try {
       const [manifest, native] = await Promise.all([
@@ -110,6 +115,7 @@ export async function checkLiveUpdate(): Promise<void> {
 }
 
 export async function completePendingFlexibleUpdate(): Promise<void> {
+  if (Capacitor.getPlatform() !== 'android') return
   if (localStorage.getItem(PENDING_FLEXIBLE_UPDATE) !== 'true') return
   try {
     await AppUpdate.completeFlexibleUpdate()
@@ -120,6 +126,7 @@ export async function completePendingFlexibleUpdate(): Promise<void> {
 }
 
 export async function startFlexibleUpdateListener(): Promise<{ remove: () => Promise<void> }> {
+  if (Capacitor.getPlatform() !== 'android') return { remove: async () => {} }
   return AppUpdate.addListener('onFlexibleUpdateStateChange', (state) => {
     if (state.installStatus === FlexibleUpdateInstallStatus.DOWNLOADED) {
       localStorage.setItem(PENDING_FLEXIBLE_UPDATE, 'true')

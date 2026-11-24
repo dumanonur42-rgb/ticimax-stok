@@ -5,6 +5,7 @@ import type { Customer, PaymentType, Product, Settings, Session } from '@shared/
 import { cachedShowPricesToDealers, DEFAULT_SETTINGS } from '../lib/defaults'
 import type { DimensionFilters } from '../lib/search'
 import { CART_STORAGE_KEY, secureStorage } from '../lib/secureStorage'
+import { dismissIOSKeyboard } from '../lib/iosKeyboard'
 
 export type Tab = 'home' | 'products' | 'cart' | 'orders' | 'account'
 export type ThemePreference = 'system' | 'light' | 'dark'
@@ -160,7 +161,7 @@ export const useApp = create<AppState>((set) => ({
   sheet: null,
   selectedProduct: null,
   selectedOrderId: null,
-  setTab: (tab) => set({ tab }),
+  setTab: (tab) => { dismissIOSKeyboard(); set({ tab }) },
   setThemePreference: (themePreference) => {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, themePreference)
@@ -175,7 +176,7 @@ export const useApp = create<AppState>((set) => ({
   setOnline: (online) => set({ online }),
   setSyncBusy: (syncBusy) => set({ syncBusy }),
   showToast: (toast) => set({ toast }),
-  setSheet: (sheet) => set({ sheet }),
+  setSheet: (sheet) => { dismissIOSKeyboard(); set({ sheet }) },
   setSelectedProduct: (selectedProduct) => set({ selectedProduct }),
   setSelectedOrderId: (selectedOrderId) => set({ selectedOrderId })
 }))
