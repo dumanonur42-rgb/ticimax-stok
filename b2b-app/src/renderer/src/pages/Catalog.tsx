@@ -242,7 +242,7 @@ export function Catalog(): ReactNode {
       if (column.key === 'shelf') return { ...column, min: gridW < 1200 ? 229 : 240 }
       if (column.key === 'sku') return { ...column, min: Math.ceil(178 * scale + 20) }
       // Logo plate (68) + gap + the condition label ("Çıkma"); the origin is shown in the drawer only.
-      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 76 : 102)) }
+      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + 102) }
       if (column.key === 'stock') return { ...column, min: compact ? Math.ceil(45 + 20 * scale) : 104 }
       if (column.key === 'price') return { ...column, min: Math.ceil(96 * scale + 50) }
       if (column.key === 'act') return { ...column, min: Math.ceil(72 * scale + 34) }
@@ -807,7 +807,7 @@ export function Catalog(): ReactNode {
                             {logo.named && <span className="sr-only">{brand.base} </span>}
                             {!logo.named && !brandInside && <span className="brand-rest">{brand.base}</span>}
                           </>
-                          : brand.base && <span className="brand-plate text"><span>{brand.base}</span></span>}
+                          : brand.base && <span className={`brand-plate text${brand.base.length > 7 ? ' long' : ''}`}><span>{brand.base}</span></span>}
                         {brand.condition && <span className="brand-cond">{brand.condition}</span>}
                       </div>
                     )}

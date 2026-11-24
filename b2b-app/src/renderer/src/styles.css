@@ -1221,20 +1221,27 @@ textarea.input {
 }
 /* Every logo sits in the same white plate; its drawn size comes from brandLogoFit.json so no brand looks bigger than another. */
 .brand-plate {
-  /* Gives way to the label beside it in a narrow column, but never below a readable size. */
-  flex: 1 1 36px;
+  /* One tile for every row: a logo, a country mark and a written name all have the same outline. */
+  position: relative;
+  flex: 0 0 68px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  min-width: 36px;
-  max-width: 68px;
+  width: 68px;
   height: 28px;
-  padding: 3px 5px;
-  border: 1px solid var(--border-soft);
+  padding: 2px 4px;
   border-radius: 6px;
   background: #fff;
   overflow: hidden;
+}
+.brand-plate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--plate-edge, rgba(30, 41, 59, 0.22));
+  border-radius: inherit;
+  pointer-events: none;
 }
 .brand-plate img {
   display: block;
@@ -1257,31 +1264,29 @@ textarea.input {
 }
 .brand-plate.flag {
   padding: 0;
-  border: 0;
   background: none;
 }
 .brand-plate.flag img {
   object-fit: cover;
 }
 .brand-plate.text {
-  /* As wide as a logo plate, wider for a long name, narrower only when a label beside it needs the room. */
-  flex: 0 1 auto;
   display: block;
-  min-width: 44px;
-  max-width: 100%;
-  padding: 0 8px;
+  padding: 0 4px;
   background: var(--bg-sunken);
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 26px;
+  letter-spacing: 0.02em;
+  line-height: 28px;
   text-align: center;
   white-space: nowrap;
 }
+.brand-plate.text.long {
+  font-size: 0.58rem;
+  letter-spacing: 0;
+}
 .brand-plate.text > span {
   display: block;
-  min-width: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -1312,26 +1317,24 @@ textarea.input {
   letter-spacing: 0.02em;
 }
 [data-density='compact'] .brand-plate {
-  max-width: 60px;
+  flex-basis: 60px;
+  width: 60px;
   height: 24px;
 }
 [data-density='compact'] .brand-plate.text {
-  max-width: 100%;
-  padding: 0 7px;
-  line-height: 22px;
+  line-height: 24px;
 }
-[data-density='compact'] .brand-plate.text > span {
-  min-width: 44px;
+[data-theme='dark'] .brand-plate {
+  --plate-edge: rgba(255, 255, 255, 0.16);
 }
 [data-theme='dark'] .brand-plate:not(.text, .flag) {
-  border-color: transparent;
   background: #e4e8ef;
 }
 [data-theme='dark'] .brand-plate:not(.flag) img {
   mix-blend-mode: multiply;
 }
 [data-theme='contrast'] .brand-plate {
-  border-color: var(--border);
+  --plate-edge: var(--border);
 }
 [data-theme='contrast'] .brand-plate.text {
   color: var(--text);
