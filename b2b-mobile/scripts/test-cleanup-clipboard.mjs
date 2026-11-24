@@ -44,23 +44,29 @@ function declaration(source, name) {
   const ast = ts.createSourceFile('source.ts', source, ts.ScriptTarget.Latest, true)
   return ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === name).getText(ast).replace(/^export /, '')
 }
-for (const platform of ['ios', 'android']) for (const failed of ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', null]) for (const preferences of [true, false]) {
+const cloudAst = ts.createSourceFile('cloud.ts', cloud, ts.ScriptTarget.Latest, true)
+const deviceKeys = cloudAst.statements.find(node => ts.isVariableStatement(node) && node.declarationList.declarations.some(d => d.name.getText(cloudAst) === 'DEVICE_STORAGE_KEYS')).getText(cloudAst)
+for (const platform of ['ios', 'android']) for (const failed of ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', null]) for (const preferences of [true, false]) for (const policy of [true, false]) {
   const visited = []
   const step = name => { visited.push(name); if (name === failed) throw new Error(name) }
   const kept = preferences ? [['yamansa.theme', 'dark'], ['yb2b.productView', 'card']] : []
+  if (policy) kept.push(['yb2b.minimumVersions', JSON.stringify({ min_version_ios: '99.0.0', min_version_android: '98.0.0', min_version_windows: '97.0.0' })])
   const stored = new Map([...kept, ['yamansa.cart', 'private']])
   const context = { attemptAll: contextForAttemptAll(), Capacitor: { getPlatform: () => platform },
     SESSION_CACHE: 'session', CART_STORAGE_KEY: 'cart', SUPABASE_AUTH_STORAGE_KEY: 'auth',
     clearLocalCatalog: () => step('catalog'), secureStorage: { removeItem: key => step(key) },
-    DEVICE_PREFERENCE_KEYS: ['yamansa.theme', 'yb2b.productView'],
-    localStorage: { getItem: key => stored.get(key) ?? null, setItem: (key, value) => stored.set(key, value), clear: () => { step('local'); stored.clear() } },
+    MIN_VERSION_CACHE: 'yb2b.minimumVersions',
+    localStorage: { get length() { return stored.size }, key: index => [...stored.keys()][index] ?? null,
+      removeItem: key => { assert.ok(!kept.some(([keptKey]) => keptKey === key), 'Device policy/preferences must never be removed'); step('local'); stored.delete(key) },
+      setItem: () => assert.fail('Cleanup must not rewrite retained device data'), clear: () => assert.fail('Cleanup must not clear device data') },
     sessionStorage: { clear: () => step('browser') },
     window: { caches: {} }, caches: { keys: async () => ['a', 'b'], delete: key => step(`cache:${key}`) } }
-  vm.runInNewContext(ts.transpileModule(declaration(cloud, 'wipeLocalUserData'), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context)
+  vm.runInNewContext(ts.transpileModule(deviceKeys + '\n' + declaration(cloud, 'wipeLocalUserData'), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context)
   await context.wipeLocalUserData().catch(() => {})
   assert.deepEqual(visited, platform === 'ios' ? ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', 'cache:b'] : ['catalog', 'session', 'cart'])
   if (platform === 'ios' && failed !== 'local') assert.deepEqual([...stored], kept)
+  if (platform === 'android') assert.deepEqual([...stored], [...kept, ['yamansa.cart', 'private']])
 }
 function contextForAttemptAll() { return context.attemptAll }
 assert.ok(declaration(idb, 'clearLocalCatalog').includes('await attemptAll(['))
-console.log('Cleanup/clipboard: ok (all stores attempted on failure, iOS preferences retained or absent, private data removed, Android scope, copy fallback true/false/throw, cleanup)')
+console.log('Cleanup/clipboard: ok (all stores attempted on failure, device preferences/minimum-version policy retained or absent without removal/rewrite, iOS private data removed, Android scope unchanged, copy fallback true/false/throw, cleanup)')
