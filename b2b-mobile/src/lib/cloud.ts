@@ -9,6 +9,7 @@ import { cacheShowPricesToDealers, DEFAULT_SETTINGS, SHARED_SETTING_KEYS } from 
 import { loginEmail } from './loginEmail'
 import { clearLocalCatalog, getState, setState, unlockCatalogStorage } from './idb'
 import { CART_STORAGE_KEY, secureStorage } from './secureStorage'
+import { attemptAll } from './cleanup'
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
@@ -169,17 +170,22 @@ async function verifySessionInBackground(): Promise<void> {
 }
 
 async function wipeLocalUserData(): Promise<void> {
-  await clearLocalCatalog()
-  await secureStorage.removeItem(SESSION_CACHE)
-  await secureStorage.removeItem(CART_STORAGE_KEY)
+  const steps: (() => unknown | Promise<unknown>)[] = [
+    () => clearLocalCatalog(),
+    () => secureStorage.removeItem(SESSION_CACHE),
+    () => secureStorage.removeItem(CART_STORAGE_KEY)
+  ]
   if (Capacitor.getPlatform() === 'ios') {
-    await secureStorage.removeItem(SUPABASE_AUTH_STORAGE_KEY)
-    localStorage.clear()
-    sessionStorage.clear()
-    if ('caches' in window) {
-      await Promise.all((await caches.keys()).map((key) => caches.delete(key)))
-    }
+    steps.push(
+      () => secureStorage.removeItem(SUPABASE_AUTH_STORAGE_KEY),
+      () => localStorage.clear(),
+      () => sessionStorage.clear(),
+      async () => {
+        if ('caches' in window) await attemptAll((await caches.keys()).map((key) => () => caches.delete(key)))
+      }
+    )
   }
+  await attemptAll(steps)
 }
 
 function mapProfile(profile: ProfileRow): User {

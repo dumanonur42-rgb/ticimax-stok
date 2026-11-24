@@ -64,11 +64,14 @@ export const secureStorage = {
     cachedValues.set(key, value)
   },
   async removeItem(key: string): Promise<void> {
-    await SecureStorage.removeItem(key)
-    cachedValues.set(key, null)
     try {
-      localStorage.removeItem(key)
-    } catch {}
+      await SecureStorage.removeItem(key)
+    } finally {
+      cachedValues.set(key, null)
+      try {
+        localStorage.removeItem(key)
+      } catch {}
+    }
   }
 }
 

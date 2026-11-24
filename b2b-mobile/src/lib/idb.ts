@@ -1,5 +1,6 @@
 import type { Product } from '@shared/types'
 import { secureStorage } from './secureStorage'
+import { attemptAll } from './cleanup'
 
 const DB_NAME = 'yamansa-rulman-b2b'
 const DB_VERSION = 2
@@ -281,14 +282,18 @@ export async function clearLocalCatalog(): Promise<void> {
   await persist?.catch(() => undefined)
   await keyPromise?.catch(() => undefined)
   persist = null
-  await clearStores()
-  productMap.clear()
-  productsLoaded = true
-  dirty.clear()
-  versions.clear()
-  cryptoKey = null
-  keyPromise = null
-  await secureStorage.removeItem(CATALOG_KEY)
+  await attemptAll([
+    () => clearStores(),
+    () => {
+      productMap.clear()
+      productsLoaded = true
+      dirty.clear()
+      versions.clear()
+      cryptoKey = null
+      keyPromise = null
+    },
+    () => secureStorage.removeItem(CATALOG_KEY)
+  ])
 }
 
 export async function getState(key: string): Promise<string | null> {

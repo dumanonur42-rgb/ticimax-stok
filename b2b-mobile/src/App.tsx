@@ -27,6 +27,7 @@ import {
 } from '@shared/copy'
 import { hasPerm } from '@shared/perms'
 import { dismissIOSKeyboard } from './lib/iosKeyboard'
+import { copyToClipboard } from './lib/clipboard'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
@@ -1143,28 +1144,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
   const dimensionText = dimensionValues.map((value) => value === null ? '—' : num(value)).join(' × ')
   const copyResult = (): { html: string; text: string } => productsToClipboard([product], savedCopyColumns.columns, { canShelf, showPrices })
   const copy = async (): Promise<void> => {
-    try {
-      const value = copyResult()
-      await navigator.clipboard.write([new ClipboardItem({
-        'text/html': new Blob([value.html], { type: 'text/html' }),
-        'text/plain': new Blob([value.text], { type: 'text/plain' })
-      })])
-    } catch {
-      const value = copyResult()
-      try {
-        await navigator.clipboard.writeText(value.text)
-      } catch {
-        const textarea = document.createElement('textarea')
-        textarea.value = value.text
-        textarea.style.position = 'fixed'
-        textarea.style.opacity = '0'
-        document.body.append(textarea)
-        textarea.select()
-        document.execCommand('copy')
-        textarea.remove()
-      }
-    }
-    onToast('Ürün bilgisi kopyalandı.')
+    const copied = await copyToClipboard(copyResult())
+    onToast(copied ? 'Ürün bilgisi kopyalandı.' : 'Kopyalanamadı. Lütfen yeniden deneyin.')
   }
   const share = async (): Promise<void> => {
     const text = copyResult().text
@@ -1187,19 +1168,8 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
         if (reason instanceof DOMException && reason.name === 'AbortError') return
       }
     }
-    try {
-      await navigator.clipboard.writeText(text)
-    } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.append(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      textarea.remove()
-    }
-    onToast('Metin kopyalandı.')
+    const copied = await copyToClipboard({ text })
+    onToast(copied ? 'Metin kopyalandı.' : 'Kopyalanamadı. Lütfen yeniden deneyin.')
   }
   const setCopyColumns = (columns: CopyColumn[]): void => {
     setSavedCopyColumns({
