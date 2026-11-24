@@ -521,7 +521,16 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   }
   if (/^GE[A-Z]{0,2}$/.test(prefix) && digits) {
     if (/KRR/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı, eksantrik kilit bilezikli (INA)', size: bore(Number(digits)) }
-    return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size: bore(Number(digits)) }
+    // GEZ and ...ZO are inch sizes: "GEZ 108" is 1 8/16 in, while "GEZ 31" / "GE 19 ZO" are the inch bore rounded to mm.
+    const inch = prefix.startsWith('GEZ') || /(^|[\s-])ZO($|[\s-])/.test(rest)
+    let size = bore(Number(digits))
+    if (inch) {
+      const sixteenths = Number(digits) % 100
+      size = digits.length === 3 && sixteenths < 16
+        ? `İç çap ${mm(Math.round((Math.floor(Number(digits) / 100) + sixteenths / 16) * 25.4 * 1000) / 1000)} (inç ölçülü)`
+        : digits.length <= 2 ? `İç çap yaklaşık ${mm(Number(digits))} (inç ölçülü)` : ''
+    }
+    return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
   if ((prefix === 'SA' || prefix === 'SB' || prefix === 'UC' || prefix === 'UK' || prefix === 'YAR' || prefix === 'YET' || prefix === 'YEL') && /^[23]\d\d$/.test(digits)) {
     return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : bore(boreFromCode(digits.slice(1))) }
