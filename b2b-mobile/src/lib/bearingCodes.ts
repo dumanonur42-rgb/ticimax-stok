@@ -521,14 +521,14 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   }
   if (/^GE[A-Z]{0,2}$/.test(prefix) && digits) {
     if (/KRR/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı, eksantrik kilit bilezikli (INA)', size: bore(Number(digits)) }
-    // GEZ and ...ZO are inch sizes: "GEZ 108" is 1 8/16 in, while "GEZ 31" / "GE 19 ZO" are the inch bore rounded to mm.
-    const inch = prefix.startsWith('GEZ') || /(^|[\s-])ZO($|[\s-])/.test(rest)
+    // Inch sizes: "GEZ 108" is 1 8/16 in (quarter-inch steps from 1 in up); "GEZ 31" and "GE 101 ZO" are the inch bore rounded to mm.
+    const gez = prefix.startsWith('GEZ')
     let size = bore(Number(digits))
-    if (inch) {
+    if (gez || /(^|[\s-])ZO($|[\s-])/.test(rest)) {
       const sixteenths = Number(digits) % 100
-      size = digits.length === 3 && sixteenths < 16
+      size = gez && digits.length === 3 && sixteenths < 16 && (digits[0] === '0' || sixteenths % 4 === 0)
         ? `İç çap ${mm(Math.round((Math.floor(Number(digits) / 100) + sixteenths / 16) * 25.4 * 1000) / 1000)} (inç ölçülü)`
-        : digits.length <= 2 ? `İç çap yaklaşık ${mm(Number(digits))} (inç ölçülü)` : ''
+        : `İç çap yaklaşık ${mm(Number(digits))} (inç ölçülü)`
     }
     return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
