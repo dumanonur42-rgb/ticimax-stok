@@ -5,6 +5,7 @@ import { Keyboard, KeyboardResize } from '@capacitor/keyboard'
 import App from './App'
 import { SystemInsets, type SystemInsetsValue } from './lib/systemInsets'
 import './styles.css'
+import { installIOSKeyboardDismissal } from './lib/iosKeyboard'
 
 const root = document.documentElement
 const SYSTEM_INSETS_BOOTSTRAP_TIMEOUT_MS = 400
@@ -28,7 +29,7 @@ function scrollFocusedField(): void {
     requestAnimationFrame(() => {
       const keyboardProperty = Capacitor.getPlatform() === 'ios' ? '--ios-keyboard-height' : '--keyboard'
       const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue(keyboardProperty)) || 0
-      const safeTop = Number.parseFloat(getComputedStyle(root).getPropertyValue('--safe-top')) || 0
+      const safeTop = Number.parseFloat(getComputedStyle(loginScreen).paddingTop) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
       const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
       const keyboardTop = keyboard > 0 ? window.innerHeight - keyboard : window.innerHeight
@@ -73,7 +74,7 @@ async function initializeSystemInsets(): Promise<void> {
 
 async function bootstrap(): Promise<void> {
   if (Capacitor.getPlatform() === 'ios') {
-    await Keyboard.setResizeMode({ mode: KeyboardResize.None })
+    installIOSKeyboardDismissal()
     const updateKeyboard = (height: number): void => {
       const keyboardHeight = Math.max(0, height)
       root.style.setProperty('--ios-keyboard-height', `${keyboardHeight}px`)
@@ -81,10 +82,35 @@ async function bootstrap(): Promise<void> {
       root.dataset.keyboardOpen = String(keyboardHeight > 0)
       if (keyboardHeight > 0) scrollFocusedField()
     }
-    await Keyboard.addListener('keyboardWillShow', ({ keyboardHeight }) => updateKeyboard(keyboardHeight))
-    await Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => updateKeyboard(keyboardHeight))
-    await Keyboard.addListener('keyboardWillHide', () => updateKeyboard(0))
-    await Keyboard.addListener('keyboardDidHide', () => updateKeyboard(0))
+    let stopped = false
+    let timer: number | undefined
+    const handles: { remove: () => Promise<void> }[] = []
+    const listen = async (name: 'keyboardWillShow' | 'keyboardDidShow' | 'keyboardWillHide' | 'keyboardDidHide'): Promise<void> => {
+      const handle = await Keyboard.addListener(name, (info) => {
+        if (!stopped) updateKeyboard(name.endsWith('Hide') ? 0 : info.keyboardHeight)
+      })
+      if (stopped) void handle.remove().catch(() => undefined)
+      else handles.push(handle)
+    }
+    try {
+      await Promise.race([
+        Promise.all([
+          Keyboard.setResizeMode({ mode: KeyboardResize.None }),
+          Keyboard.setAccessoryBarVisible({ isVisible: true }),
+          ...(['keyboardWillShow', 'keyboardDidShow', 'keyboardWillHide', 'keyboardDidHide'] as const).map(listen)
+        ]),
+        new Promise<never>((_, reject) => {
+          timer = window.setTimeout(() => reject(new Error('Keyboard initialization timed out')), 1500)
+        })
+      ])
+    } catch (error) {
+      stopped = true
+      for (const handle of handles) void handle.remove().catch(() => undefined)
+      updateKeyboard(0)
+      console.warn('iOS keyboard initialization failed', error)
+    } finally {
+      window.clearTimeout(timer)
+    }
     window.addEventListener('resize', () => {
       updateKeyboard(Number.parseFloat(root.style.getPropertyValue('--ios-keyboard-height')) || 0)
     })

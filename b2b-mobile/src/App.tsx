@@ -26,6 +26,7 @@ import {
   type CopyColumn
 } from '@shared/copy'
 import { hasPerm } from '@shared/perms'
+import { dismissIOSKeyboard } from './lib/iosKeyboard'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
@@ -99,6 +100,8 @@ export default function App(): ReactNode {
   const copySheetOpenRef = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
+
+  useEffect(() => { dismissIOSKeyboard() }, [tab, sheet])
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
@@ -827,7 +830,7 @@ function ProductsPage({ entries, variantIndex, settings, session, loading, onToa
     <div className="page products-page">
       <div className="page-heading"><div><p className="eyebrow">KATALOG</p><h1>Ürünler</h1></div><div className="catalog-heading-actions"><div className="view-toggle" role="group" aria-label="Ürün görünümü"><button className={view === 'table' ? 'active' : ''} onClick={() => setProductView('table')} aria-pressed={view === 'table'}><Table2 size={16} />Tablo</button><button className={view === 'card' ? 'active' : ''} onClick={() => setProductView('card')} aria-pressed={view === 'card'}><LayoutGrid size={16} />Kart</button></div><span className="count-pill">{num(results.length)}</span></div></div>
       <div className="search-row">
-        <div className="search-box"><Search size={19} aria-hidden /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
+        <div className="search-box"><Search size={19} aria-hidden /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'search' : undefined} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Kod, marka veya açıklama ara" aria-label="Ürünlerde ara" /><button aria-label="Aramayı temizle" onClick={() => setQuery('')} className="search-clear" hidden={!query}><X size={17} /></button></div>
         <button className={`filter-button${activeFilters ? ' selected' : ''}`} onClick={() => setSheet('filters')} aria-label={`Filtreler${activeFilters ? `, ${activeFilters} seçili` : ''}`}><SlidersHorizontal size={19} />{activeFilters > 0 && <span>{activeFilters}</span>}</button>
       </div>
       <label className="stock-toggle"><input type="checkbox" checked={inStock} onChange={(event) => setInStock(event.target.checked)} /><span className="switch" /><span>Sadece stoktakiler</span></label>
@@ -1091,7 +1094,7 @@ function FilterSheet({ entries, initialBrands, initialDimensions, onApply, onClo
     <Sheet title="Filtreler" onClose={onClose} footer={
       <div className="sheet-actions"><button className="button secondary" onClick={clear}>Temizle</button><button className="button primary" onClick={setProductsFilter}>Sonuçları göster</button></div>
     }>
-      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
+      <section className="filter-section"><h3>Marka</h3><div className="sheet-search"><Search size={16} /><input data-dismiss-on-enter enterKeyHint={Capacitor.getPlatform() === 'ios' ? 'done' : undefined} value={brandQuery} onChange={(event) => setBrandQuery(event.target.value)} placeholder="Marka ara" aria-label="Markalarda ara" /></div>
         <div className="brand-options">{visibleBrands.map(([key, value]) => <label key={key} className="brand-option"><input type="checkbox" checked={selected.has(key)} onChange={(event) => setSelected((prev) => { const next = new Set(prev); if (event.target.checked) next.add(key); else next.delete(key); return next })} /><span>{value.label}</span><small>{num(value.count)}</small></label>)}</div>
         {(hiddenBrandCount > 0 || showAllBrands) && <button type="button" className="show-more-brands" onClick={() => setShowAllBrands((value) => !value)}>{showAllBrands ? 'Daha az göster' : `Tümünü göster (+${num(hiddenBrandCount)})`}</button>}
       </section>
