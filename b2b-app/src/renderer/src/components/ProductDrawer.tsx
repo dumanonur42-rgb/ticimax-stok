@@ -1,13 +1,14 @@
 import type { Product } from '@shared/types'
 import { boxParts, brandOrigin, normalize } from '@shared/identity'
 import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, mm, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
 import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
+import { explainProductCode } from '@shared/bearingCodes'
 
 export function ProductDrawer({
   product,
@@ -39,6 +40,7 @@ export function ProductDrawer({
   const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
+  const codeInfo = useMemo(() => explainProductCode(product.sku, product.brand), [product.sku, product.brand])
 
   useEffect(() => {
     const active = document.activeElement instanceof HTMLElement ? document.activeElement : null
@@ -246,6 +248,43 @@ export function ProductDrawer({
           </dl>
 
           {product.description && <p>{product.description}</p>}
+
+          {codeInfo && (
+            <section className="code-info" aria-labelledby="code-title">
+              <h3 id="code-title">Kod açıklaması</h3>
+              <div className="code-note">
+                <span className="code-chip">{codeInfo.base}</span>
+                <div>
+                  <strong>{codeInfo.type}</strong>
+                  {codeInfo.size && <p className="code-size">{codeInfo.size}</p>}
+                  {codeInfo.typeDetail && <p>{codeInfo.typeDetail}</p>}
+                </div>
+              </div>
+              {codeInfo.notes.map((note) => (
+                <div className="code-note" key={note.code}>
+                  <span className="code-chip">{note.code}</span>
+                  <div>
+                    <strong>{note.title}</strong>
+                    {note.detail && <p>{note.detail}</p>}
+                    {note.sameEverywhere && <p>Bütün markalarda aynı yazılır.</p>}
+                    {note.equivalents.length > 0 && (
+                      <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
+                        <small>Diğer markalarda</small>
+                        <ul>
+                          {note.equivalents.map((item) => (
+                            <li key={item.brand}>
+                              <b>{item.brand}</b> {item.code}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              <p className="code-disclaimer">Açıklamalar üreticilerin genel kodlamasına göredir. Kritik kullanımda üretici kataloğundan teyit edin.</p>
+            </section>
+          )}
 
           {product.equivalents && (
             <section aria-labelledby="eq-title">

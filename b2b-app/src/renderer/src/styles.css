@@ -1705,6 +1705,88 @@ textarea.input {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.code-info {
+  display: grid;
+  gap: 8px;
+}
+.code-info h3 {
+  margin: 0;
+}
+.code-note {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--bg-stripe);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.code-note > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.code-note strong,
+.code-note p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.code-note p {
+  color: var(--text-muted);
+}
+.code-note .code-size {
+  color: var(--text);
+  font-weight: 600;
+}
+.code-chip {
+  justify-self: start;
+  max-width: 130px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-elev);
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+.code-equivalents {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+}
+.code-equivalents small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.code-equivalents ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.code-equivalents li {
+  padding: 2px 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  font-size: 0.8rem;
+  user-select: text;
+}
+.code-disclaimer {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
 .backdrop {
   position: fixed;
   inset: 0;
