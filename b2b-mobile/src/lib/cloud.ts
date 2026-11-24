@@ -175,6 +175,8 @@ async function verifySessionInBackground(): Promise<void> {
   }
 }
 
+const DEVICE_PREFERENCE_KEYS = ['yamansa.theme', 'yb2b.productView']
+
 async function wipeLocalUserData(): Promise<void> {
   const steps: (() => unknown | Promise<unknown>)[] = [
     () => clearLocalCatalog(),
@@ -184,7 +186,11 @@ async function wipeLocalUserData(): Promise<void> {
   if (Capacitor.getPlatform() === 'ios') {
     steps.push(
       () => secureStorage.removeItem(SUPABASE_AUTH_STORAGE_KEY),
-      () => localStorage.clear(),
+      () => {
+        const kept = DEVICE_PREFERENCE_KEYS.map((key) => [key, localStorage.getItem(key)] as const)
+        localStorage.clear()
+        for (const [key, value] of kept) if (value !== null) localStorage.setItem(key, value)
+      },
       () => sessionStorage.clear(),
       async () => {
         if ('caches' in window) await attemptAll((await caches.keys()).map((key) => () => caches.delete(key)))
