@@ -18,9 +18,9 @@ export function installIOSKeyboardDismissal(): void {
     const editable = target.closest(editableSelector)
     return !!editable && !editable.matches('input[type="checkbox"], input[type="radio"]')
   }
-  document.addEventListener('pointerdown', (event) => {
-    if (!preservesEditing(event.target)) dismissIOSKeyboard()
-  })
+  document.addEventListener('click', (event) => {
+    if (!preservesEditing(event.target)) window.setTimeout(dismissIOSKeyboard, 0)
+  }, true)
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !event.isComposing && event.target instanceof Element &&
       event.target.matches('input[data-dismiss-on-enter]')) {

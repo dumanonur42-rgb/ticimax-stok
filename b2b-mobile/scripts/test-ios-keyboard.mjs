@@ -78,6 +78,8 @@ const dismissalSource = await readFile(new URL('../src/lib/iosKeyboard.ts', impo
 const dismissalJS = ts.transpileModule(dismissalSource.replace(/^import .*$/gm, '').replace(/^export /gm, ''), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
 for (const platform of ['ios', 'android']) {
   const events = new Map()
+  const options = new Map()
+  const pending = []
   let hidden = 0
   let blurred = 0
   class Element {
@@ -88,9 +90,15 @@ for (const platform of ['ios', 'android']) {
   }
   const input = new Element(['input', 'input[data-dismiss-on-enter]'])
   const context = { Capacitor: { getPlatform: () => platform }, Keyboard: { hide: async () => { hidden++ } },
-    document: { activeElement: input, addEventListener: (name, fn) => events.set(name, fn) }, Element, HTMLElement: Element }
+    document: { activeElement: input, addEventListener: (name, fn, option) => { events.set(name, fn); options.set(name, option) } },
+    window: { setTimeout: fn => pending.push(fn) }, Element, HTMLElement: Element }
   vm.runInNewContext(dismissalJS + '\ninstallIOSKeyboardDismissal()', context)
   if (platform === 'android') { assert.equal(events.size, 0); continue }
+  const click = (event, action = () => {}) => {
+    events.get('click')(event)
+    action()
+    while (pending.length) pending.shift()()
+  }
   let prevented = 0
   events.get('keydown')({ key: 'Enter', target: input, preventDefault: () => { prevented++ } })
   assert.equal(hidden, 1)
@@ -100,10 +108,28 @@ for (const platform of ['ios', 'android']) {
   events.get('keydown')({ key: 'Enter', target: input, isComposing: true })
   assert.equal(hidden, 1)
   for (const selector of ['input', 'textarea', 'select', '.quantity-stepper', '.search-clear']) {
-    events.get('pointerdown')({ target: new Element([selector]) })
+    click({ target: new Element([selector]) })
   }
   assert.equal(hidden, 1)
-  events.get('pointerdown')({ target: new Element() })
+  assert.equal(events.has('pointerdown'), false)
+  assert.equal(options.get('click'), true, 'Capture observes controls that stop click propagation')
+  assert.equal(events.has('touchend'), true)
+  for (const selector of ['.catalog-table-row', 'button', '.tab', '.filter-chip']) {
+    const target = new Element([], new Element([selector]))
+    const before = hidden
+    events.get('touchstart')({ target, touches: [{ clientX: 0, clientY: 0 }] })
+    events.get('touchend')({ target })
+    assert.equal(hidden, before, `${selector}: no layout-changing dismissal before click`)
+    let actions = 0
+    click({ target, preventDefault: () => assert.fail('Outside dismissal must not cancel clicks'), stopPropagation: () => assert.fail('Outside dismissal must not stop propagation') }, () => {
+      assert.equal(hidden, before, `${selector}: action runs before keyboard dismissal`)
+      actions++
+    })
+    assert.equal(actions, 1)
+    assert.equal(hidden, before + 1, `${selector}: one click both acts and dismisses`)
+  }
+  hidden = 1
+  click({ target: new Element() })
   assert.equal(hidden, 2)
   assert.equal(events.has('scroll'), false)
   const surface = new Element(['.catalog-scroll'])
@@ -133,4 +159,4 @@ for (const transition of transitions) {
   vm.runInNewContext(js, { dismissIOSKeyboard: () => order.push('dismiss'), set: () => order.push('transition') })
   assert.deepEqual(order, ['dismiss', 'transition'])
 }
-console.log('iOS keyboard: ok (geometry, Done, Return, tap, user drag, transitions, init rejection/timeout; Android untouched)')
+console.log('iOS keyboard: ok (geometry, Done, Return, tap, single-tap actions, user drag, transitions, init rejection/timeout; Android untouched)')
