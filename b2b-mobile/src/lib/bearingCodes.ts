@@ -549,7 +549,7 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'SL' && number.length >= 4) return { family: 'crb', type: 'Silindirik makaralı rulman, kafessiz (tam dolu)', detail: 'Yük kapasitesi çok yüksek, izin verilen devir düşüktür.', size: digits.length === 6 ? bore(boreFromCode(digits.slice(-2))) : '' }
   if ((prefix === 'GS' || prefix === 'WS' || prefix === 'LS' || prefix === 'K') && /^(811|812|893|894)\d\d$/.test(digits)) {
     const part = prefix === 'GS' ? 'yuva pulu' : prefix === 'WS' ? 'mil pulu' : prefix === 'LS' ? 'pulu' : 'makaralı kafesi (pulsuz)'
-    return { family: 'thrust', type: `Eksenel silindirik makaralı rulman ${part}`, detail: `${digits} rulmanının parçasıdır.`, size: bore(boreFromCode(digits.slice(-2))) }
+    return { family: 'thrust', type: `Eksenel silindirik makaralı rulman ${part}`, detail: `${digits} rulmanının parçasıdır.`, size: prefix === 'GS' ? bore(boreFromCode(digits.slice(-2))).replace('İç çap', 'Mil çapı') : bore(boreFromCode(digits.slice(-2))) }
   }
   if (prefix === 'K' && slash && slash[1].length >= 4 && /^\d{4,}$/.test(slash[2])) return { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
   if (prefix === 'Q' && /^[23]\d\d$/.test(digits)) return { family: 'acbb', type: 'Dört nokta temaslı bilyalı rulman', detail: 'İki yönde eksenel yük taşır.', size: bore(boreFromCode(digits.slice(-2))) }
