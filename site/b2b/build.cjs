@@ -3,6 +3,7 @@ const ICON = '__B__icon.png';
 const S = Object.fromEntries(['panel','katalog','arama','detay','sepet'].map(n => [n, `__B__s_${n}.webp`]));
 const WIN = 'https://github.com/dumanonur42-rgb/ticimax-stok/releases/download/b2b-v1.0.30/Yamansa-Rulman-B2B-Kurulum-1.0.30.exe';
 const PLAY = 'https://play.google.com/store/apps/details?id=com.yamansarulman.b2b';
+const APPSTORE = 'https://apps.apple.com/tr/app/yamansa-rulman-b2b/id6832507420';
 const WA = 'https://wa.me/905526109363?text=' + encodeURIComponent('Merhaba, Yamansa B2B bayi hesabı açtırmak istiyorum.');
 const LPURL = '/bayi-uygulamasi';
 const svgPlay = `<svg viewBox="0 0 24 24" width="24" height="24"><path fill="#34A853" d="M3.6 1.8 13.7 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m17.1 8.6-3.4 3.4 3.4 3.4 3.9-2.2c.8-.5.8-1.7 0-2.2z"/><path fill="#4285F4" d="M3.6 1.8c.3-.2.8-.2 1.2 0l12.3 6.8-3.4 3.4z"/><path fill="#EA4335" d="m13.7 12 3.4 3.4-12.3 6.8c-.4.2-.9.2-1.2 0z"/></svg>`;
@@ -27,7 +28,7 @@ const fix = (s) => s;
 const badge = (href, icon, small, big, cls='', soon=false) => soon
   ? `<span class="yb-badge ${cls} soon" role="img" aria-label="${big} – yakında">${icon}<span><small>${small}</small><b>${big}</b></span><em>Yakında</em></span>`
   : `<a class="yb-badge ${cls}" href="${href}">${icon}<span><small>${small}</small><b>${big}</b></span></a>`;
-const BADGES = badge(PLAY, svgPlay, "GET IT ON", "Google Play") + badge('', svgApple(), "Download on the", "App Store", '', true) + badge(WIN, svgWin(), "Windows için", "İndir (PC)", 'win');
+const BADGES = badge(PLAY, svgPlay, "GET IT ON", "Google Play") + badge(APPSTORE, svgApple(), "Download on the", "App Store") + badge(WIN, svgWin(), "Windows için", "İndir (PC)", 'win');
 const phone = (src, alt) => `<div class="yb-ph"><img src="${src}" alt="${alt}" width="520" height="1156" loading="lazy" decoding="async"></div>`;
 const rows = [['6205 2RS','SKF','25×52×15','124','€3,20',1],['6205 ZZ','FAG','25×52×15','86','€2,95'],['6205 2RS C3','NSK','25×52×15','48','€3,05'],['6205 TN','KOYO','25×52×15','12','€2,70'],['6205 N','ZKL','25×52×15','Az: 2','€2,40'],['6205 2Z','NTN','25×52×15','31','€2,90'],['6205 RS','ORS','25×52×15','210','€1,85']];
 const WINDOW = `<div class="yb-win" aria-hidden="true">
@@ -75,7 +76,7 @@ const LP = fix(`<div class="yb-lp">
 <p class="yb-sub">Aynı kullanıcı adı ve şifreyle bütün cihazlarınızda giriş yapabilirsiniz.</p>
 <div class="yb-plats">
  <div class="yb-plat"><div class="yb-ic">${svgAndroid}</div><b>Android</b><p>Android telefon ve tabletler için Google Play'den indirin.</p>${badge(PLAY, svgPlay, "GET IT ON", "Google Play")}<small>Android 7 ve üzeri</small></div>
- <div class="yb-plat"><div class="yb-ic">${svgApple('#0b1f4b')}</div><b>iPhone</b><p>iPhone sürümü Apple onayında. Yayınlandığında buradan indirebileceksiniz.</p>${badge('', svgApple(), "Download on the", "App Store", '', true)}<small>Çok yakında</small></div>
+ <div class="yb-plat"><div class="yb-ic">${svgApple('#0b1f4b')}</div><b>iPhone</b><p>iPhone ve iPad için App Store'dan indirin.</p>${badge(APPSTORE, svgApple(), "Download on the", "App Store")}<small>iOS 14 ve üzeri</small></div>
  <div class="yb-plat"><div class="yb-ic">${svgWin('#0b1f4b')}</div><b>Windows</b><p>Ofis bilgisayarınız için kurulum dosyasını indirin; güncellemeler kendiliğinden gelir.</p>${badge(WIN, svgWin(), "Windows için", "İndir (PC)")}<small>Windows 10 ve 11</small></div>
 </div>
 
@@ -157,7 +158,7 @@ const PAGE = `<style type="text/css">.yb-fb{max-width:760px;margin:24px auto 40p
 <h2>İndirin</h2>
 <div class="yb-fb-dl">
 <a href="${PLAY}" target="_blank" rel="noopener">Android – Google Play'den indir<span>Android telefon ve tabletler</span></a>
-<div>iPhone – App Store'da yakında</div>
+<a href="${APPSTORE}" target="_blank" rel="noopener">iPhone – App Store'dan indir<span>iPhone ve iPad</span></a>
 <a href="${WIN}" rel="noopener">Windows – Kurulum dosyasını indir<span>Windows 10 ve 11 bilgisayarlar</span></a>
 </div>
 <h2>Bayi hesabı</h2>
