@@ -14,13 +14,14 @@ const context = {
   React: { createElement: (type, props, ...children) => ({ type, props, children }) },
   Minus: 'minus', Plus: 'plus',
   useState: initial => { draft ??= initial; return [draft, value => { draft = value }] },
-  useEffect: () => {},
+  useEffect: (effect, deps) => { if (!lastDeps || deps.some((value, index) => value !== lastDeps[index])) { lastDeps = deps; effect() } },
   useRef: initial => refs[refIndex++] ??= { current: initial },
   props: () => ({ qty, min, sku: '6205', setQty: value => { committed = value; qty = value } })
 }
 vm.createContext(context)
 vm.runInContext(ts.transpileModule(stepper.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.React } }).outputText, context)
 const refs = []
+let lastDeps
 let refIndex = 0
 const render = () => { refIndex = 0; return vm.runInContext('QuantityStepper(props())', context) }
 const input = () => render().children[1].props
@@ -71,6 +72,14 @@ assert.equal(committed, 10, 'Clearing the field restores the amount from before 
 input().onChange({ target: { value: '10' } })
 input().onBlur()
 min = 5
+qty = 15
+render()
+assert.equal(input().value, '15', 'An amount changed elsewhere (re-add) replaces the text of the field')
+input().onBlur()
+assert.equal(committed, 15, 'Blur must not overwrite a re-added amount with the old text')
+qty = 10
+render()
+input().onBlur()
 input().onChange({ target: { value: '' } })
 assert.equal(input().value, '')
 input().onChange({ target: { value: '1,5' } })
