@@ -10,8 +10,10 @@ import { loginEmail } from './loginEmail'
 import { clearLocalCatalog, getState, setState, unlockCatalogStorage } from './idb'
 import { CART_STORAGE_KEY, secureStorage } from './secureStorage'
 import { attemptAll } from './cleanup'
+import { authFetch, networkRequest } from './networkRequest'
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  global: { fetch: authFetch },
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -118,9 +120,9 @@ class InvalidProfileError extends Error {
   }
 }
 
-class SessionRestoreTimeoutError extends Error {
+class SessionRestoreTimeoutError extends TypeError {
   constructor() {
-    super('Session restore timed out')
+    super('Sunucu isteği zaman aşımına uğradı. Lütfen yeniden deneyin.')
     this.name = 'SessionRestoreTimeoutError'
   }
 }
@@ -162,7 +164,7 @@ async function verifySessionInBackground(): Promise<void> {
       dispatchRestoredSession(null)
       return
     }
-    const session = await withTimeout(loadProfileSession(data.session.user.id), 4000)
+    const session = await loadProfileSession(data.session.user.id)
     dispatchRestoredSession(session)
   } catch (error) {
     if (error instanceof InvalidProfileError) {
@@ -207,22 +209,26 @@ function mapProfile(profile: ProfileRow): User {
 }
 
 async function loadProfileSession(userId: string): Promise<Session> {
-  const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
-  if (error) throw new Error(errorMessage(error))
-  if (!profile) throw new InvalidProfileError('missing')
-  if (!profile.active) throw new InvalidProfileError('inactive')
-  if (!profile.approved) throw new InvalidProfileError('unapproved')
-  const user = mapProfile(profile)
-  let customer: Customer | null = null
-  if (user.customer_id !== null) {
-    const { data, error: customerError } = await supabase.from('customers').select('*').eq('id', user.customer_id).maybeSingle()
-    if (customerError) throw new Error(errorMessage(customerError))
-    if (data) customer = mapCustomer(data)
-  }
-  const session = { user, customer }
-  await secureStorage.setItem(SESSION_CACHE, JSON.stringify(session))
-  await unlockCatalogStorage()
-  return session
+  return networkRequest(async signal => {
+    const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', userId).abortSignal(signal).maybeSingle()
+    if (error) throw new Error(errorMessage(error))
+    if (!profile) throw new InvalidProfileError('missing')
+    if (!profile.active) throw new InvalidProfileError('inactive')
+    if (!profile.approved) throw new InvalidProfileError('unapproved')
+    const user = mapProfile(profile)
+    let customer: Customer | null = null
+    if (user.customer_id !== null) {
+      const { data, error: customerError } = await supabase.from('customers').select('*').eq('id', user.customer_id).abortSignal(signal).maybeSingle()
+      if (customerError) throw new Error(errorMessage(customerError))
+      if (data) customer = mapCustomer(data)
+    }
+    const session = { user, customer }
+    if (signal.aborted) throw new SessionRestoreTimeoutError()
+    await secureStorage.setItem(SESSION_CACHE, JSON.stringify(session))
+    if (signal.aborted) throw new SessionRestoreTimeoutError()
+    await unlockCatalogStorage()
+    return session
+  }, undefined, 4000)
 }
 
 function mapCustomer(row: CustomerRow): Customer {
@@ -259,14 +265,15 @@ export async function signUp(input: { username: string; companyName: string; dis
   const company = input.companyName.trim()
   if (company.length < 2) throw new Error('İşletme adı en az 2 karakter olmalı.')
   const client = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    global: { fetch: authFetch },
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'yamansa-b2b-signup' }
   })
   try {
-    const { error } = await client.auth.signUp({
+    const { error } = await withTimeout(client.auth.signUp({
       email: await loginEmail(username),
       password: input.password,
       options: { data: { username, display_name: input.displayName.trim() || company, company_name: company } }
-    })
+    }), 10_000)
     if (error) throw error
   } catch (error) {
     throw new Error(errorMessage(error))
@@ -277,7 +284,7 @@ export async function signIn(username: string, password: string): Promise<Sessio
   try {
     const cleanUsername = validateCredentials(username, password)
     const email = await loginEmail(cleanUsername)
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }), 10_000)
     if (error) throw new Error(errorMessage(error))
     return await loadProfileSession(data.user.id)
   } catch (error) {
@@ -341,7 +348,7 @@ export async function restoreSession(): Promise<Session | null> {
     return null
   }
   try {
-    return await withTimeout(loadProfileSession(data.session.user.id), 4000)
+    return await loadProfileSession(data.session.user.id)
   } catch (error) {
     if (isRetryableFailure(error)) {
       if (cached?.user.id === data.session.user.id) {
@@ -376,7 +383,7 @@ export async function signOut(): Promise<void> {
 
 export async function loadSettings(signal?: AbortSignal): Promise<Settings> {
   const query = supabase.from('settings').select('key,value')
-  const { data, error } = await (signal ? query.abortSignal(signal) : query)
+  const { data, error } = await networkRequest(requestSignal => query.abortSignal(requestSignal), signal)
   if (signal?.aborted) throw new Error('Katalog isteği iptal edildi.')
   if (error) throw new Error(errorMessage(error))
   const settings: Settings = { ...DEFAULT_SETTINGS }
@@ -402,20 +409,20 @@ export async function loadSettings(signal?: AbortSignal): Promise<Settings> {
 }
 
 export async function listCustomers(): Promise<Customer[]> {
-  const { data, error } = await supabase.from('customers').select('*').eq('active', true).order('name')
+  const { data, error } = await networkRequest(signal => supabase.from('customers').select('*').eq('active', true).order('name').abortSignal(signal))
   if (error) throw new Error(errorMessage(error))
   return (data ?? []).map(mapCustomer)
 }
 
 export async function dashboardOrders(): Promise<{ openOrders: number; ordersToday: number }> {
-  const { data, error } = await supabase.rpc('dashboard_orders', { p_customer: null })
+  const { data, error } = await networkRequest(signal => supabase.rpc('dashboard_orders', { p_customer: null }).abortSignal(signal))
   if (error) throw new Error(errorMessage(error))
   const stats = data as unknown as { openOrders?: number; ordersToday?: number } | null
   return { openOrders: Number(stats?.openOrders ?? 0), ordersToday: Number(stats?.ordersToday ?? 0) }
 }
 
 export async function listOrders(): Promise<Order[]> {
-  const { data, error } = await supabase.from('orders').select('*, order_items(count)').order('created_at', { ascending: false }).order('id', { ascending: false }).limit(300)
+  const { data, error } = await networkRequest(signal => supabase.from('orders').select('*, order_items(count)').order('created_at', { ascending: false }).order('id', { ascending: false }).limit(300).abortSignal(signal))
   if (error) throw new Error(errorMessage(error))
   return (data ?? []).map((row) => {
     const itemCount = (row as unknown as { order_items?: { count: number }[] }).order_items?.[0]?.count ?? 0
@@ -424,12 +431,14 @@ export async function listOrders(): Promise<Order[]> {
 }
 
 export async function getOrder(id: number): Promise<Order | null> {
-  const { data, error } = await supabase.from('orders').select('*').eq('id', id).maybeSingle()
-  if (error) throw new Error(errorMessage(error))
-  if (!data) return null
-  const { data: items, error: itemError } = await supabase.from('order_items').select('*').eq('order_id', id).order('id')
-  if (itemError) throw new Error(errorMessage(itemError))
-  return mapOrder(data, items ?? [])
+  return networkRequest(async signal => {
+    const { data, error } = await supabase.from('orders').select('*').eq('id', id).abortSignal(signal).maybeSingle()
+    if (error) throw new Error(errorMessage(error))
+    if (!data) return null
+    const { data: items, error: itemError } = await supabase.from('order_items').select('*').eq('order_id', id).order('id').abortSignal(signal)
+    if (itemError) throw new Error(errorMessage(itemError))
+    return mapOrder(data, items ?? [])
+  })
 }
 
 export async function cancelOrder(id: number): Promise<void> {

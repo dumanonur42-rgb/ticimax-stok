@@ -4,6 +4,7 @@ import vm from 'node:vm'
 import ts from 'typescript'
 
 const source = await readFile(new URL('../src/lib/updates.ts', import.meta.url), 'utf8')
+const network = await readFile(new URL('../src/lib/networkRequest.ts', import.meta.url), 'utf8')
 const js = ts.transpileModule(source.replace(/^import .*\n/gm, ''), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }
 }).outputText
@@ -12,7 +13,7 @@ for (const platform of ['ios', 'web', 'android']) {
   let manifest = { version: '1.0.9', versionCode: 10, apkUrl: 'https://github.com/dumanonur42-rgb/ticimax-stok/releases/download/test/app.apk', sha256: 'a'.repeat(64) }
   const api = {}
   const context = vm.createContext({
-    exports: api, __APP_VERSION__: '1.0.8', console, Date,
+    exports: api, __APP_VERSION__: '1.0.8', console, Date, AbortController, setTimeout, clearTimeout,
     Capacitor: { getPlatform: () => platform },
     localStorage: { getItem: () => null, setItem: () => {} },
     navigator: { onLine: true },
@@ -21,6 +22,7 @@ for (const platform of ['ios', 'web', 'android']) {
     AppUpdate: new Proxy({}, { get: () => () => { throw new Error('Unexpected native call') } }),
     CapacitorUpdater: new Proxy({}, { get: () => () => { throw new Error('Unexpected updater call') } })
   })
+  vm.runInContext(ts.transpileModule(network.replace(/^export /gm, ''), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context)
   vm.runInContext(js, context)
   if (platform === 'android') {
     assert.equal((await api.checkAndroidUpdate()).version, '1.0.9')

@@ -12,6 +12,7 @@ const compile = source => ts.transpileModule(source, { compilerOptions: { target
 for (const mode of ['success', 'empty-name', 'username', 'company', 'password', 'mismatch', 'api-error']) {
   const created = []
   const context = { SUPABASE_URL: 'https://example.invalid', SUPABASE_ANON_KEY: 'fake-key',
+    authFetch: () => assert.fail('No real network allowed'), withTimeout: promise => promise,
     loginEmail: async username => `${username}@example.invalid`, errorMessage: error => error.message,
     createClient: (url, key, options) => {
       assert.equal(options.auth.persistSession, false)
