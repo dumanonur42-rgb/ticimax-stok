@@ -627,7 +627,7 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   }
   if (/^(RLS|RMS|LJ|MJ|XLJ|KLNJ)$/.test(prefix)) {
     // "LJ 1 1/4", "KLNJ 1/2": the bore in inches.
-    const inch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) ? `${number}${rest}`.match(/^(?:(\d)(?=\s|$))?\s*(?:(\d{1,2})\/(2|4|8|16|32))?/) : null
+    const inch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) ? number.match(/^(?:(\d)(?=\s|$))?\s*(?:(\d{1,2})\/(2|4|8|16|32))?$/) : null
     const inches = inch ? Number(inch[1] ?? 0) + (inch[2] ? Number(inch[2]) / Number(inch[3]) : 0) : 0
     const series = prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : prefix === 'XLJ' ? 'Çok hafif seri.' : prefix === 'KLNJ' ? '' : 'Orta seri.'
     return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: series, size: inches > 0 && inches < 8 ? `İç çap ${mm(Math.round(inches * 25.4 * 1000) / 1000)} (inç ölçülü)` : '' }
@@ -659,6 +659,9 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const prefix = match[1] ?? ''
   let number = match[2]
   let rest = match[3]
+  // "XLJ 1 1/4", "LJ 1-1/4", "LJ 1.1/4": whole inches and a fraction make up one size.
+  const mixedInch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) && /^\d$/.test(number) ? rest.match(/^[\s.-]\s?(\d{1,2})\s?\/\s?(2|4|8|16|32)(?!\d)/) : null
+  if (mixedInch) { number = `${number} ${mixedInch[1]}/${mixedInch[2]}`; rest = rest.slice(mixedInch[0].length) }
   let info: TypeInfo | null = null
   let prefixNote = ''
   const flanged = /^(F|SF|SSF)$/.test(prefix)
