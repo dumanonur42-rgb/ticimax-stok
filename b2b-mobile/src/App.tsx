@@ -13,6 +13,7 @@ import {
   Monitor, Moon, Sun, Building2, IdCard, Lock, LogIn, UserPlus, CircleAlert, CircleCheck
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
+import { explainProductCode } from './lib/bearingCodes'
 import { brandOrigin, normalize } from '@shared/identity'
 import {
   availableCopyColumns,
@@ -1298,6 +1299,7 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
     if (savedCopyColumns.userId === session.user.id) saveCopyColumns(session.user.id, savedCopyColumns.columns)
   }, [savedCopyColumns, session.user.id])
   const brand = brandOrigin(product.brand)
+  const codeInfo = useMemo(() => explainProductCode(product.sku, product.brand), [product.sku, product.brand])
   const variantLocations = variantShelfRows(variants)
   const availableColumns = availableCopyColumns([product], { canShelf, showPrices })
   const dimensionValues = [product.d_inner, product.d_outer, product.width]
@@ -1375,6 +1377,30 @@ function ProductDetail({ product, variantIndex, settings, session, copySheetOpen
         <DetailRow label="Eşdeğerler" value={product.equivalents} />
         <DetailRow label="Açıklama" value={product.description} />
       </dl>
+      {codeInfo && <section className="code-info" aria-label="Kod açıklaması">
+        <h3>Kod açıklaması</h3>
+        <div className="code-note">
+          <span className="code-chip">{codeInfo.base}</span>
+          <div>
+            <strong>{codeInfo.type}</strong>
+            {codeInfo.size && <p className="code-size">{codeInfo.size}</p>}
+            {codeInfo.typeDetail && <p>{codeInfo.typeDetail}</p>}
+          </div>
+        </div>
+        {codeInfo.notes.map((note) => <div className="code-note" key={note.code}>
+          <span className="code-chip">{note.code}</span>
+          <div>
+            <strong>{note.title}</strong>
+            {note.detail && <p>{note.detail}</p>}
+            {note.sameEverywhere && <p className="code-same">Bütün markalarda aynı yazılır.</p>}
+            {note.equivalents.length > 0 && <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
+              <small>Diğer markalarda</small>
+              <ul>{note.equivalents.map((item) => <li key={item.brand}><b>{item.brand}</b> {item.code}</li>)}</ul>
+            </div>}
+          </div>
+        </div>)}
+        <p className="code-disclaimer">Açıklamalar üreticilerin genel kodlamasına göredir. Kritik kullanımda üretici kataloğundan teyit edin.</p>
+      </section>}
       {canShelf ? <section className="detail-shelves" aria-label="Raflar">
         <h3>Raflar</h3>
         <div className="detail-location-table" role="table" aria-label="Raf konumları">
