@@ -132,6 +132,7 @@ export default function App(): ReactNode {
   const syncNowRef = useRef<() => Promise<void>>(async () => undefined)
   const appReadyNotified = useRef(false)
   const copySheetOpenRef = useRef(false)
+  const backInterceptRef = useRef<(() => void) | null>(null)
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
 
@@ -428,6 +429,10 @@ export default function App(): ReactNode {
   useEffect(() => {
     let handle: { remove: () => Promise<void> } | undefined
     const goBack = (exitAtHome: boolean): void => {
+      if (backInterceptRef.current) {
+        backInterceptRef.current()
+        return
+      }
       if (copySheetOpenRef.current) {
         copySheetOpenRef.current = false
         setCopySheetOpen(false)
@@ -751,7 +756,7 @@ export default function App(): ReactNode {
           {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} />}
-          {tab === 'account' && <AccountPage session={session} online={online} onLogout={() => void onLogout()} onDeleteAccount={onDeleteAccount} themePreference={themePreference} onThemeChange={changeThemePreference} />}
+          {tab === 'account' && <AccountPage session={session} online={online} onLogout={() => void onLogout()} onDeleteAccount={onDeleteAccount} backInterceptRef={backInterceptRef} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
         <BottomTabs tab={tab} setTab={setTab} cartLineCount={cartLineCount} />
         {sheet === 'filters' && <FilterSheet
@@ -1740,8 +1745,8 @@ function OrderDetail({ id, settings, onClose, onRefresh, onToast }: { id: number
   )
 }
 
-function AccountPage({ session, online, onLogout, onDeleteAccount, themePreference, onThemeChange }: {
-  session: Session; online: boolean; onLogout: () => void; onDeleteAccount: () => Promise<void>; themePreference: ThemePreference; onThemeChange: (preference: ThemePreference) => void
+function AccountPage({ session, online, onLogout, onDeleteAccount, backInterceptRef, themePreference, onThemeChange }: {
+  session: Session; online: boolean; onLogout: () => void; onDeleteAccount: () => Promise<void>; backInterceptRef: { current: (() => void) | null }; themePreference: ThemePreference; onThemeChange: (preference: ThemePreference) => void
 }): ReactNode {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deleteConfirmed, setDeleteConfirmed] = useState(false)
@@ -1753,6 +1758,11 @@ function AccountPage({ session, online, onLogout, onDeleteAccount, themePreferen
     setDeleteConfirmed(false)
     setDeleteError('')
   }
+  useEffect(() => {
+    if (!deleteOpen) return
+    backInterceptRef.current = closeDelete
+    return () => { backInterceptRef.current = null }
+  })
   const confirmDelete = async (): Promise<void> => {
     setDeleteBusy(true)
     setDeleteError('')
