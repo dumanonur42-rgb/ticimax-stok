@@ -182,7 +182,10 @@ img { max-width: 100%; }
 .password-wrap { position: relative; display: flex; align-items: center; }
 .password-wrap input { padding-right: 54px; }
 .password-wrap .icon-button { position: absolute; right: 4px; }
-.login-foot { margin: 25px 0 0; text-align: center; color: var(--muted); font-size: .86rem; }
+.login-notice { margin: 0; color: var(--green, #17803d); font-size: .88rem; line-height: 1.35; }
+.login-switch { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 2px 6px; margin: 16px 0 0; color: var(--muted); font-size: .9rem; }
+.login-switch button { min-height: 44px; padding: 0 8px; border: 0; background: none; color: var(--blue); font: inherit; font-weight: 700; }
+.login-foot { margin: 8px 0 0; text-align: center; color: var(--muted); font-size: .86rem; }
 .login-foot a { color: var(--blue); font-weight: 700; }
 .error-text { color: var(--red); font-size: .88rem; margin: 4px 0 8px; }
 .summary-retry { color: var(--muted); font-size: .68rem; font-weight: 600; }

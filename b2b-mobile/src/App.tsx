@@ -30,7 +30,7 @@ import { openExternal } from './lib/external'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
-import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut } from './lib/cloud'
+import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut, signUp } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
@@ -54,6 +54,14 @@ const CART_ADDED_EVENT = 'yamansa:cart-added'
 
 function userFacingError(error: unknown): string {
   return error instanceof Error ? error.message : 'Bir sorun oluştu. Yeniden deneyin.'
+}
+
+function focusOnEnter(id: string): (event: ReactKeyboardEvent<HTMLInputElement>) => void {
+  return (event) => {
+    if (event.key !== 'Enter') return
+    event.preventDefault()
+    document.getElementById(id)?.focus()
+  }
 }
 
 function external(url: string, onToast = useApp.getState().showToast): void {
@@ -80,7 +88,12 @@ export default function App(): ReactNode {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loginError, setLoginError] = useState('')
-  const [loginFieldError, setLoginFieldError] = useState<'username' | 'password' | null>(null)
+  const [loginFieldError, setLoginFieldError] = useState<'username' | 'company' | 'password' | 'password2' | null>(null)
+  const [loginMode, setLoginMode] = useState<'login' | 'register'>('login')
+  const [loginNotice, setLoginNotice] = useState('')
+  const [companyName, setCompanyName] = useState('')
+  const [displayName, setDisplayName] = useState('')
+  const [password2, setPassword2] = useState('')
   const [loginBusy, setLoginBusy] = useState(false)
   const [homeCatalogStatus, setHomeCatalogStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [homeOpenOrders, setHomeOpenOrders] = useState<number | null>(null)
@@ -137,7 +150,7 @@ export default function App(): ReactNode {
       window.removeEventListener('resize', measure)
       window.removeEventListener('orientationchange', measure)
     }
-  }, [booting, session])
+  }, [booting, session, loginMode])
 
   useEffect(() => {
     if (!bootMinimumElapsed || booting || bootOverlayStage !== 'visible') return
@@ -463,22 +476,45 @@ export default function App(): ReactNode {
     return () => window.clearTimeout(timer)
   }, [toast, showToast])
 
+  const switchLoginMode = (mode: 'login' | 'register'): void => {
+    setLoginMode(mode)
+    setLoginError('')
+    setLoginNotice('')
+    setLoginFieldError(null)
+    setPassword('')
+    setPassword2('')
+    setShowPassword(false)
+    document.querySelector('.login-screen')?.scrollTo({ top: 0 })
+  }
+
   const onLogin = async (event: FormEvent): Promise<void> => {
     event.preventDefault()
     setLoginError('')
-    if (!loginName.trim()) {
-      setLoginFieldError('username')
-      document.getElementById('username')?.focus()
-      return
-    }
-    if (!password) {
-      setLoginFieldError('password')
-      document.getElementById('password')?.focus()
+    setLoginNotice('')
+    const registering = loginMode === 'register'
+    const invalid: [boolean, NonNullable<typeof loginFieldError>, string][] = [
+      [registering ? loginName.trim().length < 3 : !loginName.trim(), 'username', 'username'],
+      [registering && companyName.trim().length < 2, 'company', 'company-name'],
+      [registering ? password.length < 6 : !password, 'password', 'password'],
+      [registering && password !== password2, 'password2', 'password2']
+    ]
+    const failed = invalid.find(([bad]) => bad)
+    if (failed) {
+      setLoginFieldError(failed[1])
+      document.getElementById(failed[2])?.focus()
       return
     }
     setLoginFieldError(null)
     setLoginBusy(true)
     try {
+      if (registering) {
+        await signUp({ username: loginName, companyName, displayName, password })
+        switchLoginMode('login')
+        setCompanyName('')
+        setDisplayName('')
+        setLoginNotice('Kaydınız alındı. Bir yönetici bayi hesabınızı onayladığında giriş yapabilirsiniz.')
+        return
+      }
       const signedIn = await signIn(loginName.trim(), password)
       setActivitySession(signedIn.user.id)
       logActivity({ kind: 'login' })
@@ -547,14 +583,15 @@ export default function App(): ReactNode {
     </>
   )
   if (!session) {
+    const registering = loginMode === 'register'
     return (
       <>
         <main className={`login-screen${dark ? ' dark' : ''}`}>
           <section className="login-card">
             <img className="login-mark" src={mark} alt="Yamansa Rulman" />
             <p className="eyebrow">BAYİ UYGULAMASI</p>
-            <h1>Hoş geldiniz</h1>
-            <p className="muted">Hesabınızla giriş yapın.</p>
+            <h1>{registering ? 'Kayıt ol' : 'Hoş geldiniz'}</h1>
+            <p className="muted">{registering ? 'Bayi hesabınız yönetici onayından sonra açılır.' : 'Hesabınızla giriş yapın.'}</p>
             <form className="login-form" noValidate onSubmit={(event) => void onLogin(event)}>
               <label htmlFor="username">Kullanıcı adı</label>
               <input
@@ -566,35 +603,81 @@ export default function App(): ReactNode {
                 enterKeyHint="next"
                 value={loginName}
                 onChange={(event) => { setLoginName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    event.preventDefault()
-                    document.getElementById('password')?.focus()
-                  }
-                }}
+                onKeyDown={focusOnEnter(registering ? 'company-name' : 'password')}
               />
-              <p className="login-field-error" role="alert">{loginFieldError === 'username' ? 'Kullanıcı adını yazın' : '\u00a0'}</p>
+              <p className="login-field-error" role="alert">{loginFieldError === 'username' ? (registering ? 'Kullanıcı adı en az 3 karakter olmalı' : 'Kullanıcı adını yazın') : '\u00a0'}</p>
+              {registering && (
+                <>
+                  <label htmlFor="company-name">İşletme adı</label>
+                  <input
+                    id="company-name"
+                    autoComplete="organization"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint="next"
+                    maxLength={120}
+                    value={companyName}
+                    onChange={(event) => { setCompanyName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                    onKeyDown={focusOnEnter('display-name')}
+                  />
+                  <p className="login-field-error" role="alert">{loginFieldError === 'company' ? 'İşletme adını yazın' : '\u00a0'}</p>
+                  <label htmlFor="display-name">Ad Soyad <span className="muted">(isteğe bağlı)</span></label>
+                  <input
+                    id="display-name"
+                    autoComplete="name"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint="next"
+                    maxLength={80}
+                    value={displayName}
+                    onChange={(event) => { setDisplayName(event.target.value); setLoginError('') }}
+                    onKeyDown={focusOnEnter('password')}
+                  />
+                  <p className="login-field-error">{'\u00a0'}</p>
+                </>
+              )}
               <label htmlFor="password">Şifre</label>
               <div className="password-wrap">
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  enterKeyHint="go"
+                  autoComplete={registering ? 'new-password' : 'current-password'}
+                  enterKeyHint={registering ? 'next' : 'go'}
                   value={password}
                   onChange={(event) => { setPassword(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                  onKeyDown={registering ? focusOnEnter('password2') : undefined}
                 />
                 <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
                   {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
                 </button>
               </div>
-              <p className="login-field-error" role="alert">{loginFieldError === 'password' ? 'Şifrenizi yazın' : '\u00a0'}</p>
-              <p className="error-text login-message-slot" role="alert">{loginError || '\u00a0'}</p>
-              {!online && <p className="error-text" role="status">Giriş yapmak için internet bağlantısı gerekir.</p>}
+              <p className="login-field-error" role="alert">{loginFieldError === 'password' ? (registering ? 'Şifre en az 6 karakter olmalı' : 'Şifrenizi yazın') : '\u00a0'}</p>
+              {registering && (
+                <>
+                  <label htmlFor="password2">Şifre (tekrar)</label>
+                  <input
+                    id="password2"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    enterKeyHint="go"
+                    value={password2}
+                    onChange={(event) => { setPassword2(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                  />
+                  <p className="login-field-error" role="alert">{loginFieldError === 'password2' ? 'Şifreler birbiriyle eşleşmiyor' : '\u00a0'}</p>
+                </>
+              )}
+              {loginNotice && !loginError
+                ? <p className="login-notice login-message-slot" role="status">{loginNotice}</p>
+                : <p className="error-text login-message-slot" role="alert">{loginError || '\u00a0'}</p>}
+              {!online && <p className="error-text" role="status">{registering ? 'Kayıt olmak' : 'Giriş yapmak'} için internet bağlantısı gerekir.</p>}
               <button className="button primary wide" type="submit" disabled={loginBusy || !online}>
-                {loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap'}
+                {registering ? (loginBusy ? 'Kaydediliyor…' : 'Kayıt ol') : (loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap')}
               </button>
             </form>
+            <p className="login-switch">
+              {registering ? 'Zaten hesabınız var mı?' : 'Hesabınız yok mu?'}
+              <button type="button" onClick={() => switchLoginMode(registering ? 'login' : 'register')}>{registering ? 'Giriş yap' : 'Kayıt ol'}</button>
+            </p>
             <p className="login-foot">Yardım için <a href={`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`} onClick={(event) => { event.preventDefault(); external(`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`) }}>bizi arayın</a>.</p>
           </section>
         </main>
