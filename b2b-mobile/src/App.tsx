@@ -1554,9 +1554,11 @@ function CartPage({ session, settings, customers, products, online, onToast, onO
       <section className="success-card card">
         <div className="success-mark"><Check size={30} /></div>
         <h2>Siparişiniz alındı</h2>
-        <p>Sipariş numaranız</p>
-        <strong className="success-order-no">{successOrder.order_no}</strong>
-        <span className={`status-pill status-${successOrder.status}`}>{STATUS_LABEL[successOrder.status]}</span>
+        {successOrder.order_no ? <>
+          <p>Sipariş numaranız</p>
+          <strong className="success-order-no">{successOrder.order_no}</strong>
+          <span className={`status-pill status-${successOrder.status}`}>{STATUS_LABEL[successOrder.status]}</span>
+        </> : <p>Sipariş numaranızı Siparişlerim sayfasında görebilirsiniz.</p>}
         <button className="button primary wide" onClick={onViewOrders}>Siparişlerime git</button>
         <button className="button secondary wide" onClick={() => useApp.getState().setTab('products')}>Yeni sipariş</button>
       </section>
