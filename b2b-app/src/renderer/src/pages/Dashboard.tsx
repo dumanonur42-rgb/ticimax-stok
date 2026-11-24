@@ -1,4 +1,5 @@
 import type { DashboardStats, Product } from '@shared/types'
+import { brandLabel } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { AlertTriangle, Boxes, ClipboardList, PackageCheck, PackageX, Search, ShoppingCart, UserCheck, Users } from 'lucide-react'
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
@@ -231,8 +232,8 @@ export function Dashboard(): ReactNode {
                     }}
                   >
                     <td className="mono">{p.sku}</td>
-                    <td className="truncate" style={{ maxWidth: 160 }}>
-                      {p.brand}
+                    <td className="truncate" style={{ maxWidth: 160 }} title={p.brand}>
+                      {brandLabel(p.brand)}
                     </td>
                     {canShelf && <td>{p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}</td>}
                     <td className="right">

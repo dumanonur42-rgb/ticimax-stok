@@ -24,6 +24,8 @@ def ink(image):
 
 fit = {}
 for path in sorted(glob.glob(os.path.join(ROOT, 'assets', 'brands', '*.webp'))):
+    if os.path.basename(path).startswith('flag-'):
+        continue  # country marks fill the whole plate
     image = Image.open(path)
     aspect = image.width / image.height
     area = AREA * max(0.86, min(1.18, (0.42 / max(ink(image), 0.05)) ** 0.3))

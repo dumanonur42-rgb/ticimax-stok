@@ -1,4 +1,4 @@
-import { brandOrigin, normalize } from './identity'
+import { brandLabel, normalize } from './identity'
 import { shelfBreakdown } from './locations'
 import type { Currency, Product } from './types'
 
@@ -142,12 +142,6 @@ function sizeLabel(product: Product): string {
   const dimensions = [product.d_inner, product.d_outer, product.width]
   if (dimensions.every((value) => value === null)) return ''
   return `${dimensions.map((value) => value === null ? '—' : numberFormat.format(value)).join(' × ')} mm`
-}
-
-function brandLabel(brand: string): string {
-  const { base, origin, condition } = brandOrigin(brand)
-  const extra = [origin, condition].filter(Boolean).join(', ')
-  return `${base}${extra ? ` (${extra})` : ''}`
 }
 
 function htmlEscape(value: string): string {

@@ -1255,10 +1255,19 @@ textarea.input {
   width: auto !important;
   height: 100% !important;
 }
+.brand-plate.flag {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.brand-plate.flag img {
+  object-fit: cover;
+}
 .brand-plate.text {
+  /* As wide as a logo plate, wider for a long name, narrower only when a label beside it needs the room. */
   flex: 0 1 auto;
   display: block;
-  min-width: 68px;
+  min-width: 44px;
   max-width: 100%;
   padding: 0 8px;
   background: var(--bg-sunken);
@@ -1268,8 +1277,13 @@ textarea.input {
   letter-spacing: 0.04em;
   line-height: 26px;
   text-align: center;
-  text-overflow: ellipsis;
   white-space: nowrap;
+}
+.brand-plate.text > span {
+  display: block;
+  min-width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .brand-rest {
   flex: 0 1 auto;
@@ -1303,15 +1317,17 @@ textarea.input {
 }
 [data-density='compact'] .brand-plate.text {
   max-width: 100%;
-  min-width: 60px;
   padding: 0 7px;
   line-height: 22px;
 }
-[data-theme='dark'] .brand-plate:not(.text) {
+[data-density='compact'] .brand-plate.text > span {
+  min-width: 44px;
+}
+[data-theme='dark'] .brand-plate:not(.text, .flag) {
   border-color: transparent;
   background: #e4e8ef;
 }
-[data-theme='dark'] .brand-plate img {
+[data-theme='dark'] .brand-plate:not(.flag) img {
   mix-blend-mode: multiply;
 }
 [data-theme='contrast'] .brand-plate {

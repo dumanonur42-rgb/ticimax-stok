@@ -263,7 +263,59 @@ const ORIGIN_NAMES = new Map<string, string>([
   ['AUSTRIA', 'Avusturya'],
   ['YUGOSLAVIA', 'Yugoslavya'],
   ['EU', 'Avrupa'],
-  ['AVRUPA', 'Avrupa']
+  ['AVRUPA', 'Avrupa'],
+  ['ALMANYA', 'Almanya'],
+  ['JAPONYA', 'Japonya'],
+  ['ITALIA', 'İtalya'],
+  ['AMERIKA', 'ABD'],
+  ['ABD', 'ABD'],
+  ['INGILTERE', 'İngiltere'],
+  ['FRANSA', 'Fransa'],
+  ['HINDISTAN', 'Hindistan'],
+  ['TURKIYE', 'Türkiye'],
+  ['RUSSIA', 'Rusya'],
+  ['USSR', 'SSCB'],
+  ['SSCB', 'SSCB'],
+  ['TAYVAN', 'Tayvan'],
+  ['TAIWAN', 'Tayvan'],
+  ['ISVEC', 'İsveç'],
+  ['ISVICRE', 'İsviçre'],
+  ['SWITZERLAND', 'İsviçre'],
+  ['POLONYA', 'Polonya'],
+  ['POLAND', 'Polonya'],
+  ['CEKYA', 'Çekya'],
+  ['CEK', 'Çekya'],
+  ['CZECH', 'Çekya'],
+  ['SLOVAKYA', 'Slovakya'],
+  ['SLOVAKIA', 'Slovakya'],
+  ['ROMANIA', 'Romanya'],
+  ['BULGARISTAN', 'Bulgaristan'],
+  ['BULGARIA', 'Bulgaristan'],
+  ['MACARISTAN', 'Macaristan'],
+  ['HUNGARY', 'Macaristan'],
+  ['YUGOSLAVYA', 'Yugoslavya'],
+  ['SIRBISTAN', 'Sırbistan'],
+  ['SERBIA', 'Sırbistan'],
+  ['UKRAYNA', 'Ukrayna'],
+  ['UKRAINE', 'Ukrayna'],
+  ['PORTEKIZ', 'Portekiz'],
+  ['PORTUGAL', 'Portekiz'],
+  ['HOLLANDA', 'Hollanda'],
+  ['HOLLAND', 'Hollanda'],
+  ['NETHERLANDS', 'Hollanda'],
+  ['BELCIKA', 'Belçika'],
+  ['BELGIUM', 'Belçika'],
+  ['BREZILYA', 'Brezilya'],
+  ['BRAZIL', 'Brezilya'],
+  ['TAYLAND', 'Tayland'],
+  ['THAILAND', 'Tayland'],
+  ['MALEZYA', 'Malezya'],
+  ['MALAYSIA', 'Malezya'],
+  ['SINGAPUR', 'Singapur'],
+  ['SINGAPORE', 'Singapur'],
+  ['ENDONEZYA', 'Endonezya'],
+  ['INDONESIA', 'Endonezya'],
+  ['VIETNAM', 'Vietnam']
 ])
 
 const CONDITION_NAMES = new Map<string, string>([['CIKMA', 'Çıkma']])
@@ -295,4 +347,11 @@ export function brandOrigin(brand: string): { base: string; origin: string; cond
   // "ÇİN (NATURAL)": what is left may still be wrapped in the brackets it was typed with.
   const wrapped = /^\(\s*([^()]+?)\s*\)$/.exec(base)
   return { base: wrapped ? wrapped[1] : base, origin, condition }
+}
+
+/** A brand as one line of text, with its origin and condition spelled out: "FAG (Almanya)", "NMB (Çıkma)". */
+export function brandLabel(brand: string): string {
+  const { base, origin, condition } = brandOrigin(brand)
+  const extra = [origin, condition].filter(Boolean).join(', ')
+  return `${base}${extra ? ` (${extra})` : ''}`
 }

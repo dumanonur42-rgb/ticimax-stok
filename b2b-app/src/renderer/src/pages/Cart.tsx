@@ -1,4 +1,5 @@
 import type { Customer, PaymentType } from '@shared/types'
+import { brandLabel } from '@shared/identity'
 import { hasPerm } from '@shared/perms'
 import { priceFor } from '@shared/price'
 import { Minus, Plus, Send, Trash2 } from 'lucide-react'
@@ -125,7 +126,7 @@ export function Cart(): ReactNode {
                   <div className="truncate" style={{ maxWidth: 360 }} title={l.name}>
                     {l.name}
                   </div>
-                  <div className="small muted">{l.brand}</div>
+                  <div className="small muted">{brandLabel(l.brand)}</div>
                 </td>
                 <td>
                   <div className="row" style={{ gap: 4 }} role="group" aria-label={`${l.sku} miktarı`}>

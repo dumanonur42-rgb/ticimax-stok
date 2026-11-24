@@ -242,7 +242,7 @@ export function Catalog(): ReactNode {
       if (column.key === 'shelf') return { ...column, min: gridW < 1200 ? 229 : 240 }
       if (column.key === 'sku') return { ...column, min: Math.ceil(178 * scale + 20) }
       // Logo plate (68) + gap + a short label such as "ÇIKMA" or the country of origin.
-      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 76 : 96)) }
+      if (column.key === 'brand') return { ...column, min: Math.ceil(46 * scale + (compact ? 76 : 102)) }
       if (column.key === 'stock') return { ...column, min: compact ? Math.ceil(45 + 20 * scale) : 104 }
       if (column.key === 'price') return { ...column, min: Math.ceil(96 * scale + 50) }
       if (column.key === 'act') return { ...column, min: Math.ceil(72 * scale + 34) }
@@ -800,14 +800,14 @@ export function Catalog(): ReactNode {
                       <div className="cell muted brand-cell" role="gridcell" title={p.brand}>
                         {logo
                           ? <>
-                            <span className="brand-plate">
+                            <span className={`brand-plate${logo.flag ? ' flag' : ''}`}>
                               <img src={logo.src} style={logo.size} alt="" loading="lazy" decoding="async" draggable={false} />
                               {brandInside && <b>{brand.base}</b>}
                             </span>
                             {logo.named && <span className="sr-only">{brand.base} </span>}
                             {!logo.named && !brandInside && <span className="brand-rest">{brand.base}</span>}
                           </>
-                          : brand.base && <span className="brand-plate text">{brand.base}</span>}
+                          : brand.base && <span className="brand-plate text"><span>{brand.base}</span></span>}
                         {brand.origin && <span className="brand-rest origin">{brand.origin}</span>}
                         {brand.condition && <span className="brand-cond">{brand.condition}</span>}
                       </div>
