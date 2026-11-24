@@ -23,8 +23,9 @@ const TINY = new Set(['ask', 'sbc', 'slf', 'zf', 'eurosnodi', 'nb', 'schneeberge
  * Logo of the brand named by the first word, e.g. "SKF", "KYK JAPAN" or "GPZ-ZKL".
  * `named` is false when the logo alone does not say the whole brand, so the name must stay visible.
  * `label` is the text a list row shows beside the logo: the part of the name the logo does not say.
+ * `said` is the word only the logo shows, to be kept as hidden text so copying and screen readers still get it.
  */
-export function brandLogo(brand: string): { src: string; emblem: boolean; named: boolean; label: string } | undefined {
+export function brandLogo(brand: string): { src: string; emblem: boolean; named: boolean; label: string; said: string } | undefined {
   const text = brand.trim()
   const upper = text.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I')
   const words = upper.split(/[^A-Z0-9]+/).filter(Boolean)
@@ -38,5 +39,5 @@ export function brandLogo(brand: string): { src: string; emblem: boolean; named:
   // "SKF(ÇIKMA)", "GPZ-ZKL": everything but the word the logo stands for; upper-casing must not have moved it.
   const start = upper.length === text.length ? upper.indexOf(words[0]) : -1
   const label = whole || start < 0 ? text : `${text.slice(0, start)}${text.slice(start + words[0].length)}`.replace(/^[\s\-/.,]+/, '')
-  return { src, emblem, named: !emblem && !alias && words.length === 1, label }
+  return { src, emblem, named: !emblem && !alias && words.length === 1, label, said: label === text ? '' : words[0] }
 }

@@ -798,7 +798,8 @@ export function Catalog(): ReactNode {
                       <div className="cell muted brand-cell" role="gridcell" title={p.brand}>
                         {logo
                           ? <>
-                            <span className="brand-plate"><img src={logo.src} alt={logo.label ? '' : brand.base} loading="lazy" decoding="async" draggable={false} /></span>
+                            <span className="brand-plate"><img src={logo.src} alt="" loading="lazy" decoding="async" draggable={false} /></span>
+                            {logo.said && <span className="sr-only">{logo.said} </span>}
                             {(logo.label || brand.origin) && <span className="brand-rest">{logo.label}{brand.origin && <small>{logo.label ? ' · ' : ''}{brand.origin}</small>}</span>}
                           </>
                           : <>
