@@ -4,6 +4,10 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.33
+
+- Ürün listesinde marka logosunun yanında menşei yazmaz; menşei yalnızca ürün detayında görünür.
+
 ## 1.0.32
 
 - Açılışta dünya logosu her zaman tam süresince döner; Windows ile birlikte başlatıldığında da uygulama açılış ekranından sonra açılır.
