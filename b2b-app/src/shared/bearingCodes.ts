@@ -589,10 +589,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     if (/^\d+$/.test(digits)) info = numericType(digits, explicit)
-    // "62052RS": the seal's leading 2 is glued to the base number.
-    if (!info && !slash && digits.endsWith('2') && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
-      info = numericType(digits.slice(0, -1), explicit)
-      if (info) { number = digits.slice(0, -1); rest = `2${rest}` }
+    // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
+    // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
+    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+      const split = numericType(digits.slice(0, -1), explicit)
+      if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
