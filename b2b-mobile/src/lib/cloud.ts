@@ -360,6 +360,12 @@ export async function signOut(): Promise<void> {
   if (error) throw new Error(errorMessage(error))
 }
 
+export async function deleteMyAccount(): Promise<void> {
+  const { error } = await supabase.rpc('delete_my_account')
+  if (error) throw new Error(errorMessage(error))
+  await signOut().catch(() => undefined)
+}
+
 export async function loadSettings(): Promise<Settings> {
   const { data, error } = await supabase.from('settings').select('key,value')
   if (error) throw new Error(errorMessage(error))
