@@ -44,10 +44,11 @@ function declaration(source, name) {
   const ast = ts.createSourceFile('source.ts', source, ts.ScriptTarget.Latest, true)
   return ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === name).getText(ast).replace(/^export /, '')
 }
-for (const platform of ['ios', 'android']) for (const failed of ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', null]) {
+for (const platform of ['ios', 'android']) for (const failed of ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', null]) for (const preferences of [true, false]) {
   const visited = []
   const step = name => { visited.push(name); if (name === failed) throw new Error(name) }
-  const stored = new Map([['yamansa.theme', 'dark'], ['yb2b.productView', 'card'], ['yamansa.cart', 'private']])
+  const kept = preferences ? [['yamansa.theme', 'dark'], ['yb2b.productView', 'card']] : []
+  const stored = new Map([...kept, ['yamansa.cart', 'private']])
   const context = { attemptAll: contextForAttemptAll(), Capacitor: { getPlatform: () => platform },
     SESSION_CACHE: 'session', CART_STORAGE_KEY: 'cart', SUPABASE_AUTH_STORAGE_KEY: 'auth',
     clearLocalCatalog: () => step('catalog'), secureStorage: { removeItem: key => step(key) },
@@ -58,8 +59,8 @@ for (const platform of ['ios', 'android']) for (const failed of ['catalog', 'ses
   vm.runInNewContext(ts.transpileModule(declaration(cloud, 'wipeLocalUserData'), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context)
   await context.wipeLocalUserData().catch(() => {})
   assert.deepEqual(visited, platform === 'ios' ? ['catalog', 'session', 'cart', 'auth', 'local', 'browser', 'cache:a', 'cache:b'] : ['catalog', 'session', 'cart'])
-  if (platform === 'ios' && failed !== 'local') assert.deepEqual([...stored], [['yamansa.theme', 'dark'], ['yb2b.productView', 'card']])
+  if (platform === 'ios' && failed !== 'local') assert.deepEqual([...stored], kept)
 }
 function contextForAttemptAll() { return context.attemptAll }
 assert.ok(declaration(idb, 'clearLocalCatalog').includes('await attemptAll(['))
-console.log('Cleanup/clipboard: ok (all stores attempted on failure, Android scope, copy fallback true/false/throw, cleanup)')
+console.log('Cleanup/clipboard: ok (all stores attempted on failure, iOS preferences retained or absent, private data removed, Android scope, copy fallback true/false/throw, cleanup)')

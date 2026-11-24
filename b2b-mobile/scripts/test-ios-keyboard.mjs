@@ -129,6 +129,15 @@ for (const platform of ['ios', 'android']) {
     assert.equal(actions, 1)
     assert.equal(hidden, before + 1, `${selector}: one click both acts and dismisses`)
   }
+  const invalid = new Element(['input', '[aria-invalid="true"]'])
+  const beforeInvalid = { hidden, blurred }
+  click({ target: new Element(['button']) }, () => { context.document.activeElement = invalid })
+  assert.equal(hidden, beforeInvalid.hidden, 'Submit validation keeps the keyboard open for the invalid field')
+  assert.equal(blurred, beforeInvalid.blurred, 'Deferred dismissal must not blur the newly focused invalid field')
+  context.document.activeElement = null
+  click({ target: new Element() })
+  assert.equal(hidden, beforeInvalid.hidden + 1, 'Dismissal tolerates no active field')
+  context.document.activeElement = input
   hidden = 1
   click({ target: new Element() })
   assert.equal(hidden, 2)
@@ -160,4 +169,4 @@ for (const transition of transitions) {
   vm.runInNewContext(js, { dismissIOSKeyboard: () => order.push('dismiss'), set: () => order.push('transition') })
   assert.deepEqual(order, ['dismiss', 'transition'])
 }
-console.log('iOS keyboard: ok (geometry, Done, Return, tap, single-tap actions, user drag, transitions, init rejection/timeout; Android untouched)')
+console.log('iOS keyboard: ok (geometry, Done, Return, tap, single-tap actions, invalid submit focus retained, no active field, user drag, transitions, init rejection/timeout; Android untouched)')
