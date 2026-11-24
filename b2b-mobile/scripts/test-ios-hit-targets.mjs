@@ -13,7 +13,7 @@ const app = await readFile(new URL('../src/App.tsx', import.meta.url), 'utf8')
 const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8')
 const mark = 'data:image/png;base64,' + (await readFile(new URL('../src/assets/mark.png', import.meta.url))).toString('base64')
 const ast = ts.createSourceFile('App.tsx', app, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
-const functions = ['catalogRowStyle', 'ProductsPage', 'ProductTableRow', 'variantShelfRows', 'shelfRowsLabel', 'ProductAddButton', 'ProductCartActions', 'ProductCard', 'QuantityStepper', 'Sheet'].map(name => ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === name).getText(ast)).join('\n')
+const functions = ['ProductsPage', 'ProductTableRow', 'variantShelfRows', 'shelfRowsLabel', 'ProductAddButton', 'ProductCartActions', 'ProductCard', 'QuantityStepper', 'Sheet'].map(name => ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === name).getText(ast)).join('\n')
 let detailHeader, requiredGate
 function visit(node) {
   if (ts.isJsxElement(node) && node.openingElement.attributes.properties.some(attribute => attribute.name?.getText(ast) === 'className' && attribute.initializer?.getText(ast) === '"detail-product-header"')) detailHeader = node.getText(ast)

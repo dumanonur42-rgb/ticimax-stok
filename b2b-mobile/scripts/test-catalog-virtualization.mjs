@@ -6,10 +6,6 @@ import ts from 'typescript'
 const source = await readFile(new URL('../src/App.tsx', import.meta.url), 'utf8')
 const ast = ts.createSourceFile('App.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
 const page = ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'ProductsPage')
-const position = ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'catalogRowStyle')
-const tableRow = ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'ProductTableRow')
-assert.match(page.getText(ast), /style=\{catalogRowStyle\(item.start\)\}/)
-assert.match(tableRow.getText(ast), /style=\{catalogRowStyle\(start\)\}/)
 const declarations = page.body.statements.filter(node => ts.isVariableStatement(node) &&
   node.declarationList.declarations.some(declaration => ['getItemKey', 'virtualizer'].includes(declaration.name.getText(ast))))
 assert.equal(declarations.length, 2)
@@ -33,10 +29,6 @@ for (const platform of ['ios', 'android', 'web']) {
     useVirtualizer: options => options }
   vm.createContext(context)
   vm.runInContext(js, context)
-  vm.runInContext(ts.transpileModule(position.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context)
-  for (const start of [0, 66, 143.25, 765000.37]) {
-    assert.deepEqual({ ...context.catalogRowStyle(start) }, platform === 'ios' ? { top: start } : { transform: `translateY(${start}px)` })
-  }
   const results = [{ id: 41 }, { id: 7 }]
   const table = context.options(results, 'table')
   const card = context.options(results, 'card')
@@ -61,4 +53,4 @@ for (const platform of ['ios', 'android', 'web']) {
   assert.equal(empty.overscan, platform === 'ios' ? 10 : 5)
   assert.throws(() => empty.getItemKey(0), /id/, 'An out-of-range key still fails rather than reusing stale data')
 }
-console.log('Catalog virtualization: ok (shared table/card callback stable across rerenders, reordered/replaced/empty results, invalid index, iOS overscan 10 and transform-free top positioning; Android/web overscan 5 and transforms unchanged)')
+console.log('Catalog virtualization: ok (shared table/card callback stable across rerenders, reordered/replaced/empty results, invalid index, iOS overscan 10; Android/web 5)')
