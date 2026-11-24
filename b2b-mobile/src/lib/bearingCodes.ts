@@ -377,14 +377,17 @@ const bore = (value: number | null): string => value === null ? '' : `İç çap 
 
 interface TypeInfo { family: BearingFamily; type: string; detail?: string; size?: string }
 
-const numericType = (digits: string, explicitBore: number | null): TypeInfo | null => {
+const numericType = (digits: string, explicitBore: number | null, sealed = false, brand = ''): TypeInfo | null => {
   const size = (code: string): string => bore(explicitBore ?? boreFromCode(code))
   // "230/500", "618/8": a three-digit series followed by the bore in mm.
   if (digits.length === 3 && explicitBore !== null && /^(160|617|618|619|213|222|223|230|231|232|233|238|239|240|241|302|303|313|320|322|323|329|330|331|332|292|293|294)$/.test(digits)) {
-    return numericType(`${digits}00`, explicitBore)
+    return numericType(`${digits}00`, explicitBore, sealed, brand)
   }
   if (digits.length === 3 && /^6[0-3]\d$/.test(digits)) {
     return { family: 'dgbb', type: 'Sabit bilyalı rulman (minyatür)', size: bore(explicitBore ?? Number(digits[2])) }
+  }
+  if (digits.length === 3 && /^6[789][1-9]$/.test(digits)) {
+    return { family: 'dgbb', type: 'Sabit bilyalı rulman (minyatür, ince kesitli)', size: bore(explicitBore ?? Number(digits[2])) }
   }
   if (digits.length === 2 && explicitBore !== null) {
     if (/^6[0-4]$/.test(digits)) return { family: 'dgbb', type: 'Sabit bilyalı rulman', size: bore(explicitBore) }
@@ -399,21 +402,32 @@ const numericType = (digits: string, explicitBore: number | null): TypeInfo | nu
     if (/^(42|43)$/.test(series)) return { family: 'dgbb', type: 'Çift sıra sabit bilyalı rulman', size: size(code) }
     if (/^(32|33|52|53)$/.test(series)) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman', detail: 'Radyal yükle birlikte iki yönde eksenel yük taşır.', size: size(code) }
     if (/^7[0234]$/.test(series)) return { family: 'acbb', type: 'Eğik bilyalı rulman', detail: 'Radyal yükle birlikte tek yönde eksenel yük taşır; genellikle çift kullanılır.', size: size(code) }
+    // 30 / 38 are also inch taper part numbers (3820), so the thin double-row series needs its seal code and a small bore.
+    if (sealed && /^(30|38)$/.test(series) && Number(code) <= 12) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman (ince seri)', detail: 'Radyal yükle birlikte iki yönde eksenel yük taşır.', size: size(code) }
     return null
   }
   if (digits.length === 5) {
     const series = digits.slice(0, 3)
     const code = digits.slice(3)
-    if (/^(160|161|617|618|619|622|623|630|632|633)$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman', size: size(code) }
+    if (/^(160|161|617|618|619|622|623|630|632|633|638)$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman', size: size(code) }
     if (/^(213|222|223|230|231|232|233|238|239|240|241)$/.test(series)) return { family: 'srb', type: 'Oynak makaralı rulman', detail: 'Çift sıra fıçı makaralı; çok ağır yük taşır, eksen kaçıklığını karşılar.', size: size(code) }
     if (/^(202|203)$/.test(series)) return { family: 'srb', type: 'Fıçı makaralı rulman (tek sıra)', size: size(code) }
     if (/^(302|303|313|320|322|323|329|330|331|332)$/.test(series)) return { family: 'trb', type: 'Konik makaralı rulman', detail: 'Radyal ve tek yönde eksenel yükü birlikte taşır; iç ve dış bilezik ayrılabilir.', size: size(code) }
     if (/^51[1-4]$/.test(series)) return { family: 'thrust', type: 'Eksenel bilyalı rulman (tek yönlü)', detail: 'Yalnızca eksenel yük taşır.', size: size(code) }
+    if (/^11[23]$/.test(series)) return { family: 'sabb', type: 'Oynak bilyalı rulman (geniş iç bilezikli)', detail: 'İç bileziği iki yana uzatılmıştır; mile kilit pimi veya vidasıyla bağlanır.', size: size(code) }
+    if (/^54[2-4]$/.test(series)) return { family: 'thrust', type: 'Eksenel bilyalı rulman (çift yönlü, küresel oturma yüzeyli)', detail: 'Yalnızca eksenel yük taşır.' }
+    if (brand === 'FAG' && /^[1357]62$/.test(series)) return { family: 'insert', type: 'Yatak rulmanı (FAG S serisi)', detail: series === '562' || series === '762' ? 'Mile setuskur vidasıyla bağlanır.' : 'Mile eksantrik kilit bileziğiyle bağlanır.', size: explicitBore === null ? size(code) : '' }
     if (/^52[2-4]$/.test(series)) return { family: 'thrust', type: 'Eksenel bilyalı rulman (çift yönlü)', detail: 'Yalnızca eksenel yük taşır.' }
     if (/^53[2-4]$/.test(series)) return { family: 'thrust', type: 'Eksenel bilyalı rulman (küresel oturma yüzeyli)', size: size(code) }
     if (/^(811|812|893|894)$/.test(series)) return { family: 'thrust', type: 'Eksenel silindirik makaralı rulman', detail: 'Yalnızca eksenel yük taşır.', size: size(code) }
     if (/^29[234]$/.test(series)) return { family: 'thrust', type: 'Eksenel oynak makaralı rulman', size: size(code) }
     if (/^71[89]$/.test(series)) return { family: 'acbb', type: 'Eğik bilyalı rulman', size: size(code) }
+  }
+  if (digits.length === 6 && brand === 'SKF') {
+    const series = digits.slice(0, 4)
+    const code = digits.slice(4)
+    if (series === '4792') return { family: 'insert', type: 'Yatak rulmanı, setuskur vidalı (SKF eski kodu)', detail: `Güncel adı YAR 2${code}.`, size: explicitBore === null ? size(code) : '' }
+    if (series === '3612' || series === '3057') return { family: 'dgbb', type: 'Yürüyen makara (çift sıra bilyalı, kalın dış bilezikli)', size: size(code) }
   }
   return null
 }
@@ -449,6 +463,15 @@ const NEEDLE: Record<string, string> = {
   AS: 'Eksenel rulman pulu (ince)',
   NKX: 'Kombine rulman: iğneli + eksenel bilyalı',
   NKXR: 'Kombine rulman: iğneli + eksenel silindirik makaralı',
+  NAX: 'Kombine rulman: iğneli + eksenel bilyalı',
+  NAXK: 'Kombine rulman: iğneli + eksenel bilyalı',
+  PNA: 'Oynak iğneli rulman (iç bilezikli)',
+  RPNA: 'Oynak iğneli rulman (iç bileziksiz)',
+  NURT: 'Destek makarası, ağır yük tipi (çift sıra silindirik makaralı)',
+  RNAST: 'Destek makarası (ayrılabilir tip, iç bileziksiz)',
+  MCYRR: 'Destek makarası (McGill, metrik)',
+  LRT: 'İğneli rulman iç bileziği',
+  LS: 'Eksenel rulman pulu (kalın)',
   NKIA: 'Kombine rulman: iğneli + eğik bilyalı (tek yön)',
   NKIB: 'Kombine rulman: iğneli + eğik bilyalı (çift yön)',
   NATR: 'Destek makarası (yürüyen makara), eksenel kılavuzlu',
@@ -488,7 +511,12 @@ const LINEAR: Record<string, string> = {
   LMEK: 'Lineer bilyalı rulman, kare flanşlı (Avrupa ölçü serisi)',
   KH: 'Lineer bilyalı rulman (kompakt seri)',
   KB: 'Lineer bilyalı rulman',
-  KBO: 'Lineer bilyalı rulman (açık tip)'
+  KBO: 'Lineer bilyalı rulman (açık tip)',
+  LBE: 'Lineer bilyalı rulman (Avrupa ölçü serisi)',
+  LBBR: 'Lineer bilyalı rulman (kompakt seri, SKF)',
+  LBCR: 'Lineer bilyalı rulman (kapalı tip, SKF)',
+  LBCD: 'Lineer bilyalı rulman (oynak, kapalı tip, SKF)',
+  LBCT: 'Lineer bilyalı rulman (açık tip, SKF)'
 }
 
 const INSERT: Record<string, string> = {
@@ -518,7 +546,20 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     const noInner = prefix === 'RNU' || prefix === 'RN'
     return { family: 'crb', type: `Silindirik makaralı rulman (${prefix} tipi)`, detail: CRB[prefix], size: noInner ? '' : bore(boreFromCode(code)) }
   }
-  if (prefix === 'SL' && number.length >= 4) return { family: 'crb', type: 'Silindirik makaralı rulman, kafessiz (tam dolu)', detail: 'Yük kapasitesi çok yüksek, izin verilen devir düşüktür.' }
+  if (prefix === 'SL' && number.length >= 4) return { family: 'crb', type: 'Silindirik makaralı rulman, kafessiz (tam dolu)', detail: 'Yük kapasitesi çok yüksek, izin verilen devir düşüktür.', size: digits.length === 6 ? bore(boreFromCode(digits.slice(-2))) : '' }
+  if ((prefix === 'GS' || prefix === 'WS' || prefix === 'LS' || prefix === 'K') && /^(811|812|893|894)\d\d$/.test(digits)) {
+    const part = prefix === 'GS' ? 'yuva pulu' : prefix === 'WS' ? 'mil pulu' : prefix === 'LS' ? 'pulu' : 'makaralı kafesi (pulsuz)'
+    return { family: 'thrust', type: `Eksenel silindirik makaralı rulman ${part}`, detail: `${digits} rulmanının parçasıdır.`, size: prefix === 'GS' ? bore(boreFromCode(digits.slice(-2))).replace('İç çap', 'Mil çapı') : bore(boreFromCode(digits.slice(-2))) }
+  }
+  if (prefix === 'K' && slash && slash[1].length >= 4 && /^\d{4,}$/.test(slash[2])) return { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
+  if (prefix === 'Q' && /^[23]\d\d$/.test(digits)) return { family: 'acbb', type: 'Dört nokta temaslı bilyalı rulman', detail: 'İki yönde eksenel yük taşır.', size: bore(boreFromCode(digits.slice(-2))) }
+  if (prefix === 'U' && /^[234]\d\d$/.test(digits)) return { family: 'other', type: 'Küresel oturma pulu (eksenel bilyalı rulman için)', detail: `53${digits} rulmanının altına konur; eksen kaçıklığını karşılar.` }
+  if ((prefix === 'RAE' || prefix === 'GRAE') && digits && digits.length <= 2) return { family: 'insert', type: 'Yatak rulmanı, eksantrik kilit bilezikli (INA)', size: bore(Number(digits)) }
+  if ((prefix === 'HJ' || prefix === 'BR') && digits.length === 6) {
+    const inch = (code: string): string => mm(Math.round(Number(code) / 16 * 25.4 * 1000) / 1000)
+    if (Number(digits.slice(0, 2)) >= Number(digits.slice(2, 4))) return null
+    return { family: 'needle', type: 'İnç ölçülü iğneli rulman (ağır seri, iç bileziksiz)', size: `Mil çapı ${inch(digits.slice(0, 2))} · dış çap ${inch(digits.slice(2, 4))} · genişlik ${inch(digits.slice(4))}` }
+  }
   if (prefix === 'QJ' && digits) return { family: 'acbb', type: 'Dört nokta temaslı bilyalı rulman', detail: 'İki yönde eksenel yük taşır; iç bileziği iki parçalıdır.', size: bore(boreFromCode(digits.slice(-2))) }
   if (prefix === 'LR' && !dims && digits) return { family: 'needle', type: 'Yürüyen makara (bilyalı, kalın dış bilezikli)' }
   if (prefix === 'LR' && dims) return { family: 'needle', type: 'İğneli rulman iç bileziği', size: `İç çap ${mm(value(dims[1]))} · dış çap ${mm(value(dims[2]))} · genişlik ${mm(value(dims[3]))}` }
@@ -534,6 +575,11 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     else if ((prefix === 'HK' || prefix === 'BK' || prefix === 'HF') && digits.length === 4) info.size = `Mil çapı ${mm(Number(digits.slice(0, 2)))} · genişlik ${mm(Number(digits.slice(2)))}`
     else if ((prefix === 'AXK' || prefix === 'AS') && halves(digits)) { const pair = halves(digits); if (pair) info.size = `İç çap ${mm(pair[0])} · dış çap ${mm(pair[1])}` }
     else if (prefix === 'NA' && /^(48|49|59|69)\d\d$/.test(digits)) info.size = bore(boreFromCode(digits.slice(2)))
+    else if (prefix === 'NAX' || prefix === 'NAXK') { if (digits.length === 4 || (digits && digits.length <= 2)) info.size = `Mil çapı ${mm(Number(digits.slice(0, 2)))}`; else return null }
+    else if (prefix === 'PNA' || prefix === 'RPNA') { if (!slash) return null; info.size = `${prefix === 'PNA' ? 'İç çap' : 'İğne altı (mil) çapı'} ${mm(value(slash[1]))} · dış çap ${mm(value(slash[2]))}` }
+    else if (prefix === 'NURT' || prefix === 'RNAST' || prefix === 'MCYRR') { if (!digits || digits.length > 2) return null; if (prefix !== 'RNAST') info.size = bore(Number(digits)) }
+    else if (prefix === 'LRT') { if (dims) info.size = `İç çap ${mm(value(dims[1]))} · yuvarlanma çapı ${mm(value(dims[2]))} · genişlik ${mm(value(dims[3]))}`; else if (digits.length === 6) info.size = `İç çap ${mm(Number(digits.slice(0, 2)))} · yuvarlanma çapı ${mm(Number(digits.slice(2, 4)))} · genişlik ${mm(Number(digits.slice(4)))}`; else return null }
+    else if (prefix === 'LS') { const pair = digits.length >= 4 ? halves(digits) : null; if (!pair || pair[0] >= pair[1]) return null; info.size = `İç çap ${mm(pair[0])} · dış çap ${mm(pair[1])}` }
     return info
   }
   if (/^GE[A-Z]{0,2}$/.test(prefix) && digits) {
@@ -579,7 +625,13 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     const metricPart = prefix.startsWith('J') || /(^|[^A-Z])J[A-Z]{1,3}[\s-]?\d/.test(rest)
     return { family: 'other', type: metricPart ? 'Konik makaralı rulman (inç seri numaralı)' : 'İnç seri konik makaralı rulman', detail: `İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.${metricPart ? ' Numarası J ile başlayan parça metrik ölçülüdür.' : ''}` }
   }
-  if (/^(RLS|RMS|LJ|MJ)$/.test(prefix)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : 'Orta seri.' }
+  if (/^(RLS|RMS|LJ|MJ|XLJ|KLNJ)$/.test(prefix)) {
+    // "LJ 1 1/4", "KLNJ 1/2": the bore in inches.
+    const inch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) ? number.match(/^(?:(\d)(?=\s|$))?\s*(?:(\d{1,2})\/(2|4|8|16|32))?$/) : null
+    const inches = inch ? Number(inch[1] ?? 0) + (inch[2] ? Number(inch[2]) / Number(inch[3]) : 0) : 0
+    const series = prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : prefix === 'XLJ' ? 'Çok hafif seri.' : prefix === 'KLNJ' ? '' : 'Orta seri.'
+    return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: series, size: inches > 0 && inches < 8 ? `İç çap ${mm(Math.round(inches * 25.4 * 1000) / 1000)} (inç ölçülü)` : '' }
+  }
   void brand
   return null
 }
@@ -594,30 +646,53 @@ const STAINLESS = /^(SS|S)$/
 
 export function explainProductCode(sku: string, brand: string): CodeExplanation | null {
   const text = sku.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I').replace(/\([^)]*\)?/g, ' ').replace(/\s+/g, ' ').trim()
+    // "SL 04 5005 PP": INA writes the series and the size apart.
+    .replace(/^SL ?(\d\d) (\d{4})(?=[\s-]|$)/, 'SL$1$2')
+  const brandName = brandKey(brand)
+  // "0610-012-00": Star / Rexroth linear bushing; the last two digits of the middle group are the shaft diameter.
+  const star = /(^|[^A-Z])(STAR|REXROTH|BOSCH)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR')) ? text.match(/^R?(06[0-7]\d)[\s-]?\d(\d\d)[\s-]?\d\d$/) : null
+  if (star && Number(star[2]) >= 5) {
+    return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
+  }
   const match = text.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
   if (!match) return null
   const prefix = match[1] ?? ''
   let number = match[2]
   let rest = match[3]
-  const brandName = brandKey(brand)
+  // "XLJ 1 1/4", "LJ 1-1/4", "LJ 1.1/4": whole inches and a fraction make up one size.
+  const mixedInch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) && /^\d$/.test(number) ? rest.match(/^[\s.-]\s?(\d{1,2})\s?\/\s?(2|4|8|16|32)(?!\d)/) : null
+  if (mixedInch) { number = `${number} ${mixedInch[1]}/${mixedInch[2]}`; rest = rest.slice(mixedInch[0].length) }
+  // "LJ 1/2.2RS": after an inch fraction a dot starts the suffix, it is not a decimal.
+  const inchDot = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) ? number.match(/^(\d{1,2}\/(?:2|4|8|16|32))[.,](\d+)$/) : null
+  if (inchDot) { number = inchDot[1]; rest = `${inchDot[2]}${rest}` }
   let info: TypeInfo | null = null
   let prefixNote = ''
-  const plainPrefix = prefix === '' || STAINLESS.test(prefix) || prefix === 'HR' || prefix === '4T' || prefix === 'B' || prefix === 'HQ' || prefix === 'E'
+  const flanged = /^(F|SF|SSF)$/.test(prefix)
+  const plainPrefix = prefix === '' || flanged || STAINLESS.test(prefix) || prefix === 'HR' || prefix === '4T' || prefix === 'B' || prefix === 'HQ' || prefix === 'E'
   if (plainPrefix) {
     const slash = number.match(/^(\d+)\/(\d+(?:[.,]\d+)?)$/)
     const digits = slash ? slash[1] : number
     let explicit = slash ? Number(slash[2].replace(',', '.')) : null
     // "6902-16 ZZ": a number right after the base code is a special bore, so the standard bore does not apply.
-    const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
+    // "15123/15245", "45284-45220": an inch taper cone and cup, both plain numbers; the second one is never a bore.
+    const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^(\d{5})-\d{5}$/.test(text))
+    // FAG 562xx is an insert bearing series, so such a pair cannot be told apart from a cone and cup.
+    if (conePair && brandName === 'FAG' && /^[1357]62\d\d$/.test(digits)) return null
+    if (conePair && !slash) { number = text; rest = '' }
+    const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
-    if (/^\d+$/.test(digits)) info = numericType(digits, explicit)
+    const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
+    if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
+    if (conePair) info = { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
     // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
-    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z(?!Z)|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
-      const split = numericType(digits.slice(0, -1), explicit)
+    if (!slash && digits.endsWith('2') && (!info || /^6[0-389][3-9]2$/.test(digits)) && /^(RS|RZ|Z(?!Z)|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+      const split = numericType(digits.slice(0, -1), explicit, true, brandName)
       if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
+    if (flanged && info?.family !== 'dgbb') info = null
+    if (info && flanged) prefixNote = prefix === 'F' ? 'Flanşlı dış bilezik' : 'Paslanmaz çelik, flanşlı dış bilezik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
     if (info && prefix === 'B' && info.family !== 'acbb') info = null
     if (info && prefix === 'B') prefixNote = 'İş mili (spindle) rulmanı'
