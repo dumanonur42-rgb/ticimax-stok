@@ -677,7 +677,7 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     if (conePair) info = { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
     // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
-    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z(?!Z)|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+    if (!slash && digits.endsWith('2') && (!info || /^6[0-389][3-9]2$/.test(digits)) && /^(RS|RZ|Z(?!Z)|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
       const split = numericType(digits.slice(0, -1), explicit, true, brandName)
       if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
