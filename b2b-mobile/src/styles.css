@@ -1041,10 +1041,21 @@ img { max-width: 100%; }
 :root[data-platform='ios'] .quantity-stepper { position: relative; border: 0; overflow: visible; }
 :root[data-platform='ios'] .quantity-stepper::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--line); border-radius: inherit; pointer-events: none; }
 :root[data-platform='ios'] .quantity-stepper :is(button, input) { flex: 0 0 44px; width: 44px; min-width: 44px; height: 44px; }
-:root[data-platform='ios'] :is(.view-toggle button, .detail-copy-actions .button) { position: relative; min-width: 44px; }
-:root[data-platform='ios'] :is(.view-toggle button, .detail-copy-actions .button)::after { content: ''; position: absolute; inset: 50% 0 auto; height: max(100%, 44px); transform: translateY(-50%); }
+:root[data-platform='ios'] :is(.view-toggle button, .detail-copy-actions .button) { position: relative; isolation: isolate; min-width: 44px; min-height: 44px; background: transparent; }
+:root[data-platform='ios'] :is(.view-toggle button, .detail-copy-actions .button)::before { content: ''; position: absolute; z-index: -1; border-radius: inherit; pointer-events: none; }
+:root[data-platform='ios'] .view-toggle button { margin-block: -4px; }
+:root[data-platform='ios'] .view-toggle button::before { inset: 4px 0; }
+:root[data-platform='ios'] .view-toggle button.active::before { background: #e7eef8; }
+:root[data-platform='ios'] .dark .view-toggle button.active::before { background: #203854; }
+:root[data-platform='ios'] .detail-copy-actions .button { border-color: transparent; }
+:root[data-platform='ios'] .detail-copy-actions .button::before { inset: 2px -1px; border: 1px solid var(--line); background: var(--surface-2); }
 :root[data-platform='ios'] .catalog-table-header { min-height: 45px; padding-block: 0; }
 :root[data-platform='ios'] .catalog-table-header button { min-height: 44px; }
 :root[data-platform='ios'] .detail-heading { flex-wrap: wrap; }
 :root[data-platform='ios'] .detail-copy-actions .icon-button { position: relative; isolation: isolate; width: 44px; min-width: 44px; height: 44px; min-height: 44px; border-color: transparent; background: transparent; }
 :root[data-platform='ios'] .detail-copy-actions .icon-button::before { content: ''; position: absolute; z-index: -1; inset: 3px; border: 1px solid var(--line); border-radius: inherit; background: var(--surface-2); }
+
+@media (max-height: 520px) {
+  :root[data-platform='ios'] .products-page .view-toggle button { margin-block: -2px; }
+  :root[data-platform='ios'] .products-page .view-toggle button::before { inset-block: 2px; }
+}

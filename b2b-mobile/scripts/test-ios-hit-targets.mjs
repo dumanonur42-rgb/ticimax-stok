@@ -80,24 +80,27 @@ try {
     return result.result.value
   }
   const measurements = []
-  for (const platform of ['ios', 'android']) for (const width of [375, 430]) for (const scale of [1, 1.3]) for (const [surface, options] of [['catalog', {}], ['catalog', { showPrices: false, canShelf: true }], ['catalog', { empty: true }], ['card', {}], ['detail', {}], ['required-light', {}], ['required-dark', {}]]) {
+  for (const platform of ['ios', 'android']) for (const [width, height] of [[375, 812], [430, 812], [667, 375]]) for (const scale of [1, 1.3]) for (const [surface, options] of [['catalog', {}], ['catalog', { showPrices: false, canShelf: true }], ['catalog', { empty: true }], ['card', {}], ['detail', {}], ['required-light', {}], ['required-dark', {}]]) {
+    if (height < 520 && surface !== 'catalog') continue
     const label = `${platform}/${width}/${scale}/${surface}/${JSON.stringify(options)}`
-    await cdp('Emulation.setDeviceMetricsOverride', { width, height: 812, deviceScaleFactor: 1, mobile: true })
+    await cdp('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: true })
     const { frameTree } = await cdp('Page.getFrameTree')
-    await cdp('Page.setDocumentContent', { frameId: frameTree.frame.id, html: `<!doctype html><html data-platform="${platform}" data-ios-text-enlarged="${scale > 1}" style="--ios-font-size:${16 * scale}px;--ios-viewport-height:812px"><head><meta name="viewport" content="width=device-width,initial-scale=1"><style id="app-styles">${css}</style><style>*{animation:none!important;transition:none!important}</style></head><body>${markup(platform, surface, options)}</body></html>` })
+    await cdp('Page.setDocumentContent', { frameId: frameTree.frame.id, html: `<!doctype html><html data-platform="${platform}" data-ios-text-enlarged="${scale > 1}" style="--ios-font-size:${16 * scale}px;--ios-viewport-height:${height}px"><head><meta name="viewport" content="width=device-width,initial-scale=1"><style id="app-styles">${css}</style><style>*{animation:none!important;transition:none!important}</style></head><body>${markup(platform, surface, options)}</body></html>` })
     const result = await evaluate(`(() => {
       const rect = element => { const r=element.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height} }
       const selector='.view-toggle button,.quantity-stepper button,.quantity-stepper input,.catalog-table-header button,.detail-copy-actions button,.required-update .button'
       const buttons=[...document.querySelectorAll(selector)]
       const snapshot = () => ({rows:[...document.querySelectorAll('.catalog-table-row')].map(el=>el.getBoundingClientRect().height),columns:[...document.querySelectorAll('.catalog-table-row > [role=cell],.catalog-table-header > [role=columnheader]')].filter(el=>getComputedStyle(el).display!=='none').map(el=>[rect(el).left,rect(el).width]),buttons:buttons.map(el=>({rect:rect(el),background:getComputedStyle(el).backgroundColor,border:getComputedStyle(el).border,padding:getComputedStyle(el).padding})),scrollWidth:document.querySelector('.catalog-scroll')?.scrollWidth})
       const current=snapshot()
-      const targetFor=el=>{
-        const r=rect(el),pseudo=getComputedStyle(el,'::after'),style=getComputedStyle(el)
-        const leftBorder=parseFloat(style.borderLeftWidth),rightBorder=parseFloat(style.borderRightWidth)
-        const hit=pseudo.content!=='none'&&pseudo.position==='absolute'?{...r,left:r.left+leftBorder,right:r.right-rightBorder,width:r.width-leftBorder-rightBorder,top:r.top+(r.height-parseFloat(pseudo.height))/2,bottom:r.top+(r.height+parseFloat(pseudo.height))/2,height:parseFloat(pseudo.height)}:r
-        return {el,hit,label:el.getAttribute('aria-label')||el.textContent.trim()}
-      }
+      const targetFor=el=>({el,hit:rect(el),label:el.getAttribute('aria-label')||el.textContent.trim()})
       const targets=buttons.map(targetFor)
+      const layout=()=>[...document.querySelectorAll('.view-toggle,.detail-copy-actions,.detail-heading,.page-heading')].map(rect)
+      const currentLayout=layout()
+      const legacyButtons=document.createElement('style')
+      legacyButtons.textContent=":root[data-platform='ios'] .view-toggle button{min-height:36px!important;margin-block:0!important}:root[data-platform='ios'] .detail-copy-actions .button{min-height:38px!important}@media(max-height:520px){:root[data-platform='ios'] .products-page .view-toggle button{min-height:40px!important}}"
+      document.head.append(legacyButtons)
+      const previousLayout=layout()
+      legacyButtons.remove()
       const overlaps=[]
       for(let i=0;i<targets.length;i++)for(let j=i+1;j<targets.length;j++){
         const a=targets[i].hit,b=targets[j].hit
@@ -125,10 +128,11 @@ try {
       const update=updateButton?{actual:colours(updateButton),reference:colours(document.getElementById('primary-reference'))}:null
       const sheets=document.getElementById('app-styles').sheet
       for(let i=sheets.cssRules.length-1;i>=0;i--){const rule=sheets.cssRules[i];if(rule.selectorText?.includes('data-platform="ios"')&&!rule.selectorText.includes('data-ios-text-enlarged')&&/quantity-stepper|view-toggle|detail-copy-actions|catalog-table-header|detail-heading/.test(rule.selectorText))sheets.deleteRule(i)}
-      return {current,baseline:snapshot(),targets:targets.map(({hit,label})=>({hit,label})),overlaps,misses,overflow,update}
+      return {current,baseline:snapshot(),targets:targets.map(({hit,label})=>({hit,label})),overlaps,misses,overflow,update,currentLayout,previousLayout}
     })()`)
     if (platform === 'ios') {
-      for (const { hit, label: control } of result.targets) { assert.ok(hit.width >= 43.99, `${label}: ${control} width ${hit.width}`); assert.ok(hit.height >= 43.99, `${label}: ${control} height ${hit.height}`) }
+      for (const { hit, label: control } of result.targets) { assert.ok(hit.width >= 43.99, `${label}: ${control} own box width ${hit.width}`); assert.ok(hit.height >= 43.99, `${label}: ${control} own box height ${hit.height}`) }
+      assert.deepEqual(result.currentLayout, result.previousLayout, label + ' toggle/detail/header layout unchanged from pre-accessibility-box sizing')
       assert.deepEqual(result.overlaps, [], label + ' overlapping targets')
       assert.deepEqual(result.misses, [], label + ' clipped/intercepted targets')
       assert.deepEqual(result.overflow, [], label + ' page/sheet overflow')
@@ -153,7 +157,7 @@ try {
     }
   }
   if(process.env.HIT_TARGET_EVIDENCE_DIR)await writeFile(join(process.env.HIT_TARGET_EVIDENCE_DIR,'hit-targets-results.json'),JSON.stringify(measurements,null,2))
-  console.log('iOS hit targets: ok (375/430px, 1.0/1.3; real JSX/CSS; all targets >=44px, hit-tested slop, no overlaps/page overflow; normal/empty/hidden-price catalog, card/cart/detail; table columns/row heights and Android unchanged)')
+  console.log('iOS hit targets: ok (375/430px and compact landscape, 1.0/1.3; real JSX/CSS; own element rects >=44px, hit-tested boxes, no overlaps/page overflow; toggle/detail/header layout stable; normal/empty/hidden-price catalog, card/cart/detail; table columns/row heights and Android unchanged)')
   console.log('Required-update colours: ok (real gate JSX/CSS; iOS/Android, light/dark, 375/430px, 1.0/1.3; label contrast >=4.5:1 and same colours as normal primary buttons)')
 } finally {
   clearTimeout(watchdog)
