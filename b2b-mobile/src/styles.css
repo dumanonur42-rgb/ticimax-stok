@@ -989,3 +989,33 @@ img { max-width: 100%; }
     }
   }
 }
+
+:root[data-platform='ios'] { font-size: var(--ios-font-size, 16px); }
+:root[data-platform='ios'] body { font-size: 1rem; }
+:root[data-platform='ios'] :is(.app-shell, .login-screen) :is(input, textarea, select) { font-size: max(16px, 1rem); }
+:root[data-platform='ios'] .shelf-summary-text { font-size: .78125rem; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .app-shell { --bottom-tabs-height: calc(4rem + var(--safe-bottom)); }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .bottom-tabs { height: var(--bottom-tabs-height); min-height: var(--bottom-tabs-height); }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .tab { min-height: 3.25rem; font-size: .72rem; line-height: 1.15; white-space: normal; overflow-wrap: anywhere; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .tab-badge { min-width: 1.0625rem; height: auto; min-height: 1.0625rem; line-height: 1.0625rem; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .catalog-scroll.table-view { overflow-x: auto; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header, .table-list) { min-width: 24rem; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header, .catalog-table-row) { --catalog-table-columns: minmax(7rem, 1.45fr) minmax(4.5rem, 1fr) 2.75rem 4.125rem 44px; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header.no-price, .catalog-table-row.no-price) { --catalog-table-columns: minmax(7rem, 1.6fr) minmax(4.5rem, 1fr) 2.75rem 44px; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .login-tabs button { white-space: normal; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .login-steps { flex-wrap: wrap; row-gap: 8px; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .login-steps li { flex: 0 1 auto; white-space: normal; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .login-steps span { width: 1.125rem; height: 1.125rem; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .cart-sticky-summary { flex-wrap: wrap; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .cart-summary-copy { flex: 1 1 10rem; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .cart-sticky-summary .button { flex: 1 1 10rem; white-space: normal; }
+:root[data-platform='ios'][data-ios-text-enlarged='true'] .cart-page { padding-bottom: calc(var(--cart-summary-height) + 24px); scroll-padding-bottom: calc(var(--cart-summary-height) + 24px); }
+:root[data-platform='ios'][data-ios-text-enlarged='true']:not([data-keyboard-open='true']) .toast { bottom: calc(var(--bottom-tabs-height) + 12px); }
+:root[data-platform='ios'][data-ios-text-enlarged='true']:not([data-keyboard-open='true']) .app-shell[data-tab='cart'][data-cart-summary='true'] .toast { bottom: calc(var(--bottom-tabs-height) + var(--cart-summary-height) + 8px); }
+@media (min-width: 560px) {
+  :root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header, .table-list) { min-width: 46rem; }
+  :root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header.has-shelf:not(.no-price), .catalog-table-row.has-shelf:not(.no-price)) { --catalog-table-columns: minmax(7rem, 1.1fr) minmax(4.5rem, .95fr) 2.75rem minmax(7.375rem, 1fr) 4.125rem 3.625rem 44px minmax(7rem, 1.2fr); }
+  :root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header:not(.has-shelf):not(.no-price), .catalog-table-row:not(.has-shelf):not(.no-price)) { --catalog-table-columns: minmax(7rem, 1.1fr) minmax(4.5rem, 1fr) 2.75rem minmax(7.375rem, 1fr) 4.125rem 44px minmax(7rem, 1.2fr); }
+  :root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header.no-price.has-shelf, .catalog-table-row.no-price.has-shelf) { --catalog-table-columns: minmax(7rem, 1.1fr) minmax(4.5rem, 1fr) 2.75rem minmax(7.375rem, 1fr) 3.625rem 44px minmax(7rem, 1.2fr); }
+  :root[data-platform='ios'][data-ios-text-enlarged='true'] :is(.catalog-table-header.no-price:not(.has-shelf), .catalog-table-row.no-price:not(.has-shelf)) { --catalog-table-columns: minmax(7rem, 1.1fr) minmax(4.5rem, 1fr) 2.75rem minmax(7.375rem, 1fr) 44px minmax(7rem, 1.2fr); }
+}

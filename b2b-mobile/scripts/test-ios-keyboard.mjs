@@ -34,7 +34,7 @@ for (const platform of ['ios', 'android', 'error', 'timeout']) {
   let accessory
   let warnings = 0
   const context = { root, Capacitor: { getPlatform: () => platform === 'android' ? platform : 'ios' }, KeyboardResize: { None: 'none' },
-    installIOSKeyboardDismissal: () => {}, console: { warn: () => { warnings++ } },
+    installIOSKeyboardDismissal: () => {}, initializeIOSDynamicType: () => {}, console: { warn: () => { warnings++ } },
     Keyboard: { setResizeMode: async value => {
       if (platform === 'error') throw new Error('Bridge unavailable')
       if (platform === 'timeout') await new Promise(() => {})

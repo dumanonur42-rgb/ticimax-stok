@@ -6,6 +6,7 @@ import App from './App'
 import { SystemInsets, type SystemInsetsValue } from './lib/systemInsets'
 import './styles.css'
 import { installIOSKeyboardDismissal } from './lib/iosKeyboard'
+import { initializeIOSDynamicType } from './lib/iosDynamicType'
 
 const root = document.documentElement
 const SYSTEM_INSETS_BOOTSTRAP_TIMEOUT_MS = 400
@@ -39,7 +40,7 @@ function scrollFocusedField(): void {
       const field = activeElement.getBoundingClientRect()
       const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
       const pinnedSubmit = Capacitor.getPlatform() === 'ios' && keyboard > 0 && loginScreen.dataset.mode === 'register' && submit
-      const fieldBottom = pinnedSubmit ? Math.min(visibleBottom, pinnedSubmit.top - 12) : visibleBottom
+      const fieldBottom = pinnedSubmit ? Math.min(pinnedSubmit.top - 12, visibleBottom - (pinnedSubmit.bottom - pinnedSubmit.top) - 12) : visibleBottom
       const targetTop = pinnedSubmit ? field.top : Math.min(field.top, submit?.top ?? field.top)
       const targetBottom = pinnedSubmit ? field.bottom : Math.max(field.bottom, submit?.bottom ?? field.bottom)
       if (targetTop >= visibleTop && targetBottom <= fieldBottom) return
@@ -78,6 +79,7 @@ async function initializeSystemInsets(): Promise<void> {
 
 async function bootstrap(): Promise<void> {
   if (Capacitor.getPlatform() === 'ios') {
+    initializeIOSDynamicType(scrollFocusedField)
     installIOSKeyboardDismissal()
     const updateKeyboard = (height: number): void => {
       const keyboardHeight = Math.max(0, height)
