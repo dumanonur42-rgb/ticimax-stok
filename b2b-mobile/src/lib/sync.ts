@@ -76,7 +76,7 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
 }
 
 async function generation(signal: AbortSignal): Promise<string> {
-  const { data, error } = await catalogRequest(requestSignal => supabase.from('settings').select('value').eq('key', 'catalog_generation').maybeSingle().abortSignal(requestSignal), signal)
+  const { data, error } = await catalogRequest(requestSignal => supabase.from('settings').select('value').eq('key', 'catalog_generation').abortSignal(requestSignal).maybeSingle(), signal)
   if (error) throw error
   return data ? String(data.value) : '0'
 }
