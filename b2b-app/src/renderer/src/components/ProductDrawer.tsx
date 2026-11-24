@@ -205,7 +205,7 @@ export function ProductDrawer({
                   <dd>
                     <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(product.price as number, product.currency) : 'Fiyat sorunuz'}</b>
                     {product.list_price != null && product.price != null && product.list_price > product.price && (
-                      <span className="pd-stat-note">Liste <s>{money(product.list_price, product.currency)}</s></span>
+                      <span className="pd-stat-note">Liste {hasPrice ? <s>{money(product.list_price, product.currency)}</s> : money(product.list_price, product.currency)}</span>
                     )}
                   </dd>
                 </div>
