@@ -1735,6 +1735,19 @@ textarea.input {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+.pd-stat dt,
+.pd-meta dt,
+.code-equivalents small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pd-stat dt svg,
+.pd-meta dt svg,
+.code-equivalents small svg {
+  flex: 0 0 auto;
+  opacity: 0.85;
+}
 .pd-name {
   margin: 0;
   font-size: 1.3rem;
@@ -1990,10 +2003,14 @@ textarea.input {
   height: 34px;
   display: grid;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border-soft));
   border-radius: 10px;
-  background: color-mix(in srgb, var(--primary) 10%, var(--bg-elev));
-  color: var(--primary);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 82%, #fff), var(--primary));
+  color: var(--primary-text, #fff);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+[data-theme='contrast'] .code-head-icon {
+  background: var(--primary);
+  box-shadow: none;
 }
 .code-head h3 {
   margin: 0;

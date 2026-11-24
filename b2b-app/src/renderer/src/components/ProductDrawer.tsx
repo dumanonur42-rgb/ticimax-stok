@@ -1,7 +1,7 @@
 import type { Product } from '@shared/types'
 import { boxParts, brandOrigin, normalize } from '@shared/identity'
 import { brandLogo } from '../lib/brandLogos'
-import { Braces, Check, Info, MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
+import { ArrowLeftRight, BadgeCheck, Barcode, Clock, CreditCard, Info, Layers, MapPin, Minus, Package, Pencil, Plus, ShoppingCart, Tag, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, money, num, stockLevel } from '@/lib/format'
@@ -10,6 +10,19 @@ import { cardPrice } from '@shared/price'
 import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 import { explainProductCode } from '@shared/bearingCodes'
+
+function BearingIcon(): ReactNode {
+  const balls = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4)
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
+      <circle cx="12" cy="12" r="10.2" />
+      <circle cx="12" cy="12" r="3.6" />
+      {balls.map((a) => (
+        <circle key={a} cx={12 + 6.9 * Math.cos(a)} cy={12 + 6.9 * Math.sin(a)} r="1.5" fill="currentColor" stroke="none" />
+      ))}
+    </svg>
+  )
+}
 
 export function ProductDrawer({
   product,
@@ -196,7 +209,7 @@ export function ProductDrawer({
 
             <dl className="pd-stats">
               <div className={`pd-stat pd-stock ${lvl.cls}`}>
-                <dt>Stok</dt>
+                <dt><Package size={13} aria-hidden /> Stok</dt>
                 <dd>
                   <b>{num(Math.max(0, product.stock))}</b> <small>{product.unit.trim() || 'adet'}</small>
                   <span className="pd-stat-note"><i aria-hidden />{stockNote}</span>
@@ -204,7 +217,7 @@ export function ProductDrawer({
               </div>
               {showPrices && (
                 <div className="pd-stat">
-                  <dt>Fiyat</dt>
+                  <dt><Tag size={13} aria-hidden /> Fiyat</dt>
                   <dd>
                     <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(product.price as number, product.currency) : 'Fiyat sorunuz'}</b>
                     {product.list_price != null && product.price != null && product.list_price > product.price && (
@@ -215,7 +228,7 @@ export function ProductDrawer({
               )}
               {showPrices && cp != null && (
                 <div className="pd-stat">
-                  <dt>Kredi kartı</dt>
+                  <dt><CreditCard size={13} aria-hidden /> Kredi kartı</dt>
                   <dd><b>{money(cp, product.currency)}</b></dd>
                 </div>
               )}
@@ -239,9 +252,9 @@ export function ProductDrawer({
             )}
 
             <dl className="pd-meta">
-              {product.min_order > 1 && <div><dt>Min. sipariş</dt><dd>{num(product.min_order)}</dd></div>}
-              {product.barcode && <div><dt>Barkod</dt><dd className="mono">{product.barcode}</dd></div>}
-              <div><dt>Güncelleme</dt><dd>{date(product.updated_at)}</dd></div>
+              {product.min_order > 1 && <div><dt><Layers size={13} aria-hidden /> Min. sipariş</dt><dd>{num(product.min_order)}</dd></div>}
+              {product.barcode && <div><dt><Barcode size={13} aria-hidden /> Barkod</dt><dd className="mono">{product.barcode}</dd></div>}
+              <div><dt><Clock size={13} aria-hidden /> Güncelleme</dt><dd>{date(product.updated_at)}</dd></div>
             </dl>
           </section>
 
@@ -250,7 +263,7 @@ export function ProductDrawer({
           {codeInfo && (
             <section className="code-info" aria-labelledby="code-title">
               <div className="code-head">
-                <span className="code-head-icon" aria-hidden><Braces size={17} /></span>
+                <span className="code-head-icon" aria-hidden><BearingIcon /></span>
                 <div>
                   <h3 id="code-title">Kod açıklaması</h3>
                   <p>Koddaki her parçanın anlamı</p>
@@ -271,10 +284,10 @@ export function ProductDrawer({
                     <div>
                       <strong>{note.title}</strong>
                       {note.detail && <p>{note.detail}</p>}
-                      {note.sameEverywhere && <p className="code-same"><Check size={14} aria-hidden /> Bütün markalarda aynı yazılır.</p>}
+                      {note.sameEverywhere && <p className="code-same"><BadgeCheck size={15} aria-hidden /> Bütün markalarda aynı yazılır.</p>}
                       {note.equivalents.length > 0 && (
                         <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
-                          <small>Diğer markalarda</small>
+                          <small><ArrowLeftRight size={12} aria-hidden /> Diğer markalarda</small>
                           <ul>
                             {note.equivalents.map((item) => {
                               const mark = brandLogo(item.brand)
