@@ -12,7 +12,7 @@ function visit(node) {
 }
 visit(ast)
 for (const dependency of ['session?.user.id', 'online', 'orderRefresh', 'ordersLoaded']) assert.ok(effect.arguments[1].getText(ast).includes(dependency))
-const js = ts.transpileModule(`const effect = ${effect.arguments[0].getText(ast)}; effect()`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
+const js = ts.transpileModule(`(${effect.arguments[0].getText(ast)})()`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
 let calls = 0
 let value = null
 let fail = false
