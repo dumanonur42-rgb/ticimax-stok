@@ -553,8 +553,9 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     return { family: 'nut', type: 'Emniyet pulu (kilit rondelası)', detail: `KM ${Number(digits)} somunuyla birlikte kullanılır.` }
   }
   if (/^(LM|JLM|JM|JHM|HM|LL|JL|L|M|HH|H)$/.test(prefix) && (digits || slash?.[1] || '').length >= 5) {
-    // A leading J marks metric main dimensions within the same cone/cup numbering.
-    return { family: 'other', type: prefix.startsWith('J') ? 'Konik makaralı rulman (J serisi, metrik ölçülü)' : 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
+    // A leading J marks a metric cone or cup; either may be paired with an inch part (JLM104948-LM104911), so no unit is claimed for the set.
+    const metricPart = prefix.startsWith('J') || /(^|[^A-Z])J[A-Z]{1,3}[\s-]?\d/.test(rest)
+    return { family: 'other', type: metricPart ? 'Konik makaralı rulman (inç seri numaralı)' : 'İnç seri konik makaralı rulman', detail: `İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.${metricPart ? ' Numarası J ile başlayan parça metrik ölçülüdür.' : ''}` }
   }
   if (/^(RLS|RMS|LJ|MJ)$/.test(prefix)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : 'Orta seri.' }
   void brand
