@@ -267,6 +267,7 @@
  .yb-shots{margin:42px -6px 0;padding:28px 0 20px;border-radius:22px}
  .yb-shots-row{gap:14px;padding:4px 21% 10px;scrollbar-width:none}
  .yb-shots-row::-webkit-scrollbar{display:none}
+ .yb-shots-row:focus-visible{outline:2px solid #0b2a5b;outline-offset:-2px;border-radius:14px}
  .yb-shot{flex:0 0 100%}
  .yb-shot b{margin:14px 0 2px;font-size:14.5px}
  .yb-shot span{font-size:12px}

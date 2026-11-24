@@ -64,7 +64,7 @@ const LP = fix(`<div class="yb-lp">
 </div>
 
 <div class="yb-shots"><h2 class="yb-h">Uygulamadan görüntüler</h2><p class="yb-sub">Telefonda ve bilgisayarda aynı sade, hızlı ekranlar.</p>
- <div class="yb-shots-row">
+ <div class="yb-shots-row" role="group" aria-label="Uygulamadan ekran görüntüleri">
   <div class="yb-shot">${phone(S.panel,'Bayi paneli')}<b>Bayi paneli</b><span>Ürün, sepet ve siparişleriniz tek bakışta</span></div>
   <div class="yb-shot">${phone(S.arama,'Ürün arama')}<b>Ürün arama</b><span>Kodu yazın, sonuçlar anında gelsin</span></div>
   <div class="yb-shot">${phone(S.detay,'Ürün detayı')}<b>Ürün detayı</b><span>Stok adedi ve fiyat bir arada</span></div>
@@ -114,7 +114,7 @@ var isLP=/^\\/bayi-uygulamasi\\/?$/i.test(location.pathname),ready=false,t0=Date
 var l=document.createElement("link");l.rel="stylesheet";l.href=B+"b2b.css";l.onload=function(){ready=true;run()};l.onerror=function(){ready=true};
 (document.head||document.documentElement).appendChild(l);
 function ins(sel,pos,html,mark){var el=document.querySelector(sel);if(!el||document.querySelector(mark))return;el.insertAdjacentHTML(pos,html)}
-function dots(c){var r=c.querySelector(".yb-shots-row"),d=c.querySelectorAll(".yb-dots i");if(!r||!d.length)return;r.addEventListener("scroll",function(){var m=r.scrollWidth-r.clientWidth,k=m>0?Math.round(r.scrollLeft/m*(d.length-1)):0;for(var i=0;i<d.length;i++)d[i].className=i===k?"on":""},{passive:true})}
+function dots(c){var r=c.querySelector(".yb-shots-row"),d=c.querySelectorAll(".yb-dots i");if(!r||!d.length)return;var mq=window.matchMedia("(max-width:1023px)"),tab=function(){if(mq.matches)r.setAttribute("tabindex","0");else r.removeAttribute("tabindex")};tab();if(mq.addEventListener)mq.addEventListener("change",tab);else if(mq.addListener)mq.addListener(tab);r.addEventListener("scroll",function(){var m=r.scrollWidth-r.clientWidth,k=m>0?Math.round(r.scrollLeft/m*(d.length-1)):0;for(var i=0;i<d.length;i++)d[i].className=i===k?"on":""},{passive:true})}
 function run(){
 if(!ready)return;
 ins(".yr-banner","beforeend",TOP,".yb-top-link");
