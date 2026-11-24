@@ -152,6 +152,9 @@ const CONCEPTS: Record<string, Concept> = {
   universalUa: { title: 'Üniversal eşleme, küçük eksenel boşluk', detail: 'İkili takıldığında az boşluklu çalışır.', eq: 'FAG=UA; SKF=CB' },
   universalUo: { title: 'Üniversal eşleme, boşluksuz', eq: 'FAG=UO; SKF=CA / G' },
   universalUl: { title: 'Üniversal eşleme, hafif ön yük', eq: 'FAG=UL; SKF=GA; NSK=SUL' },
+  setDga: { title: 'İkili üniversal set, hafif ön yük (SKF)', detail: 'İki rulmandan oluşan takımdır; rulmanlar sırt sırta, yüz yüze veya art arda takılabilir.' },
+  setDgb: { title: 'İkili üniversal set, orta ön yük (SKF)', detail: 'İki rulmandan oluşan takımdır; rulmanlar sırt sırta, yüz yüze veya art arda takılabilir.' },
+  setDgc: { title: 'İkili üniversal set, ağır ön yük (SKF)', detail: 'İki rulmandan oluşan takımdır; rulmanlar sırt sırta, yüz yüze veya art arda takılabilir.' },
   universalGb: { title: 'Üniversal eşleme, orta ön yük', eq: 'SKF=GB; FAG=UM' },
   universalGc: { title: 'Üniversal eşleme, ağır ön yük', eq: 'SKF=GC; FAG=UH' },
   nskBw: { title: 'Temas açısı 40°, sac kafes (NSK)', eq: 'SKF=BEJ; FAG=B-JP' },
@@ -258,9 +261,12 @@ const RULES: Rule[] = [
   { codes: 'CB G', concept: 'universal', families: ['acbb'] },
   { codes: 'UA', concept: 'universalUa', families: ['acbb'] },
   { codes: 'UO', concept: 'universalUo', families: ['acbb'] },
-  { codes: 'UL SUL GA DGA', concept: 'universalUl', families: ['acbb'] },
-  { codes: 'GB DGB UM', concept: 'universalGb', families: ['acbb'] },
-  { codes: 'GC DGC UH', concept: 'universalGc', families: ['acbb'] },
+  { codes: 'UL SUL GA', concept: 'universalUl', families: ['acbb'] },
+  { codes: 'GB UM', concept: 'universalGb', families: ['acbb'] },
+  { codes: 'GC UH', concept: 'universalGc', families: ['acbb'] },
+  { codes: 'DGA', concept: 'setDga', families: ['acbb'] },
+  { codes: 'DGB', concept: 'setDgb', families: ['acbb'] },
+  { codes: 'DGC', concept: 'setDgc', families: ['acbb'] },
   { codes: 'DB', concept: 'pairDb', families: ['acbb', 'trb'] },
   { codes: 'DF', concept: 'pairDf', families: ['acbb', 'trb'] },
   { codes: 'DT', concept: 'pairDt', families: ['acbb'] },
@@ -607,7 +613,7 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     if (/^\d+$/.test(digits)) info = numericType(digits, explicit)
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
     // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
-    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z(?!Z)|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
       const split = numericType(digits.slice(0, -1), explicit)
       if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
