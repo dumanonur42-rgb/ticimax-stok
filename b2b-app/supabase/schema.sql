@@ -356,6 +356,25 @@ begin
   end if;
 end $$;
 
+-- Self-service account deletion (mobile "Hesabımı sil"). Orders stay; their customer link is kept unless the customer card is empty and unused.
+create or replace function public.delete_my_account() returns void
+language plpgsql security definer set search_path = public as $$
+declare t profiles; uid uuid := auth.uid();
+begin
+  if uid is null then raise exception 'Oturum bulunamadı.'; end if;
+  select * into t from profiles where id = uid;
+  if t.role = 'admin' and not exists (select 1 from profiles where role = 'admin' and active and id <> uid) then
+    raise exception 'Son yönetici silinemez.';
+  end if;
+  delete from auth.users where id = uid;
+  if t.customer_id is not null then
+    delete from customers c where c.id = t.customer_id
+      and not exists (select 1 from orders where customer_id = c.id)
+      and not exists (select 1 from profiles where customer_id = c.id)
+      and c.tax_no = '' and c.phone = '' and c.address = '';
+  end if;
+end $$;
+
 create or replace function public.deactivate_products_not_in(p_norms text[]) returns integer
 language plpgsql security definer set search_path = public as $$
 declare n integer;
