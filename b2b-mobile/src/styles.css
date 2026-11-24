@@ -79,9 +79,10 @@ img { max-width: 100%; }
   min-height: 0;
 }
 :root[data-platform='ios'][data-keyboard-open='true'] .login-card { margin-top: 0; }
-:root[data-platform='ios'][data-keyboard-open='true'] .login-screen[data-login-mode='register'] button[type='submit'] {
+:root[data-platform='ios'] .login-screen { padding-bottom: 0; }
+:root[data-platform='ios'][data-keyboard-open='true'] .login-screen[data-mode='register'] button[type='submit'] {
   position: sticky;
-  bottom: 0;
+  bottom: 16px;
   z-index: 2;
   flex-shrink: 0;
   box-shadow: 0 -8px 12px var(--surface);

@@ -30,7 +30,7 @@ function scrollFocusedField(): void {
       const keyboardProperty = Capacitor.getPlatform() === 'ios' ? '--ios-keyboard-height' : '--keyboard'
       const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue(keyboardProperty)) || 0
       const safeTop = Number.parseFloat(Capacitor.getPlatform() === 'ios'
-        ? getComputedStyle(loginScreen).paddingTop
+        ? getComputedStyle(loginScreen.querySelector('.login-hero') ?? loginScreen).paddingTop
         : getComputedStyle(root).getPropertyValue('--safe-top')) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
       const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
@@ -38,7 +38,7 @@ function scrollFocusedField(): void {
       const visibleBottom = Math.min(viewportBottom, keyboardTop) - 16
       const field = activeElement.getBoundingClientRect()
       const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
-      const pinnedSubmit = Capacitor.getPlatform() === 'ios' && keyboard > 0 && loginScreen.dataset.loginMode === 'register' && submit
+      const pinnedSubmit = Capacitor.getPlatform() === 'ios' && keyboard > 0 && loginScreen.dataset.mode === 'register' && submit
       const fieldBottom = pinnedSubmit ? Math.min(visibleBottom, pinnedSubmit.top - 12) : visibleBottom
       const targetTop = pinnedSubmit ? field.top : Math.min(field.top, submit?.top ?? field.top)
       const targetBottom = pinnedSubmit ? field.bottom : Math.max(field.bottom, submit?.bottom ?? field.bottom)

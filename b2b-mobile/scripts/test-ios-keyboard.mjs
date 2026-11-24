@@ -9,7 +9,8 @@ const bootstrap = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name
 const setup = bootstrap.body.statements[0].getText(ast)
 const scrollField = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === 'scrollFocusedField')
 let scrollAmount = 0
-const login = { dataset: {}, getBoundingClientRect: () => ({ top: 0 }), querySelector: () => ({ getBoundingClientRect: () => ({ top: 250, bottom: 300 }) }), scrollBy: ({ top }) => { scrollAmount += top } }
+const hero = {}
+const login = { dataset: {}, getBoundingClientRect: () => ({ top: 0 }), querySelector: selector => selector === '.login-hero' ? hero : ({ getBoundingClientRect: () => ({ top: 250, bottom: 300 }) }), scrollBy: ({ top }) => { scrollAmount += top } }
 class Field {
   matches() { return true }
   closest() { return login }
@@ -17,7 +18,7 @@ class Field {
 }
 const safeAreaContext = { root: {}, Capacitor: { getPlatform: () => 'ios' }, HTMLElement: Field,
   document: { activeElement: new Field() }, window: { innerHeight: 667 }, requestAnimationFrame: fn => fn(),
-  getComputedStyle: element => element === login ? { paddingTop: '62px' } : { getPropertyValue: key => key === '--ios-keyboard-height' ? '300px' : 'max(62px, 0px)' } }
+  getComputedStyle: element => element === hero ? { paddingTop: '62px' } : { getPropertyValue: key => key === '--ios-keyboard-height' ? '300px' : 'max(62px, 0px)' } }
 vm.runInNewContext(ts.transpileModule(scrollField.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText + '\nscrollFocusedField()', safeAreaContext)
 assert.equal(scrollAmount, -34)
 safeAreaContext.document.activeElement = null

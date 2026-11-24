@@ -19,7 +19,13 @@ function visit(node) {
 }
 visit(ast)
 assert.equal(fields.get('username').get('autoCapitalize'), '"none"')
-for (const id of ['company-name', 'display-name']) assert.equal(fields.get(id).get('autoCapitalize'), "{platform === 'ios' ? 'words' : undefined}")
+for (const id of ['company-name', 'display-name']) assert.equal(fields.get(id).get('autoCapitalize'), '"words"')
+assert.equal(fields.get('username').has('maxLength'), false)
+assert.match(app, /className=\{`login-screen[^\n]+data-mode=\{loginMode\}/)
+assert.match(app, /className="login-hero"/)
+assert.match(app, /className="button primary wide login-submit"/)
+assert.doesNotMatch(css, /--login-top|\.password-wrap/)
+assert.match(css, /:root\[data-platform='ios'\] \.login-screen \{ padding-bottom: 0; \}/)
 for (const id of ['username', 'company-name', 'display-name']) assert.equal(fields.get(id).get('enterKeyHint'), '"next"')
 assert.equal(fields.get('password').get('autoComplete'), "{registering ? 'new-password' : 'current-password'}")
 assert.equal(fields.get('password2').get('autoComplete'), '"new-password"')
@@ -43,9 +49,10 @@ assert.equal(focused, 'password2')
 for (const [height, keyboard] of [[667, 296], [956, 346]]) {
   for (let fieldIndex = 0; fieldIndex < 5; fieldIndex++) {
     let scroll = 0
-    const submit = { top: height - keyboard - 70, bottom: height - keyboard - 22 }
-    const login = { dataset: { loginMode: 'register' }, getBoundingClientRect: () => ({ top: 0 }),
-      querySelector: () => ({ getBoundingClientRect: () => submit }), scrollBy: ({ top }) => { scroll += top } }
+    const submit = { top: height - keyboard - 68, bottom: height - keyboard - 16 }
+    const hero = {}
+    const login = { dataset: { mode: 'register' }, getBoundingClientRect: () => ({ top: 0 }),
+      querySelector: selector => selector === '.login-hero' ? hero : ({ getBoundingClientRect: () => submit }), scrollBy: ({ top }) => { scroll += top } }
     class Field {
       matches() { return true }
       closest() { return login }
@@ -54,12 +61,12 @@ for (const [height, keyboard] of [[667, 296], [956, 346]]) {
     const field = new Field()
     const context = { root: {}, Capacitor: { getPlatform: () => 'ios' }, HTMLElement: Field, document: { activeElement: field },
       window: { innerHeight: height }, requestAnimationFrame: fn => fn(),
-      getComputedStyle: element => element === login ? { paddingTop: '22px' } : { getPropertyValue: () => `${keyboard}px` } }
+      getComputedStyle: element => element === hero ? { paddingTop: '22px' } : { getPropertyValue: () => `${keyboard}px` } }
     vm.runInNewContext(compile(declaration(parse(main), 'scrollFocusedField')) + '\nscrollFocusedField()', context)
     assert.ok(field.getBoundingClientRect().top >= 34)
     assert.ok(field.getBoundingClientRect().bottom <= submit.top - 12)
     assert.ok(submit.bottom < height - keyboard)
   }
 }
-assert.match(css, /:root\[data-platform='ios'\]\[data-keyboard-open='true'\] \.login-screen\[data-login-mode='register'\] button\[type='submit'\][\s\S]*?position: sticky/)
-console.log('iOS register: ok (5-field SE/Pro Max geometry, pinned submit, Next chain, capitalization/autocomplete; Android styling unchanged)')
+assert.match(css, /:root\[data-platform='ios'\]\[data-keyboard-open='true'\] \.login-screen\[data-mode='register'\] button\[type='submit'\][\s\S]*?position: sticky/)
+console.log('iOS register: ok (redesigned hero/fields, 5-field SE/Pro Max geometry, pinned submit, Next chain, capitalization/autocomplete, unlimited username; iOS-only layout adaptation)')
