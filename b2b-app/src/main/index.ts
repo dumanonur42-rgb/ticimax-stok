@@ -13,7 +13,12 @@ import { startUpdater } from './updater'
 const isDev = !app.isPackaged && !!process.env.ELECTRON_RENDERER_URL
 const SPLASH_MIN_MS = 3000
 const SPLASH_LEAVE_MS = 450
-let splashShownAt = 0
+// A splash that has not painted by now is given up on rather than holding the app back.
+const SPLASH_PAINT_LIMIT_MS = 8000
+// Resolves once the splash is on screen: its minimum time counts from here, not from when it was created.
+let splashVisible: Promise<void> = Promise.resolve()
+// Whether the main window has been on screen since the app started; it starts hidden with Windows.
+let mainRevealed = false
 let mainWin: BrowserWindow | null = null
 let activeSplash: BrowserWindow | null = null
 
@@ -130,22 +135,57 @@ function createSplash(): BrowserWindow {
   })
   hardenWebContents(splash)
   splash.setIgnoreMouseEvents(true)
-  splash.on('ready-to-show', () => {
-    splashShownAt = Date.now()
-    splash.show()
+  splashVisible = new Promise((resolve) => {
+    splash.once('ready-to-show', () => {
+      splash.show()
+      resolve()
+    })
+    splash.once('closed', () => resolve())
+    setTimeout(resolve, SPLASH_PAINT_LIMIT_MS)
+  })
+  activeSplash = splash
+  splash.on('closed', () => {
+    if (activeSplash === splash) activeSplash = null
   })
   load(splash, { splash: '1' })
   return splash
 }
 
-function createWindow(showSplash = true): void {
+/** Keeps the splash up for its minimum time and until `ready` settles, fades it out, then runs `then`. */
+function leaveSplash(splash: BrowserWindow, ready: Promise<unknown>, then: () => void): void {
+  const minimum = splashVisible.then(() => new Promise((r) => setTimeout(r, SPLASH_MIN_MS)))
+  Promise.allSettled([minimum, ready]).then(() => {
+    if (!splash.isDestroyed()) splash.webContents.send('splash:leave')
+    setTimeout(() => {
+      if (!splash.isDestroyed()) splash.close()
+      then()
+    }, SPLASH_LEAVE_MS)
+  })
+}
+
+function showMainWindow(win: BrowserWindow): void {
+  if (win.isDestroyed()) return
+  mainRevealed = true
+  if (win.isMinimized()) win.restore()
+  win.show()
+  win.focus()
+  win.webContents.focus()
+  win.webContents.send('window:shown')
+}
+
+/** Brings the main window up on request; the first time since a hidden start it comes after the splash, like a normal start. */
+function revealMain(): void {
+  const win = mainWin
+  if (!win || win.isDestroyed()) return createWindow(false)
+  if (activeSplash && !activeSplash.isDestroyed()) return activeSplash.show()
+  if (mainRevealed) return showMainWindow(win)
+  mainRevealed = true
+  leaveSplash(createSplash(), Promise.resolve(), () => showMainWindow(win))
+}
+
+/** `startHidden`: started with Windows, so the window stays in the tray when there are orders to wait for in the background. */
+function createWindow(showSplash = true, startHidden = false): void {
   const splash = showSplash ? createSplash() : null
-  if (splash) {
-    activeSplash = splash
-    splash.on('closed', () => {
-      if (activeSplash === splash) activeSplash = null
-    })
-  }
   const restored = loadWindowState()
   const area = screen.getPrimaryDisplay().workArea
   const initial: WindowState = restored ?? {
@@ -207,28 +247,16 @@ function createWindow(showSplash = true): void {
   })
 
   win.on('ready-to-show', () => {
-    const hidden = process.argv.includes('--hidden')
-    const showMain = (): void => {
-      if (!(hidden && isBackgroundMode()) && !win.isDestroyed()) {
-        win.show()
-        win.focus()
-        win.webContents.focus()
-        win.webContents.send('window:shown')
-      }
-    }
     if (!splash) {
-      restoreSession().finally(showMain)
+      restoreSession().finally(() => {
+        if (!startHidden) showMainWindow(win)
+        // Nothing to wait for in the background: open as on a normal start, splash included.
+        else if (!isBackgroundMode()) revealMain()
+      })
       return
     }
-    const wait = Math.max(0, SPLASH_MIN_MS - (Date.now() - (splashShownAt || Date.now())))
     // The splash stays until the minimum time has passed and the cloud session is known; the product mirror syncs in the background.
-    Promise.all([new Promise((r) => setTimeout(r, wait)), restoreSession()]).then(() => {
-      if (!splash.isDestroyed()) splash.webContents.send('splash:leave')
-      setTimeout(() => {
-        if (!splash.isDestroyed()) splash.close()
-        showMain()
-      }, SPLASH_LEAVE_MS)
-    })
+    leaveSplash(splash, restoreSession(), () => showMainWindow(win))
   })
   load(win)
 }
@@ -253,19 +281,7 @@ if (process.argv.includes('--selfcheck')) {
 } else if (!app.requestSingleInstanceLock()) {
   app.exit(0)
 } else {
-  app.on('second-instance', () => {
-    if (mainWin && !mainWin.isDestroyed()) {
-      if (activeSplash && !activeSplash.isDestroyed()) {
-        activeSplash.show()
-        return
-      }
-      if (mainWin.isMinimized()) mainWin.restore()
-      mainWin.show()
-      mainWin.focus()
-      mainWin.webContents.focus()
-      mainWin.webContents.send('window:shown')
-    } else createWindow(false)
-  })
+  app.on('second-instance', revealMain)
 
   app.whenReady().then(() => {
     Menu.setApplicationMenu(null)
@@ -274,11 +290,9 @@ if (process.argv.includes('--selfcheck')) {
     const theme = getSettings().theme
     nativeTheme.themeSource = theme === 'dark' || theme === 'contrast' ? 'dark' : theme === 'light' ? 'light' : 'system'
     registerIpc()
-    registerMainWindow(
-      () => mainWin,
-      () => createWindow(false)
-    )
-    createWindow(!process.argv.includes('--hidden'))
+    registerMainWindow(revealMain)
+    const hidden = process.argv.includes('--hidden')
+    createWindow(!hidden, hidden)
     setImmediate(warmUp)
     startUpdater()
     app.on('activate', () => {

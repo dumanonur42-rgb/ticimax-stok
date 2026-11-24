@@ -12,7 +12,7 @@ import { lastSeenOrderId, markOrderSeen, onNewOrderRow, primeOrderCursor } from 
 let tray: Tray | null = null
 let backgroundMode = false
 let quitting = false
-let mainRef: { get: () => BrowserWindow | null; create: () => void } | null = null
+let showMain: () => void = () => {}
 let selfId: string | null = null
 
 export function isBackgroundMode(): boolean {
@@ -23,21 +23,13 @@ export function isQuitting(): boolean {
   return quitting
 }
 
-export function registerMainWindow(get: () => BrowserWindow | null, create: () => void): void {
-  mainRef = { get, create }
+/** `show` brings the main window up, creating it if it was closed. */
+export function registerMainWindow(show: () => void): void {
+  showMain = show
 }
 
 function iconPath(): string {
   return join(__dirname, '../../resources/icon.png')
-}
-
-function showMain(): void {
-  const w = mainRef?.get() ?? null
-  if (w && !w.isDestroyed()) {
-    if (w.isMinimized()) w.restore()
-    w.show()
-    w.focus()
-  } else mainRef?.create()
 }
 
 function ensureTray(): void {
@@ -47,7 +39,7 @@ function ensureTray(): void {
   tray.setToolTip('Yamansa Rulman B2B — yeni siparişler için arka planda çalışıyor')
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: 'Uygulamayı aç', click: showMain },
+      { label: 'Uygulamayı aç', click: () => showMain() },
       { type: 'separator' },
       {
         label: 'Çıkış',
@@ -58,8 +50,8 @@ function ensureTray(): void {
       }
     ])
   )
-  tray.on('click', showMain)
-  tray.on('double-click', showMain)
+  tray.on('click', () => showMain())
+  tray.on('double-click', () => showMain())
 }
 
 function destroyTray(): void {
@@ -81,7 +73,7 @@ function notifyOrder(o: OrderRow): void {
     icon: iconPath(),
     silent: false
   })
-  n.on('click', showMain)
+  n.on('click', () => showMain())
   n.show()
 }
 
