@@ -62,8 +62,13 @@ function focusOnEnter(id: string): (event: ReactKeyboardEvent<HTMLInputElement>)
     if (event.key !== 'Enter') return
     event.preventDefault()
     const next = document.getElementById(id)
-    if (Capacitor.getPlatform() === 'ios' && next instanceof HTMLInputElement && next.autocapitalize === 'words' && !next.value) {
+    if (Capacitor.getPlatform() === 'ios' && next instanceof HTMLInputElement && ['words', 'sentences'].includes(next.autocapitalize) && !next.value) {
       if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+      const blurredElement = document.activeElement
+      window.setTimeout(() => {
+        if (next.isConnected && !next.disabled && !next.value && document.visibilityState === 'visible' && document.activeElement === blurredElement) next.focus()
+      }, 75)
+      return
     }
     next?.focus()
   }
