@@ -539,7 +539,12 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
   if ((prefix === 'SA' || prefix === 'SB' || prefix === 'UC' || prefix === 'UK' || prefix === 'YAR' || prefix === 'YET' || prefix === 'YEL') && /^[23]\d\d$/.test(digits)) {
-    return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : bore(boreFromCode(digits.slice(1))) }
+    // "-100" is 1 in (inches + sixteenths), "-16" is 16/16 in.
+    const inchCode = rest.match(/^-(\d{2,3})(?=[\s-]|$)/)?.[1]
+    const sixteenths = inchCode ? Number(inchCode.slice(0, -2) || 0) * 16 + Number(inchCode.slice(-2)) : 0
+    const inch = inchCode && Number(inchCode.slice(-2)) < (inchCode.length === 3 ? 16 : 100) && sixteenths >= 8 && sixteenths <= 64
+    const size = inch ? `İç çap ${mm(Math.round(sixteenths / 16 * 25.4 * 1000) / 1000)} (inç ölçülü)` : bore(boreFromCode(digits.slice(1)))
+    return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : size }
   }
   if (prefix in ROD && digits && digits.length <= 2) return { family: 'rod', type: ROD[prefix], size: `Delik çapı ${mm(Number(digits))}` }
   if (prefix in LINEAR && digits && (digits.length <= 2 || ((prefix === 'KH' || prefix.startsWith('KB')) && digits.length === 4))) {
