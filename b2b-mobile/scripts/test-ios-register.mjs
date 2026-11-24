@@ -46,17 +46,17 @@ for (const id of ['company-name', 'display-name', 'password', 'password2']) {
 }
 context.focusOnEnter('ignored')({ key: 'Tab', preventDefault: () => assert.fail('Tab must keep normal navigation') })
 assert.equal(focused, 'password2')
-for (const [height, keyboard] of [[667, 296], [956, 346]]) {
+for (const scale of [1, 1.3]) for (const [height, keyboard] of [[667, 296], [956, 346]]) {
   for (let fieldIndex = 0; fieldIndex < 5; fieldIndex++) {
     let scroll = 0
-    const submit = { top: height - keyboard - 68, bottom: height - keyboard - 16 }
+    const submit = { top: height - keyboard - 16 - 52 * scale, bottom: height - keyboard - 16 }
     const hero = {}
     const login = { dataset: { mode: 'register' }, getBoundingClientRect: () => ({ top: 0 }),
-      querySelector: selector => selector === '.login-hero' ? hero : ({ getBoundingClientRect: () => submit }), scrollBy: ({ top }) => { scroll += top } }
+      querySelector: selector => selector === '.login-hero' ? hero : ({ getBoundingClientRect: () => scroll === 0 ? { top: submit.top + 6, bottom: submit.bottom + 6 } : submit }), scrollBy: ({ top }) => { scroll += top } }
     class Field {
       matches() { return true }
       closest() { return login }
-      getBoundingClientRect() { return { top: 200 + fieldIndex * 108 - scroll, bottom: 248 + fieldIndex * 108 - scroll } }
+      getBoundingClientRect() { return { top: (200 + fieldIndex * 108) * scale - scroll, bottom: (248 + fieldIndex * 108) * scale - scroll } }
     }
     const field = new Field()
     const context = { root: {}, Capacitor: { getPlatform: () => 'ios' }, HTMLElement: Field, document: { activeElement: field },
