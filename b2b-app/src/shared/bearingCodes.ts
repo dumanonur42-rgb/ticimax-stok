@@ -307,9 +307,11 @@ const RULES: Rule[] = [
 
 const STRONG_SHORT = new Set(['ZZ', '2Z', 'C2', 'C3', 'C4', 'C5', 'P4', 'P5', 'P6', 'UU'])
 
+const BRANDS = ['SKF', 'FAG', 'INA', 'NSK', 'NTN', 'KOYO', 'NACHI', 'SNR', 'TIMKEN', 'ZKL', 'IKO', 'KBC']
+
 const brandKey = (brand: string): string => {
   const value = brand.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I')
-  for (const name of ['SKF', 'FAG', 'INA', 'NSK', 'NTN', 'KOYO', 'NACHI', 'SNR', 'TIMKEN', 'ZKL', 'IKO', 'KBC']) {
+  for (const name of BRANDS) {
     if (new RegExp(`(^|[^A-Z])${name}([^A-Z]|$)`).test(value)) return name
   }
   return ''
@@ -608,8 +610,9 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const notes: CodeNote[] = []
   const seen = new Map<string, CodeNote>()
   const tokens = rest.split(/[\s\-/.,+]+/).filter(Boolean)
+  const brandWords = new Set([...BRANDS, ...brand.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I').split(/[^A-Z0-9]+/)])
   for (const token of tokens) {
-    if (/^\d+$/.test(token) || token.length > 14) continue
+    if (/^\d+$/.test(token) || token.length > 14 || brandWords.has(token)) continue
     for (const code of segment(token, table)) {
       const id = table.get(code)
       if (!id) continue
