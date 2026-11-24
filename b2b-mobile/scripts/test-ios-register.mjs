@@ -37,7 +37,7 @@ const declaration = (ast, name) => ast.statements.find(node => ts.isFunctionDecl
 const compile = source => ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
 let focused
 let prevented = false
-const context = { document: { getElementById: id => ({ focus: () => { focused = id } }) } }
+const context = { Capacitor: { getPlatform: () => 'android' }, document: { getElementById: id => ({ focus: () => { focused = id } }) } }
 vm.runInNewContext(compile(declaration(ast, 'focusOnEnter')), context)
 for (const id of ['company-name', 'display-name', 'password', 'password2']) {
   context.focusOnEnter(id)({ key: 'Enter', preventDefault: () => { prevented = true } })

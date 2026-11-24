@@ -27,6 +27,7 @@ import {
 import { hasPerm } from '@shared/perms'
 import { copyToClipboard } from './lib/clipboard'
 import { openExternal } from './lib/external'
+import { dismissIOSKeyboard } from './lib/iosKeyboard'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
@@ -60,7 +61,11 @@ function focusOnEnter(id: string): (event: ReactKeyboardEvent<HTMLInputElement>)
   return (event) => {
     if (event.key !== 'Enter') return
     event.preventDefault()
-    document.getElementById(id)?.focus()
+    const next = document.getElementById(id)
+    if (Capacitor.getPlatform() === 'ios' && next instanceof HTMLInputElement && next.autocapitalize === 'words' && !next.value) {
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
+    }
+    next?.focus()
   }
 }
 
@@ -1807,7 +1812,7 @@ function AccountPage({ session, online, onLogout, onDeleteAccount, backIntercept
       </section>
       <div className="account-actions">
         <button className="button danger wide" onClick={onLogout}>Çıkış yap</button>
-        <button className="text-button delete-account-link" onClick={() => setDeleteOpen(true)}>Hesabımı sil</button>
+        <button className="text-button delete-account-link" onClick={() => { dismissIOSKeyboard(); setDeleteOpen(true) }}>Hesabımı sil</button>
       </div>
       {deleteOpen && (
         <Sheet

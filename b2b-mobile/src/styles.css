@@ -991,6 +991,8 @@ img { max-width: 100%; }
 }
 
 :root[data-platform='ios'] { font-size: var(--ios-font-size, 16px); }
+:root[data-platform='ios'][data-keyboard-open='true'] .login-screen[data-mode='login'] .login-hero { padding-bottom: 28px; }
+:root[data-platform='ios'][data-keyboard-open='true'] .login-screen[data-mode='login'] .login-logo { display: none; }
 :root[data-platform='ios'] body { font-size: 1rem; }
 :root[data-platform='ios'] :is(.app-shell, .login-screen) :is(input, textarea, select) { font-size: max(16px, 1rem); }
 :root[data-platform='ios'] .shelf-summary-text { font-size: .78125rem; }
