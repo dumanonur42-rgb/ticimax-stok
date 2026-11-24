@@ -662,6 +662,9 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   // "XLJ 1 1/4", "LJ 1-1/4", "LJ 1.1/4": whole inches and a fraction make up one size.
   const mixedInch = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) && /^\d$/.test(number) ? rest.match(/^[\s.-]\s?(\d{1,2})\s?\/\s?(2|4|8|16|32)(?!\d)/) : null
   if (mixedInch) { number = `${number} ${mixedInch[1]}/${mixedInch[2]}`; rest = rest.slice(mixedInch[0].length) }
+  // "LJ 1/2.2RS": after an inch fraction a dot starts the suffix, it is not a decimal.
+  const inchDot = /^(LJ|MJ|XLJ|KLNJ)$/.test(prefix) ? number.match(/^(\d{1,2}\/(?:2|4|8|16|32))[.,](\d+)$/) : null
+  if (inchDot) { number = inchDot[1]; rest = `${inchDot[2]}${rest}` }
   let info: TypeInfo | null = null
   let prefixNote = ''
   const flanged = /^(F|SF|SSF)$/.test(prefix)
