@@ -1999,18 +1999,14 @@ textarea.input {
 }
 .code-head-icon {
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border-soft));
   border-radius: 10px;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--primary) 82%, #fff), var(--primary));
-  color: var(--primary-text, #fff);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 30%, transparent);
-}
-[data-theme='contrast'] .code-head-icon {
-  background: var(--primary);
-  box-shadow: none;
+  background: color-mix(in srgb, var(--primary) 13%, var(--bg-elev));
+  color: var(--primary);
 }
 .code-head h3 {
   margin: 0;

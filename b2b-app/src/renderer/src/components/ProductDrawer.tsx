@@ -1,7 +1,7 @@
 import type { Product } from '@shared/types'
 import { boxParts, brandOrigin, normalize } from '@shared/identity'
 import { brandLogo } from '../lib/brandLogos'
-import { ArrowLeftRight, BadgeCheck, Barcode, Clock, CreditCard, Info, Layers, MapPin, Minus, Package, Pencil, Plus, ShoppingCart, Tag, X } from 'lucide-react'
+import { ArrowLeftRight, BadgeCheck, Barcode, Clock, CreditCard, Info, Layers, MapPin, Minus, Package, Pencil, Plus, ShoppingCart, Tag, TextSearch, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
 import { date, money, num, stockLevel } from '@/lib/format'
@@ -10,19 +10,6 @@ import { cardPrice } from '@shared/price'
 import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 import { explainProductCode } from '@shared/bearingCodes'
-
-function BearingIcon(): ReactNode {
-  const balls = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4)
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-      <circle cx="12" cy="12" r="10.2" />
-      <circle cx="12" cy="12" r="3.6" />
-      {balls.map((a) => (
-        <circle key={a} cx={12 + 6.9 * Math.cos(a)} cy={12 + 6.9 * Math.sin(a)} r="1.5" fill="currentColor" stroke="none" />
-      ))}
-    </svg>
-  )
-}
 
 export function ProductDrawer({
   product,
@@ -263,7 +250,7 @@ export function ProductDrawer({
           {codeInfo && (
             <section className="code-info" aria-labelledby="code-title">
               <div className="code-head">
-                <span className="code-head-icon" aria-hidden><BearingIcon /></span>
+                <span className="code-head-icon" aria-hidden><TextSearch size={20} /></span>
                 <div>
                   <h3 id="code-title">Kod açıklaması</h3>
                   <p>Koddaki her parçanın anlamı</p>
