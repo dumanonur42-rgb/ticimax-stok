@@ -536,7 +536,7 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : bore(boreFromCode(digits.slice(1))) }
   }
   if (prefix in ROD && digits && digits.length <= 2) return { family: 'rod', type: ROD[prefix], size: `Delik çapı ${mm(Number(digits))}` }
-  if (prefix in LINEAR && (digits.length <= 2 || ((prefix === 'KH' || prefix.startsWith('KB')) && digits.length === 4))) {
+  if (prefix in LINEAR && digits && (digits.length <= 2 || ((prefix === 'KH' || prefix.startsWith('KB')) && digits.length === 4))) {
     const shaft = digits.length === 4 ? Number(digits.slice(0, 2)) : Number(digits)
     return { family: 'linear', type: LINEAR[prefix], size: digits ? `Mil çapı ${mm(shaft)}` : '' }
   }
@@ -552,7 +552,7 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'MB' && digits && digits.length <= 2) {
     return { family: 'nut', type: 'Emniyet pulu (kilit rondelası)', detail: `KM ${Number(digits)} somunuyla birlikte kullanılır.` }
   }
-  if (/^(LM|JLM|JM|JHM|HM|LL|JL|L|M|HH|H)$/.test(prefix) && digits.length >= 5) {
+  if (/^(LM|JLM|JM|JHM|HM|LL|JL|L|M|HH|H)$/.test(prefix) && (digits || slash?.[1] || '').length >= 5) {
     return { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
   }
   if (/^(RLS|RMS|LJ|MJ)$/.test(prefix)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman', detail: prefix === 'RLS' || prefix === 'LJ' ? 'Hafif seri.' : 'Orta seri.' }
