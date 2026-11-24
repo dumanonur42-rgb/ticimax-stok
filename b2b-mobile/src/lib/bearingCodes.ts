@@ -152,6 +152,8 @@ const CONCEPTS: Record<string, Concept> = {
   universalUa: { title: 'Üniversal eşleme, küçük eksenel boşluk', detail: 'İkili takıldığında az boşluklu çalışır.', eq: 'FAG=UA; SKF=CB' },
   universalUo: { title: 'Üniversal eşleme, boşluksuz', eq: 'FAG=UO; SKF=CA / G' },
   universalUl: { title: 'Üniversal eşleme, hafif ön yük', eq: 'FAG=UL; SKF=GA; NSK=SUL' },
+  universalGb: { title: 'Üniversal eşleme, orta ön yük', eq: 'SKF=GB; FAG=UM' },
+  universalGc: { title: 'Üniversal eşleme, ağır ön yük', eq: 'SKF=GC; FAG=UH' },
   nskBw: { title: 'Temas açısı 40°, sac kafes (NSK)', eq: 'SKF=BEJ; FAG=B-JP' },
   pairDb: { title: 'İkili takım: sırt sırta (O düzeni)', same: true },
   pairDf: { title: 'İkili takım: yüz yüze (X düzeni)', same: true },
@@ -251,12 +253,14 @@ const RULES: Rule[] = [
   { codes: 'BE BEA', concept: 'angle40e', families: ['acbb'] },
   { codes: 'B', concept: 'angle40', families: ['acbb'] },
   { codes: 'A', concept: 'angle30', families: ['acbb'], brands: ['NSK', 'NTN', 'KOYO', 'NACHI'] },
-  { codes: 'AC ACD', concept: 'angle25', families: ['acbb'] },
+  { codes: 'AC ACD A5 AD', concept: 'angle25', families: ['acbb'] },
   { codes: 'C CD', concept: 'angle15', families: ['acbb'] },
   { codes: 'CB G', concept: 'universal', families: ['acbb'] },
   { codes: 'UA', concept: 'universalUa', families: ['acbb'] },
   { codes: 'UO', concept: 'universalUo', families: ['acbb'] },
-  { codes: 'UL SUL', concept: 'universalUl', families: ['acbb'] },
+  { codes: 'UL SUL GA DGA', concept: 'universalUl', families: ['acbb'] },
+  { codes: 'GB DGB UM', concept: 'universalGb', families: ['acbb'] },
+  { codes: 'GC DGC UH', concept: 'universalGc', families: ['acbb'] },
   { codes: 'DB', concept: 'pairDb', families: ['acbb', 'trb'] },
   { codes: 'DF', concept: 'pairDf', families: ['acbb', 'trb'] },
   { codes: 'DT', concept: 'pairDt', families: ['acbb'] },
@@ -307,9 +311,11 @@ const RULES: Rule[] = [
 
 const STRONG_SHORT = new Set(['ZZ', '2Z', 'C2', 'C3', 'C4', 'C5', 'P4', 'P5', 'P6', 'UU'])
 
+const BRANDS = ['SKF', 'FAG', 'INA', 'NSK', 'NTN', 'KOYO', 'NACHI', 'SNR', 'TIMKEN', 'ZKL', 'IKO', 'KBC']
+
 const brandKey = (brand: string): string => {
   const value = brand.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I')
-  for (const name of ['SKF', 'FAG', 'INA', 'NSK', 'NTN', 'KOYO', 'NACHI', 'SNR', 'TIMKEN', 'ZKL', 'IKO', 'KBC']) {
+  for (const name of BRANDS) {
     if (new RegExp(`(^|[^A-Z])${name}([^A-Z]|$)`).test(value)) return name
   }
   return ''
@@ -367,6 +373,10 @@ interface TypeInfo { family: BearingFamily; type: string; detail?: string; size?
 
 const numericType = (digits: string, explicitBore: number | null): TypeInfo | null => {
   const size = (code: string): string => bore(explicitBore ?? boreFromCode(code))
+  // "230/500", "618/8": a three-digit series followed by the bore in mm.
+  if (digits.length === 3 && explicitBore !== null && /^(160|617|618|619|213|222|223|230|231|232|233|238|239|240|241|302|303|313|320|322|323|329|330|331|332|292|293|294)$/.test(digits)) {
+    return numericType(`${digits}00`, explicitBore)
+  }
   if (digits.length === 3 && /^6[0-3]\d$/.test(digits)) {
     return { family: 'dgbb', type: 'Sabit bilyalı rulman (minyatür)', size: bore(explicitBore ?? Number(digits[2])) }
   }
@@ -378,6 +388,7 @@ const numericType = (digits: string, explicitBore: number | null): TypeInfo | nu
     const series = digits.slice(0, 2)
     const code = digits.slice(2)
     if (/^6[0234]$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman', detail: 'En yaygın rulman tipi: radyal yükü ve iki yönde hafif eksenel yükü taşır.', size: size(code) }
+    if (/^6[789]$/.test(series)) return { family: 'dgbb', type: 'Sabit bilyalı rulman (ince kesitli)', detail: 'Dar kesitli hafif seri; 61700 / 61800 / 61900 serilerinin kısa yazılışıdır.', size: size(code) }
     if (/^(12|13|22|23)$/.test(series)) return { family: 'sabb', type: 'Oynak bilyalı rulman', detail: 'Çift sıra bilyalı; mil eğilmesini ve eksen kaçıklığını kendiliğinden karşılar.', size: size(code) }
     if (/^(42|43)$/.test(series)) return { family: 'dgbb', type: 'Çift sıra sabit bilyalı rulman', size: size(code) }
     if (/^(32|33|52|53)$/.test(series)) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman', detail: 'Radyal yükle birlikte iki yönde eksenel yük taşır.', size: size(code) }
@@ -533,7 +544,12 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
   if ((prefix === 'SA' || prefix === 'SB' || prefix === 'UC' || prefix === 'UK' || prefix === 'YAR' || prefix === 'YET' || prefix === 'YEL') && /^[23]\d\d$/.test(digits)) {
-    return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : bore(boreFromCode(digits.slice(1))) }
+    // "-100" is 1 in (inches + sixteenths), "-16" is 16/16 in.
+    const inchCode = rest.match(/^-(\d{2,3})(?=[\s-]|$)/)?.[1]
+    const sixteenths = inchCode ? Number(inchCode.slice(0, -2) || 0) * 16 + Number(inchCode.slice(-2)) : 0
+    const inch = inchCode && Number(inchCode.slice(-2)) < (inchCode.length === 3 ? 16 : 100) && sixteenths >= 8 && sixteenths <= 64
+    const size = inch ? `İç çap ${mm(Math.round(sixteenths / 16 * 25.4 * 1000) / 1000)} (inç ölçülü)` : bore(boreFromCode(digits.slice(1)))
+    return { family: 'insert', type: INSERT[prefix], detail: 'Dış bileziği küreseldir; yatak gövdesine (UCP, UCF vb.) takılır.', size: prefix === 'UK' ? '' : size }
   }
   if (prefix in ROD && digits && digits.length <= 2) return { family: 'rod', type: ROD[prefix], size: `Delik çapı ${mm(Number(digits))}` }
   if (prefix in LINEAR && digits && (digits.length <= 2 || ((prefix === 'KH' || prefix.startsWith('KB')) && digits.length === 4))) {
@@ -589,10 +605,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     if (/^\d+$/.test(digits)) info = numericType(digits, explicit)
-    // "62052RS": the seal's leading 2 is glued to the base number.
-    if (!info && !slash && digits.endsWith('2') && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
-      info = numericType(digits.slice(0, -1), explicit)
-      if (info) { number = digits.slice(0, -1); rest = `2${rest}` }
+    // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
+    // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
+    if (!slash && digits.endsWith('2') && (!info || /^6[0-3][3-9]2$/.test(digits)) && /^(RS|RZ|Z|HRS|BRS|NSE|NKE|RU|LS)/.test(rest)) {
+      const split = numericType(digits.slice(0, -1), explicit)
+      if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
@@ -607,8 +624,9 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const notes: CodeNote[] = []
   const seen = new Map<string, CodeNote>()
   const tokens = rest.split(/[\s\-/.,+]+/).filter(Boolean)
+  const brandWords = new Set([...BRANDS, ...brand.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I').split(/[^A-Z0-9]+/)])
   for (const token of tokens) {
-    if (/^\d+$/.test(token) || token.length > 14) continue
+    if (/^\d+$/.test(token) || token.length > 14 || brandWords.has(token)) continue
     for (const code of segment(token, table)) {
       const id = table.get(code)
       if (!id) continue
