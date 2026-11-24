@@ -11,7 +11,7 @@ import {
   PackageSearch, Plus, RefreshCw, Search, Send, ShoppingCart, SlidersHorizontal,
   Trash2, UserRound, X, Eye, EyeOff, WifiOff, Phone, Download,
   Package, Table2, LayoutGrid, ArrowUp, ArrowDown, ArrowUpDown, Box, MapPin, Sparkles,
-  Monitor, Moon, Sun
+  Monitor, Moon, Sun, Building2, IdCard, Lock, LogIn, UserPlus, CircleAlert, CircleCheck
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, type ReactNode } from 'react'
 import { brandOrigin, normalize } from '@shared/identity'
@@ -59,6 +59,28 @@ function focusOnEnter(id: string): (event: ReactKeyboardEvent<HTMLInputElement>)
     event.preventDefault()
     document.getElementById(id)?.focus()
   }
+}
+
+function LoginField({ id, label, icon, optional, error, action, children }: {
+  id: string
+  label: string
+  icon: ReactNode
+  optional?: boolean
+  error?: string
+  action?: ReactNode
+  children: ReactNode
+}): ReactNode {
+  return (
+    <div className={`login-field${error ? ' invalid' : ''}`}>
+      <label htmlFor={id}>{label}{optional && <small>İsteğe bağlı</small>}</label>
+      <div className="login-input">
+        {icon}
+        {children}
+        {action}
+      </div>
+      {error && <p className="login-field-error" id={`${id}-error`} role="alert">{error}</p>}
+    </div>
+  )
 }
 
 function external(url: string): void {
@@ -117,30 +139,6 @@ export default function App(): ReactNode {
     const timeout = window.setTimeout(() => setBootMinimumElapsed(true), 1400)
     return () => window.clearTimeout(timeout)
   }, [])
-
-  useEffect(() => {
-    if (booting || session) return
-    const root = document.documentElement
-    const measure = (): void => {
-      if (root.dataset.keyboardOpen === 'true') return
-      const screen = document.querySelector<HTMLElement>('.login-screen')
-      const card = screen?.querySelector<HTMLElement>('.login-card')
-      if (!screen || !card) return
-      const screenStyle = getComputedStyle(screen)
-      const available = screen.clientHeight -
-        Number.parseFloat(screenStyle.paddingTop) -
-        Number.parseFloat(screenStyle.paddingBottom) -
-        card.offsetHeight
-      root.style.setProperty('--login-top', `${Math.max(0, available / 2)}px`)
-    }
-    measure()
-    window.addEventListener('resize', measure)
-    window.addEventListener('orientationchange', measure)
-    return () => {
-      window.removeEventListener('resize', measure)
-      window.removeEventListener('orientationchange', measure)
-    }
-  }, [booting, session, loginMode])
 
   useEffect(() => {
     if (!bootMinimumElapsed || booting || bootOverlayStage !== 'visible') return
@@ -574,99 +572,151 @@ export default function App(): ReactNode {
     const registering = loginMode === 'register'
     return (
       <>
-        <main className={`login-screen${dark ? ' dark' : ''}`}>
+        <main className={`login-screen${dark ? ' dark' : ''}`} data-mode={loginMode}>
+          <header className="login-hero">
+            <img className="login-logo" src={logo} alt="Yamansa Rulman" />
+            <p className="login-hero-eyebrow">B2B BAYİ UYGULAMASI</p>
+            <p className="login-hero-tagline">Stok, fiyat ve sipariş tek uygulamada.</p>
+          </header>
           <section className="login-card">
-            <img className="login-mark" src={mark} alt="Yamansa Rulman" />
-            <p className="eyebrow">BAYİ UYGULAMASI</p>
-            <h1>{registering ? 'Kayıt ol' : 'Hoş geldiniz'}</h1>
-            <p className="muted">{registering ? 'Bayi hesabınız yönetici onayından sonra açılır.' : 'Hesabınızla giriş yapın.'}</p>
-            <form className="login-form" noValidate onSubmit={(event) => void onLogin(event)}>
-              <label htmlFor="username">Kullanıcı adı</label>
-              <input
-                id="username"
-                autoComplete="username"
-                autoCapitalize="none"
-                autoCorrect="off"
-                spellCheck={false}
-                enterKeyHint="next"
-                value={loginName}
-                onChange={(event) => { setLoginName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
-                onKeyDown={focusOnEnter(registering ? 'company-name' : 'password')}
-              />
-              <p className="login-field-error" role="alert">{loginFieldError === 'username' ? (registering ? 'Kullanıcı adı en az 3 karakter olmalı' : 'Kullanıcı adını yazın') : '\u00a0'}</p>
-              {registering && (
-                <>
-                  <label htmlFor="company-name">İşletme adı</label>
-                  <input
-                    id="company-name"
-                    autoComplete="organization"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    enterKeyHint="next"
-                    maxLength={120}
-                    value={companyName}
-                    onChange={(event) => { setCompanyName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
-                    onKeyDown={focusOnEnter('display-name')}
-                  />
-                  <p className="login-field-error" role="alert">{loginFieldError === 'company' ? 'İşletme adını yazın' : '\u00a0'}</p>
-                  <label htmlFor="display-name">Ad Soyad <span className="muted">(isteğe bağlı)</span></label>
-                  <input
-                    id="display-name"
-                    autoComplete="name"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    enterKeyHint="next"
-                    maxLength={80}
-                    value={displayName}
-                    onChange={(event) => { setDisplayName(event.target.value); setLoginError('') }}
-                    onKeyDown={focusOnEnter('password')}
-                  />
-                  <p className="login-field-error">{'\u00a0'}</p>
-                </>
-              )}
-              <label htmlFor="password">Şifre</label>
-              <div className="password-wrap">
-                <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete={registering ? 'new-password' : 'current-password'}
-                  enterKeyHint={registering ? 'next' : 'go'}
-                  value={password}
-                  onChange={(event) => { setPassword(event.target.value); setLoginError(''); setLoginFieldError(null) }}
-                  onKeyDown={registering ? focusOnEnter('password2') : undefined}
-                />
-                <button type="button" className="icon-button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'}>
-                  {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+            <div className="login-tabs" role="tablist" aria-label="Hesap">
+              {(['login', 'register'] as const).map((mode) => (
+                <button key={mode} type="button" role="tab" id={`login-tab-${mode}`} aria-selected={loginMode === mode} aria-controls="login-panel" className={loginMode === mode ? 'active' : ''} onClick={() => { if (loginMode !== mode) switchLoginMode(mode) }}>
+                  {mode === 'login' ? 'Giriş yap' : 'Kayıt ol'}
                 </button>
-              </div>
-              <p className="login-field-error" role="alert">{loginFieldError === 'password' ? (registering ? 'Şifre en az 6 karakter olmalı' : 'Şifrenizi yazın') : '\u00a0'}</p>
-              {registering && (
-                <>
-                  <label htmlFor="password2">Şifre (tekrar)</label>
+              ))}
+            </div>
+            <div id="login-panel" role="tabpanel" aria-labelledby={`login-tab-${loginMode}`}>
+              <h1>{registering ? 'Bayi hesabı oluşturun' : 'Hoş geldiniz'}</h1>
+              {registering
+                ? <ol className="login-steps" aria-label="Kayıt adımları">
+                    <li><span>1</span>Kayıt olun</li>
+                    <li><span>2</span>Yönetici onaylar</li>
+                    <li><span>3</span>Giriş yapın</li>
+                  </ol>
+                : <p className="login-lead">Bayi hesabınızla giriş yapın.</p>}
+              <form className="login-form" noValidate onSubmit={(event) => void onLogin(event)}>
+                <LoginField id="username" label="Kullanıcı adı" icon={<UserRound size={19} aria-hidden />} error={loginFieldError === 'username' ? (registering ? 'Kullanıcı adı en az 3 karakter olmalı' : 'Kullanıcı adınızı yazın') : ''}>
                   <input
-                    id="password2"
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="new-password"
-                    enterKeyHint="go"
-                    value={password2}
-                    onChange={(event) => { setPassword2(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                    id="username"
+                    autoComplete="username"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint="next"
+                    maxLength={60}
+                    placeholder={registering ? 'Örn. yilmazrulman' : undefined}
+                    aria-invalid={loginFieldError === 'username'}
+                    aria-describedby={loginFieldError === 'username' ? 'username-error' : undefined}
+                    value={loginName}
+                    onChange={(event) => { setLoginName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                    onKeyDown={focusOnEnter(registering ? 'company-name' : 'password')}
                   />
-                  <p className="login-field-error" role="alert">{loginFieldError === 'password2' ? 'Şifreler birbiriyle eşleşmiyor' : '\u00a0'}</p>
-                </>
+                </LoginField>
+                {registering && (
+                  <>
+                    <LoginField id="company-name" label="İşletme adı" icon={<Building2 size={19} aria-hidden />} error={loginFieldError === 'company' ? 'İşletme adını yazın' : ''}>
+                      <input
+                        id="company-name"
+                        autoComplete="organization"
+                        autoCapitalize="words"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        enterKeyHint="next"
+                        maxLength={120}
+                        placeholder="Firma veya dükkân adı"
+                        aria-invalid={loginFieldError === 'company'}
+                        aria-describedby={loginFieldError === 'company' ? 'company-name-error' : undefined}
+                        value={companyName}
+                        onChange={(event) => { setCompanyName(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                        onKeyDown={focusOnEnter('display-name')}
+                      />
+                    </LoginField>
+                    <LoginField id="display-name" label="Ad Soyad" optional icon={<IdCard size={19} aria-hidden />}>
+                      <input
+                        id="display-name"
+                        autoComplete="name"
+                        autoCapitalize="words"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        enterKeyHint="next"
+                        maxLength={80}
+                        value={displayName}
+                        onChange={(event) => { setDisplayName(event.target.value); setLoginError('') }}
+                        onKeyDown={focusOnEnter('password')}
+                      />
+                    </LoginField>
+                  </>
+                )}
+                <LoginField
+                  id="password"
+                  label="Şifre"
+                  icon={<Lock size={19} aria-hidden />}
+                  error={loginFieldError === 'password' ? (registering ? 'Şifre en az 6 karakter olmalı' : 'Şifrenizi yazın') : ''}
+                  action={<button type="button" className="login-field-action" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Şifreyi gizle' : 'Şifreyi göster'} aria-pressed={showPassword}>{showPassword ? <EyeOff size={19} /> : <Eye size={19} />}</button>}
+                >
+                  <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete={registering ? 'new-password' : 'current-password'}
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint={registering ? 'next' : 'go'}
+                    aria-invalid={loginFieldError === 'password'}
+                    placeholder={registering ? 'En az 6 karakter' : undefined}
+                    aria-describedby={loginFieldError === 'password' ? 'password-error' : undefined}
+                    value={password}
+                    onChange={(event) => { setPassword(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                    onKeyDown={registering ? focusOnEnter('password2') : undefined}
+                  />
+                </LoginField>
+                {registering && (
+                  <LoginField
+                    id="password2"
+                    label="Şifre (tekrar)"
+                    icon={<Lock size={19} aria-hidden />}
+                    error={loginFieldError === 'password2' ? 'Şifreler birbiriyle eşleşmiyor' : ''}
+                    action={password2.length >= 6 && password2 === password ? <span className="login-field-ok" role="img" aria-label="Şifreler eşleşiyor"><Check size={18} /></span> : undefined}
+                  >
+                    <input
+                      id="password2"
+                      type={showPassword ? 'text' : 'password'}
+                      autoComplete="new-password"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      enterKeyHint="go"
+                      aria-invalid={loginFieldError === 'password2'}
+                      aria-describedby={loginFieldError === 'password2' ? 'password2-error' : undefined}
+                      value={password2}
+                      onChange={(event) => { setPassword2(event.target.value); setLoginError(''); setLoginFieldError(null) }}
+                    />
+                  </LoginField>
+                )}
+                {loginError && <p className="login-banner error" role="alert"><CircleAlert size={18} aria-hidden /><span>{loginError}</span></p>}
+                {loginNotice && !loginError && <p className="login-banner success" role="status"><CircleCheck size={18} aria-hidden /><span>{loginNotice}</span></p>}
+                {!online && <p className="login-banner offline" role="status"><WifiOff size={18} aria-hidden /><span>{registering ? 'Kayıt olmak' : 'Giriş yapmak'} için internet bağlantısı gerekir.</span></p>}
+                <button className="button primary wide login-submit" type="submit" disabled={loginBusy || !online}>
+                  {loginBusy ? <span className="login-spinner" aria-hidden /> : registering ? <UserPlus size={19} aria-hidden /> : <LogIn size={19} aria-hidden />}
+                  {registering ? (loginBusy ? 'Kaydediliyor…' : 'Kayıt ol') : (loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap')}
+                </button>
+              </form>
+              {!registering && (
+                <p className="login-switch">
+                  Hesabınız yok mu?
+                  <button type="button" onClick={() => switchLoginMode('register')}>Kayıt ol</button>
+                </p>
               )}
-              {loginNotice && !loginError
-                ? <p className="login-notice login-message-slot" role="status">{loginNotice}</p>
-                : <p className="error-text login-message-slot" role="alert">{loginError || '\u00a0'}</p>}
-              {!online && <p className="error-text" role="status">{registering ? 'Kayıt olmak' : 'Giriş yapmak'} için internet bağlantısı gerekir.</p>}
-              <button className="button primary wide" type="submit" disabled={loginBusy || !online}>
-                {registering ? (loginBusy ? 'Kaydediliyor…' : 'Kayıt ol') : (loginBusy ? 'Giriş yapılıyor…' : 'Giriş yap')}
-              </button>
-            </form>
-            <p className="login-switch">
-              {registering ? 'Zaten hesabınız var mı?' : 'Hesabınız yok mu?'}
-              <button type="button" onClick={() => switchLoginMode(registering ? 'login' : 'register')}>{registering ? 'Giriş yap' : 'Kayıt ol'}</button>
-            </p>
-            <p className="login-foot">Yardım için <a href={`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`} onClick={(event) => { event.preventDefault(); external(`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`) }}>bizi arayın</a>.</p>
+            </div>
+            <footer className="login-help">
+              <span>{registering ? 'Yardım mı lazım?' : 'Şifrenizi mi unuttunuz? Bize ulaşın.'}</span>
+              <div>
+                <button type="button" onClick={() => external(`tel:+${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`)}><Phone size={16} aria-hidden />Bizi arayın</button>
+                <button type="button" className="whatsapp" onClick={() => external(`https://wa.me/${SUPPORT_CONTACTS[0].phone.replace(/\D/g, '')}`)}><WhatsAppIcon />WhatsApp</button>
+              </div>
+              <small>Sürüm {APP_VERSION}</small>
+            </footer>
           </section>
         </main>
         {bootOverlay}
