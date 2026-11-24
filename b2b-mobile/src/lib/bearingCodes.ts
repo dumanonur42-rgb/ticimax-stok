@@ -670,7 +670,7 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     // "6902-16 ZZ": a number right after the base code is a special bore, so the standard bore does not apply.
     const special = rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
-    const sealed = /^\s?(2RS|ZZ|2Z)/.test(rest)
+    const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
     // "15123/15245", "45284-45220": an inch taper cone and cup, both plain numbers; the second one is never a bore.
     const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^(\d{5})-\d{5}$/.test(text))
     if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
