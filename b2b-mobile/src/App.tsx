@@ -40,6 +40,7 @@ import { indexProducts, searchProducts, type DimensionFilters, type SearchEntry 
 import { indexProductVariants, productVariantKey } from './lib/productVariants'
 import { abortCatalogSync, debounceSync, refreshSettings, startRealtime, syncCatalog } from './lib/sync'
 import { CatalogSyncAbortedError } from './lib/catalogRequest'
+import { CatalogStorageError } from './lib/catalogStorage'
 import { androidReleasesPage, checkAndroidUpdate, checkLiveUpdate, completePendingFlexibleUpdate, minimumVersionFor, startFlexibleUpdateListener, type AndroidUpdate } from './lib/updates'
 import { useApp, useCart, type Tab, type ThemePreference } from './store/app'
 import { BoxBadge } from './components/BoxBadge'
@@ -194,6 +195,11 @@ export default function App(): ReactNode {
       }
     } catch (error) {
       if (error instanceof CatalogSyncAbortedError) return
+      if (error instanceof CatalogStorageError) {
+        if (!useApp.getState().products.length) setHomeCatalogStatus('error')
+        showToast(error.message)
+        return
+      }
       setOnline(false)
       if (!useApp.getState().products.length) setHomeCatalogStatus('error')
       console.warn('Catalog sync failed', error)
@@ -208,7 +214,7 @@ export default function App(): ReactNode {
     } finally {
       setSyncBusy(false)
     }
-  }, [refreshCart, setOnline, setProducts, setSettings, setSyncBusy])
+  }, [refreshCart, setOnline, setProducts, setSettings, setSyncBusy, showToast])
   syncNowRef.current = syncNow
 
   useEffect(() => {

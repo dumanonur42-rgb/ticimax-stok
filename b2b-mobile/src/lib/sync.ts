@@ -5,6 +5,7 @@ import { getState, putProducts, readProducts, removeProducts, replaceProducts, s
 import { loadSettings, supabase } from './cloud'
 import { useApp } from '../store/app'
 import { catalogRequest, CatalogSyncAbortedError } from './catalogRequest'
+import { catalogStorage } from './catalogStorage'
 
 const PAGE_SIZE = 1000
 const PRODUCT_COLUMNS = [
@@ -96,11 +97,11 @@ async function pull(signal: AbortSignal): Promise<{ products: Product[]; changed
   useApp.getState().setSettings(await catalogRequest(requestSignal => loadSettings(requestSignal), signal))
   const currentGeneration = await generation(signal)
   const policy = storagePolicy()
-  const [storedGeneration, storedTime, storedPolicy] = await Promise.all([
+  const [storedGeneration, storedTime, storedPolicy] = await catalogStorage(() => Promise.all([
     getState('catalog_generation'),
     getState('products_cursor_time'),
     getState('product_storage_policy')
-  ])
+  ]))
   const policyChanged = storedPolicy !== policy.signature
   assertActive(signal)
   const full = !storedTime || storedGeneration !== currentGeneration || policyChanged
@@ -125,15 +126,15 @@ async function pull(signal: AbortSignal): Promise<{ products: Product[]; changed
       afterId = rows[rows.length - 1].id
     }
     assertActive(signal)
-    await replaceProducts(products)
+    await catalogStorage(() => replaceProducts(products))
     assertActive(signal)
     const cursor = cursorOf(products)
-    await Promise.all([
+    await catalogStorage(() => Promise.all([
       setState('products_cursor_time', cursor.time),
       setState('products_cursor_id', String(cursor.id)),
       setState('catalog_generation', currentGeneration),
       setState('product_storage_policy', policy.signature)
-    ])
+    ]))
     changed = Math.max(1, products.length)
   } else {
     let time = new Date(new Date(storedTime).getTime() - 5 * 60_000).toISOString()
@@ -151,7 +152,7 @@ async function pull(signal: AbortSignal): Promise<{ products: Product[]; changed
       if (!rows.length) break
       const active = rows.filter((row) => row.active && !row.deleted).map((row) => toProduct(row, policy))
       const removed = rows.filter((row) => !row.active || row.deleted).map((row) => row.id)
-      await Promise.all([putProducts(active), removeProducts(removed)])
+      await catalogStorage(() => Promise.all([putProducts(active), removeProducts(removed)]))
       assertActive(signal)
       const last = rows[rows.length - 1]
       time = last.updated_at
@@ -159,13 +160,13 @@ async function pull(signal: AbortSignal): Promise<{ products: Product[]; changed
       changed += rows.length
     }
     if (changed) {
-      await Promise.all([
+      await catalogStorage(() => Promise.all([
         setState('products_cursor_time', time),
         setState('products_cursor_id', String(id))
-      ])
+      ]))
     }
   }
-  const products = await readProducts()
+  const products = await catalogStorage(() => readProducts())
   assertActive(signal)
   return { products, changed }
 }

@@ -5,6 +5,7 @@ import ts from 'typescript'
 
 const request = await readFile(new URL('../src/lib/catalogRequest.ts', import.meta.url), 'utf8')
 const sync = await readFile(new URL('../src/lib/sync.ts', import.meta.url), 'utf8')
+const storage = await readFile(new URL('../src/lib/catalogStorage.ts', import.meta.url), 'utf8')
 const compile = source => ts.transpileModule(source.replace(/^import .*$/gm, '').replace(/^export /gm, ''), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
 const tick = () => new Promise(resolve => setImmediate(resolve))
 function setup(delta, initialStall, fail = false) {
@@ -40,7 +41,7 @@ function setup(delta, initialStall, fail = false) {
       return query
     } } }
   vm.createContext(context)
-  vm.runInContext(compile(request) + '\nglobalThis.Cancelled = CatalogSyncAbortedError;\n' + compile(sync), context)
+  vm.runInContext(compile(request) + '\nglobalThis.Cancelled = CatalogSyncAbortedError;\n' + compile(storage) + '\nglobalThis.StorageError = CatalogStorageError;\n' + compile(sync), context)
   return { context, writes, signals, restart: () => { stall = null; pages = 0 }, release: () => release?.({ data: [product], error: null }) }
 }
 for (const delta of [false, true]) {
@@ -69,6 +70,11 @@ for (const delta of [false, true]) {
 }
 const failed = setup(false, null, true)
 await assert.rejects(failed.context.syncCatalog(), /network failure/)
+for (const method of ['getState', 'replaceProducts', 'putProducts', 'removeProducts', 'setState', 'readProducts']) {
+  const test = setup(['putProducts', 'removeProducts'].includes(method))
+  test.context[method] = async () => { throw new DOMException('Disk full', 'QuotaExceededError') }
+  await assert.rejects(test.context.syncCatalog(), error => error instanceof test.context.StorageError && error.originalError.name === 'QuotaExceededError')
+}
 const emptyContext = { AbortController, setTimeout, clearTimeout }
 vm.runInNewContext(compile(request), emptyContext)
 assert.equal(await emptyContext.catalogRequest(async () => null), null)
