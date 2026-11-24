@@ -371,7 +371,8 @@ begin
     delete from customers c where c.id = t.customer_id
       and not exists (select 1 from orders where customer_id = c.id)
       and not exists (select 1 from profiles where customer_id = c.id)
-      and c.tax_no = '' and c.phone = '' and c.address = '';
+      and c.tax_no = '' and c.tax_office = '' and c.phone = '' and c.email = '' and c.address = '' and c.city = ''
+      and c.notes = '' and c.discount_pct = 0;
   end if;
 end $$;
 
