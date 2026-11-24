@@ -50,6 +50,7 @@ for (const name of ['listOrders', 'listCustomers', 'dashboardOrders', 'getOrder'
     if (mode === 'error' || mode === 'stall' || (mode === 'empty' && name === 'loadProfileSession')) await assert.rejects(result)
     else await result
     assert.ok(test.signals.length > 0)
+    assert.ok(test.deadlines.includes(10_000))
     if (mode === 'stall') {
       assert.ok(test.signals.every(signal => signal.aborted))
       assert.equal(test.writes.length, 0)
@@ -67,7 +68,7 @@ for (const [name, table] of [['getOrder', 'order_items'], ['loadProfileSession',
 for (const name of ['signIn', 'signUp']) {
   const test = setup('stall')
   await assert.rejects(name === 'signIn' ? test.context.signIn('tester', 'password') : test.context.signUp({ username: 'tester', password: 'password', companyName: 'Test', displayName: '' }), /zaman aşımına/)
-  assert.ok(test.deadlines.includes(10_000))
+  assert.ok(test.deadlines.includes(15_000))
 }
 // Exercise the real Orders effect, not a duplicated fallback implementation.
 const ordersPage = parse(app).statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'OrdersPage')
@@ -104,6 +105,7 @@ for (const mode of ['headers-stall', 'body-stall', 'success', 'error']) {
     return { status: 200, statusText: 'OK', headers: {}, arrayBuffer: async () => mode === 'body-stall' ? new Promise(() => {}) : new TextEncoder().encode('{}').buffer }
   }
   const result = test.context.authFetch('https://example.invalid/auth/v1/token', {})
+  assert.ok(test.deadlines.includes(15_000))
   if (mode === 'success') assert.deepEqual(await (await result).json(), {})
   else await assert.rejects(result)
   if (mode.includes('stall')) assert.ok(signal.aborted)

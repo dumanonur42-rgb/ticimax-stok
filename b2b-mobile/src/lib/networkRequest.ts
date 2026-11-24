@@ -34,5 +34,5 @@ export const authFetch: typeof fetch = (input, init) => {
     return new Response([204, 205, 304].includes(response.status) ? null : body, {
       status: response.status, statusText: response.statusText, headers: response.headers
     })
-  }, parent, 4000)
+  }, parent, 15_000)
 }

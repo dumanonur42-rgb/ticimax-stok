@@ -228,7 +228,7 @@ async function loadProfileSession(userId: string): Promise<Session> {
     if (signal.aborted) throw new SessionRestoreTimeoutError()
     await unlockCatalogStorage()
     return session
-  }, undefined, 4000)
+  }, undefined, 10_000)
 }
 
 function mapCustomer(row: CustomerRow): Customer {
@@ -273,7 +273,7 @@ export async function signUp(input: { username: string; companyName: string; dis
       email: await loginEmail(username),
       password: input.password,
       options: { data: { username, display_name: input.displayName.trim() || company, company_name: company } }
-    }), 10_000)
+    }), 15_000)
     if (error) throw error
   } catch (error) {
     throw new Error(errorMessage(error))
@@ -284,7 +284,7 @@ export async function signIn(username: string, password: string): Promise<Sessio
   try {
     const cleanUsername = validateCredentials(username, password)
     const email = await loginEmail(cleanUsername)
-    const { data, error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }), 10_000)
+    const { data, error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }), 15_000)
     if (error) throw new Error(errorMessage(error))
     return await loadProfileSession(data.user.id)
   } catch (error) {
