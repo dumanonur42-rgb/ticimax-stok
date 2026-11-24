@@ -30,7 +30,7 @@ import { openExternal } from './lib/external'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
-import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut, signUp } from './lib/cloud'
+import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut, signUp } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
@@ -586,7 +586,7 @@ export default function App(): ReactNode {
     const registering = loginMode === 'register'
     return (
       <>
-        <main className={`login-screen${dark ? ' dark' : ''}`}>
+        <main className={`login-screen${dark ? ' dark' : ''}`} data-login-mode={loginMode}>
           <section className="login-card">
             <img className="login-mark" src={mark} alt="Yamansa Rulman" />
             <p className="eyebrow">BAYİ UYGULAMASI</p>
@@ -612,6 +612,7 @@ export default function App(): ReactNode {
                   <input
                     id="company-name"
                     autoComplete="organization"
+                    autoCapitalize={platform === 'ios' ? 'words' : undefined}
                     autoCorrect="off"
                     spellCheck={false}
                     enterKeyHint="next"
@@ -625,6 +626,7 @@ export default function App(): ReactNode {
                   <input
                     id="display-name"
                     autoComplete="name"
+                    autoCapitalize={platform === 'ios' ? 'words' : undefined}
                     autoCorrect="off"
                     spellCheck={false}
                     enterKeyHint="next"

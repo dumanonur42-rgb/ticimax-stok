@@ -9,7 +9,7 @@ const bootstrap = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name
 const setup = bootstrap.body.statements[0].getText(ast)
 const scrollField = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === 'scrollFocusedField')
 let scrollAmount = 0
-const login = { getBoundingClientRect: () => ({ top: 0 }), querySelector: () => ({ getBoundingClientRect: () => ({ top: 250, bottom: 300 }) }), scrollBy: ({ top }) => { scrollAmount += top } }
+const login = { dataset: {}, getBoundingClientRect: () => ({ top: 0 }), querySelector: () => ({ getBoundingClientRect: () => ({ top: 250, bottom: 300 }) }), scrollBy: ({ top }) => { scrollAmount += top } }
 class Field {
   matches() { return true }
   closest() { return login }

@@ -38,10 +38,12 @@ function scrollFocusedField(): void {
       const visibleBottom = Math.min(viewportBottom, keyboardTop) - 16
       const field = activeElement.getBoundingClientRect()
       const submit = loginScreen.querySelector<HTMLButtonElement>('button[type="submit"]')?.getBoundingClientRect()
-      const targetTop = Math.min(field.top, submit?.top ?? field.top)
-      const targetBottom = Math.max(field.bottom, submit?.bottom ?? field.bottom)
-      if (targetTop >= visibleTop && targetBottom <= visibleBottom) return
-      const needed = Math.max(0, targetBottom - visibleBottom)
+      const pinnedSubmit = Capacitor.getPlatform() === 'ios' && keyboard > 0 && loginScreen.dataset.loginMode === 'register' && submit
+      const fieldBottom = pinnedSubmit ? Math.min(visibleBottom, pinnedSubmit.top - 12) : visibleBottom
+      const targetTop = pinnedSubmit ? field.top : Math.min(field.top, submit?.top ?? field.top)
+      const targetBottom = pinnedSubmit ? field.bottom : Math.max(field.bottom, submit?.bottom ?? field.bottom)
+      if (targetTop >= visibleTop && targetBottom <= fieldBottom) return
+      const needed = Math.max(0, targetBottom - fieldBottom)
       const available = Math.max(0, targetTop - visibleTop)
       const amount = targetTop < visibleTop ? targetTop - visibleTop : Math.min(needed, available)
       if (amount) loginScreen.scrollBy({ top: amount, behavior: 'auto' })

@@ -79,6 +79,13 @@ img { max-width: 100%; }
   min-height: 0;
 }
 :root[data-platform='ios'][data-keyboard-open='true'] .login-card { margin-top: 0; }
+:root[data-platform='ios'][data-keyboard-open='true'] .login-screen[data-login-mode='register'] button[type='submit'] {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+  box-shadow: 0 -8px 12px var(--surface);
+}
 :root[data-platform='ios'] .sheet-backdrop { bottom: var(--ios-keyboard-height, 0px); }
 :root[data-platform='ios'] .bottom-sheet { max-height: min(820px, calc(var(--ios-viewport-height, 100dvh) - var(--safe-top) - var(--safe-bottom) - 12px)); }
 :root[data-platform='ios'] :is(button, [role='button'], nav, .bottom-tabs, .stock-toggle, .brand-option, .payment-options label, .copy-column-option) {
