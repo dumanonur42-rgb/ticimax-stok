@@ -26,7 +26,6 @@ import {
   type CopyColumn
 } from '@shared/copy'
 import { hasPerm } from '@shared/perms'
-import { dismissIOSKeyboard } from './lib/iosKeyboard'
 import { copyToClipboard } from './lib/clipboard'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
@@ -103,8 +102,6 @@ export default function App(): ReactNode {
   const copySheetOpenRef = useRef(false)
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
-
-  useEffect(() => { dismissIOSKeyboard() }, [tab, sheet])
 
   useEffect(() => {
     if (!session || !online) return

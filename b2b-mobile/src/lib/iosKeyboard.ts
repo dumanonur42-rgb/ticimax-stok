@@ -12,8 +12,12 @@ export function dismissIOSKeyboard(): void {
 
 export function installIOSKeyboardDismissal(): void {
   if (Capacitor.getPlatform() !== 'ios') return
-  const preservesEditing = (target: EventTarget | null): boolean => target instanceof Element &&
-    !!target.closest(`${editableSelector}, label, .quantity-stepper, .search-clear`)
+  const preservesEditing = (target: EventTarget | null): boolean => {
+    if (!(target instanceof Element)) return false
+    if (target.closest('.quantity-stepper, .search-clear')) return true
+    const editable = target.closest(editableSelector)
+    return !!editable && !editable.matches('input[type="checkbox"], input[type="radio"]')
+  }
   document.addEventListener('pointerdown', (event) => {
     if (!preservesEditing(event.target)) dismissIOSKeyboard()
   })

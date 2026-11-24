@@ -7,6 +7,22 @@ const source = await readFile(new URL('../src/main.tsx', import.meta.url), 'utf8
 const ast = ts.createSourceFile('main.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
 const bootstrap = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === 'bootstrap')
 const setup = bootstrap.body.statements[0].getText(ast)
+const scrollField = ast.statements.find(s => ts.isFunctionDeclaration(s) && s.name?.text === 'scrollFocusedField')
+let scrollAmount = 0
+const login = { getBoundingClientRect: () => ({ top: 0 }), querySelector: () => ({ getBoundingClientRect: () => ({ top: 250, bottom: 300 }) }), scrollBy: ({ top }) => { scrollAmount += top } }
+class Field {
+  matches() { return true }
+  closest() { return login }
+  getBoundingClientRect() { return { top: 40, bottom: 80 } }
+}
+const safeAreaContext = { root: {}, Capacitor: { getPlatform: () => 'ios' }, HTMLElement: Field,
+  document: { activeElement: new Field() }, window: { innerHeight: 667 }, requestAnimationFrame: fn => fn(),
+  getComputedStyle: element => element === login ? { paddingTop: '62px' } : { getPropertyValue: key => key === '--ios-keyboard-height' ? '300px' : 'max(62px, 0px)' } }
+vm.runInNewContext(ts.transpileModule(scrollField.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText + '\nscrollFocusedField()', safeAreaContext)
+assert.equal(scrollAmount, -34)
+safeAreaContext.document.activeElement = null
+vm.runInNewContext('scrollFocusedField()', safeAreaContext)
+assert.equal(scrollAmount, -34)
 for (const platform of ['ios', 'android', 'error', 'timeout']) {
   const values = new Map()
   const listeners = new Map()
@@ -83,7 +99,7 @@ for (const platform of ['ios', 'android']) {
   events.get('keydown')({ key: 'Enter', target: new Element(['textarea']) })
   events.get('keydown')({ key: 'Enter', target: input, isComposing: true })
   assert.equal(hidden, 1)
-  for (const selector of ['input', 'textarea', 'select', 'label', '.quantity-stepper', '.search-clear']) {
+  for (const selector of ['input', 'textarea', 'select', '.quantity-stepper', '.search-clear']) {
     events.get('pointerdown')({ target: new Element([selector]) })
   }
   assert.equal(hidden, 1)
@@ -102,4 +118,19 @@ for (const platform of ['ios', 'android']) {
   events.get('touchmove')({ touches: [] })
   assert.equal(hidden, 3)
 }
-console.log('iOS keyboard: ok (geometry, Done, Return, tap, user drag, init rejection/timeout; Android untouched)')
+const storeSource = await readFile(new URL('../src/store/app.ts', import.meta.url), 'utf8')
+const storeAst = ts.createSourceFile('app.ts', storeSource, ts.ScriptTarget.Latest, true)
+const transitions = []
+function visit(node) {
+  if (ts.isPropertyAssignment(node) && ['setTab', 'setSheet'].includes(node.name.getText(storeAst))) transitions.push(node.initializer.getText(storeAst))
+  ts.forEachChild(node, visit)
+}
+visit(storeAst)
+assert.equal(transitions.length, 2)
+for (const transition of transitions) {
+  const order = []
+  const js = ts.transpileModule(`(${transition})(null)`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
+  vm.runInNewContext(js, { dismissIOSKeyboard: () => order.push('dismiss'), set: () => order.push('transition') })
+  assert.deepEqual(order, ['dismiss', 'transition'])
+}
+console.log('iOS keyboard: ok (geometry, Done, Return, tap, user drag, transitions, init rejection/timeout; Android untouched)')

@@ -29,7 +29,9 @@ function scrollFocusedField(): void {
     requestAnimationFrame(() => {
       const keyboardProperty = Capacitor.getPlatform() === 'ios' ? '--ios-keyboard-height' : '--keyboard'
       const keyboard = Number.parseFloat(getComputedStyle(root).getPropertyValue(keyboardProperty)) || 0
-      const safeTop = Number.parseFloat(getComputedStyle(loginScreen).paddingTop) || 0
+      const safeTop = Number.parseFloat(Capacitor.getPlatform() === 'ios'
+        ? getComputedStyle(loginScreen).paddingTop
+        : getComputedStyle(root).getPropertyValue('--safe-top')) || 0
       const visibleTop = loginScreen.getBoundingClientRect().top + safeTop + 12
       const viewportBottom = (window.visualViewport?.offsetTop ?? 0) + (window.visualViewport?.height ?? window.innerHeight)
       const keyboardTop = keyboard > 0 ? window.innerHeight - keyboard : window.innerHeight
@@ -85,10 +87,8 @@ async function bootstrap(): Promise<void> {
     let stopped = false
     let timer: number | undefined
     const handles: { remove: () => Promise<void> }[] = []
-    const listen = async (name: 'keyboardWillShow' | 'keyboardDidShow' | 'keyboardWillHide' | 'keyboardDidHide'): Promise<void> => {
-      const handle = await Keyboard.addListener(name, (info) => {
-        if (!stopped) updateKeyboard(name.endsWith('Hide') ? 0 : info.keyboardHeight)
-      })
+    const listen = async (pending: Promise<{ remove: () => Promise<void> }>): Promise<void> => {
+      const handle = await pending
       if (stopped) void handle.remove().catch(() => undefined)
       else handles.push(handle)
     }
@@ -97,7 +97,12 @@ async function bootstrap(): Promise<void> {
         Promise.all([
           Keyboard.setResizeMode({ mode: KeyboardResize.None }),
           Keyboard.setAccessoryBarVisible({ isVisible: true }),
-          ...(['keyboardWillShow', 'keyboardDidShow', 'keyboardWillHide', 'keyboardDidHide'] as const).map(listen)
+          ...[
+            Keyboard.addListener('keyboardWillShow', ({ keyboardHeight }) => { if (!stopped) updateKeyboard(keyboardHeight) }),
+            Keyboard.addListener('keyboardDidShow', ({ keyboardHeight }) => { if (!stopped) updateKeyboard(keyboardHeight) }),
+            Keyboard.addListener('keyboardWillHide', () => { if (!stopped) updateKeyboard(0) }),
+            Keyboard.addListener('keyboardDidHide', () => { if (!stopped) updateKeyboard(0) })
+          ].map(listen)
         ]),
         new Promise<never>((_, reject) => {
           timer = window.setTimeout(() => reject(new Error('Keyboard initialization timed out')), 1500)
