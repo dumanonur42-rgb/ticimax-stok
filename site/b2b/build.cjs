@@ -41,14 +41,14 @@ const LP = fix(`<div class="yb-lp">
 <div class="yb-crumb">Anasayfa › <b>Bayi Uygulaması</b></div>
 <div class="yb-hero">
  <div><span class="yb-kicker">YAMANSA B2B · BAYİLERİMİZE ÖZEL</span>
-  <h1>Stok, bayi fiyatı ve sipariş<span>cebinizde ve bilgisayarınızda</span></h1>
+  <h1>Stok, bayi fiyatı<br class="yb-m"> ve sipariş<span>cebinizde<i class="yb-d"> ve bilgisayarınızda</i></span></h1>
   <p class="yb-lead">Yamansa Rulman bayileri 9.000'den fazla ürünün stok durumunu ve kendilerine özel fiyatını anında görür, siparişini birkaç saniyede verir.</p>
   <div class="yb-badges">${BADGES}</div>
   <a class="yb-winlink" href="${WIN}">${svgWin()} Bilgisayar için Windows sürümü</a>
-  <ul class="yb-ticks"><li>Ücretsiz</li><li>Tek hesap, tüm cihazlar</li><li>İnternetsiz katalog</li></ul>
+  <ul class="yb-ticks"><li>Ücretsiz</li><li><span>Tek hesap<i class="yb-d">, tüm cihazlar</i></span></li><li>İnternetsiz katalog</li></ul>
   <div class="yb-note">Uygulama kayıtlı bayilerimiz içindir. Hesabınız yoksa <a href="${WA}">WhatsApp'tan bayi hesabı isteyin</a>.</div>
  </div>
- <div class="yb-vis">${WINDOW}${phone(S.katalog,'Yamansa B2B ürün kataloğu')}</div>
+ <div class="yb-vis">${WINDOW}<div class="yb-ph yb-ph2" aria-hidden="true"><img src="${S.panel}" alt="" width="520" height="1156" decoding="async"></div>${phone(S.katalog,'Yamansa B2B ürün kataloğu')}</div>
 </div>
 <div class="yb-stats"><div><b>9.000<span>+</span></b><small>ürün, güncel stok bilgisiyle</small></div><div><b>50<span>+</span></b><small>rulman ve güç aktarım markası</small></div><div><b>3</b><small>platform: Android, iPhone, Windows</small></div><div><b>7/24</b><small>sipariş, mesai saati beklemeden</small></div></div>
 
@@ -69,7 +69,7 @@ const LP = fix(`<div class="yb-lp">
   <div class="yb-shot">${phone(S.arama,'Ürün arama')}<b>Ürün arama</b><span>Kodu yazın, sonuçlar anında gelsin</span></div>
   <div class="yb-shot">${phone(S.detay,'Ürün detayı')}<b>Ürün detayı</b><span>Stok adedi ve fiyat bir arada</span></div>
   <div class="yb-shot">${phone(S.sepet,'Sepet')}<b>Sepet</b><span>Adedi belirleyin, siparişi gönderin</span></div>
- </div></div>
+ </div><div class="yb-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div></div>
 
 <h2 class="yb-h">Cihazınıza indirin</h2>
 <p class="yb-sub">Aynı kullanıcı adı ve şifreyle bütün cihazlarınızda giriş yapabilirsiniz.</p>
@@ -99,7 +99,7 @@ const LP = fix(`<div class="yb-lp">
 <div class="yb-cta"><div><b class="t">Henüz bayimiz değil misiniz?</b><p>Firma bilgilerinizi gönderin, bayi hesabınızı açalım. Sorularınız için bize her zaman ulaşabilirsiniz.</p></div>
  <div class="yb-cta-b"><a class="yb-btn wa" href="${WA}">${I.wa} WhatsApp'tan bayi ol</a><a class="yb-btn tel" href="tel:+905526109363">${I.tel} 0552 610 93 63</a><a class="yb-btn mail" href="mailto:info@yamansarulman.com">${I.mail} E-posta</a></div></div>
 </div>`);
-const FSTRIP = fix(`<div class="yb-fstrip" id="yb-foot"><div class="yb-fstrip-in"><div class="yb-fstrip-l"><img class="yb-fstrip-ic" src="${ICON}" alt=""><div><div class="yb-fstrip-t">Yamansa B2B Bayi Uygulaması<i>YENİ</i></div><div class="yb-fstrip-s">Stok, bayi fiyatı ve sipariş · Android, iPhone ve Windows<a href="${LPURL}">Detaylı bilgi →</a></div></div></div><div class="yb-badges">${BADGES}</div><a class="yb-fstrip-m" href="${LPURL}">Windows sürümü ve detaylar →</a></div></div>`);
+const FSTRIP = fix(`<div class="yb-fstrip" id="yb-foot"><div class="yb-fstrip-in"><div class="yb-fstrip-l"><img class="yb-fstrip-ic" src="${ICON}" alt=""><div><div class="yb-fstrip-t">Yamansa B2B Bayi Uygulaması<i>YENİ</i></div><div class="yb-fstrip-s">Stok, bayi fiyatı ve sipariş<span class="yb-d"> · Android, iPhone ve Windows</span><a href="${LPURL}">Detaylı bilgi →</a></div></div></div><div class="yb-badges">${BADGES}</div><a class="yb-fstrip-m" href="${LPURL}">Windows sürümü ve detaylar →</a></div></div>`);
 
 const TOP = `<a class="yb-top-link" href="${LPURL}">${I.phone} Bayi Uygulaması <i>YENİ</i></a>`;
 const HEAD = `<a class="yb-head-btn" href="${LPURL}"><img src="${ICON}" alt="" width="32" height="32"><span><small>Bayilere özel</small>B2B Uygulama</span></a>`;
@@ -110,25 +110,25 @@ const js = `/* Yamansa B2B bayi uygulamasi tanitimi: ust serit baglantisi, menu 
 if(window.__ybB2B)return;window.__ybB2B=1;
 var B=((document.currentScript&&document.currentScript.src)||"").replace(/[^\\/]*$/,"");
 var TOP=${J(TOP)},HEAD=${J(HEAD)},FS=${J(FSTRIP)},LP=${J(LP)};
-var isLP=/^\\/bayi-uygulamasi\\/?$/i.test(location.pathname),ready=false,t0=Date.now(),desk=window.matchMedia("(min-width:1024px)");
+var isLP=/^\\/bayi-uygulamasi\\/?$/i.test(location.pathname),ready=false,t0=Date.now();
 var l=document.createElement("link");l.rel="stylesheet";l.href=B+"b2b.css";l.onload=function(){ready=true;run()};l.onerror=function(){ready=true};
 (document.head||document.documentElement).appendChild(l);
 function ins(sel,pos,html,mark){var el=document.querySelector(sel);if(!el||document.querySelector(mark))return;el.insertAdjacentHTML(pos,html)}
+function dots(c){var r=c.querySelector(".yb-shots-row"),d=c.querySelectorAll(".yb-dots i");if(!r||!d.length)return;r.addEventListener("scroll",function(){var m=r.scrollWidth-r.clientWidth,k=m>0?Math.round(r.scrollLeft/m*(d.length-1)):0;for(var i=0;i<d.length;i++)d[i].className=i===k?"on":""},{passive:true})}
 function run(){
 if(!ready)return;
 ins(".yr-banner","beforeend",TOP,".yb-top-link");
 ins("#divHeaderUyeV2","beforebegin",HEAD,".yb-head-btn");
 ins("footer","beforebegin",FS,".yb-fstrip");
-if(isLP&&desk.matches&&!document.querySelector(".yb-lp")){var c=document.querySelector("#divIcerik");if(c){c.innerHTML=LP;document.documentElement.classList.add("yb-lp-page")}}
+if(isLP&&!document.querySelector(".yb-lp")){var c=document.querySelector("#divIcerik");if(c){c.innerHTML=LP;document.documentElement.classList.add("yb-lp-page");dots(c)}}
 }
-function loop(){run();var done=document.querySelector(".yb-top-link")&&document.querySelector(".yb-head-btn")&&document.querySelector(".yb-fstrip")&&(!isLP||!desk.matches||document.querySelector(".yb-lp"));if(!done&&Date.now()-t0<20000)setTimeout(loop,250)}
-if(desk.addEventListener)desk.addEventListener("change",run);
+function loop(){run();var done=document.querySelector(".yb-top-link")&&document.querySelector(".yb-head-btn")&&document.querySelector(".yb-fstrip")&&(!isLP||document.querySelector(".yb-lp"));if(!done&&Date.now()-t0<20000)setTimeout(loop,250)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loop);else loop();
 })();
 `;
 fs.writeFileSync(__dirname + '/b2b.js', js);
 /* Ticimax "Sayfa Yönetimi" > Bayi Uygulaması (adres: bayi-uygulamasi) sayfasının içeriği.
-   Masaüstünde b2b.js bu içeriği tanıtım sayfasıyla değiştirir; telefonda ve betik yüklenemezse bu sade içerik görünür. */
+   b2b.js bu içeriği tanıtım sayfasıyla değiştirir; betik yüklenemezse bu sade içerik görünür (yükleyicideki stil, değişim sırasında bu içeriği 6 sn gizler). */
 const PAGE = `<style type="text/css">.yb-fb{max-width:760px;margin:24px auto 40px;padding:0 16px;font-family:Montserrat,Arial,sans-serif;color:#0b1f4b;font-size:15px;line-height:1.7;box-sizing:border-box}
 .yb-fb *{box-sizing:border-box}
 .yb-fb h1{font-size:26px;line-height:1.25;margin:0 0 10px;font-weight:700;color:#0b1f4b}
@@ -165,9 +165,11 @@ const PAGE = `<style type="text/css">.yb-fb{max-width:760px;margin:24px auto 40p
 </div>
 `;
 fs.writeFileSync(__dirname + '/page-content.html', PAGE);
+/* Ticimax "Script Yönetimi" > "Tüm Sayfalar - Header" kaydının sonuna eklenen yükleyici. <commit> yerine bu dalın sabitlenen commit'i yazılır. */
+const CDN = 'https://cdn.jsdelivr.net/gh/dumanonur42-rgb/ticimax-stok@<commit>/site/b2b/';
+fs.writeFileSync(__dirname + '/loader.html', `<style>.yb-fb{visibility:hidden;min-height:70vh;animation:ybfb 0s linear 6s forwards}@keyframes ybfb{to{visibility:visible}}</style><link rel="preload" as="style" href="${CDN}b2b.css"><script src="${CDN}b2b.js" defer></script>\n`);
 
 let css = fs.readFileSync(__dirname + '/b2b.src.css', 'utf8');
 css = css.slice(0, css.indexOf('/* mockup işaretleri */'));
-css += '/* telefon tasarımı onaylanana kadar footer şeridi yalnızca masaüstünde */\n@media (max-width:1023px){.yb-fstrip{display:none!important}}\n';
 fs.writeFileSync(__dirname + '/b2b.css', css);
 console.log('js', js.length, 'css', css.length);
