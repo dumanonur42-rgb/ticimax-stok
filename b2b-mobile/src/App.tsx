@@ -974,12 +974,13 @@ function ProductsPage({ entries, variantIndex, settings, session, loading, onToa
     })
   }, [searchResult.matches, sort])
   const searchMs = searchResult.elapsed
+  const getItemKey = useCallback((index: number) => results[index].id, [results])
   const virtualizer = useVirtualizer({
     count: results.length,
     getScrollElement: () => scrollRef.current,
     estimateSize: () => view === 'table' ? 66 : 210,
-    getItemKey: (index) => results[index].id,
-    overscan: 5
+    getItemKey,
+    overscan: Capacitor.getPlatform() === 'ios' ? 10 : 5
   })
   const showPrices = settings.show_prices_to_dealers !== false || hasPerm(session.user, 'prices')
   const canShelf = hasPerm(session.user, 'shelf')
