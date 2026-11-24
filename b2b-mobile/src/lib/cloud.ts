@@ -504,7 +504,13 @@ export async function createOrder(input: OrderInput): Promise<Order> {
     if (/Sunucuya ulaşılamıyor/.test(message)) throw new Error('Sipariş oluşturmak için internet bağlantısı gerekir.')
     throw new Error(message)
   }
-  const order = await getOrder(Number(id))
-  if (!order) throw new Error('Sipariş kaydedildi ancak okunamadı.')
-  return order
+  // The order is saved at this point: a failed read-back must not look like a failed checkout.
+  const saved = await getOrder(Number(id)).catch(() => null) ?? await getOrder(Number(id)).catch(() => null)
+  if (saved) return saved
+  const now = new Date().toISOString()
+  return {
+    id: Number(id), order_no: '', customer_id: input.customer_id, customer_name: '', status: 'beklemede', note: input.note ?? '',
+    payment: input.payment, currency: input.currency, subtotal: 0, discount: 0, vat_pct: input.vat_pct, vat: 0, total: 0,
+    created_by: '', created_at: now, updated_at: now
+  }
 }
