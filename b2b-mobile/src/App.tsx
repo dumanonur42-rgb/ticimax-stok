@@ -616,7 +616,6 @@ export default function App(): ReactNode {
                     autoCorrect="off"
                     spellCheck={false}
                     enterKeyHint="next"
-                    maxLength={60}
                     placeholder={registering ? 'Örn. yilmazrulman' : undefined}
                     aria-invalid={loginFieldError === 'username'}
                     aria-describedby={loginFieldError === 'username' ? 'username-error' : undefined}
