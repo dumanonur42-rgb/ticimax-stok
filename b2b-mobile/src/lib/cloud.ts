@@ -88,6 +88,10 @@ function errorMessage(error: unknown): string {
       ? String(error.message)
       : String(error)
   if (/Invalid login credentials/i.test(message)) return 'Kullanıcı adı veya şifre hatalı.'
+  if (/already registered|already been registered|duplicate key value.*profiles_username/i.test(message)) return 'Bu kullanıcı adı zaten alınmış.'
+  if (/Password should be at least/i.test(message)) return 'Şifre en az 6 karakter olmalı.'
+  if (/rate limit|only request this after/i.test(message)) return 'Çok fazla deneme yapıldı. Lütfen biraz sonra tekrar deneyin.'
+  if (/Database error saving new user/i.test(message)) return 'Kayıt tamamlanamadı. Farklı bir kullanıcı adı deneyin.'
   if (/fetch failed|Failed to fetch|network|timeout|ECONN|ENOTFOUND|aborted/i.test(message)) {
     return 'Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.'
   }
@@ -227,12 +231,37 @@ async function cachedSession(): Promise<Session | null> {
   }
 }
 
+function validateCredentials(username: string, password: string): string {
+  const cleanUsername = username.trim().replace(/\s+/g, ' ')
+  if (cleanUsername.length < 3) throw new Error('Kullanıcı adı en az 3 karakter olmalı.')
+  if (!/^[\p{L}\p{N} ._-]+$/u.test(cleanUsername)) throw new Error('Kullanıcı adı yalnızca harf, rakam, boşluk, nokta, alt çizgi ve tire içerebilir.')
+  if (password.length < 6) throw new Error('Şifre en az 6 karakter olmalı.')
+  return cleanUsername
+}
+
+/** Self-service sign-up: a dealer account with its own company card, locked until an administrator approves it. */
+export async function signUp(input: { username: string; companyName: string; displayName: string; password: string }): Promise<void> {
+  const username = validateCredentials(input.username, input.password)
+  const company = input.companyName.trim()
+  if (company.length < 2) throw new Error('İşletme adı en az 2 karakter olmalı.')
+  const client = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false, storageKey: 'yamansa-b2b-signup' }
+  })
+  try {
+    const { error } = await client.auth.signUp({
+      email: await loginEmail(username),
+      password: input.password,
+      options: { data: { username, display_name: input.displayName.trim() || company, company_name: company } }
+    })
+    if (error) throw error
+  } catch (error) {
+    throw new Error(errorMessage(error))
+  }
+}
+
 export async function signIn(username: string, password: string): Promise<Session> {
   try {
-    const cleanUsername = username.trim().replace(/\s+/g, ' ')
-    if (cleanUsername.length < 3) throw new Error('Kullanıcı adı en az 3 karakter olmalı.')
-    if (!/^[\p{L}\p{N} ._-]+$/u.test(cleanUsername)) throw new Error('Kullanıcı adı yalnızca harf, rakam, boşluk, nokta, alt çizgi ve tire içerebilir.')
-    if (password.length < 6) throw new Error('Şifre en az 6 karakter olmalı.')
+    const cleanUsername = validateCredentials(username, password)
     const email = await loginEmail(cleanUsername)
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw new Error(errorMessage(error))
