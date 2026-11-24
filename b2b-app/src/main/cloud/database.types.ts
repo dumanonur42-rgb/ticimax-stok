@@ -213,6 +213,7 @@ export interface Database {
       admin_get_password: { Args: { p_user: string }; Returns: string | null }
       prune_logs: { Args: Record<string, never>; Returns: undefined }
       admin_delete_user: { Args: { p_user: string }; Returns: undefined }
+      delete_my_account: { Args: Record<string, never>; Returns: undefined }
       deactivate_products_not_in: { Args: { p_norms: string[] }; Returns: number }
       soft_delete_all_products: { Args: Record<string, never>; Returns: undefined }
       purge_all_products: { Args: Record<string, never>; Returns: number }

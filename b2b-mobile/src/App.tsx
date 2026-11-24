@@ -30,7 +30,7 @@ import { openExternal } from './lib/external'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
-import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut, signUp } from './lib/cloud'
+import { cacheOrder, cacheOrders, cancelOrder, createOrder, dashboardOrders, deleteMyAccount, getOrder, listCustomers, listOrders, loadSettings, readCachedOrder, readCachedOrders, restoreSession, signIn, signOut, signUp } from './lib/cloud'
 import { cancelActivitySearch, flushActivity, logActivity, scheduleActivitySearch, setActivitySession } from './lib/activity'
 import { displayPrice, money, num, STATUS_LABEL } from './lib/format'
 import { readProducts } from './lib/idb'
@@ -550,6 +550,19 @@ export default function App(): ReactNode {
     }
   }
 
+  const onDeleteAccount = async (): Promise<void> => {
+    await flushActivity().catch(() => undefined)
+    await deleteMyAccount()
+    setActivitySession(null)
+    setSession(null)
+    setProducts([])
+    setCustomers([])
+    clearCart()
+    setTab('home')
+    setLoginName('')
+    setLoginNotice('Hesabınız silindi.')
+  }
+
   const changeThemePreference = (preference: ThemePreference): void => {
     if (preference === 'system') setSystemDark(window.matchMedia('(prefers-color-scheme: dark)').matches)
     setThemePreference(preference)
@@ -750,7 +763,7 @@ export default function App(): ReactNode {
           {tab === 'products' && <ProductsPage entries={searchIndex} variantIndex={productVariants} settings={settings} session={session} loading={syncBusy && products.length === 0} onToast={showToast} />}
           {tab === 'cart' && <CartPage session={session} settings={settings} customers={customers} products={products} online={online} onToast={showToast} onOrderCreated={() => setOrderRefresh((n) => n + 1)} onViewOrders={() => setTab('orders')} />}
           {tab === 'orders' && <OrdersPage settings={settings} refreshKey={orderRefresh} selectedOrderId={selectedOrderId} onSelectOrder={(id) => { setSelectedOrderId(id); setSheet('order') }} onRefresh={() => setOrderRefresh((n) => n + 1)} onLoaded={onOrdersLoaded} />}
-          {tab === 'account' && <AccountPage session={session} onLogout={() => void onLogout()} themePreference={themePreference} onThemeChange={changeThemePreference} />}
+          {tab === 'account' && <AccountPage session={session} online={online} onLogout={() => void onLogout()} onDeleteAccount={onDeleteAccount} themePreference={themePreference} onThemeChange={changeThemePreference} />}
         </main>
         <BottomTabs tab={tab} setTab={setTab} cartLineCount={cartLineCount} />
         {sheet === 'filters' && <FilterSheet
@@ -1717,9 +1730,29 @@ function OrderDetail({ id, settings, onClose, onRefresh, onToast }: { id: number
   )
 }
 
-function AccountPage({ session, onLogout, themePreference, onThemeChange }: {
-  session: Session; onLogout: () => void; themePreference: ThemePreference; onThemeChange: (preference: ThemePreference) => void
+function AccountPage({ session, online, onLogout, onDeleteAccount, themePreference, onThemeChange }: {
+  session: Session; online: boolean; onLogout: () => void; onDeleteAccount: () => Promise<void>; themePreference: ThemePreference; onThemeChange: (preference: ThemePreference) => void
 }): ReactNode {
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleteConfirmed, setDeleteConfirmed] = useState(false)
+  const [deleteBusy, setDeleteBusy] = useState(false)
+  const [deleteError, setDeleteError] = useState('')
+  const closeDelete = (): void => {
+    if (deleteBusy) return
+    setDeleteOpen(false)
+    setDeleteConfirmed(false)
+    setDeleteError('')
+  }
+  const confirmDelete = async (): Promise<void> => {
+    setDeleteBusy(true)
+    setDeleteError('')
+    try {
+      await onDeleteAccount()
+    } catch (error) {
+      setDeleteError(userFacingError(error))
+      setDeleteBusy(false)
+    }
+  }
   const themeGroup = useRef<HTMLDivElement>(null)
   const themeOptions: { value: ThemePreference; label: string; icon: typeof Monitor }[] = [
     { value: 'system', label: 'Sistem', icon: Monitor },
@@ -1764,7 +1797,35 @@ function AccountPage({ session, onLogout, themePreference, onThemeChange }: {
       </section>
       <div className="account-actions">
         <button className="button danger wide" onClick={onLogout}>Çıkış yap</button>
+        <button className="text-button delete-account-link" onClick={() => setDeleteOpen(true)}>Hesabımı sil</button>
       </div>
+      {deleteOpen && (
+        <Sheet
+          title="Hesabımı sil"
+          onClose={closeDelete}
+          footer={
+            <div className="delete-account-actions">
+              <button className="button secondary" onClick={closeDelete} disabled={deleteBusy}>Vazgeç</button>
+              <button className="button danger" onClick={() => void confirmDelete()} disabled={!deleteConfirmed || deleteBusy || !online}>{deleteBusy ? 'Siliniyor…' : 'Hesabımı kalıcı olarak sil'}</button>
+            </div>
+          }
+        >
+          <div className="delete-account">
+            <p><strong>{session.user.username}</strong> hesabı kalıcı olarak silinecek. Bu işlem geri alınamaz.</p>
+            <ul>
+              <li>Bu kullanıcı adı ve şifreyle bir daha giriş yapamazsınız.</li>
+              <li>Sepetiniz ve bu cihazdaki verileriniz silinir.</li>
+              <li>Verdiğiniz siparişler, yasal ve ticari kayıt olarak Yamansa Rulman'da saklanır.</li>
+            </ul>
+            <label className="delete-account-check">
+              <input type="checkbox" checked={deleteConfirmed} disabled={deleteBusy} onChange={(event) => setDeleteConfirmed(event.target.checked)} />
+              <span>Hesabımın kalıcı olarak silineceğini anlıyorum.</span>
+            </label>
+            {!online && <p className="error-text" role="status">Hesabı silmek için internet bağlantısı gerekir.</p>}
+            {deleteError && <p className="error-text" role="alert">{deleteError}</p>}
+          </div>
+        </Sheet>
+      )}
       <p className="version-note">Yamansa Rulman B2B · {APP_VERSION}</p>
     </div>
   )

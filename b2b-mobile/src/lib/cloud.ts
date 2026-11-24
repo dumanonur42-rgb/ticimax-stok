@@ -381,6 +381,12 @@ export async function signOut(): Promise<void> {
   if (error) throw new Error(errorMessage(error))
 }
 
+export async function deleteMyAccount(): Promise<void> {
+  const { error } = await supabase.rpc('delete_my_account')
+  if (error) throw new Error(errorMessage(error))
+  await signOut().catch(() => undefined)
+}
+
 export async function loadSettings(signal?: AbortSignal): Promise<Settings> {
   const query = supabase.from('settings').select('key,value')
   const { data, error } = await networkRequest(requestSignal => query.abortSignal(requestSignal), signal)

@@ -688,6 +688,13 @@ img { max-width: 100%; }
 .info-row span { flex: 0 0 auto; color: var(--muted); }
 .info-row strong { min-width: 0; text-align: right; overflow-wrap: anywhere; font-weight: 650; }
 .account-actions { display: grid; gap: 9px; margin-top: 13px; }
+.delete-account-link { min-height: 44px; color: var(--red); background: none; font-size: .88rem; font-weight: 650; }
+.delete-account { display: grid; gap: 12px; padding: 0; font-size: .92rem; line-height: 1.45; }
+.delete-account p { margin: 0; overflow-wrap: anywhere; }
+.delete-account ul { display: grid; gap: 6px; margin: 0; padding-left: 20px; color: var(--muted); }
+.delete-account-check { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); font-weight: 650; }
+.delete-account-check input { flex: 0 0 auto; width: 20px; height: 20px; margin: 1px 0 0; accent-color: #ae3831; }
+.delete-account-actions { display: grid; grid-template-columns: auto 1fr; gap: 9px; padding: 12px 18px max(12px, var(--safe-bottom)); }
 .version-note { margin: 17px 0 0; color: var(--muted); text-align: center; font-size: .74rem; }
 .required-update { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: max(24px, var(--safe-top)) calc(24px + var(--safe-right)) max(24px, var(--safe-bottom)) calc(24px + var(--safe-left)); background: linear-gradient(to bottom, var(--status-bar-color) 0 var(--safe-top), #f5f7fb var(--safe-top)); color: #17243a; text-align: center; }
 .required-update.dark { background: #101a28; color: #f4f7fc; }
