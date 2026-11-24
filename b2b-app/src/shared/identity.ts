@@ -265,6 +265,8 @@ const ORIGIN_NAMES = new Map<string, string>([
   ['EU', 'Avrupa'],
   ['AVRUPA', 'Avrupa'],
   ['ALMANYA', 'Almanya'],
+  ['GERMAN', 'Almanya'],
+  ['UK', 'İngiltere'],
   ['JAPONYA', 'Japonya'],
   ['ITALIA', 'İtalya'],
   ['AMERIKA', 'ABD'],

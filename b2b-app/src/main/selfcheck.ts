@@ -887,6 +887,7 @@ export async function runSelfCheck(): Promise<number> {
     brandOrigin('GERMANY/İNA').base === 'İNA' && brandOrigin('ÇİN ÇIKMA').base === 'ÇİN' &&
     brandOrigin('ÇIKMA/ÇİN').base === 'ÇİN' && brandOrigin('ÇIKMA/ÇİN').condition === 'Çıkma' && brandOrigin('ÇIKMA/ÇİN').origin === '' &&
     brandOrigin('SKF GERMANY ÇIKMA').base === 'SKF' && brandOrigin('SKF GERMANY ÇIKMA').origin === 'Almanya' && brandOrigin('SKF GERMANY ÇIKMA').condition === 'Çıkma' &&
+    brandOrigin('SKF GERMAN').base === 'SKF' && brandOrigin('RHP UK').origin === 'İngiltere' &&
     brandOrigin('GPZ-ZKL').base === 'GPZ-ZKL' && brandOrigin('D-TECH').base === 'D-TECH' && brandOrigin('').base === '' &&
     mergeBrandAliases({}).HOFFMAN === 'HOFFMANN' &&
     mergeBrandAliases({}).HOFFMAN === DEFAULT_BRAND_ALIASES.HOFFMAN &&
