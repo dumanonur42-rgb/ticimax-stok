@@ -1,9 +1,9 @@
 import type { Product } from '@shared/types'
 import { boxParts, brandOrigin, normalize } from '@shared/identity'
-import { MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
+import { Braces, Check, Info, MapPin, Minus, Pencil, Plus, ShoppingCart, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { api } from '@/lib/api'
-import { date, mm, money, num, stockLevel } from '@/lib/format'
+import { date, money, num, stockLevel } from '@/lib/format'
 import { useApp, useCart } from '@/store/app'
 import { cardPrice } from '@shared/price'
 import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
@@ -40,6 +40,10 @@ export function ProductDrawer({
   const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
+  const hasPrice = product.price != null && product.price > 0
+  const hasDims = product.d_inner != null || product.d_outer != null || product.width != null
+  const stockNote = lvl.cls === 'out' ? 'Stok yok' : lvl.cls === 'low' ? 'Az kaldı' : 'Stokta'
+  const tags = [product.box, product.category, product.type, product.seal].filter(Boolean)
   const codeInfo = useMemo(() => explainProductCode(product.sku, product.brand), [product.sku, product.brand])
 
   useEffect(() => {
@@ -130,19 +134,7 @@ export function ProductDrawer({
             <X size={18} aria-hidden />
           </button>
         </div>
-        <div className="drawer-body grid" style={{ gap: 18, alignContent: 'start' }}>
-          <div>
-            <h3 style={{ marginBottom: 4 }}>{product.name}</h3>
-            <div className="row wrap small">
-              {product.brand && <span className="badge info">{brand.base}{brand.origin && <small> · Menşei: {brand.origin}</small>}</span>}
-              {product.box && <span className="badge neutral">{product.box}</span>}
-              {product.category && <span className="badge neutral">{product.category}</span>}
-              {product.type && <span className="badge neutral">{product.type}</span>}
-              {product.seal && <span className="badge neutral">{product.seal}</span>}
-              {!product.active && <span className="badge out">Pasif</span>}
-            </div>
-          </div>
-
+        <div className="drawer-body grid" style={{ gap: 16, alignContent: 'start' }}>
           {canSeeShelf ? (
             <section className="shelf-card shelf-card-locations" role="group" aria-label="Raflar">
               <MapPin size={22} aria-hidden />
@@ -179,110 +171,121 @@ export function ProductDrawer({
             </section>
           ) : null}
 
-          {(product.d_inner != null || product.d_outer != null || product.width != null) && (
-            <div className="dims" role="group" aria-label="Ölçüler">
-              <div className="dim">
-                <b>{num(product.d_inner)}</b>
-                <span>İç çap d (mm)</span>
+          <section className="pd-card" aria-labelledby="pd-name">
+            <div className="pd-head">
+              <div className="pd-head-text">
+                <span className="pd-eyebrow">Ürün</span>
+                <h3 id="pd-name" className="pd-name">{product.name}</h3>
               </div>
-              <div className="dim">
-                <b>{num(product.d_outer)}</b>
-                <span>Dış çap D (mm)</span>
-              </div>
-              <div className="dim">
-                <b>{num(product.width)}</b>
-                <span>Genişlik B (mm)</span>
-              </div>
+              {product.brand && (
+                <span className="pd-brand">
+                  <b>{brand.base}</b>
+                  {brand.origin && <small>Menşei: {brand.origin}</small>}
+                </span>
+              )}
+              {tags.length > 0 && (
+                <ul className="pd-tags" aria-label="Özellikler">
+                  {tags.map((tag) => <li key={tag}>{tag}</li>)}
+                  {!product.active && <li className="out">Pasif</li>}
+                </ul>
+              )}
             </div>
-          )}
 
-          <dl className="dl">
-            <dt>Stok</dt>
-            <dd>
-              <span className={`badge ${lvl.cls}`}>{lvl.label}</span> <span className="muted small">{product.unit}</span>
-            </dd>
-            {showPrices && (
-              <>
-                <dt>Fiyat</dt>
+            <dl className="pd-stats">
+              <div className={`pd-stat pd-stock ${lvl.cls}`}>
+                <dt>Stok</dt>
                 <dd>
-                  <strong>{product.price != null && product.price > 0 ? money(product.price, product.currency) : 'Fiyat sorunuz'}</strong>
-                  {product.list_price != null && product.price != null && product.list_price > product.price && (
-                    <span className="muted small">
-                      {' '}
-                      · liste <s>{money(product.list_price, product.currency)}</s>
-                    </span>
-                  )}
+                  <b>{num(Math.max(0, product.stock))}</b> <small>{product.unit.trim() || 'adet'}</small>
+                  <span className="pd-stat-note"><i aria-hidden />{stockNote}</span>
                 </dd>
-                {cp != null && (
-                  <>
-                    <dt>Kredi Kartı Fiyatı</dt>
-                    <dd>
-                      <strong>{money(cp, product.currency)}</strong>
-                    </dd>
-                  </>
-                )}
-              </>
-            )}
-            {product.min_order > 1 && (
-              <>
-                <dt>Min. sipariş</dt>
-                <dd>{num(product.min_order)}</dd>
-              </>
-            )}
-            {product.barcode && (
-              <>
-                <dt>Barkod</dt>
-                <dd className="mono">{product.barcode}</dd>
-              </>
-            )}
-            {(product.d_inner != null || product.d_outer != null || product.width != null) && (
-              <>
-                <dt>Ölçü</dt>
-                <dd>
-                  {mm(product.d_inner)} × {mm(product.d_outer)} × {mm(product.width)}
-                </dd>
-              </>
-            )}
-            <dt>Güncelleme</dt>
-            <dd className="small">{date(product.updated_at)}</dd>
-          </dl>
+              </div>
+              {showPrices && (
+                <div className="pd-stat">
+                  <dt>Fiyat</dt>
+                  <dd>
+                    <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(product.price as number, product.currency) : 'Fiyat sorunuz'}</b>
+                    {product.list_price != null && hasPrice && product.list_price > (product.price as number) && (
+                      <span className="pd-stat-note">Liste <s>{money(product.list_price, product.currency)}</s></span>
+                    )}
+                  </dd>
+                </div>
+              )}
+              {showPrices && cp != null && (
+                <div className="pd-stat">
+                  <dt>Kredi kartı</dt>
+                  <dd><b>{money(cp, product.currency)}</b></dd>
+                </div>
+              )}
+            </dl>
 
-          {product.description && <p>{product.description}</p>}
+            {hasDims && (
+              <div className="pd-dims" role="group" aria-label="Ölçüler">
+                <div className="pd-dim">
+                  <i aria-hidden>d</i>
+                  <span><b>{num(product.d_inner)}</b><small>İç çap (mm)</small></span>
+                </div>
+                <div className="pd-dim">
+                  <i aria-hidden>D</i>
+                  <span><b>{num(product.d_outer)}</b><small>Dış çap (mm)</small></span>
+                </div>
+                <div className="pd-dim">
+                  <i aria-hidden>B</i>
+                  <span><b>{num(product.width)}</b><small>Genişlik (mm)</small></span>
+                </div>
+              </div>
+            )}
+
+            <dl className="pd-meta">
+              {product.min_order > 1 && <div><dt>Min. sipariş</dt><dd>{num(product.min_order)}</dd></div>}
+              {product.barcode && <div><dt>Barkod</dt><dd className="mono">{product.barcode}</dd></div>}
+              <div><dt>Güncelleme</dt><dd>{date(product.updated_at)}</dd></div>
+            </dl>
+          </section>
+
+          {product.description && <p className="pd-description">{product.description}</p>}
 
           {codeInfo && (
             <section className="code-info" aria-labelledby="code-title">
-              <h3 id="code-title">Kod açıklaması</h3>
-              <div className="code-note">
-                <span className="code-chip">{codeInfo.base}</span>
+              <div className="code-head">
+                <span className="code-head-icon" aria-hidden><Braces size={17} /></span>
                 <div>
-                  <strong>{codeInfo.type}</strong>
-                  {codeInfo.size && <p className="code-size">{codeInfo.size}</p>}
-                  {codeInfo.typeDetail && <p>{codeInfo.typeDetail}</p>}
+                  <h3 id="code-title">Kod açıklaması</h3>
+                  <p>Koddaki her parçanın anlamı</p>
                 </div>
               </div>
-              {codeInfo.notes.map((note) => (
-                <div className="code-note" key={note.code}>
-                  <span className="code-chip">{note.code}</span>
+              <ol className="code-steps">
+                <li className="code-note base">
+                  <span className="code-chip">{codeInfo.base}</span>
                   <div>
-                    <strong>{note.title}</strong>
-                    {note.detail && <p>{note.detail}</p>}
-                    {note.sameEverywhere && <p>Bütün markalarda aynı yazılır.</p>}
-                    {note.equivalents.length > 0 && (
-                      <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
-                        <small>Diğer markalarda</small>
-                        <ul>
-                          {note.equivalents.map((item) => (
-                            <li key={item.brand}>
-                              <b>{item.brand}</b> {item.code}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    <strong>{codeInfo.type}</strong>
+                    {codeInfo.size && <p className="code-size">{codeInfo.size}</p>}
+                    {codeInfo.typeDetail && <p>{codeInfo.typeDetail}</p>}
                   </div>
-                </div>
-              ))}
-              <p className="code-disclaimer">Açıklamalar üreticilerin genel kodlamasına göredir. Kritik kullanımda üretici kataloğundan teyit edin.</p>
+                </li>
+                {codeInfo.notes.map((note) => (
+                  <li className="code-note" key={note.code}>
+                    <span className="code-chip">{note.code}</span>
+                    <div>
+                      <strong>{note.title}</strong>
+                      {note.detail && <p>{note.detail}</p>}
+                      {note.sameEverywhere && <p className="code-same"><Check size={14} aria-hidden /> Bütün markalarda aynı yazılır.</p>}
+                      {note.equivalents.length > 0 && (
+                        <div className="code-equivalents" aria-label="Diğer markalardaki yazılışı">
+                          <small>Diğer markalarda</small>
+                          <ul>
+                            {note.equivalents.map((item) => (
+                              <li key={item.brand}>
+                                <b>{item.brand}</b> <span>{item.code}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="code-disclaimer"><Info size={14} aria-hidden /> <span>Açıklamalar üreticilerin genel kodlamasına göredir. Kritik kullanımda üretici kataloğundan teyit edin.</span></p>
             </section>
           )}
 
