@@ -183,7 +183,7 @@ export function ProductDrawer({
                   {brand.origin && <small>Menşei: {brand.origin}</small>}
                 </span>
               )}
-              {tags.length > 0 && (
+              {(tags.length > 0 || !product.active) && (
                 <ul className="pd-tags" aria-label="Özellikler">
                   {tags.map((tag) => <li key={tag}>{tag}</li>)}
                   {!product.active && <li className="out">Pasif</li>}
@@ -204,7 +204,7 @@ export function ProductDrawer({
                   <dt>Fiyat</dt>
                   <dd>
                     <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(product.price as number, product.currency) : 'Fiyat sorunuz'}</b>
-                    {product.list_price != null && hasPrice && product.list_price > (product.price as number) && (
+                    {product.list_price != null && product.price != null && product.list_price > product.price && (
                       <span className="pd-stat-note">Liste <s>{money(product.list_price, product.currency)}</s></span>
                     )}
                   </dd>
