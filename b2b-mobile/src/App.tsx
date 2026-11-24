@@ -388,6 +388,35 @@ export default function App(): ReactNode {
   }, [platform, settings.min_version_android, settings.min_version_ios, setSheet])
 
   useEffect(() => {
+    if (Capacitor.getPlatform() !== 'ios' || platform !== 'ios') return
+    let active = true
+    let checkId = 0
+    let resumeHandle: { remove: () => Promise<void> } | undefined
+    const checkUpdates = async (): Promise<void> => {
+      const id = ++checkId
+      let currentVersion = APP_VERSION
+      try {
+        currentVersion = (await CapacitorApp.getInfo()).version || APP_VERSION
+      } catch (error) {
+        console.warn('iOS version lookup failed', error)
+      }
+      const version = minimumVersionFor('ios', settings)
+      if (active && id === checkId) {
+        setRequiredUpdate(version && compareVersions(currentVersion, version) < 0 ? { platform: 'ios', version } : null)
+      }
+    }
+    void checkUpdates()
+    void CapacitorApp.addListener('resume', checkUpdates).then((handle) => {
+      if (active) resumeHandle = handle
+      else void handle.remove()
+    }).catch((error) => console.warn('iOS update resume listener failed', error))
+    return () => {
+      active = false
+      void resumeHandle?.remove()
+    }
+  }, [platform, settings.min_version_ios])
+
+  useEffect(() => {
     if (!session) return
     void syncNow()
     if (session.user.role === 'admin') void listCustomers().then(setCustomers).catch(() => setCustomers([]))
@@ -602,7 +631,7 @@ export default function App(): ReactNode {
         <h1>Güncelleme gerekli</h1>
         <p>Uygulamayı kullanmaya devam etmek için {requiredUpdate.version} sürümünü yükleyin.</p>
         <button className="button primary wide" onClick={() => {
-          if (requiredUpdate.platform === 'ios') void AppUpdate.openAppStore().catch((error) => console.warn('App Store could not be opened', error))
+          if (requiredUpdate.platform === 'ios') external('https://apps.apple.com/tr/app/yamansa-rulman-b2b/id6832507420')
           else external(requiredUpdate.url ?? androidReleasesPage())
         }}>
           {requiredUpdate.platform === 'ios' ? 'App Store’u aç' : 'APK güncellemesini indir'}
