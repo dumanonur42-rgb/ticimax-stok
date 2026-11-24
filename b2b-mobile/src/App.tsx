@@ -1,5 +1,4 @@
 import { App as CapacitorApp } from '@capacitor/app'
-import { AppLauncher } from '@capacitor/app-launcher'
 import { AppUpdate, AppUpdateAvailability } from '@capawesome/capacitor-app-update'
 import { Capacitor } from '@capacitor/core'
 import { Network } from '@capacitor/network'
@@ -27,6 +26,7 @@ import {
 } from '@shared/copy'
 import { hasPerm } from '@shared/perms'
 import { copyToClipboard } from './lib/clipboard'
+import { openExternal } from './lib/external'
 import { priceFor } from '@shared/price'
 import { SUPPORT_CONTACTS, type Customer, type Order, type Product, type Settings, type Session } from '@shared/types'
 import { compareVersions } from '@shared/version'
@@ -54,12 +54,8 @@ function userFacingError(error: unknown): string {
   return error instanceof Error ? error.message : 'Bir sorun oluştu. Yeniden deneyin.'
 }
 
-function external(url: string): void {
-  if (Capacitor.isNativePlatform()) {
-    void AppLauncher.openUrl({ url }).catch(() => { window.open(url, '_system') })
-    return
-  }
-  window.open(url, '_blank', 'noopener,noreferrer')
+function external(url: string, onToast = useApp.getState().showToast): void {
+  void openExternal(url).catch(() => onToast('Bağlantı açılamadı.'))
 }
 
 export default function App(): ReactNode {
@@ -698,7 +694,7 @@ function HomePage({ session, settings, openOrders, products, catalogStatus, onRe
   session: Session; settings: Settings; openOrders: number | null; products: Product[]; catalogStatus: 'loading' | 'ready' | 'error'; onRetryCatalog: () => void; onNavigate: (tab: Tab) => void; onToast: (message: string) => void
 }): ReactNode {
   const openContact = (url: string): void => {
-    try { external(url) } catch { onToast('Bağlantı açılamadı.') }
+    external(url, onToast)
   }
   const openCount = openOrders ?? 0
   const customerName = session.customer?.name ?? settings.company_name
