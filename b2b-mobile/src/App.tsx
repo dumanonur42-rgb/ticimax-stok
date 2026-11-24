@@ -148,6 +148,8 @@ export default function App(): ReactNode {
   const searchIndex = useMemo(() => indexProducts(products), [products])
   const productVariants = useMemo(() => indexProductVariants(products), [products])
 
+  useEffect(() => { setHomeOpenOrders(null) }, [session?.user.id])
+
   useEffect(() => {
     if (!session || !online) return
     let active = true
