@@ -25,11 +25,9 @@ const TINY = new Set(['ask', 'sbc', 'slf', 'zf', 'eurosnodi', 'nb', 'schneeberge
  * `label` is the text a list row shows beside the logo: the part of the name the logo does not say.
  */
 export function brandLogo(brand: string): { src: string; emblem: boolean; named: boolean; label: string } | undefined {
-  const words = brand
-    .toLocaleUpperCase('tr-TR')
-    .replace(/İ/g, 'I')
-    .split(/[^A-Z0-9]+/)
-    .filter(Boolean)
+  const text = brand.trim()
+  const upper = text.toLocaleUpperCase('tr-TR').replace(/İ/g, 'I')
+  const words = upper.split(/[^A-Z0-9]+/).filter(Boolean)
   if (!words.length) return undefined
   const alias = ALIASES[words[0]]
   const key = alias ?? words[0].toLowerCase()
@@ -37,6 +35,8 @@ export function brandLogo(brand: string): { src: string; emblem: boolean; named:
   if (!src) return undefined
   const emblem = EMBLEMS.has(key)
   const whole = emblem || alias !== undefined || TINY.has(key)
-  const label = whole ? brand.trim() : brand.trim().replace(/^[^\s-]+[\s-]*/, '')
+  // "SKF(ÇIKMA)", "GPZ-ZKL": everything but the word the logo stands for; upper-casing must not have moved it.
+  const start = upper.length === text.length ? upper.indexOf(words[0]) : -1
+  const label = whole || start < 0 ? text : `${text.slice(0, start)}${text.slice(start + words[0].length)}`.replace(/^[\s\-/.,]+/, '')
   return { src, emblem, named: !emblem && !alias && words.length === 1, label }
 }
