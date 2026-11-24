@@ -1481,10 +1481,13 @@ function DetailRow({ label, value }: { label: string; value: string }): ReactNod
 
 function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (value: number) => void; min: number; sku: string }): ReactNode {
   const [draft, setDraft] = useState(String(qty))
-  const field = useRef<HTMLInputElement>(null)
   const beforeEdit = useRef(qty)
+  const typed = useRef<number | null>(null)
   useEffect(() => {
-    if (field.current && document.activeElement === field.current) return
+    // An amount this field applied while typing keeps the typed text; any other change (stepper, re-add) replaces it.
+    const own = typed.current === qty
+    typed.current = null
+    if (own) return
     beforeEdit.current = qty
     setDraft(String(qty))
   }, [qty])
@@ -1495,6 +1498,7 @@ function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (valu
   }
   const commit = (value = amount()): void => {
     beforeEdit.current = value
+    typed.current = null
     setDraft(String(value))
     setQty(value)
   }
@@ -1502,9 +1506,11 @@ function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (valu
   const edit = (next: string): void => {
     setDraft(next)
     const value = /^\d+$/.test(next) && Number(next) >= min ? Number(next) : beforeEdit.current
-    if (value !== qty) setQty(value)
+    if (value === qty) return
+    typed.current = value
+    setQty(value)
   }
-  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" ref={field} value={draft} onChange={(event) => edit(event.target.value)} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
+  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" value={draft} onChange={(event) => edit(event.target.value)} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
 }
 
 function CartPage({ session, settings, customers, products, online, onToast, onOrderCreated, onViewOrders }: {
