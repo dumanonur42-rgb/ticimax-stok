@@ -1488,7 +1488,7 @@ function QuantityStepper({ qty, setQty, min, sku }: { qty: number; setQty: (valu
     setDraft(String(value))
     setQty(value)
   }
-  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" value={draft} onChange={(event) => setDraft(event.target.value)} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
+  return <div className="quantity-stepper" role="group" aria-label={`${sku} miktarı`}><button type="button" aria-label="Miktarı azalt" onClick={() => commit(Math.max(min, amount() - min))}><Minus size={16} /></button><input aria-label={`${sku} miktarı`} aria-invalid={!validDraft} inputMode="numeric" value={draft} onChange={(event) => { const next = event.target.value; setDraft(next); if (/^\d+$/.test(next) && Number(next) >= min) setQty(Number(next)) }} onBlur={() => commit()} onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() } }} /><button type="button" aria-label="Miktarı artır" onClick={() => commit(amount() + min)}><Plus size={16} /></button></div>
 }
 
 function CartPage({ session, settings, customers, products, online, onToast, onOrderCreated, onViewOrders }: {
