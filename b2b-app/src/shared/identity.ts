@@ -253,15 +253,44 @@ const ORIGIN_NAMES = new Map<string, string>([
   ['TURK', 'Türkiye'],
   ['TURKEY', 'Türkiye'],
   ['FRANCE', 'Fransa'],
-  ['SWEDEN', 'İsveç']
+  ['SWEDEN', 'İsveç'],
+  ['ISPANYA', 'İspanya'],
+  ['SPAIN', 'İspanya'],
+  ['RUS', 'Rusya'],
+  ['RUSYA', 'Rusya'],
+  ['SWISS', 'İsviçre'],
+  ['AVUSTURYA', 'Avusturya'],
+  ['AUSTRIA', 'Avusturya'],
+  ['YUGOSLAVIA', 'Yugoslavya'],
+  ['EU', 'Avrupa'],
+  ['AVRUPA', 'Avrupa']
 ])
 
-export function brandOrigin(brand: string): { base: string; origin: string } {
-  const value = brand.replace(/\s+/g, ' ').trim()
-  const suffix = /^(.*?)\s*(?:\(([^()]+)\)|([^\s()]+))$/.exec(value)
-  if (!suffix) return { base: value, origin: '' }
-  const country = normalize(suffix[2] ?? suffix[3] ?? '')
-  const origin = ORIGIN_NAMES.get(country)
-  const base = suffix[1].trim()
-  return origin && base ? { base, origin } : { base: value, origin: '' }
+const CONDITION_NAMES = new Map<string, string>([['CIKMA', 'Çıkma']])
+
+/**
+ * Splits what is typed into the brand field into the maker, the country of origin and the condition of the part:
+ * "FAG GERMANY", "NB ( JAPAN )", "USA MCGILL" and "SKF(ÇIKMA)" are FAG, NB, MCGILL and SKF. A country on its own
+ * ("ÇİN") stays the brand, because nothing else names the maker.
+ */
+export function brandOrigin(brand: string): { base: string; origin: string; condition: string } {
+  let base = brand.replace(/\s+/g, ' ').trim()
+  let origin = ''
+  let condition = ''
+  for (let pass = 0; pass < 3; pass++) {
+    const last = /^(.*?)[\s/]*(?:\(\s*([^()]+?)\s*\)|([^\s()/]+))$/.exec(base)
+    const first = /^(?:\(\s*([^()]+?)\s*\)|([^\s()/]+))[\s/]+(.+)$/.exec(base)
+    const candidates: Array<[string, string]> = []
+    if (last) candidates.push([last[2] ?? last[3] ?? '', last[1].trim()])
+    if (first) candidates.push([first[1] ?? first[2] ?? '', first[3].trim()])
+    const found = candidates.find(([word, rest]) => rest && ((!origin && ORIGIN_NAMES.has(normalize(word))) || (!condition && CONDITION_NAMES.has(normalize(word)))))
+    if (!found) break
+    const key = normalize(found[0])
+    if (CONDITION_NAMES.has(key)) condition = CONDITION_NAMES.get(key) ?? ''
+    else origin = ORIGIN_NAMES.get(key) ?? ''
+    base = found[1]
+  }
+  // "ÇİN (NATURAL)": what is left may still be wrapped in the brackets it was typed with.
+  const wrapped = /^\(\s*([^()]+?)\s*\)$/.exec(base)
+  return { base: wrapped ? wrapped[1] : base, origin, condition }
 }

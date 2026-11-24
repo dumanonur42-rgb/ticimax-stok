@@ -145,8 +145,9 @@ function sizeLabel(product: Product): string {
 }
 
 function brandLabel(brand: string): string {
-  const { base, origin } = brandOrigin(brand)
-  return `${base}${origin ? ` (${origin})` : ''}`
+  const { base, origin, condition } = brandOrigin(brand)
+  const extra = [origin, condition].filter(Boolean).join(', ')
+  return `${base}${extra ? ` (${extra})` : ''}`
 }
 
 function htmlEscape(value: string): string {

@@ -879,6 +879,14 @@ export async function runSelfCheck(): Promise<number> {
   const brandIdentityOk =
     brandOrigin('FAG GERMANY').base === 'FAG' && brandOrigin('FAG GERMANY').origin === 'Almanya' &&
     brandOrigin('GERMANY').origin === '' &&
+    brandOrigin('ÇİN').base === 'ÇİN' && brandOrigin('ÇİN').origin === '' &&
+    brandOrigin('SKF(ÇIKMA)').base === 'SKF' && brandOrigin('SKF(ÇIKMA)').condition === 'Çıkma' &&
+    brandOrigin('NMB ÇIKMA').base === 'NMB' && brandOrigin('NMB ÇIKMA').origin === '' &&
+    brandOrigin('NB ( JAPAN )').base === 'NB' && brandOrigin('NB ( JAPAN )').origin === 'Japonya' &&
+    brandOrigin('USA MCGILL').base === 'MCGILL' && brandOrigin('USA MCGILL').origin === 'ABD' &&
+    brandOrigin('GERMANY/İNA').base === 'İNA' && brandOrigin('ÇİN ÇIKMA').base === 'ÇİN' &&
+    brandOrigin('SKF GERMANY ÇIKMA').base === 'SKF' && brandOrigin('SKF GERMANY ÇIKMA').origin === 'Almanya' && brandOrigin('SKF GERMANY ÇIKMA').condition === 'Çıkma' &&
+    brandOrigin('GPZ-ZKL').base === 'GPZ-ZKL' && brandOrigin('D-TECH').base === 'D-TECH' && brandOrigin('').base === '' &&
     mergeBrandAliases({}).HOFFMAN === 'HOFFMANN' &&
     mergeBrandAliases({}).HOFFMAN === DEFAULT_BRAND_ALIASES.HOFFMAN &&
     !('HOFFMANN' in mergeBrandAliases({})) &&

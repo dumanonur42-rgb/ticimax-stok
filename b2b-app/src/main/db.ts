@@ -313,6 +313,16 @@ function ensureProductColumns(d: DB): void {
     d.transaction(() => {
       for (const row of rows) update.run(brandOrigin(row.brand).base, row.id)
     })()
+  } else {
+    // The rule that takes the origin and condition off a brand can change between versions; rows synced by an older one are brought in line.
+    const rows = d.prepare('SELECT id, brand, brand_base FROM products').all() as Array<{ id: number; brand: string; brand_base: string }>
+    const stale = rows.filter((row) => brandOrigin(row.brand).base !== row.brand_base)
+    if (stale.length) {
+      const update = d.prepare('UPDATE products SET brand_base = ? WHERE id = ?')
+      d.transaction(() => {
+        for (const row of stale) update.run(brandOrigin(row.brand).base, row.id)
+      })()
+    }
   }
   d.exec('CREATE INDEX IF NOT EXISTS idx_products_brand_base ON products(brand_base)')
 }
