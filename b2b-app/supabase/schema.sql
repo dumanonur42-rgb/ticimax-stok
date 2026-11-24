@@ -344,7 +344,7 @@ declare t profiles;
 begin
   if not is_admin() then raise exception 'Bu işlem için yetkiniz yok.'; end if;
   select * into t from profiles where id = p_user;
-  if t.role = 'admin' and not exists (select 1 from profiles where role = 'admin' and active and id <> p_user) then
+  if t.role = 'admin' and not exists (select 1 from profiles where role = 'admin' and active and approved and id <> p_user) then
     raise exception 'Son yönetici silinemez.';
   end if;
   delete from auth.users where id = p_user;
@@ -363,7 +363,7 @@ declare t profiles; uid uuid := auth.uid();
 begin
   if uid is null then raise exception 'Oturum bulunamadı.'; end if;
   select * into t from profiles where id = uid;
-  if t.role = 'admin' and not exists (select 1 from profiles where role = 'admin' and active and id <> uid) then
+  if t.role = 'admin' and not exists (select 1 from profiles where role = 'admin' and active and approved and id <> uid) then
     raise exception 'Son yönetici silinemez.';
   end if;
   delete from auth.users where id = uid;
