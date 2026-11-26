@@ -165,13 +165,14 @@ function buildWhere(f: ProductFilter, exclude?: keyof ProductFilter): Where {
     const r = f[key]
     if (!r) return
     const [min, max] = r
-    if (min != null) {
+    if (min != null && max != null) {
       clauses.push(`p.${col} >= ?`)
       params.push(min)
-    }
-    if (max != null) {
       clauses.push(`p.${col} <= ?`)
       params.push(max)
+    } else if (min != null || max != null) {
+      clauses.push(`p.${col} = ?`)
+      params.push(min != null ? min : max)
     }
   }
   range('d_inner', 'dInner')
