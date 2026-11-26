@@ -624,7 +624,7 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (/^CPN\d$/.test(prefix) || /^CPN\d$/.test(prefix + digits.slice(0, 0))) return { family: 'thrust', type: 'Baskı pulu (Nadella kombine rulman için)', detail: 'RAXN kombine rulmanların eksenel baskı puludur.', size: '' }
   if (prefix === 'CPN' && digits) return { family: 'thrust', type: 'Baskı pulu (Nadella kombine rulman için)', detail: 'RAXN kombine rulmanların eksenel baskı puludur.', size: '' }
   // İngiliz inç silindirik makaralılar: LRJ/CRL hafif seri, MRJ/CRM orta seri; numara inç delik çapıdır (CRL'de 1/8 inç birimi).
-  if (/^(LRJ|MRJ|NLJ|LLRJ)$/.test(prefix)) return { family: 'crb', type: `İnç ölçülü silindirik makaralı rulman (${prefix.startsWith('M') ? 'orta' : 'hafif'} seri)`, detail: 'Eski İngiliz yazımıdır; numara inç delik çapını gösterir.', size: '' }
+  if (/^(LRJ|MRJ|LLRJ)$/.test(prefix)) return { family: 'crb', type: `İnç ölçülü silindirik makaralı rulman (${prefix.startsWith('M') ? 'orta' : 'hafif'} seri)`, detail: 'Eski İngiliz yazımıdır; numara inç delik çapını gösterir.', size: '' }
   if (/^(CRL|CRM)$/.test(prefix) && digits) return { family: 'crb', type: `İnç ölçülü silindirik makaralı rulman (${prefix === 'CRM' ? 'orta' : 'hafif'} seri)`, detail: 'Numara delik çapını 1/8 inç birimiyle verir (CRL 8 = 1 inç = 25,4 mm).', size: Number(digits) >= 4 && Number(digits) <= 60 ? `İç çap yaklaşık ${mm(Math.round(Number(digits) / 8 * 25.4 * 100) / 100)} (inç ölçülü)` : '' }
   // NB inç lineer "SW-8": numara inç mil çapının 16'da biridir.
   if (prefix === 'SW' && digits) return { family: 'linear', type: 'İnç ölçülü lineer bilyalı rulman (NB slide bush)', detail: 'Numara inç mil çapını 1/16 inç birimiyle verir (SW-8 = 1/2 inç).', size: '' }
@@ -638,6 +638,10 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'SJ' && digits) return { family: 'needle', type: 'İnç ölçülü iğneli rulman, ağır seri (RBC Pitchlign)', detail: 'Kafesli, taşlanmış bilezikli; iç bilezikle veya doğrudan mil üzerinde çalışır.', size: '' }
   // İngiliz inç bilyalı orta seri "MS 7": RMS serisiyle aynıdır; numara inç deliğin seri numarasıdır.
   if (prefix === 'MS' && /^\d{1,2}$/.test(digits)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman (orta seri, eski İngiliz yazımı)', detail: 'RMS serisinin eski Fafnir/FAG yazımıdır.', size: '' }
+  // İngiliz inç oynak bilyalılar: RL/RM serisi (NLJ = RHP yazımı, PAJ = RIV yazımı); numara inç deliğin seri numarası.
+  if (/^(RL|RM|NLJ|PAJ)$/.test(prefix) && digits) return { family: 'sabb', type: 'İnç ölçülü oynak bilyalı rulman (çift sıra)', detail: 'Eski İngiliz yazımıdır; mil eğilmesini kendiliğinden karşılar.', size: '' }
+  // SKF lineer bilyalı "LBA 40 2LS": ISO seri 3, numara mil çapıdır.
+  if (/^LBA[S]?$/.test(prefix) && digits && digits.length <= 2) return { family: 'linear', type: 'Lineer bilyalı rulman (SKF)', size: `Mil çapı ${mm(Number(digits))}` }
   // Wanda forklift mast makarası "MG309".
   if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
   // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
@@ -717,6 +721,12 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const leadCr = text.match(/^\d{2}\s+(NUP|NJ|NU|NF|N)\s?\d{4}(.*)$/)
   if (leadCr) {
     return { base: text, type: `Silindirik makaralı rulman (${leadCr[1]} tipi) · üreticiye özel seri`, typeDetail: (CRB[leadCr[1]] ?? '') + ' Baştaki iki hane ve sondaki ekler üreticinin otomotiv özel seri yazımıdır; ana ölçüler standart diziye uymaz.', size: '', notes: [] }
+  }
+  // Nadella "NA BIG 2070" / "NA BI 3060": BI/BIG iç bilezikli demektir, ara sözcüklerdir.
+  const naBi = text.match(/^NA\s+(?:BIG?|S\/BIG?)\s+(\d{4})(.*)$/)
+  if (naBi) {
+    const inner = explainProductCode(`NA ${naBi[1]}${naBi[2]}`, brand)
+    if (inner) return inner
   }
   // NSK vidalı mil rulmanı "20TAC47": önce delik çapı, sonra TAC, sonra dış çap gelir.
   const tac = text.match(/^(\d\d)\s?TAC\s?\d\d(.*)$/)
