@@ -31,7 +31,7 @@ jobs:
           (cd dist && zip -qr "../$archive" .)
           sha256sum "$archive" | tee "$archive.sha256"
           checksum="$(sha256sum "$archive" | awk '{print $1}')"
-          min_native="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
+          min_native="$(node -p "const p=JSON.parse(require('fs').readFileSync('package.json','utf8')); p.minNative || p.version")"
           url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${archive}"
           printf '{"version":"%s","url":"%s","checksum":"%s","minNative":"%s"}\n' "$version" "$url" "$checksum" "$min_native" > live-update.json
           echo "version=$version" >> "$GITHUB_OUTPUT"
