@@ -3,11 +3,13 @@ import { brandOrigin } from '@shared/identity'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 import { getDb, normalizeText } from '../db'
 import { pullSettings } from '../repo/settings'
-import { cloud, must } from './client'
+import { cloud, isTransientCloudError, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
 import { flush, outboxCounts, reapplyPending } from './outbox'
 
-const PAGE = 1000
+/** Small pages survive slow/flaky links: a page must fit inside the request timeout even on a weak connection. */
+const PAGE = 500
+const PAGE_ATTEMPTS = 4
 /** Rows per SQLite transaction; the event loop gets a turn between chunks so IPC stays responsive during big pulls. */
 const CHUNK = 250
 const POLL_MS = 60_000
@@ -97,6 +99,10 @@ function setState(key: string, value: string): void {
   getDb().prepare('INSERT INTO sync_state(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').run(key, value)
 }
 
+function removeState(key: string): void {
+  getDb().prepare('DELETE FROM sync_state WHERE key = ?').run(key)
+}
+
 const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, brand_base, category, type, seal, d_inner, d_outer, width, stock, unit,
   price, currency, list_price, card_price, min_order, shelf, locations, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
   VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@brand_base,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
@@ -153,9 +159,18 @@ export function upsertLocal(rows: ProductRow[]): void {
   })(rows)
 }
 
-async function upsertLocalChunked(rows: ProductRow[]): Promise<void> {
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms))
+
+async function upsertLocalChunked(rows: ProductRow[], trackSeen: boolean): Promise<void> {
+  const db = getDb()
+  const insSeen = trackSeen ? db.prepare('INSERT OR IGNORE INTO pull_seen(id) VALUES (?)') : null
   for (let i = 0; i < rows.length; i += CHUNK) {
-    upsertLocal(rows.slice(i, i + CHUNK))
+    const slice = rows.slice(i, i + CHUNK)
+    // Rows and their pull_seen markers commit together, so a crash mid-page never leaves written rows unmarked.
+    db.transaction(() => {
+      upsertLocal(slice)
+      if (insSeen) for (const r of slice) insSeen.run(r.id)
+    })()
     await yieldToLoop()
   }
 }
@@ -166,7 +181,11 @@ async function cloudGeneration(): Promise<string> {
   return rows.length ? String(rows[0].value) : '0'
 }
 
-/** Incremental pull: everything changed since the stored cursor (or all rows on first run / `full`). */
+/**
+ * Incremental pull: everything changed since the stored cursor (or all rows on first run / `full`).
+ * A full pull writes its progress (cursor + seen ids) after every page, so a dropped connection or a closed
+ * app resumes where it stopped instead of restarting the whole catalog download.
+ */
 export async function pullProducts(full = false): Promise<number> {
   if (pulling) {
     const active = pulling
@@ -179,43 +198,65 @@ export async function pullProducts(full = false): Promise<number> {
     const db = getDb()
     const generation = await cloudGeneration()
     if (generation !== (getState('catalog_generation') ?? '0')) full = true
-    const storedCursor = full ? null : getState('products_cursor')
-    const cursor = storedCursor ? new Date(new Date(storedCursor).getTime() - 5 * 60_000).toISOString() : null
     if (!full && getState('product_storage_policy') !== JSON.stringify(storagePolicy)) full = true
-    const seenIds: number[] = []
-    let last = cursor
+    let last: string | null
+    let lastId = 0
+    if (full) {
+      const resumeCursor = getState('full_cursor')
+      if (resumeCursor) {
+        last = resumeCursor
+        lastId = Number(getState('full_cursor_id') ?? '0')
+      } else {
+        db.exec('DELETE FROM pull_seen')
+        setState('full_running', '1')
+        last = null
+      }
+    } else {
+      const storedCursor = getState('products_cursor')
+      last = storedCursor ? new Date(new Date(storedCursor).getTime() - 5 * 60_000).toISOString() : null
+    }
     const fetchPage = async (after: string | null, afterId: number): Promise<ProductRow[]> => {
-      let q = sb.from('products').select('*').order('updated_at').order('id').limit(PAGE)
-      if (after) q = q.or(`updated_at.gt.${after},and(updated_at.eq.${after},id.gt.${afterId})`)
-      return must(await q)
+      for (let attempt = 1; ; attempt++) {
+        try {
+          let q = sb.from('products').select('*').order('updated_at').order('id').limit(PAGE)
+          if (after) q = q.or(`updated_at.gt.${after},and(updated_at.eq.${after},id.gt.${afterId})`)
+          return must(await q)
+        } catch (e) {
+          if (attempt >= PAGE_ATTEMPTS || !isTransientCloudError(e)) throw e
+          await sleep(2000 * attempt)
+        }
+      }
     }
     // The next page downloads while the current one is written, so network and SQLite work overlap.
-    let next: Promise<ProductRow[]> | null = fetchPage(last, 0)
+    let next: Promise<ProductRow[]> | null = fetchPage(last, lastId)
     while (next) {
       const rows = await next
       next = null
       if (!rows.length) break
       const tail = rows[rows.length - 1]
       last = tail.updated_at
+      lastId = tail.id
       if (rows.length === PAGE) {
         next = fetchPage(tail.updated_at, tail.id)
         next.catch(() => undefined) // surfaces via the await above, not as an unhandled rejection
       }
-      await upsertLocalChunked(rows)
+      await upsertLocalChunked(rows, full)
       n += rows.length
-      for (const r of rows) seenIds.push(r.id)
+      if (full) {
+        setState('full_cursor', last)
+        setState('full_cursor_id', String(lastId))
+      }
     }
     if (full) {
       // Full refresh: anything the cloud no longer returned (hard-deleted) leaves the mirror too.
       db.transaction(() => {
-        db.exec('CREATE TEMP TABLE IF NOT EXISTS seen_ids (id INTEGER PRIMARY KEY)')
-        db.exec('DELETE FROM seen_ids')
-        const ins = db.prepare('INSERT OR IGNORE INTO seen_ids(id) VALUES (?)')
-        for (const id of seenIds) ins.run(id)
-        db.exec('DELETE FROM products WHERE id NOT IN (SELECT id FROM seen_ids)')
-        db.exec('DELETE FROM seen_ids')
+        db.exec('DELETE FROM products WHERE id NOT IN (SELECT id FROM pull_seen)')
+        db.exec('DELETE FROM pull_seen')
         reapplyPending()
       })()
+      removeState('full_cursor')
+      removeState('full_cursor_id')
+      removeState('full_running')
     }
     setState('products_cursor', last ?? new Date(0).toISOString())
     setState('catalog_generation', generation)

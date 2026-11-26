@@ -196,7 +196,8 @@ export function wipeProducts(): void {
   database.transaction(() => {
     database.exec('DELETE FROM products')
     database.exec("INSERT INTO products_fts(products_fts) VALUES('rebuild')")
-    database.exec("DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation')")
+    database.exec("DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation', 'full_cursor', 'full_cursor_id', 'full_running')")
+    database.exec('DELETE FROM pull_seen')
   })()
   database.pragma('wal_checkpoint(TRUNCATE)')
   database.exec('VACUUM')
@@ -329,12 +330,14 @@ function ensureProductColumns(d: DB): void {
 
 function migrate(d: DB): void {
   d.exec('CREATE TABLE IF NOT EXISTS sync_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
+  d.exec('CREATE TABLE IF NOT EXISTS pull_seen (id INTEGER PRIMARY KEY)')
   const v = (d.prepare("SELECT value FROM sync_state WHERE key = 'mirror_schema'").get() as { value: string } | undefined)?.value
   if (v !== MIRROR_SCHEMA) {
     d.exec(`
       DROP TRIGGER IF EXISTS products_ai; DROP TRIGGER IF EXISTS products_ad; DROP TRIGGER IF EXISTS products_au;
       DROP TABLE IF EXISTS products_fts; DROP TABLE IF EXISTS products;
-      DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation');
+      DELETE FROM sync_state WHERE key IN ('products_cursor', 'catalog_generation', 'full_cursor', 'full_cursor_id', 'full_running');
+      DELETE FROM pull_seen;
     `)
     for (const t of LEGACY_TABLES) d.exec(`DROP TABLE IF EXISTS ${t}`)
     d.prepare("INSERT OR REPLACE INTO sync_state(key, value) VALUES ('mirror_schema', ?)").run(MIRROR_SCHEMA)

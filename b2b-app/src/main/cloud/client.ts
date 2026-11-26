@@ -82,8 +82,8 @@ export function removeStoredValue(key: string): void {
   fileStorage.removeItem(key)
 }
 
-/** A request that gets no answer (captive Wi-Fi, half-open link) must fail like a lost connection instead of hanging. */
-const REQUEST_TIMEOUT_MS = 30_000
+/** A request that gets no answer (captive Wi-Fi, half-open link) must fail like a lost connection instead of hanging. 60s so a catalog page still fits on a weak link; the per-page retry in the sync loop covers the rest. */
+const REQUEST_TIMEOUT_MS = 60_000
 
 function timedFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
