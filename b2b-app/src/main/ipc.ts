@@ -412,7 +412,7 @@ export function registerIpc(): void {
     if (filters.from) query = query.gte('at', dateBoundary(filters.from))
     if (filters.to) query = query.lte('at', dateBoundary(filters.to, true))
     const text = filters.text?.trim().replace(/[%_,()]/g, ' ').trim()
-    if (text) query = query.or(`sku.ilike.%${text}%,query.ilike.%${text}%`)
+    if (text) query = query.or(`sku.ilike.%${text}%,query.ilike.%${text}%,brand.ilike.%${text}%`)
     const result = await query.order('at', { ascending: false }).order('id', { ascending: false }).range(offset, offset + limit - 1)
     if (result.error) throw result.error
     const people = await resolvePeople(result.data.map((row) => row.user_id))
