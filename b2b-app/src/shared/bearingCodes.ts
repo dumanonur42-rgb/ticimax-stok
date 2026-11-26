@@ -538,6 +538,11 @@ const halves = (digits: string): [number, number] | null => {
 
 const prefixedType = (prefix: string, number: string, rest: string, brand: string): TypeInfo | null => {
   const digits = /^\d+$/.test(number) ? number : ''
+  // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
+  if (/^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
+    const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
+    return { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
+  }
   const slash = number.match(/^(\d+)\/(\d+(?:[.,]\d+)?)$/)
   const dims = number.match(/^(\d+(?:[.,]\d+)?)X(\d+(?:[.,]\d+)?)X(\d+(?:[.,]\d+)?)$/)
   const value = (text: string): number => Number(text.replace(',', '.'))
@@ -714,6 +719,17 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   if (star && Number(star[2]) >= 5) {
     return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
   }
+  // MRC eski Amerikan yazımı: "108 KR" eğik bilyalı (15°, 7000C karşılığı), "202 ZZ" sabit bilyalı (200 hafif seri).
+  const mrc = text.match(/^MRC[\s-]?(\d{3})[\s-]?KR/)
+  if (mrc) return { base: text, type: 'Eğik bilyalı rulman (MRC 100-KR serisi)', typeDetail: 'Temas açısı 15°dir; ISO 70..C serisi karşılığıdır (ör. 108KR = 7008C).', size: bore(boreFromCode(mrc[1].slice(-2))), notes: [] }
+  const mrcDg = text.match(/^MRC[\s-]?(\d{3})([\s-].*)?$/)
+  if (mrcDg && boreFromCode(mrcDg[1].slice(-2)) !== null) {
+    const seri = mrcDg[1][0] === '3' ? 'orta' : mrcDg[1][0] === '2' ? 'hafif' : 'çok hafif'
+    const info = { base: text, type: `Sabit bilyalı rulman (MRC ${mrcDg[1][0]}00 serisi, ${seri})`, typeDetail: 'MRC eski Amerikan yazımıdır; 200 serisi 62.., 300 serisi 63.. karşılığıdır.', size: bore(boreFromCode(mrcDg[1].slice(-2))), notes: [] }
+    const inner = explainProductCode(`${mrcDg[1][0] === '3' ? '63' : mrcDg[1][0] === '2' ? '62' : '60'}${mrcDg[1].slice(-2)}${mrcDg[2] ?? ''}`, brand)
+    if (inner) return { ...inner, type: info.type, typeDetail: info.typeDetail }
+    return info as never
+  }
   // RBC koda markasını da yazar: "RBC SJ-840".
   const rbcStrip = text.replace(/^RBC[\s-]+/, '')
   if (rbcStrip !== text) {
@@ -778,6 +794,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
+    // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
+    if (!info && /^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
+      const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
+      info = { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
+    }
     if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
     // Torrington / IKO inç iğneli kovan "B 2812": ilk iki hane mil çapı, son iki hane genişlik (1/16 inç).
     if (!info && prefix === 'B' && /^\d{4}$/.test(digits) && Number(digits.slice(0, 2)) > Number(digits.slice(2))) {
