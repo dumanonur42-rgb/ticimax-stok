@@ -642,6 +642,14 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (/^(RL|RM|NLJ|PAJ)$/.test(prefix) && digits) return { family: 'sabb', type: 'İnç ölçülü oynak bilyalı rulman (çift sıra)', detail: 'Eski İngiliz yazımıdır; mil eğilmesini kendiliğinden karşılar.', size: '' }
   // SKF lineer bilyalı "LBA 40 2LS": ISO seri 3, numara mil çapıdır.
   if (/^LBA[S]?$/.test(prefix) && digits && digits.length <= 2) return { family: 'linear', type: 'Lineer bilyalı rulman (SKF)', size: `Mil çapı ${mm(Number(digits))}` }
+  // Torrington/Koyo inç iğneli kovan "J-68": ilk haneler mil çapı, son hane genişlik (1/16 inç birimi).
+  if ((prefix === 'J' || prefix === 'MJH' || prefix === 'JH') && /^\d{2,3}$/.test(digits)) {
+    const cut = digits.length === 3 && Number(digits[0]) <= 2 ? 1 : digits.length - 1
+    const bore16 = Number(digits.slice(0, cut))
+    if (bore16 >= 2 && bore16 <= 40) return { family: 'needle', type: 'İnç ölçülü iğneli kovan (Torrington J serisi)', detail: 'Kafesli, iki ucu açık çekme kovan; sertleştirilmiş mil veya iç bilezik üzerinde çalışır.', size: `Mil çapı ${mm(Math.round(bore16 / 16 * 25.4 * 1000) / 1000)} (inç ölçülü)` }
+  }
+  // SKF inç konik özel serisi "BT1B": otomotiv ağırlıklı, ölçüsü koddan okunmaz.
+  if (/^BT1[A-Z]?$/.test(prefix) && digits) return { family: 'trb', type: 'Konik makaralı rulman (SKF özel seri)', detail: 'Standart dizi dışı, çoğunlukla otomotiv uygulamalı özel üretimdir; ölçüsü koddan okunmaz.', size: '' }
   // Wanda forklift mast makarası "MG309".
   if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
   // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
@@ -715,6 +723,10 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   // SKF özel/otomotiv yazımı "BA2B 633272", "BB1-0868": harf ve rakam iç içedir, standart ayrışmaz.
   if (/^(BA2B|BB2B|BB1|BA2|BB2)[\s-]?\d/.test(text)) {
     return { base: text, type: 'Bilyalı rulman (SKF özel/otomotiv serisi)', typeDetail: 'Standart dizi dışı, özel üretimdir; ölçüsü koddan okunmaz.', size: '', notes: [] }
+  }
+  // SKF inç konik özel serisi "BT1B332551": harf ve rakam iç içedir.
+  if (/^BT1[A-Z]?[\s-]?\d/.test(text)) {
+    return { base: text, type: 'Konik makaralı rulman (SKF özel seri)', typeDetail: 'Standart dizi dışı, çoğunlukla otomotiv uygulamalı özel üretimdir; ölçüsü koddan okunmaz.', size: '', notes: [] }
   }
   // Koyo otomotiv özel serisi "05 NJ 0620 VH": baştaki iki hane seri ön ekidir; rulman NJ tipidir.
   // Ölçü dizisi standart dışı olduğundan delik çapı koddan okunmaz (ör. bu kod 25x58x20 şanzıman rulmanıdır).
