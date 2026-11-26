@@ -29,6 +29,7 @@ import {
   purgeAllProducts,
   quickEntry,
   saveProduct,
+  setPriceSource,
   searchProducts,
   similarProducts
 } from './repo/products'
@@ -158,7 +159,7 @@ function requirePerm(perm: Perm): Session {
 }
 
 /** Shelf location is internal warehouse data; only accounts with the shelf ability see it. Prices are also stripped when hidden. */
-function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; list_price?: number | null; card_price?: number | null; description?: string }>(items: T[]): T[] {
+function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; auto_price?: number | null; list_price?: number | null; card_price?: number | null; description?: string }>(items: T[]): T[] {
   const s = requireRole()
   const settings = getSettings()
   const canSeeShelf = hasPerm(s.user, 'shelf')
@@ -168,7 +169,7 @@ function sanitizeProducts<T extends { shelf: string; locations: import('@shared/
   return items.map((p) => ({
     ...p,
     ...(canSeeShelf ? {} : { shelf: '', locations: [] }),
-    ...(canSeePrices ? {} : { price: null, list_price: null, card_price: null }),
+    ...(canSeePrices ? {} : { price: null, auto_price: null, list_price: null, card_price: null }),
     ...(canSeeDescription || p.description === undefined ? {} : { description: '' })
   }))
 }
@@ -558,6 +559,11 @@ export function registerIpc(): void {
     const r = await saveProduct(p)
     broadcast('products:changed')
     return r
+  })
+  handle('products:priceSource', async ({ id, source }) => {
+    requireRole('admin')
+    await setPriceSource(id, source)
+    broadcast('products:changed')
   })
   handle('products:delete', async (id) => {
     requireRole('admin')

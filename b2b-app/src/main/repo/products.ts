@@ -23,7 +23,7 @@ import { parseProductLocations } from '@shared/locations'
 import { getDb, normalize, normalizeText, productKey } from '../db'
 import { getSettings } from './settings'
 
-const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, currency,
+const COLS = `id, sku, name, brand, category, type, seal, d_inner, d_outer, width, stock, unit, price, auto_price, auto_price_source, auto_price_at, price_source, currency,
   list_price, card_price, min_order, shelf, locations, box, barcode, image, description, equivalents, active, updated_at`
 
 export type LocalProductRow = Omit<Product, 'locations'> & { locations: string | ProductLocation[] | null }
@@ -604,4 +604,10 @@ export function allProductsForExport(f: ProductFilter): Product[] {
     .prepare(`SELECT ${COLS} FROM products p WHERE ${w.sql} ORDER BY ${o.sql}`)
     .all(...w.params, ...o.params) as LocalProductRow[]
   return mapProductRows(rows)
+}
+
+/** Admin: ürünün fiyat kaynağı tercihini buluta ve yerele yazar. Diğer istemciler ürün senkronuyla alır. */
+export async function setPriceSource(id: number, source: 'default' | 'manual' | 'auto'): Promise<void> {
+  mustVoid(await cloud().from('products').update({ price_source: source }).eq('id', id))
+  getDb().prepare('UPDATE products SET price_source = ? WHERE id = ?').run(source, id)
 }

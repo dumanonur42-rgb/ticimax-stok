@@ -20,6 +20,10 @@ export interface Product {
   stock: number
   unit: string
   price: number | null
+  auto_price: number | null
+  auto_price_source: string
+  auto_price_at: string
+  price_source: string
   currency: Currency
   list_price: number | null
   card_price: number | null
@@ -432,6 +436,9 @@ export interface Settings {
   vat_pct: number
   low_stock_threshold: number
   show_prices_to_dealers: boolean
+  show_auto_prices: boolean
+  price_preference: 'manual' | 'auto'
+  auto_disable_on_manual: boolean
   /** Açıkken raf konumu yalnızca kişiye özel yetki verilenlerde görünür; rolle gelen hak geçersizdir. */
   restrict_shelf: boolean
   /** Açıkken ürün açıklaması yalnızca kişiye özel yetki verilenlerde görünür. */

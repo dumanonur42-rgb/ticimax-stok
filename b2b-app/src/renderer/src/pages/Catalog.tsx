@@ -1,5 +1,6 @@
-import type { CatalogProduct, Facets, Perm, Product, ProductFilter } from '@shared/types'
+import type { CatalogProduct, Facets, Perm, Product, ProductFilter, Currency } from '@shared/types'
 import { hasPerm } from '@shared/perms'
+import { effectivePrice } from '@shared/pricing'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { ArrowDown, ArrowUp, ChevronDown, ChevronLeft, Copy, Download, Filter, MapPin, Plus, Search, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
@@ -98,6 +99,7 @@ export function Catalog(): ReactNode {
   const isAdmin = session?.user.role === 'admin'
   const canShelf = hasPerm(session?.user, 'shelf')
   const showPrices = settings?.show_prices_to_dealers !== false || hasPerm(session?.user, 'prices')
+  const priceOf = (prod: Product): { price: number | null; currency: Currency; source: 'manual' | 'auto' | null } => effectivePrice(prod, settings ?? {})
   const threshold = settings?.low_stock_threshold ?? 5
 
   const [q, setQ] = useState('')
@@ -386,7 +388,7 @@ export function Catalog(): ReactNode {
       const p = rows.get(activeIdx)
       if (p) {
         e.preventDefault()
-        if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+        if (priceOf(p).price == null) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
         else {
           addToCart(p)
           toast(`${p.sku} sepete eklendi.`, 'success')
@@ -830,7 +832,7 @@ export function Catalog(): ReactNode {
                     )}
                     {has.has('price') && (
                       <div className="cell right nowrap" role="gridcell">
-                        {p.price != null && p.price > 0 ? money(p.price, p.currency) : <span className="badge low">Fiyat sorunuz</span>}
+                        {(() => { const e = priceOf(p); return e.price != null ? <>{money(e.price, e.currency)}{e.source === 'auto' && isAdmin && <span className="badge" title="Otomatik kaynak fiyatı" style={{ marginLeft: 4, fontSize: 10 }}>oto</span>}</> : <span className="badge low">Fiyat sorunuz</span> })()}
                       </div>
                     )}
                     <div className="cell cart-cell" role="gridcell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4 }}>
@@ -838,14 +840,14 @@ export function Catalog(): ReactNode {
                         className="btn sm cart-btn"
                         onClick={(e) => {
                           e.stopPropagation()
-                          if (p.price == null || p.price <= 0) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
+                          if (priceOf(p).price == null) toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
                           else {
                             addToCart(p)
                             toast(`${p.sku} sepete eklendi.`, 'success')
                           }
                         }}
                         aria-label={`${p.sku} sepete ekle`}
-                        disabled={(p.stock <= 0 && !isAdmin) || p.price == null || p.price <= 0}
+                        disabled={(p.stock <= 0 && !isAdmin) || priceOf(p).price == null}
                       >
                         <Plus size={16} aria-hidden /> Sepet
                       </button>

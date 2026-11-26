@@ -224,6 +224,10 @@ CREATE TABLE IF NOT EXISTS products (
   stock REAL NOT NULL DEFAULT 0,
   unit TEXT NOT NULL DEFAULT 'Adet',
   price REAL DEFAULT 0,
+  auto_price REAL,
+  auto_price_source TEXT NOT NULL DEFAULT '',
+  auto_price_at TEXT NOT NULL DEFAULT '',
+  price_source TEXT NOT NULL DEFAULT 'default',
   currency TEXT NOT NULL DEFAULT 'TRY',
   list_price REAL,
   card_price REAL,
@@ -308,6 +312,10 @@ function ensurePriceNullable(d: DB): void {
 function ensureProductColumns(d: DB): void {
   const cols = new Set((d.prepare('PRAGMA table_info(products)').all() as Array<{ name: string }>).map((col) => col.name))
   if (!cols.has('locations')) d.exec("ALTER TABLE products ADD COLUMN locations TEXT NOT NULL DEFAULT '[]'")
+  if (!cols.has('auto_price')) d.exec('ALTER TABLE products ADD COLUMN auto_price REAL')
+  if (!cols.has('auto_price_source')) d.exec("ALTER TABLE products ADD COLUMN auto_price_source TEXT NOT NULL DEFAULT ''")
+  if (!cols.has('auto_price_at')) d.exec("ALTER TABLE products ADD COLUMN auto_price_at TEXT NOT NULL DEFAULT ''")
+  if (!cols.has('price_source')) d.exec("ALTER TABLE products ADD COLUMN price_source TEXT NOT NULL DEFAULT 'default'")
   if (!cols.has('brand_base')) {
     d.exec("ALTER TABLE products ADD COLUMN brand_base TEXT NOT NULL DEFAULT ''")
     const rows = d.prepare('SELECT id, brand FROM products').all() as Array<{ id: number; brand: string }>

@@ -235,6 +235,17 @@ function Company({ s }: { s: S }): ReactNode {
       <section className="settings-group"><header><h3>Stok ve bayiler</h3><p>Stok uyarısı ve bayi fiyat görünürlüğü.</p></header><div className="settings-fields">{numF('low_stock_threshold', 'Kritik stok eşiği', '"Azaldı" uyarısı bu değerin altında gösterilir.')}<label className="check"><input type="checkbox" checked={f.show_prices_to_dealers} onChange={(e) => setF({ ...f, show_prices_to_dealers: e.target.checked })} /> Bayiler fiyatları görebilsin</label>
         <label className="check" title="Açıkken raf konumu hiçbir rolde otomatik görünmez; yalnızca kullanıcıya özel yetki verilenler görür."><input type="checkbox" checked={f.restrict_shelf} onChange={(e) => setF({ ...f, restrict_shelf: e.target.checked })} /> Raf konumu yalnızca kişiye özel yetkiyle görünsün</label>
         <label className="check" title="Açıkken ürün açıklamaları yalnızca kullanıcıya özel yetki verilenlerde görünür."><input type="checkbox" checked={f.restrict_description} onChange={(e) => setF({ ...f, restrict_description: e.target.checked })} /> Ürün açıklaması yalnızca kişiye özel yetkiyle görünsün</label></div></section>
+      <section className="settings-group"><header><h3>Otomatik fiyatlar</h3><p>Yabancı kaynaklardan bulunan EUR fiyatların nasıl kullanılacağı.</p></header><div className="settings-fields">
+        <label className="check" title="Kapalıyken otomatik bulunan fiyatlar hiçbir yerde kullanılmaz ve gösterilmez."><input type="checkbox" checked={f.show_auto_prices} onChange={(e) => setF({ ...f, show_auto_prices: e.target.checked })} /> Otomatik fiyatları kullan</label>
+        <label className="check" title="Açıkken manuel fiyatı olan üründe otomatik fiyat kullanılmaz; siz yeni fiyat girdiğinizde otomatik devre dışı kalır."><input type="checkbox" checked={f.auto_disable_on_manual} onChange={(e) => setF({ ...f, auto_disable_on_manual: e.target.checked })} /> Manuel fiyat girilince otomatik fiyat devre dışı kalsın</label>
+        <div className="field"><span className="field-label">Varsayılan fiyat kaynağı</span>
+          <div className="seg" role="group" aria-label="Varsayılan fiyat kaynağı">
+            <button type="button" className={f.price_preference === 'manual' ? 'on' : ''} onClick={() => setF({ ...f, price_preference: 'manual' })}>Benim fiyatım öncelikli</button>
+            <button type="button" className={f.price_preference === 'auto' ? 'on' : ''} onClick={() => setF({ ...f, price_preference: 'auto' })}>Otomatik fiyat öncelikli</button>
+          </div>
+          <small className="hint">İkisi de varsa hangisi gösterilsin; seçilen yoksa öteki kullanılır. Ürün bazında ayrıca değiştirilebilir.</small>
+        </div>
+      </div></section>
       {dirty && <div className="settings-savebar"><button className="btn" onClick={() => setF(s)}>Vazgeç</button><button className="btn primary" onClick={() => void save()}><Save size={16} aria-hidden /> Kaydet</button></div>}
     </div>
   )

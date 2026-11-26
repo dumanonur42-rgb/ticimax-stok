@@ -10,6 +10,7 @@ import { cardPrice } from '@shared/price'
 import { locationLabel, shelfBreakdown, shelfQuantitySummary } from '@shared/locations'
 import { hasPerm } from '@shared/perms'
 import { explainProductCode } from '@shared/bearingCodes'
+import { effectivePrice } from '@shared/pricing'
 
 export function ProductDrawer({
   product,
@@ -30,11 +31,16 @@ export function ProductDrawer({
   const toast = useApp((s) => s.toast)
   const session = useApp((s) => s.session)
   const cardPct = useApp((s) => s.settings?.card_price_pct ?? 0)
-  const cp = cardPrice(product.price, product.card_price, cardPct)
+  const settings = useApp((s) => s.settings)
+  const eff = effectivePrice(product, settings ?? {})
+  const effUnit = eff.price
+  const effCur = eff.currency
+  const cp = eff.source === 'manual' ? cardPrice(product.price, product.card_price, cardPct) : null
   const [qty, setQty] = useState(String(Math.max(1, product.min_order || 1)))
   const [equivalents, setEquivalents] = useState<Product[]>([])
   const [variants, setVariants] = useState<Product[]>([])
   const canSeeShelf = hasPerm(session?.user ?? null, 'shelf')
+  const isAdmin = session?.user?.role === 'admin'
   const shelfRows = (variants.length ? variants : [product]).flatMap((variant) =>
     shelfBreakdown(variant).map((location, index) => ({ variant, location, index }))
   )
@@ -42,7 +48,7 @@ export function ProductDrawer({
   const hideShelfQuantities = shelfQuantities.hideQuantityColumn
   const ref = useRef<HTMLDivElement>(null)
   const lvl = stockLevel(product.stock, threshold)
-  const hasPrice = product.price != null && product.price > 0
+  const hasPrice = effUnit != null
   const hasDims = product.d_inner != null || product.d_outer != null || product.width != null
   const stockNote = lvl.cls === 'out' ? 'Stok yok' : lvl.cls === 'low' ? 'Az kaldı' : 'Stokta'
   const tags = [product.box, product.category, product.type, product.seal].filter(Boolean)
@@ -109,7 +115,7 @@ export function ProductDrawer({
   }, [onClose])
 
   const addNow = (): void => {
-    if (product.price == null || product.price <= 0) {
+    if (effUnit == null) {
       toast('Bu ürünün fiyatı girilmemiş. Fiyat için lütfen bizi arayın.', 'error')
       return
     }
@@ -207,7 +213,8 @@ export function ProductDrawer({
                 <div className="pd-stat">
                   <dt><Tag size={13} aria-hidden /> Fiyat</dt>
                   <dd>
-                    <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(product.price as number, product.currency) : 'Fiyat sorunuz'}</b>
+                    <b className={hasPrice ? '' : 'ask'}>{hasPrice ? money(effUnit as number, effCur) : 'Fiyat sorunuz'}</b>
+                    {eff.source === 'auto' && isAdmin && <span className="pd-stat-note">otomatik kaynak fiyatı</span>}
                     {product.list_price != null && product.price != null && product.list_price > product.price && (
                       <span className="pd-stat-note">Liste {hasPrice ? <s>{money(product.list_price, product.currency)}</s> : money(product.list_price, product.currency)}</span>
                     )}
@@ -221,6 +228,30 @@ export function ProductDrawer({
                 </div>
               )}
             </dl>
+
+            {isAdmin && (
+              <div className="pd-priceadmin" role="group" aria-label="Fiyat kaynağı yönetimi" style={{ margin: '8px 0', padding: '8px 10px', border: '1px solid var(--line, #4444)', borderRadius: 8, fontSize: 12 }}>
+                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 6 }}>
+                  <span>Manuel: <b>{product.price != null && product.price > 0 ? money(product.price, product.currency) : 'yok'}</b></span>
+                  <span>Otomatik: <b>{product.auto_price != null && product.auto_price > 0 ? money(product.auto_price, 'EUR') : 'yok'}</b>
+                    {product.auto_price != null && product.auto_price > 0 && product.auto_price_source && (
+                      <small className="muted"> ({product.auto_price_source.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}{product.auto_price_at ? `, ${date(product.auto_price_at)}` : ''})</small>
+                    )}
+                  </span>
+                </div>
+                <div className="seg" role="group" aria-label="Fiyat kaynağı" style={{ display: 'flex', gap: 4 }}>
+                  {([['default', 'Varsayılan'], ['manual', 'Manuel'], ['auto', 'Otomatik']] as const).map(([val, label]) => (
+                    <button
+                      key={val}
+                      type="button"
+                      className={`btn sm${(product.price_source || 'default') === val ? ' primary' : ''}`}
+                      onClick={() => void api('products:priceSource', { id: product.id, source: val }).catch(() => toast('Fiyat kaynağı kaydedilemedi.', 'error'))}
+                    >{label}</button>
+                  ))}
+                  <small className="muted" style={{ marginLeft: 6, alignSelf: 'center' }}>bu üründe hangi fiyat görünsün</small>
+                </div>
+              </div>
+            )}
 
             {hasDims && (
               <div className="pd-dims" role="group" aria-label="Ölçüler">
@@ -338,11 +369,11 @@ export function ProductDrawer({
           <span className="spacer" />
           {showPrices && (
             <span aria-live="polite" className="nowrap drawer-price">
-              <strong>{product.price != null && product.price > 0 ? money(product.price * (Number(qty) || 1), product.currency) : 'Fiyat sorunuz'}</strong>
+              <strong>{effUnit != null ? money(effUnit * (Number(qty) || 1), effCur) : 'Fiyat sorunuz'}</strong>
               {cp != null && <span className="muted small"> · kart {money(cp * (Number(qty) || 1), product.currency)}</span>}
             </span>
           )}
-          <button className="btn primary" onClick={addNow} disabled={product.price == null || product.price <= 0}>
+          <button className="btn primary" onClick={addNow} disabled={effUnit == null}>
             <ShoppingCart size={16} aria-hidden /> Sepete ekle
           </button>
         </div>

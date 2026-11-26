@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
 import { toEur } from '@/lib/format'
 import { findRefreshedCartProduct } from '@shared/cart'
+import { effectivePrice } from '@shared/pricing'
 import { configurePermRestrictions } from '@shared/perms'
 
 export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help' | 'activity'
@@ -106,7 +107,8 @@ export const useCart = create<CartState>()(
       payment: 'pesin',
       add: (p, qty) => {
         const step = qty ?? Math.max(1, p.min_order || 1)
-        const eurUnit = toEur(p.price ?? 0, p.currency) ?? 0
+        const eff = effectivePrice(p, useApp.getState().settings ?? {})
+        const eurUnit = eff.price != null ? toEur(eff.price, eff.currency) ?? 0 : 0
         const eurCard = p.card_price != null ? toEur(p.card_price, p.currency) : null
         set((s) => {
           const ex = s.lines.find((l) => l.product_id === p.id)
@@ -151,7 +153,7 @@ export const useCart = create<CartState>()(
                     ...line,
                     product_id: product.id,
                     box: product.box,
-                    unit_price: toEur(product.price ?? 0, product.currency) ?? 0,
+                    unit_price: (() => { const e = effectivePrice(product, useApp.getState().settings ?? {}); return e.price != null ? toEur(e.price, e.currency) ?? 0 : 0 })(),
                     card_price: product.card_price != null ? toEur(product.card_price, product.currency) : null,
                     currency: 'EUR',
                     stock: product.stock,

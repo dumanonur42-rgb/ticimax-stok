@@ -63,6 +63,7 @@ export interface ApiMap {
   'products:variants': [number, Product[]]
   'products:bySkus': [string[], Product[]]
   'products:save': [Partial<Product> & ProductInput, Product]
+  'products:priceSource': [{ id: number; source: 'default' | 'manual' | 'auto' }, void]
   'products:delete': [number, void]
   'products:exportExcel': [ProductFilter, string | null]
   /** Admin stock management: row-level edits, bulk delete, duplicate detection and merging. */

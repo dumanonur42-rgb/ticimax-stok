@@ -4,6 +4,12 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.41
+
+- [yönetici] Otomatik fiyat sistemi: yabancı kaynaklardan bulunan EUR fiyatlar ürünlere işleniyor; Ayarlar'dan otomatik fiyatları açıp kapatabilir, varsayılan önceliği (sizin fiyatınız / otomatik) seçebilirsiniz
+- [yönetici] Ürün detayında fiyat kaynağı seçimi: her üründe manuel/otomatik/varsayılan ayrıca ayarlanabilir; manuel fiyat girilince otomatik devre dışı bırakılabilir
+- Ürün detayında ve listede gösterilen fiyat, seçilen kaynağa göre otomatik belirlenir
+
 ## 1.0.40
 
 - Ölçü filtrelerinde tek sınır girildiğinde (örn. yalnızca minimum iç çap) aralık yerine tam eşleşme uygulanır; yalnızca o ölçüdeki ürünler listelenir

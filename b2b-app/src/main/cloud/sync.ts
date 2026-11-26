@@ -112,9 +112,9 @@ function removeState(key: string): void {
 }
 
 const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name_norm, brand, brand_norm, brand_base, category, type, seal, d_inner, d_outer, width, stock, unit,
-  price, currency, list_price, card_price, min_order, shelf, locations, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
+  price, auto_price, auto_price_source, auto_price_at, price_source, currency, list_price, card_price, min_order, shelf, locations, box, box_norm, barcode, image, description, equivalents, eq_norm, active, updated_at)
   VALUES (@id,@sku,@sku_norm,@key_norm,@name,@name_norm,@brand,@brand_norm,@brand_base,@category,@type,@seal,@d_inner,@d_outer,@width,@stock,@unit,@price,
-  @currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
+  @auto_price,@auto_price_source,@auto_price_at,@price_source,@currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
 // Açıklama kısıtlaması kapalıyken herkes görür (eski davranış); açıkken yalnızca yetki verilenler.
@@ -163,6 +163,10 @@ export function upsertLocal(rows: ProductRow[]): void {
         stock: Number(r.stock),
         unit: r.unit,
         price: storagePolicy.hidePrices ? null : Number(r.price),
+        auto_price: storagePolicy.hidePrices || r.auto_price === null || r.auto_price === undefined ? null : Number(r.auto_price),
+        auto_price_source: r.auto_price_source ?? '',
+        auto_price_at: r.auto_price_at ?? '',
+        price_source: r.price_source ?? 'default',
         currency: r.currency,
         list_price: storagePolicy.hidePrices || r.list_price === null ? null : Number(r.list_price),
         card_price: storagePolicy.hidePrices || r.card_price === null ? null : Number(r.card_price),
