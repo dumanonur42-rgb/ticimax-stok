@@ -805,7 +805,6 @@ export function Catalog(): ReactNode {
                               {brandInside && <b>{brand.base}</b>}
                             </span>
                             {logo.named && <span className="sr-only">{brand.base} </span>}
-                            {!logo.named && !brandInside && <span className="brand-rest">{brand.base}</span>}
                           </>
                           : brand.base && <span className={`brand-plate text${brand.base.length > 7 ? ' long' : ''}`}><span>{brand.base}</span></span>}
                         {brand.condition && <span className="brand-cond">{brand.condition}</span>}
