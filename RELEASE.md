@@ -18,6 +18,8 @@
 
 Mobil web içeriğini `b2b-mobile-web-v<version>` etiketiyle derleyip ZIP olarak GitHub Release’e ekleyin. SHA-256 değerini alın; ardından `b2b-mobile/live-update.json` dosyasını `main` dalında yeni sürüm, ZIP adresi, checksum ve `minNative` değeriyle güncelleyin. Bu yolla yalnızca HTML, JavaScript, CSS ve görseller dağıtılır; yerel Android/iOS kodu değişmez.
 
+Bu etiket, `b2b-mobile-web.yml` iş akışını çalıştırır; `dist/` içeriğini ZIP'ler, checksum'ı yazdırır ve dosyaları `b2b-mobile-web-v<version>` GitHub Release'ine ekler.
+
 ## Minimum sürüm
 
 İsteğe bağlı `min_version_android`, `min_version_ios` ve `min_version_windows` ayarları eski uygulama sürümlerini engeller. Değer, örneğin `1.0.2` biçiminde bir metindir. Uygulama bu anahtarları yalnızca okur; ayarlar tablosuna yazmaz.
@@ -28,7 +30,9 @@ insert into settings(key,value) values('min_version_android', to_jsonb('1.0.2'::
 
 ```sql
 insert into settings(key,value) values('min_version_ios', to_jsonb('1.0.2'::text)) on conflict (key) do update set value=excluded.value;
-insert into settings(key,value) values('min_version_windows', to_jsonb('1.0.2'::text)) on conflict (key) do update set value=excluded.value;
+insert into settings(key,value) values('min_version_windows', to_jsonb('1.0.19'::text)) on conflict (key) do update set value=excluded.value;
 ```
+
+Ayarlarda anahtar yoksa zorunlu sürüm uygulanmaz. Mobil uygulamalar kimlik doğrulamasıyla son değeri okur, soğuk açılışta giriş öncesi kullanmak üzere yerelde saklar ve bu anahtarları hiçbir zaman yazmaz.
 
 Windows EXE sessizce güncellenir. Microsoft Store (AppX) paket güncellemesini kendisi yönetir; uygulama zorunlu sürümde Store’un İndirmeler ve güncellemeler sayfasını açar. Windows Store güncellemesinin durumu bir WinRT eklentisi olmadan uygulama içinden sorgulanamaz.
