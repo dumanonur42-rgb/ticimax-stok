@@ -169,7 +169,7 @@ export function ProductDrawer({
             </section>
           ) : variants.length > 1 ? (
             <section className="shelf-card" role="group" aria-label="Kutu durumları">
-              <div><span className="shelf-card-label">Kutu durumları</span><div>{(variants.length ? variants : [product]).map((variant) => <span key={variant.id}>{variant.box || 'Belirtilmemiş'} · {num(variant.stock)} adet</span>)}</div></div>
+              <div><span className="shelf-card-label">Kutu durumları</span><div>{(variants.length ? variants : [product]).map((variant) => <div key={variant.id}>{(variant.box || 'Belirtilmemiş').replace(/kutussuz/gi, 'Kutusuz')} · {num(variant.stock)} adet</div>)}</div></div>
             </section>
           ) : null}
 
