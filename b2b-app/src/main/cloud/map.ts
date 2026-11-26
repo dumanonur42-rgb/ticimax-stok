@@ -21,7 +21,7 @@ export function toProduct(r: ProductRow): Product {
     stock: num(r.stock),
     unit: r.unit,
     price: num(r.price),
-    auto_price: opt(r.auto_price),
+    auto_price: r.auto_price == null ? null : Number(r.auto_price),
     auto_price_source: r.auto_price_source ?? '',
     auto_price_at: r.auto_price_at ?? '',
     price_source: r.price_source ?? 'default',

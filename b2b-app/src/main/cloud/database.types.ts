@@ -22,10 +22,10 @@ export type ProductRow = {
   stock: number
   unit: string
   price: number
-  auto_price: number | null
-  auto_price_source: string | null
-  auto_price_at: string | null
-  price_source: string | null
+  auto_price?: number | null
+  auto_price_source?: string | null
+  auto_price_at?: string | null
+  price_source?: string | null
   currency: Currency
   list_price: number | null
   card_price: number | null

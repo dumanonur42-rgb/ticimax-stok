@@ -13,7 +13,7 @@ import type {
   QuickEntryResult,
   QuickEntryRow
 } from '@shared/types'
-import { cloud, must } from '../cloud/client'
+import { cloud, must, mustVoid } from '../cloud/client'
 import type { ProductInsert } from '../cloud/database.types'
 import { toProduct } from '../cloud/map'
 import { submit, type PatchOpRow, type QuickEntryOpRow } from '../cloud/outbox'
