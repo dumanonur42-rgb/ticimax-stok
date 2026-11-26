@@ -655,6 +655,10 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   }
   // SKF inç konik özel serisi "BT1B": otomotiv ağırlıklı, ölçüsü koddan okunmaz.
   if (/^BT1[A-Z]?$/.test(prefix) && digits) return { family: 'trb', type: 'Konik makaralı rulman (SKF özel seri)', detail: 'Standart dizi dışı, çoğunlukla otomotiv uygulamalı özel üretimdir; ölçüsü koddan okunmaz.', size: '' }
+  // Timken inç konik A serisi "A6075": cone numarasıdır; takımı A6075/A6157 diye yazılır.
+  if (prefix === 'A' && /^\d{4,5}$/.test(digits)) return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası (Timken A serisi)', detail: 'İç ve dış bilezik ayrı numaralanır; takım cone/cup birlikte yazılır.', size: '' }
+  // INA eski yazım "G 3203", "G5207 2RSN": çift sıra eğik bilyalı; numara 32../52.. serisinin kısa yazılışıdır.
+  if (prefix === 'G' && /^[35]\d{3}$/.test(digits)) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman (eski yazım)', detail: `Güncel yazımı ${digits} serisidir; radyal yükle birlikte iki yönde eksenel yük taşır.`, size: bore(boreFromCode(digits.slice(-2))) }
   // Wanda forklift mast makarası "MG309".
   if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
   // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
@@ -755,6 +759,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   if (naBi) {
     const inner = explainProductCode(`NA ${naBi[1]}${naBi[2]}`, brand)
     if (inner) return inner
+  }
+  // Bosch Rexroth lineer ünite malzeme numarası "R1081 620 40": orta grubun son iki hanesi mil çapıdır.
+  const rex = text.match(/^R(\d{4})[\s-]?\d(\d\d)[\s-]?\d\d$/)
+  if (rex && /(^|[^A-Z])(REXROTH|BOSCH|STAR)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR'))) {
+    return { base: text, type: 'Lineer rulman ünitesi (Rexroth)', typeDetail: 'Lineer burç ve yuvası takılı hâlde gelen hazır ünitedir; numarası üreticinin malzeme numarasıdır.', size: `Mil çapı ${mm(Number(rex[2]))}`, notes: [] }
   }
   // NSK vidalı mil rulmanı "20TAC47": önce delik çapı, sonra TAC, sonra dış çap gelir.
   const tac = text.match(/^(\d\d)\s?TAC\s?\d\d(.*)$/)
