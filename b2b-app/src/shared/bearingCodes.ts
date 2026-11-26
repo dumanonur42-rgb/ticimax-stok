@@ -817,11 +817,6 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
-    // FAG/SKF inç konik parça yazımı "K 2789": 8 ile başlamayan numara eksenel kafes değil, konik parça numarasıdır.
-  if (prefix === 'K' && /^\d{4,5}$/.test(digits) && !digits.startsWith('8') && !/TN|TV/.test(rest)) {
-    return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası', detail: 'İç ve dış bilezik ayrı numaralanır; K öneki seri işaretidir.', size: '' }
-  }
-  // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
     if (!info && /^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
       const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
       info = { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
