@@ -52,6 +52,14 @@ export function searchProducts(
   const knownBrands = new Set(entries.map((entry) => entry.brand).filter(Boolean))
   const skuTokens = tokens.filter((token) => !knownBrands.has(token))
   const skuQuery = skuTokens.join('')
+
+function dimInRange(val: number | null, min: number | null, max: number | null): boolean {
+  if (min === null && max === null) return true
+  if (val === null) return false
+  if (min !== null && max !== null) return val >= min && val <= max
+  return val === (min !== null ? min : max)
+}
+
   const exact: Product[] = []
   const prefix: Product[] = []
   const contains: Product[] = []
@@ -61,12 +69,9 @@ export function searchProducts(
     const p = entry.product
     if (options.inStock && p.stock <= 0) continue
     if (options.brands?.size && !options.brands.has(entry.brand)) continue
-    if (d && ((d.dMin !== null && (p.d_inner === null || p.d_inner < d.dMin)) ||
-      (d.dMax !== null && (p.d_inner === null || p.d_inner > d.dMax)) ||
-      (d.DMin !== null && (p.d_outer === null || p.d_outer < d.DMin)) ||
-      (d.DMax !== null && (p.d_outer === null || p.d_outer > d.DMax)) ||
-      (d.bMin !== null && (p.width === null || p.width < d.bMin)) ||
-      (d.bMax !== null && (p.width === null || p.width > d.bMax)))) continue
+    if (d && (!dimInRange(p.d_inner, d.dMin, d.dMax) ||
+      !dimInRange(p.d_outer, d.DMin, d.DMax) ||
+      !dimInRange(p.width, d.bMin, d.bMax))) continue
     if (tokens.some((token) => !entry.haystack.includes(token))) continue
     if (!tokens.length) {
       other.push(p)
