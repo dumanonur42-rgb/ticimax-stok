@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.35
+
+- 25 markaya logo eklendi: CCVI, HOFFMANN, AEC, R&M, FEMINA, ORB, JBS, ROLLWAY, CBF, SYI, AKN, WANDA, DÜRKOPP, ELGES, RIV, ZWZ, IJK, WBF, NBS, KSM, LDI, AKE, GNUTTI, TAM, HIC; STEYR logosu yenilendi.
+- Ürün detayındaki kod açıklamaları genişledi: yüzlerce ek rulman kodu artık türü ve mil çapıyla açıklanıyor (inç seriler, Torrington/MRC/RBC eski yazımlar, Koyo otomotiv, Rexroth lineer üniteler, Timken/SKF inç konik parçaları ve daha fazlası).
+
 ## 1.0.34
 
 - Yavaş veya kesik internette ürün listesi artık doluyor: indirme kaldığı yerden devam eder, program kapatılıp açılsa bile başa dönmez.
