@@ -4,6 +4,7 @@ import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { brandOrigin, normalize, productKey } from '@shared/identity'
+import { lookupBearingDims } from '@shared/bearingDims'
 import { decryptAtRest, encryptAtRest, ensureAtRestAvailable } from './storage'
 import { setStoredValue, SESSION_CACHE_STORAGE_KEY } from './cloud/client'
 
@@ -345,6 +346,20 @@ function migrate(d: DB): void {
   d.exec(SCHEMA)
   ensureProductColumns(d)
   ensurePriceNullable(d)
+  backfillDerivedDims(d)
+}
+
+/** Bulutta ölçüsü olmayan satırların iç/dış çap ve genişliğini rulman kodundan türetir (ISO sınır ölçü tabloları). */
+function backfillDerivedDims(d: DB): void {
+  const rows = d.prepare('SELECT id, sku, brand FROM products WHERE d_inner IS NULL').all() as Array<{ id: number; sku: string; brand: string }>
+  if (!rows.length) return
+  const update = d.prepare('UPDATE products SET d_inner = ?, d_outer = ?, width = ? WHERE id = ?')
+  d.transaction(() => {
+    for (const row of rows) {
+      const dims = lookupBearingDims(row.sku, row.brand)
+      if (dims) update.run(dims[0], dims[1], dims[2], row.id)
+    }
+  })()
 }
 
 /** Tables left behind by single-machine builds (pre-cloud); dropped on the first start of a cloud build. */

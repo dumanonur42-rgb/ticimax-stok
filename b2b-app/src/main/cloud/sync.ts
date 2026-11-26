@@ -6,6 +6,7 @@ import { pullSettings } from '../repo/settings'
 import { cloud, isTransientCloudError, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
 import { flush, outboxCounts, reapplyPending } from './outbox'
+import { lookupBearingDims } from '../../shared/bearingDims'
 
 /** Small pages survive slow/flaky links: a page must fit inside the request timeout even on a weak connection. */
 const PAGE = 500
@@ -109,6 +110,14 @@ const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name
   @currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
+// Buluttan ölçü gelmediyse koddan türet; ISO sınır ölçü tabloları standarttır.
+const derivedDims = (r: ProductRow): { d_inner: number | null; d_outer: number | null; width: number | null } => {
+  if (r.d_inner !== null && r.d_inner !== undefined) return { d_inner: r.d_inner, d_outer: r.d_outer, width: r.width }
+  const dims = lookupBearingDims(r.sku, r.brand)
+  if (!dims) return { d_inner: r.d_inner ?? null, d_outer: r.d_outer ?? null, width: r.width ?? null }
+  return { d_inner: dims[0], d_outer: dims[1], width: dims[2] }
+}
+
 export function upsertLocal(rows: ProductRow[]): void {
   if (!rows.length) return
   const db = getDb()
@@ -133,9 +142,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         category: r.category,
         type: r.type,
         seal: r.seal,
-        d_inner: r.d_inner,
-        d_outer: r.d_outer,
-        width: r.width,
+        ...derivedDims(r),
         stock: Number(r.stock),
         unit: r.unit,
         price: storagePolicy.hidePrices ? null : Number(r.price),
