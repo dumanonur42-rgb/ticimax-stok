@@ -4,6 +4,13 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.37
+
+- [yönetici] Hareketler paneli gelişti: kişiye tıklayınca yalnızca onun hareketleri, siparişe tıklayınca siparişi verenin tüm hareketleri, ürün koduna tıklayınca o ürünün hareketleri filtrelenir; hareket türü rozetine tıklayınca türe göre filtrelenir.
+- [yönetici] Hareketler paneline hızlı tarih seçimleri eklendi: Bugün / Dün / 7 gün / 30 gün.
+- [yönetici] Hareket araması artık marka adını da bulur.
+- ZKL logosu kod açıklamalarındaki "diğer markalarda" bölümünde de görünür.
+
 ## 1.0.36
 
 - Ürün detayındaki kutu durumları artık birbirine yapışmadan, ayrı satırlar halinde görünür; "Kutussuz" yazım hatası otomatik düzeltilir.
