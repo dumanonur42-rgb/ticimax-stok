@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.38
+
+- Filtrelerdeki ölçü arama artık çalışıyor: ürünlerin iç çap, dış çap ve genişliği rulman kodundan otomatik hesaplanıyor (ISO standart ölçü tabloları; sabit/eğik/oynak bilyalı, silindirik ve oynak makaralı, konik, eksenel, iğneli, yatak rulmanları, adaptör kovanları, KM somunlar, GE küresel düz rulmanlar dahil).
+- [yönetici] Raf konumu ve ürün açıklaması için yeni yetki sistemi: Ayarlar'dan "yalnızca kişiye özel yetkiyle görünsün" açılırsa kimse otomatik göremez; kullanıcı düzenlemeden kişiye özel açılır. Yetkisi kaldırılanın bilgisayarındaki bilgi de silinir.
+
 ## 1.0.37
 
 - [yönetici] Hareketler paneli gelişti: kişiye tıklayınca yalnızca onun hareketleri, siparişe tıklayınca siparişi verenin tüm hareketleri, ürün koduna tıklayınca o ürünün hareketleri filtrelenir; hareket türü rozetine tıklayınca türe göre filtrelenir.
