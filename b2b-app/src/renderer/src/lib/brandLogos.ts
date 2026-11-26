@@ -14,7 +14,7 @@ const SPELLINGS: Record<string, string> = { ASKUBAL: 'ask', STEYER: 'steyr', STY
 const OWNERS: Record<string, string> = { BOSCH: 'rexroth', STAR: 'rexroth' }
 
 // Emblems whose lettering is too small to read at plate size: the name is printed beside them.
-const EMBLEMS = new Set(['zkl', 'ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth', 'slf'])
+const EMBLEMS = new Set(['ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth', 'slf'])
 
 // Wordmarks that do not show the brand's short name legibly ("Nippon Bearing" for NB).
 const UNREADABLE = new Set(['eurosnodi', 'nb', 'schneeberger'])
