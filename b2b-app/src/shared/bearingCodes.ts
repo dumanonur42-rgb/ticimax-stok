@@ -595,6 +595,18 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     }
     return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
+  // IKO eksenel iğneli rulman pulları "GS 75100": ilk yarı mil (iç) çapı, ikinci yarı dış çap.
+  if ((prefix === 'GS' || prefix === 'WS') && digits.length >= 4 && digits.length <= 6) {
+    const pair = halves(digits)
+    if (pair && pair[0] < pair[1]) return { family: 'thrust', type: `Eksenel rulman pulu (${prefix === 'GS' ? 'yuva tarafı' : 'mil tarafı'})`, detail: 'Eksenel iğneli veya silindirik makaralı rulmanların sertleştirilmiş yuvarlanma puludur.', size: `İç çap ${mm(pair[0])} · dış çap ${mm(pair[1])}` }
+  }
+  // IBC / TPI vidalı mil destek rulmanı "BS30M62".
+  if (prefix === 'BS' && /^\d{2,4}$/.test(digits)) return { family: 'acbb', type: 'Vidalı mil destek rulmanı (eğik bilyalı)', detail: 'Vidalı millerde yüksek eksenel yükü karşılar; çoğunlukla eşli (çiftli) takılır.', size: Number(digits.slice(0, 2)) >= 10 && Number(digits.slice(0, 2)) <= 80 ? `Mil (delik) çapı ${mm(Number(digits.slice(0, 2)))}` : '' }
+  // Wanda forklift mast makarası "MG309".
+  if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
+  // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
+  if (/^(GRA?E?|RALE|RLE|RAL)$/.test(prefix) && digits && digits.length <= 2 && /(NPP|KRR)/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı, eksantrik kilit bilezikli', detail: 'Dış bileziği küreseldir; yatak gövdesine takılır.', size: bore(Number(digits)) }
+  if (prefix === 'G' && digits && /(KRR|NPP)/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı (Fafnir)', detail: 'Dış bileziği küreseldir; yatak gövdesine takılır.', size: bore(Number(digits)) }
   if ((prefix === 'SA' || prefix === 'SB' || prefix === 'UC' || prefix === 'UK' || prefix === 'YAR' || prefix === 'YET' || prefix === 'YEL') && /^[23]\d\d$/.test(digits)) {
     // "-100" is 1 in (inches + sixteenths), "-16" is 16/16 in.
     const inchCode = rest.match(/^-(\d{2,3})(?=[\s-]|$)/)?.[1]
@@ -654,7 +666,17 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   if (star && Number(star[2]) >= 5) {
     return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
   }
-  const match = text.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
+  // NSK vidalı mil rulmanı "20TAC47": önce delik çapı, sonra TAC, sonra dış çap gelir.
+  const tac = text.match(/^(\d\d)\s?TAC\s?\d\d(.*)$/)
+  if (tac) {
+    return { base: text, type: 'Vidalı mil destek rulmanı (eğik bilyalı)', typeDetail: 'Vidalı millerde yüksek eksenel yükü karşılar; çoğunlukla eşli (çiftli) takılır. Temas açısı 60°dir.', size: `Mil (delik) çapı ${mm(Number(tac[1]))}`, notes: [] }
+  }
+  // "K LM 11749/11710", "K-L68149/K-L68111": bazı markalar inç konik numaralarının önüne K koyar; parça numarası değildir.
+  const kInch = /^K[\s-]+(?=J?[A-Z]{1,3}[\s-]?\d{4,6})/.test(text) ? text.replace(/^K[\s-]+/, '').replace(/K-(?=\d)/g, '') : text
+  // "3586 3525": inç konik rulmanın cone ve cup numarası bazen bölü yerine boşlukla yazılır.
+  const spacedPair = kInch.match(/^(\d{4,6}) (\d{4,6})$/)
+  const source = spacedPair ? `${spacedPair[1]}/${spacedPair[2]}` : kInch
+  const match = source.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
   if (!match) return null
   const prefix = match[1] ?? ''
   let number = match[2]
@@ -675,14 +697,19 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     let explicit = slash ? Number(slash[2].replace(',', '.')) : null
     // "6902-16 ZZ": a number right after the base code is a special bore, so the standard bore does not apply.
     // "15123/15245", "45284-45220": an inch taper cone and cup, both plain numbers; the second one is never a bore.
-    const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^(\d{5})-\d{5}$/.test(text))
+    const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^\d{4,6}\/\d{4,6}$/.test(source) || /^(\d{5})-\d{5}$/.test(text))
     // FAG 562xx is an insert bearing series, so such a pair cannot be told apart from a cone and cup.
     if (conePair && brandName === 'FAG' && /^[1357]62\d\d$/.test(digits)) return null
-    if (conePair && !slash) { number = text; rest = '' }
+    if (conePair && !slash) { number = source; rest = '' }
     const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
     if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
+    // Torrington / IKO inç iğneli kovan "B 2812": ilk iki hane mil çapı, son iki hane genişlik (1/16 inç).
+    if (!info && prefix === 'B' && /^\d{4}$/.test(digits) && Number(digits.slice(0, 2)) > Number(digits.slice(2))) {
+      const sixteenth = (code: string): number => Math.round(Number(code) / 16 * 25.4 * 1000) / 1000
+      info = { family: 'needle', type: 'İnç ölçülü iğneli kovan (Torrington yazımı)', size: `Mil çapı ${mm(sixteenth(digits.slice(0, 2)))} (inç ölçülü) · genişlik ${mm(sixteenth(digits.slice(2)))}` }
+    }
     if (conePair) info = { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
     // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
@@ -690,12 +717,14 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
       const split = numericType(digits.slice(0, -1), explicit, true, brandName)
       if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
+    // "203 KRR": INA tarım rulmanı (altıgen/kare delikli), KRR keçesiyle yazılır.
+    if (!info && /^20[3-6]$/.test(digits) && /KRR/.test(rest)) info = { family: 'insert', type: 'Tarım rulmanı (altıgen delikli yatak rulmanı)', detail: 'Tarım makinelerinde mile burçsuz, doğrudan altıgen mil üzerinde çalışır.' }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
     if (flanged && info?.family !== 'dgbb') info = null
     if (info && flanged) prefixNote = prefix === 'F' ? 'Flanşlı dış bilezik' : 'Paslanmaz çelik, flanşlı dış bilezik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
-    if (info && prefix === 'B' && info.family !== 'acbb') info = null
-    if (info && prefix === 'B') prefixNote = 'İş mili (spindle) rulmanı'
+    if (info && prefix === 'B' && info.family !== 'acbb' && info.family !== 'needle') info = null
+    if (info && prefix === 'B' && info.family === 'acbb') prefixNote = 'İş mili (spindle) rulmanı'
   } else {
     info = prefixedType(prefix, number, rest, brandName)
   }
