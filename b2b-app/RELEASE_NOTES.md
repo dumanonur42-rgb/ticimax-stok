@@ -4,6 +4,10 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.39
+
+- Ürün listesinde marka logosunun yanında çıkan ek marka yazısı kaldırıldı; logo varsa yalnızca logo görünür.
+
 ## 1.0.38
 
 - Filtrelerdeki ölçü arama artık çalışıyor: ürünlerin iç çap, dış çap ve genişliği rulman kodundan otomatik hesaplanıyor (ISO standart ölçü tabloları; sabit/eğik/oynak bilyalı, silindirik ve oynak makaralı, konik, eksenel, iğneli, yatak rulmanları, adaptör kovanları, KM somunlar, GE küresel düz rulmanlar dahil).
