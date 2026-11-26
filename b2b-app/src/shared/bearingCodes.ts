@@ -538,6 +538,10 @@ const halves = (digits: string): [number, number] | null => {
 
 const prefixedType = (prefix: string, number: string, rest: string, brand: string): TypeInfo | null => {
   const digits = /^\d+$/.test(number) ? number : ''
+  // FAG/SKF inç konik parça yazımı "K 2789": 8 ile başlamayan numara eksenel kafes değil, konik parça numarasıdır.
+  if (prefix === 'K' && /^\d{4,5}$/.test(digits) && !digits.startsWith('8') && !/TN|TV/.test(rest)) {
+    return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası', detail: 'İç ve dış bilezik ayrı numaralanır; K öneki seri işaretidir.', size: '' }
+  }
   // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
   if (/^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
     const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
@@ -734,6 +738,12 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     if (inner) return { ...inner, type: info.type, typeDetail: info.typeDetail }
     return info as never
   }
+  // ZWZ inç konik takım yazımı "K15123-K15245": K- önekleri seri işaretidir, takım cone/cup çiftidir.
+  const kPair = text.match(/^K[\s-]?(\d{4,6})[\s-]+K[\s-]?(\d{4,6})$/)
+  if (kPair) {
+    const inner = explainProductCode(`${kPair[1]}/${kPair[2]}`, brand)
+    if (inner) return inner
+  }
   // RBC koda markasını da yazar: "RBC SJ-840".
   const rbcStrip = text.replace(/^RBC[\s-]+/, '')
   if (rbcStrip !== text) {
@@ -803,7 +813,11 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
-    // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
+    // FAG/SKF inç konik parça yazımı "K 2789": 8 ile başlamayan numara eksenel kafes değil, konik parça numarasıdır.
+  if (prefix === 'K' && /^\d{4,5}$/.test(digits) && !digits.startsWith('8') && !/TN|TV/.test(rest)) {
+    return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası', detail: 'İç ve dış bilezik ayrı numaralanır; K öneki seri işaretidir.', size: '' }
+  }
+  // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
     if (!info && /^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
       const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
       info = { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
