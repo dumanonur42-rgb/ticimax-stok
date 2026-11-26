@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.34
+
+- Yavaş veya kesik internette ürün listesi artık doluyor: indirme kaldığı yerden devam eder, program kapatılıp açılsa bile başa dönmez.
+- Bağlantı koparsa indirme kendiliğinden birkaç kez yeniden dener; çıkış yapıp tekrar girenlerde listenin boş kalması düzeltildi.
+
 ## 1.0.33
 
 - Ürün listesinde marka logosunun yanında menşei yazmaz; menşei yalnızca ürün detayında görünür.
