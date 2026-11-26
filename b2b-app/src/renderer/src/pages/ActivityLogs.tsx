@@ -47,7 +47,11 @@ const activityText = (row: ActivityRow): string => {
   if (row.kind === 'search') return `“${row.query}” aradı`
   if (row.kind === 'product_view') return `${product || 'Ürüne'} baktı`
   if (row.kind === 'cart_add') return `${product || 'Ürün'} sepete ekledi (${row.qty ?? 1} adet)`
-  return `${String(row.detail?.order_no ?? `Sipariş #${row.order_id ?? ''}`)} siparişini verdi`
+  if (row.kind === 'order') {
+    const no = row.detail?.order_no ?? (row.order_id ? `Sipariş #${row.order_id}` : '')
+    return no ? `${String(no)} siparişini verdi` : 'Sipariş verdi'
+  }
+  return 'Sipariş verdi'
 }
 const PlatformIcon = ({ platform }: { platform: ActivityPlatform }): ReactNode =>
   platform === 'windows' ? <Monitor size={15} /> : platform === 'web' ? <Globe size={15} /> : <Smartphone size={15} />
@@ -141,7 +145,7 @@ export function ActivityLogs(): ReactNode {
   }, [sourceTab, tab, activityOffset, stockOffset])
   const companyById = useMemo(() => new Map(customers.map((customer) => [customer.id, customer.name])), [customers])
   const filterPerson = <select className="select sm activity-person-filter" aria-label="Kişi filtresi" value={userId} onChange={(e) => setUserId(e.target.value)}><option value="">Tüm kişiler</option>{users.map((u) => <option key={u.id} value={u.id}>{u.display_name || u.username}{u.customer_id ? ` · ${companyById.get(u.customer_id) ?? ''}` : ''}</option>)}</select>
-  const dateFilters = <><label className="activity-date"><CalendarDays size={14} /><input className="input sm" type="date" aria-label="Başlangıç tarihi" value={from} onChange={(e) => setFrom(e.target.value)} /></label><label className="activity-date"><CalendarDays size={14} /><input className="input sm" type="date" aria-label="Bitiş tarihi" value={to} onChange={(e) => setTo(e.target.value)} /></label></>
+  const dateFilters = <><label className="activity-date"><CalendarDays size={14} /><input className="input sm" type="date" aria-label="Başlangıç tarihi" value={from} onChange={(e) => setFrom(e.target.value)} /></label><label className="activity-date"><CalendarDays size={14} /><input className="input sm" type="date" aria-label="Bitiş tarihi" value={to} onChange={(e) => setTo(e.target.value)} /></label><span className="activity-quick-dates"><button type="button" onClick={() => quickDay(0)}>Bugün</button><button type="button" onClick={() => quickDay(1)}>Dün</button><button type="button" onClick={() => quickDay(6)}>7 gün</button><button type="button" onClick={() => quickDay(29)}>30 gün</button>{(from || to) ? <button type="button" onClick={() => { setFrom(''); setTo('') }}>Tümü</button> : null}</span></>
   const refresh = (): void => {
     if (tab === 'activity') {
       setActivityOffset(0)
@@ -163,11 +167,23 @@ export function ActivityLogs(): ReactNode {
     }
   }, [sourceTab, tab])
   const selectedUser = users.find((user) => user.id === userId)
-  const pickUser = (id: string | null): void => {
+  function pickUser(id: string | null): void {
     if (!id) return
     setUserId(id)
     setActivityOffset(0)
     setStockOffset(0)
+  }
+  function pickSku(value: string | null | undefined): void {
+    if (!value) return
+    setText(value)
+    setActivityOffset(0)
+  }
+  function quickDay(days: number): void {
+    const end = new Date()
+    const start = new Date(end.getFullYear(), end.getMonth(), end.getDate() - days)
+    const iso = (d: Date): string => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    setFrom(iso(start))
+    setTo(iso(end))
   }
   const userChip = userId ? <button className="activity-filter-chip" type="button" title="Kişi filtresini kaldır" onClick={() => setUserId('')}>{selectedUser?.display_name || selectedUser?.username || 'Seçili kişi'} ×</button> : null
   const stockHasFilters = Boolean(sku.trim() || userId || source || from || to)
@@ -200,7 +216,7 @@ export function ActivityLogs(): ReactNode {
         <div className="activity-summary-list"><b>En çok baktığı ürünler</b>{summary.topViewedProducts.length ? summary.topViewedProducts.map((product) => <span key={`${product.product_id}-${product.sku}`}>{product.sku}{product.brand && ` · ${product.brand}`} ({product.views})</span>) : <span>Kayıt yok</span>}</div>
         <div className="activity-summary-list"><b>En çok aradığı kelimeler</b>{summary.topSearchTerms.length ? summary.topSearchTerms.map((term) => <span key={term.query}>“{term.query}” ({term.searches})</span>) : <span>Kayıt yok</span>}</div>
       </div>}
-      <div className="activity-table-wrap"><table className="table activity-table"><thead><tr><th>Zaman</th><th>Kişi</th><th>Platform</th><th>Hareket</th></tr></thead><tbody>{activityGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={4} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td className="activity-person"><button className="activity-person-btn" type="button" title="Yalnızca bu kişinin hareketlerini göster" onClick={() => pickUser(row.user_id)}><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></button></td><td><span className="activity-platform"><PlatformIcon platform={row.platform} />{platforms.find(([key]) => key === row.platform)?.[1] ?? row.platform}</span></td><td>{row.kind === 'order' ? <button className="activity-order-btn" type="button" title="Bu siparişi verenin tüm hareketlerini göster" onClick={() => pickUser(row.user_id)}><span className="activity-description"><ActivityKindBadge kind={row.kind} /><span>{activityText(row)}</span></span></button> : <span className="activity-description"><ActivityKindBadge kind={row.kind} /><span>{activityText(row)}</span></span>}</td></tr>)}</Fragment>)}</tbody></table>{activityError ? <LoadError message={activityError} onRetry={refresh} /> : activityLoading ? <p className="activity-empty" role="status">Hareketler yükleniyor…</p> : !activity.length && <p className="activity-empty">Kayıt bulunamadı.</p>}</div>
+      <div className="activity-table-wrap"><table className="table activity-table"><thead><tr><th>Zaman</th><th>Kişi</th><th>Platform</th><th>Hareket</th></tr></thead><tbody>{activityGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={4} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td className="activity-person"><button className="activity-person-btn" type="button" title="Yalnızca bu kişinin hareketlerini göster" onClick={() => pickUser(row.user_id)}><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></button></td><td><span className="activity-platform"><PlatformIcon platform={row.platform} />{platforms.find(([key]) => key === row.platform)?.[1] ?? row.platform}</span></td><td><span className="activity-description"><button className="activity-kind-btn" type="button" title="Bu hareket türüne filtrele" onClick={() => setKind((cur) => cur === row.kind ? '' : row.kind)}><ActivityKindBadge kind={row.kind} /></button>{row.kind === 'order' ? <button className="activity-order-btn" type="button" title="Bu siparişi verenin tüm hareketlerini göster" onClick={() => pickUser(row.user_id)}>{activityText(row)}</button> : (row.kind === 'product_view' || row.kind === 'cart_add') && row.sku ? <button className="activity-order-btn" type="button" title="Bu ürünün hareketlerine filtrele" onClick={() => pickSku(row.sku)}>{activityText(row)}</button> : <span>{activityText(row)}</span>}</span></td></tr>)}</Fragment>)}</tbody></table>{activityError ? <LoadError message={activityError} onRetry={refresh} /> : activityLoading ? <p className="activity-empty" role="status">Hareketler yükleniyor…</p> : !activity.length && <p className="activity-empty">Kayıt bulunamadı.</p>}</div>
     </> : <>
       <div className="activity-filters">{userChip}<input className="input sm" aria-label="Ürün kodu ara" placeholder="Ürün kodu" value={sku} onChange={(e) => setSku(e.target.value)} />{filterPerson}<select className="select sm" aria-label="Stok kaynağı" value={source} onChange={(e) => setSource(e.target.value)}><option value="">Tüm kaynaklar</option>{sources.map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select>{dateFilters}<button className="btn sm activity-refresh" onClick={refresh}><RefreshCw size={15} aria-hidden /> Yenile</button></div>
       <div className="activity-table-wrap"><table className="table activity-table stock-activity-table"><thead><tr><th>Zaman</th><th>Ürün</th><th>Eski → Yeni</th><th>Fark</th><th>Kim</th><th>Kaynak</th></tr></thead><tbody>{stockGroups.map((group) => <Fragment key={group.key}><tr className="activity-day-row"><th colSpan={6} scope="rowgroup">{group.label}</th></tr>{group.rows.map((row) => <tr key={row.id}><td>{timeText(row.at)}</td><td><b>{row.sku}</b><small>{[row.brand, row.box].filter(Boolean).join(' · ')}</small></td><td>{row.old_stock ?? '—'} → {row.new_stock}</td><td className={row.delta > 0 ? 'activity-positive' : row.delta < 0 ? 'activity-negative' : ''}>{row.delta > 0 ? '+' : ''}{row.delta}</td><td className="activity-person">{row.user_id ? <button className="activity-person-btn" type="button" title="Yalnızca bu kişinin hareketlerini göster" onClick={() => pickUser(row.user_id)}><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></button> : <><b>{row.person.display_name || row.person.username || 'Silinmiş kullanıcı'}</b><small>{[row.person.company, row.person.username].filter(Boolean).join(' · ')}</small></>}</td><td>{sourceName(row.source)}</td></tr>)}</Fragment>)}</tbody></table>{stockError ? <LoadError message={stockError} onRetry={refresh} /> : stockLoading ? <p className="activity-empty" role="status">Stok hareketleri yükleniyor…</p> : !stock.length && <p className="activity-empty">{stockHasFilters ? 'Kayıt bulunamadı.' : 'Henüz stok değişikliği yok.'}</p>}</div>
