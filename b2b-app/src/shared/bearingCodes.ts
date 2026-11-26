@@ -666,6 +666,12 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   if (star && Number(star[2]) >= 5) {
     return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
   }
+  // Koyo otomotiv özel serisi "05 NJ 0620 VH": baştaki iki hane seri ön ekidir; rulman NJ tipidir.
+  // Ölçü dizisi standart dışı olduğundan delik çapı koddan okunmaz (ör. bu kod 25x58x20 şanzıman rulmanıdır).
+  const leadCr = text.match(/^\d{2}\s+(NUP|NJ|NU|NF|N)\s?\d{4}(.*)$/)
+  if (leadCr) {
+    return { base: text, type: `Silindirik makaralı rulman (${leadCr[1]} tipi) · üreticiye özel seri`, typeDetail: (CRB[leadCr[1]] ?? '') + ' Baştaki iki hane ve sondaki ekler üreticinin otomotiv özel seri yazımıdır; ana ölçüler standart diziye uymaz.', size: '', notes: [] }
+  }
   // NSK vidalı mil rulmanı "20TAC47": önce delik çapı, sonra TAC, sonra dış çap gelir.
   const tac = text.match(/^(\d\d)\s?TAC\s?\d\d(.*)$/)
   if (tac) {
