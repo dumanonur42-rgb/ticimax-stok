@@ -4,6 +4,10 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.36
+
+- Ürün detayındaki kutu durumları artık birbirine yapışmadan, ayrı satırlar halinde görünür; "Kutussuz" yazım hatası otomatik düzeltilir.
+
 ## 1.0.35
 
 - 25 markaya logo eklendi: CCVI, HOFFMANN, AEC, R&M, FEMINA, ORB, JBS, ROLLWAY, CBF, SYI, AKN, WANDA, DÜRKOPP, ELGES, RIV, ZWZ, IJK, WBF, NBS, KSM, LDI, AKE, GNUTTI, TAM, HIC; STEYR logosu yenilendi.
