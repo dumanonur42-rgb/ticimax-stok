@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { effectivePrice } from '@shared/pricing'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { boxIdentity, normalize } from '@shared/identity'
 import type { Customer, PaymentType, Product, Settings, Session } from '@shared/types'
@@ -146,6 +147,18 @@ interface AppState {
   setSelectedOrderId: (id: number | null) => void
 }
 
+
+/** Otomatik/manuel fiyat politikasını ürün listesine uygular; bayiye gösterilen fiyat burada netleşir. */
+function applyPricePolicy(products: Product[], settings: Settings): Product[] {
+  return products.map((p) => {
+    if (p.price === null) return p
+    const eff = effectivePrice(p, settings)
+    if (eff.price == null) return p.price === 0 || p.price == null ? p : { ...p, price: 0 }
+    if (eff.source === 'auto') return { ...p, price: eff.price, currency: 'EUR' as const }
+    return p
+  })
+}
+
 export const useApp = create<AppState>((set) => ({
   tab: 'home',
   themePreference: readThemePreference(),
@@ -169,9 +182,9 @@ export const useApp = create<AppState>((set) => ({
     set({ themePreference })
   },
   setSession: (session) => set({ session }),
-  setSettings: (settings) => set({ settings }),
+  setSettings: (settings) => set((state) => ({ settings, products: applyPricePolicy(state.products, settings) })),
   setCustomers: (customers) => set({ customers }),
-  setProducts: (products) => set({ products }),
+  setProducts: (products) => set((state) => ({ products: applyPricePolicy(products, state.settings) })),
   setCatalogFilters: (catalogBrands, catalogDimensions) => set({ catalogBrands, catalogDimensions }),
   setOnline: (online) => set({ online }),
   setSyncBusy: (syncBusy) => set({ syncBusy }),

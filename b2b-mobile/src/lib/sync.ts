@@ -10,7 +10,7 @@ import { catalogStorage } from './catalogStorage'
 const PAGE_SIZE = 1000
 const PRODUCT_COLUMNS = [
   'id', 'sku', 'name', 'brand', 'category', 'type', 'seal', 'd_inner', 'd_outer', 'width',
-  'stock', 'unit', 'price', 'currency', 'list_price', 'card_price', 'min_order', 'shelf', 'locations',
+  'stock', 'unit', 'price', 'auto_price', 'auto_price_source', 'auto_price_at', 'price_source', 'currency', 'list_price', 'card_price', 'min_order', 'shelf', 'locations',
   'box', 'barcode', 'description', 'equivalents', 'active', 'deleted', 'updated_at'
 ].join(',')
 
@@ -65,6 +65,10 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
     stock: Number(row.stock),
     unit: row.unit,
     price: policy.hidePrices ? null : Number(row.price),
+    auto_price: policy.hidePrices || row.auto_price == null ? null : Number(row.auto_price),
+    auto_price_source: row.auto_price_source ?? '',
+    auto_price_at: row.auto_price_at ?? '',
+    price_source: row.price_source ?? 'default',
     currency: row.currency,
     list_price: policy.hidePrices || row.list_price == null ? null : Number(row.list_price),
     card_price: policy.hidePrices || row.card_price == null ? null : Number(row.card_price),
