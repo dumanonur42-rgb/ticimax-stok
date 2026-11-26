@@ -4,6 +4,10 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.40
+
+- Ölçü filtrelerinde tek sınır girildiğinde (örn. yalnızca minimum iç çap) aralık yerine tam eşleşme uygulanır; yalnızca o ölçüdeki ürünler listelenir
+
 ## 1.0.39
 
 - Ürün listesinde marka logosunun yanında çıkan ek marka yazısı kaldırıldı; logo varsa yalnızca logo görünür.
