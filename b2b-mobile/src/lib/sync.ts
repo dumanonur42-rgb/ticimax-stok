@@ -1,6 +1,6 @@
 import type { Product } from '@shared/types'
 import type { ProductRow } from '@desktopDatabase'
-import { hasPerm } from '@shared/perms'
+import { configurePermRestrictions, hasPerm } from '@shared/perms'
 import { getState, putProducts, readProducts, removeProducts, replaceProducts, setState } from './idb'
 import { loadSettings, supabase } from './cloud'
 import { useApp } from '../store/app'
@@ -17,6 +17,7 @@ const PRODUCT_COLUMNS = [
 interface ProductStoragePolicy {
   canSeeShelf: boolean
   hidePrices: boolean
+  canSeeDescription: boolean
   signature: string
 }
 
@@ -28,16 +29,21 @@ let realtimeTimer: ReturnType<typeof setTimeout> | null = null
 function storagePolicy(): ProductStoragePolicy {
   const user = useApp.getState().session?.user
   const settings = useApp.getState().settings
-  const canSeeShelf = user?.role === 'admin' || user?.role === 'ara' || hasPerm(user, 'shelf')
+  configurePermRestrictions(settings)
+  const canSeeShelf = hasPerm(user, 'shelf')
   const canSeePrices = user?.role === 'admin' ||
     settings.show_prices_to_dealers !== false ||
     hasPerm(user, 'prices')
   return {
     canSeeShelf,
+    canSeeDescription: !settings.restrict_description || hasPerm(user, 'description'),
     hidePrices: !!user && user.role !== 'admin' && !canSeePrices,
     signature: JSON.stringify({
       role: user?.role ?? null,
       shelf: canSeeShelf,
+      description: !settings.restrict_description || hasPerm(user, 'description'),
+      restrictShelf: !!settings.restrict_shelf,
+      restrictDescription: !!settings.restrict_description,
       prices: hasPerm(user, 'prices'),
       showPricesToDealers: settings.show_prices_to_dealers !== false
     })
@@ -68,7 +74,7 @@ function toProduct(row: ProductRow, policy: ProductStoragePolicy): Product {
     box: row.box,
     barcode: row.barcode,
     image: '',
-    description: row.description,
+    description: policy.canSeeDescription ? row.description : '',
     equivalents: row.equivalents,
     active: row.active ? 1 : 0,
     updated_at: row.updated_at

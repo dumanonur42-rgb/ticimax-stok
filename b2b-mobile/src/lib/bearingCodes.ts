@@ -538,6 +538,15 @@ const halves = (digits: string): [number, number] | null => {
 
 const prefixedType = (prefix: string, number: string, rest: string, brand: string): TypeInfo | null => {
   const digits = /^\d+$/.test(number) ? number : ''
+  // FAG/SKF inç konik parça yazımı "K 2789": 8 ile başlamayan numara eksenel kafes değil, konik parça numarasıdır.
+  if (prefix === 'K' && /^\d{4,5}$/.test(digits) && !digits.startsWith('8') && !/TN|TV/.test(rest)) {
+    return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası', detail: 'İç ve dış bilezik ayrı numaralanır; K öneki seri işaretidir.', size: '' }
+  }
+  // SKF inç konik parça yazımı "K 2720 CUP": CUP/CONE sözcüğü parçanın ne olduğunu söyler.
+  if (/^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
+    const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
+    return { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
+  }
   const slash = number.match(/^(\d+)\/(\d+(?:[.,]\d+)?)$/)
   const dims = number.match(/^(\d+(?:[.,]\d+)?)X(\d+(?:[.,]\d+)?)X(\d+(?:[.,]\d+)?)$/)
   const value = (text: string): number => Number(text.replace(',', '.'))
@@ -563,6 +572,8 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'QJ' && digits) return { family: 'acbb', type: 'Dört nokta temaslı bilyalı rulman', detail: 'İki yönde eksenel yük taşır; iç bileziği iki parçalıdır.', size: bore(boreFromCode(digits.slice(-2))) }
   if (prefix === 'LR' && !dims && digits) return { family: 'needle', type: 'Yürüyen makara (bilyalı, kalın dış bilezikli)' }
   if (prefix === 'LR' && dims) return { family: 'needle', type: 'İğneli rulman iç bileziği', size: `İç çap ${mm(value(dims[1]))} · dış çap ${mm(value(dims[2]))} · genişlik ${mm(value(dims[3]))}` }
+  // Nadella / INA tam dolu iğneli "NA 1055": 1000/2000/3000 serisi; sondaki haneler mil çapıdır.
+  if (prefix === 'NA' && /^[123]\d{3}$/.test(digits) && !/^(48|49|59|69)/.test(digits) && !(/^22\d\d$/.test(digits) && /(2RS|LL)(\s|$)/.test(rest))) return { family: 'needle', type: 'İğneli rulman, kafessiz (tam dolu), iç bilezikli', detail: 'Nadella/INA 1000-3000 serisi; yük kapasitesi yüksek, devir düşüktür. Son haneler mil çapıdır.', size: `Mil (delik) çapı ${mm(Number(digits.slice(1)))}` }
   if (prefix in NEEDLE) {
     const info: TypeInfo = { family: 'needle', type: NEEDLE[prefix] }
     if (prefix === 'K' && !dims) return null
@@ -595,6 +606,68 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
     }
     return { family: 'plain', type: 'Mafsal rulmanı (küresel kaymalı yatak)', detail: 'Salınım hareketi ve eksen kaçıklığı olan bağlantılarda kullanılır.', size }
   }
+  // IKO eksenel iğneli rulman pulları "GS 75100": ilk yarı mil (iç) çapı, ikinci yarı dış çap.
+  if ((prefix === 'GS' || prefix === 'WS') && digits.length >= 4 && digits.length <= 6) {
+    const pair = halves(digits)
+    if (pair && pair[0] < pair[1]) return { family: 'thrust', type: `Eksenel rulman pulu (${prefix === 'GS' ? 'yuva tarafı' : 'mil tarafı'})`, detail: 'Eksenel iğneli veya silindirik makaralı rulmanların sertleştirilmiş yuvarlanma puludur.', size: `İç çap ${mm(pair[0])} · dış çap ${mm(pair[1])}` }
+  }
+  // IBC / TPI vidalı mil destek rulmanı "BS30M62".
+  if (prefix === 'BS' && /^\d{2,4}$/.test(digits)) return { family: 'acbb', type: 'Vidalı mil destek rulmanı (eğik bilyalı)', detail: 'Vidalı millerde yüksek eksenel yükü karşılar; çoğunlukla eşli (çiftli) takılır.', size: Number(digits.slice(0, 2)) >= 10 && Number(digits.slice(0, 2)) <= 80 ? `Mil (delik) çapı ${mm(Number(digits.slice(0, 2)))}` : '' }
+  // FAG / DWB (Dürkopp) eski masif iğneli rulman yazımı: NAB iç bileziksiz (mil üzerinde çalışır), NAK iç bilezikli.
+  if ((prefix === 'NAB' || prefix === 'NAK') && digits && digits.length <= 3) return { family: 'needle', type: `Masif iğneli rulman, eski FAG/DWB yazımı (${prefix === 'NAB' ? 'iç bileziksiz' : 'iç bilezikli'})`, detail: prefix === 'NAB' ? 'İç bileziği yoktur; iğneler doğrudan taşlanmış mil üzerinde çalışır. Numara mil çapıdır.' : 'Numara delik çapıdır.', size: `${prefix === 'NAB' ? 'Mil çapı' : 'İç çap'} ${mm(Number(digits))}` }
+  // ZKL / ZVL özel çizim numaralı rulmanlar "PLC 44-3".
+  if (prefix === 'PLC' && digits) return { family: 'crb', type: 'Silindirik makaralı rulman (ZKL özel çizim serisi)', detail: 'Standart dizi dışı, çizim numaralı özel üretimdir; ölçüsü koddan okunmaz.', size: '' }
+  // SKF / INA tam dolu çift sıra silindirik makaralı "NNF 5010" (= SL04 50.. serisi).
+  if (prefix === 'NNF' && /^50\d\d$/.test(digits)) return { family: 'crb', type: 'Çift sıra silindirik makaralı rulman, kafessiz (tam dolu)', detail: 'Yük kapasitesi çok yüksek, devir düşüktür; iki yönde eksenel yük de taşır. INA yazımı SL04 50.. serisidir.', size: bore(boreFromCode(digits.slice(-2))) }
+  // INA kombine rulman yazımı: NKIA iğneli + eğik bilyalı; başa R gelirse iç bileziksizi.
+  if (/^R?NKIA$/.test(prefix) && /^59\d\d$/.test(digits)) return { family: 'needle', type: `Kombine rulman: iğneli + eğik bilyalı (tek yön)${prefix.startsWith('R') ? ', iç bileziksiz' : ''}`, size: bore(boreFromCode(digits.slice(-2))) }
+  // NMB inç minyatür "R3 ZZ", "R52 ZZ": R serisi inç ölçülü minyatür bilyalı.
+  if (prefix === 'R' && /^\d{1,3}[A-Z]?$/.test(digits) && digits.length <= 3) return { family: 'dgbb', type: 'İnç ölçülü minyatür bilyalı rulman (R serisi)', detail: 'Numarası inç ölçüsüne göre seri numarasıdır; metrik karşılığı koddan okunmaz.', size: '' }
+  // McGill yürüyen makara "GR 16": iğneli, kalın dış bilezikli.
+  if (prefix === 'GR' && digits) return { family: 'needle', type: 'Yürüyen makara (iğneli, kalın dış bilezikli)', detail: 'McGill GR serisi; ray veya düzlem üzerinde yürüyen makara olarak kullanılır.', size: '' }
+  // SKF otomotiv özel yazımı "BA2B", "BB1", "BB2B": ölçüsü koddan okunmayan özel seriler.
+  if (/^(BA2B|BB2B|BB1|BBA?)$/.test(prefix) && digits) return { family: 'dgbb', type: 'Bilyalı rulman (SKF özel/otomotiv serisi)', detail: 'Standart dizi dışı özel üretimdir; ölçüsü koddan okunmaz.', size: '' }
+  // Nadella iç bilezik "IM 19035": 19000/20600 serisi; sondaki haneler delik çapıdır.
+  if (prefix === 'IM' && /^(19|20)\d{3}$/.test(digits)) return { family: 'needle', type: 'İğneli rulman iç bileziği (Nadella)', detail: 'Kombine rulmanlar ve iğneli rulmanlar için taşlanmış iç bileziktir.', size: `İç çap ${mm(Number(digits.slice(2)))}` }
+  // Nadella kombine rulman baskı pulu "CPN3 40 60".
+  if (/^CPN\d$/.test(prefix) || /^CPN\d$/.test(prefix + digits.slice(0, 0))) return { family: 'thrust', type: 'Baskı pulu (Nadella kombine rulman için)', detail: 'RAXN kombine rulmanların eksenel baskı puludur.', size: '' }
+  if (prefix === 'CPN' && digits) return { family: 'thrust', type: 'Baskı pulu (Nadella kombine rulman için)', detail: 'RAXN kombine rulmanların eksenel baskı puludur.', size: '' }
+  // İngiliz inç silindirik makaralılar: LRJ/CRL hafif seri, MRJ/CRM orta seri; numara inç delik çapıdır (CRL'de 1/8 inç birimi).
+  if (/^(LRJ|MRJ|LLRJ)$/.test(prefix)) return { family: 'crb', type: `İnç ölçülü silindirik makaralı rulman (${prefix.startsWith('M') ? 'orta' : 'hafif'} seri)`, detail: 'Eski İngiliz yazımıdır; numara inç delik çapını gösterir.', size: '' }
+  if (/^(CRL|CRM)$/.test(prefix) && digits) return { family: 'crb', type: `İnç ölçülü silindirik makaralı rulman (${prefix === 'CRM' ? 'orta' : 'hafif'} seri)`, detail: 'Numara delik çapını 1/8 inç birimiyle verir (CRL 8 = 1 inç = 25,4 mm).', size: Number(digits) >= 4 && Number(digits) <= 60 ? `İç çap yaklaşık ${mm(Math.round(Number(digits) / 8 * 25.4 * 100) / 100)} (inç ölçülü)` : '' }
+  // NB inç lineer "SW-8": numara inç mil çapının 16'da biridir.
+  if (prefix === 'SW' && digits) return { family: 'linear', type: 'İnç ölçülü lineer bilyalı rulman (NB slide bush)', detail: 'Numara inç mil çapını 1/16 inç birimiyle verir (SW-8 = 1/2 inç).', size: '' }
+  // Samick kompakt lineer "CLB 20 UU".
+  if (prefix === 'CLB' && digits) return { family: 'linear', type: 'Lineer bilyalı rulman (kompakt seri, Samick)', size: `Mil çapı ${mm(Number(digits))}` }
+  // Askubal rot başı "KJ 18": PHS karşılığı dişi dişli rot başı.
+  if (prefix === 'KJ' && digits && digits.length <= 2) return { family: 'rod', type: 'Rot başı (mafsal başlık), dişi dişli (Askubal)', size: `Delik çapı ${mm(Number(digits))}` }
+  // INA lineer bilyalı rulman "KN 2045 PP": ilk iki hane mil çapıdır; PP iki tarafı keçeli.
+  if ((prefix === 'KN' || prefix === 'KNO') && /^\d{4}$/.test(digits)) return { family: 'linear', type: `Lineer bilyalı rulman (INA ${prefix === 'KNO' ? 'açık tip' : 'kapalı tip'})`, detail: 'İlk iki hane mil çapı, son iki hane boyu verir.', size: `Mil çapı ${mm(Number(digits.slice(0, 2)))}` }
+  // RBC ağır hizmet inç iğneli "SJ-840" (Pitchlign).
+  if (prefix === 'SJ' && digits) return { family: 'needle', type: 'İnç ölçülü iğneli rulman, ağır seri (RBC Pitchlign)', detail: 'Kafesli, taşlanmış bilezikli; iç bilezikle veya doğrudan mil üzerinde çalışır.', size: '' }
+  // İngiliz inç bilyalı orta seri "MS 7": RMS serisiyle aynıdır; numara inç deliğin seri numarasıdır.
+  if (prefix === 'MS' && /^\d{1,2}$/.test(digits)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman (orta seri, eski İngiliz yazımı)', detail: 'RMS serisinin eski Fafnir/FAG yazımıdır.', size: '' }
+  // İngiliz inç oynak bilyalılar: RL/RM serisi (NLJ = RHP yazımı, PAJ = RIV yazımı); numara inç deliğin seri numarası.
+  if (/^(RL|RM|NLJ|PAJ)$/.test(prefix) && digits) return { family: 'sabb', type: 'İnç ölçülü oynak bilyalı rulman (çift sıra)', detail: 'Eski İngiliz yazımıdır; mil eğilmesini kendiliğinden karşılar.', size: '' }
+  // SKF lineer bilyalı "LBA 40 2LS": ISO seri 3, numara mil çapıdır.
+  if (/^LBA[S]?$/.test(prefix) && digits && digits.length <= 2) return { family: 'linear', type: 'Lineer bilyalı rulman (SKF)', size: `Mil çapı ${mm(Number(digits))}` }
+  // Torrington/Koyo inç iğneli kovan "J-68": ilk haneler mil çapı, son hane genişlik (1/16 inç birimi).
+  if ((prefix === 'J' || prefix === 'MJH' || prefix === 'JH') && /^\d{2,3}$/.test(digits)) {
+    const cut = digits.length === 3 && Number(digits[0]) <= 2 ? 1 : digits.length - 1
+    const bore16 = Number(digits.slice(0, cut))
+    if (bore16 >= 2 && bore16 <= 40) return { family: 'needle', type: 'İnç ölçülü iğneli kovan (Torrington J serisi)', detail: 'Kafesli, iki ucu açık çekme kovan; sertleştirilmiş mil veya iç bilezik üzerinde çalışır.', size: `Mil çapı ${mm(Math.round(bore16 / 16 * 25.4 * 1000) / 1000)} (inç ölçülü)` }
+  }
+  // SKF inç konik özel serisi "BT1B": otomotiv ağırlıklı, ölçüsü koddan okunmaz.
+  if (/^BT1[A-Z]?$/.test(prefix) && digits) return { family: 'trb', type: 'Konik makaralı rulman (SKF özel seri)', detail: 'Standart dizi dışı, çoğunlukla otomotiv uygulamalı özel üretimdir; ölçüsü koddan okunmaz.', size: '' }
+  // Timken inç konik A serisi "A6075": cone numarasıdır; takımı A6075/A6157 diye yazılır.
+  if (prefix === 'A' && /^\d{4,5}$/.test(digits)) return { family: 'trb', type: 'İnç seri konik makaralı rulman parçası (Timken A serisi)', detail: 'İç ve dış bilezik ayrı numaralanır; takım cone/cup birlikte yazılır.', size: '' }
+  // INA eski yazım "G 3203", "G5207 2RSN": çift sıra eğik bilyalı; numara 32../52.. serisinin kısa yazılışıdır.
+  if (prefix === 'G' && /^[35]\d{3}$/.test(digits)) return { family: 'dacbb', type: 'Çift sıra eğik bilyalı rulman (eski yazım)', detail: `Güncel yazımı ${digits} serisidir; radyal yükle birlikte iki yönde eksenel yük taşır.`, size: bore(boreFromCode(digits.slice(-2))) }
+  // Wanda forklift mast makarası "MG309".
+  if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
+  // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
+  if (/^(GRA?E?|RALE|RLE|RAL)$/.test(prefix) && digits && digits.length <= 2 && /(NPP|KRR)/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı, eksantrik kilit bilezikli', detail: 'Dış bileziği küreseldir; yatak gövdesine takılır.', size: bore(Number(digits)) }
+  if (prefix === 'G' && digits && /(KRR|NPP)/.test(rest)) return { family: 'insert', type: 'Yatak rulmanı (Fafnir)', detail: 'Dış bileziği küreseldir; yatak gövdesine takılır.', size: bore(Number(digits)) }
   if ((prefix === 'SA' || prefix === 'SB' || prefix === 'UC' || prefix === 'UK' || prefix === 'YAR' || prefix === 'YET' || prefix === 'YEL') && /^[23]\d\d$/.test(digits)) {
     // "-100" is 1 in (inches + sixteenths), "-16" is 16/16 in.
     const inchCode = rest.match(/^-(\d{2,3})(?=[\s-]|$)/)?.[1]
@@ -654,7 +727,69 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   if (star && Number(star[2]) >= 5) {
     return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
   }
-  const match = text.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
+  // MRC eski Amerikan yazımı: "108 KR" eğik bilyalı (15°, 7000C karşılığı), "202 ZZ" sabit bilyalı (200 hafif seri).
+  const mrc = text.match(/^MRC[\s-]?(\d{3})[\s-]?KR/)
+  if (mrc) return { base: text, type: 'Eğik bilyalı rulman (MRC 100-KR serisi)', typeDetail: 'Temas açısı 15°dir; ISO 70..C serisi karşılığıdır (ör. 108KR = 7008C).', size: bore(boreFromCode(mrc[1].slice(-2))), notes: [] }
+  const mrcDg = text.match(/^MRC[\s-]?(\d{3})([\s-].*)?$/)
+  if (mrcDg && boreFromCode(mrcDg[1].slice(-2)) !== null) {
+    const seri = mrcDg[1][0] === '3' ? 'orta' : mrcDg[1][0] === '2' ? 'hafif' : 'çok hafif'
+    const info = { base: text, type: `Sabit bilyalı rulman (MRC ${mrcDg[1][0]}00 serisi, ${seri})`, typeDetail: 'MRC eski Amerikan yazımıdır; 200 serisi 62.., 300 serisi 63.. karşılığıdır.', size: bore(boreFromCode(mrcDg[1].slice(-2))), notes: [] }
+    const inner = explainProductCode(`${mrcDg[1][0] === '3' ? '63' : mrcDg[1][0] === '2' ? '62' : '60'}${mrcDg[1].slice(-2)}${mrcDg[2] ?? ''}`, brand)
+    if (inner) return { ...inner, type: info.type, typeDetail: info.typeDetail }
+    return info as never
+  }
+  // ZWZ inç konik takım yazımı "K15123-K15245": K- önekleri seri işaretidir, takım cone/cup çiftidir.
+  const kPair = text.match(/^K[\s-]?(\d{4,6})[\s-]+K[\s-]?(\d{4,6})$/)
+  if (kPair) {
+    const inner = explainProductCode(`${kPair[1]}/${kPair[2]}`, brand)
+    if (inner) return inner
+  }
+  // RBC koda markasını da yazar: "RBC SJ-840".
+  const rbcStrip = text.replace(/^RBC[\s-]+/, '')
+  if (rbcStrip !== text) {
+    const inner = explainProductCode(rbcStrip, brand)
+    if (inner) return inner
+  }
+  // SKF özel/otomotiv yazımı "BA2B 633272", "BB1-0868": harf ve rakam iç içedir, standart ayrışmaz.
+  if (/^(BA2B|BB2B|BB1|BA2|BB2)[\s-]?\d/.test(text)) {
+    return { base: text, type: 'Bilyalı rulman (SKF özel/otomotiv serisi)', typeDetail: 'Standart dizi dışı, özel üretimdir; ölçüsü koddan okunmaz.', size: '', notes: [] }
+  }
+  // SKF inç konik özel serisi "BT1B332551": harf ve rakam iç içedir.
+  if (/^BT1[A-Z]?[\s-]?\d/.test(text)) {
+    return { base: text, type: 'Konik makaralı rulman (SKF özel seri)', typeDetail: 'Standart dizi dışı, çoğunlukla otomotiv uygulamalı özel üretimdir; ölçüsü koddan okunmaz.', size: '', notes: [] }
+  }
+  // Koyo otomotiv özel serisi "05 NJ 0620 VH": baştaki iki hane seri ön ekidir; rulman NJ tipidir.
+  // Ölçü dizisi standart dışı olduğundan delik çapı koddan okunmaz (ör. bu kod 25x58x20 şanzıman rulmanıdır).
+  const leadCr = text.match(/^\d{2}\s+(NUP|NJ|NU|NF|N)\s?\d{4}(.*)$/)
+  if (leadCr) {
+    return { base: text, type: `Silindirik makaralı rulman (${leadCr[1]} tipi) · üreticiye özel seri`, typeDetail: (CRB[leadCr[1]] ?? '') + ' Baştaki iki hane ve sondaki ekler üreticinin otomotiv özel seri yazımıdır; ana ölçüler standart diziye uymaz.', size: '', notes: [] }
+  }
+  // Nadella "NA BIG 2070" / "NA BI 3060": BI/BIG iç bilezikli demektir, ara sözcüklerdir.
+  const naBi = text.match(/^NA\s+(?:BIG?|S\/BIG?)\s+(\d{4})(.*)$/)
+  if (naBi) {
+    const inner = explainProductCode(`NA ${naBi[1]}${naBi[2]}`, brand)
+    if (inner) return inner
+  }
+  // STAR (Rexroth) lineer burç/ünite serileri: "1037625-00", "0668-020-030" — üretici malzeme numarasıdır.
+  if (/(^|[^A-Z])STAR([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR')) && /^(10\d{5}(-\d{2})?|0668([\s-]\d{2,3}){0,2})$/.test(text)) {
+    return { base: text, type: 'Lineer bilyalı burç/ünite (STAR/Rexroth)', typeDetail: 'Numarası üreticinin malzeme numarasıdır; boyut koddan okunmaz.', size: '', notes: [] }
+  }
+  // Bosch Rexroth lineer ünite malzeme numarası "R1081 620 40": orta grubun son iki hanesi mil çapıdır.
+  const rex = text.match(/^R(\d{4})[\s-]?\d(\d\d)[\s-]?\d\d$/)
+  if (rex && /(^|[^A-Z])(REXROTH|BOSCH|STAR)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR'))) {
+    return { base: text, type: 'Lineer rulman ünitesi (Rexroth)', typeDetail: 'Lineer burç ve yuvası takılı hâlde gelen hazır ünitedir; numarası üreticinin malzeme numarasıdır.', size: `Mil çapı ${mm(Number(rex[2]))}`, notes: [] }
+  }
+  // NSK vidalı mil rulmanı "20TAC47": önce delik çapı, sonra TAC, sonra dış çap gelir.
+  const tac = text.match(/^(\d\d)\s?TAC\s?\d\d(.*)$/)
+  if (tac) {
+    return { base: text, type: 'Vidalı mil destek rulmanı (eğik bilyalı)', typeDetail: 'Vidalı millerde yüksek eksenel yükü karşılar; çoğunlukla eşli (çiftli) takılır. Temas açısı 60°dir.', size: `Mil (delik) çapı ${mm(Number(tac[1]))}`, notes: [] }
+  }
+  // "K LM 11749/11710", "K-L68149/K-L68111": bazı markalar inç konik numaralarının önüne K koyar; parça numarası değildir.
+  const kInch = /^K[\s-]+(?=J?[A-Z]{1,3}[\s-]?\d{4,6})/.test(text) ? text.replace(/^K[\s-]+/, '').replace(/K-(?=\d)/g, '') : text.replace(/K(?=(?:LM?|LL|JL|JLM|HM|JHM|HH|H|L|M)\d{4,6})/g, '')
+  // "3586 3525": inç konik rulmanın cone ve cup numarası bazen bölü yerine boşlukla yazılır.
+  const spacedPair = kInch.match(/^(\d{4,6}) (\d{4,6})$/)
+  const source = spacedPair ? `${spacedPair[1]}/${spacedPair[2]}` : kInch
+  const match = source.match(/^(?:(4T|[A-Z]{1,5})[\s-]?)?(\d+(?:[.,]\d+)?(?:X\d+(?:[.,]\d+)?){2}|\d+(?:\/\d+(?:[.,]\d+)?)?)(.*)$/)
   if (!match) return null
   const prefix = match[1] ?? ''
   let number = match[2]
@@ -675,14 +810,23 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     let explicit = slash ? Number(slash[2].replace(',', '.')) : null
     // "6902-16 ZZ": a number right after the base code is a special bore, so the standard bore does not apply.
     // "15123/15245", "45284-45220": an inch taper cone and cup, both plain numbers; the second one is never a bore.
-    const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^(\d{5})-\d{5}$/.test(text))
+    const conePair = prefix === '' && (/^\d{4,6}\/\d{4,6}$/.test(text) || /^\d{4,6}\/\d{4,6}$/.test(source) || /^(\d{5})-\d{5}$/.test(text))
     // FAG 562xx is an insert bearing series, so such a pair cannot be told apart from a cone and cup.
     if (conePair && brandName === 'FAG' && /^[1357]62\d\d$/.test(digits)) return null
-    if (conePair && !slash) { number = text; rest = '' }
+    if (conePair && !slash) { number = source; rest = '' }
     const special = conePair ? null : rest.match(/^-(\d+(?:[.,]\d+)?)(?=\s|$)/)
     if (special) { explicit = Number(special[1].replace(',', '.')); rest = rest.slice(special[0].length) }
     const sealed = /^[\s-]?(?:B[\s-])?(2RS|2RZ|ZZ|2Z)/.test(rest)
+    if (!info && /^\d{4,6}$/.test(digits) && /(^|[\s-])(CUP|CONE)([\s-]|$)/.test(rest)) {
+      const cup = /(^|[\s-])CUP([\s-]|$)/.test(rest)
+      info = { family: 'trb', type: `İnç seri konik makaralı rulman ${cup ? 'dış bileziği (cup)' : 'iç bileziği (cone)'}`, detail: 'İç ve dış bilezik ayrı numaralanır; bu kod yalnızca bir parçayı gösterir.', size: '' }
+    }
     if (!conePair && /^\d+$/.test(digits)) info = numericType(digits, explicit, sealed, brandName)
+    // Torrington / IKO inç iğneli kovan "B 2812": ilk iki hane mil çapı, son iki hane genişlik (1/16 inç).
+    if (!info && prefix === 'B' && /^\d{4}$/.test(digits) && Number(digits.slice(0, 2)) > Number(digits.slice(2))) {
+      const sixteenth = (code: string): number => Math.round(Number(code) / 16 * 25.4 * 1000) / 1000
+      info = { family: 'needle', type: 'İnç ölçülü iğneli kovan (Torrington yazımı)', size: `Mil çapı ${mm(sixteenth(digits.slice(0, 2)))} (inç ölçülü) · genişlik ${mm(sixteenth(digits.slice(2)))}` }
+    }
     if (conePair) info = { family: 'other', type: 'İnç seri konik makaralı rulman', detail: 'İç bilezik (cone) ve dış bilezik (cup) ayrı numaralanır; kod ikisini birlikte gösterir.' }
     // "62052RS" / "6082RS": the seal's leading 2 is glued to the base number. A miniature with two seals is
     // preferred over the same digits read as a 160 mm or larger bearing with one glued seal.
@@ -690,12 +834,14 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
       const split = numericType(digits.slice(0, -1), explicit, true, brandName)
       if (split) { info = split; number = digits.slice(0, -1); rest = `2${rest}` }
     }
+    // "203 KRR": INA tarım rulmanı (altıgen/kare delikli), KRR keçesiyle yazılır.
+    if (!info && /^20[3-6]$/.test(digits) && /KRR/.test(rest)) info = { family: 'insert', type: 'Tarım rulmanı (altıgen delikli yatak rulmanı)', detail: 'Tarım makinelerinde mile burçsuz, doğrudan altıgen mil üzerinde çalışır.' }
     if (info && STAINLESS.test(prefix) && info.family === 'dgbb') prefixNote = 'Paslanmaz çelik'
     if (flanged && info?.family !== 'dgbb') info = null
     if (info && flanged) prefixNote = prefix === 'F' ? 'Flanşlı dış bilezik' : 'Paslanmaz çelik, flanşlı dış bilezik'
     if (info && (prefix === 'HR' || prefix === '4T') && info.family !== 'trb') info = null
-    if (info && prefix === 'B' && info.family !== 'acbb') info = null
-    if (info && prefix === 'B') prefixNote = 'İş mili (spindle) rulmanı'
+    if (info && prefix === 'B' && info.family !== 'acbb' && info.family !== 'needle') info = null
+    if (info && prefix === 'B' && info.family === 'acbb') prefixNote = 'İş mili (spindle) rulmanı'
   } else {
     info = prefixedType(prefix, number, rest, brandName)
   }

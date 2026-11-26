@@ -29,6 +29,8 @@ export const DEFAULT_SETTINGS: Settings = {
   vat_pct: 20,
   low_stock_threshold: 5,
   show_prices_to_dealers: true,
+  restrict_shelf: false,
+  restrict_description: false,
   card_price_pct: 5,
   theme: 'system',
   font_scale: 1,

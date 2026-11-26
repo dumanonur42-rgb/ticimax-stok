@@ -228,7 +228,7 @@ export interface OrderInput {
 export type UserRole = 'admin' | 'ara' | 'bayi'
 
 /** Extra abilities an administrator can grant to a non-admin account. */
-export const PERMS = ['shelf', 'prices', 'all_orders', 'export'] as const
+export const PERMS = ['shelf', 'prices', 'all_orders', 'export', 'description'] as const
 export type Perm = (typeof PERMS)[number]
 
 export interface User {
@@ -432,6 +432,10 @@ export interface Settings {
   vat_pct: number
   low_stock_threshold: number
   show_prices_to_dealers: boolean
+  /** Açıkken raf konumu yalnızca kişiye özel yetki verilenlerde görünür; rolle gelen hak geçersizdir. */
+  restrict_shelf: boolean
+  /** Açıkken ürün açıklaması yalnızca kişiye özel yetki verilenlerde görünür. */
+  restrict_description: boolean
   card_price_pct: number
   theme: 'system' | 'light' | 'dark' | 'contrast'
   font_scale: number

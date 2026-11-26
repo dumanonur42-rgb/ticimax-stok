@@ -8,13 +8,13 @@ const logos = new Map(
 )
 
 // Other spellings of the name the logo itself shows.
-const SPELLINGS: Record<string, string> = { ASKUBAL: 'ask', STEYER: 'steyr', STYER: 'steyr' }
+const SPELLINGS: Record<string, string> = { ASKUBAL: 'ask', STEYER: 'steyr', STYER: 'steyr', STAYER: 'steyr', ROLWAY: 'rollway', DWB: 'durkopp', DKFL: 'durkopp', HOFFMAN: 'hoffmann' }
 
 // Brands sold under the logo of the group that owns them; the logo does not say their name.
 const OWNERS: Record<string, string> = { BOSCH: 'rexroth', STAR: 'rexroth' }
 
 // Emblems whose lettering is too small to read at plate size: the name is printed beside them.
-const EMBLEMS = new Set(['zkl', 'ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth', 'slf'])
+const EMBLEMS = new Set(['ina', 'dkf', 'urb', 'snfa', 'bpw', 'hth', 'slf'])
 
 // Wordmarks that do not show the brand's short name legibly ("Nippon Bearing" for NB).
 const UNREADABLE = new Set(['eurosnodi', 'nb', 'schneeberger'])
@@ -80,7 +80,7 @@ export function brandLogo(brand: string): BrandLogo | undefined {
   if (!words.length) return undefined
   const country = words.length === 1 ? logos.get(COUNTRIES[words[0]] ?? '') : undefined
   if (country) return { src: country, size: { width: '100%', height: '100%' }, emblem: false, named: true, flag: true }
-  const key = (SPELLINGS[words[0]] ?? OWNERS[words[0]] ?? words[0]).toLowerCase()
+  const key = (/^R\s*&\s*M/i.test(brand.trim()) ? 'rm' : (SPELLINGS[words[0]] ?? OWNERS[words[0]] ?? words[0])).toLowerCase()
   const src = logos.get(key)
   const box = (fit as Record<string, number[]>)[key]
   if (!src || !box) return undefined
