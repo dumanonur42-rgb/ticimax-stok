@@ -770,6 +770,10 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
     const inner = explainProductCode(`NA ${naBi[1]}${naBi[2]}`, brand)
     if (inner) return inner
   }
+  // STAR (Rexroth) lineer burç/ünite serileri: "1037625-00", "0668-020-030" — üretici malzeme numarasıdır.
+  if (/(^|[^A-Z])STAR([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR')) && /^(10\d{5}(-\d{2})?|0668([\s-]\d{2,3}){0,2})$/.test(text)) {
+    return { base: text, type: 'Lineer bilyalı burç/ünite (STAR/Rexroth)', typeDetail: 'Numarası üreticinin malzeme numarasıdır; boyut koddan okunmaz.', size: '', notes: [] }
+  }
   // Bosch Rexroth lineer ünite malzeme numarası "R1081 620 40": orta grubun son iki hanesi mil çapıdır.
   const rex = text.match(/^R(\d{4})[\s-]?\d(\d\d)[\s-]?\d\d$/)
   if (rex && /(^|[^A-Z])(REXROTH|BOSCH|STAR)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR'))) {
