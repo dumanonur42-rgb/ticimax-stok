@@ -563,6 +563,8 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'QJ' && digits) return { family: 'acbb', type: 'Dört nokta temaslı bilyalı rulman', detail: 'İki yönde eksenel yük taşır; iç bileziği iki parçalıdır.', size: bore(boreFromCode(digits.slice(-2))) }
   if (prefix === 'LR' && !dims && digits) return { family: 'needle', type: 'Yürüyen makara (bilyalı, kalın dış bilezikli)' }
   if (prefix === 'LR' && dims) return { family: 'needle', type: 'İğneli rulman iç bileziği', size: `İç çap ${mm(value(dims[1]))} · dış çap ${mm(value(dims[2]))} · genişlik ${mm(value(dims[3]))}` }
+  // Nadella / INA tam dolu iğneli "NA 1055": 1000/2000/3000 serisi; sondaki haneler mil çapıdır.
+  if (prefix === 'NA' && /^[123]\d{3}$/.test(digits) && !/^(48|49|59|69)/.test(digits) && !(/^22\d\d$/.test(digits) && /(2RS|LL)(\s|$)/.test(rest))) return { family: 'needle', type: 'İğneli rulman, kafessiz (tam dolu), iç bilezikli', detail: 'Nadella/INA 1000-3000 serisi; yük kapasitesi yüksek, devir düşüktür. Son haneler mil çapıdır.', size: `Mil (delik) çapı ${mm(Number(digits.slice(1)))}` }
   if (prefix in NEEDLE) {
     const info: TypeInfo = { family: 'needle', type: NEEDLE[prefix] }
     if (prefix === 'K' && !dims) return null
@@ -630,6 +632,12 @@ const prefixedType = (prefix: string, number: string, rest: string, brand: strin
   if (prefix === 'CLB' && digits) return { family: 'linear', type: 'Lineer bilyalı rulman (kompakt seri, Samick)', size: `Mil çapı ${mm(Number(digits))}` }
   // Askubal rot başı "KJ 18": PHS karşılığı dişi dişli rot başı.
   if (prefix === 'KJ' && digits && digits.length <= 2) return { family: 'rod', type: 'Rot başı (mafsal başlık), dişi dişli (Askubal)', size: `Delik çapı ${mm(Number(digits))}` }
+  // INA lineer bilyalı rulman "KN 2045 PP": ilk iki hane mil çapıdır; PP iki tarafı keçeli.
+  if ((prefix === 'KN' || prefix === 'KNO') && /^\d{4}$/.test(digits)) return { family: 'linear', type: `Lineer bilyalı rulman (INA ${prefix === 'KNO' ? 'açık tip' : 'kapalı tip'})`, detail: 'İlk iki hane mil çapı, son iki hane boyu verir.', size: `Mil çapı ${mm(Number(digits.slice(0, 2)))}` }
+  // RBC ağır hizmet inç iğneli "SJ-840" (Pitchlign).
+  if (prefix === 'SJ' && digits) return { family: 'needle', type: 'İnç ölçülü iğneli rulman, ağır seri (RBC Pitchlign)', detail: 'Kafesli, taşlanmış bilezikli; iç bilezikle veya doğrudan mil üzerinde çalışır.', size: '' }
+  // İngiliz inç bilyalı orta seri "MS 7": RMS serisiyle aynıdır; numara inç deliğin seri numarasıdır.
+  if (prefix === 'MS' && /^\d{1,2}$/.test(digits)) return { family: 'dgbb', type: 'İnç ölçülü sabit bilyalı rulman (orta seri, eski İngiliz yazımı)', detail: 'RMS serisinin eski Fafnir/FAG yazımıdır.', size: '' }
   // Wanda forklift mast makarası "MG309".
   if (prefix === 'MG' && digits) return { family: 'other', type: 'Forklift mast makarası (mast rulmanı)', detail: 'Forklift direğinde (mastta) çalışan kalın dış bilezikli makaralı rulmandır.', size: '' }
   // INA / Fafnir tarım ve yatak rulmanları: "203 KRR" (altıgen delikli tarım rulmanı), "G 112 KRRB", "RALE 30 NPP".
@@ -693,6 +701,12 @@ export function explainProductCode(sku: string, brand: string): CodeExplanation 
   const star = /(^|[^A-Z])(STAR|REXROTH|BOSCH)([^A-Z]|$)/.test(brand.toLocaleUpperCase('tr-TR')) ? text.match(/^R?(06[0-7]\d)[\s-]?\d(\d\d)[\s-]?\d\d$/) : null
   if (star && Number(star[2]) >= 5) {
     return { base: text, type: 'Lineer bilyalı rulman (Star / Rexroth)', typeDetail: '', size: `Mil çapı ${mm(Number(star[2]))}`, notes: [] }
+  }
+  // RBC koda markasını da yazar: "RBC SJ-840".
+  const rbcStrip = text.replace(/^RBC[\s-]+/, '')
+  if (rbcStrip !== text) {
+    const inner = explainProductCode(rbcStrip, brand)
+    if (inner) return inner
   }
   // SKF özel/otomotiv yazımı "BA2B 633272", "BB1-0868": harf ve rakam iç içedir, standart ayrışmaz.
   if (/^(BA2B|BB2B|BB1|BA2|BB2)[\s-]?\d/.test(text)) {
