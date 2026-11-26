@@ -7,6 +7,7 @@ import { cloud, isTransientCloudError, must } from './client'
 import type { OrderRow, ProductRow } from './database.types'
 import { flush, outboxCounts, reapplyPending } from './outbox'
 import { lookupBearingDims } from '../../shared/bearingDims'
+import { hasPerm } from '@shared/perms'
 
 /** Small pages survive slow/flaky links: a page must fit inside the request timeout even on a weak connection. */
 const PAGE = 500
@@ -27,7 +28,7 @@ let status: SyncStatus = { online: false, lastSync: null, productCount: 0, pendi
 let connectionChecked = false
 let onNewOrder: ((o: OrderRow) => void) | null = null
 let onSettingsUpdated: (() => void) | null = null
-let storagePolicy = { canSeeShelf: false, hidePrices: false }
+let storagePolicy = { canSeeShelf: false, hidePrices: false, canSeeDescription: true }
 
 export function onSyncEvent(l: Listener): void {
   listener = l
@@ -43,10 +44,11 @@ export function onSettingsSync(cb: (() => void) | null): void {
 
 export function setStoragePolicy(user: User, showPricesToDealers: boolean): boolean {
   const next = {
-    canSeeShelf: user.role === 'admin' || user.role === 'ara' || user.perms.includes('shelf'),
-    hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices')
+    canSeeShelf: hasPerm(user, 'shelf'),
+    hidePrices: user.role !== 'admin' && !showPricesToDealers && !user.perms.includes('prices'),
+    canSeeDescription: hasPerm(user, 'description') || !isDescriptionRestricted()
   }
-  const changed = next.canSeeShelf !== storagePolicy.canSeeShelf || next.hidePrices !== storagePolicy.hidePrices
+  const changed = next.canSeeShelf !== storagePolicy.canSeeShelf || next.hidePrices !== storagePolicy.hidePrices || next.canSeeDescription !== storagePolicy.canSeeDescription
   if (!storagePolicy.hidePrices && next.hidePrices) {
     try {
       getDb().exec('UPDATE products SET price = NULL, list_price = NULL, card_price = NULL')
@@ -55,6 +57,11 @@ export function setStoragePolicy(user: User, showPricesToDealers: boolean): bool
   if (storagePolicy.canSeeShelf && !next.canSeeShelf) {
     try {
       getDb().exec("UPDATE products SET shelf = '', locations = '[]'")
+    } catch {}
+  }
+  if (storagePolicy.canSeeDescription && !next.canSeeDescription) {
+    try {
+      getDb().exec("UPDATE products SET description = ''")
     } catch {}
   }
   storagePolicy = next
@@ -110,6 +117,16 @@ const INSERT_SQL = `INSERT INTO products(id, sku, sku_norm, key_norm, name, name
   @currency,@list_price,@card_price,@min_order,@shelf,@locations,@box,@box_norm,@barcode,@image,@description,@equivalents,@eq_norm,@active,@updated_at)`
 
 /** Mirror a batch of cloud rows into the SQLite search cache (delete + insert keeps the FTS triggers honest). */
+// Açıklama kısıtlaması kapalıyken herkes görür (eski davranış); açıkken yalnızca yetki verilenler.
+const isDescriptionRestricted = (): boolean => {
+  try {
+    const row = getDb().prepare("SELECT value FROM settings WHERE key = 'restrict_description'").get() as { value: string } | undefined
+    return row ? JSON.parse(row.value) === true : false
+  } catch {
+    return false
+  }
+}
+
 // Buluttan ölçü gelmediyse koddan türet; ISO sınır ölçü tabloları standarttır.
 const derivedDims = (r: ProductRow): { d_inner: number | null; d_outer: number | null; width: number | null } => {
   if (r.d_inner !== null && r.d_inner !== undefined) return { d_inner: r.d_inner, d_outer: r.d_outer, width: r.width }
@@ -156,7 +173,7 @@ export function upsertLocal(rows: ProductRow[]): void {
         box_norm: normalizeText(r.box),
         barcode: r.barcode,
         image: r.image,
-        description: r.description,
+        description: storagePolicy.canSeeDescription ? r.description : '',
         equivalents: r.equivalents,
         eq_norm: normalizeText(r.equivalents),
         active: r.active ? 1 : 0,

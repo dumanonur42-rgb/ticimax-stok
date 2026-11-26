@@ -136,6 +136,27 @@ export const lookupBearingDims = (sku: string, brand = ''): [number, number, num
   const lm = core.match(/^LM\s?(\d+)(UU)?$/)
   if (lm) return hit(`LM${lm[1]}UU`) ?? hit(`LM${lm[1]}`)
 
+  // KM somun (DIN 981): "KM 21", "KM21"
+  const km = core.match(/^KM\s?(\d{1,2})(?:\s|$)/)
+  if (km) {
+    const found = hit(`KM${km[1].padStart(2, '0')}`) ?? hit(`KM${km[1]}`)
+    if (found) return found
+  }
+
+  // Küresel düz rulman GE serisi: "GE 40 UK 2RS", "GE20ES" — E/ES/UK/2RS ekleri sınır ölçüyü değiştirmez
+  const ge = core.match(/^GE\s?(\d{2,3})(?:E|ES|UK|DO)?(?:\s|2RS|$)/)
+  if (ge) {
+    const found = hit(`GE${ge[1]}`) ?? hit(`GE${ge[1]}ES`)
+    if (found) return found
+  }
+
+  // Adaptör kovanı H/HE + numara: "H 3132", "H3132" — ölçüler kovanın kendi sınır ölçüleridir
+  const sleeve = core.match(/^(HE|H)\s?(\d{3,4})(?:\s|[A-Z]|$)/)
+  if (sleeve) {
+    const found = hit(`${sleeve[1]}${sleeve[2]}`) ?? hit(`H${sleeve[2]}`)
+    if (found) return found
+  }
+
   // İnç R serisi: "R2-5", "R144" — tire/boşluk farkını yut
   const inch = core.match(/^R\s?(\d{1,3}(?:-\d)?)$/)
   if (inch) return hit(`R${inch[1]}`) ?? hit(`R${inch[1].replace('-', '')}`)

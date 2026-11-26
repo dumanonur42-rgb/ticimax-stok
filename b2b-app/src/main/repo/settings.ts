@@ -1,4 +1,5 @@
 import { SUPPORT_PHONE, type Settings } from '@shared/types'
+import { configurePermRestrictions } from '@shared/perms'
 import { DEFAULT_BRAND_ALIASES } from '@shared/identity'
 import { cloud, must, mustVoid } from '../cloud/client'
 import { getDb } from '../db'
@@ -15,6 +16,8 @@ export const DEFAULT_SETTINGS: Settings = {
   vat_pct: 20,
   low_stock_threshold: 5,
   show_prices_to_dealers: true,
+  restrict_shelf: false,
+  restrict_description: false,
   card_price_pct: 5,
   theme: 'system',
   font_scale: 1,
@@ -52,7 +55,9 @@ export function getSettings(): Settings {
       }
     }
   }
-  return out as unknown as Settings
+  const settings = out as unknown as Settings
+  configurePermRestrictions(settings)
+  return settings
 }
 
 function writeLocal(patch: Record<string, unknown>): void {

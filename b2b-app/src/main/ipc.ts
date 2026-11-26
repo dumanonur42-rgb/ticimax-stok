@@ -158,15 +158,18 @@ function requirePerm(perm: Perm): Session {
 }
 
 /** Shelf location is internal warehouse data; only accounts with the shelf ability see it. Prices are also stripped when hidden. */
-function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; list_price?: number | null; card_price?: number | null }>(items: T[]): T[] {
+function sanitizeProducts<T extends { shelf: string; locations: import('@shared/types').ProductLocation[]; price?: number | null; list_price?: number | null; card_price?: number | null; description?: string }>(items: T[]): T[] {
   const s = requireRole()
+  const settings = getSettings()
   const canSeeShelf = hasPerm(s.user, 'shelf')
-  const canSeePrices = getSettings().show_prices_to_dealers || hasPerm(s.user, 'prices')
-  if (canSeeShelf && canSeePrices) return items
+  const canSeePrices = settings.show_prices_to_dealers || hasPerm(s.user, 'prices')
+  const canSeeDescription = !settings.restrict_description || hasPerm(s.user, 'description')
+  if (canSeeShelf && canSeePrices && canSeeDescription) return items
   return items.map((p) => ({
     ...p,
     ...(canSeeShelf ? {} : { shelf: '', locations: [] }),
-    ...(canSeePrices ? {} : { price: null, list_price: null, card_price: null })
+    ...(canSeePrices ? {} : { price: null, list_price: null, card_price: null }),
+    ...(canSeeDescription || p.description === undefined ? {} : { description: '' })
   }))
 }
 

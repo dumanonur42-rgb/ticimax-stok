@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware'
 import { api } from '@/lib/api'
 import { toEur } from '@/lib/format'
 import { findRefreshedCartProduct } from '@shared/cart'
+import { configurePermRestrictions } from '@shared/perms'
 
 export type Page = 'dashboard' | 'catalog' | 'cart' | 'orders' | 'stock' | 'customers' | 'import' | 'settings' | 'help' | 'activity'
 
@@ -40,11 +41,17 @@ export const useApp = create<AppState>()((set, get) => ({
   toasts: [],
   sidebarCollapsed: false,
   setSession: (session) => set({ session }),
-  loadSettings: async () => set({ settings: await api('settings:get', undefined) }),
+  loadSettings: async () => {
+    const settings = await api('settings:get', undefined)
+    configurePermRestrictions(settings)
+    set({ settings })
+  },
   updateSettings: async (patch) => {
     const cur = get().settings
     if (cur) set({ settings: { ...cur, ...patch } })
-    set({ settings: await api('settings:set', patch) })
+    const updated = await api('settings:set', patch)
+    configurePermRestrictions(updated)
+    set({ settings: updated })
   },
   go: (page, param = null) => set({ page, pageParam: param }),
   toast: (text, kind = 'info') => {
