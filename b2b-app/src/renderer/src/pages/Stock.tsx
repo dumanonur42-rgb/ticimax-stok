@@ -635,7 +635,7 @@ export function Stock(): ReactNode {
                           {p.box ? <span className="box-tag">{p.box}</span> : <span className="faint">kutu boş</span>}
                         </span>
                         <StockPill stock={p.stock} threshold={threshold} unit={p.unit} />
-                        <span className="nowrap">{money(p.price, p.currency)}</span>
+                        <span className="nowrap">{money(p.price, p.currency)}{p.auto_price != null && p.auto_price > 0 && <small className="muted" title="Otomatik kaynak fiyatı" style={{ marginLeft: 4 }}>oto {money(p.auto_price, 'EUR')}</small>}</span>
                         {p.shelf ? <span className="shelf-tag sm">{p.shelf}</span> : <span className="faint">—</span>}
                         <button className="btn ghost icon sm" onClick={() => setEditing(p)} aria-label={`${p.sku} düzenle`} title="Düzenle">
                           <Pencil size={14} aria-hidden />

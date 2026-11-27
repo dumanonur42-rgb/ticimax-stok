@@ -4,6 +4,11 @@ Her sürüm `## <sürüm>` başlığı altında, kullanıcıya yönelik Türkçe
 Bu bölüm CI tarafından GitHub Release açıklamasına kopyalanır; uygulama içinde gösterilmez. Yalnızca yöneticiyi ilgilendiren maddeler
 `[yönetici]` ile başlar; bayilere gösterilmez. Bayiyi ilgilendiren madde yoksa bölüm boş kalır.
 
+## 1.0.42
+
+- [yönetici] Stok listesinde otomatik kaynak fiyatı olan ürünlerde fiyatın yanında "oto" rozeti ve kaynak fiyatı görünür.
+- Otomatik fiyat kapsamı genişledi: iki yabancı kaynaktan (123bearing, lager-techniek) uzantısı ve markası birebir eşleşen 2000+ ürüne EUR referans fiyatı işlendi.
+
 ## 1.0.41
 
 - [yönetici] Otomatik fiyat sistemi: yabancı kaynaklardan bulunan EUR fiyatlar ürünlere işleniyor; Ayarlar'dan otomatik fiyatları açıp kapatabilir, varsayılan önceliği (sizin fiyatınız / otomatik) seçebilirsiniz
